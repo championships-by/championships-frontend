@@ -2,20 +2,17 @@ import React from 'react'
 import FormItem from 'antd/es/form/FormItem'
 import { Flex, Input, Space, Typography, AutoComplete } from 'antd'
 import { TrophyOutlined } from '@ant-design/icons'
+import './sass/participant.scss'
 
 function ParticipantEventInput({ name }) {
   return (
-    <div style={{ marginBottom: '24px' }}>
+    <div className="participant__event-input__div">
       <Typography.Text>Мероприятие</Typography.Text>
       <Flex>
-        <Space.Compact
-          style={{
-            width: '100%',
-          }}
-        >
+        <Space.Compact className="participant__event-input__space">
           <Input
             prefix={<TrophyOutlined />}
-            style={{ width: '38px', height: '32px', border: 'none' }}
+            className="participant__event-input__input"
             disabled
           />
           <FormItem
@@ -36,7 +33,7 @@ function ParticipantEventInput({ name }) {
             <Flex vertical>
               <AutoComplete
                 allowClear
-                style={{ width: '100%' }}
+                className="participant__event-input__autocomplete"
                 placeholder="Выбирите мероприятие"
                 id="participant_event_input"
                 maxLength={255}

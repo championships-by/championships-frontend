@@ -8,11 +8,11 @@ function ParticipantAdditionalOrganiztionInput({ name }) {
     <FormItem name={name}>
       <Flex vertical>
         <Typography.Text>
-          Дополнительное учереждение образования
+          Учереждение дополнительного образования
         </Typography.Text>
         <Input
           prefix={<BankOutlined />}
-          placeholder="Введите дополнительное учереждение образования"
+          placeholder="Введите учереждение дополнительного образования"
           id="participant_additionalorganization_input"
         />
         <Typography.Text type="secondary">

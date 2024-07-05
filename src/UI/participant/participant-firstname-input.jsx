@@ -5,40 +5,33 @@ import FormItem from 'antd/es/form/FormItem'
 
 function ParticipantFirstnameInput({ name }) {
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
+    <FormItem
+      name={name}
+      hasFeedback
+      validateFirst
+      rules={[
+        {
+          required: true,
+          message: 'Пожалуйста введите имя',
+        },
+        {
+          max: 255,
+          message: 'Максимальное значение 255',
+        },
+      ]}
     >
-      <Typography.Text>Имя</Typography.Text>
-      <FormItem
-        name={name}
-        hasFeedback
-        validateFirst
-        rules={[
-          {
-            required: true,
-            message: 'Пожалуйста введите имя',
-          },
-          {
-            max: 255,
-            message: 'Максимальное значение 255',
-          },
-        ]}
-        style={{
-          marginBottom: '0px',
-        }}
-      >
+      <Flex vertical>
+        <Typography.Text>Имя</Typography.Text>
         <Input
           allowClear
           prefix={<UserOutlined />}
           placeholder="Введите имя"
           maxLength={255}
+          id="participant_fname_input"
         />
-      </FormItem>
-      <Typography.Text type="secondary">Пример: Иван</Typography.Text>
-    </Flex>
+        <Typography.Text type="secondary">Пример: Иван</Typography.Text>
+      </Flex>
+    </FormItem>
   )
 }
 

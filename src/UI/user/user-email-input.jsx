@@ -2,15 +2,11 @@ import React from 'react'
 import { Flex, Input, Typography } from 'antd'
 import { MailOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
+import './sass/user.scss'
 
 function UserEmailInput({ name }) {
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
-    >
+    <Flex vertical className="user__email-input__flex">
       <Typography.Text>Email</Typography.Text>
       <FormItem
         name={name}
@@ -27,9 +23,7 @@ function UserEmailInput({ name }) {
             message: 'Некоректный Email',
           },
         ]}
-        style={{
-          marginBottom: '0px',
-        }}
+        className="user__email-input__formitem"
       >
         <Input
           prefix={<MailOutlined />}

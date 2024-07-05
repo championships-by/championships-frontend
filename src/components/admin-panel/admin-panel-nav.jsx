@@ -1,25 +1,26 @@
 import { NavLink } from 'react-router-dom'
 import { Tooltip } from 'antd'
+import { ROUTES } from '@components/enums'
 
 function AdminPanelNav({ role }) {
   return (
     <nav className="admin-panel__nav">
       <ul className="admin-panel__menu-list">
         {(role === 'admin' || role === 'judge') && (
-          <Tooltip title="Мероприятия">
+          <Tooltip title={ROUTES.EVENTS.TITLE}>
             <li>
               <NavLink
-                to="/admin/events"
+                to={ROUTES.EVENTS.PATH}
                 className="admin-panel__menu-link admin-panel__menu-link--event"
               />
             </li>
           </Tooltip>
         )}
         {(role === 'admin' || role === 'judge') && (
-          <Tooltip title="Судейство">
+          <Tooltip title={ROUTES.JUDGMENT.TITLE}>
             <li>
               <NavLink
-                to="/admin/judgment"
+                to={ROUTES.JUDGMENT.PATH}
                 className="admin-panel__menu-link admin-panel__menu-link--judgment"
               />
             </li>
@@ -27,9 +28,9 @@ function AdminPanelNav({ role }) {
         )}
         {(role === 'admin' || role === 'specialist') && (
           <li>
-            <Tooltip title="Управление участниками">
+            <Tooltip title={ROUTES.PARTICIPANTS.TITLE}>
               <NavLink
-                to="/admin/participants"
+                to={ROUTES.PARTICIPANTS.PATH}
                 className="admin-panel__menu-link admin-panel__menu-link--add-participants"
               />
             </Tooltip>
@@ -37,18 +38,18 @@ function AdminPanelNav({ role }) {
         )}
         {role === 'admin' && (
           <li>
-            <Tooltip title="Управление пользователями">
+            <Tooltip title={ROUTES.USERS_CONTROL.TITLE}>
               <NavLink
-                to="/admin/users"
+                to={ROUTES.USERS_CONTROL.PATH}
                 className="admin-panel__menu-link admin-panel__menu-link--users"
               />
             </Tooltip>
           </li>
         )}
         <li>
-          <Tooltip title="Настройки аккаунта">
+          <Tooltip title={ROUTES.USER_SETTINGS.TITLE}>
             <NavLink
-              to="/admin/settings"
+              to={ROUTES.USER_SETTINGS.PATH}
               className="admin-panel__menu-link admin-panel__menu-link--settings"
             />
           </Tooltip>
@@ -56,9 +57,9 @@ function AdminPanelNav({ role }) {
       </ul>
       <ul className="admin-panel__menu-list">
         <li>
-          <Tooltip title="Выход">
+          <Tooltip title={ROUTES.LOGOUT.TITLE}>
             <NavLink
-              to="/admin/logout"
+              to={ROUTES.LOGOUT.PATH}
               className="admin-panel__menu-link admin-panel__menu-link--logout"
             />
           </Tooltip>

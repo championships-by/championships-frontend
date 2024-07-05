@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import Loader from '@components/loader/loader'
-import ApiPath from '@components/enums.js'
+import { ROUTES, RESPONSE_STATUS } from '@components/enums'
 
 const Logout = () => {
   const navigate = useNavigate()
-  fetch(`${ApiPath}/auth/logout`, {
+  fetch(`${API_PATH}/auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -12,7 +12,9 @@ const Logout = () => {
     redirect: 'follow',
     credentials: 'include',
   }).then((response) => {
-    navigate('/admin/auth')
+    if (response.status === RESPONSE_STATUS.STATUS_OK) {
+      navigate(ROUTES.AUTHORIZATION.PATH)
+    }
   })
 
   return <Loader show={true} />

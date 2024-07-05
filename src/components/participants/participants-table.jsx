@@ -15,8 +15,8 @@ function ParticipantsTable({ ParticipantData }) {
     },
     {
       title: 'Регион',
-      dataIndex: 'region',
       key: 'participant_region',
+      dataIndex: 'region',
     },
     {
       title: 'Учреждение образования',
@@ -63,7 +63,7 @@ function ParticipantsTable({ ParticipantData }) {
         credentials: 'include',
       }
 
-      await fetch(`${ApiPath}/participant/hide_participant`, requestOptions)
+      await fetch(`${API_PATH}/participant/hide_participant`, requestOptions)
     }
     Modal.confirm({
       title: 'Вы уверены?',

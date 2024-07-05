@@ -2,20 +2,17 @@ import React from 'react'
 import FormItem from 'antd/es/form/FormItem'
 import { Flex, Input, Space, Typography, AutoComplete } from 'antd'
 import { FlagOutlined } from '@ant-design/icons'
+import './sass/events.scss'
 
 function CompitationNameInput({ name }) {
   return (
-    <div style={{ marginBottom: '24px' }}>
+    <div className="events_compitation-name__div">
       <Typography.Text>Компитенция</Typography.Text>
       <Flex>
-        <Space.Compact
-          style={{
-            width: '100%',
-          }}
-        >
+        <Space.Compact className="events__compitation-name__space">
           <Input
             prefix={<FlagOutlined />}
-            style={{ width: '38px', height: '32px', border: 'none' }}
+            className="events__compitation-name__input"
             disabled
           />
           <FormItem
@@ -36,7 +33,7 @@ function CompitationNameInput({ name }) {
             <Flex vertical>
               <AutoComplete
                 allowClear
-                style={{ width: '100%' }}
+                className="events__compitation-name__autocomlete"
                 placeholder="Выбирите компетенцию"
                 maxLength={255}
                 options={[

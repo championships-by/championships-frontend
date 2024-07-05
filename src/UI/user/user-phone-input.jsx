@@ -2,15 +2,11 @@ import React from 'react'
 import { Flex, Input, Typography } from 'antd'
 import { PhoneOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
+import './sass/user.scss'
 
 function UserPhoneInput({ name }) {
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
-    >
+    <Flex vertical className="user__phone-input__flex">
       <Typography.Text>Телефон</Typography.Text>
       <FormItem
         name={name}
@@ -27,9 +23,7 @@ function UserPhoneInput({ name }) {
               'Пожалуйста, введите номер телефона в соответствии с примером',
           },
         ]}
-        style={{
-          marginBottom: '0px',
-        }}
+        className="user__phone-input__formitem"
       >
         <Input
           prefix={<PhoneOutlined />}

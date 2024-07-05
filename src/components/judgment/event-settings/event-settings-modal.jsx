@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { Button, Flex, Form, Modal, message } from 'antd'
-import Compitation from '@src/UI/events/сompitation-name.jsx'
+import Compitation from '@src/UI/judgment/events/сompitation-name.jsx'
 
 function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false)
@@ -19,9 +19,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
   return (
     <Modal
       title="Добавить компетенцию"
-      style={{
-        top: 20,
-      }}
+      className="event-settings__modal"
       open={isOpen}
       onOk={onOk}
       onCancel={onCancel}

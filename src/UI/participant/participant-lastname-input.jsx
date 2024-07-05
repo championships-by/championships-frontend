@@ -4,41 +4,33 @@ import FormItem from 'antd/es/form/FormItem'
 
 function ParticipantLastnameInput({ name }) {
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
+    <FormItem
+      name={name}
+      hasFeedback
+      validateFirst
+      shouldUpdate={true}
+      rules={[
+        {
+          required: true,
+          message: 'Пожалуйста, введите фамилию',
+        },
+        {
+          max: 255,
+          message: 'Максимальное значение 255',
+        },
+      ]}
     >
-      <Typography.Text>Фамилия</Typography.Text>
-      <FormItem
-        name={name}
-        hasFeedback
-        validateFirst
-        shouldUpdate={true}
-        rules={[
-          {
-            required: true,
-            message: 'Пожалуйста, введите фамилию',
-          },
-          {
-            max: 255,
-            message: 'Максимальное значение 255',
-          },
-        ]}
-        style={{
-          marginBottom: 0,
-        }}
-      >
+      <Flex vertical>
+        <Typography.Text>Фамилия</Typography.Text>
         <Input
           prefix={<UserOutlined />}
           allowClear
           placeholder="Введите фамилию"
           maxLength={255}
         />
-      </FormItem>
-      <Typography.Text type="secondary">Пример: Иванов</Typography.Text>
-    </Flex>
+        <Typography.Text type="secondary">Пример: Иванов</Typography.Text>
+      </Flex>
+    </FormItem>
   )
 }
 

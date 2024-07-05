@@ -1,20 +1,18 @@
 import AdminPanelLogo from './admin-panel-logo.jsx'
 import AdminPanelNav from './admin-panel-nav.jsx'
 import './sass/admin-panel.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { message } from 'antd'
-import { Outlet, useNavigate } from 'react-router-dom'
-import Loader from '@components/loader/loader'
-import ApiPath from '@components/enums.js'
+import { Outlet, useNavigate, Navigate } from 'react-router-dom'
+import { RESPONSE_STATUS } from '@components/enums'
 
 function AdminPanel() {
-  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true)
   const [role, setRole] = useState('unauthorized')
-
-  if (isLoading) {
-    try {
-      fetch(`${ApiPath}/user/profile`, {
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (isLoading) {
+      fetch(`${API_PATH}/user/profile`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -23,31 +21,28 @@ function AdminPanel() {
         credentials: 'include',
       })
         .then((response) => {
-          if (response.ok) {
+          if (response.status === RESPONSE_STATUS.STATUS_OK) {
             return response.json()
+          } else if (response.status === RESPONSE_STATUS.STATUS_UNAUTHORIZED) {
+            navigate('/401', { replace: true })
           } else {
-            navigate('/admin/auth')
+            throw new Error(`Error ${response.status}`)
           }
         })
         .then((user) => {
           setRole(user.role)
-          setTimeout(() => setIsLoading(false), 1000)
+          setIsLoading(false)
         })
-    } catch (error) {
-      message.error(
-        'Ошибка: Невозможно получить данные. Обратитесь к администратору...'
-      )
+        .catch(() => {
+          message.error(
+            'Невозможно получить данные. Обратитесь к администратору'
+          )
+        })
     }
-  }
+  })
 
   return (
     <>
-      <Loader
-        show={isLoading}
-        style={{
-          zIndex: 9999,
-        }}
-      />
       <div className="admin-panel">
         <div className="admin-panel__menu">
           <AdminPanelLogo />

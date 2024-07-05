@@ -2,28 +2,22 @@ import React from 'react'
 import FormItem from 'antd/es/form/FormItem'
 import { Select, Flex, Input, Space, Typography } from 'antd'
 import { EnvironmentOutlined } from '@ant-design/icons'
+import './sass/participant.scss'
 
 function ParticipantRegionSelect({ name }) {
   return (
-    <div style={{ marginBottom: '24px' }}>
+    <div className="participant__region-select__div">
       <Typography.Text>Регион</Typography.Text>
       <Flex>
-        <Space.Compact
-          style={{
-            width: '100%',
-          }}
-        >
+        <Space.Compact className="participant__region-select__space">
           <Input
             prefix={<EnvironmentOutlined />}
-            style={{ width: '38px', height: '32px', border: 'none' }}
+            className="participant__region-select__input"
             disabled
           />
           <FormItem
             name={name}
-            style={{
-              width: '100%',
-              marginBottom: '0px',
-            }}
+            className="participant__region-select__formitem"
             hasFeedback
             validateFirst
             rules={[
@@ -40,31 +34,31 @@ function ParticipantRegionSelect({ name }) {
               placeholder="Выберите регион"
               options={[
                 {
-                  value: 'Minsk',
+                  value: 'г.Минск',
                   label: 'г.Минск',
                 },
                 {
-                  value: 'minskreg',
+                  value: 'Минская область',
                   label: 'Минская область',
                 },
                 {
-                  value: 'mogilev',
+                  value: 'Могилевская область',
                   label: 'Могилевская область',
                 },
                 {
-                  value: 'grodno',
+                  value: 'Гродненская область',
                   label: 'Гродненская область',
                 },
                 {
-                  value: 'gomel',
+                  value: 'Гомельская область',
                   label: 'Гомельская область',
                 },
                 {
-                  value: 'brest',
+                  value: 'Брестская область',
                   label: 'Брестская область',
                 },
                 {
-                  value: 'vitebsk',
+                  value: 'Витебская область',
                   label: 'Витебская область',
                 },
               ]}

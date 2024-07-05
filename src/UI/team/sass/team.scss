@@ -1,0 +1,43 @@
+.team {
+  &__team-name-input {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__formitem {
+      margin-bottom: 0px;
+    }
+  }
+  &__team-nomonation-select {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__formitem {
+      width: 100%;
+      margin-bottom: 0px;
+    }
+    &__space {
+      width: 100%;
+    }
+    &__input {
+      width: 38px;
+    }
+  }
+  &__team-participants-input {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__space {
+      width: 100%;
+    }
+    &__formitem {
+      width: 100%;
+      margin-bottom: 0px;
+    }
+    &__input {
+      width: 38px;
+    }
+    &__space {
+      width: 100%;
+    }
+  }
+}

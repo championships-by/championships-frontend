@@ -2,15 +2,11 @@ import React from 'react'
 import { Flex, Input, Typography } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
+import './sass/user.scss'
 
 function UserPatronymicInput({ name }) {
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
-    >
+    <Flex vertical className="user__patronymic-input__flex">
       <Typography.Text>Отчество (если таковое имеется)</Typography.Text>
       <FormItem
         name={name}
@@ -22,9 +18,7 @@ function UserPatronymicInput({ name }) {
             message: 'Максимальное значение 255',
           },
         ]}
-        style={{
-          marginBottom: '0px',
-        }}
+        className="user__patronymic-input__formitem"
       >
         <Input
           prefix={<UserOutlined />}

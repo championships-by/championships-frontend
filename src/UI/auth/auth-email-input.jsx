@@ -7,9 +7,7 @@ const AuthEmailInput = ({ value, onChange }) => {
   return (
     <FormItem
       name="Email"
-      style={{
-        width: 300,
-      }}
+      сlassName="auth-email-input"
       hasFeedback
       validateFirst
       rules={[

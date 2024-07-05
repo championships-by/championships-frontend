@@ -2,15 +2,11 @@ import React from 'react'
 import { Flex, Input, Typography } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
+import './sass/user.scss'
 
 function UserFirstnameInput({ name }) {
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
-    >
+    <Flex vertical className="user__firstname-input__flex">
       <Typography.Text>Имя</Typography.Text>
       <FormItem
         name={name}
@@ -26,9 +22,7 @@ function UserFirstnameInput({ name }) {
             message: 'Максимальное значение 255',
           },
         ]}
-        style={{
-          marginBottom: '0px',
-        }}
+        className="user__firstname-input__formitem"
       >
         <Input
           allowClear

@@ -1,15 +1,11 @@
 import { Flex, Input, Typography } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
+import './sass/user.scss'
 
 function UserLastnameInput({ name }) {
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
-    >
+    <Flex vertical className="user__lastname-input__flex">
       <Typography.Text>Фамилия</Typography.Text>
       <FormItem
         name={name}
@@ -26,9 +22,7 @@ function UserLastnameInput({ name }) {
             message: 'Максимальное значение 255',
           },
         ]}
-        style={{
-          marginBottom: 0,
-        }}
+        className="user__lastname-input__formitem"
       >
         <Input
           prefix={<UserOutlined />}

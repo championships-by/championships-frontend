@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+require('dotenv').config()
 
 module.exports = (env) => {
   return {
@@ -24,6 +25,9 @@ module.exports = (env) => {
       new webpack.ProvidePlugin({
         React: 'react',
       }),
+      new webpack.DefinePlugin({
+        API_PATH : JSON.stringify(process.env.API_PATH)
+      })
     ],
     module: {
       rules: [

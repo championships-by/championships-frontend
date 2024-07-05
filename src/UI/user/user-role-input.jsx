@@ -1,41 +1,26 @@
 import { Flex, Input, Select, Space, Typography } from 'antd'
 import { CrownOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
+import './sass/user.scss'
 
 function UserRoleInput({ name, ...props }) {
   const disabled = props.disabled ?? false
 
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
-    >
+    <Flex vertical className="user__role-input__flex">
       <Typography.Text>Роль пользователя</Typography.Text>
       <Flex>
-        <Space.Compact
-          style={{
-            width: '100%',
-          }}
-        >
+        <Space.Compact className="user__role-input__space">
           <Input
             prefix={<CrownOutlined />}
-            style={{ width: '38px' }}
+            className="user__role-input__input"
             disabled
           />
-          <FormItem
-            name={name}
-            style={{
-              width: '100%',
-              marginBottom: '0px',
-            }}
-          >
+          <FormItem name={name} className="user__role-input__formitem">
             <Select
               disabled={disabled}
               name="role_select"
               value="specialist"
-              // defaultValue={{value:'specialist'}}
               options={[
                 {
                   value: 'admin',
