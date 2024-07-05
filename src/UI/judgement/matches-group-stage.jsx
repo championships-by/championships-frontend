@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { EditOutlined } from '@ant-design/icons'
-import { Card, Flex, Tooltip, Table, Button, Modal, Row, Col } from 'antd'
-import { useEffect, useState } from 'react'
+import { Card,  Tooltip, Table, ConfigProvider, Row, Col } from 'antd'
+import { useEffect, useState} from 'react'
+import { useSearchParams } from 'react-router-dom'
 import ModalGroupStage from './modal-matches-group-stage'
 
 function MatchesGroupStage() {
@@ -13,10 +13,11 @@ function MatchesGroupStage() {
     let matchNumber = 1
     dataMatches?.map((group) => {
       group?.matches.map((match) => {
+        console.log(match)
         match.team1 = match.team1?.name
         match.team2 = match.team2?.name
-        const { team1, team2, match_id } = match
-        var team = { team1, team2, matchNumber }
+        const { team1, team2, match_id, team1_score,team2_score } = match
+        var team = { team1, team2, matchNumber,team1_score, team2_score,match_id }
         if (team.team1 === undefined) {
           team.team1 = 'Отсутствует'
         } else if (team.team2 === undefined) {
@@ -31,6 +32,7 @@ function MatchesGroupStage() {
   }
 
   let data = getMatches(dataMatches)
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
     ;(async () => {
@@ -45,16 +47,17 @@ function MatchesGroupStage() {
         credentials: 'include',
       }
       const response = await fetch(
-        'http://127.0.0.1:8000/api/match/get_group_matches?event_name=Event3&nomination_name=Tennis',
+        `http://127.0.0.1:8000/api/match/get_group_matches?event_id=${searchParams.get('event_id')}&nomination_id=${searchParams.get('nomination_id')}`,
         requestOptions
       )
       let responseJson = await response.json()
 
       setMatches(responseJson)
+      console.log(responseJson)
     })()
   }, [])
 
-  // eslint-disable-next-line react/prop-types
+ 
   const MatchCard = ( {match} ) => {
     let columns = [
       {
@@ -73,31 +76,37 @@ function MatchesGroupStage() {
         render: (record) => (
           <div >
               <div style={{ marginTop: '15px'}}>
-                <div ><span style={{float: 'left', alignItems: 'center'}}>0</span></div><br/>
-                <div><span style={{float: 'left',alignItems: 'center'}}>0</span></div>
+                <div ><span style={{float: 'left', alignItems: 'center'}}>{record.team1_score}</span></div><br/>
+                <div><span style={{float: 'left',alignItems: 'center'}}>{record.team2_score}</span></div>
               </div>
                 <div style={{marginLeft: '100px',alignItems: 'center'}}><ModalGroupStage match={record} /></div>
-              
-              
           </div>
-          
-         
         ),
       },
     ]
 
     return (
-      <Card title={`Матч ${match.matchNumber}`} style={{width: '80%'
+      <ConfigProvider
+      theme={{
+        components: {
+          Card: {
+            headerBg: '#1E90FF',
+          },
+        },
+      }}
+      >
+        <Card  title={`Матч ${match.matchNumber}`} style={{width: '100%'
        }}>
         <Table
           columns={columns}
           dataSource={[match]}
           pagination={false}
           style={{
-            
-          }}
+            width: '100%',
+          }}  
         />
       </Card>
+      </ConfigProvider>
     )
   }
   return (

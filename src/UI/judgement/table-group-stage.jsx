@@ -1,5 +1,6 @@
-import { Flex, Table, Tooltip, Typography } from 'antd'
+import { Flex, Table, Tooltip } from 'antd'
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 export default function TableGroupStage() {
   const [dataParticipant, setParticipant] = useState([])
@@ -42,12 +43,13 @@ export default function TableGroupStage() {
       key: 'points',
     },
     {
-      title: (
-        <Tooltip title="Количество баллов, выставленных судьёй">Счёт</Tooltip>
-      ),
+      title: <Tooltip title="Количество баллов, выставленных судьёй">Счёт</Tooltip>,
+      dataIndex: 'get_score',
+      key: 'get_score',
     },
   ]
 
+  const [searchParams] = useSearchParams()
   const getStats = (group) => {
     const teams = new Map()
 
@@ -58,16 +60,16 @@ export default function TableGroupStage() {
         losses: 0,
         draws: 0,
         points: 0,
+        get_score: 0,
       })
     }
-
-    const changeStats = (name, winner, draw) => {
+    const changeStats = (name, winner) => {
       if (!teams.has(name)) {
         addTeam(name)
       }
 
       teams.get(name).matches++
-      if (draw) {
+      if (winner === null) {
         teams.get(name).draws++
         teams.get(name).points += 1
       } else if (name == winner) {
@@ -77,14 +79,20 @@ export default function TableGroupStage() {
         teams.get(name).losses++
       }
     }
-
     group.matches.forEach((match) => {
+      let winner = null
+      if (match.team1_score > match.team2_score) {
+        winner = match.team1?.name
+      }
+      if (match.team2_score > match.team1_score) {
+        winner = match.team2?.name
+      }
       if (match.team1) {
-        changeStats(match.team1.name, match.winner.name)
+        changeStats(match.team1.name, winner)
       }
 
       if (match.team2) {
-        changeStats(match.team2.name, match.winner.name)
+        changeStats(match.team2.name, winner)
       }
     })
 
@@ -100,22 +108,37 @@ export default function TableGroupStage() {
         draws: el[1].draws,
         place: 1,
         points: el[1].points,
+        get_score: el[1].get_score,
       })
     }
     result.sort((first, second) => {
-      if (first.points > second.points) {
-        return -1
+      if (second.points !== first.points) {
+        return second.points - first.points
       }
-      if (first.points < second.points) {
-        return 1
+      if (second.wins !== first.wins) {
+        return second.wins - first.wins
       }
-      return 0
+      return first.name.localeCompare(second.name)
     })
 
+    let get_score = new Map()
+    group.matches.forEach((match) => {
+      if (!get_score.has(match.team1.name)) {
+        get_score.set(match.team1.name, 0)
+      }
+
+      if (!get_score.has(match.team2.name)) {
+        get_score.set(match.team2.name, 0)
+      }
+      get_score.set(match.team1.name, get_score.get(match.team1.name) + match.team1_score)
+      get_score.set(match.team2.name, get_score.get(match.team2.name) + match.team2_score)
+    })
     result.forEach((team, index) => {
       team.place = index + 1
+      console.log(team.name, get_score.get(team.name))
+      team.get_score = get_score.get(team.name)
     })
-    console.log
+
     return result
   }
 
@@ -132,7 +155,7 @@ export default function TableGroupStage() {
         credentials: 'include',
       }
       const response = await fetch(
-        'http://127.0.0.1:8000/api/match/get_group_matches?event_name=Event2&nomination_name=Hockey',
+        `http://127.0.0.1:8000/api/match/get_group_matches?event_id=${searchParams.get('event_id')}&nomination_id=${searchParams.get('nomination_id')}`,
         requestOptions
       )
       let responseJson = await response.json()
@@ -144,7 +167,7 @@ export default function TableGroupStage() {
     <Flex vertical gap="large">
       {dataParticipant?.map((participants, index) => (
         <div key={index}>
-          <div>Группа {index + 1}</div>
+          <div>Группа {participants.group_id}</div>
           <Table
             style={{
               width: 100,

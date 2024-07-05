@@ -2,12 +2,12 @@
 import { Modal, Button, Flex, Table, InputNumber } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
+import ApiPath from '../../components/enums'
 
 function ModalGroupStage(match) {
   const [visible, setVisible] = useState(false)
-
-  
-  console.log(match)
 
   const data = [
     {
@@ -18,7 +18,7 @@ function ModalGroupStage(match) {
     {
         key: '2',
         participants: match.match?.team2,
-        result: 0,
+        result: 1,
     }
   ]
   const columns = [
@@ -31,9 +31,13 @@ function ModalGroupStage(match) {
         title: 'Счёт',
         key: 'result',
         dataIndex: 'result',
-        render:() => (
+        render:(result) => (
             <div>
-                <InputNumber></InputNumber>
+                <InputNumber 
+                onChange={(e) => setScore(result, e)}
+                min={0}
+                defaultValue={0}
+                ></InputNumber>
             </div>
         )
     }
@@ -44,12 +48,58 @@ function ModalGroupStage(match) {
   }
 
   const handleOk = () => {
+    sendMatchResult()
     setVisible(false)
   }
   const handleCancel = () => {
     setVisible(false)
   }
 
+  const [team1Score, setTeam1Score] = useState()
+  const [team2Score, setTeam2Score] = useState()
+
+  const setScore = (key, score) => {
+    if (key === 0)
+      setTeam1Score(score)
+
+    if (key === 1)
+      setTeam2Score(score)
+  }
+
+  const [searchParams] = useSearchParams()
+
+  const sendMatchResult = () => {
+    
+    console.log(searchParams.get('event_id'))
+    console.log(searchParams.get('nomination_id'))
+    console.log(match.match.match_id)
+
+    let data = {
+      nomination_event: {
+        event_id: searchParams.get('event_id'),
+        nomination_id: searchParams.get('nomination_id')
+      },
+      match_id: match.match.match_id,
+      team1_score: team1Score,
+      team2_score: team2Score
+    }
+    
+    fetch(`${ApiPath}/match/set_group_match_result`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      credentials: 'include',
+      body: JSON.stringify(data)
+    })
+    .then((response) => {
+      if (response.ok) {
+        window.location.reload()
+      }
+      console.log(response)
+    })
+  }
 
   return (
     <>
