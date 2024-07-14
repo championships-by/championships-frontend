@@ -2,14 +2,13 @@ import React from 'react'
 import { Flex, Input, Typography } from 'antd'
 import { EyeInvisibleOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
+import './sass/auth.scss'
 
 const AuthPasswordInput = ({ value, onChange }) => {
   return (
     <FormItem
       name="Password"
-      style={{
-        width: 300,
-      }}
+      className="auth-password-input"
       hasFeedback
       validateFirst
       rules={[

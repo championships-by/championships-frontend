@@ -1,7 +1,8 @@
 import { Typography, Input, Flex } from 'antd'
 import FormItem from 'antd/es/form/FormItem'
+import './sass/events.scss'
 
-function EventName({ name }) {
+function EventPlace({ name }) {
   return (
     <FormItem
       name={name}
@@ -10,7 +11,7 @@ function EventName({ name }) {
       rules={[
         {
           required: true,
-          message: 'Пожалуйста введите название мероприятия',
+          message: 'Пожалуйста, введите место проведения мероприятия',
         },
         {
           max: 255,
@@ -23,16 +24,16 @@ function EventName({ name }) {
       ]}
     >
       <Flex vertical>
-        <Typography.Text>Название мероприятия</Typography.Text>
+        <Typography.Text>Место проведения мероприятия</Typography.Text>
         <Input
           allowClear
-          placeholder="Введите название мероприятия"
-          id="event_name_input"
+          placeholder="Введите место проведения мероприятия"
+          id="event_place_input"
           maxLength={255}
-          style={{ width: '100%' }}
+          className="events__event-place__input"
         />
       </Flex>
     </FormItem>
   )
 }
-export default EventName
+export default EventPlace

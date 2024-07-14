@@ -1,0 +1,73 @@
+.user {
+  &__email-input {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__formitem {
+      margin-bottom: 0px;
+    }
+  }
+  &__firstname-input {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__formitem {
+      margin-bottom: 0px;
+    }
+  }
+  &__lastname-input {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__formitem {
+      margin-bottom: 0px;
+    }
+  }
+  &__organization-input {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__formitem {
+      margin-bottom: 0px;
+    }
+  }
+  &__password-input {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__formitem {
+      margin-bottom: 0px;
+    }
+  }
+  &__patronymic-input {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__formitem {
+      margin-bottom: 0px;
+    }
+  }
+  &__phone-input {
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__formitem {
+      margin-bottom: 0px;
+    }
+  }
+  &__role-input {
+    &__space {
+      width: 100%;
+    }
+    &__flex {
+      margin-bottom: 24px;
+    }
+    &__input {
+      width: 38px;
+    }
+    &__formitem {
+      width: 100%;
+      margin-bottom: 0px;
+    }
+  }
+}

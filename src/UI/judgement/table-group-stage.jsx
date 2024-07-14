@@ -1,6 +1,7 @@
+/* eslint-disable prettier/prettier */
 import { Flex, Table, Tooltip } from 'antd'
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import {getGroupStageQueries} from './api/get-group-stage-queries'
 
 export default function TableGroupStage() {
   const [dataParticipant, setParticipant] = useState([])
@@ -49,7 +50,6 @@ export default function TableGroupStage() {
     },
   ]
 
-  const [searchParams] = useSearchParams()
   const getStats = (group) => {
     const teams = new Map()
 
@@ -120,7 +120,6 @@ export default function TableGroupStage() {
       }
       return first.name.localeCompare(second.name)
     })
-
     let get_score = new Map()
     group.matches.forEach((match) => {
       if (!get_score.has(match.team1.name)) {
@@ -144,21 +143,7 @@ export default function TableGroupStage() {
 
   useEffect(() => {
     ;(async () => {
-      const myHeaders = new Headers()
-      myHeaders.append('accept', 'application/json')
-      myHeaders.append('Content-Type', 'application/json')
-      const requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        body: null,
-        redirect: 'follow',
-        credentials: 'include',
-      }
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/match/get_group_matches?event_id=${searchParams.get('event_id')}&nomination_id=${searchParams.get('nomination_id')}`,
-        requestOptions
-      )
-      let responseJson = await response.json()
+      let responseJson = getGroupStageQueries()
       setParticipant(responseJson)
     })()
   }, [])

@@ -5,40 +5,32 @@ import FormItem from 'antd/es/form/FormItem'
 
 function ParticipantOrganizationInput({ name }) {
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
+    <FormItem
+      name={name}
+      hasFeedback
+      validateFirst
+      rules={[
+        {
+          required: true,
+          message: 'Пожалуйста, введите учереждение образования',
+        },
+        {
+          max: 255,
+          message: 'Максимальное значение 255',
+        },
+      ]}
     >
-      <Typography.Text>Учреждение образования</Typography.Text>
-      <FormItem
-        name={name}
-        hasFeedback
-        validateFirst
-        rules={[
-          {
-            required: true,
-            message: 'Пожалуйста, введите учереждение образования',
-          },
-          {
-            max: 255,
-            message: 'Максимальное значение 255',
-          },
-        ]}
-        style={{
-          marginBottom: '0px',
-        }}
-      >
+      <Flex vertical>
+        <Typography.Text>Учреждение образования</Typography.Text>
         <Input
           prefix={<BankOutlined />}
           placeholder="Введите учреждение образования"
         />
-      </FormItem>
-      <Typography.Text type="secondary">
-        Пример: ГУО "Гимназия-колледж искусств"
-      </Typography.Text>
-    </Flex>
+        <Typography.Text type="secondary">
+          Пример: ГУО "Гимназия-колледж искусств"
+        </Typography.Text>
+      </Flex>
+    </FormItem>
   )
 }
 

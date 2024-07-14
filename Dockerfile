@@ -1,5 +1,12 @@
-FROM node:20 as build
-WORKDIR /app
+FROM node:20-alpine
+
+ENV API_PATH=
+
+WORKDIR /usr/src/app
+
+COPY package.json .
+COPY package-lock.json .
+
+RUN npm install
 COPY . .
-RUN npm i
-CMD ['npm', 'run', 'build:prod']
+CMD ["npm", "run", "build:prod"]

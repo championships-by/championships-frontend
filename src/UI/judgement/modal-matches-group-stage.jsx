@@ -2,9 +2,8 @@
 import { Modal, Button, Flex, Table, InputNumber } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { sendMatchResult } from './api/get-group-stage-queries'
 
-import ApiPath from '../../components/enums'
 
 function ModalGroupStage(match) {
   const [visible, setVisible] = useState(false)
@@ -48,7 +47,7 @@ function ModalGroupStage(match) {
   }
 
   const handleOk = () => {
-    sendMatchResult()
+    sendMatchResult(team1Score,team2Score,match)
     setVisible(false)
   }
   const handleCancel = () => {
@@ -64,41 +63,6 @@ function ModalGroupStage(match) {
 
     if (key === 1)
       setTeam2Score(score)
-  }
-
-  const [searchParams] = useSearchParams()
-
-  const sendMatchResult = () => {
-    
-    console.log(searchParams.get('event_id'))
-    console.log(searchParams.get('nomination_id'))
-    console.log(match.match.match_id)
-
-    let data = {
-      nomination_event: {
-        event_id: searchParams.get('event_id'),
-        nomination_id: searchParams.get('nomination_id')
-      },
-      match_id: match.match.match_id,
-      team1_score: team1Score,
-      team2_score: team2Score
-    }
-    
-    fetch(`${ApiPath}/match/set_group_match_result`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      redirect: 'follow',
-      credentials: 'include',
-      body: JSON.stringify(data)
-    })
-    .then((response) => {
-      if (response.ok) {
-        window.location.reload()
-      }
-      console.log(response)
-    })
   }
 
   return (

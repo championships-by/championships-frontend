@@ -2,28 +2,22 @@ import React from 'react'
 import FormItem from 'antd/es/form/FormItem'
 import { Select, Flex, Input, Space, Typography } from 'antd'
 import { FlagOutlined } from '@ant-design/icons'
+import './sass/participant.scss'
 
 function ParticipantCompitationSelect({ name }) {
   return (
-    <div style={{ marginBottom: '24px' }}>
+    <div className="participant__compitation-select__div">
       <Typography.Text>Компетенция</Typography.Text>
       <Flex>
-        <Space.Compact
-          style={{
-            width: '100%',
-          }}
-        >
+        <Space.Compact className="participant__compitation-select__space">
           <Input
             prefix={<FlagOutlined />}
-            style={{ width: '38px', height: '32px', border: 'none' }}
+            className="participant__compitation-select__input"
             disabled
           />
           <FormItem
             name={name}
-            style={{
-              width: '100%',
-              marginBottom: '0px',
-            }}
+            className="participant__compitation-select__formitem"
             hasFeedback
             validateFirst
             // rules={[
@@ -35,6 +29,7 @@ function ParticipantCompitationSelect({ name }) {
           >
             <Select
               // disabled={disabled}
+              className="participant__compitation-select__select"
               id="user_compitation_select"
               placeholder="Выберите компетенцию"
               options={[

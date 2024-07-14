@@ -1,13 +1,11 @@
 /* eslint-disable prettier/prettier */
-import { Card,  Tooltip, Table, ConfigProvider, Row, Col } from 'antd'
-import { useEffect, useState} from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Card, Tooltip, Table, ConfigProvider, Row, Col } from 'antd'
+import { useEffect, useState } from 'react'
 import ModalGroupStage from './modal-matches-group-stage'
+import {getGroupStageQueries} from './api/get-group-stage-queries'
 
 function MatchesGroupStage() {
   const [dataMatches, setMatches] = useState([])
-
-
   const getMatches = (dataMatches) => {
     let result = []
     let matchNumber = 1
@@ -16,55 +14,31 @@ function MatchesGroupStage() {
         console.log(match)
         match.team1 = match.team1?.name
         match.team2 = match.team2?.name
-        const { team1, team2, match_id, team1_score,team2_score } = match
-        var team = { team1, team2, matchNumber,team1_score, team2_score,match_id }
-        if (team.team1 === undefined) {
-          team.team1 = 'Отсутствует'
-        } else if (team.team2 === undefined) {
-          team.team2 = 'Отсутствует'
-        }
+        const { team1, team2, match_id, team1_score, team2_score } = match
+        var team = { team1, team2, matchNumber, team1_score, team2_score, match_id }
         result.push(team)
         matchNumber++
       })
     })
-    
     return result
   }
-
   let data = getMatches(dataMatches)
-  const [searchParams] = useSearchParams()
 
   useEffect(() => {
     ;(async () => {
-      const myHeaders = new Headers()
-      myHeaders.append('accept', 'application/json')
-      myHeaders.append('Content-Type', 'application/json')
-      const requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        body: null,
-        redirect: 'follow',
-        credentials: 'include',
-      }
-      const response = await fetch(
-        `http://127.0.0.1:8000/api/match/get_group_matches?event_id=${searchParams.get('event_id')}&nomination_id=${searchParams.get('nomination_id')}`,
-        requestOptions
-      )
-      let responseJson = await response.json()
-
+      let responseJson = getGroupStageQueries()
       setMatches(responseJson)
-      console.log(responseJson)
     })()
   }, [])
 
  
-  const MatchCard = ( {match} ) => {
+  const MatchCard = (match) => {
     let columns = [
       {
         title: <Tooltip title="Команды">Команды</Tooltip>,
         key: 'team1',
         render: (record) => (
-          <div style={{alignItems: 'center' }}>
+          <div className="showTeams">
             <div>{record?.team1} </div>
             <div>{record?.team2} </div>
           </div>

@@ -47,15 +47,13 @@ function UserModal({ isOpen, onOk, onCancel }) {
       redirect: 'follow',
       credentials: 'include',
     }
-    await fetch(`${ApiPath}/user/create_user`, requestOptions)
+    await fetch(`${API_PATH}/user/create_user`, requestOptions)
   }
 
   return (
     <Modal
       title="Настройка пользователя"
-      style={{
-        top: 20,
-      }}
+      className="user-control__modal"
       open={isOpen}
       onOk={onOk}
       onCancel={onCancel}

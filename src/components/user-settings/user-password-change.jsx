@@ -1,7 +1,8 @@
-import { EyeInvisibleOutlined, LockOutlined } from '@ant-design/icons'
-import { Button, Input, Modal, Flex, message, Form } from 'antd'
+import { Button, Modal, Flex, message, Form } from 'antd'
 import { useState } from 'react'
-import FormItem from 'antd/es/form/FormItem'
+import OldPassword from '@src/UI/user/password-change/old-password'
+import NewPassword from '@src/UI/user/password-change/new-password'
+import SecondNewPassword from '@src/UI/user/password-change/second-new-password'
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false)
@@ -19,9 +20,7 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
   return (
     <Modal
       title="Добавить участника"
-      style={{
-        top: 20,
-      }}
+      className="user-settings__password-change-modal"
       open={isOpen}
       onOk={onOk}
       onCancel={onCancel}
@@ -34,79 +33,9 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <FormItem
-          name="OldPassword"
-          hasFeedback
-          validateFirst
-          rules={[
-            {
-              required: true,
-              message: 'Пожалуйста введите свой пароль',
-            },
-            {
-              min: 8,
-              message: 'Минимальная длина пароля - 8 символов',
-            },
-          ]}
-          style={{
-            marginBottom: '0px',
-          }}
-        >
-          <Input.Password
-            prefix={<LockOutlined />}
-            placeholder="Введите старый Пароль"
-            iconRender={() => <EyeInvisibleOutlined />}
-          />
-        </FormItem>
-        <FormItem
-          name="NewPassword"
-          hasFeedback
-          validateFirst
-          rules={[
-            {
-              required: true,
-              message: 'Пожалуйста введите пароль',
-            },
-            {
-              min: 8,
-              message: 'Минимальная длина пароля - 8 символов',
-            },
-          ]}
-          style={{
-            marginBottom: '0px',
-          }}
-        >
-          <Input.Password
-            prefix={<LockOutlined />}
-            placeholder="Введите новый пароль"
-            iconRender={() => <EyeInvisibleOutlined />}
-          />
-        </FormItem>
-
-        <FormItem
-          name="SecondNewPassword"
-          hasFeedback
-          validateFirst
-          rules={[
-            {
-              required: true,
-              message: 'Пожалуйста введите пароль',
-            },
-            {
-              min: 8,
-              message: 'Минимальная длина пароля - 8 символов',
-            },
-          ]}
-          style={{
-            marginBottom: '0px',
-          }}
-        >
-          <Input.Password
-            prefix={<LockOutlined />}
-            placeholder="Повторите новый пароль"
-            iconRender={() => <EyeInvisibleOutlined />}
-          />
-        </FormItem>
+        <OldPassword name="OldPassword" />
+        <NewPassword name="NewPassword" />
+        <SecondNewPassword name="SecondNewPassword" />
 
         <Flex gap="middle">
           <Button

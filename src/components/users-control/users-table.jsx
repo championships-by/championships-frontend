@@ -29,8 +29,7 @@ function UsersTable({ usersData }) {
   // 	redirect: "follow",
   // 	credentials: 'include',
   // 	};
-  // 	console.log(document.getElementById("user_role_select"))
-  //     await fetch(`${ApiPath}/user/delete`, requestOptions)
+  //     await fetch(`${API_PATH}/user/delete`, requestOptions)
   // }
 
   const deleteUserConfirm = () => {
@@ -67,7 +66,16 @@ function UsersTable({ usersData }) {
     {
       title: 'Роль',
       key: 'role',
-      dataIndex: 'role',
+      render: (_, { role }) =>
+        role === 'admin' ? (
+          <Typography.Text>Админ</Typography.Text>
+        ) : role === 'judge' ? (
+          <Typography.Text>Судейство</Typography.Text>
+        ) : role === 'specialist' ? (
+          <Typography.Text>Специалист</Typography.Text>
+        ) : (
+          <Typography.Text></Typography.Text>
+        ),
     },
     {
       title: 'Действия',

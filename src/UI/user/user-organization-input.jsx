@@ -2,23 +2,17 @@ import React from 'react'
 import { Flex, Input, Typography } from 'antd'
 import { BankOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
+import './sass/user.scss'
 
 function UserOrganizationInput({ name }) {
   return (
-    <Flex
-      vertical
-      style={{
-        marginBottom: '24px',
-      }}
-    >
+    <Flex vertical className="user__organization-input__flex">
       <Typography.Text>Учреждение образования</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
         validateFirst
-        style={{
-          marginBottom: '0px',
-        }}
+        className="user__organization-input__formitem"
       >
         <Input
           prefix={<BankOutlined />}

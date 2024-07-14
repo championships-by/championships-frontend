@@ -1,49 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Card, List, Modal, Tooltip, Typography } from 'antd'
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  DeleteOutlined,
-} from '@ant-design/icons'
+import { Card, List, Tooltip, Typography } from 'antd'
+import { EditOutlined, EllipsisOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
+import { ROUTES } from '@components/enums'
+
 const EventsList = ({ events }) => {
   const data = events.map((event, index) => {
-    const delete_user_request = async () => {
-      const myHeaders = new Headers()
-      myHeaders.append('accept', 'application/json')
-      myHeaders.append('Content-Type', 'application/json')
-
-      const raw = JSON.stringify({
-        name: event.name,
-      })
-
-      const requestOptions = {
-        method: 'DELETE',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow',
-        credentials: 'include',
-      }
-
-      await fetch(`${ApiPath}/event/event`, requestOptions)
-    }
     const navigate = useNavigate()
-    const deleteEventConfirm = () => {
-      Modal.confirm({
-        title: 'Вы уверены?',
-        content: 'Вы уверены, что хотите удалить это мероприятие?',
-        footer: (_, { OkBtn, CancelBtn }) => (
-          <>
-            <OkBtn />
-            <CancelBtn />
-          </>
-        ),
-        onOk: () => delete_user_request(),
-        okText: 'Да',
-        cancelText: 'Отмена',
-      })
-    }
     return (
       <Card
         key={index}
@@ -55,17 +19,19 @@ const EventsList = ({ events }) => {
           />
         }
         actions={[
-          <Tooltip title="Редактировать мероприятие">
+          <Tooltip title={ROUTES.EVENTS_REGISTRATION.TITLE}>
             <EditOutlined
               key="edit"
-              onClick={() => navigate('/admin/events/settings')}
+              onClick={() =>
+                navigate(ROUTES.EVENTS_REGISTRATION.PATH(event.id))
+              }
             />
           </Tooltip>,
-          <Tooltip title="Удалить мероприятие">
-            <DeleteOutlined key="delete" onClick={() => deleteEventConfirm()} />
-          </Tooltip>,
-          <Tooltip title="Перейти к мероприятию">
-            <EllipsisOutlined key="ellipsis" />
+          <Tooltip title={ROUTES.EVENTS_DESCRIPTION.TITLE}>
+            <EllipsisOutlined
+              key="description"
+              onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
+            />
           </Tooltip>,
         ]}
         title={<Typography.Title level={2}>{event.name}</Typography.Title>}
@@ -76,6 +42,9 @@ const EventsList = ({ events }) => {
         }
       >
         <List
+          locale={{
+            emptyText: 'Компетенции пока отсутствуют',
+          }}
           size="small"
           header={<Typography.Text>Компетенции: </Typography.Text>}
           footer={
@@ -104,9 +73,7 @@ const EventsList = ({ events }) => {
       locale={{
         emptyText: 'Мероприятия отсутствуют',
       }}
-      style={{
-        width: '100%',
-      }}
+      className="events__list"
     />
   )
 }
