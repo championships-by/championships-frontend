@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Flex, Table, Tooltip } from 'antd'
 import { useState, useEffect,useSearchParams } from 'react'
 import {getGroupStageQueries} from './api/get-group-stage-queries'
@@ -144,21 +143,7 @@ export default function TableGroupStage() {
   const [searchParams] = useSearchParams()
   useEffect(() => {
     ;(async () => {
-      const myHeaders = new Headers()
-      myHeaders.append('accept', 'application/json')
-      myHeaders.append('Content-Type', 'application/json')
-      const requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        body: null,
-        redirect: 'follow',
-        credentials: 'include',
-      }
-      const response = await fetch(
-        `${API_PATH}/api/match/get_group_matches?event_id=${searchParams.get('event_id')}&nomination_id=${searchParams.get('nomination_id')}`,
-        requestOptions
-      )
-      let responseJson = await response.json()
+      let responseJson = getGroupStageQueries()
       setParticipant(responseJson)
     })()
   }, [])

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Card, Tooltip, Table, ConfigProvider, Row, Col } from 'antd'
 import { useEffect, useState, useSearchParams } from 'react'
 import ModalGroupStage from './modal-matches-group-stage'
@@ -24,25 +23,10 @@ function MatchesGroupStage() {
   }
   let data = getMatches(dataMatches)
 
-  const [searchParams] = useSearchParams()
 
   useEffect(() => {
-    ;(async () => {
-      const myHeaders = new Headers()
-      myHeaders.append('accept', 'application/json')
-      myHeaders.append('Content-Type', 'application/json')
-      const requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        body: null,
-        redirect: 'follow',
-        credentials: 'include',
-      }
-      const response = await fetch(
-        `${API_PATH}/api/match/get_group_matches?event_id=${searchParams.get('event_id')}&nomination_id=${searchParams.get('nomination_id')}`,
-        requestOptions
-      )
-      let responseJson = await response.json()
+    ;(async () => {      
+      let responseJson = getGroupStageQueries()
       setMatches(responseJson)
     })()
   }, [])
