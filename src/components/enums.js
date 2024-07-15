@@ -43,7 +43,7 @@ export const ROUTES = {
   },
   JUDGMENT_GROUP_STAGE: {
     TITLE: 'Групповой этап',
-    PATH: (event_id, nomination_id) => `judgment/${event_id}/${nomination_id}`,
+    PATH: (event_id, nomination_id) => `/judgment/${event_id}/${nomination_id}`,
   },
 }
 

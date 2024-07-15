@@ -55,7 +55,7 @@ const App = () => {
               />
               <Route
                 path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
-                element={<GroupStage/>}
+                element={<GroupStage />}
               />
               <Route
                 path={ROUTER_ROUTES.JUDGMENT_EVENT_SETTINGS}

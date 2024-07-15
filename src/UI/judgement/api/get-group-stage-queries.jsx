@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useSearchParams } from 'react-router-dom'
  export async function getGroupStageQueries(){
     const [searchParams] = useSearchParams()
