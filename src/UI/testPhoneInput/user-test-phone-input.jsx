@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import { Flex, Input, Typography } from 'antd';
 import { PhoneOutlined } from '@ant-design/icons';

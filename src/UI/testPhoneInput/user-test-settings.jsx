@@ -13,7 +13,7 @@ import Loader from '@components/loader/loader'
 import UserPasswordModal from './user-password-change'
 import ApiPath from '@components/enums.js'
 
-// Мой тестовый импорт
+
 import UserTestPhoneInput from '../testPhoneInput/user-test-phone-input'
 
 function UsersTestSettings() {
