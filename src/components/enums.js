@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export const FILE_UPLOADING = {
   UPLOADING: 'uploading',
   DONE: 'done',
@@ -40,6 +41,10 @@ export const ROUTES = {
     TITLE: 'Редактрирование мероприятия',
     PATH: (eventID) => `/judgment/events/${eventID}/settings`,
   },
+  JUDGMENT_TIME_MATCHES: {
+    TITLE: 'Матчи на время',
+    PATH: 'judgment/matches',
+  },
 }
 
 export const ROUTER_ROUTES = {
@@ -57,6 +62,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT: 'judgment/events',
   JUDGMENT_CREATE: 'create',
   JUDGMENT_EVENT_SETTINGS: ':eventID/settings',
+  JUDGMENT_TIME_MATCHES: 'matches',
 }
 
 export const Locale = {
