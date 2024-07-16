@@ -40,6 +40,14 @@ export const ROUTES = {
     TITLE: 'Редактрирование мероприятия',
     PATH: (eventID) => `/judgment/events/${eventID}/settings`,
   },
+  JUDGMENT_GROUP_STAGE: {
+    TITLE: 'Групповой этап',
+    PATH: (event_id, nomination_id) => `/judgment/${event_id}/${nomination_id}`,
+  },
+  JUDGMENT_TIME_MATHCES: {
+    TITLE: 'Матчи на время',
+    PATH: (event_id, nomination_id) => `/test/${event_id}/${nomination_id}`,
+  },
 }
 
 export const ROUTER_ROUTES = {
@@ -57,6 +65,8 @@ export const ROUTER_ROUTES = {
   JUDGMENT: 'judgment/events',
   JUDGMENT_CREATE: 'create',
   JUDGMENT_EVENT_SETTINGS: ':eventID/settings',
+  JUDGMENT_GROUP_STAGE: 'judgment/:event_id/:nomination_id',
+  JUDGMENT_TIME_MATCHES: 'test/:event_id/:nomination_id',
 }
 
 export const Locale = {
