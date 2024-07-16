@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ROUTER_ROUTES } from '@src/components/enums'
 import AdminPanel from '@components/admin-panel/admin-panel'
@@ -13,6 +14,7 @@ import Logout from '@components/logout/logout'
 import Judgment from '@components/judgment/events/judgment-events'
 import Unauthorized from '@components/unauthorized/unauthorized'
 import GroupStage from '@components/judgment/group-stage/group-stage'
+import TimeMatches from '@components/judgment/time-matches/time-matches'
 
 const App = () => {
   return (
@@ -51,6 +53,10 @@ const App = () => {
               path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
               element={<GroupStage />}
             />
+            <Route
+              path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
+              element={<TimeMatches />}
+              />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />
               <Route
