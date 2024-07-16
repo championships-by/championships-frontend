@@ -1,6 +1,7 @@
+import { Tabs } from 'antd'
 import TableGroupStage from './table-group-stage'
 import MatchGroupStage from './matches-group-stage'
-import Tabs from 'antd'
+import './sass/groupStage.scss'
 
 const items = [
   {

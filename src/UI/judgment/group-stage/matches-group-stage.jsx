@@ -1,7 +1,11 @@
 import { Card, Tooltip, Table, ConfigProvider, Row, Col } from 'antd'
-import { useEffect, useState, useSearchParams } from 'react'
+import { useEffect, useState} from 'react'
+import { useParams } from 'react-router-dom'
 import ModalGroupStage from './modal-matches-group-stage'
-import {getGroupStageQueries} from './api/get-group-stage-queries'
+import  Queries  from './api/Queries'
+import './sass/groupStage.scss'
+
+
 
 function MatchesGroupStage() {
   const [dataMatches, setMatches] = useState([])
@@ -10,7 +14,6 @@ function MatchesGroupStage() {
     let matchNumber = 1
     dataMatches?.map((group) => {
       group?.matches.map((match) => {
-        console.log(match)
         match.team1 = match.team1?.name
         match.team2 = match.team2?.name
         const { team1, team2, match_id, team1_score, team2_score } = match
@@ -21,18 +24,20 @@ function MatchesGroupStage() {
     })
     return result
   }
+
   let data = getMatches(dataMatches)
 
-
+  
+  const {event_id,nomination_id} = useParams()
   useEffect(() => {
-    ;(async () => {      
-      let responseJson = getGroupStageQueries()
+    ;(async () => {
+      let responseJson = await Queries.getMatches(event_id,nomination_id)
       setMatches(responseJson)
     })()
   }, [])
 
  
-  const MatchCard = (match) => {
+  const MatchCard = ({match}) => {
     let columns = [
       {
         title: <Tooltip title="Команды">Команды</Tooltip>,
@@ -69,22 +74,18 @@ function MatchesGroupStage() {
         },
       }}
       >
-        <Card  title={`Матч ${match.matchNumber}`} style={{width: '100%'
-       }}>
+        <Card  className= 'getMatches' title={`Матч ${match.matchNumber}`}>
         <Table
           columns={columns}
           dataSource={[match]}
-          pagination={false}
-          style={{
-            width: '100%',
-          }}  
+          pagination={false}  
         />
       </Card>
       </ConfigProvider>
     )
   }
   return (
-    <Row gutter={[16, 16]} style={{ maxWidth: '100vw', overflowX: 'auto', overflowY: 'auto'}}>
+    <Row className='matchRow' gutter={[16, 16]} style={{ maxWidth: '100vw', overflowX: 'auto', overflowY: 'auto'}}>
       {data.map((match, index) => (
         <Col key={index} span={8} style={{ minWidth: '200px' }}>
           <MatchCard match={match} />

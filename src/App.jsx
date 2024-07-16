@@ -12,7 +12,7 @@ import Auth from '@components/auth/auth'
 import Logout from '@components/logout/logout'
 import Judgment from '@components/judgment/events/judgment-events'
 import Unauthorized from '@components/unauthorized/unauthorized'
-import GroupStage from '@components/judgement/group-stage'
+import GroupStage from '@components/judgment/group-stage/group-stage'
 
 const App = () => {
   return (
@@ -47,15 +47,15 @@ const App = () => {
                 element={<EventsRegistration />}
               />
             </Route>
+            <Route
+              path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
+              element={<GroupStage />}
+            />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />
               <Route
                 path={ROUTER_ROUTES.JUDGMENT_CREATE}
                 element={<EventSettings />}
-              />
-              <Route
-                path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
-                element={<GroupStage />}
               />
               <Route
                 path={ROUTER_ROUTES.JUDGMENT_EVENT_SETTINGS}

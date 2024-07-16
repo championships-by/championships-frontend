@@ -1,7 +1,9 @@
 import { Modal, Button, Flex, Table, InputNumber } from 'antd'
 import { EditOutlined } from '@ant-design/icons'
-import { useState} from 'react'
-import { sendMatchResult } from './api/get-group-stage-queries'
+import { useState } from 'react'
+import { useParams } from 'react-router-dom' 
+import './sass/groupStage.scss'
+
 
 
 function ModalGroupStage(match) {
@@ -62,6 +64,34 @@ function ModalGroupStage(match) {
 
     if (key === 1)
       setTeam2Score(score)
+  }
+
+  const {event_id,nomination_id} = useParams()
+  const sendMatchResult = () => {
+    let data = {
+      nomination_event: {
+        event_id: event_id,
+        nomination_id: nomination_id
+      },
+      match_id: match.match.match_id,
+      team1_score: team1Score,
+      team2_score: team2Score
+    }
+
+    fetch(`${API_PATH}/match/set_group_match_result`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      credentials: 'include',
+      body: JSON.stringify(data)
+    })
+    .then((response) => {
+      if (response.ok) {
+        window.location.reload()
+      }
+    })
   }
 
   return (

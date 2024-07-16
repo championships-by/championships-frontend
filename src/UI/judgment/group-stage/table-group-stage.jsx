@@ -1,6 +1,9 @@
 import { Flex, Table, Tooltip } from 'antd'
-import { useState, useEffect,useSearchParams } from 'react'
-import {getGroupStageQueries} from './api/get-group-stage-queries'
+import { useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom'
+import  Queries  from './api/Queries'
+import './sass/groupStage.scss'
+
 
 export default function TableGroupStage() {
   const [dataParticipant, setParticipant] = useState([])
@@ -133,17 +136,17 @@ export default function TableGroupStage() {
     })
     result.forEach((team, index) => {
       team.place = index + 1
-      console.log(team.name, get_score.get(team.name))
       team.get_score = get_score.get(team.name)
     })
 
     return result
   }
 
-  const [searchParams] = useSearchParams()
+  const {event_id,nomination_id} = useParams()
+
   useEffect(() => {
     ;(async () => {
-      let responseJson = getGroupStageQueries()
+      let responseJson = await Queries.getMatches(event_id,nomination_id)
       setParticipant(responseJson)
     })()
   }, [])
