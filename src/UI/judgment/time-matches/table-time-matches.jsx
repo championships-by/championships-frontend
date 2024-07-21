@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { Table, Tooltip, Flex, TimePicker } from 'antd'
-import './sass/time-matches.module.scss'
+import { Table, Tooltip, Flex, TimePicker, Button} from 'antd'
+import './sass/time-matches.scss'
+
 
 function TableTimeMatches(){
+
     const columns = [
         {
             title: <Tooltip title="Место">Место</Tooltip>,
@@ -41,9 +43,12 @@ function TableTimeMatches(){
         {
             place: '1',
             participants: 'Иванов Иван Иванович',
-            first_attempt: <TimePicker></TimePicker>,
-            second_attempt: <TimePicker></TimePicker>,
-            third_attempt: <TimePicker></TimePicker>,
+            first_attempt: <TimePicker
+                            format={"mm:ss.SSS"}></TimePicker>,
+            second_attempt: <TimePicker
+                            format={"mm:ss.SSS"}></TimePicker>,
+            third_attempt: <TimePicker
+                            format={"mm:ss.SSS"}></TimePicker>,
             best_attempt: '2:49:35'
         }
     ]
@@ -51,6 +56,7 @@ function TableTimeMatches(){
 
 
     return (
+       <>
         <Flex vertical gap="large">
             <Table
             pagination={false}
@@ -58,6 +64,8 @@ function TableTimeMatches(){
             dataSource={data}
             />
         </Flex>
+        <Button style={{margin: "10px 0px 10px 0px" }}className="endStage" type="primary">Завершить этап</Button>
+       </>
     )
 }
 

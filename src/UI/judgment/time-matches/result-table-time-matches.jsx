@@ -2,7 +2,7 @@
 import GoldMedal from '@src/assets/img/gold-medal.png';
 import SilverMedal from '@src/assets/img/silver-medal.png';
 import BronzeMedal from '@src/assets/img/bronze-medal.png';
-import { Table, Tooltip, Flex } from 'antd';
+import { Table, Tooltip, Flex, Button } from 'antd';
 
 function ResultTableTimeMatches() {
   const columns = [
@@ -47,30 +47,33 @@ function ResultTableTimeMatches() {
       place: '1',
       participants: 'Иванов Иван Иванович',
       best_attempt: '2:49:35',
-      medal: GoldMedal,
+      
     },
     {
       place: '2',
       participants: 'Егоров Егор Егорович',
       best_attempt: '2:41:30',
-      medal: SilverMedal,
+      
     },
     {
       place: '3',
       participants: 'Кириллов Кирилл Кириллович',
       best_attempt: '2:40:12',
-      medal: BronzeMedal,
+      
     },
   ];
 
   return (
-    <Flex vertical gap="large">
+    <>
+      <Flex vertical gap="large">
       <Table
         pagination={false}
         columns={columns}
         dataSource={data}
       />
-    </Flex>
+      </Flex>
+      <Button style={{margin: "10px 0px 10px 0px"}} type="primary">Итоговый протокол</Button>
+    </>
   );
 }
 export default ResultTableTimeMatches
