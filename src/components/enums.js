@@ -48,6 +48,10 @@ export const ROUTES = {
     TITLE: 'Матчи на время',
     PATH: (event_id, nomination_id) => `/test/${event_id}/${nomination_id}`,
   },
+  JUDGMENT_COMPETENCIES: {
+    TITLE: 'Компетенции по критериям',
+    PATH: 'judgment/competencies',
+  },
 }
 
 export const ROUTER_ROUTES = {
@@ -67,6 +71,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_EVENT_SETTINGS: ':eventID/settings',
   JUDGMENT_GROUP_STAGE: 'judgment/:event_id/:nomination_id',
   JUDGMENT_TIME_MATCHES: 'test/:event_id/:nomination_id',
+  JUDGMENT_COMPETENCIES: 'judgment/competencies',
 }
 
 export const Locale = {
