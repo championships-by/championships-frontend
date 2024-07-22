@@ -2,9 +2,9 @@
 import GoldMedal from '@src/assets/img/gold-medal.png';
 import SilverMedal from '@src/assets/img/silver-medal.png';
 import BronzeMedal from '@src/assets/img/bronze-medal.png';
-import { Table, Tooltip, Flex, Button } from 'antd';
+import { Table, Tooltip, Flex} from 'antd';
 
-function ResultTableTimeMatches() {
+function CompetenciesResult() {
   const columns = [
     {
       title: <Tooltip></Tooltip>,
@@ -76,4 +76,4 @@ function ResultTableTimeMatches() {
     </>
   );
 }
-export default ResultTableTimeMatches
+export default CompetenciesResult

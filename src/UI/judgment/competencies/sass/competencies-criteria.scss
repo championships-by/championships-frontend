@@ -1,0 +1,9 @@
+.rotate{
+   
+    transform: rotate(270deg);
+    display: inline-block;
+    overflow: hidden;        // Скрывает переполнение
+    text-overflow: ellipsis; // Добавляет многоточие в конце
+    // white-space: nowrap;     // Запрещает перенос текста
+    max-width: 20px;   
+}

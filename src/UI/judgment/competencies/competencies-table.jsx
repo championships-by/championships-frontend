@@ -1,24 +1,26 @@
 /* eslint-disable prettier/prettier */
-import { Flex, Tooltip, Table } from "antd"
+import { Flex, Tooltip, Table, Button } from "antd"
+import './sass/competencies-criteria.scss'
 
 let columns = [
     {
         title: <Tooltip title="Компетенции"></Tooltip>,
         dataIndex: 'competencies',
-        key: 'competencies'
+        key: 'competencies',
+        
     },
     {
-        title: <Tooltip title="Первый участник">Иванов</Tooltip>,
+        title: <div className="rotate">Иванов Иван</div>,
         dataIndex: 'first_participant',
         key: 'first_participant'
     },
     {
-        title: <Tooltip title="Второй участник">Петров</Tooltip>,
+        title: <div className="rotate">Петров Петр</div>,
         dataIndex: 'second_participant',
         key: 'second_participant'
     },
     {
-        title: <Tooltip title="Третий участник">Сидоров</Tooltip>,
+        title: <div className="rotate">Сидоров Сидр</div>,
         dataIndex: 'third_participant',
         key: 'third_participant'
     }
@@ -53,13 +55,17 @@ let data = [
 ]
 function CompetenciesTable(){
     return (
-        <Flex vertical gap="large">
+        <>
+            <Flex vertical gap="large">
             <Table
+                className="table"
                 columns={columns}
                 dataSource={data}
                 pagination={false}
             />
         </Flex>
+        <Button type="primary">Завершить этап</Button>
+        </>
     )
 }
 
