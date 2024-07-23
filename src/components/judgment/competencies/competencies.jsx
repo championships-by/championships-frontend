@@ -1,7 +1,12 @@
+import {Button} from 'antd'
 import CompetenciesTab from '../../../UI/judgment/competencies/competencies-tab'
 function Competencies() {
     return (
-        <CompetenciesTab/>
+        <>
+            <Button type="primary">Завершить этап</Button>
+            <CompetenciesTab/>
+        </>
+      
     )
 }
 

@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
-import { Flex, Tooltip, Table, Button } from "antd"
+import { Flex, Tooltip, Table, Button, InputNumber } from "antd"
+import { useEffect, useState } from 'react'
 import './sass/competencies-criteria.scss'
+import { getCompetencies } from "./api/api"
 
 let columns = [
     {
@@ -30,30 +32,37 @@ let columns = [
 let data = [
     {
         competencies: 'Компетенция №1',
-        first_participant: '5/10',
-        second_participant: '6/10',
-        third_participant: '7/10',
+        first_participant: <InputNumber></InputNumber>,
+        second_participant: <InputNumber></InputNumber>,
+        third_participant: <InputNumber></InputNumber>,
     },
     {
         competencies: 'Компетенция №2',
-        first_participant: '7/10',
-        second_participant: '8/10',
-        third_participant: '3/10',
+        first_participant: <InputNumber></InputNumber>,
+        second_participant: <InputNumber></InputNumber>,
+        third_participant: <InputNumber></InputNumber>,
     },
     {
         competencies: 'Компетенция №3',
-        first_participant: '4/10',
-        second_participant: '2/10',
-        third_participant: '9/10',
+        first_participant: <InputNumber></InputNumber>,
+        second_participant: <InputNumber></InputNumber>,
+        third_participant: <InputNumber></InputNumber>,
     },
     {
-        competencies: 'Сумма баллов',
-        first_participant: '12',
-        second_participant: '13',
-        third_participant: '15',
+        competencies: 'Компетенция №4',
+        first_participant: <InputNumber></InputNumber>,
+        second_participant: <InputNumber></InputNumber>,
+        third_participant: <InputNumber></InputNumber>,
     }
 ]
 function CompetenciesTable(){
+    const [competencies,setCompetencies] = useState([])
+    useEffect(() => {
+        ;(async () => {
+          let response = await getCompetencies()
+          setCompetencies(response)
+        })()
+      }, [])
     return (
         <>
             <Flex vertical gap="large">
@@ -63,8 +72,8 @@ function CompetenciesTable(){
                 dataSource={data}
                 pagination={false}
             />
-        </Flex>
-        <Button type="primary">Завершить этап</Button>
+            </Flex>
+            
         </>
     )
 }
