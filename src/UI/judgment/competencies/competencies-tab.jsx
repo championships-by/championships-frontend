@@ -1,4 +1,6 @@
-import { Tabs } from 'antd'
+/* eslint-disable prettier/prettier */
+import React,{useState} from 'react'
+import { Tabs, Button } from 'antd'
 import CompetenciesTable from './competencies-table'
 import CompetenciesResult from './competencies-result'
 
@@ -6,7 +8,8 @@ const items = [
     {
         key: '1',
         label: 'Таблица',
-        children: <CompetenciesTable />
+        children: <CompetenciesTable/> 
+        
         
     },
     {
@@ -17,8 +20,31 @@ const items = [
     }
 ]
 function CompetenciesTab(){
+    const [activeKey, setActiveKey] = useState('1'); // Состояние для отслеживания активной вкладки
+
+    const onChange = (key) => {
+      setActiveKey(key); // Обновляем активную вкладку
+    };
     return (
-        <Tabs defaultActiveKey="1" items={items}/>
+        <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Tabs
+            defaultActiveKey="1"
+            items={items}
+            activeKey={activeKey}
+            onChange={onChange}
+            style={{ flex: 3 }}
+          />
+          {activeKey === '1' && ( // Условный рендеринг кнопки
+            <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+              <Button type="primary">
+                Завершить этап
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+        
     )
 }
 

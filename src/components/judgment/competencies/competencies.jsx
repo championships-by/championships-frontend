@@ -3,8 +3,8 @@ import CompetenciesTab from '../../../UI/judgment/competencies/competencies-tab'
 function Competencies() {
     return (
         <>
-            <Button type="primary">Завершить этап</Button>
-            <CompetenciesTab/>
+            <div className='tabs-container'><CompetenciesTab/></div>
+           
         </>
       
     )

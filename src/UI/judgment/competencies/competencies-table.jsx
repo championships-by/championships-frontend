@@ -4,11 +4,20 @@ import { useEffect, useState } from 'react'
 import './sass/competencies-criteria.scss'
 import { getCompetencies } from "./api/api"
 
+function limitStringLength(str){
+    let maxLength = 50
+    if(str.length > maxLength){
+        return str.slice(0,maxLength - 3) + '...'
+    }
+    return str;
+
+}
 let columns = [
     {
         title: <Tooltip title="Компетенции"></Tooltip>,
         dataIndex: 'competencies',
         key: 'competencies',
+        render: (text) => limitStringLength(text)
         
     },
     {
@@ -32,27 +41,27 @@ let columns = [
 let data = [
     {
         competencies: 'Компетенция №1',
-        first_participant: <InputNumber></InputNumber>,
-        second_participant: <InputNumber></InputNumber>,
-        third_participant: <InputNumber></InputNumber>,
+        first_participant: <InputNumber max={10} min={0}></InputNumber>,
+        second_participant: <InputNumber max={10} min={0}></InputNumber>,
+        third_participant: <InputNumber max={10} min={0}></InputNumber>,
     },
     {
         competencies: 'Компетенция №2',
-        first_participant: <InputNumber></InputNumber>,
-        second_participant: <InputNumber></InputNumber>,
-        third_participant: <InputNumber></InputNumber>,
+        first_participant: <InputNumber max={10} min={0}></InputNumber>,
+        second_participant: <InputNumber max={10} min={0}></InputNumber>,
+        third_participant: <InputNumber max={10} min={0}></InputNumber>,
     },
     {
         competencies: 'Компетенция №3',
-        first_participant: <InputNumber></InputNumber>,
-        second_participant: <InputNumber></InputNumber>,
-        third_participant: <InputNumber></InputNumber>,
+        first_participant: <InputNumber max={10} min={0}></InputNumber>,
+        second_participant: <InputNumber max={10} min={0}></InputNumber>,
+        third_participant: <InputNumber max={10} min={0}></InputNumber>,
     },
     {
         competencies: 'Компетенция №4',
-        first_participant: <InputNumber></InputNumber>,
-        second_participant: <InputNumber></InputNumber>,
-        third_participant: <InputNumber></InputNumber>,
+        first_participant: <InputNumber max={10} min={0}></InputNumber>,
+        second_participant: <InputNumber max={10} min={0}></InputNumber>,
+        third_participant: <InputNumber max={10} min={0}></InputNumber>,
     }
 ]
 function CompetenciesTable(){
