@@ -20,10 +20,10 @@ const items = [
     }
 ]
 function CompetenciesTab(){
-    const [activeKey, setActiveKey] = useState('1'); // Состояние для отслеживания активной вкладки
+    const [activeKey, setActiveKey] = useState('1');
 
     const onChange = (key) => {
-      setActiveKey(key); // Обновляем активную вкладку
+      setActiveKey(key); 
     };
     return (
         <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '24px' }}>
@@ -35,7 +35,7 @@ function CompetenciesTab(){
             onChange={onChange}
             style={{ flex: 3 }}
           />
-          {activeKey === '1' && ( // Условный рендеринг кнопки
+          {activeKey === '1' && ( 
             <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
               <Button type="primary">
                 Завершить этап
