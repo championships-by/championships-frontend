@@ -123,12 +123,10 @@ function UsersSettings() {
             <UserLastnameInput name="lastname" />
             <UserFirstnameInput name="firstname" />
             <UserPatronymicInput name="patronymic" />
-
-            <UserRoleInput disabled={true} name="role" />
           </Col>
           <Col span={8}>
             <UserEmailInput name="email" />
-            <UserPasswordInput name="password" />
+            <UserPhoneInput name="phone" />
             <Button
               type="primary"
               onClick={() => setIsUserPasswordModalOpen(true)}
@@ -137,8 +135,8 @@ function UsersSettings() {
             </Button>
           </Col>
           <Col span={8}>
-            <UserPhoneInput name="phone" />
             <UserOrganizationInput name="organization" />
+            <UserRoleInput disabled={true} name="role" />
           </Col>
         </Row>
 

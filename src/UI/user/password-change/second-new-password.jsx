@@ -4,12 +4,13 @@ import { EyeInvisibleOutlined, LockOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
 import './sass/password-change.scss'
 
-function SecondNewPassword({ name }) {
+function SecondNewPassword({ name, form }) {
   return (
     <Flex vertical className="password-change__second-new-password__flex">
       <Typography.Text>Повторно новый пароль</Typography.Text>
       <FormItem
         name={name}
+        dependencies={['NewPassword']}
         hasFeedback
         validateFirst
         rules={[
@@ -20,6 +21,14 @@ function SecondNewPassword({ name }) {
           {
             min: 8,
             message: 'Минимальная длина пароля - 8 символов',
+          },
+          {
+            validator(_, value) {
+              if (!value || form.getFieldValue('NewPassword') === value) {
+                return Promise.resolve()
+              }
+              return Promise.reject(new Error('Пароли не совпадают'))
+            },
           },
         ]}
         className="password-change__second-new-password__formitem"
