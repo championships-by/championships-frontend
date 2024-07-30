@@ -5,6 +5,7 @@ import EventsRegistration from '@components/event-registration/event-registratio
 import EventSettings from '@components/judgment/event-settings/event-settings'
 import Events from '@components/events/events'
 import UserSettings from '@components/user-settings/user-settings'
+import UsersSettingsTest  from './components/user-settings/user-settings-test'
 import UsersControl from '@components/users-control/users-control'
 import Participants from '@components/participants/participants'
 import NotFound from '@components/notfound/notfound'
@@ -37,6 +38,10 @@ const App = () => {
             <Route
               path={ROUTER_ROUTES.USER_SETTINGS}
               element={<UserSettings />}
+            />
+            <Route
+              path={ROUTER_ROUTES.USER_SETTINGS_TEST}
+              element={<UsersSettingsTest/>}
             />
             <Route path={ROUTER_ROUTES.EVENTS}>
               <Route index element={<Events />} />

@@ -36,9 +36,9 @@ function CompetenciesResult() {
       key: 'participants',
     },
     {
-      title: <Tooltip title="Лучшее время">Лучшее время</Tooltip>,
-      dataIndex: 'best_attempt',
-      key: 'best_attempt',
+      title: <Tooltip title="Сумма баллов">Сумма баллов</Tooltip>,
+      dataIndex: 'points_sum',
+      key: 'points_sum',
     },
   ];
 
@@ -46,19 +46,19 @@ function CompetenciesResult() {
     {
       place: '1',
       participants: 'Иванов Иван Иванович',
-      best_attempt: '2:49:35',
+      points_sum: '90',
       
     },
     {
       place: '2',
       participants: 'Егоров Егор Егорович',
-      best_attempt: '2:41:30',
+      points_sum: '78',
       
     },
     {
       place: '3',
       participants: 'Кириллов Кирилл Кириллович',
-      best_attempt: '2:40:12',
+      points_sum: '80',
       
     },
   ];

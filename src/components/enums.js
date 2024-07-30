@@ -22,6 +22,7 @@ export const ROUTES = {
   PARTICIPANTS: { TITLE: 'Управление участниками', PATH: '/participants' },
   USERS_CONTROL: { TITLE: 'Управление пользователями', PATH: '/users' },
   USER_SETTINGS: { TITLE: 'Настройка аккаунта', PATH: '/settings' },
+  USER_SETTINGS_TEST:{  TITLE: 'Тест', PATH: '/settings/test'},
   EVENTS: { TITLE: 'Мероприятия', PATH: '/events' },
   EVENTS_DESCRIPTION: {
     TITLE: ' Описание мероприятия',
@@ -63,6 +64,7 @@ export const ROUTER_ROUTES = {
   PARTICIPANTS: 'participants',
   USERS_CONTROL: 'users',
   USER_SETTINGS: 'settings',
+  USER_SETTINGS_TEST: 'settings/test',
   EVENTS: 'events',
   EVENTS_DESCRIPTION: ':eventID',
   EVENTS_REGISTRATION: ':eventID/registration',
