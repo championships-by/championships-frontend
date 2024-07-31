@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Input, Typography, Form } from 'antd'
+import { Flex, Input, Typography, Form } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
+import FormItem from 'antd/es/form/FormItem'
 import './sass/user.scss'
 
 function UserPatronymicInput({ name, initialValue }) {
@@ -42,9 +43,9 @@ function UserPatronymicInput({ name, initialValue }) {
   }
 
   return (
-    <div className="user__patronymic-input__flex">
+    <Flex vertical className="user__patronymic-input__flex">
       <Typography.Text>Отчество (если таковое имеется)</Typography.Text>
-      <Form.Item
+      <FormItem
         name={name}
         hasFeedback={hasFeedback}
         validateFirst
@@ -66,9 +67,9 @@ function UserPatronymicInput({ name, initialValue }) {
           onChange={handleChange}
           defaultValue={initialValue}
         />
-      </Form.Item>
+      </FormItem>
       <Typography.Text type="secondary">Пример: Иванович</Typography.Text>
-    </div>
+    </Flex>
   )
 }
 
