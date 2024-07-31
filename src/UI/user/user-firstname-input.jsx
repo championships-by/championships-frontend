@@ -11,7 +11,7 @@ function UserFirstnameInput({ name }) {
     }
   }
 
-  const handlePaste = useCallback((event) => {
+  const handlePaste = (event) => {
     event.preventDefault()
     const clipboardData = (event.clipboardData || window.clipboardData).getData(
       'text'
@@ -30,7 +30,7 @@ function UserFirstnameInput({ name }) {
       selectionStart + sanitizedData.length
     )
     input.dispatchEvent(new Event('input', { bubbles: true }))
-  }, [])
+  }
 
   return (
     <Flex vertical className="user__firstname-input__flex">
