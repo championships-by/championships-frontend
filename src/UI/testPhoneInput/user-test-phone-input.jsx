@@ -1,40 +1,28 @@
-/* eslint-disable prettier/prettier */
 import React,{useState} from 'react'
 import { Flex, Input, Typography } from 'antd'
 import { PhoneOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
-//import './sass/user.scss'
+import './sass/user.scss'
 
 function UserPhoneInput({ name }) {
-  const [phoneNumber,setPhoneNumber] = useState('+375')
+  const [phoneNumber, setPhoneNumber] = useState('')
   const handlePhoneChange = (event) => {
-    let value = event.target.value.replace(/\D/g, ''); // Удаляем все нецифровые символы
-    let formattedValue = '';
-
-    if (value.length > 0) {
-      formattedValue += '+375'; // Код страны
-    }
-    if (value.length > 3) {
-      formattedValue += ' (' + value.slice(3, 5); // Код оператора
-    }
-    if (value.length >= 5) {
-      formattedValue += ') ' + value.slice(5, 8); // Первые 3 цифры номера
-    }
-    if (value.length >= 8) {
-      formattedValue += '-' + value.slice(8, 10); // Следующие 2 цифры
-    }
-    if (value.length >= 10) {
-      formattedValue += '-' + value.slice(10, 12); // Последние 2 цифры
-    }
-
-    setPhoneNumber(formattedValue);
-  };
-
+    const inputValue = event.target.value.replace(/\D/g, '')
+    const parts = [
+      inputValue.length > 0 ? '+375' : '',
+      inputValue.length > 3 ? `(${inputValue.slice(3, 5)})` : '',
+      inputValue.length > 5 ? `${inputValue.slice(5, 8)}` : '',
+      inputValue.length > 8 ? `-${inputValue.slice(8, 10)}` : '',
+      inputValue.length > 10 ? `-${inputValue.slice(10, 12)}` : '',
+    ]
+    const formattedValue = parts.filter(Boolean).join('')
+    setPhoneNumber(formattedValue)
+  }
   const handleKeyDown = (event) =>{
-    if(event.key == 'Backspace'){
-      const currentValue = phoneNumber.replace(/\D/g, ''); // Удаляем все нецифровые символы
-      const newValue = currentValue.slice(0, -1); // Удаляем последнюю цифру
-      handlePhoneChange({ target: { value: newValue } }); // Обновляем телефон с удаленной цифрой
+    if (event.key == 'Backspace') {
+      const currentValue = phoneNumber.replace(/\D/g, '')
+      const newValue = currentValue.slice(0, -1)
+      handlePhoneChange({ target: { value: newValue } }) 
     }
   } 
   return (
@@ -74,5 +62,4 @@ function UserPhoneInput({ name }) {
     </Flex>
   )
 }
-
 export default UserPhoneInput
