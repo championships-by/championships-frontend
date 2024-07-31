@@ -6,6 +6,7 @@ import './sass/user.scss'
 
 function UserPhoneInput({ name }) {
   const [phoneNumber, setPhoneNumber] = useState('')
+
   const handlePhoneChange = (event) => {
     const inputValue = event.target.value.replace(/\D/g, '')
     const parts = [
@@ -18,6 +19,7 @@ function UserPhoneInput({ name }) {
     const formattedValue = parts.filter(Boolean).join('')
     setPhoneNumber(formattedValue)
   }
+
   const handleKeyDown = (event) =>{
     if (event.key == 'Backspace') {
       const currentValue = phoneNumber.replace(/\D/g, '')
@@ -25,6 +27,7 @@ function UserPhoneInput({ name }) {
       handlePhoneChange({ target: { value: newValue } }) 
     }
   } 
+
   return (
     <Flex vertical className="user__phone-input__flex">
       <Typography.Text>Телефон</Typography.Text>
@@ -44,6 +47,7 @@ function UserPhoneInput({ name }) {
         ]}
         className="user__phone-input__formitem"
       >
+
         <Input
           value={phoneNumber}
           onChange={handlePhoneChange}
@@ -61,4 +65,5 @@ function UserPhoneInput({ name }) {
     </Flex>
   )
 }
+
 export default UserPhoneInput
