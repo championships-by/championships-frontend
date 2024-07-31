@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Typography, message, Form, Col, Row } from 'antd'
+import FormItem from 'antd/es/form/FormItem'
 import UserLastnameInput from '@src/UI/user/user-lastname-input.jsx'
 import UserFirstnameInput from '@src/UI/user/user-firstname-input.jsx'
 import UserPatronymicInput from '@src/UI/user/user-patronymic-input.jsx'
@@ -138,7 +139,7 @@ function UsersSettings() {
         </Row>
 
         <Row>
-          <Form.Item>
+          <FormItem>
             <Button
               type="primary"
               htmlType="submit"
@@ -147,7 +148,7 @@ function UsersSettings() {
             >
               Сохранить настройки
             </Button>
-          </Form.Item>
+          </FormItem>
         </Row>
       </Form>
       <UserPasswordModal
