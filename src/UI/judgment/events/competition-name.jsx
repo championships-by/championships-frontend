@@ -1,18 +1,18 @@
-import React from 'react'
+import React,{ useState } from 'react'
 import FormItem from 'antd/es/form/FormItem'
-import { Flex, Input, Space, Typography, AutoComplete } from 'antd'
+import { Flex, Input, Space, Typography } from 'antd'
 import { FlagOutlined } from '@ant-design/icons'
 import './sass/events.scss'
 
 function CompitationNameInput({ name }) {
   return (
     <div className="events_compitation-name__div">
-      <Typography.Text>Компитенция</Typography.Text>
+      <Typography.Text>Компетенция</Typography.Text>
       <Flex>
         <Space.Compact className="events__compitation-name__space">
           <Input
             prefix={<FlagOutlined />}
-            className="events__compitation-name__input"
+            className="events__compitation-name__image"
             disabled
           />
           <FormItem
@@ -22,7 +22,7 @@ function CompitationNameInput({ name }) {
             rules={[
               {
                 required: true,
-                message: 'Пожалуйста, выбирите мероприятие',
+                message: 'Пожалуйста, выберите мероприятие',
               },
               {
                 min: 5,
@@ -31,17 +31,12 @@ function CompitationNameInput({ name }) {
             ]}
           >
             <Flex vertical>
-              <AutoComplete
-                allowClear
-                className="events__compitation-name__autocomlete"
-                placeholder="Выбирите компетенцию"
-                maxLength={255}
-                options={[
-                  { value: 'Робофутбол' },
-                  { value: 'Веб-разработка' },
-                  { value: 'Робосуммо' },
-                ]}
-              />
+                <Input
+                className="events__compitation-name__input"
+                placeholder='Введите название'
+                maxLength={30}  
+                >
+                </Input>
               <Typography.Text type="secondary">
                 Пример: Робофутбол
               </Typography.Text>

@@ -169,6 +169,7 @@ function EventSettings() {
         <Flex vertical align="flex-end">
           <Button
             onClick={() => setIsAddCompitationModalOpen(true)}
+           
             type="primary"
           >
             {' '}

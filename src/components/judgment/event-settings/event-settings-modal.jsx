@@ -1,7 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
 import { Button, Flex, Form, Modal, message } from 'antd'
-import Compitation from '@src/UI/judgment/events/сompitation-name.jsx'
+import Competition from '../../../UI/judgment/events/competition-name'
+import ReglamentName from '@src/UI/judgment/events/reglament-name'
+import CompetitionJudge from '@src/UI/judgment/events/competition-judge-name'
+import CompetitionType from '../../../UI/judgment/events/competition-type'
 
 function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false)
@@ -24,6 +27,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
       onOk={onOk}
       onCancel={onCancel}
       footer={[]}
+      width={800}
     >
       <Form
         layout="vertical"
@@ -32,7 +36,10 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Compitation name="CompitationName" />
+        <Competition name="CompitationName" />
+        <ReglamentName/>
+        <CompetitionJudge/>
+        <CompetitionType/>
 
         <Flex gap="middle">
           <Button
@@ -41,7 +48,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
             loading={isLoading}
             onClick={() => setIsLoading(true)}
           >
-            Сохранить компетенцию
+            Сохранить
           </Button>
           <Button onClick={onCancel}>Отмена</Button>
         </Flex>
