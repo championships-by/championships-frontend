@@ -1,9 +1,8 @@
 import { Flex, Table, Tooltip } from 'antd'
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import  Queries  from './api/Queries'
+import Queries from './api/Queries'
 import './sass/groupStage.scss'
-
 
 export default function TableGroupStage() {
   const [dataParticipant, setParticipant] = useState([])
@@ -46,7 +45,9 @@ export default function TableGroupStage() {
       key: 'points',
     },
     {
-      title: <Tooltip title="Количество баллов, выставленных судьёй">Счёт</Tooltip>,
+      title: (
+        <Tooltip title="Количество баллов, выставленных судьёй">Счёт</Tooltip>
+      ),
       dataIndex: 'get_score',
       key: 'get_score',
     },
@@ -131,8 +132,14 @@ export default function TableGroupStage() {
       if (!get_score.has(match.team2.name)) {
         get_score.set(match.team2.name, 0)
       }
-      get_score.set(match.team1.name, get_score.get(match.team1.name) + match.team1_score)
-      get_score.set(match.team2.name, get_score.get(match.team2.name) + match.team2_score)
+      get_score.set(
+        match.team1.name,
+        get_score.get(match.team1.name) + match.team1_score
+      )
+      get_score.set(
+        match.team2.name,
+        get_score.get(match.team2.name) + match.team2_score
+      )
     })
     result.forEach((team, index) => {
       team.place = index + 1
@@ -142,11 +149,11 @@ export default function TableGroupStage() {
     return result
   }
 
-  const {event_id,nomination_id} = useParams()
+  const { event_id, nomination_id } = useParams()
 
   useEffect(() => {
     ;(async () => {
-      let responseJson = await Queries.getMatches(event_id,nomination_id)
+      let responseJson = await Queries.getMatches(event_id, nomination_id)
       setParticipant(responseJson)
     })()
   }, [])

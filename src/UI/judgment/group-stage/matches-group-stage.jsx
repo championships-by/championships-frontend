@@ -1,11 +1,9 @@
 import { Card, Tooltip, Table, ConfigProvider, Row, Col } from 'antd'
-import { useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ModalGroupStage from './modal-matches-group-stage'
-import  Queries  from './api/Queries'
+import Queries from './api/Queries'
 import './sass/groupStage.scss'
-
-
 
 function MatchesGroupStage() {
   const [dataMatches, setMatches] = useState([])
@@ -17,7 +15,14 @@ function MatchesGroupStage() {
         match.team1 = match.team1?.name
         match.team2 = match.team2?.name
         const { team1, team2, match_id, team1_score, team2_score } = match
-        var team = { team1, team2, matchNumber, team1_score, team2_score, match_id }
+        var team = {
+          team1,
+          team2,
+          matchNumber,
+          team1_score,
+          team2_score,
+          match_id,
+        }
         result.push(team)
         matchNumber++
       })
@@ -27,17 +32,15 @@ function MatchesGroupStage() {
 
   let data = getMatches(dataMatches)
 
-  
-  const {event_id,nomination_id} = useParams()
+  const { event_id, nomination_id } = useParams()
   useEffect(() => {
     ;(async () => {
-      let responseJson = await Queries.getMatches(event_id,nomination_id)
+      let responseJson = await Queries.getMatches(event_id, nomination_id)
       setMatches(responseJson)
     })()
   }, [])
 
- 
-  const MatchCard = ({match}) => {
+  const MatchCard = ({ match }) => {
     let columns = [
       {
         title: <Tooltip title="Команды">Команды</Tooltip>,
@@ -53,12 +56,23 @@ function MatchesGroupStage() {
         title: <Tooltip title="Результаты матча">Результат</Tooltip>,
         key: 'result',
         render: (record) => (
-          <div >
-              <div style={{ marginTop: '15px'}}>
-                <div ><span style={{float: 'left', alignItems: 'center'}}>{record.team1_score}</span></div><br/>
-                <div><span style={{float: 'left',alignItems: 'center'}}>{record.team2_score}</span></div>
+          <div>
+            <div style={{ marginTop: '15px' }}>
+              <div>
+                <span style={{ float: 'left', alignItems: 'center' }}>
+                  {record.team1_score}
+                </span>
               </div>
-                <div style={{marginLeft: '100px',alignItems: 'center'}}><ModalGroupStage match={record} /></div>
+              <br />
+              <div>
+                <span style={{ float: 'left', alignItems: 'center' }}>
+                  {record.team2_score}
+                </span>
+              </div>
+            </div>
+            <div style={{ marginLeft: '100px', alignItems: 'center' }}>
+              <ModalGroupStage match={record} />
+            </div>
           </div>
         ),
       },
@@ -66,26 +80,26 @@ function MatchesGroupStage() {
 
     return (
       <ConfigProvider
-      theme={{
-        components: {
-          Card: {
-            headerBg: '#1E90FF',
+        theme={{
+          components: {
+            Card: {
+              headerBg: '#1E90FF',
+            },
           },
-        },
-      }}
+        }}
       >
-        <Card  className= 'getMatches' title={`Матч ${match.matchNumber}`}>
-        <Table
-          columns={columns}
-          dataSource={[match]}
-          pagination={false}  
-        />
-      </Card>
+        <Card className="getMatches" title={`Матч ${match.matchNumber}`}>
+          <Table columns={columns} dataSource={[match]} pagination={false} />
+        </Card>
       </ConfigProvider>
     )
   }
   return (
-    <Row className='matchRow' gutter={[16, 16]} style={{ maxWidth: '100vw', overflowX: 'auto', overflowY: 'auto'}}>
+    <Row
+      className="matchRow"
+      gutter={[16, 16]}
+      style={{ maxWidth: '100vw', overflowX: 'auto', overflowY: 'auto' }}
+    >
       {data.map((match, index) => (
         <Col key={index} span={8} style={{ minWidth: '200px' }}>
           <MatchCard match={match} />
@@ -93,6 +107,6 @@ function MatchesGroupStage() {
       ))}
     </Row>
   )
-} 
+}
 
 export default MatchesGroupStage

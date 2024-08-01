@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { Flex, Input, Typography } from 'antd';
-import { PhoneOutlined } from '@ant-design/icons';
-import FormItem from 'antd/es/form/FormItem';
-import InputMask from 'react-input-mask';
+import React, { useState } from 'react'
+import { Flex, Input, Typography } from 'antd'
+import { PhoneOutlined } from '@ant-design/icons'
+import FormItem from 'antd/es/form/FormItem'
+import InputMask from 'react-input-mask'
 
 function UserPhoneInput({ name }) {
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('')
 
   const handleChange = (event) => {
-    setPhoneNumber(event.target.value);
-  };
+    setPhoneNumber(event.target.value)
+  }
 
   return (
     <Flex
@@ -55,7 +55,7 @@ function UserPhoneInput({ name }) {
         Пример: +375-25-123-45-67
       </Typography.Text>
     </Flex>
-  );
+  )
 }
 
-export default UserPhoneInput;
+export default UserPhoneInput

@@ -7,9 +7,7 @@ function EventName({ name }) {
     <FormItem name={name} hasFeedback validateFirst>
       <Flex vertical>
         <Typography.Text>Регистрация открыта/закрыта</Typography.Text>
-        <Switch
-          className="events__event-registration-switch__switch"
-        />
+        <Switch className="events__event-registration-switch__switch" />
       </Flex>
     </FormItem>
   )

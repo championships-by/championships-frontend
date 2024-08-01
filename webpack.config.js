@@ -26,8 +26,8 @@ module.exports = (env) => {
         React: 'react',
       }),
       new webpack.DefinePlugin({
-        API_PATH : JSON.stringify(process.env.API_PATH)
-      })
+        API_PATH: JSON.stringify(process.env.API_PATH),
+      }),
     ],
     module: {
       rules: [
