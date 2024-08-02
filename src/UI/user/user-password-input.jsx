@@ -15,7 +15,7 @@ function UserPasswordInput({ name, required }) {
         rules={[
           {
             required: required ?? false,
-            message: 'Пожалуйста введите пароль',
+            message: 'Пожалуйста, введите пароль',
           },
           {
             min: 8,

@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Flex, Input, Typography } from 'antd'
 import { MailOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
 import './sass/user.scss'
 
 function UserEmailInput({ name }) {
+  const handleKeyPress = (event) => {
+    if (event.key === ' ') {
+      event.preventDefault()
+    }
+  }
+
   return (
     <Flex vertical className="user__email-input__flex">
       <Typography.Text>Email</Typography.Text>
@@ -16,7 +22,7 @@ function UserEmailInput({ name }) {
         rules={[
           {
             required: true,
-            message: 'Пожалуйста введите Email',
+            message: 'Пожалуйста, введите Email',
           },
           {
             type: 'email',
@@ -29,6 +35,7 @@ function UserEmailInput({ name }) {
           prefix={<MailOutlined />}
           type="email"
           placeholder="Введите Email"
+          onKeyPress={handleKeyPress}
         />
       </FormItem>
       <Typography.Text type="secondary">

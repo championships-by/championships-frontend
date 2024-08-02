@@ -1,16 +1,33 @@
-import React from 'react'
-import { Flex, Input, Typography } from 'antd'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Flex, Input, Typography, Form } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem'
 import './sass/user.scss'
+import { handlePaste } from './handlePaste'
 
-function UserPatronymicInput({ name }) {
+function UserPatronymicInput({ name, initialValue }) {
+  const [hasFeedback, setHasFeedback] = useState(false)
+
+  useEffect(() => {
+    setHasFeedback(initialValue && initialValue.length > 0)
+  }, [initialValue])
+
+  const handleKeyPress = (event) => {
+    if (event.key === ' ') {
+      event.preventDefault()
+    }
+  }
+
+  const handleChange = (e) => {
+    setHasFeedback(e.target.value.length > 0)
+  }
+
   return (
     <Flex vertical className="user__patronymic-input__flex">
       <Typography.Text>Отчество (если таковое имеется)</Typography.Text>
       <FormItem
         name={name}
-        hasFeedback
+        hasFeedback={hasFeedback}
         validateFirst
         rules={[
           {
@@ -25,6 +42,10 @@ function UserPatronymicInput({ name }) {
           allowClear
           placeholder="Введите отчество"
           maxLength={255}
+          onKeyPress={handleKeyPress}
+          onPaste={handlePaste}
+          onChange={handleChange}
+          defaultValue={initialValue}
         />
       </FormItem>
       <Typography.Text type="secondary">Пример: Иванович</Typography.Text>

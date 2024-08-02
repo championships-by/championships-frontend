@@ -37,7 +37,7 @@ function UserPhoneInput({ name }) {
         rules={[
           {
             required: true,
-            message: 'Пожалуйста введите телефон',
+            message: 'Пожалуйста, введите номер телефона',
           },
           {
             pattern: /\+\d{3}\(\d{2}\)\d{3}-\d{2}-\d{2}/,

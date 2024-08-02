@@ -6,6 +6,7 @@ import SecondNewPassword from '@src/UI/user/password-change/second-new-password'
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false)
+  const [form] = Form.useForm()
 
   const onFinish = () => {
     message.success('Всё в порядке!')
@@ -19,7 +20,7 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
 
   return (
     <Modal
-      title="Добавить участника"
+      title="Изменение пароля"
       className="user-settings__password-change-modal"
       open={isOpen}
       onOk={onOk}
@@ -30,12 +31,13 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
         layout="vertical"
         variant="filled"
         requiredMark="Default"
+        form={form}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
         <OldPassword name="OldPassword" />
         <NewPassword name="NewPassword" />
-        <SecondNewPassword name="SecondNewPassword" />
+        <SecondNewPassword name="SecondNewPassword" form={form} />
 
         <Flex gap="middle">
           <Button

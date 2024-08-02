@@ -13,6 +13,24 @@ function UserOrganizationInput({ name }) {
         hasFeedback
         validateFirst
         className="user__organization-input__formitem"
+        rules={[
+          {
+            required: true,
+            message: 'Пожалуйста, введите учреждение образования',
+          },
+          {
+            validator(_, value) {
+              if (value && value.trim()) {
+                return Promise.resolve()
+              }
+              return Promise.reject(
+                new Error(
+                  'Пожалуйста, введите корректное учреждение образования'
+                )
+              )
+            },
+          },
+        ]}
       >
         <Input
           prefix={<BankOutlined />}
