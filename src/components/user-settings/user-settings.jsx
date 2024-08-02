@@ -127,7 +127,7 @@ function UsersSettings() {
             <Button
               type="primary"
               onClick={() => setIsUserPasswordModalOpen(true)}
-              style={{ marginTop: '20px' }}
+              className="change-password-button"
             >
               Сменить пароль
             </Button>
