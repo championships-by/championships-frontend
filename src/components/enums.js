@@ -67,7 +67,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_CREATE: 'create',
   JUDGMENT_EVENT_SETTINGS: ':eventID/settings',
   JUDGMENT_GROUP_STAGE: 'judgment/:event_id/:nomination_id',
-  JUDGMENT_TIME_MATCHES: 'matches',
+  JUDGMENT_TIME_MATCHES: 'matches/:eventId/:nominationId',
 }
 
 export const Locale = {
