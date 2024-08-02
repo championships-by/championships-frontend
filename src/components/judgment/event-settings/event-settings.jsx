@@ -169,7 +169,6 @@ function EventSettings() {
         <Flex vertical align="flex-end">
           <Button
             onClick={() => setIsAddCompitationModalOpen(true)}
-           
             type="primary"
           >
             {' '}
@@ -183,6 +182,7 @@ function EventSettings() {
         />
       </Space>
       <CompitationModal
+        name={'Добавить компетенцию'}
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}

@@ -1,42 +1,48 @@
 import { useState } from 'react'
-import { Typography, Flex, Space, AutoComplete } from "antd"
+import { Typography, Select, Space } from 'antd'
 import './sass/events.scss'
 
-function CompetitionType(){
-    const [options,setOptions] = useState([])
-    const [inputValue,setInputValue] = useState('')
+function CompetitionType() {
+  const [options, setOptions] = useState([])
+  const [inputValue, setInputValue] = useState('')
 
-    const handleSearch = (value) => {
-        setInputValue(value)
+  const handleSearch = (value) => {
+    setInputValue(value)
 
-        if(value){
-            const filteredOptions = ['Сергачев Виктор', 'Иванов Сергей', 'Викторов Евгений', 'grape', 'lemon']
-            .filter(item => item.toLowerCase().includes(value.toLowerCase()))
-            .map(item => ({value: item}))
+    if (value) {
+      const filteredOptions = [
+        'Сергачев Виктор',
+        'Иванов Сергей',
+        'Викторов Евгений',
+        'Сидоров Виктор',
+        'Евтухов Кирилл',
+      ]
+        .filter((item) => item.toLowerCase().includes(value.toLowerCase()))
+        .map((item) => ({ value: item, label: item }))
 
-            setOptions(filteredOptions)
-        }
-        else{
-            setOptions([])
-        }
+      setOptions(filteredOptions)
+    } else {
+      setOptions([])
     }
-    return (
-        <div className="events__competition-judge__div">
-            <Typography.Text>Судья</Typography.Text>
-            <Flex>
-                <Space.Compact>
-                    <AutoComplete
-                    className='events__competition-judge__name'
-                    placeholder={'Введите фамилию судьи'}
-                    options={options}
-                    onSearch={handleSearch}
-                    onSelect={(value) => setInputValue(value)}
-                    value={inputValue}
-                    ></AutoComplete>
-                </Space.Compact>   
-            </Flex>
-        </div>
-    )
+  }
+
+  return (
+    <div className="events__competition-judge__div">
+      <Typography.Text className="events__competition-judge__text">
+        Судья
+      </Typography.Text>
+      <Space>
+        <Select
+          className="events__competition-judge__select"
+          mode="multiple"
+          placeholder="Выберите судью"
+          maxTagCount="responsive"
+          options={options}
+          onSearch={handleSearch}
+        />
+      </Space>
+    </div>
+  )
 }
 
 export default CompetitionType

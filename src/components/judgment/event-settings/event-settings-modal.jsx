@@ -6,7 +6,7 @@ import ReglamentName from '@src/UI/judgment/events/reglament-name'
 import CompetitionJudge from '@src/UI/judgment/events/competition-judge-name'
 import CompetitionType from '../../../UI/judgment/events/competition-type'
 
-function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
+function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
   const [isLoading, setIsLoading] = useState(false)
 
   const onFinish = () => {
@@ -21,7 +21,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
 
   return (
     <Modal
-      title="Добавить компетенцию"
+      title={name}
       className="event-settings__modal"
       open={isOpen}
       onOk={onOk}
@@ -36,13 +36,14 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Competition name="CompitationName" />
-        <ReglamentName/>
-        <CompetitionJudge/>
-        <CompetitionType/>
+        <Competition />
+        <ReglamentName />
+        <CompetitionJudge />
+        <CompetitionType />
 
         <Flex gap="middle">
           <Button
+            className="event-settings__saveButton"
             type="primary"
             htmlType="submit"
             loading={isLoading}
@@ -50,7 +51,9 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel }) {
           >
             Сохранить
           </Button>
-          <Button onClick={onCancel}>Отмена</Button>
+          <Button className="event-settings__cancelButton" onClick={onCancel}>
+            Отмена
+          </Button>
         </Flex>
       </Form>
     </Modal>

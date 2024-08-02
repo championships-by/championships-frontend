@@ -1,13 +1,15 @@
-import React,{ useState } from 'react'
+import React from 'react'
 import FormItem from 'antd/es/form/FormItem'
 import { Flex, Input, Space, Typography } from 'antd'
 import { FlagOutlined } from '@ant-design/icons'
 import './sass/events.scss'
 
-function CompitationNameInput({ name }) {
+function CompitationNameInput() {
   return (
     <div className="events_compitation-name__div">
-      <Typography.Text>Компетенция</Typography.Text>
+      <Typography.Text className="events_compitation-name__text">
+        Компетенция
+      </Typography.Text>
       <Flex>
         <Space.Compact className="events__compitation-name__space">
           <Input
@@ -16,7 +18,6 @@ function CompitationNameInput({ name }) {
             disabled
           />
           <FormItem
-            name={name}
             hasFeedback
             validateFirst
             rules={[
@@ -31,12 +32,11 @@ function CompitationNameInput({ name }) {
             ]}
           >
             <Flex vertical>
-                <Input
+              <Input
                 className="events__compitation-name__input"
-                placeholder='Введите название'
-                maxLength={30}  
-                >
-                </Input>
+                placeholder="Введите название"
+                maxLength={30}
+              ></Input>
               <Typography.Text type="secondary">
                 Пример: Робофутбол
               </Typography.Text>
