@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-import { Tabs, Button } from 'antd'
+import { Tabs } from 'antd'
 import TableTimeMatches from '../time-matches/table-time-matches'
 import ResultTableTimeMatches from './result-table-time-matches'
 import './sass/time-matches.scss'
