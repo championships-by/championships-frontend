@@ -224,6 +224,7 @@ function EventSettings() {
         />
       </Space>
       <CompitationModal
+        name={'Добавить компетенцию'}
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}

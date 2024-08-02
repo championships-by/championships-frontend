@@ -1,18 +1,69 @@
 .events {
+  &__competition-groupStageParametrs{
+    width: 250px;
+  }
+  &__competition-TimeParametrs{
+    width: 250px;
+  }
+  &__competition-criteria{
+    &__div{
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    &__input{
+      margin-bottom: 10px;
+    }
+  }
+  &__competition-reglament{
+    &__text{
+      font-size: 16px;
+    }
+  }
+  &__competition-judge{
+    &__text{
+      font-size: 16px;
+    }
+    &__name{
+      width: 500px;
+    }
+    &__select{
+      width: 250px;
+    }
+  }
+  &__competition-type{
+    &__div{
+      margin-top: 30px;
+    }
+    &__space{
+      width: 100%;
+    }
+    &__name{
+      width: 300px;
+    }
+    &__text{
+      font-size: 16px;
+    }
+  }
   &__compitation-name {
     &__space {
       width: 100%;
     }
-    &__input {
+    &__image {
       width: 38px;
       height: 32px;
       border: none;
+    }
+    &__input{
+      width: 250%;
     }
     &__div {
       margin-bottom: 24px;
     }
     &__autocomplete {
       width: 100%;
+    }
+    &__text{
+      font-size: 16px;
     }
   }
   &__event-date {
