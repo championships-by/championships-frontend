@@ -22,6 +22,7 @@ export const ROUTES = {
   PARTICIPANTS: { TITLE: 'Управление участниками', PATH: '/participants' },
   USERS_CONTROL: { TITLE: 'Управление пользователями', PATH: '/users' },
   USER_SETTINGS: { TITLE: 'Настройка аккаунта', PATH: '/settings' },
+  USER_SETTINGS_TEST:{  TITLE: 'Тест', PATH: '/settings/test'},
   EVENTS: { TITLE: 'Мероприятия', PATH: '/events' },
   EVENTS_DESCRIPTION: {
     TITLE: ' Описание мероприятия',
@@ -52,6 +53,10 @@ export const ROUTES = {
     TITLE: 'Матчи на время',
     PATH: (event_id, nomination_id) => `/test/${event_id}/${nomination_id}`,
   },
+  JUDGMENT_COMPETENCIES: {
+    TITLE: 'Компетенции по критериям',
+    PATH: 'judgment/competencies',
+  },
 }
 
 export const ROUTER_ROUTES = {
@@ -63,6 +68,7 @@ export const ROUTER_ROUTES = {
   PARTICIPANTS: 'participants',
   USERS_CONTROL: 'users',
   USER_SETTINGS: 'settings',
+  USER_SETTINGS_TEST: 'settings/test',
   EVENTS: 'events',
   EVENTS_DESCRIPTION: ':eventID',
   EVENTS_REGISTRATION: ':eventID/registration',
@@ -72,6 +78,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_EVENT_SETTINGS: ':eventID/settings',
   JUDGMENT_GROUP_STAGE: 'judgment/:event_id/:nomination_id',
   JUDGMENT_TIME_MATCHES: 'test/:event_id/:nomination_id',
+  JUDGMENT_COMPETENCIES: 'judgment/competencies',
 }
 
 export const Locale = {

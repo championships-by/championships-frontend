@@ -5,6 +5,7 @@ import EventsRegistration from '@components/event-registration/event-registratio
 import EventSettings from '@components/judgment/event-settings/event-settings'
 import Events from '@components/events/events'
 import UserSettings from '@components/user-settings/user-settings'
+import UsersSettingsTest  from './components/user-settings/user-settings-test'
 import UsersControl from '@components/users-control/users-control'
 import Participants from '@components/participants/participants'
 import NotFound from '@components/notfound/notfound'
@@ -13,6 +14,8 @@ import Logout from '@components/logout/logout'
 import Judgment from '@components/judgment/events/judgment-events'
 import Unauthorized from '@components/unauthorized/unauthorized'
 import GroupStage from '@components/judgment/group-stage/group-stage'
+import Competencies from '@components/judgment/competencies/competencies'
+
 
 const App = () => {
   return (
@@ -36,6 +39,10 @@ const App = () => {
               path={ROUTER_ROUTES.USER_SETTINGS}
               element={<UserSettings />}
             />
+            <Route
+              path={ROUTER_ROUTES.USER_SETTINGS_TEST}
+              element={<UsersSettingsTest/>}
+            />
             <Route path={ROUTER_ROUTES.EVENTS}>
               <Route index element={<Events />} />
               <Route
@@ -50,6 +57,10 @@ const App = () => {
             <Route
               path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
               element={<GroupStage />}
+            />
+            <Route
+              path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
+              element={<Competencies/>}
             />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />

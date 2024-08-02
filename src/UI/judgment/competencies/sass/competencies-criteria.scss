@@ -1,0 +1,27 @@
+.competencies__result__img{
+    width: 50px;
+    height: 50px;
+}
+.rotate{
+   
+    transform: rotate(270deg);
+    display: inline-block;
+    overflow: hidden;        // Скрывает переполнение
+    text-overflow: ellipsis; // Добавляет многоточие в конце
+    // white-space: nowrap;     // Запрещает перенос текста
+    max-width: 80px;   
+}
+.competencies-tabs{
+    display: 'flex'; 
+    justify-content: 'space-between'; 
+    margin-bottom: '24px';
+
+    &_tabs{
+        flex: 3;
+    }
+    &_button{
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
