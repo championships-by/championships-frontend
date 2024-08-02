@@ -37,6 +37,10 @@ export const ROUTES = {
     TITLE: 'Создание мероприятия',
     PATH: '/judgment/events/create',
   },
+  JUDGMENT_CREATE_TEST: {
+    TITLE: 'Создание мероприятия',
+    PATH: '/judgment/events/create/test',
+  },
   JUDGMENT_EVENT_SETTINGS: {
     TITLE: 'Редактрирование мероприятия',
     PATH: (eventID) => `/judgment/events/${eventID}/settings`,
@@ -70,6 +74,7 @@ export const ROUTER_ROUTES = {
   EVENTS_REGISTRATION: ':eventID/registration',
   JUDGMENT: 'judgment/events',
   JUDGMENT_CREATE: 'create',
+  JUDGMENT_CREATE_TEST: 'create/test',
   JUDGMENT_EVENT_SETTINGS: ':eventID/settings',
   JUDGMENT_GROUP_STAGE: 'judgment/:event_id/:nomination_id',
   JUDGMENT_TIME_MATCHES: 'test/:event_id/:nomination_id',

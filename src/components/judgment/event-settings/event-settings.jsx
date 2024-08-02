@@ -12,6 +12,7 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import Loader from '@components/loader/loader'
 import CompitationModal from './event-settings-modal'
 import EventName from '@src/UI/judgment/events/event-name'
 import EventDate from '@src/UI/judgment/events/event-date'
@@ -24,25 +25,44 @@ import EventLogo from '@src/UI/judgment/events/event-logo'
 import './sass/event-settings.scss'
 
 function EventSettings() {
+  const [isLoading, setIsLoading] = useState(true)
   const [loadings, setLoadings] = useState([])
   const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
     useState(false)
   const [dataEvent, setEvent] = useState({})
   const { eventID } = useParams()
+  const [form] = Form.useForm()
+
   useEffect(() => {
-    fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-      },
-      redirect: 'follow',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((data) => setEvent(data))
-      .catch(() =>
-        message.error('Невозможно получить данные. Обратитесь к администратору')
-      )
+    if(eventID != undefined){
+      try {
+        fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          redirect: 'follow',
+          credentials: 'include',
+        })
+        .then((response) => response.json())
+        .then((data) => setEvent(data))
+        .then((dataEvent) => {
+            form.setFieldsValue({
+              event_name: dataEvent?.event_data?.name,
+              event_date: dataEvent?.event_data?.date,
+            })//#TODO
+  
+            setTimeout(() => setIsLoading(false), 300)
+          })
+      } catch (error) {
+        message.error(
+          'Ошибка: Невозможно получить данные. Обратитесь к администратору...'
+        )
+      }
+    }else{
+      setTimeout(() => setIsLoading(false), 300)
+          
+    }
   }, [eventID])
 
   const update_event_request = async () => {
@@ -51,12 +71,31 @@ function EventSettings() {
     myHeaders.append('Content-Type', 'application/json')
 
     const raw = JSON.stringify({
-      old_name: dataEvent?.event_data?.name,
+      id: eventID,
       new_name: form.getFieldValue('event_name'),
       new_date: dayjs(form.getFieldValue('event_date')).format('YYYY-MM-DD'),
-    }) //#TODO
+    }) 
     const requestOptions = {
       method: 'PUT',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+      credentials: 'include',
+    }
+    await fetch(`${API_PATH}/event/event`, requestOptions)
+  }
+
+  const create_event_request = async () => {
+    const myHeaders = new Headers()
+    myHeaders.append('accept', 'application/json')
+    myHeaders.append('Content-Type', 'application/json')
+
+    const raw = JSON.stringify({
+      name: form.getFieldValue('event_name'),
+      date: dayjs(form.getFieldValue('event_date')).format('YYYY-MM-DD'),
+    }) //#TODO
+    const requestOptions = {
+      method: 'POST',
       headers: myHeaders,
       body: raw,
       redirect: 'follow',
@@ -110,10 +149,11 @@ function EventSettings() {
       })
     }, 6000)
   }
-  const [form] = Form.useForm()
+
   return (
     <Flex vertical gap="middle">
       <div>
+        <Loader show={isLoading} />
         <Typography.Title level={2}>
           Редактирование мероприятия
         </Typography.Title>
@@ -156,7 +196,11 @@ function EventSettings() {
           loading={loadings[0]}
           onClick={() => {
             enterLoading(0)
+            if (eventID === undefined){
+              create_event_request()
+            }else{
             update_event_request()
+            }
           }}
         >
           Сохранить данные
@@ -177,11 +221,10 @@ function EventSettings() {
         </Flex>
         <Table
           columns={columns}
-          //dataSource={data}
-          //pagination={{position:'bottom'}}
         />
       </Space>
       <CompitationModal
+        name={'Добавить компетенцию'}
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}

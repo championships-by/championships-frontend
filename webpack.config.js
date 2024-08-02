@@ -5,6 +5,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 require('dotenv').config()
 
 module.exports = (env) => {
+  const DEV_SERVER_HOST = '127.0.0.1'
+  const DEV_SERVER_PORT = '9000'
+
+  const PROD_API_PATH = process.env.API_HOST + process.env.API_PATH
+  const DEV_API_PATH = `http://${DEV_SERVER_HOST}:${DEV_SERVER_PORT}` + process.env.API_PATH
+
+  const IS_DEV = env.mode == undefined || env.mode === 'development'
+  
   return {
     mode: env.mode ?? 'development',
     entry: path.resolve(__dirname, 'src', 'index.jsx'),
@@ -26,7 +34,7 @@ module.exports = (env) => {
         React: 'react',
       }),
       new webpack.DefinePlugin({
-        API_PATH : JSON.stringify(process.env.API_PATH)
+        API_PATH : JSON.stringify(IS_DEV ? DEV_API_PATH : PROD_API_PATH)
       })
     ],
     module: {
@@ -73,9 +81,16 @@ module.exports = (env) => {
       static: {
         directory: path.join(__dirname, 'build'),
       },
-      host: '127.0.0.1',
+      proxy: [
+        {
+          context: ['/backend'],
+          target: process.env.API_HOST,
+          changeOrigin: true
+        },
+      ],
+      host: DEV_SERVER_HOST,
       compress: true,
-      port: 9000,
+      port: DEV_SERVER_PORT,
       watchFiles: [
         'public/**/*.html',
         'src/**/*.scss',
