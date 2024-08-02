@@ -1,5 +1,5 @@
-/* eslint-disable prettier/prettier */
-import { Table, Tooltip, Flex, TimePicker, Button } from 'antd'
+import { Button, Flex, Table, Tooltip } from 'antd'
+import { CustomTimePicker } from './components'
 import './sass/time-matches.scss'
 
 function TableTimeMatches() {
@@ -40,9 +40,9 @@ function TableTimeMatches() {
     {
       place: '1',
       participants: 'Иванов Иван Иванович',
-      first_attempt: <TimePicker format={'mm:ss.SSS'}></TimePicker>,
-      second_attempt: <TimePicker format={'mm:ss.SSS'}></TimePicker>,
-      third_attempt: <TimePicker format={'mm:ss.SSS'}></TimePicker>,
+      first_attempt: <CustomTimePicker />,
+      second_attempt: <CustomTimePicker />,
+      third_attempt: <CustomTimePicker />,
       best_attempt: '2:49:35',
     },
   ]
