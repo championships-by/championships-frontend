@@ -1,8 +1,13 @@
 import { Button, Flex, Table, Tooltip } from 'antd'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { timeMatchesApi } from './api/time-matches-api'
 import { CustomTimePicker } from './components'
 import './sass/time-matches.scss'
 
 function TableTimeMatches() {
+  const { eventId, nominationId } = useParams()
+
   const columns = [
     {
       title: <Tooltip title="Место">Место</Tooltip>,
@@ -46,6 +51,13 @@ function TableTimeMatches() {
       best_attempt: '2:49:35',
     },
   ]
+
+  useEffect(() => {
+    timeMatchesApi
+      .getTimeMatches({ eventId, nominationId })
+      .then(console.log)
+      .catch(console.error)
+  }, [eventId, nominationId])
 
   return (
     <>
