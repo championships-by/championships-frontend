@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Typography, Space, Select } from "antd";
 import GroupStageParametrs from "./competition-group-stage-parametrs";
+import CriteriaParametrs from './competition-criteria-parametrs';
+import TimeParametrs from './competition-time-parametrs';
 
 const options = [
     {
@@ -29,9 +31,9 @@ function CompetitionType() {
     };
 
     const settingsComponents = {
-        groupStage: <GroupStageParametrs />, // Убедитесь, что этот компонент импортирован правильно
-        criteria: <div>Настройки для соревнований по критериям</div>,
-        time: <div>Настройки для соревнований по времени</div>,
+        groupStage: <GroupStageParametrs />, 
+        criteria: <CriteriaParametrs />,
+        time: <TimeParametrs/>,
         playoffs: <GroupStageParametrs/>,
     };
 
