@@ -7,6 +7,7 @@ import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 
 import "./sass/event-registration.scss";
+import { teamApi, eventApi } from "@api";
 
 function EventsRegistration() {
   const [isAddTeamModalOpen, setIsAddTeamModalOpen] = useState(false);
@@ -17,14 +18,8 @@ function EventsRegistration() {
 
   useEffect(() => {
     if (isLoading) {
-      fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      })
+      eventApi
+        .getEvent(eventID)
         .then((response) => response.json())
         .then((data) => setEvent(data))
         .catch(() =>
@@ -33,14 +28,8 @@ function EventsRegistration() {
           )
         );
 
-      fetch(`${API_PATH}/team/teams?offset=0&limit=49`, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      })
+      teamApi
+        .getTeam()
         .then((response) => response.json())
         .then((data) => setTeams(data))
         .catch(() =>

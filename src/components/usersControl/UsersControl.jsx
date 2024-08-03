@@ -13,14 +13,8 @@ function UsersControl() {
   const [dataUsers, setUsers] = useState([]);
 
   if (isLoading) {
-    fetch(`${API_PATH}/user/users`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-    })
+    userApi
+      .getUsers()
       .then((response) => response.json())
       .then((data) => setUsers(data))
       .catch(() =>

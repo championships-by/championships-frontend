@@ -5,6 +5,7 @@ import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import { ROUTES } from "@constants";
 import EventTable from "@components/judgment/events/JudgmentEventsTable";
+import { userApi } from "@api";
 
 function JudgmentEvents() {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,14 +14,8 @@ function JudgmentEvents() {
 
   useEffect(() => {
     if (isLoading) {
-      fetch(`${API_PATH}/event/events_with_nominations?offset=0&limit=49`, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      })
+      userApi
+        .getEventWithNominations({ limit: 49 })
         .then((response) => response.json())
         .then((data) => setEvents(data))
         .catch(() =>

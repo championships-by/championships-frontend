@@ -9,6 +9,7 @@ import UserEmailInput from "@modules/user/UserEmailInput";
 import UserPasswordInput from "@modules/user/UserPasswordInput";
 import UserPhoneInput from "@modules/user/UserPhoneInput";
 import UserOrganizationInput from "@modules/user/UserOrganizationInput";
+import { userApi } from "@api";
 
 function UserModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -25,10 +26,6 @@ function UserModal({ isOpen, onOk, onCancel }) {
   };
 
   const create_user_request = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
-
     const raw = JSON.stringify({
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
@@ -40,14 +37,7 @@ function UserModal({ isOpen, onOk, onCancel }) {
       password: form.getFieldValue("password"),
     });
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-      credentials: "include",
-    };
-    await fetch(`${API_PATH}/user/create_user`, requestOptions);
+    await userApi.setUser(raw);
   };
 
   return (

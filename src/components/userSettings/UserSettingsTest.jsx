@@ -13,6 +13,7 @@ import Loader from "@components/loader/Loader";
 import UserPasswordModal from "./UserPasswordChange";
 
 import "./sass/user-settings.scss";
+import { userApi } from "@api";
 
 function UsersSettings() {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,14 +23,8 @@ function UsersSettings() {
 
   if (isLoading) {
     try {
-      fetch(`${API_PATH}/user/profile`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      })
+      userApi
+        .getProfile()
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -70,18 +65,8 @@ function UsersSettings() {
       data.password = form.getFieldValue("password");
     }
 
-    const requestOptions = {
-      method: "PATCH",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-      redirect: "follow",
-      credentials: "include",
-    };
-
-    fetch(`${API_PATH}/user/profile`, requestOptions)
+    userApi
+      .changeProfile()
       .then((response) => {
         if (response.ok) {
           message.success("Данные успешно сохранены");

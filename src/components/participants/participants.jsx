@@ -14,14 +14,8 @@ function Participants() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataParticipants, setParticipants] = useState([]);
   if (isLoading) {
-    fetch(`${API_PATH}/participant/participant?offset=0&limit=10`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-    })
+    participantApi
+      .getParticipant()
       .then((response) => response.json())
       .then((data) => setParticipants(data))
       .catch(() =>

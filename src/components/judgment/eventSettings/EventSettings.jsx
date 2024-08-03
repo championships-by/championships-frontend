@@ -24,6 +24,30 @@ import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
 
 import "./sass/event-settings.scss";
+import { eventApi } from "@api";
+
+const columns = [
+  {
+    title: "Название компетенции",
+    dataIndex: "name_compitation",
+    key: "name_nomination",
+  },
+  {
+    title: "Количество зарегестрированных участников",
+    dataIndex: "porticipants_count",
+    key: "porticipants_count",
+  },
+  {
+    title: "Действия",
+    key: "action",
+    render: () => (
+      <Flex>
+        <Button type="text" icon={<EditOutlined />} />
+        <Button type="text" icon={<DeleteOutlined />} />
+      </Flex>
+    ),
+  },
+];
 
 function EventSettings() {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,16 +59,10 @@ function EventSettings() {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (eventID != undefined) {
+    if (eventID !== undefined) {
       try {
-        fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          redirect: "follow",
-          credentials: "include",
-        })
+        eventApi
+          .getEvent(eventID)
           .then((response) => response.json())
           .then((data) => setEvent(data))
           .then((dataEvent) => {
@@ -66,66 +84,23 @@ function EventSettings() {
   }, [eventID]);
 
   const update_event_request = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
-
-    const raw = JSON.stringify({
+    const body = JSON.stringify({
       id: eventID,
       new_name: form.getFieldValue("event_name"),
       new_date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
     });
-    const requestOptions = {
-      method: "PUT",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-      credentials: "include",
-    };
-    await fetch(`${API_PATH}/event/event`, requestOptions);
+
+    eventApi.changeEvent(body);
   };
 
   const create_event_request = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
-
-    const raw = JSON.stringify({
+    const body = JSON.stringify({
       name: form.getFieldValue("event_name"),
       date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
     }); // #TODO
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-      credentials: "include",
-    };
-    await fetch(`${API_PATH}/event/event`, requestOptions);
-  };
 
-  const columns = [
-    {
-      title: "Название компетенции",
-      dataIndex: "name_compitation",
-      key: "name_nomination",
-    },
-    {
-      title: "Количество зарегестрированных участников",
-      dataIndex: "porticipants_count",
-      key: "porticipants_count",
-    },
-    {
-      title: "Действия",
-      key: "action",
-      render: () => (
-        <Flex>
-          <Button type="text" icon={<EditOutlined />} />
-          <Button type="text" icon={<DeleteOutlined />} />
-        </Flex>
-      ),
-    },
-  ];
+    eventApi.setEvent(body);
+  };
 
   const onFinish = () => {
     message.success("Всё в порядке!");

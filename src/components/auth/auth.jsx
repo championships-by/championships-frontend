@@ -8,6 +8,7 @@ import AuthPasswordInput from "@modules/auth/AuthPasswordInput";
 import { useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import { ROUTES } from "@constants";
+import { userApi, authApi } from "@api";
 
 function Auth() {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,14 +19,8 @@ function Auth() {
   const navigate = useNavigate();
   useEffect(() => {
     if (isLoading) {
-      fetch(`${API_PATH}/user/profile`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      })
+      userApi
+        .getProfile()
         .then((response) => {
           if (response.ok) {
             navigate("/settings");
@@ -51,15 +46,7 @@ function Auth() {
     };
 
     try {
-      const response = await fetch(`${API_PATH}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-        redirect: "follow",
-        credentials: "include",
-      });
+      const response = await authApi.setLogin();
 
       if (response.ok) {
         navigate(ROUTES.USER_SETTINGS.PATH);

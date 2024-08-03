@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
 import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
+import { participantApi } from "@api";
 
 function TeamCreateModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,14 +23,8 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
 
   useEffect(() => {
     if (isOpen) {
-      fetch(`${API_PATH}/participant/participant?offset=0&limit=10`, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      })
+      participantApi
+        .getParticipant()
         .then((response) => response.json())
         .then((data) =>
           setTeamParticipants(
@@ -49,22 +44,11 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
   }, [isOpen, eventID]);
 
   const create_team_request = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
-
-    const raw = JSON.stringify({
+    const body = JSON.stringify({
       name: form.getFieldValue("teamName"),
     });
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-      credentials: "include",
-    };
-    await fetch(`${API_PATH}/team/teams`, requestOptions);
+    teamApi.setTeams(body);
   };
 
   return (

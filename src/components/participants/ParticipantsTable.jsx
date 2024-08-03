@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Flex, Modal, Table, Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ParticipantModal from "./ParticipantModal";
+import { participantApi } from "../../api";
 
 function ParticipantsTable({ ParticipantData }) {
   const columns = [
@@ -46,23 +47,11 @@ function ParticipantsTable({ ParticipantData }) {
 
   const deleteParticipantConfirm = (email) => {
     const hide_participant_request = async () => {
-      const myHeaders = new Headers();
-      myHeaders.append("accept", "application/json");
-      myHeaders.append("Content-Type", "application/json");
-
-      const raw = JSON.stringify({
+      const body = JSON.stringify({
         participant_email: email,
       });
 
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-        credentials: "include",
-      };
-
-      await fetch(`${API_PATH}/participant/hide_participant`, requestOptions);
+      await participantApi.setHideParticipant(body);
     };
     Modal.confirm({
       title: "Вы уверены?",

@@ -5,20 +5,15 @@ import Loader from "@components/loader/Loader";
 import { Locale } from "@constants";
 
 import "./sass/events.scss";
+import { userApi } from "@api";
 
 function Events() {
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
 
   if (isLoading) {
-    fetch(`${API_PATH}/event/events_with_nominations?offset=0&limit=10`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-    })
+    userApi
+      .getEventWithNominations({ limit: 10 })
       .then((response) => response.json())
       .then((data) => setEvents(data))
       .catch(() =>

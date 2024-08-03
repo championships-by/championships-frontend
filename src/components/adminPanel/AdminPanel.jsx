@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { message } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { RESPONSE_STATUS } from "@constants";
+import { userApi } from "@api/index.js";
 import AdminPanelNav from "./AdminPanelNav.jsx";
 import AdminPanelLogo from "./AdminPanelLogo.jsx";
 
@@ -14,14 +15,8 @@ function AdminPanel() {
 
   useEffect(() => {
     if (isLoading) {
-      fetch(`${API_PATH}/user/profile`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      })
+      userApi
+        .getProfile()
         .then((response) => {
           if (response.status === RESPONSE_STATUS.STATUS_OK) {
             return response.json();

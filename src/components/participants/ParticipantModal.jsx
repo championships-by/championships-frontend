@@ -33,7 +33,7 @@ function ParticipantModal({ isOpen, onOk, onCancel }) {
     myHeaders.append("accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
 
-    const raw = JSON.stringify({
+    const body = JSON.stringify({
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
       second_name: form.getFieldValue("second_name"),
@@ -50,14 +50,7 @@ function ParticipantModal({ isOpen, onOk, onCancel }) {
       hidden: false,
     });
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-      credentials: "include",
-    };
-    await fetch(`${API_PATH}/participant/participant`, requestOptions);
+    participantApi.setParticipant(body);
   };
 
   return (

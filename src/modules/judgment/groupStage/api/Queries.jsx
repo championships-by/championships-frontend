@@ -1,19 +1,8 @@
+import { matchApi } from "@api";
+
 const Queries = {
   getMatches: async (event_id, nomination_id) => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      body: null,
-      redirect: "follow",
-      credentials: "include",
-    };
-    const response = await fetch(
-      `${API_PATH}/match/get_group_matches?event_id=${event_id}&nomination_id=${nomination_id}`,
-      requestOptions
-    );
+    const response = await matchApi.getMatch(event_id, nomination_id);
     const responseJson = await response.json();
     return responseJson;
   },
@@ -34,15 +23,7 @@ const Queries = {
       team2_score: team2Score,
     };
 
-    fetch(`${API_PATH}/match/set_group_match_result`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-      body: JSON.stringify(data),
-    }).then((response) => {
+    matchApi.setMatch(data).then((response) => {
       if (response.ok) {
         window.location.reload();
       }

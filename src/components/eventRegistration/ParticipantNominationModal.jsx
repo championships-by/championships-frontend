@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
 import TeamNominationInput from "@modules/team/TeamNominationSelect";
+import { eventApi, participantApi, userApi } from "@api";
 
 function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,14 +24,8 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
 
   useEffect(() => {
     if (isOpen) {
-      fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      })
+      eventApi
+        .getEvent()
         .then((response) => response.json())
         .then((data) =>
           setNomination(
@@ -46,14 +41,8 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
           )
         );
 
-      fetch(`${API_PATH}/participant/participant?offset=0&limit=10`, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      })
+      participantApi
+        .getParticipant()
         .then((response) => response.json())
         .then((data) =>
           setTeamParticipants(
@@ -73,22 +62,11 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
   }, [isOpen, eventID]);
 
   const create_team_request = async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
-
-    const raw = JSON.stringify({
+    const body = JSON.stringify({
       name: form.getFieldValue("teamName"),
     });
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-      credentials: "include",
-    };
-    await fetch(`${API_PATH}/team/teams`, requestOptions);
+    await userApi.setTeams(body);
   };
 
   return (

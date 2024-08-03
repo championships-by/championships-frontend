@@ -3,6 +3,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import "./sass/groupStage.scss";
+import { matchApi } from "@api";
 
 function ModalGroupStage(match) {
   const [visible, setVisible] = useState(false);
@@ -74,15 +75,7 @@ function ModalGroupStage(match) {
       team2_score: team2Score,
     };
 
-    fetch(`${API_PATH}/match/set_group_match_result`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-      body: JSON.stringify(data),
-    }).then((response) => {
+    matchApi.setMatch(data).then((response) => {
       if (response.ok) {
         window.location.reload();
       }
