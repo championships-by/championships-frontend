@@ -1,10 +1,10 @@
-import { Flex, Input, Select, Space, Typography } from 'antd'
-import { CrownOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/user.scss'
+import { Flex, Input, Select, Space, Typography } from "antd";
+import { CrownOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/user.scss";
 
 function UserRoleInput({ name, ...props }) {
-  const disabled = props.disabled ?? false
+  const disabled = props.disabled ?? false;
 
   return (
     <Flex vertical className="user__role-input__flex">
@@ -23,16 +23,16 @@ function UserRoleInput({ name, ...props }) {
               value="specialist"
               options={[
                 {
-                  value: 'admin',
-                  label: 'Администратор',
+                  value: "admin",
+                  label: "Администратор",
                 },
                 {
-                  value: 'judge',
-                  label: 'Судья',
+                  value: "judge",
+                  label: "Судья",
                 },
                 {
-                  value: 'specialist',
-                  label: 'Специалист',
+                  value: "specialist",
+                  label: "Специалист",
                 },
               ]}
             />
@@ -43,7 +43,7 @@ function UserRoleInput({ name, ...props }) {
         Обратитесь к администратору сайта, чтобы изменить роль
       </Typography.Text>
     </Flex>
-  )
+  );
 }
 
-export default UserRoleInput
+export default UserRoleInput;

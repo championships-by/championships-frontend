@@ -1,7 +1,7 @@
-import React from 'react'
-import FormItem from 'antd/es/form/FormItem'
-import { Flex, Input, Typography } from 'antd'
-import { TeamOutlined } from '@ant-design/icons'
+import React from "react";
+import FormItem from "antd/es/form/FormItem";
+import { Flex, Input, Typography } from "antd";
+import { TeamOutlined } from "@ant-design/icons";
 
 function ParticipantTeacherPatronymicInput({ name }) {
   return (
@@ -20,6 +20,6 @@ function ParticipantTeacherPatronymicInput({ name }) {
         <Typography.Text type="secondary">Пример: Иванович</Typography.Text>
       </Flex>
     </FormItem>
-  )
+  );
 }
-export default ParticipantTeacherPatronymicInput
+export default ParticipantTeacherPatronymicInput;

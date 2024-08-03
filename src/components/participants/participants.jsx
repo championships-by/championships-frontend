@@ -1,32 +1,32 @@
-import { Button, Flex, Typography, Tooltip } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
-import { useEffect, useState } from 'react'
-import AdminPanelControls from '@components/admin-panel/admin-panel-controls'
-import ParticipantModal from './participant-modal.jsx'
-import ParticipantsTable from './participants-table.jsx'
-import Loader from '@components/loader/loader'
-import './sass/participants.scss'
+import { Button, Flex, Typography, Tooltip } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import AdminPanelControls from "@components/admin-panel/admin-panel-controls";
+import ParticipantModal from "./participant-modal.jsx";
+import ParticipantsTable from "./participants-table.jsx";
+import Loader from "@components/loader/loader";
+import "./sass/participants.scss";
 
 function Participants() {
   const [isAddParticipantModalOpen, setIsAddParticipantModalOpen] =
-    useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const [dataParticipants, setParticipants] = useState([])
+    useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataParticipants, setParticipants] = useState([]);
   if (isLoading) {
     fetch(`${API_PATH}/participant/participant?offset=0&limit=10`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        accept: 'application/json',
+        accept: "application/json",
       },
-      redirect: 'follow',
-      credentials: 'include',
+      redirect: "follow",
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => setParticipants(data))
       .catch(() =>
-        message.error('Невозможно получить данные. Обратитесь к администратору')
+        message.error("Невозможно получить данные. Обратитесь к администратору")
       )
-      .finally(() => setTimeout(() => setIsLoading(false), 300))
+      .finally(() => setTimeout(() => setIsLoading(false), 300));
   }
 
   return (
@@ -56,6 +56,6 @@ function Participants() {
         onCancel={() => setIsAddParticipantModalOpen(false)}
       />
     </>
-  )
+  );
 }
-export default Participants
+export default Participants;

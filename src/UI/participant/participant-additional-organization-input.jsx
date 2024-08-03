@@ -1,7 +1,7 @@
-import React from 'react'
-import FormItem from 'antd/es/form/FormItem'
-import { Flex, Input, Typography } from 'antd'
-import { BankOutlined } from '@ant-design/icons'
+import React from "react";
+import FormItem from "antd/es/form/FormItem";
+import { Flex, Input, Typography } from "antd";
+import { BankOutlined } from "@ant-design/icons";
 
 function ParticipantAdditionalOrganiztionInput({ name }) {
   return (
@@ -20,6 +20,6 @@ function ParticipantAdditionalOrganiztionInput({ name }) {
         </Typography.Text>
       </Flex>
     </FormItem>
-  )
+  );
 }
-export default ParticipantAdditionalOrganiztionInput
+export default ParticipantAdditionalOrganiztionInput;

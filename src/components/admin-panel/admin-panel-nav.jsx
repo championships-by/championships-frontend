@@ -1,12 +1,12 @@
-import { NavLink } from 'react-router-dom'
-import { Tooltip } from 'antd'
-import { ROUTES } from '@components/enums'
+import { NavLink } from "react-router-dom";
+import { Tooltip } from "antd";
+import { ROUTES } from "@components/enums";
 
 function AdminPanelNav({ role }) {
   return (
     <nav className="admin-panel__nav">
       <ul className="admin-panel__menu-list">
-        {(role === 'admin' || role === 'judge') && (
+        {(role === "admin" || role === "judge") && (
           <Tooltip title={ROUTES.EVENTS.TITLE}>
             <li>
               <NavLink
@@ -16,7 +16,7 @@ function AdminPanelNav({ role }) {
             </li>
           </Tooltip>
         )}
-        {(role === 'admin' || role === 'judge') && (
+        {(role === "admin" || role === "judge") && (
           <Tooltip title={ROUTES.JUDGMENT.TITLE}>
             <li>
               <NavLink
@@ -26,7 +26,7 @@ function AdminPanelNav({ role }) {
             </li>
           </Tooltip>
         )}
-        {(role === 'admin' || role === 'specialist') && (
+        {(role === "admin" || role === "specialist") && (
           <li>
             <Tooltip title={ROUTES.PARTICIPANTS.TITLE}>
               <NavLink
@@ -36,7 +36,7 @@ function AdminPanelNav({ role }) {
             </Tooltip>
           </li>
         )}
-        {role === 'admin' && (
+        {role === "admin" && (
           <li>
             <Tooltip title={ROUTES.USERS_CONTROL.TITLE}>
               <NavLink
@@ -66,7 +66,7 @@ function AdminPanelNav({ role }) {
         </li>
       </ul>
     </nav>
-  )
+  );
 }
 
-export default AdminPanelNav
+export default AdminPanelNav;

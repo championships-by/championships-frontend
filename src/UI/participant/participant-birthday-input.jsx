@@ -1,9 +1,9 @@
-import React from 'react'
-import { DatePicker, Flex, Input, Space, Typography } from 'antd'
-import { CalendarOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/participant.scss'
-import { Locale } from '@src/components/enums'
+import React from "react";
+import { DatePicker, Flex, Input, Space, Typography } from "antd";
+import { CalendarOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/participant.scss";
+import { Locale } from "@src/components/enums";
 
 const ParticipantBirthdayInput = () => {
   return (
@@ -22,9 +22,9 @@ const ParticipantBirthdayInput = () => {
             validateFirst
             rules={[
               {
-                type: 'object',
+                type: "object",
                 required: true,
-                message: 'Пожалуйста, выбирите дату рождения',
+                message: "Пожалуйста, выбирите дату рождения",
               },
             ]}
             className="participant__birthday-input__formitem"
@@ -39,7 +39,7 @@ const ParticipantBirthdayInput = () => {
         </Space.Compact>
       </Flex>
     </>
-  )
-}
+  );
+};
 
-export default ParticipantBirthdayInput
+export default ParticipantBirthdayInput;

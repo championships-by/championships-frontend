@@ -1,18 +1,18 @@
-import { DatePicker, Typography } from 'antd'
-import FormItem from 'antd/es/form/FormItem'
-import { Locale } from '@src/components/enums'
-import './sass/events.scss'
+import { DatePicker, Typography } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import { Locale } from "@src/components/enums";
+import "./sass/events.scss";
 
 function EventDate({ name }) {
   const configDate = {
     rules: [
       {
-        type: 'object',
+        type: "object",
         required: true,
-        message: 'Пожалуйста выбирите дату мероприятия',
+        message: "Пожалуйста выбирите дату мероприятия",
       },
     ],
-  }
+  };
   return (
     <>
       <Typography.Text>Дата мероприятия</Typography.Text>
@@ -26,6 +26,6 @@ function EventDate({ name }) {
         />
       </FormItem>
     </>
-  )
+  );
 }
-export default EventDate
+export default EventDate;

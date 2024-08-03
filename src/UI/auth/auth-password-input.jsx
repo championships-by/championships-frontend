@@ -1,8 +1,8 @@
-import React from 'react'
-import { Flex, Input, Typography } from 'antd'
-import { EyeInvisibleOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/auth.scss'
+import React from "react";
+import { Flex, Input, Typography } from "antd";
+import { EyeInvisibleOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/auth.scss";
 
 const AuthPasswordInput = ({ value, onChange }) => {
   return (
@@ -14,7 +14,7 @@ const AuthPasswordInput = ({ value, onChange }) => {
       rules={[
         {
           required: true,
-          message: 'Пожалуйста, введите пароль',
+          message: "Пожалуйста, введите пароль",
         },
       ]}
     >
@@ -33,7 +33,7 @@ const AuthPasswordInput = ({ value, onChange }) => {
         <a href="mailto:profil@zubronok.by">profil@zubronok.by</a>
       </Flex>
     </FormItem>
-  )
-}
+  );
+};
 
-export default AuthPasswordInput
+export default AuthPasswordInput;

@@ -1,8 +1,8 @@
-import React from 'react'
-import { Flex, Input, Typography } from 'antd'
-import { EyeInvisibleOutlined, LockOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/password-change.scss'
+import React from "react";
+import { Flex, Input, Typography } from "antd";
+import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/password-change.scss";
 
 function OldPassword({ name }) {
   return (
@@ -15,11 +15,11 @@ function OldPassword({ name }) {
         rules={[
           {
             required: true,
-            message: 'Пожалуйста введите свой пароль',
+            message: "Пожалуйста введите свой пароль",
           },
           {
             min: 8,
-            message: 'Минимальная длина пароля - 8 символов',
+            message: "Минимальная длина пароля - 8 символов",
           },
         ]}
         className="password-change__old-password__formitem"
@@ -31,7 +31,7 @@ function OldPassword({ name }) {
         />
       </FormItem>
     </Flex>
-  )
+  );
 }
 
-export default OldPassword
+export default OldPassword;

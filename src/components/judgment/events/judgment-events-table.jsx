@@ -1,39 +1,39 @@
-import { Table, Flex, List, Button, Typography, Modal, Tooltip } from 'antd'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
-import { ROUTES } from '@components/enums'
+import { Table, Flex, List, Button, Typography, Modal, Tooltip } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@components/enums";
 
 function JudgmentEventsTable({ EventsData }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const deleteUserConfirm = () => {
     Modal.confirm({
-      title: 'Вы уверены?',
-      content: 'Вы уверены что хотите удалить это мероприятие?',
+      title: "Вы уверены?",
+      content: "Вы уверены что хотите удалить это мероприятие?",
       footer: (_, { OkBtn, CancelBtn }) => (
         <>
           <OkBtn />
           <CancelBtn />
         </>
       ),
-      okText: 'Да',
-      cancelText: 'Отмена',
-    })
-  }
+      okText: "Да",
+      cancelText: "Отмена",
+    });
+  };
 
   const columns = [
     {
-      title: 'Название мероприятия',
-      key: 'nameEvent',
-      dataIndex: 'name',
+      title: "Название мероприятия",
+      key: "nameEvent",
+      dataIndex: "name",
     },
     {
-      title: 'Компетенции',
-      key: 'nominations',
+      title: "Компетенции",
+      key: "nominations",
       render: (_, { nominations }) => (
         <List
           locale={{
-            emptyText: 'Компетенции пока отсутствуют',
+            emptyText: "Компетенции пока отсутствуют",
           }}
           split={false}
           dataSource={nominations}
@@ -46,13 +46,13 @@ function JudgmentEventsTable({ EventsData }) {
       ),
     },
     {
-      title: 'Дата мероприятия',
-      key: 'dateEvent',
-      dataIndex: 'date',
+      title: "Дата мероприятия",
+      key: "dateEvent",
+      dataIndex: "date",
     },
     {
-      title: 'Действия',
-      key: 'action',
+      title: "Действия",
+      key: "action",
       render: ({ id }) => (
         <Flex>
           <Tooltip title={ROUTES.JUDGMENT_EVENT_SETTINGS.TITLE}>
@@ -72,13 +72,13 @@ function JudgmentEventsTable({ EventsData }) {
         </Flex>
       ),
     },
-  ]
+  ];
 
   return (
     <>
       <Table dataSource={EventsData} columns={columns} />
     </>
-  )
+  );
 }
 
-export default JudgmentEventsTable
+export default JudgmentEventsTable;

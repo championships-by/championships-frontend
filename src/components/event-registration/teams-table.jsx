@@ -1,63 +1,63 @@
-import { Table, Flex, List, Button, Typography } from 'antd'
-import { useState } from 'react'
+import { Table, Flex, List, Button, Typography } from "antd";
+import { useState } from "react";
 import {
   EditOutlined,
   DeleteOutlined,
   UsergroupAddOutlined,
-} from '@ant-design/icons'
-import TeamEditModal from '@components/event-registration/team-edit-modal'
-import ParticipantNominationModal from '@components/event-registration/participant-nomination-modal'
-import TeamDeleteModal from '@components/event-registration/team-delete-modal'
+} from "@ant-design/icons";
+import TeamEditModal from "@components/event-registration/team-edit-modal";
+import ParticipantNominationModal from "@components/event-registration/participant-nomination-modal";
+import TeamDeleteModal from "@components/event-registration/team-delete-modal";
 
 function TeamsTable({ TeamsData }) {
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
 
   const openEditModal = () => {
-    setIsEditModalOpen(true)
-  }
+    setIsEditModalOpen(true);
+  };
 
   const changeTeamData = () => {
-    setIsEditModalOpen(false)
-  }
+    setIsEditModalOpen(false);
+  };
 
   const openParticipantModal = () => {
-    setIsParticipantModalOpen(true)
-  }
+    setIsParticipantModalOpen(true);
+  };
 
   const changeParticipantData = () => {
-    setIsParticipantModalOpen(false)
-  }
+    setIsParticipantModalOpen(false);
+  };
 
   const columns = [
     {
-      title: 'Команда',
-      key: 'nameTeam',
-      width: '15%',
-      dataIndex: 'name',
+      title: "Команда",
+      key: "nameTeam",
+      width: "15%",
+      dataIndex: "name",
     },
     {
-      title: 'Компетенция - участники ',
-      key: 'nomination_particioant',
-      width: '75%',
+      title: "Компетенция - участники ",
+      key: "nomination_particioant",
+      width: "75%",
       children: [
         {
-          title: 'Компетенции',
-          key: 'nomination',
-          width: '25%',
-          dataIndex: 'nomination',
+          title: "Компетенции",
+          key: "nomination",
+          width: "25%",
+          dataIndex: "nomination",
         },
         {
-          title: 'Cтатус участника',
+          title: "Cтатус участника",
           children: [
             {
-              title: 'Участники',
-              key: 'participants',
-              width: '40%',
+              title: "Участники",
+              key: "participants",
+              width: "40%",
               render: (_, { participants }) => (
                 <List
                   locale={{
-                    emptyText: 'Участники пока отсутствуют',
+                    emptyText: "Участники пока отсутствуют",
                   }}
                   split={false}
                   dataSource={participants}
@@ -70,20 +70,20 @@ function TeamsTable({ TeamsData }) {
               ),
             },
             {
-              title: 'Статус',
-              key: 'Status',
-              width: '10%',
-              dataIndex: 'Status',
+              title: "Статус",
+              key: "Status",
+              width: "10%",
+              dataIndex: "Status",
             },
           ],
         },
       ],
     },
     {
-      title: 'Действия',
-      width: '10%',
-      key: 'action',
-      fixed: 'right',
+      title: "Действия",
+      width: "10%",
+      key: "action",
+      fixed: "right",
       render: () => (
         <Flex>
           <Button
@@ -104,7 +104,7 @@ function TeamsTable({ TeamsData }) {
         </Flex>
       ),
     },
-  ]
+  ];
 
   return (
     <>
@@ -121,7 +121,7 @@ function TeamsTable({ TeamsData }) {
         onCancel={() => setIsParticipantModalOpen(false)}
       /> */}
     </>
-  )
+  );
 }
 
-export default TeamsTable
+export default TeamsTable;

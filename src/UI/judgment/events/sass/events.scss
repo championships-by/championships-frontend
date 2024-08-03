@@ -1,46 +1,46 @@
 .events {
-  &__competition-groupStageParametrs{
+  &__competition-groupStageParametrs {
     width: 250px;
   }
-  &__competition-TimeParametrs{
+  &__competition-TimeParametrs {
     width: 250px;
   }
-  &__competition-criteria{
-    &__div{
+  &__competition-criteria {
+    &__div {
       margin-top: 10px;
       margin-bottom: 10px;
     }
-    &__input{
+    &__input {
       margin-bottom: 10px;
     }
   }
-  &__competition-reglament{
-    &__text{
+  &__competition-reglament {
+    &__text {
       font-size: 16px;
     }
   }
-  &__competition-judge{
-    &__text{
+  &__competition-judge {
+    &__text {
       font-size: 16px;
     }
-    &__name{
+    &__name {
       width: 500px;
     }
-    &__select{
+    &__select {
       width: 250px;
     }
   }
-  &__competition-type{
-    &__div{
+  &__competition-type {
+    &__div {
       margin-top: 30px;
     }
-    &__space{
+    &__space {
       width: 100%;
     }
-    &__name{
+    &__name {
       width: 300px;
     }
-    &__text{
+    &__text {
       font-size: 16px;
     }
   }
@@ -53,7 +53,7 @@
       height: 32px;
       border: none;
     }
-    &__input{
+    &__input {
       width: 250%;
     }
     &__div {
@@ -62,7 +62,7 @@
     &__autocomplete {
       width: 100%;
     }
-    &__text{
+    &__text {
       font-size: 16px;
     }
   }

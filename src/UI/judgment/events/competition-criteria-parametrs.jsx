@@ -1,6 +1,6 @@
-import React from 'react'
-import { Form, Space, Button, Input, Typography } from 'antd'
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import React from "react";
+import { Form, Space, Button, Input, Typography } from "antd";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 function CriteriaParametrs() {
   return (
@@ -22,12 +22,12 @@ function CriteriaParametrs() {
                   <Form.Item
                     {...restField}
                     className="events__competition-criteria__item"
-                    name={[name, 'criterion']}
-                    fieldKey={[fieldKey, 'criterion']}
+                    name={[name, "criterion"]}
+                    fieldKey={[fieldKey, "criterion"]}
                     rules={[
                       {
                         required: true,
-                        message: 'Не ввели критерий',
+                        message: "Не ввели критерий",
                       },
                     ]}
                   >
@@ -36,13 +36,13 @@ function CriteriaParametrs() {
                   </Form.Item>
                   <Form.Item
                     {...restField}
-                    name={[name, 'maxPoints']}
-                    fieldKey={[fieldKey, 'maxPoints']}
+                    name={[name, "maxPoints"]}
+                    fieldKey={[fieldKey, "maxPoints"]}
                     className="events__competition-criteria__item"
                     rules={[
                       {
                         required: true,
-                        message: 'Не ввели максимальное количество баллов',
+                        message: "Не ввели максимальное количество баллов",
                       },
                     ]}
                   >
@@ -70,7 +70,7 @@ function CriteriaParametrs() {
         </Form.List>
       </Form>
     </div>
-  )
+  );
 }
 
-export default CriteriaParametrs
+export default CriteriaParametrs;

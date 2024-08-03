@@ -1,13 +1,13 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Card, List, Tooltip, Typography } from 'antd'
-import { EditOutlined, EllipsisOutlined } from '@ant-design/icons'
-import dayjs from 'dayjs'
-import { ROUTES } from '@components/enums'
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Card, List, Tooltip, Typography } from "antd";
+import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
+import { ROUTES } from "@components/enums";
 
 const EventsList = ({ events }) => {
   const data = events.map((event, index) => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     return (
       <Card
         key={index}
@@ -37,13 +37,13 @@ const EventsList = ({ events }) => {
         title={<Typography.Title level={2}>{event.name}</Typography.Title>}
         extra={
           <Typography.Text type="secondary">
-            {dayjs(event.date).format('DD-MM-YYYY')}
+            {dayjs(event.date).format("DD-MM-YYYY")}
           </Typography.Text>
         }
       >
         <List
           locale={{
-            emptyText: 'Компетенции пока отсутствуют',
+            emptyText: "Компетенции пока отсутствуют",
           }}
           size="small"
           header={<Typography.Text>Компетенции: </Typography.Text>}
@@ -56,8 +56,8 @@ const EventsList = ({ events }) => {
           renderItem={(item) => <List.Item>{item.name}</List.Item>}
         />
       </Card>
-    )
-  })
+    );
+  });
 
   return (
     <List
@@ -65,17 +65,17 @@ const EventsList = ({ events }) => {
       pagination={{
         hideOnSinglePage: true,
         pageSize: 3,
-        position: 'bottom',
-        align: 'center',
+        position: "bottom",
+        align: "center",
       }}
       dataSource={data}
       renderItem={(item) => <List.Item>{item}</List.Item>}
       locale={{
-        emptyText: 'Мероприятия отсутствуют',
+        emptyText: "Мероприятия отсутствуют",
       }}
       className="events__list"
     />
-  )
-}
+  );
+};
 
-export default EventsList
+export default EventsList;

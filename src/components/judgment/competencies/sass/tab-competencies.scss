@@ -1,9 +1,9 @@
 .tabs-container {
-    display: flex;
-    align-items: center; /* Выравнивание по вертикали */
-    justify-content: space-between; /* Распределение пространства между элементами */
-  }
-  
-  .tabs-button {
-    margin-left: auto; /* Сдвигает кнопку вправо */
-  }
+  display: flex;
+  align-items: center; /* Выравнивание по вертикали */
+  justify-content: space-between; /* Распределение пространства между элементами */
+}
+
+.tabs-button {
+  margin-left: auto; /* Сдвигает кнопку вправо */
+}

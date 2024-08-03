@@ -1,8 +1,8 @@
-import React from 'react'
-import FormItem from 'antd/es/form/FormItem'
-import { Select, Flex, Input, Space, Typography } from 'antd'
-import { FlagOutlined } from '@ant-design/icons'
-import './sass/participant.scss'
+import React from "react";
+import FormItem from "antd/es/form/FormItem";
+import { Select, Flex, Input, Space, Typography } from "antd";
+import { FlagOutlined } from "@ant-design/icons";
+import "./sass/participant.scss";
 
 function ParticipantCompitationSelect({ name }) {
   return (
@@ -34,16 +34,16 @@ function ParticipantCompitationSelect({ name }) {
               placeholder="Выберите компетенцию"
               options={[
                 {
-                  value: 'robofootball',
-                  label: 'Робофутбол',
+                  value: "robofootball",
+                  label: "Робофутбол",
                 },
                 {
-                  value: 'veb',
-                  label: 'Веб-разработка',
+                  value: "veb",
+                  label: "Веб-разработка",
                 },
                 {
-                  value: 'robosumo',
-                  label: 'Робосумо',
+                  value: "robosumo",
+                  label: "Робосумо",
                 },
               ]}
             />
@@ -51,6 +51,6 @@ function ParticipantCompitationSelect({ name }) {
         </Space.Compact>
       </Flex>
     </div>
-  )
+  );
 }
-export default ParticipantCompitationSelect
+export default ParticipantCompitationSelect;

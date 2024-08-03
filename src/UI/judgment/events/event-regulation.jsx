@@ -1,8 +1,8 @@
-import { Typography, Upload, message, Button, Flex } from 'antd'
-import FormItem from 'antd/es/form/FormItem'
-import { UploadOutlined } from '@ant-design/icons'
-import { FILE_UPLOADING } from '@components/enums.js'
-import './sass/events.scss'
+import { Typography, Upload, message, Button, Flex } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import { UploadOutlined } from "@ant-design/icons";
+import { FILE_UPLOADING } from "@components/enums.js";
+import "./sass/events.scss";
 
 function EventRegulation({ name }) {
   return (
@@ -15,9 +15,9 @@ function EventRegulation({ name }) {
             if (info.file.status !== FILE_UPLOADING.UPLOADING) {
             }
             if (info.file.status === FILE_UPLOADING.DONE) {
-              message.success(`${info.file.name} Файл загружен успешно`)
+              message.success(`${info.file.name} Файл загружен успешно`);
             } else if (info.file.status === FILE_UPLOADING.ERROR) {
-              message.error(`${info.file.name} Ошибка загрузки файла`)
+              message.error(`${info.file.name} Ошибка загрузки файла`);
             }
           }}
         >
@@ -25,6 +25,6 @@ function EventRegulation({ name }) {
         </Upload>
       </Flex>
     </FormItem>
-  )
+  );
 }
-export default EventRegulation
+export default EventRegulation;

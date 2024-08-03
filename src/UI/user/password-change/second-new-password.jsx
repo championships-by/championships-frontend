@@ -1,8 +1,8 @@
-import React from 'react'
-import { Flex, Input, Typography } from 'antd'
-import { EyeInvisibleOutlined, LockOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/password-change.scss'
+import React from "react";
+import { Flex, Input, Typography } from "antd";
+import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/password-change.scss";
 
 function SecondNewPassword({ name, form }) {
   return (
@@ -10,24 +10,24 @@ function SecondNewPassword({ name, form }) {
       <Typography.Text>Повторно новый пароль</Typography.Text>
       <FormItem
         name={name}
-        dependencies={['NewPassword']}
+        dependencies={["NewPassword"]}
         hasFeedback
         validateFirst
         rules={[
           {
             required: true,
-            message: 'Пожалуйста введите пароль',
+            message: "Пожалуйста введите пароль",
           },
           {
             min: 8,
-            message: 'Минимальная длина пароля - 8 символов',
+            message: "Минимальная длина пароля - 8 символов",
           },
           {
             validator(_, value) {
-              if (!value || form.getFieldValue('NewPassword') === value) {
-                return Promise.resolve()
+              if (!value || form.getFieldValue("NewPassword") === value) {
+                return Promise.resolve();
               }
-              return Promise.reject(new Error('Пароли не совпадают'))
+              return Promise.reject(new Error("Пароли не совпадают"));
             },
           },
         ]}
@@ -40,7 +40,7 @@ function SecondNewPassword({ name, form }) {
         />
       </FormItem>
     </Flex>
-  )
+  );
 }
 
-export default SecondNewPassword
+export default SecondNewPassword;

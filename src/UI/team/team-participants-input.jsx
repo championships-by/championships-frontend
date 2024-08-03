@@ -1,8 +1,8 @@
-import { Flex, Input, Select, Space, Typography } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/team.scss'
-import { FILTER_OPTION } from '@src/components/enums'
+import { Flex, Input, Select, Space, Typography } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/team.scss";
+import { FILTER_OPTION } from "@src/components/enums";
 
 function TeamParticipantsInput({ name, options }) {
   return (
@@ -33,7 +33,7 @@ function TeamParticipantsInput({ name, options }) {
       </Flex>
       <Typography.Text type="secondary">Робофутбол</Typography.Text>
     </Flex>
-  )
+  );
 }
 
-export default TeamParticipantsInput
+export default TeamParticipantsInput;

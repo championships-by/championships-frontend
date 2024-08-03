@@ -7,117 +7,116 @@ import {
   message,
   Form,
   Space,
-} from 'antd'
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
-import dayjs from 'dayjs'
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import Loader from '@components/loader/loader'
-import CompitationModal from './event-settings-modal'
-import EventName from '@src/UI/judgment/events/event-name'
-import EventDate from '@src/UI/judgment/events/event-date'
-import EventDescription from '@src/UI/judgment/events/event-description'
-import EventEmail from '@src/UI/judgment/events/event-email'
-import EventPlace from '@src/UI/judgment/events/event-place'
-import EventRegistrationSwitch from '@src/UI/judgment/events/event-registration-switch'
-import EventRegulation from '@src/UI/judgment/events/event-regulation'
-import EventLogo from '@src/UI/judgment/events/event-logo'
-import './sass/event-settings.scss'
+} from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Loader from "@components/loader/loader";
+import CompitationModal from "./event-settings-modal";
+import EventName from "@src/UI/judgment/events/event-name";
+import EventDate from "@src/UI/judgment/events/event-date";
+import EventDescription from "@src/UI/judgment/events/event-description";
+import EventEmail from "@src/UI/judgment/events/event-email";
+import EventPlace from "@src/UI/judgment/events/event-place";
+import EventRegistrationSwitch from "@src/UI/judgment/events/event-registration-switch";
+import EventRegulation from "@src/UI/judgment/events/event-regulation";
+import EventLogo from "@src/UI/judgment/events/event-logo";
+import "./sass/event-settings.scss";
 
 function EventSettings() {
-  const [isLoading, setIsLoading] = useState(true)
-  const [loadings, setLoadings] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadings, setLoadings] = useState([]);
   const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
-    useState(false)
-  const [dataEvent, setEvent] = useState({})
-  const { eventID } = useParams()
-  const [form] = Form.useForm()
+    useState(false);
+  const [dataEvent, setEvent] = useState({});
+  const { eventID } = useParams();
+  const [form] = Form.useForm();
 
   useEffect(() => {
-    if(eventID != undefined){
+    if (eventID != undefined) {
       try {
         fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          redirect: 'follow',
-          credentials: 'include',
+          redirect: "follow",
+          credentials: "include",
         })
-        .then((response) => response.json())
-        .then((data) => setEvent(data))
-        .then((dataEvent) => {
+          .then((response) => response.json())
+          .then((data) => setEvent(data))
+          .then((dataEvent) => {
             form.setFieldsValue({
               event_name: dataEvent?.event_data?.name,
               event_date: dataEvent?.event_data?.date,
-            })//#TODO
-  
-            setTimeout(() => setIsLoading(false), 300)
-          })
+            }); //#TODO
+
+            setTimeout(() => setIsLoading(false), 300);
+          });
       } catch (error) {
         message.error(
-          'Ошибка: Невозможно получить данные. Обратитесь к администратору...'
-        )
+          "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
+        );
       }
-    }else{
-      setTimeout(() => setIsLoading(false), 300)
-          
+    } else {
+      setTimeout(() => setIsLoading(false), 300);
     }
-  }, [eventID])
+  }, [eventID]);
 
   const update_event_request = async () => {
-    const myHeaders = new Headers()
-    myHeaders.append('accept', 'application/json')
-    myHeaders.append('Content-Type', 'application/json')
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
       id: eventID,
-      new_name: form.getFieldValue('event_name'),
-      new_date: dayjs(form.getFieldValue('event_date')).format('YYYY-MM-DD'),
-    }) 
+      new_name: form.getFieldValue("event_name"),
+      new_date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
+    });
     const requestOptions = {
-      method: 'PUT',
+      method: "PUT",
       headers: myHeaders,
       body: raw,
-      redirect: 'follow',
-      credentials: 'include',
-    }
-    await fetch(`${API_PATH}/event/event`, requestOptions)
-  }
+      redirect: "follow",
+      credentials: "include",
+    };
+    await fetch(`${API_PATH}/event/event`, requestOptions);
+  };
 
   const create_event_request = async () => {
-    const myHeaders = new Headers()
-    myHeaders.append('accept', 'application/json')
-    myHeaders.append('Content-Type', 'application/json')
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
 
     const raw = JSON.stringify({
-      name: form.getFieldValue('event_name'),
-      date: dayjs(form.getFieldValue('event_date')).format('YYYY-MM-DD'),
-    }) //#TODO
+      name: form.getFieldValue("event_name"),
+      date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
+    }); //#TODO
     const requestOptions = {
-      method: 'POST',
+      method: "POST",
       headers: myHeaders,
       body: raw,
-      redirect: 'follow',
-      credentials: 'include',
-    }
-    await fetch(`${API_PATH}/event/event`, requestOptions)
-  }
+      redirect: "follow",
+      credentials: "include",
+    };
+    await fetch(`${API_PATH}/event/event`, requestOptions);
+  };
 
   const columns = [
     {
-      title: 'Название компетенции',
-      dataIndex: 'name_compitation',
-      key: 'name_nomination',
+      title: "Название компетенции",
+      dataIndex: "name_compitation",
+      key: "name_nomination",
     },
     {
-      title: 'Количество зарегестрированных участников',
-      dataIndex: 'porticipants_count',
-      key: 'porticipants_count',
+      title: "Количество зарегестрированных участников",
+      dataIndex: "porticipants_count",
+      key: "porticipants_count",
     },
     {
-      title: 'Действия',
-      key: 'action',
+      title: "Действия",
+      key: "action",
       render: () => (
         <Flex>
           <Button type="text" icon={<EditOutlined />}></Button>
@@ -125,30 +124,30 @@ function EventSettings() {
         </Flex>
       ),
     },
-  ]
+  ];
 
   const onFinish = () => {
-    message.success('Всё в порядке!')
-  }
+    message.success("Всё в порядке!");
+  };
 
   const onFinishFailed = () => {
-    message.error('Проверьте поля для ввода!')
-  }
+    message.error("Проверьте поля для ввода!");
+  };
 
   const enterLoading = (index) => {
     setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings]
-      newLoadings[index] = true
-      return newLoadings
-    })
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
     setTimeout(() => {
       setLoadings((prevLoadings) => {
-        const newLoadings = [...prevLoadings]
-        newLoadings[index] = false
-        return newLoadings
-      })
-    }, 6000)
-  }
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = false;
+        return newLoadings;
+      });
+    }, 6000);
+  };
 
   return (
     <Flex vertical gap="middle">
@@ -160,11 +159,11 @@ function EventSettings() {
         <Breadcrumb
           items={[
             {
-              title: 'Мероприятия',
-              href: './',
+              title: "Мероприятия",
+              href: "./",
             },
             {
-              title: 'Hастройка мероприятия',
+              title: "Hастройка мероприятия",
             },
           ]}
         />
@@ -195,11 +194,11 @@ function EventSettings() {
           htmlType="submit"
           loading={loadings[0]}
           onClick={() => {
-            enterLoading(0)
-            if (eventID === undefined){
-              create_event_request()
-            }else{
-            update_event_request()
+            enterLoading(0);
+            if (eventID === undefined) {
+              create_event_request();
+            } else {
+              update_event_request();
             }
           }}
         >
@@ -215,22 +214,20 @@ function EventSettings() {
             onClick={() => setIsAddCompitationModalOpen(true)}
             type="primary"
           >
-            {' '}
-            Добавить компетенцию{' '}
+            {" "}
+            Добавить компетенцию{" "}
           </Button>
         </Flex>
-        <Table
-          columns={columns}
-        />
+        <Table columns={columns} />
       </Space>
       <CompitationModal
-        name={'Добавить компетенцию'}
+        name={"Добавить компетенцию"}
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
       />
     </Flex>
-  )
+  );
 }
 
-export default EventSettings
+export default EventSettings;

@@ -1,10 +1,10 @@
-import { Table, Flex, Button, Typography, Modal } from 'antd'
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import UserModal from '@components/users-control/user-modal'
-import { useState } from 'react'
+import { Table, Flex, Button, Typography, Modal } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import UserModal from "@components/users-control/user-modal";
+import { useState } from "react";
 
 function UsersTable({ usersData }) {
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // const delete_user_request = async () => {
   //     const myHeaders = new Headers();
@@ -34,52 +34,52 @@ function UsersTable({ usersData }) {
 
   const deleteUserConfirm = () => {
     Modal.confirm({
-      title: 'Вы уверены?',
-      content: 'Вы уверены что хотите удалить этого пользователя?',
+      title: "Вы уверены?",
+      content: "Вы уверены что хотите удалить этого пользователя?",
       footer: (_, { OkBtn, CancelBtn }) => (
         <>
           <OkBtn />
           <CancelBtn />
         </>
       ),
-      okText: 'Да',
-      cancelText: 'Отмена',
-    })
-  }
+      okText: "Да",
+      cancelText: "Отмена",
+    });
+  };
 
   const openEditModal = () => {
-    setIsEditModalOpen(true)
-  }
+    setIsEditModalOpen(true);
+  };
 
   const changeUserData = () => {
-    setIsEditModalOpen(false)
-  }
+    setIsEditModalOpen(false);
+  };
 
   const columns = [
     {
-      title: 'ФИО',
-      key: 'fullname',
+      title: "ФИО",
+      key: "fullname",
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
       ),
     },
     {
-      title: 'Роль',
-      key: 'role',
+      title: "Роль",
+      key: "role",
       render: (_, { role }) =>
-        role === 'admin' ? (
+        role === "admin" ? (
           <Typography.Text>Админ</Typography.Text>
-        ) : role === 'judge' ? (
+        ) : role === "judge" ? (
           <Typography.Text>Судейство</Typography.Text>
-        ) : role === 'specialist' ? (
+        ) : role === "specialist" ? (
           <Typography.Text>Специалист</Typography.Text>
         ) : (
           <Typography.Text></Typography.Text>
         ),
     },
     {
-      title: 'Действия',
-      key: 'action',
+      title: "Действия",
+      key: "action",
       render: () => (
         <Flex>
           <Button
@@ -95,7 +95,7 @@ function UsersTable({ usersData }) {
         </Flex>
       ),
     },
-  ]
+  ];
 
   return (
     <>
@@ -107,7 +107,7 @@ function UsersTable({ usersData }) {
         onCancel={() => setIsEditModalOpen(false)}
       />
     </>
-  )
+  );
 }
 
-export default UsersTable
+export default UsersTable;

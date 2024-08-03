@@ -1,22 +1,22 @@
-import { Button, Modal, Flex, message, Form } from 'antd'
-import { useState } from 'react'
-import OldPassword from '@src/UI/user/password-change/old-password'
-import NewPassword from '@src/UI/user/password-change/new-password'
-import SecondNewPassword from '@src/UI/user/password-change/second-new-password'
+import { Button, Modal, Flex, message, Form } from "antd";
+import { useState } from "react";
+import OldPassword from "@src/UI/user/password-change/old-password";
+import NewPassword from "@src/UI/user/password-change/new-password";
+import SecondNewPassword from "@src/UI/user/password-change/second-new-password";
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
-  const [isLoading, setIsLoading] = useState(false)
-  const [form] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(false);
+  const [form] = Form.useForm();
 
   const onFinish = () => {
-    message.success('Всё в порядке!')
-    setIsLoading(false)
-  }
+    message.success("Всё в порядке!");
+    setIsLoading(false);
+  };
 
   const onFinishFailed = () => {
-    message.error('Проверьте поля для ввода!')
-    setIsLoading(false)
-  }
+    message.error("Проверьте поля для ввода!");
+    setIsLoading(false);
+  };
 
   return (
     <Modal
@@ -52,7 +52,7 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
         </Flex>
       </Form>
     </Modal>
-  )
+  );
 }
 
-export default UserPasswordModal
+export default UserPasswordModal;

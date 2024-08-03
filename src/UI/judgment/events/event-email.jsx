@@ -1,6 +1,6 @@
-import { Typography, Input, Flex } from 'antd'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/events.scss'
+import { Typography, Input, Flex } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/events.scss";
 
 function EventEmail({ name }) {
   return (
@@ -11,11 +11,11 @@ function EventEmail({ name }) {
       rules={[
         {
           required: true,
-          message: 'Пожалуйста, введите email для вопросов участников',
+          message: "Пожалуйста, введите email для вопросов участников",
         },
         {
-          type: 'email',
-          message: 'Некоректный Email',
+          type: "email",
+          message: "Некоректный Email",
         },
       ]}
     >
@@ -30,6 +30,6 @@ function EventEmail({ name }) {
         />
       </Flex>
     </FormItem>
-  )
+  );
 }
-export default EventEmail
+export default EventEmail;

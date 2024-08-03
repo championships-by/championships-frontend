@@ -1,7 +1,7 @@
-import { Typography, Input, Flex } from 'antd'
-import FormItem from 'antd/es/form/FormItem'
-import TextArea from 'antd/es/input/TextArea'
-import './sass/events.scss'
+import { Typography, Input, Flex } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import TextArea from "antd/es/input/TextArea";
+import "./sass/events.scss";
 
 function EventDescription({ name }) {
   return (
@@ -12,15 +12,15 @@ function EventDescription({ name }) {
       rules={[
         {
           required: true,
-          message: 'Пожалуйста, введите описание мероприятия',
+          message: "Пожалуйста, введите описание мероприятия",
         },
         {
           max: 500,
-          message: 'Максимальное значение 500',
+          message: "Максимальное значение 500",
         },
         {
           min: 5,
-          message: 'Минимальное значение 5',
+          message: "Минимальное значение 5",
         },
       ]}
     >
@@ -36,6 +36,6 @@ function EventDescription({ name }) {
         />
       </Flex>
     </FormItem>
-  )
+  );
 }
-export default EventDescription
+export default EventDescription;

@@ -1,6 +1,6 @@
-import { Button, Result } from 'antd'
-import { NavLink } from 'react-router-dom'
-import { ROUTES } from '@src/components/enums'
+import { Button, Result } from "antd";
+import { NavLink } from "react-router-dom";
+import { ROUTES } from "@src/components/enums";
 
 const Forbidden = () => (
   <Result
@@ -13,5 +13,5 @@ const Forbidden = () => (
       </NavLink>
     }
   />
-)
-export default Forbidden
+);
+export default Forbidden;

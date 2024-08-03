@@ -1,7 +1,7 @@
-import React from 'react'
-import { Flex, Input, Typography } from 'antd'
-import { BankOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
+import React from "react";
+import { Flex, Input, Typography } from "antd";
+import { BankOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
 
 function ParticipantOrganizationInput({ name }) {
   return (
@@ -12,11 +12,11 @@ function ParticipantOrganizationInput({ name }) {
       rules={[
         {
           required: true,
-          message: 'Пожалуйста, введите учереждение образования',
+          message: "Пожалуйста, введите учереждение образования",
         },
         {
           max: 255,
-          message: 'Максимальное значение 255',
+          message: "Максимальное значение 255",
         },
       ]}
     >
@@ -31,7 +31,7 @@ function ParticipantOrganizationInput({ name }) {
         </Typography.Text>
       </Flex>
     </FormItem>
-  )
+  );
 }
 
-export default ParticipantOrganizationInput
+export default ParticipantOrganizationInput;

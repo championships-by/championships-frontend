@@ -1,23 +1,23 @@
-import React from 'react'
-import { useState } from 'react'
-import { Button, Flex, Form, Modal, message } from 'antd'
-import Competition from '../../../UI/judgment/events/competition-name'
-import ReglamentName from '@src/UI/judgment/events/reglament-name'
-import CompetitionJudge from '@src/UI/judgment/events/competition-judge-name'
-import CompetitionType from '../../../UI/judgment/events/competition-type'
+import React from "react";
+import { useState } from "react";
+import { Button, Flex, Form, Modal, message } from "antd";
+import Competition from "../../../UI/judgment/events/competition-name";
+import ReglamentName from "@src/UI/judgment/events/reglament-name";
+import CompetitionJudge from "@src/UI/judgment/events/competition-judge-name";
+import CompetitionType from "../../../UI/judgment/events/competition-type";
 
 function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const onFinish = () => {
-    message.success('Всё в порядке!')
-    setIsLoading(false)
-  }
+    message.success("Всё в порядке!");
+    setIsLoading(false);
+  };
 
   const onFinishFailed = () => {
-    message.error('Проверьте поля для ввода!')
-    setIsLoading(false)
-  }
+    message.error("Проверьте поля для ввода!");
+    setIsLoading(false);
+  };
 
   return (
     <Modal
@@ -57,7 +57,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
         </Flex>
       </Form>
     </Modal>
-  )
+  );
 }
 
-export default EventSettingsCompitations
+export default EventSettingsCompitations;

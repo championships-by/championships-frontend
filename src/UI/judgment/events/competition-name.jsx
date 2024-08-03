@@ -1,8 +1,8 @@
-import React from 'react'
-import FormItem from 'antd/es/form/FormItem'
-import { Flex, Input, Space, Typography } from 'antd'
-import { FlagOutlined } from '@ant-design/icons'
-import './sass/events.scss'
+import React from "react";
+import FormItem from "antd/es/form/FormItem";
+import { Flex, Input, Space, Typography } from "antd";
+import { FlagOutlined } from "@ant-design/icons";
+import "./sass/events.scss";
 
 function CompitationNameInput() {
   return (
@@ -23,11 +23,11 @@ function CompitationNameInput() {
             rules={[
               {
                 required: true,
-                message: 'Пожалуйста, выберите мероприятие',
+                message: "Пожалуйста, выберите мероприятие",
               },
               {
                 min: 5,
-                message: 'Минимальное значение 5',
+                message: "Минимальное значение 5",
               },
             ]}
           >
@@ -45,6 +45,6 @@ function CompitationNameInput() {
         </Space.Compact>
       </Flex>
     </div>
-  )
+  );
 }
-export default CompitationNameInput
+export default CompitationNameInput;

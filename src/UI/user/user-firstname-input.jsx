@@ -1,16 +1,16 @@
-import React, { useCallback } from 'react'
-import { Flex, Input, Typography } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/user.scss'
-import { handlePaste } from './handlePaste'
+import React, { useCallback } from "react";
+import { Flex, Input, Typography } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/user.scss";
+import { handlePaste } from "./handlePaste";
 
 function UserFirstnameInput({ name }) {
   const handleKeyPress = (event) => {
-    if (event.key === ' ') {
-      event.preventDefault()
+    if (event.key === " ") {
+      event.preventDefault();
     }
-  }
+  };
 
   return (
     <Flex vertical className="user__firstname-input__flex">
@@ -22,20 +22,20 @@ function UserFirstnameInput({ name }) {
         rules={[
           {
             required: true,
-            message: 'Пожалуйста, введите имя',
+            message: "Пожалуйста, введите имя",
           },
           {
             max: 255,
-            message: 'Максимальное значение 255',
+            message: "Максимальное значение 255",
           },
           {
             validator(_, value) {
               if (value && value.trim()) {
-                return Promise.resolve()
+                return Promise.resolve();
               }
               return Promise.reject(
-                new Error('Пожалуйста, введите корректное имя')
-              )
+                new Error("Пожалуйста, введите корректное имя")
+              );
             },
           },
         ]}
@@ -52,7 +52,7 @@ function UserFirstnameInput({ name }) {
       </FormItem>
       <Typography.Text type="secondary">Пример: Иван</Typography.Text>
     </Flex>
-  )
+  );
 }
 
-export default UserFirstnameInput
+export default UserFirstnameInput;

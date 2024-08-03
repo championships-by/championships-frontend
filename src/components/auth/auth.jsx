@@ -1,89 +1,89 @@
-import './sass/auth.scss'
-import { Form, message, Button } from 'antd'
-import FormItem from 'antd/es/form/FormItem'
-import { useEffect, useState } from 'react'
-import logo from '@src/assets/img/logo.png'
-import AuthEmailInput from '@src/UI/auth/auth-email-input'
-import AuthPasswordInput from '@src/UI/auth/auth-password-input'
-import { useNavigate } from 'react-router-dom'
-import Loader from '@components/loader/loader'
-import { ROUTES } from '@components/enums'
+import "./sass/auth.scss";
+import { Form, message, Button } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import { useEffect, useState } from "react";
+import logo from "@src/assets/img/logo.png";
+import AuthEmailInput from "@src/UI/auth/auth-email-input";
+import AuthPasswordInput from "@src/UI/auth/auth-password-input";
+import { useNavigate } from "react-router-dom";
+import Loader from "@components/loader/loader";
+import { ROUTES } from "@components/enums";
 
 function Auth() {
-  const [isLoading, setIsLoading] = useState(true)
-  const [isFormLoading, setIsFormLoading] = useState(false)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     if (isLoading) {
       fetch(`${API_PATH}/user/profile`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        redirect: 'follow',
-        credentials: 'include',
+        redirect: "follow",
+        credentials: "include",
       })
         .then((response) => {
           if (response.ok) {
-            navigate('/settings')
+            navigate("/settings");
           } else {
-            setIsLoading(false)
+            setIsLoading(false);
           }
         })
         .catch(() => {
           message.error(
-            'Ошибка: Невозможно получить данные. Обратитесь к администратору...'
-          )
-        })
+            "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
+          );
+        });
     }
-  }, [isLoading, navigate])
+  }, [isLoading, navigate]);
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    setIsFormLoading(true)
+    event.preventDefault();
+    setIsFormLoading(true);
 
     const requestBody = {
       email: email,
       password: password,
-    }
+    };
 
     try {
       const response = await fetch(`${API_PATH}/auth/login`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(requestBody),
-        redirect: 'follow',
-        credentials: 'include',
-      })
+        redirect: "follow",
+        credentials: "include",
+      });
 
       if (response.ok) {
-        navigate(ROUTES.USER_SETTINGS.PATH)
+        navigate(ROUTES.USER_SETTINGS.PATH);
       } else {
-        message.error('Ошибка: Неверный email или пароль.')
+        message.error("Ошибка: Неверный email или пароль.");
       }
     } catch (error) {
       message.error(
-        'Ошибка: Невозможно авторизовать пользователя. Попробуйте еще раз...'
-      )
+        "Ошибка: Невозможно авторизовать пользователя. Попробуйте еще раз..."
+      );
     }
 
-    setIsFormLoading(false)
-  }
+    setIsFormLoading(false);
+  };
 
   const onFinish = () => {
-    setIsFormLoading(false)
-  }
+    setIsFormLoading(false);
+  };
 
   const onFinishFailed = () => {
-    message.error('Проверьте поля для ввода!')
+    message.error("Проверьте поля для ввода!");
 
-    setIsFormLoading(false)
-  }
+    setIsFormLoading(false);
+  };
 
   return (
     <>
@@ -123,7 +123,7 @@ function Auth() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Auth
+export default Auth;

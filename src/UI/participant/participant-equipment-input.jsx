@@ -1,7 +1,7 @@
-import React from 'react'
-import FormItem from 'antd/es/form/FormItem'
-import { Flex, Input, Typography } from 'antd'
-import { LaptopOutlined } from '@ant-design/icons'
+import React from "react";
+import FormItem from "antd/es/form/FormItem";
+import { Flex, Input, Typography } from "antd";
+import { LaptopOutlined } from "@ant-design/icons";
 
 function ParticipantEquipmentInput({ name }) {
   return (
@@ -18,6 +18,6 @@ function ParticipantEquipmentInput({ name }) {
         </Typography.Text>
       </Flex>
     </FormItem>
-  )
+  );
 }
-export default ParticipantEquipmentInput
+export default ParticipantEquipmentInput;

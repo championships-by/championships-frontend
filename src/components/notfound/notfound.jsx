@@ -1,6 +1,6 @@
-import { Button, Result } from 'antd'
-import { NavLink } from 'react-router-dom'
-import { ROUTES } from '@components/enums'
+import { Button, Result } from "antd";
+import { NavLink } from "react-router-dom";
+import { ROUTES } from "@components/enums";
 
 function NotFound() {
   return (
@@ -14,7 +14,7 @@ function NotFound() {
         </NavLink>
       }
     />
-  )
+  );
 }
 
-export default NotFound
+export default NotFound;

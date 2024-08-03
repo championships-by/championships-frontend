@@ -1,7 +1,7 @@
-import React from 'react'
-import FormItem from 'antd/es/form/FormItem'
-import { Flex, Input, Typography } from 'antd'
-import { CodeOutlined } from '@ant-design/icons'
+import React from "react";
+import FormItem from "antd/es/form/FormItem";
+import { Flex, Input, Typography } from "antd";
+import { CodeOutlined } from "@ant-design/icons";
 
 function ParticipantSoftwareInput({ name }) {
   return (
@@ -18,6 +18,6 @@ function ParticipantSoftwareInput({ name }) {
         </Typography.Text>
       </Flex>
     </FormItem>
-  )
+  );
 }
-export default ParticipantSoftwareInput
+export default ParticipantSoftwareInput;

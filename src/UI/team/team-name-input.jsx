@@ -1,8 +1,8 @@
-import React from 'react'
-import { Flex, Input, Typography } from 'antd'
-import { TeamOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/team.scss'
+import React from "react";
+import { Flex, Input, Typography } from "antd";
+import { TeamOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/team.scss";
 
 function TeamNameInput({ name }) {
   return (
@@ -15,11 +15,11 @@ function TeamNameInput({ name }) {
         rules={[
           {
             required: true,
-            message: 'Пожалуйста введите название команды',
+            message: "Пожалуйста введите название команды",
           },
           {
             max: 255,
-            message: 'Максимальное значение 255',
+            message: "Максимальное значение 255",
           },
         ]}
         className="team__team-name-input__formitem"
@@ -33,7 +33,7 @@ function TeamNameInput({ name }) {
       </FormItem>
       <Typography.Text type="secondary">Пример: Эврика</Typography.Text>
     </Flex>
-  )
+  );
 }
 
-export default TeamNameInput
+export default TeamNameInput;

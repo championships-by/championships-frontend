@@ -1,7 +1,7 @@
-import React from 'react'
-import { Flex, Input, Typography } from 'antd'
-import { UserOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
+import React from "react";
+import { Flex, Input, Typography } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
 
 function ParticipantFirstnameInput({ name }) {
   return (
@@ -12,11 +12,11 @@ function ParticipantFirstnameInput({ name }) {
       rules={[
         {
           required: true,
-          message: 'Пожалуйста введите имя',
+          message: "Пожалуйста введите имя",
         },
         {
           max: 255,
-          message: 'Максимальное значение 255',
+          message: "Максимальное значение 255",
         },
       ]}
     >
@@ -32,7 +32,7 @@ function ParticipantFirstnameInput({ name }) {
         <Typography.Text type="secondary">Пример: Иван</Typography.Text>
       </Flex>
     </FormItem>
-  )
+  );
 }
 
-export default ParticipantFirstnameInput
+export default ParticipantFirstnameInput;

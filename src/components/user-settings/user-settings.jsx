@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Typography, message, Form, Col, Row } from 'antd'
-import FormItem from 'antd/es/form/FormItem'
-import UserLastnameInput from '@src/UI/user/user-lastname-input.jsx'
-import UserFirstnameInput from '@src/UI/user/user-firstname-input.jsx'
-import UserPatronymicInput from '@src/UI/user/user-patronymic-input.jsx'
-import UserRoleInput from '@src/UI/user/user-role-input.jsx'
-import UserEmailInput from '@src/UI/user/user-email-input.jsx'
-import UserPasswordInput from '@src/UI/user/user-password-input.jsx'
-import UserPhoneInput from '@src/UI/user/user-phone-input.jsx'
-import UserOrganizationInput from '@src/UI/user/user-organization-input.jsx'
-import Loader from '@components/loader/loader'
-import UserPasswordModal from './user-password-change'
-import './sass/user-settings.scss'
+import React, { useState, useEffect } from "react";
+import { Button, Typography, message, Form, Col, Row } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import UserLastnameInput from "@src/UI/user/user-lastname-input.jsx";
+import UserFirstnameInput from "@src/UI/user/user-firstname-input.jsx";
+import UserPatronymicInput from "@src/UI/user/user-patronymic-input.jsx";
+import UserRoleInput from "@src/UI/user/user-role-input.jsx";
+import UserEmailInput from "@src/UI/user/user-email-input.jsx";
+import UserPasswordInput from "@src/UI/user/user-password-input.jsx";
+import UserPhoneInput from "@src/UI/user/user-phone-input.jsx";
+import UserOrganizationInput from "@src/UI/user/user-organization-input.jsx";
+import Loader from "@components/loader/loader";
+import UserPasswordModal from "./user-password-change";
+import "./sass/user-settings.scss";
 
 function UsersSettings() {
-  const [isLoading, setIsLoading] = useState(true)
-  const [isFormLoading, setIsFormLoading] = useState(false)
-  const [form] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFormLoading, setIsFormLoading] = useState(false);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     if (isLoading) {
       fetch(`${API_PATH}/user/profile`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        redirect: 'follow',
-        credentials: 'include',
+        redirect: "follow",
+        credentials: "include",
       })
         .then((response) => {
           if (response.ok) {
-            return response.json()
+            return response.json();
           }
         })
         .then((user) => {
@@ -42,64 +42,64 @@ function UsersSettings() {
             email: user.email,
             phone: user.phone,
             organization: user.educational_institution,
-          })
+          });
 
-          setTimeout(() => setIsLoading(false), 300)
+          setTimeout(() => setIsLoading(false), 300);
         })
         .catch(() => {
           message.error(
-            'Ошибка: Невозможно получить данные. Обратитесь к администратору...'
-          )
-        })
+            "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
+          );
+        });
     }
-  }, [isLoading, form])
+  }, [isLoading, form]);
 
   const handleSubmit = () => {
     form
       .validateFields()
       .then(() => {
         const data = {
-          first_name: form.getFieldValue('firstname'),
-          second_name: form.getFieldValue('lastname'),
-          third_name: form.getFieldValue('patronymic'),
-          email: form.getFieldValue('email'),
-          phone: form.getFieldValue('phone'),
-          educational_institution: form.getFieldValue('organization'),
-        }
-        if (form.getFieldValue('password')) {
-          data.password = form.getFieldValue('password')
+          first_name: form.getFieldValue("firstname"),
+          second_name: form.getFieldValue("lastname"),
+          third_name: form.getFieldValue("patronymic"),
+          email: form.getFieldValue("email"),
+          phone: form.getFieldValue("phone"),
+          educational_institution: form.getFieldValue("organization"),
+        };
+        if (form.getFieldValue("password")) {
+          data.password = form.getFieldValue("password");
         }
 
         const requestOptions = {
-          method: 'PATCH',
+          method: "PATCH",
           headers: {
-            accept: 'application/json',
-            'Content-Type': 'application/json',
+            accept: "application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
-          redirect: 'follow',
-          credentials: 'include',
-        }
+          redirect: "follow",
+          credentials: "include",
+        };
 
         fetch(`${API_PATH}/user/profile`, requestOptions)
           .then((response) => {
             if (response.ok) {
-              message.success('Данные успешно сохранены')
+              message.success("Данные успешно сохранены");
             } else {
               message.error(
-                'Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору...'
-              )
+                "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору..."
+              );
             }
           })
-          .finally(() => setIsFormLoading(false))
+          .finally(() => setIsFormLoading(false));
       })
       .catch(() => {
-        message.error('Проверьте поля для ввода!')
-        setIsFormLoading(false)
-      })
-  }
+        message.error("Проверьте поля для ввода!");
+        setIsFormLoading(false);
+      });
+  };
 
-  const [isUserPasswordModalOpen, setIsUserPasswordModalOpen] = useState(false)
+  const [isUserPasswordModalOpen, setIsUserPasswordModalOpen] = useState(false);
 
   return (
     <>
@@ -118,7 +118,7 @@ function UsersSettings() {
             <UserFirstnameInput name="firstname" />
             <UserPatronymicInput
               name="patronymic"
-              initialValue={form.getFieldValue('patronymic')}
+              initialValue={form.getFieldValue("patronymic")}
             />
           </Col>
           <Col span={8}>
@@ -157,7 +157,7 @@ function UsersSettings() {
         onCancel={() => setIsUserPasswordModalOpen(false)}
       />
     </>
-  )
+  );
 }
 
-export default UsersSettings
+export default UsersSettings;

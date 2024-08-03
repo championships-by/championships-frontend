@@ -1,20 +1,20 @@
-import { Typography, Space, Input, Flex } from 'antd'
-import { useState } from 'react'
+import { Typography, Space, Input, Flex } from "antd";
+import { useState } from "react";
 
 function ReglamentName() {
-  const [inputValue, setInputValue] = useState('')
-  const [hasHttp, setHasHttp] = useState(false)
+  const [inputValue, setInputValue] = useState("");
+  const [hasHttp, setHasHttp] = useState(false);
 
   const handleChange = (e) => {
-    const value = e.target.value
-    setInputValue(value)
+    const value = e.target.value;
+    setInputValue(value);
 
-    if (!value.startsWith('http://') || !value.startsWith('https://')) {
-      setHasHttp(true)
+    if (!value.startsWith("http://") || !value.startsWith("https://")) {
+      setHasHttp(true);
     } else {
-      setHasHttp(false)
+      setHasHttp(false);
     }
-  }
+  };
   return (
     <div className="events__competition-reglament__div">
       <Typography.Text className="events__competition-reglament__text">
@@ -23,7 +23,7 @@ function ReglamentName() {
       <Flex vertical>
         <Space.Compact>
           <Input
-            placeholder={'Вставьте ссылку на регламент'}
+            placeholder={"Вставьте ссылку на регламент"}
             value={inputValue}
             onChange={handleChange}
           ></Input>
@@ -38,7 +38,7 @@ function ReglamentName() {
         </Typography.Text>
       </Flex>
     </div>
-  )
+  );
 }
 
-export default ReglamentName
+export default ReglamentName;

@@ -1,59 +1,60 @@
-import { Flex, Table, Tooltip } from 'antd'
-import { useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
-import  Queries  from './api/Queries'
-import './sass/groupStage.scss'
-
+import { Flex, Table, Tooltip } from "antd";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Queries from "./api/Queries";
+import "./sass/groupStage.scss";
 
 export default function TableGroupStage() {
-  const [dataParticipant, setParticipant] = useState([])
+  const [dataParticipant, setParticipant] = useState([]);
   const columns = [
     {
       title: <Tooltip title="Место">Место</Tooltip>,
-      dataIndex: 'place',
-      key: 'place',
+      dataIndex: "place",
+      key: "place",
     },
     {
       title: <Tooltip title="Участники">Участники</Tooltip>,
-      key: 'name',
-      dataIndex: 'name',
+      key: "name",
+      dataIndex: "name",
     },
     {
       title: <Tooltip title="Количество сыгранных матчей">Матчи</Tooltip>,
-      key: 'matches',
-      dataIndex: 'matches',
+      key: "matches",
+      dataIndex: "matches",
     },
     {
       title: <Tooltip title="Количество выигранных матчи">Победы</Tooltip>,
-      dataIndex: 'wins',
-      key: 'wins',
+      dataIndex: "wins",
+      key: "wins",
     },
     {
       title: (
         <Tooltip title="Количество матчей,сыгранных вничью">Ничьи</Tooltip>
       ),
-      dataIndex: 'draws',
-      key: 'draws',
+      dataIndex: "draws",
+      key: "draws",
     },
     {
       title: <Tooltip title="Количество проигранных матчей">Поражения</Tooltip>,
-      dataIndex: 'losses',
-      key: 'losses',
+      dataIndex: "losses",
+      key: "losses",
     },
     {
       title: <Tooltip title="Количество заработанных очков">Очки</Tooltip>,
-      dataIndex: 'points',
-      key: 'points',
+      dataIndex: "points",
+      key: "points",
     },
     {
-      title: <Tooltip title="Количество баллов, выставленных судьёй">Счёт</Tooltip>,
-      dataIndex: 'get_score',
-      key: 'get_score',
+      title: (
+        <Tooltip title="Количество баллов, выставленных судьёй">Счёт</Tooltip>
+      ),
+      dataIndex: "get_score",
+      key: "get_score",
     },
-  ]
+  ];
 
   const getStats = (group) => {
-    const teams = new Map()
+    const teams = new Map();
 
     const addTeam = (team) => {
       teams.set(team, {
@@ -63,42 +64,42 @@ export default function TableGroupStage() {
         draws: 0,
         points: 0,
         get_score: 0,
-      })
-    }
+      });
+    };
     const changeStats = (name, winner) => {
       if (!teams.has(name)) {
-        addTeam(name)
+        addTeam(name);
       }
 
-      teams.get(name).matches++
+      teams.get(name).matches++;
       if (winner === null) {
-        teams.get(name).draws++
-        teams.get(name).points += 1
+        teams.get(name).draws++;
+        teams.get(name).points += 1;
       } else if (name == winner) {
-        teams.get(name).wins++
-        teams.get(name).points += 3
+        teams.get(name).wins++;
+        teams.get(name).points += 3;
       } else {
-        teams.get(name).losses++
+        teams.get(name).losses++;
       }
-    }
+    };
     group.matches.forEach((match) => {
-      let winner = null
+      let winner = null;
       if (match.team1_score > match.team2_score) {
-        winner = match.team1?.name
+        winner = match.team1?.name;
       }
       if (match.team2_score > match.team1_score) {
-        winner = match.team2?.name
+        winner = match.team2?.name;
       }
       if (match.team1) {
-        changeStats(match.team1.name, winner)
+        changeStats(match.team1.name, winner);
       }
 
       if (match.team2) {
-        changeStats(match.team2.name, winner)
+        changeStats(match.team2.name, winner);
       }
-    })
+    });
 
-    const result = []
+    const result = [];
 
     for (let el of teams) {
       result.push({
@@ -111,45 +112,51 @@ export default function TableGroupStage() {
         place: 1,
         points: el[1].points,
         get_score: el[1].get_score,
-      })
+      });
     }
     result.sort((first, second) => {
       if (second.points !== first.points) {
-        return second.points - first.points
+        return second.points - first.points;
       }
       if (second.wins !== first.wins) {
-        return second.wins - first.wins
+        return second.wins - first.wins;
       }
-      return first.name.localeCompare(second.name)
-    })
-    let get_score = new Map()
+      return first.name.localeCompare(second.name);
+    });
+    let get_score = new Map();
     group.matches.forEach((match) => {
       if (!get_score.has(match.team1.name)) {
-        get_score.set(match.team1.name, 0)
+        get_score.set(match.team1.name, 0);
       }
 
       if (!get_score.has(match.team2.name)) {
-        get_score.set(match.team2.name, 0)
+        get_score.set(match.team2.name, 0);
       }
-      get_score.set(match.team1.name, get_score.get(match.team1.name) + match.team1_score)
-      get_score.set(match.team2.name, get_score.get(match.team2.name) + match.team2_score)
-    })
+      get_score.set(
+        match.team1.name,
+        get_score.get(match.team1.name) + match.team1_score
+      );
+      get_score.set(
+        match.team2.name,
+        get_score.get(match.team2.name) + match.team2_score
+      );
+    });
     result.forEach((team, index) => {
-      team.place = index + 1
-      team.get_score = get_score.get(team.name)
-    })
+      team.place = index + 1;
+      team.get_score = get_score.get(team.name);
+    });
 
-    return result
-  }
+    return result;
+  };
 
-  const {event_id,nomination_id} = useParams()
+  const { event_id, nomination_id } = useParams();
 
   useEffect(() => {
-    ;(async () => {
-      let responseJson = await Queries.getMatches(event_id,nomination_id)
-      setParticipant(responseJson)
-    })()
-  }, [])
+    (async () => {
+      let responseJson = await Queries.getMatches(event_id, nomination_id);
+      setParticipant(responseJson);
+    })();
+  }, []);
 
   return (
     <Flex vertical gap="large">
@@ -168,5 +175,5 @@ export default function TableGroupStage() {
         </div>
       ))}
     </Flex>
-  )
+  );
 }

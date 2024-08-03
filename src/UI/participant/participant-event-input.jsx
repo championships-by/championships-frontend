@@ -1,8 +1,8 @@
-import React from 'react'
-import FormItem from 'antd/es/form/FormItem'
-import { Flex, Input, Space, Typography, AutoComplete } from 'antd'
-import { TrophyOutlined } from '@ant-design/icons'
-import './sass/participant.scss'
+import React from "react";
+import FormItem from "antd/es/form/FormItem";
+import { Flex, Input, Space, Typography, AutoComplete } from "antd";
+import { TrophyOutlined } from "@ant-design/icons";
+import "./sass/participant.scss";
 
 function ParticipantEventInput({ name }) {
   return (
@@ -38,9 +38,9 @@ function ParticipantEventInput({ name }) {
                 id="participant_event_input"
                 maxLength={255}
                 options={[
-                  { value: 'РобИн-2024' },
-                  { value: 'РобИн-2025' },
-                  { value: 'Техносфера' },
+                  { value: "РобИн-2024" },
+                  { value: "РобИн-2025" },
+                  { value: "Техносфера" },
                 ]}
               />
               <Typography.Text type="secondary">
@@ -51,6 +51,6 @@ function ParticipantEventInput({ name }) {
         </Space.Compact>
       </Flex>
     </div>
-  )
+  );
 }
-export default ParticipantEventInput
+export default ParticipantEventInput;

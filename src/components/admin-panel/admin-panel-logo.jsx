@@ -1,4 +1,4 @@
-import logo from '@src/assets/img/logo.png'
+import logo from "@src/assets/img/logo.png";
 
 function AdminPanelLogo() {
   return (
@@ -7,7 +7,7 @@ function AdminPanelLogo() {
         <img src={logo} alt="" />
       </a>
     </div>
-  )
+  );
 }
 
-export default AdminPanelLogo
+export default AdminPanelLogo;

@@ -1,8 +1,8 @@
-import React from 'react'
-import { Flex, Input, Typography } from 'antd'
-import { BankOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/user.scss'
+import React from "react";
+import { Flex, Input, Typography } from "antd";
+import { BankOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/user.scss";
 
 function UserOrganizationInput({ name }) {
   return (
@@ -16,18 +16,18 @@ function UserOrganizationInput({ name }) {
         rules={[
           {
             required: true,
-            message: 'Пожалуйста, введите учреждение образования',
+            message: "Пожалуйста, введите учреждение образования",
           },
           {
             validator(_, value) {
               if (value && value.trim()) {
-                return Promise.resolve()
+                return Promise.resolve();
               }
               return Promise.reject(
                 new Error(
-                  'Пожалуйста, введите корректное учреждение образования'
+                  "Пожалуйста, введите корректное учреждение образования"
                 )
-              )
+              );
             },
           },
         ]}
@@ -41,7 +41,7 @@ function UserOrganizationInput({ name }) {
         Пример: ГУО "Гимназия-колледж искусств"
       </Typography.Text>
     </Flex>
-  )
+  );
 }
 
-export default UserOrganizationInput
+export default UserOrganizationInput;

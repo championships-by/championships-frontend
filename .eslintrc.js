@@ -5,25 +5,26 @@ module.exports = {
     node: true,
   },
   extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'prettier',
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier",
+    "plugin:prettier/recommended",
   ],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 13,
-    sourceType: 'module',
+    sourceType: "module",
   },
-  plugins: ['react', 'react-hooks', 'prettier', 'only-warn'],
+  plugins: ["react", "react-hooks", "prettier", "only-warn"],
   rules: {
-    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+    "prettier/prettier": ["error", {}, { usePrettierrc: true }],
   },
   settings: {
     react: {
-      version: 'detect',
+      version: "detect",
     },
   },
-}
+};

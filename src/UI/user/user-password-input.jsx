@@ -1,8 +1,8 @@
-import React from 'react'
-import { Flex, Input, Typography } from 'antd'
-import { EyeInvisibleOutlined, LockOutlined } from '@ant-design/icons'
-import FormItem from 'antd/es/form/FormItem'
-import './sass/user.scss'
+import React from "react";
+import { Flex, Input, Typography } from "antd";
+import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
+import FormItem from "antd/es/form/FormItem";
+import "./sass/user.scss";
 
 function UserPasswordInput({ name, required }) {
   return (
@@ -15,11 +15,11 @@ function UserPasswordInput({ name, required }) {
         rules={[
           {
             required: required ?? false,
-            message: 'Пожалуйста, введите пароль',
+            message: "Пожалуйста, введите пароль",
           },
           {
             min: 8,
-            message: 'Минимальная длина пароля - 8 символов',
+            message: "Минимальная длина пароля - 8 символов",
           },
         ]}
         className="user__password-input__formitem"
@@ -31,7 +31,7 @@ function UserPasswordInput({ name, required }) {
         />
       </FormItem>
     </Flex>
-  )
+  );
 }
 
-export default UserPasswordInput
+export default UserPasswordInput;
