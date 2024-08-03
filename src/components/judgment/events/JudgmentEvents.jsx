@@ -5,7 +5,7 @@ import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import { ROUTES } from "@constants";
 import EventTable from "@components/judgment/events/JudgmentEventsTable";
-import { userApi } from "@api";
+import { eventApi } from "@api";
 
 function JudgmentEvents() {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +14,7 @@ function JudgmentEvents() {
 
   useEffect(() => {
     if (isLoading) {
-      userApi
+      eventApi
         .getEventWithNominations({ limit: 49 })
         .then((response) => response.json())
         .then((data) => setEvents(data))

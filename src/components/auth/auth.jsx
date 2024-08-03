@@ -40,13 +40,11 @@ function Auth() {
     event.preventDefault();
     setIsFormLoading(true);
 
-    const requestBody = {
-      email,
-      password,
-    };
-
     try {
-      const response = await authApi.setLogin();
+      const response = await authApi.setLogin({
+        email,
+        password,
+      });
 
       if (response.ok) {
         navigate(ROUTES.USER_SETTINGS.PATH);

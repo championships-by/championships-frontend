@@ -2,6 +2,7 @@ import { Button, message, Typography } from "antd";
 import { useState } from "react";
 import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
+import { userApi } from "@api";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
 

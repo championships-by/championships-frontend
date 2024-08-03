@@ -1,5 +1,5 @@
 function AdminPanelControls(props) {
-  const { children } = children;
+  const { children } = props;
 
   return (
     <div className="admin-panel__controls admin-panel__controls--right">

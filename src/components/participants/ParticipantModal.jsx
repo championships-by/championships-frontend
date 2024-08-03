@@ -12,6 +12,7 @@ import ParticipantTeacherFirstnameInput from "@modules/participant/ParticipantTe
 import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTeacherLastnameInput.jsx";
 import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
 import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
+import { participantApi } from "@api";
 
 function ParticipantModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);

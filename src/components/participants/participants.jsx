@@ -3,6 +3,7 @@ import { DownloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
+import { participantApi } from "@api";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";
 
