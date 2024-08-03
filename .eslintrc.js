@@ -10,7 +10,6 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
   ],
-  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
