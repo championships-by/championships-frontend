@@ -1,0 +1,39 @@
+import { Tabs } from "antd";
+import TableGroupStage from "./TableGroupStage";
+import MatchGroupStage from "./MatchesGroupStage";
+
+import "./sass/groupStage.scss";
+
+const items = [
+  {
+    key: "1",
+    label: "Таблица",
+    children: <TableGroupStage />,
+  },
+
+  {
+    key: "2",
+    label: "Матчи",
+    children: <MatchGroupStage />,
+  },
+  {
+    key: "3",
+    label: "Плей-офф",
+    children: "Content Tab3",
+    disabled: true,
+  },
+];
+function GroupTab() {
+  return (
+    <>
+      <div
+        style={{
+          marginTop: 10,
+        }}
+      />
+      <Tabs className="Tabs" defaultActiveKey="1" items={items} />
+    </>
+  );
+}
+
+export default GroupTab;

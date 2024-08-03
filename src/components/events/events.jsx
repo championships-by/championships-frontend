@@ -1,8 +1,9 @@
 import { Typography, message, Card, Calendar, Flex } from "antd";
 import { useState } from "react";
-import EventsList from "@components/events/events-list";
-import Loader from "@components/loader/loader";
-import { Locale } from "@src/components/enums";
+import EventsList from "@components/events/EventsList";
+import Loader from "@components/loader/Loader";
+import { Locale } from "@constants";
+
 import "./sass/events.scss";
 
 function Events() {

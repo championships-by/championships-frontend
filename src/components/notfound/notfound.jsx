@@ -1,6 +1,6 @@
 import { Button, Result } from "antd";
 import { NavLink } from "react-router-dom";
-import { ROUTES } from "@components/enums";
+import { ROUTES } from "@constants";
 
 function NotFound() {
   return (

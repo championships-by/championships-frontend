@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Loader from "@components/loader/loader";
-import { ROUTES, RESPONSE_STATUS } from "@components/enums";
+import Loader from "@components/loader/Loader";
+import { ROUTES, RESPONSE_STATUS } from "@constants";
 
 function Logout() {
   const navigate = useNavigate();

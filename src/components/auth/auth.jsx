@@ -2,12 +2,12 @@ import "./sass/auth.scss";
 import { Form, message, Button } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useEffect, useState } from "react";
-import logo from "@src/assets/img/logo.png";
-import AuthEmailInput from "@src/UI/auth/auth-email-input";
-import AuthPasswordInput from "@src/UI/auth/auth-password-input";
+import logo from "@assets/img/logo.png";
+import AuthEmailInput from "@modules/auth/AuthEmailInput";
+import AuthPasswordInput from "@modules/auth/AuthPasswordInput";
 import { useNavigate } from "react-router-dom";
-import Loader from "@components/loader/loader";
-import { ROUTES } from "@components/enums";
+import Loader from "@components/loader/Loader";
+import { ROUTES } from "@constants";
 
 function Auth() {
   const [isLoading, setIsLoading] = useState(true);

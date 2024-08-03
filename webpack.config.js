@@ -103,7 +103,13 @@ module.exports = (env) => {
     resolve: {
       alias: {
         "@src": path.resolve(__dirname, "src"),
+        "@api": path.resolve(__dirname, "src", "api"),
+        "@assets": path.resolve(__dirname, "src", "assets"),
         "@components": path.resolve(__dirname, "src", "components"),
+        "@constants": path.resolve(__dirname, "src", "constants"),
+        "@sass": path.resolve(__dirname, "src", "sass"),
+        "@modules": path.resolve(__dirname, "src", "modules"),
+        "@utils": path.resolve(__dirname, "src", "utils"),
         "@node_modules": path.resolve(__dirname, "node_modules"),
       },
       extensions: ["", ".js", ".jsx"],

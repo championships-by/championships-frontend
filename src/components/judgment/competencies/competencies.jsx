@@ -1,4 +1,4 @@
-import CompetenciesTab from "../../../UI/judgment/competencies/competencies-tab";
+import CompetenciesTab from "@modules/judgment/competencies/CompetenciesTab";
 
 function Competencies() {
   return (

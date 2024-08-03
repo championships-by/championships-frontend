@@ -1,0 +1,103 @@
+.admin-panel {
+  display: flex;
+  flex: 1;
+  height: 100%;
+
+  &__logo {
+    max-width: 100%;
+    margin-bottom: 50px;
+  }
+
+  &__menu {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 80px;
+    width: 80px;
+    padding: 10px 12px;
+
+    border-right: 1px solid rgb(229, 231, 235);
+  }
+
+  &__nav {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__menu-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  &__menu-link {
+    display: block;
+
+    width: 100%;
+    height: 60px;
+
+    margin-bottom: 20px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-radius: 5px;
+
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transition: 0.3s;
+
+    &.active,
+    &:hover {
+      background-color: #007aff;
+      transition: 0.3s;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &--event {
+      background-image: url("@assets/img/event.png");
+    }
+
+    &--users {
+      background-image: url("@assets/img/user.png");
+    }
+
+    &--judgment {
+      background-image: url("@assets/img/judge.png");
+    }
+
+    &--add-participants {
+      background-image: url("@assets/img/add-participants.png");
+    }
+
+    &--settings {
+      background-image: url("@assets/img/settings.png");
+    }
+
+    &--logout {
+      background-image: url("@assets/img/logout.png");
+    }
+  }
+
+  &__content {
+    position: relative;
+    flex: 1 0 auto;
+
+    padding: 24px;
+    overflow: auto;
+  }
+
+  &__controls {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+
+    &--right {
+      justify-content: flex-end;
+    }
+  }
+}
