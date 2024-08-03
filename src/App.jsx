@@ -1,23 +1,22 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { ROUTER_ROUTES } from '@src/components/enums'
-import AdminPanel from '@components/admin-panel/admin-panel'
-import EventsRegistration from '@components/event-registration/event-registration'
-import EventSettings from '@components/judgment/event-settings/event-settings'
-import Events from '@components/events/events'
-import UserSettings from '@components/user-settings/user-settings'
-import UsersSettingsTest  from './components/user-settings/user-settings-test'
-import UsersControl from '@components/users-control/users-control'
-import Participants from '@components/participants/participants'
-import NotFound from '@components/notfound/notfound'
-import Auth from '@components/auth/auth'
-import Logout from '@components/logout/logout'
-import Judgment from '@components/judgment/events/judgment-events'
-import Unauthorized from '@components/unauthorized/unauthorized'
-import GroupStage from '@components/judgment/group-stage/group-stage'
-import Competencies from '@components/judgment/competencies/competencies'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ROUTER_ROUTES } from "@constants";
+import AdminPanel from "@components/adminPanel/AdminPanel";
+import EventsRegistration from "@components/eventRegistration/EventRegistration";
+import EventSettings from "@components/judgment/eventSettings/eventSettings";
+import Events from "@components/events/Events";
+import UserSettings from "@components/userSettings/UserSettings";
+import UsersControl from "@components/usersControl/UsersControl";
+import Participants from "@components/participants/Participants";
+import NotFound from "@components/notFound/Notfound";
+import Auth from "@components/auth/Auth";
+import Logout from "@components/logout/Logout";
+import Judgment from "@components/judgment/events/JudgmentEvents";
+import Unauthorized from "@components/unauthorized/Unauthorized";
+import GroupStage from "@components/judgment/groupStage/GroupStage";
+import Competencies from "@components/judgment/competencies/Competencies";
+import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
 
-
-const App = () => {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -41,7 +40,7 @@ const App = () => {
             />
             <Route
               path={ROUTER_ROUTES.USER_SETTINGS_TEST}
-              element={<UsersSettingsTest/>}
+              element={<UsersSettingsTest />}
             />
             <Route path={ROUTER_ROUTES.EVENTS}>
               <Route index element={<Events />} />
@@ -60,7 +59,7 @@ const App = () => {
             />
             <Route
               path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
-              element={<Competencies/>}
+              element={<Competencies />}
             />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />
@@ -77,6 +76,6 @@ const App = () => {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
-export default App
+export default App;

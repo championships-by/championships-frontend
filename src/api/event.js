@@ -1,0 +1,46 @@
+export const eventApi = {
+  getEvent: (eventID) =>
+    fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+      redirect: "follow",
+      credentials: "include",
+    }),
+  getEventWithNominations: ({ limit }) =>
+    fetch(`${API_PATH}/event/events_with_nominations?offset=0&limit=${limit}`, {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+      redirect: "follow",
+      credentials: "include",
+    }),
+  changeEvent: (body) => {
+    const headers = new Headers();
+    headers.append("accept", "application/json");
+    headers.append("Content-Type", "application/json");
+
+    return fetch(`${API_PATH}/event/event`, {
+      method: "PUT",
+      headers,
+      body,
+      redirect: "follow",
+      credentials: "include",
+    });
+  },
+  setEvent: (body) => {
+    const headers = new Headers();
+    headers.append("accept", "application/json");
+    headers.append("Content-Type", "application/json");
+
+    return fetch(`${API_PATH}/event/event`, {
+      method: "POST",
+      headers,
+      body,
+      redirect: "follow",
+      credentials: "include",
+    });
+  },
+};

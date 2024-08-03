@@ -1,6 +1,2 @@
 /.vscode
 node_modules
-build
-.temp
-webpack.config.js
-.prettierrc.js
