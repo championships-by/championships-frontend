@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Flex, Modal, Table, Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ParticipantModal from "./participant-modal";
-import { useState } from "react";
 
 function ParticipantsTable({ ParticipantData }) {
   const columns = [
@@ -32,12 +31,12 @@ function ParticipantsTable({ ParticipantData }) {
             type="text"
             icon={<EditOutlined />}
             onClick={() => openEditModal()}
-          ></Button>
+          />
           <Button
             type="text"
             icon={<DeleteOutlined />}
             onClick={() => deleteParticipantConfirm(email)}
-          ></Button>
+          />
         </Flex>
       ),
     },

@@ -3,7 +3,7 @@ import { Input } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/auth.scss";
 
-const AuthEmailInput = ({ value, onChange }) => {
+function AuthEmailInput({ value, onChange }) {
   return (
     <FormItem
       name="Email"
@@ -31,6 +31,6 @@ const AuthEmailInput = ({ value, onChange }) => {
       />
     </FormItem>
   );
-};
+}
 
 export default AuthEmailInput;

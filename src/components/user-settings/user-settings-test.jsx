@@ -124,7 +124,7 @@ function UsersSettings() {
             <UserFirstnameInput name="firstname" />
             <UserPatronymicInput name="patronymic" />
 
-            <UserRoleInput disabled={true} name="role" />
+            <UserRoleInput disabled name="role" />
           </Col>
           <Col span={8}>
             <UserEmailInput name="email" />

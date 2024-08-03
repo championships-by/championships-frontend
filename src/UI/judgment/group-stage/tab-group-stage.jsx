@@ -29,7 +29,7 @@ function GroupTab() {
         style={{
           marginTop: 10,
         }}
-      ></div>
+      />
       <Tabs className="Tabs" defaultActiveKey="1" items={items} />
     </>
   );

@@ -134,7 +134,7 @@ function UsersSettings() {
           </Col>
           <Col span={8}>
             <UserOrganizationInput name="organization" />
-            <UserRoleInput disabled={true} name="role" />
+            <UserRoleInput disabled name="role" />
           </Col>
         </Row>
 

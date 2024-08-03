@@ -8,14 +8,14 @@ import "./sass/groupStage.scss";
 function MatchesGroupStage() {
   const [dataMatches, setMatches] = useState([]);
   const getMatches = (dataMatches) => {
-    let result = [];
+    const result = [];
     let matchNumber = 1;
     dataMatches?.map((group) => {
       group?.matches.map((match) => {
         match.team1 = match.team1?.name;
         match.team2 = match.team2?.name;
         const { team1, team2, match_id, team1_score, team2_score } = match;
-        var team = {
+        const team = {
           team1,
           team2,
           matchNumber,
@@ -30,18 +30,18 @@ function MatchesGroupStage() {
     return result;
   };
 
-  let data = getMatches(dataMatches);
+  const data = getMatches(dataMatches);
 
   const { event_id, nomination_id } = useParams();
   useEffect(() => {
     (async () => {
-      let responseJson = await Queries.getMatches(event_id, nomination_id);
+      const responseJson = await Queries.getMatches(event_id, nomination_id);
       setMatches(responseJson);
     })();
   }, []);
 
-  const MatchCard = ({ match }) => {
-    let columns = [
+  function MatchCard({ match }) {
+    const columns = [
       {
         title: <Tooltip title="Команды">Команды</Tooltip>,
         key: "team1",
@@ -93,7 +93,7 @@ function MatchesGroupStage() {
         </Card>
       </ConfigProvider>
     );
-  };
+  }
   return (
     <Row
       className="matchRow"

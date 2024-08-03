@@ -6,7 +6,7 @@ import { Table, Tooltip, Flex } from "antd";
 function CompetenciesResult() {
   const columns = [
     {
-      title: <Tooltip></Tooltip>,
+      title: <Tooltip />,
       key: "medal",
       render: (record) => (
         <div>
@@ -61,11 +61,9 @@ function CompetenciesResult() {
   ];
 
   return (
-    <>
-      <Flex vertical gap="large">
-        <Table pagination={false} columns={columns} dataSource={data} />
-      </Flex>
-    </>
+    <Flex vertical gap="large">
+      <Table pagination={false} columns={columns} dataSource={data} />
+    </Flex>
   );
 }
 export default CompetenciesResult;

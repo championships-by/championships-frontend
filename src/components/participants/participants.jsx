@@ -2,9 +2,9 @@ import { Button, Flex, Typography, Tooltip } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import AdminPanelControls from "@components/admin-panel/admin-panel-controls";
+import Loader from "@components/loader/loader";
 import ParticipantModal from "./participant-modal.jsx";
 import ParticipantsTable from "./participants-table.jsx";
-import Loader from "@components/loader/loader";
 import "./sass/participants.scss";
 
 function Participants() {

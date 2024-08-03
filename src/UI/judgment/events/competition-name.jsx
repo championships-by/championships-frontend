@@ -36,7 +36,7 @@ function CompitationNameInput() {
                 className="events__compitation-name__input"
                 placeholder="Введите название"
                 maxLength={30}
-              ></Input>
+              />
               <Typography.Text type="secondary">
                 Пример: Робофутбол
               </Typography.Text>

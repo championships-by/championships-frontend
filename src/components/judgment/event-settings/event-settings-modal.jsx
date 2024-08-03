@@ -1,9 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Flex, Form, Modal, message } from "antd";
-import Competition from "../../../UI/judgment/events/competition-name";
 import ReglamentName from "@src/UI/judgment/events/reglament-name";
 import CompetitionJudge from "@src/UI/judgment/events/competition-judge-name";
+import Competition from "../../../UI/judgment/events/competition-name";
 import CompetitionType from "../../../UI/judgment/events/competition-type";
 
 function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {

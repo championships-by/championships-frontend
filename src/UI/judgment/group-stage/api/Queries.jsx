@@ -14,7 +14,7 @@ const Queries = {
       `${API_PATH}/match/get_group_matches?event_id=${event_id}&nomination_id=${nomination_id}`,
       requestOptions
     );
-    let responseJson = await response.json();
+    const responseJson = await response.json();
     return responseJson;
   },
   setMatches: async (
@@ -24,10 +24,10 @@ const Queries = {
     team1Score,
     team2Score
   ) => {
-    let data = {
+    const data = {
       nomination_event: {
-        event_id: event_id,
-        nomination_id: nomination_id,
+        event_id,
+        nomination_id,
       },
       match_id: match.match.match_id,
       team1_score: team1Score,

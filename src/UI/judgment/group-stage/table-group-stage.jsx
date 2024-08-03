@@ -101,7 +101,7 @@ export default function TableGroupStage() {
 
     const result = [];
 
-    for (let el of teams) {
+    for (const el of teams) {
       result.push({
         key: el[0],
         name: el[0],
@@ -123,7 +123,7 @@ export default function TableGroupStage() {
       }
       return first.name.localeCompare(second.name);
     });
-    let get_score = new Map();
+    const get_score = new Map();
     group.matches.forEach((match) => {
       if (!get_score.has(match.team1.name)) {
         get_score.set(match.team1.name, 0);
@@ -153,7 +153,7 @@ export default function TableGroupStage() {
 
   useEffect(() => {
     (async () => {
-      let responseJson = await Queries.getMatches(event_id, nomination_id);
+      const responseJson = await Queries.getMatches(event_id, nomination_id);
       setParticipant(responseJson);
     })();
   }, []);

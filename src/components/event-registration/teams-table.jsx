@@ -90,17 +90,17 @@ function TeamsTable({ TeamsData }) {
             type="text"
             icon={<EditOutlined />}
             onClick={() => openEditModal()}
-          ></Button>
+          />
           <Button
             type="text"
             icon={<UsergroupAddOutlined />}
             onClick={openParticipantModal()}
-          ></Button>
+          />
           <Button
             type="text"
             icon={<DeleteOutlined />}
             onClick={() => TeamDeleteModal}
-          ></Button>
+          />
         </Flex>
       ),
     },

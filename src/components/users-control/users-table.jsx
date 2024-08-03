@@ -74,7 +74,7 @@ function UsersTable({ usersData }) {
         ) : role === "specialist" ? (
           <Typography.Text>Специалист</Typography.Text>
         ) : (
-          <Typography.Text></Typography.Text>
+          <Typography.Text />
         ),
     },
     {
@@ -86,12 +86,12 @@ function UsersTable({ usersData }) {
             type="text"
             icon={<EditOutlined />}
             onClick={() => openEditModal()}
-          ></Button>
+          />
           <Button
             type="text"
             icon={<DeleteOutlined />}
             onClick={() => deleteUserConfirm()}
-          ></Button>
+          />
         </Flex>
       ),
     },

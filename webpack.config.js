@@ -9,8 +9,7 @@ module.exports = (env) => {
   const DEV_SERVER_PORT = "9000";
 
   const PROD_API_PATH = process.env.API_HOST + process.env.API_PATH;
-  const DEV_API_PATH =
-    `http://${DEV_SERVER_HOST}:${DEV_SERVER_PORT}` + process.env.API_PATH;
+  const DEV_API_PATH = `http://${DEV_SERVER_HOST}:${DEV_SERVER_PORT}${process.env.API_PATH}`;
 
   const IS_DEV = env.mode == undefined || env.mode === "development";
 

@@ -5,7 +5,7 @@ import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { ROUTES } from "@components/enums";
 
-const EventsList = ({ events }) => {
+function EventsList({ events }) {
   const data = events.map((event, index) => {
     const navigate = useNavigate();
     return (
@@ -76,6 +76,6 @@ const EventsList = ({ events }) => {
       className="events__list"
     />
   );
-};
+}
 
 export default EventsList;

@@ -60,25 +60,21 @@ function JudgmentEventsTable({ EventsData }) {
               type="text"
               icon={<EditOutlined />}
               onClick={() => navigate(ROUTES.JUDGMENT_EVENT_SETTINGS.PATH(id))}
-            ></Button>
+            />
           </Tooltip>
           <Tooltip title="Удалить мероприятие">
             <Button
               type="text"
               icon={<DeleteOutlined />}
               onClick={() => deleteUserConfirm()}
-            ></Button>
+            />
           </Tooltip>
         </Flex>
       ),
     },
   ];
 
-  return (
-    <>
-      <Table dataSource={EventsData} columns={columns} />
-    </>
-  );
+  return <Table dataSource={EventsData} columns={columns} />;
 }
 
 export default JudgmentEventsTable;

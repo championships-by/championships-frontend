@@ -5,7 +5,6 @@ import EventsRegistration from "@components/event-registration/event-registratio
 import EventSettings from "@components/judgment/event-settings/event-settings";
 import Events from "@components/events/events";
 import UserSettings from "@components/user-settings/user-settings";
-import UsersSettingsTest from "./components/user-settings/user-settings-test";
 import UsersControl from "@components/users-control/users-control";
 import Participants from "@components/participants/participants";
 import NotFound from "@components/notfound/notfound";
@@ -15,8 +14,9 @@ import Judgment from "@components/judgment/events/judgment-events";
 import Unauthorized from "@components/unauthorized/unauthorized";
 import GroupStage from "@components/judgment/group-stage/group-stage";
 import Competencies from "@components/judgment/competencies/competencies";
+import UsersSettingsTest from "./components/user-settings/user-settings-test";
 
-const App = () => {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -77,5 +77,5 @@ const App = () => {
       </Routes>
     </BrowserRouter>
   );
-};
+}
 export default App;

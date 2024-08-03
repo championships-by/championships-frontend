@@ -5,9 +5,9 @@ export const handlePaste = (event) => {
   );
   const sanitizedData = clipboardData.replace(/\s/g, "");
   const input = event.target;
-  const value = input.value;
-  const selectionStart = input.selectionStart;
-  const selectionEnd = input.selectionEnd;
+  const { value } = input;
+  const { selectionStart } = input;
+  const { selectionEnd } = input;
   input.value =
     value.substring(0, selectionStart) +
     sanitizedData +

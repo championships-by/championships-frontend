@@ -5,7 +5,7 @@ import FormItem from "antd/es/form/FormItem";
 import "./sass/participant.scss";
 import { Locale } from "@src/components/enums";
 
-const ParticipantBirthdayInput = () => {
+function ParticipantBirthdayInput() {
   return (
     <>
       <Typography.Text>Дата рождения</Typography.Text>
@@ -40,6 +40,6 @@ const ParticipantBirthdayInput = () => {
       </Flex>
     </>
   );
-};
+}
 
 export default ParticipantBirthdayInput;

@@ -6,7 +6,7 @@ function ReglamentName() {
   const [hasHttp, setHasHttp] = useState(false);
 
   const handleChange = (e) => {
-    const value = e.target.value;
+    const { value } = e.target;
     setInputValue(value);
 
     if (!value.startsWith("http://") || !value.startsWith("https://")) {
@@ -23,10 +23,10 @@ function ReglamentName() {
       <Flex vertical>
         <Space.Compact>
           <Input
-            placeholder={"Вставьте ссылку на регламент"}
+            placeholder="Вставьте ссылку на регламент"
             value={inputValue}
             onChange={handleChange}
-          ></Input>
+          />
         </Space.Compact>
         {hasHttp && (
           <Typography.Text type="danger">

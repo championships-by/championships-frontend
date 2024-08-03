@@ -4,7 +4,7 @@ import { EyeInvisibleOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/auth.scss";
 
-const AuthPasswordInput = ({ value, onChange }) => {
+function AuthPasswordInput({ value, onChange }) {
   return (
     <FormItem
       name="Password"
@@ -34,6 +34,6 @@ const AuthPasswordInput = ({ value, onChange }) => {
       </Flex>
     </FormItem>
   );
-};
+}
 
 export default AuthPasswordInput;

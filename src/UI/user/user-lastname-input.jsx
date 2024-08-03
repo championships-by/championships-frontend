@@ -19,7 +19,7 @@ function UserLastnameInput({ name }) {
         name={name}
         hasFeedback
         validateFirst
-        shouldUpdate={true}
+        shouldUpdate
         rules={[
           {
             required: true,

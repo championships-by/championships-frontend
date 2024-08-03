@@ -45,7 +45,7 @@ function CompetitionType() {
       </Typography.Text>
       <Space direction="vertical" className="events__competition-type__space">
         <Select
-          placeholder={"Выберите тип соревнования"}
+          placeholder="Выберите тип соревнования"
           options={options}
           className="events__competition-type__name"
           onChange={handleChange}

@@ -35,7 +35,7 @@ function ModalGroupStage(match) {
             onChange={(e) => setScore(result, e)}
             min={0}
             defaultValue={0}
-          ></InputNumber>
+          />
         </div>
       ),
     },
@@ -64,10 +64,10 @@ function ModalGroupStage(match) {
 
   const { event_id, nomination_id } = useParams();
   const sendMatchResult = () => {
-    let data = {
+    const data = {
       nomination_event: {
-        event_id: event_id,
-        nomination_id: nomination_id,
+        event_id,
+        nomination_id,
       },
       match_id: match.match.match_id,
       team1_score: team1Score,
@@ -90,29 +90,23 @@ function ModalGroupStage(match) {
   };
 
   return (
-    <>
-      <Flex>
-        <Button
-          type="text"
-          icon={<EditOutlined />}
-          onClick={showModal}
-        ></Button>
-        <Modal
-          title={"Сообщить счёт"}
-          visible={visible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          okText={"Отправить оценки"}
-          cancelButtonProps={{
-            style: {
-              display: "none",
-            },
-          }}
-        >
-          <Table columns={columns} pagination={false} dataSource={data} />
-        </Modal>
-      </Flex>
-    </>
+    <Flex>
+      <Button type="text" icon={<EditOutlined />} onClick={showModal} />
+      <Modal
+        title="Сообщить счёт"
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="Отправить оценки"
+        cancelButtonProps={{
+          style: {
+            display: "none",
+          },
+        }}
+      >
+        <Table columns={columns} pagination={false} dataSource={data} />
+      </Modal>
+    </Flex>
   );
 }
 

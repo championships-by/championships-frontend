@@ -13,7 +13,6 @@ import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "@components/loader/loader";
-import CompitationModal from "./event-settings-modal";
 import EventName from "@src/UI/judgment/events/event-name";
 import EventDate from "@src/UI/judgment/events/event-date";
 import EventDescription from "@src/UI/judgment/events/event-description";
@@ -22,6 +21,7 @@ import EventPlace from "@src/UI/judgment/events/event-place";
 import EventRegistrationSwitch from "@src/UI/judgment/events/event-registration-switch";
 import EventRegulation from "@src/UI/judgment/events/event-regulation";
 import EventLogo from "@src/UI/judgment/events/event-logo";
+import CompitationModal from "./event-settings-modal";
 import "./sass/event-settings.scss";
 
 function EventSettings() {
@@ -50,7 +50,7 @@ function EventSettings() {
             form.setFieldsValue({
               event_name: dataEvent?.event_data?.name,
               event_date: dataEvent?.event_data?.date,
-            }); //#TODO
+            }); // #TODO
 
             setTimeout(() => setIsLoading(false), 300);
           });
@@ -92,7 +92,7 @@ function EventSettings() {
     const raw = JSON.stringify({
       name: form.getFieldValue("event_name"),
       date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
-    }); //#TODO
+    }); // #TODO
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -119,8 +119,8 @@ function EventSettings() {
       key: "action",
       render: () => (
         <Flex>
-          <Button type="text" icon={<EditOutlined />}></Button>
-          <Button type="text" icon={<DeleteOutlined />}></Button>
+          <Button type="text" icon={<EditOutlined />} />
+          <Button type="text" icon={<DeleteOutlined />} />
         </Flex>
       ),
     },
@@ -221,7 +221,7 @@ function EventSettings() {
         <Table columns={columns} />
       </Space>
       <CompitationModal
-        name={"Добавить компетенцию"}
+        name="Добавить компетенцию"
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}

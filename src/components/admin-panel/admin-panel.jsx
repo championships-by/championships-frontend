@@ -23,7 +23,8 @@ function AdminPanel() {
         .then((response) => {
           if (response.status === RESPONSE_STATUS.STATUS_OK) {
             return response.json();
-          } else if (response.status === RESPONSE_STATUS.STATUS_UNAUTHORIZED) {
+          }
+          if (response.status === RESPONSE_STATUS.STATUS_UNAUTHORIZED) {
             navigate("/401", { replace: true });
           } else {
             throw new Error(`Error ${response.status}`);
@@ -42,17 +43,15 @@ function AdminPanel() {
   });
 
   return (
-    <>
-      <div className="admin-panel">
-        <div className="admin-panel__menu">
-          <AdminPanelLogo />
-          <AdminPanelNav role={role} />
-        </div>
-        <div className="admin-panel__content">
-          <Outlet />
-        </div>
+    <div className="admin-panel">
+      <div className="admin-panel__menu">
+        <AdminPanelLogo />
+        <AdminPanelNav role={role} />
       </div>
-    </>
+      <div className="admin-panel__content">
+        <Outlet />
+      </div>
+    </div>
   );
 }
 

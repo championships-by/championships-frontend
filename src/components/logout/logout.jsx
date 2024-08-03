@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "@components/loader/loader";
 import { ROUTES, RESPONSE_STATUS } from "@components/enums";
 
-const Logout = () => {
+function Logout() {
   const navigate = useNavigate();
   fetch(`${API_PATH}/auth/logout`, {
     method: "POST",
@@ -17,7 +17,7 @@ const Logout = () => {
     }
   });
 
-  return <Loader show={true} />;
-};
+  return <Loader show />;
+}
 
 export default Logout;

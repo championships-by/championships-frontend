@@ -46,8 +46,8 @@ function Auth() {
     setIsFormLoading(true);
 
     const requestBody = {
-      email: email,
-      password: password,
+      email,
+      password,
     };
 
     try {
@@ -92,7 +92,7 @@ function Auth() {
         <div className="auth__container">
           <div className="auth__header">
             <div className="auth__logo">
-              <a href="https://zubronok.by/" target="_blank">
+              <a href="https://zubronok.by/" target="_blank" rel="noreferrer">
                 <img src={logo} alt="" />
               </a>
             </div>
