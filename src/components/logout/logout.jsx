@@ -6,7 +6,7 @@ import { userApi } from "@api";
 function Logout() {
   const navigate = useNavigate();
 
-  userApi.setLogout().then((response) => {
+  authApi.setLogout().then((response) => {
     if (response.status === RESPONSE_STATUS.STATUS_OK) {
       navigate(ROUTES.AUTHORIZATION.PATH);
     }
