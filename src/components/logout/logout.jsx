@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import { ROUTES, RESPONSE_STATUS } from "@constants";
-import { userApi } from "@api";
+import { authApi } from "@api";
 
 function Logout() {
   const navigate = useNavigate();
