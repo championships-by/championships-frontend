@@ -1,5 +1,5 @@
-import { Typography, Space, Input, Flex } from "antd";
-import { useState } from "react";
+import React, { useState } from "react";
+import { Typography, Input, Form, Space } from "antd";
 
 function ReglamentName() {
   const [inputValue, setInputValue] = useState("");
@@ -9,35 +9,50 @@ function ReglamentName() {
     const { value } = e.target;
     setInputValue(value);
 
-    if (!value.startsWith("http://") || !value.startsWith("https://")) {
-      setHasHttp(true);
-    } else {
+    
+    if (!value.startsWith("http://") && !value.startsWith("https://")) {
       setHasHttp(false);
+    } else {
+      setHasHttp(true);
     }
   };
+
   return (
-    <div className="events__competition-reglament__div">
-      <Typography.Text className="events__competition-reglament__text">
-        Регламент
-      </Typography.Text>
-      <Flex vertical>
-        <Space.Compact>
-          <Input
-            placeholder="Вставьте ссылку на регламент"
-            value={inputValue}
-            onChange={handleChange}
-          />
-        </Space.Compact>
-        {hasHttp && (
-          <Typography.Text type="danger">
-            Ссылка не соответствуют допустимому шаблону
-          </Typography.Text>
-        )}
+    <Form.Item
+      name="reglament"
+      hasFeedback
+      validateFirst
+      rules={[
+        {
+          required: true,
+          message: "Введите название компетенции",
+        },
+        {
+          validator: (_, value) => {
+            if (!hasHttp) {
+              return Promise.reject(new Error("Ссылка не соответствует допустимому шаблону"));
+            }
+            return Promise.resolve();
+          },
+        },
+      ]}
+    >
+      <Space direction="vertical">
+        <Typography.Text strong>Регламент</Typography.Text>
+        <Input
+          placeholder="Вставьте ссылку на регламент"
+          value={inputValue}
+          onChange={handleChange}
+          className="events__competition-reglament__input"
+        />
+        <Typography.Text type="secondary">
+          Пример: http://google.com или https://google.com
+        </Typography.Text>
         <Typography.Text type="danger">
           *Внимательно проверьте права доступа к файлу
         </Typography.Text>
-      </Flex>
-    </div>
+      </Space>
+    </Form.Item>
   );
 }
 

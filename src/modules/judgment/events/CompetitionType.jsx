@@ -9,11 +9,11 @@ import "./sass/events.scss";
 const options = [
   {
     value: "time",
-    label: "Соревнования по времени",
+    label: "По времени",
   },
   {
     value: "criteria",
-    label: "Соревнования по критериям",
+    label: "По критериям",
   },
   {
     value: "groupStage",
