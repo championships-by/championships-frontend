@@ -1,3 +1,3 @@
-import { timeMatchesApi } from './time-matches-api'
+import { timeMatchesApi } from "./time-matches-api";
 
-export { timeMatchesApi }
+export { timeMatchesApi };

@@ -1,3 +1,3 @@
-import { CustomTimePicker } from './custom-time-picker'
+import { CustomTimePicker } from "./custom-time-picker";
 
-export { CustomTimePicker }
+export { CustomTimePicker };
