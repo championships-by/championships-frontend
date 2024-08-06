@@ -21,6 +21,8 @@ module.exports = {
   plugins: ["react", "react-hooks", "prettier", "only-warn"],
   rules: {
     "prettier/prettier": ["error", {}, { usePrettierrc: true }],
+    "react/react-in-jsx-scope": ["off"],
+    "import/no-unresolved": ["off"],
   },
   settings: {
     react: {
