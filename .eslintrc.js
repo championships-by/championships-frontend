@@ -21,6 +21,12 @@ module.exports = {
   plugins: ["react", "react-hooks", "prettier", "only-warn"],
   rules: {
     "prettier/prettier": ["error", {}, { usePrettierrc: true }],
+    "react/react-in-jsx-scope": ["off"],
+    "import/no-unresolved": ["off"],
+    "import/prefer-default-export": ["off"],
+    "react/function-component-definition": ["off"],
+    "react/jsx-no-useless-fragment": ["off"],
+    "no-nested-ternary": ["off"],
   },
   settings: {
     react: {
