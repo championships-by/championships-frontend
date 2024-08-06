@@ -1,5 +1,5 @@
 import { Flex, Table, Tooltip } from "antd";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Queries from "./api/Queries";
 import "./sass/groupStage.scss";
@@ -149,11 +149,11 @@ export default function TableGroupStage() {
     return result;
   };
 
-  const { event_id, nomination_id } = useParams();
+  const { eventId, nominationId } = useParams();
 
   useEffect(() => {
     (async () => {
-      const responseJson = await Queries.getMatches(event_id, nomination_id);
+      const responseJson = await Queries.getMatches(eventId, nominationId);
       setParticipant(responseJson);
     })();
   }, []);
