@@ -1,22 +1,21 @@
-/* eslint-disable prettier/prettier */
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { ROUTER_ROUTES } from '@src/components/enums'
-import AdminPanel from '@components/admin-panel/admin-panel'
-import EventsRegistration from '@components/event-registration/event-registration'
-import EventSettings from '@components/judgment/event-settings/event-settings'
-import Events from '@components/events/events'
-import UserSettings from '@components/user-settings/user-settings'
-import UsersControl from '@components/users-control/users-control'
-import Participants from '@components/participants/participants'
-import NotFound from '@components/notfound/notfound'
-import Auth from '@components/auth/auth'
-import Logout from '@components/logout/logout'
-import Judgment from '@components/judgment/events/judgment-events'
-import Unauthorized from '@components/unauthorized/unauthorized'
-import GroupStage from '@components/judgment/group-stage/group-stage'
-import TimeMatches from '@components/judgment/time-matches/time-matches'
+import AdminPanel from "@components/adminPanel/AdminPanel";
+import Auth from "@components/auth/Auth";
+import EventsRegistration from "@components/eventRegistration/EventRegistration";
+import Events from "@components/events/Events";
+import EventSettings from "@components/judgment/eventSettings/eventSettings";
+import Judgment from "@components/judgment/events/JudgmentEvents";
+import GroupStage from "@components/judgment/groupStage/GroupStage";
+import Logout from "@components/logout/Logout";
+import NotFound from "@components/notFound/Notfound";
+import Participants from "@components/participants/Participants";
+import Unauthorized from "@components/unauthorized/Unauthorized";
+import UserSettings from "@components/userSettings/UserSettings";
+import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
+import UsersControl from "@components/usersControl/UsersControl";
+import { ROUTER_ROUTES } from "@constants";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-const App = () => {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -38,6 +37,10 @@ const App = () => {
               path={ROUTER_ROUTES.USER_SETTINGS}
               element={<UserSettings />}
             />
+            <Route
+              path={ROUTER_ROUTES.USER_SETTINGS_TEST}
+              element={<UsersSettingsTest />}
+            />
             <Route path={ROUTER_ROUTES.EVENTS}>
               <Route index element={<Events />} />
               <Route
@@ -54,8 +57,8 @@ const App = () => {
               element={<GroupStage />}
             />
             <Route
-              path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
-              element={<TimeMatches />}
+              path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
+              element={<Competencies />}
             />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />
@@ -72,6 +75,6 @@ const App = () => {
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
-export default App
+export default App;
