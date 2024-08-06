@@ -1,11 +1,11 @@
 export const timeMatchesApi = {
   getTimeMatches: async ({ eventId, nominationId }) => {
-    const myHeaders = new Headers();
-    myHeaders.append("accept", "application/json");
-    myHeaders.append("Content-Type", "application/json");
     const requestOptions = {
       method: "GET",
-      headers: myHeaders,
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
       body: null,
       redirect: "follow",
       credentials: "include",
@@ -14,6 +14,15 @@ export const timeMatchesApi = {
       `${API_PATH}/race_round/race_round?event_id=${eventId}&nomination_id=${nominationId}`,
       requestOptions
     );
-    return await response.json();
+
+    const json = await response.json();
+    return {
+      status: {
+        ok: response.ok,
+        code: response.status,
+        message: response.statusText,
+      },
+      data: json,
+    };
   },
 };

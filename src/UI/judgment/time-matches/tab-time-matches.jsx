@@ -1,7 +1,7 @@
 import { Tabs } from "antd";
-import TableTimeMatches from "../time-matches/table-time-matches";
 import ResultTableTimeMatches from "./result-table-time-matches";
 import "./sass/time-matches.scss";
+import TableTimeMatches from "./table-time-matches";
 
 const items = [
   {
@@ -16,11 +16,7 @@ const items = [
   },
 ];
 function TabMatches() {
-  return (
-    <>
-      <Tabs className="Tabs" defaultActiveKey="1" items={items}></Tabs>
-    </>
-  );
+  return <Tabs className="Tabs" defaultActiveKey="1" items={items} />;
 }
 
 export default TabMatches;
