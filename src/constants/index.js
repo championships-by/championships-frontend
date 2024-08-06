@@ -85,7 +85,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_CREATE_TEST: "create/test",
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
   JUDGMENT_GROUP_STAGE: "judgment/:event_id/:nomination_id",
-  JUDGMENT_TIME_MATCHES: "test/:event_id/:nomination_id",
+  JUDGMENT_TIME_MATCHES: "matches/:eventId/:nominationId",
   JUDGMENT_COMPETENCIES: "judgment/competencies",
 };
 
