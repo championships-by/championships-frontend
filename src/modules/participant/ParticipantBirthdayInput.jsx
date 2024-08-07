@@ -30,7 +30,7 @@ function ParticipantBirthdayInput() {
             className="participant__birthday-input__formitem"
           >
             <DatePicker
-              format="DD.MM.YYYY"
+              format= {Locale.dateFormat}
               className="participant__birthday-input__datepicker"
               placeholder="Выберите дату рождения"
               locale={Locale}

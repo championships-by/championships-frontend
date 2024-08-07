@@ -4,6 +4,7 @@ import { Card, List, Tooltip, Typography } from "antd";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { ROUTES } from "@constants";
+import { Locale } from "@constants"
 
 function EventsList({ events }) {
   const data = events.map((event, index) => {
@@ -37,7 +38,7 @@ function EventsList({ events }) {
         title={<Typography.Title level={2}>{event.name}</Typography.Title>}
         extra={
           <Typography.Text type="secondary">
-            {dayjs(event.date).format("DD.MM.YYYY")}
+            {dayjs(event.date).format(Locale.dateFormat)}
           </Typography.Text>
         }
       >

@@ -139,7 +139,7 @@ export const Locale = {
   timePickerLocale: {
     placeholder: "Выбирите время",
   },
-  dateFormat: "DD-MM-YYYY",
+  dateFormat: "DD.MM.YYYY",
   dateTimeFormat: "DD-MM-YYYY HH:mm:ss",
   weekFormat: "YYYY-wo",
   monthFormat: "YYYY-MM",
