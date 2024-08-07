@@ -1,7 +1,7 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Flex, Table, Tooltip, Typography } from "antd";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { timeMatchesApi } from "./api/time-matches-api";
 import { CustomTimePicker } from "./components";
@@ -76,20 +76,40 @@ function TableTimeMatches() {
     },
   ];
 
+  const transformData = useCallback((rounds) => {
+    return rounds.map((round) => ({
+      teamName: round.team_name,
+      participant: {
+        firstName: round.participant_data.first_name,
+        secondName: round.participant_data.second_name,
+        thirdName: round.participant_data.third_name,
+      },
+      attempts: round.attempts.map(({ id, result }) => ({
+        id,
+        result,
+      })),
+      bestAttempt: {
+        id: round.best_attempt.id,
+        result: round.best_attempt.result,
+      },
+    }));
+  }, []);
+
   useEffect(() => {
     setIsLoading(true);
     timeMatchesApi
       .getTimeMatches({ eventId, nominationId })
       .then((response) => {
         if (response.status.ok) {
-          setData(response.data);
+          const transformedData = transformData(response.data);
+          setData(transformedData);
         } else {
           setHasError(true);
         }
       })
       .catch(() => setHasError(true))
       .finally(() => setIsLoading(false));
-  }, [eventId, nominationId]);
+  }, [eventId, nominationId, transformData]);
 
   return (
     <>
