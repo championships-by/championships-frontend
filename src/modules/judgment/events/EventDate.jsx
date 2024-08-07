@@ -9,19 +9,20 @@ function EventDate({ name }) {
       {
         type: "object",
         required: true,
-        message: "Пожалуйста выбирите дату мероприятия",
+        message: "Пожалуйста, выберите дату и время мероприятия",
       },
     ],
   };
   return (
     <>
-      <Typography.Text>Дата мероприятия</Typography.Text>
+      <Typography.Text>Дата и время мероприятия</Typography.Text>
       <FormItem name={name} hasFeedback validateFirst {...configDate}>
         <DatePicker
           locale={Locale}
           id="event_date"
-          format="DD-MM-YYYY"
-          placeholder="Выберите дату мероприятия"
+          format="DD.MM.YYYY HH:mm"
+          showTime={{ format: "HH:mm" }}
+          placeholder="Выберите дату и время мероприятия"
           className="events__event-date__datepicker"
         />
       </FormItem>

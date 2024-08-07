@@ -10,6 +10,16 @@ function EventPlace({ name }) {
       validateFirst
       rules={[
         {
+          validator(_, value) {
+            if (value && (value.startsWith(" ") || value.endsWith(" "))) {
+              return Promise.reject(
+                new Error("Введите корректное название мероприятия")
+              );
+            }
+            return Promise.resolve();
+          },
+        },
+        {
           required: true,
           message: "Пожалуйста, введите место проведения мероприятия",
         },

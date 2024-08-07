@@ -25,7 +25,7 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
   useEffect(() => {
     if (isOpen) {
       eventApi
-        .getEvent()
+        .getEvent(eventID)
         .then((response) => response.json())
         .then((data) =>
           setNomination(
