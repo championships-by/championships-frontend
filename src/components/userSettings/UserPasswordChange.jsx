@@ -3,14 +3,43 @@ import { useState } from "react";
 import OldPassword from "@modules/user/passwordChange/OldPassword";
 import NewPassword from "@modules/user/passwordChange/NewPassword";
 import SecondNewPassword from "@modules/user/passwordChange/SecondNewPassword";
+import { userApi } from "@api"; // Import the userApi
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
-  const onFinish = () => {
-    message.success("Всё в порядке!");
-    setIsLoading(false);
+  const onFinish = (values) => {
+    setIsLoading(true);
+    const { OldPassword, NewPassword, SecondNewPassword } = values;
+
+    const data = {
+      current_password: OldPassword,
+      new_password: NewPassword,
+      new_password_retyped: SecondNewPassword,
+    };
+
+    userApi
+      .changeProfile(data)
+      .then((response) => {
+        if (response.ok) {
+          message.success("Пароль успешно изменен");
+          form.resetFields();
+          onOk();
+        } else {
+          message.error(
+            "Ошибка: Невозможно изменить пароль. Проверьте введенные данные."
+          );
+        }
+      })
+      .catch(() => {
+        message.error(
+          "Ошибка: Невозможно изменить пароль. Обратитесь к администратору."
+        );
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const onFinishFailed = () => {
@@ -40,12 +69,7 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
         <SecondNewPassword name="SecondNewPassword" form={form} />
 
         <Flex gap="middle">
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={isLoading}
-            onClick={() => setIsLoading(true)}
-          >
+          <Button type="primary" htmlType="submit" loading={isLoading}>
             Сохранить данные
           </Button>
           <Button onClick={onCancel}>Отмена</Button>
