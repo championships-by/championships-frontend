@@ -3,7 +3,7 @@ import { useState } from "react";
 import OldPassword from "@modules/user/passwordChange/OldPassword";
 import NewPassword from "@modules/user/passwordChange/NewPassword";
 import SecondNewPassword from "@modules/user/passwordChange/SecondNewPassword";
-import { userApi } from "@api"; // Import the userApi
+import { userApi } from "@api";
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
