@@ -10,16 +10,26 @@ function EventName({ name }) {
       validateFirst
       rules={[
         {
+          validator(_, value) {
+            if (value && (value.startsWith(" ") || value.endsWith(" "))) {
+              return Promise.reject(
+                new Error("Введите корректное название мероприятия")
+              );
+            }
+            return Promise.resolve();
+          },
+        },
+        {
           required: true,
           message: "Пожалуйста введите название мероприятия",
         },
         {
           max: 255,
-          message: "Максимальное значение 255",
+          message: "Максимум 255 символов",
         },
         {
           min: 5,
-          message: "Минимальное значение 5",
+          message: "Минимум 5 символов",
         },
       ]}
     >
