@@ -27,10 +27,11 @@ function CompetitionType() {
   };
 
   return (
-    <div className="events__competition-judge__div">
+    <>
       <Typography.Text className="events__competition-judge__text">
         Судья
       </Typography.Text>
+       <div className="events__competition-judge__div">
       <Space>
         <Select
           className="events__competition-judge__select"
@@ -42,6 +43,8 @@ function CompetitionType() {
         />
       </Space>
     </div>
+    </>
+    
   );
 }
 

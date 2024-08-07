@@ -20,7 +20,7 @@ function EventDate({ name }) {
         <DatePicker
           locale={Locale}
           id="event_date"
-          format="DD-MM-YYYY"
+          format={Locale.dateFormat}
           placeholder="Выберите дату мероприятия"
           className="events__event-date__datepicker"
         />
