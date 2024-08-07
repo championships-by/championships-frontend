@@ -37,7 +37,7 @@ function EventsList({ events }) {
         title={<Typography.Title level={2}>{event.name}</Typography.Title>}
         extra={
           <Typography.Text type="secondary">
-            {dayjs(event.date).format("DD-MM-YYYY")}
+            {dayjs(event.date).format("DD.MM.YYYY")}
           </Typography.Text>
         }
       >
