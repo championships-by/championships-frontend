@@ -110,6 +110,7 @@ export const Locale = {
     dateFormat: "M/D/YYYY",
     dayFormat: "D",
     dateTimeFormat: "M/D/YYYY HH:mm:ss",
+    timeFormat: "HH:mm",
     monthFormat: "MMMM",
     monthBeforeYear: true,
     previousMonth: "Предыдущий месяц (PageUp)",
@@ -140,7 +141,7 @@ export const Locale = {
     placeholder: "Выберите время",
   },
   dateFormat: "DD.MM.YYYY",
-  dateTimeFormat: "DD-MM-YYYY HH:mm:ss",
+  dateTimeFormat: "DD.MM.YYYY HH:mm",
   weekFormat: "YYYY-wo",
   monthFormat: "YYYY-MM",
 };

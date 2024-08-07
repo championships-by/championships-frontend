@@ -164,7 +164,7 @@ function EventSettings() {
               loading={loadings[0]}
               onClick={() => {
                 enterLoading(0);
-                if (eventID === undefined) {
+                if (!eventID === undefined) {
                   create_event_request();
                 } else {
                   update_event_request();
@@ -180,7 +180,6 @@ function EventSettings() {
           <Button
             onClick={() => setIsAddCompitationModalOpen(true)}
             type="primary"
-            style={{ marginBottom: "16px" }}
           >
             Добавить компетенцию
           </Button>
