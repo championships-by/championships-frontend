@@ -1,12 +1,9 @@
 import { Button, TimePicker } from "antd";
-import dayjs from "dayjs";
 import { useState } from "react";
-
-const format = "mm:ss.SSS";
-const defaultTime = "00:00.000";
+import { defaultFormat, formatTime } from "../utils";
 
 export const CustomTimePicker = () => {
-  const [value, setValue] = useState(dayjs(defaultTime, format));
+  const [value, setValue] = useState(formatTime());
   const [isDisqualified, setIsDisqualified] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -33,9 +30,9 @@ export const CustomTimePicker = () => {
           onClick={handleInputClick}
           showNow={false}
           needConfirm={false}
-          defaultValue={dayjs(defaultTime, format)}
-          defaultOpenValue={dayjs(defaultTime, format)}
-          format={{ format, type: "mask" }}
+          defaultValue={formatTime()}
+          defaultOpenValue={formatTime()}
+          format={{ format: defaultFormat, type: "mask" }}
           changeOnScroll
           renderExtraFooter={() => (
             <div
