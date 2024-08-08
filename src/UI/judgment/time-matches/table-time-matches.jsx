@@ -47,7 +47,7 @@ function TableTimeMatches() {
             id={record.attempts[i].id}
             onTimeChange={(id, time) => {
               timeMatchEventEmitter.emit(
-                TimeMatchEvents.UPDATE_TIME,
+                TimeMatchEvents.UPDATE_TABLE_DATA,
                 id,
                 time,
                 index
@@ -137,10 +137,13 @@ function TableTimeMatches() {
         })
       );
     };
-    timeMatchEventEmitter.on(TimeMatchEvents.UPDATE_TIME, handleUpdateTime);
+    timeMatchEventEmitter.on(
+      TimeMatchEvents.UPDATE_TABLE_DATA,
+      handleUpdateTime
+    );
     return () => {
       timeMatchEventEmitter.removeListener(
-        TimeMatchEvents.UPDATE_TIME,
+        TimeMatchEvents.UPDATE_TABLE_DATA,
         handleUpdateTime
       );
     };

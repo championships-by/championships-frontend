@@ -1,7 +1,7 @@
 import { EventEmitter } from "events";
 
 const TimeMatchEvents = {
-  UPDATE_TIME: "updateTime",
+  UPDATE_TABLE_DATA: "updateTableData",
 };
 
 const timeMatchEventEmitter = new EventEmitter();
