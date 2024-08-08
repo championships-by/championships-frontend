@@ -15,7 +15,8 @@ function TableTimeMatches() {
   const { eventId, nominationId } = useParams();
 
   const transformData = useCallback((rounds) => {
-    return rounds.map((round) => ({
+    return rounds.map((round, index) => ({
+      key: `round-${index + 1}`,
       teamName: round.team_name,
       participant: {
         firstName: round.participant_data.first_name,
