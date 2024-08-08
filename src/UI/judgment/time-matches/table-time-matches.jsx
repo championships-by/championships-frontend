@@ -1,9 +1,11 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { Button, Flex, Table, Typography } from "antd";
+import dayjs from "dayjs";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { timeMatchesApi } from "./api/time-matches-api";
 import { CustomTimePicker } from "./components";
+import { timeMatchEventEmitter, TimeMatchEvents } from "./events";
 import "./sass/time-matches.scss";
 import { defaultFormat, formatTime } from "./utils";
 
@@ -36,11 +38,23 @@ function TableTimeMatches() {
 
   const generateColumns = useCallback(() => {
     if (data && data[0] && data[0].attempts) {
-      return data[0].attempts.map((attempt, index) => ({
-        key: `attempt${attempt.id}`,
-        dataIndex: `attempt${attempt.id}`,
-        title: `Попытка №${index + 1}`,
-        render: () => <CustomTimePicker />,
+      return data[0].attempts.map((attempt, i) => ({
+        key: `attempt-${i}`,
+        dataIndex: `attempt-${i}`,
+        title: `Попытка №${i + 1}`,
+        render: (text, record, index) => (
+          <CustomTimePicker
+            id={record.attempts[i].id}
+            onTimeChange={(id, time) => {
+              timeMatchEventEmitter.emit(
+                TimeMatchEvents.UPDATE_TIME,
+                id,
+                time,
+                index
+              );
+            }}
+          />
+        ),
       }));
     }
 
@@ -65,7 +79,21 @@ function TableTimeMatches() {
         key: "bestTime",
         dataIndex: "bestTime",
         title: "Лучшее время",
-        render: () => <>{formatTime().format(defaultFormat)}</>,
+        render: (text, record) => {
+          const bestTime = record.attempts.reduce((min, current) => {
+            if (current.result === null) return min;
+            const currentTime = dayjs(current.result, defaultFormat);
+            return min === null || currentTime.isBefore(min)
+              ? currentTime
+              : min;
+          }, null);
+
+          return bestTime ? (
+            <>{bestTime.format(defaultFormat)}</>
+          ) : (
+            <>{formatTime().format(defaultFormat)}</>
+          );
+        },
       },
     ],
     [generateColumns]
@@ -86,6 +114,37 @@ function TableTimeMatches() {
       .catch(() => setHasError(true))
       .finally(() => setIsLoading(false));
   }, [eventId, nominationId, transformData]);
+
+  useEffect(() => {
+    const handleUpdateTime = (id, time, index) => {
+      setData((prevData) =>
+        prevData.map((item, idx) => {
+          if (idx === index) {
+            return {
+              ...item,
+              attempts: item.attempts.map((attempt) => {
+                if (attempt.id === id) {
+                  return {
+                    ...attempt,
+                    result: formatTime(time).format(defaultFormat),
+                  };
+                }
+                return attempt;
+              }),
+            };
+          }
+          return item;
+        })
+      );
+    };
+    timeMatchEventEmitter.on(TimeMatchEvents.UPDATE_TIME, handleUpdateTime);
+    return () => {
+      timeMatchEventEmitter.removeListener(
+        TimeMatchEvents.UPDATE_TIME,
+        handleUpdateTime
+      );
+    };
+  }, [data]);
 
   return (
     <>

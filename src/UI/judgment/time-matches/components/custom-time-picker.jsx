@@ -2,7 +2,7 @@ import { Button, TimePicker } from "antd";
 import { useState } from "react";
 import { defaultFormat, formatTime } from "../utils";
 
-export const CustomTimePicker = () => {
+export const CustomTimePicker = ({ id, onTimeChange }) => {
   const [value, setValue] = useState(formatTime());
   const [isDisqualified, setIsDisqualified] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +24,10 @@ export const CustomTimePicker = () => {
       {!isDisqualified ? (
         <TimePicker
           value={value}
-          onChange={(e) => setValue(e)}
+          onChange={(time) => {
+            setValue(time);
+            onTimeChange(id, time);
+          }}
           variant="borderless"
           open={isOpen}
           onClick={handleInputClick}
