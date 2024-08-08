@@ -13,6 +13,7 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
 
   const handleDisqualify = () => {
     setIsDisqualified((disqualified) => !disqualified);
+    onTimeChange(id, value, !isDisqualified);
   };
 
   const handleInputClick = () => {
@@ -26,7 +27,7 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
           value={value}
           onChange={(time) => {
             setValue(time);
-            onTimeChange(id, time);
+            onTimeChange(id, time, isDisqualified);
           }}
           variant="borderless"
           open={isOpen}

@@ -28,6 +28,7 @@ function TableTimeMatches() {
       attempts: round.attempts.map(({ id, result }) => ({
         id,
         result,
+        isDisqualified: false,
       })),
       bestAttempt: {
         id: round.best_attempt.id,
@@ -45,12 +46,13 @@ function TableTimeMatches() {
         render: (text, record, index) => (
           <CustomTimePicker
             id={record.attempts[i].id}
-            onTimeChange={(id, time) => {
+            onTimeChange={(id, time, isDisqualified) => {
               timeMatchEventEmitter.emit(
                 TimeMatchEvents.UPDATE_TABLE_DATA,
                 id,
                 time,
-                index
+                index,
+                isDisqualified
               );
             }}
           />
@@ -80,8 +82,16 @@ function TableTimeMatches() {
         dataIndex: "bestTime",
         title: "Лучшее время",
         render: (text, record) => {
+          const allDisqualified = record.attempts.every(
+            (attempt) => attempt.isDisqualified
+          );
+
+          if (allDisqualified) {
+            return <span>-</span>;
+          }
+
           const bestTime = record.attempts.reduce((min, current) => {
-            if (current.result === null) return min;
+            if (current.result === null || current.isDisqualified) return min;
             const currentTime = dayjs(current.result, defaultFormat);
             return min === null || currentTime.isBefore(min)
               ? currentTime
@@ -116,7 +126,7 @@ function TableTimeMatches() {
   }, [eventId, nominationId, transformData]);
 
   useEffect(() => {
-    const handleUpdateTime = (id, time, index) => {
+    const handleUpdateTime = (id, time, index, isDisqualified) => {
       setData((prevData) =>
         prevData.map((item, idx) => {
           if (idx === index) {
@@ -127,6 +137,7 @@ function TableTimeMatches() {
                   return {
                     ...attempt,
                     result: formatTime(time).format(defaultFormat),
+                    isDisqualified,
                   };
                 }
                 return attempt;
