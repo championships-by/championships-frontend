@@ -21,10 +21,6 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
     setIsOpen(true);
   };
 
-  const handleBlur = () => {
-    setIsOpen(false);
-  };
-
   return (
     <>
       {!isDisqualified ? (
@@ -37,7 +33,6 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
           variant="borderless"
           open={isOpen}
           onClick={handleInputClick}
-          onBlur={handleBlur}
           showNow={false}
           needConfirm={false}
           defaultValue={formatTime()}
