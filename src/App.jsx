@@ -7,7 +7,7 @@ import Events from "@components/events/Events";
 import UserSettings from "@components/userSettings/UserSettings";
 import UsersControl from "@components/usersControl/UsersControl";
 import Participants from "@components/participants/Participants";
-import NotFound from "@components/notfound/Notfound";
+import NotFound from "@components/notFound/Notfound";
 import Auth from "@components/auth/Auth";
 import Logout from "@components/logout/Logout";
 import Judgment from "@components/judgment/events/JudgmentEvents";
