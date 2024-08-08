@@ -6,4 +6,7 @@ const defaultFormat = "mm:ss.SSS";
 const formatTime = (time = defaultTime, format = defaultFormat) =>
   dayjs(time, format);
 
-export { defaultFormat, defaultTime, formatTime };
+const formatTimeToString = (time = defaultTime, format = defaultFormat) =>
+  dayjs(time, format).format(defaultFormat);
+
+export { defaultFormat, defaultTime, formatTime, formatTimeToString };
