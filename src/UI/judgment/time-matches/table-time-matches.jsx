@@ -1,11 +1,11 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { Button, Flex, Table, Tooltip, Typography } from "antd";
-import dayjs from "dayjs";
-import { useCallback, useEffect, useState } from "react";
+import { Button, Flex, Table, Typography } from "antd";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { timeMatchesApi } from "./api/time-matches-api";
 import { CustomTimePicker } from "./components";
 import "./sass/time-matches.scss";
+import { defaultFormat, formatTime } from "./utils";
 
 function TableTimeMatches() {
   const [data, setData] = useState([]);
@@ -13,68 +13,6 @@ function TableTimeMatches() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { eventId, nominationId } = useParams();
-
-  const columns = [
-    {
-      title: <Tooltip title="Место">Место</Tooltip>,
-      dataIndex: "place",
-      key: "place",
-    },
-    {
-      title: <Tooltip title="Участник">Участники</Tooltip>,
-      dataIndex: "participants",
-      key: "participants",
-    },
-    {
-      title: <Tooltip title="Попытка №1">Попытка №1</Tooltip>,
-      dataIndex: "first_attempt",
-      key: "first_attempt",
-      render: () => <CustomTimePicker />,
-    },
-    {
-      title: <Tooltip title="Попытка №2">Попытка №2</Tooltip>,
-      dataIndex: "second_attempt",
-      key: "second_attempt",
-      render: () => <CustomTimePicker />,
-    },
-    {
-      title: <Tooltip title="Попытка №3">Попытка №3</Tooltip>,
-      dataIndex: "third_attempt",
-      key: "third_attempt",
-      render: () => <CustomTimePicker />,
-    },
-    {
-      title: <Tooltip title="Лучшее время">Лучшее время</Tooltip>,
-      dataIndex: "best_attempt",
-      key: "best_attempt",
-      render: (text, record) => {
-        const attempts = [
-          record.first_attempt,
-          record.second_attempt,
-          record.third_attempt,
-        ];
-
-        const isAllDisqualified = attempts.every(
-          (attempt) => attempt === "Дисквалифицирован"
-        );
-
-        if (isAllDisqualified) {
-          return "-";
-        }
-
-        const bestAttempt = attempts
-          .filter((attempt) => attempt !== "Дисквалифицирован")
-          .sort((a, b) => {
-            const timeA = dayjs(a, "mm:ss.SSS");
-            const timeB = dayjs(b, "mm:ss.SSS");
-
-            return timeA.diff(timeB);
-          })[0];
-
-        return bestAttempt;
-      },
-    },
-  ];
 
   const transformData = useCallback((rounds) => {
     return rounds.map((round) => ({
@@ -94,6 +32,43 @@ function TableTimeMatches() {
       },
     }));
   }, []);
+
+  const generateColumns = useCallback(() => {
+    if (data && data[0] && data[0].attempts) {
+      return data[0].attempts.map((attempt, index) => ({
+        key: `attempt${attempt.id}`,
+        dataIndex: `attempt${attempt.id}`,
+        title: `Попытка №${index + 1}`,
+        render: () => <CustomTimePicker />,
+      }));
+    }
+
+    return [];
+  }, [data]);
+
+  const columns = useMemo(
+    () => [
+      {
+        key: "place",
+        dataIndex: "place",
+        title: "№ п/п",
+        render: (text, record, index) => <>{index + 1}</>,
+      },
+      {
+        key: "teamName",
+        dataIndex: "teamName",
+        title: "Участники",
+      },
+      ...generateColumns(),
+      {
+        key: "bestTime",
+        dataIndex: "bestTime",
+        title: "Лучшее время",
+        render: () => <>{formatTime().format(defaultFormat)}</>,
+      },
+    ],
+    [generateColumns]
+  );
 
   useEffect(() => {
     setIsLoading(true);
