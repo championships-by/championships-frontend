@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ROUTER_ROUTES } from "@constants";
 import AdminPanel from "@components/adminPanel/AdminPanel";
 import EventsRegistration from "@components/eventRegistration/EventRegistration";
-import EventSettings from "@components/judgment/eventSettings/eventSettings";
+import EventSettings from "@components/judgment/eventSettings/EventSettings";
 import Events from "@components/events/Events";
 import UserSettings from "@components/userSettings/UserSettings";
 import UsersControl from "@components/usersControl/UsersControl";
