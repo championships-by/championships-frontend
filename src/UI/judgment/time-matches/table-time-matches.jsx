@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { timeMatchesApi } from "./api/time-matches-api";
 import { CustomTimePicker } from "./components";
 import { timeMatchEventEmitter, TimeMatchEvents } from "./events";
-import "./sass/time-matches.scss";
 import {
   defaultFormat,
   formatTimeToString,
@@ -150,11 +149,7 @@ function TableTimeMatches() {
                 columns={columns}
                 dataSource={timeMatchesData}
               />
-              <Button
-                style={{ margin: "10px 0px 10px 0px" }}
-                className="endStage"
-                type="primary"
-              >
+              <Button style={{ margin: "10px 0px 10px 0px" }} type="primary">
                 Завершить этап
               </Button>
             </>

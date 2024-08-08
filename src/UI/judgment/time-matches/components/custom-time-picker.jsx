@@ -1,6 +1,7 @@
 import { Button, TimePicker } from "antd";
 import { useState } from "react";
 import { defaultFormat, formatTime } from "../utils";
+import "./custom-time-picker.scss";
 
 export const CustomTimePicker = ({ id, onTimeChange }) => {
   const [value, setValue] = useState(formatTime());
@@ -44,29 +45,11 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
           format={{ format: defaultFormat, type: "mask" }}
           changeOnScroll
           renderExtraFooter={() => (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "stretch",
-                margin: "8px 0",
-                gap: "8px",
-              }}
-            >
-              <Button
-                size="middle"
-                type="text"
-                style={{ width: "100%" }}
-                onClick={handleDisqualify}
-              >
+            <div className="extra-footer">
+              <Button size="middle" type="text" onClick={handleDisqualify}>
                 Дискв.
               </Button>
-              <Button
-                size="middle"
-                type="primary"
-                style={{ width: "100%" }}
-                onClick={handleOk}
-              >
+              <Button size="middle" type="primary" onClick={handleOk}>
                 Ок
               </Button>
             </div>
