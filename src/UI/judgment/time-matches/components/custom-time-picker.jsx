@@ -4,8 +4,8 @@ import { defaultFormat, formatTime } from "../utils";
 
 export const CustomTimePicker = ({ id, onTimeChange }) => {
   const [value, setValue] = useState(formatTime());
-  const [isDisqualified, setIsDisqualified] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isDisqualified, setIsDisqualified] = useState(false);
 
   const handleOk = () => {
     setIsOpen(false);
@@ -20,6 +20,10 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
     setIsOpen(true);
   };
 
+  const handleBlur = () => {
+    setIsOpen(false);
+  };
+
   return (
     <>
       {!isDisqualified ? (
@@ -32,6 +36,7 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
           variant="borderless"
           open={isOpen}
           onClick={handleInputClick}
+          onBlur={handleBlur}
           showNow={false}
           needConfirm={false}
           defaultValue={formatTime()}
