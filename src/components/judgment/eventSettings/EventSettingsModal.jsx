@@ -26,7 +26,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
       onOk={onOk}
       onCancel={onCancel}
       footer={[]}
-      width={800}
+      width={600}
     >
       <Form
         layout="vertical"

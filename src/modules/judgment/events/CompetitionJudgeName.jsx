@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Typography, Select, Space } from "antd";
+import { Typography, Select, Space, Flex, Input } from "antd";
+import { AlertOutlined } from "@ant-design/icons";
 import "./sass/events.scss";
 
 function CompetitionType() {
@@ -32,16 +33,24 @@ function CompetitionType() {
         Судья
       </Typography.Text>
        <div className="events__competition-judge__div">
-      <Space>
-        <Select
-          className="events__competition-judge__select"
-          mode="multiple"
-          placeholder="Выберите судью"
-          maxTagCount="responsive"
-          options={options}
-          onSearch={handleSearch}
-        />
-      </Space>
+        <Flex>
+          <Space.Compact>
+            <Input
+              prefix={<AlertOutlined/>}
+              className="events__competition-judge__input"
+              disabled
+            />
+            <Select
+              className="events__competition-judge__select"
+              mode="multiple"
+              placeholder="Выберите судью"
+              maxTagCount="responsive"
+              options={options}
+              onSearch={handleSearch}
+            />
+          </Space.Compact>
+        </Flex>
+      
     </div>
     </>
     

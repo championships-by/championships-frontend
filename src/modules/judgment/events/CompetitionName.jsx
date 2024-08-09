@@ -8,23 +8,19 @@ import "./sass/events.scss";
 function CompitationNameInput() {
   return (
     <div className="events_compitation-name__div">
-      <Typography.Text className="events_compitation-name__text">
-        Компетенция
+      <Typography.Text className="events__compitation-name__text">
+        Название компетенции
       </Typography.Text>
       <Flex>
         <Space.Compact className="events__compitation-name__space">
-          <Input
-            prefix={<FlagOutlined />}
-            className="events__compitation-name__image"
-            disabled
-          />
           <FormItem
+            name="compitation"
             hasFeedback
             validateFirst
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, выберите мероприятие",
+                message: "Пожалуйста, введите название компетенции",
               },
               {
                 min: 5,
@@ -37,6 +33,7 @@ function CompitationNameInput() {
                 className="events__compitation-name__input"
                 placeholder="Введите название"
                 maxLength={30}
+                prefix={<FlagOutlined/>}
               />
               <Typography.Text type="secondary">
                 Пример: Робофутбол
