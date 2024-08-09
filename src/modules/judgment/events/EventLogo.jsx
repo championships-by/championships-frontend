@@ -12,6 +12,8 @@ function EventLogo({ name }) {
         <Typography.Text>Логотип: </Typography.Text>
         <Upload
           {...FILE_UPLOADING.UPLOAD}
+          accept=".jpg,.jpeg,.png,.gif,.bmp,.svg"
+          maxCount={1}
           onChange={(info) => {
             if (info.file.status !== FILE_UPLOADING.UPLOADING) {
             }
@@ -22,7 +24,7 @@ function EventLogo({ name }) {
             }
           }}
         >
-          <Button icon={<UploadOutlined />}>Нажмите что бы загрузить</Button>
+          <Button icon={<UploadOutlined />}>Загрузить</Button>
         </Upload>
       </Flex>
     </FormItem>

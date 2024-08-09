@@ -3,7 +3,8 @@ import {
   Typography,
   Breadcrumb,
   Table,
-  Flex,
+  Row,
+  Col,
   message,
   Form,
   Space,
@@ -41,10 +42,10 @@ const columns = [
     title: "Действия",
     key: "action",
     render: () => (
-      <Flex>
+      <Space>
         <Button type="text" icon={<EditOutlined />} />
         <Button type="text" icon={<DeleteOutlined />} />
-      </Flex>
+      </Space>
     ),
   },
 ];
@@ -64,13 +65,12 @@ function EventSettings() {
         eventApi
           .getEvent(eventID)
           .then((response) => response.json())
-          .then((data) => setEvent(data))
-          .then((dataEvent) => {
+          .then((data) => {
+            setEvent(data);
             form.setFieldsValue({
-              event_name: dataEvent?.event_data?.name,
-              event_date: dataEvent?.event_data?.date,
-            }); // #TODO
-
+              event_name: data?.event_data?.name,
+              event_date: data?.event_data?.date,
+            });
             setTimeout(() => setIsLoading(false), 300);
           });
       } catch (error) {
@@ -81,7 +81,7 @@ function EventSettings() {
     } else {
       setTimeout(() => setIsLoading(false), 300);
     }
-  }, [eventID]);
+  }, [eventID, form]);
 
   const update_event_request = async () => {
     const body = JSON.stringify({
@@ -97,7 +97,7 @@ function EventSettings() {
     const body = JSON.stringify({
       name: form.getFieldValue("event_name"),
       date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
-    }); // #TODO
+    });
 
     eventApi.setEvent(body);
   };
@@ -126,83 +126,73 @@ function EventSettings() {
   };
 
   return (
-    <Flex vertical gap="middle">
-      <div>
-        <Loader show={isLoading} />
-        <Typography.Title level={2}>
-          Редактирование мероприятия
-        </Typography.Title>
-        <Breadcrumb
-          items={[
-            {
-              title: "Мероприятия",
-              href: "./",
-            },
-            {
-              title: "Hастройка мероприятия",
-            },
-          ]}
-        />
-      </div>
-      <Form
-        form={form}
-        layout="vertical"
-        variant="filled"
-        requiredMark="Default"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Flex vertical align="center">
-          <Typography.Title level={2}>Данные мероприятия</Typography.Title>
-        </Flex>
-        <Flex vertical className="event-settings__form-flex">
-          <EventName name="event_name" />
-          <EventEmail name="event_email" />
-          <EventPlace name="event_place" />
-          <EventLogo name="event_logo" />
-          <EventDate name="event_date" />
-          <EventRegistrationSwitch name="event_registartion" />
-          <EventRegulation name="event_regulation" />
-          <EventDescription name="event_description" />
-        </Flex>
-        <Button
-          type="primary"
-          htmlType="submit"
-          loading={loadings[0]}
-          onClick={() => {
-            enterLoading(0);
-            if (eventID === undefined) {
-              create_event_request();
-            } else {
-              update_event_request();
-            }
-          }}
-        >
-          Сохранить данные
-        </Button>
-      </Form>
-      <Space direction="vertical" size="middle">
-        <Flex vertical align="center">
-          <Typography.Title level={2}>Компетенции</Typography.Title>
-        </Flex>
-        <Flex vertical align="flex-end">
+    <div>
+      <Loader show={isLoading} />
+      <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
+      <Breadcrumb
+        items={[
+          {
+            title: "Мероприятия",
+            href: "./",
+          },
+          {
+            title: "Настройка мероприятия",
+          },
+        ]}
+      />
+      <Row gutter={16}>
+        <Col xs={24} md={8}>
+          <Form
+            form={form}
+            layout="vertical"
+            requiredMark="optional"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+          >
+            <Typography.Title level={3}>Данные мероприятия</Typography.Title>
+            <EventName name="event_name" />
+            <EventDate name="event_date" />
+            <EventRegistrationSwitch name="event_registartion" />
+            <EventEmail name="event_email" />
+            <EventPlace name="event_place" />
+            <EventLogo name="event_logo" />
+            <EventRegulation name="event_regulation" />
+            <EventDescription name="event_description" />
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loadings[0]}
+              onClick={() => {
+                enterLoading(0);
+                if (!eventID === undefined) {
+                  create_event_request();
+                } else {
+                  update_event_request();
+                }
+              }}
+            >
+              Сохранить данные
+            </Button>
+          </Form>
+        </Col>
+        <Col xs={24} md={16}>
+          <Typography.Title level={3}>Компетенции</Typography.Title>
           <Button
             onClick={() => setIsAddCompitationModalOpen(true)}
             type="primary"
           >
-            {" "}
-            Добавить компетенцию{" "}
+            Добавить компетенцию
           </Button>
-        </Flex>
-        <Table columns={columns} />
-      </Space>
+          <Table columns={columns} dataSource={dataEvent.competitions} />
+        </Col>
+      </Row>
       <CompitationModal
         name="Добавить компетенцию"
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
       />
-    </Flex>
+    </div>
   );
 }
 

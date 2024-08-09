@@ -3,7 +3,7 @@ import { Flex, Input, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/user.scss";
-import { handlePaste } from "./handlePaste";
+import { handlePaste } from "@utils";
 
 function UserFirstnameInput({ name }) {
   const handleKeyPress = (event) => {

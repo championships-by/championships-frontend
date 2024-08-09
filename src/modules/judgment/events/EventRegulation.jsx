@@ -12,6 +12,8 @@ function EventRegulation({ name }) {
         <Typography.Text>Положение о проведении мероприятия: </Typography.Text>
         <Upload
           {...FILE_UPLOADING.UPLOAD}
+          accept=".doc,.docx,.jpg,.png,.xls,.scv,.ppt,.txt,.rtf,.pdf,.tiff"
+          maxCount={1}
           onChange={(info) => {
             if (info.file.status !== FILE_UPLOADING.UPLOADING) {
             }
@@ -22,7 +24,7 @@ function EventRegulation({ name }) {
             }
           }}
         >
-          <Button icon={<UploadOutlined />}>Нажмите что бы загрузить</Button>
+          <Button icon={<UploadOutlined />}>Загрузить</Button>
         </Upload>
       </Flex>
     </FormItem>

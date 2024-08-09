@@ -7,6 +7,12 @@ import { ROUTES } from "@constants";
 import EventTable from "@components/judgment/events/JudgmentEventsTable";
 import { eventApi } from "@api";
 
+function ChangeDateFormat(date){
+  const parts = date.split("-")
+
+  return `${parts[2]}.${parts[1]}.${parts[0]}`
+}
+
 function JudgmentEvents() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataEvents, setEvents] = useState([]);
@@ -17,6 +23,13 @@ function JudgmentEvents() {
       eventApi
         .getEventWithNominations({ limit: 49 })
         .then((response) => response.json())
+        .then((response) => {
+          const formattedObject = response.map(user => ({
+            ...user,
+            date: ChangeDateFormat(user.date)
+          }))
+          return formattedObject
+        })
         .then((data) => setEvents(data))
         .catch(() =>
           message.error(

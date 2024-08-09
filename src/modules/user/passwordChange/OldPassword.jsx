@@ -26,7 +26,7 @@ function OldPassword({ name }) {
       >
         <Input.Password
           prefix={<LockOutlined />}
-          placeholder="Введите старый Пароль"
+          placeholder="Введите старый пароль"
           iconRender={() => <EyeInvisibleOutlined />}
         />
       </FormItem>
