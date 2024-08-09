@@ -3,19 +3,19 @@ import FormItem from "antd/es/form/FormItem";
 import { Locale } from "@constants";
 import "./sass/events.scss";
 
-function EventDate({ name }) {
+function EventRegisterDate({ name }) {
   const configDate = {
     rules: [
       {
         type: "object",
         required: true,
-        message: "Пожалуйста, выберите дату и время проведения",
+        message: "Пожалуйста, выберите дату и время регистрации",
       },
     ],
   };
   return (
     <>
-      <Typography.Text>Проведение</Typography.Text>
+      <Typography.Text>Регистрация</Typography.Text>
       <FormItem name={name} hasFeedback validateFirst {...configDate}>
         <div className="events__event-date__datepickercontainer">
           <Typography.Text>С</Typography.Text>
@@ -43,4 +43,4 @@ function EventDate({ name }) {
     </>
   );
 }
-export default EventDate;
+export default EventRegisterDate;

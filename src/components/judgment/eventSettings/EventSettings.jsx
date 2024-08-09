@@ -16,8 +16,11 @@ import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
 import EventDate from "@modules/judgment/events/EventDate";
+import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventDescription from "@modules/judgment/events/EventDescription";
+import EventRequirements from "@modules/judgment/events/EventRequirements";
 import EventEmail from "@modules/judgment/events/EventEmail";
+import EventLevel from "@modules/judgment/events/EventLevel";
 import EventPlace from "@modules/judgment/events/EventPlace";
 import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationSwitch";
 import EventRegulation from "@modules/judgment/events/EventRegulation";
@@ -34,9 +37,18 @@ const columns = [
     key: "name_nomination",
   },
   {
-    title: "Количество зарегестрированных участников",
-    dataIndex: "porticipants_count",
-    key: "porticipants_count",
+    title: "Тип соревнований",
+    dataIndex: "compitation_type",
+    key: "compitation_type",
+  },
+  {
+    title: "Регламент",
+    key: "regulations",
+    render: () => (
+      <Space>
+        <Button type="text" icon={<LinkOutlined />} />
+      </Space>
+    ),
   },
   {
     title: "Действия",
@@ -44,6 +56,8 @@ const columns = [
     render: () => (
       <Space>
         <Button type="text" icon={<EditOutlined />} />
+        <Button type="text" icon={<TrophyOutlined />} />
+        <Button type="text" icon={<TeamOutlined />} />
         <Button type="text" icon={<DeleteOutlined />} />
       </Space>
     ),
@@ -60,7 +74,7 @@ function EventSettings() {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (eventID !== undefined) {
+    if (!eventID) {
       try {
         eventApi
           .getEvent(eventID)
@@ -151,20 +165,23 @@ function EventSettings() {
           >
             <Typography.Title level={3}>Данные мероприятия</Typography.Title>
             <EventName name="event_name" />
-            <EventDate name="event_date" />
-            <EventRegistrationSwitch name="event_registartion" />
+            <EventLogo name="event_logo" />
             <EventEmail name="event_email" />
             <EventPlace name="event_place" />
-            <EventLogo name="event_logo" />
             <EventRegulation name="event_regulation" />
+            <EventRegisterDate name="event_register_date" />
+            <EventDate name="event_date" />
+            <EventRegistrationSwitch name="event_registartion" />
             <EventDescription name="event_description" />
+            <EventLevel name="event_level" />
+            <EventRequirements name="event_requirements" />
             <Button
               type="primary"
               htmlType="submit"
               loading={loadings[0]}
               onClick={() => {
                 enterLoading(0);
-                if (!eventID === undefined) {
+                if (!eventID) {
                   create_event_request();
                 } else {
                   update_event_request();
@@ -176,10 +193,16 @@ function EventSettings() {
           </Form>
         </Col>
         <Col xs={24} md={16}>
-          <Typography.Title level={3}>Компетенции</Typography.Title>
+          <Typography.Title
+            level={3}
+            className="event-settings__compitation-title"
+          >
+            Компетенции
+          </Typography.Title>
           <Button
             onClick={() => setIsAddCompitationModalOpen(true)}
             type="primary"
+            className="event-settings__add-compitation-btn"
           >
             Добавить компетенцию
           </Button>

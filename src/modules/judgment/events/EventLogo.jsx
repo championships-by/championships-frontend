@@ -7,7 +7,17 @@ import "./sass/events.scss";
 
 function EventLogo({ name }) {
   return (
-    <FormItem name={name} hasFeedback validateFirst>
+    <FormItem
+      name={name}
+      hasFeedback
+      validateFirst
+      rules={[
+        {
+          required: true,
+          message: "Пожалуйста, загрузите логотип",
+        },
+      ]}
+    >
       <Flex gap="middle">
         <Typography.Text>Логотип: </Typography.Text>
         <Upload
