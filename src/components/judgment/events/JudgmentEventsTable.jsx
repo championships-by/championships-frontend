@@ -28,7 +28,7 @@ function JudgmentEventsTable({ EventsData }) {
       ),
       okText: "Да",
       cancelText: "Отмена",
-      onOk: async () => {
+      onOk: () => {
         const body = JSON.stringify({
           id: id,
         });

@@ -3,16 +3,16 @@ import FormItem from "antd/es/form/FormItem";
 import { Locale } from "@constants";
 import "./sass/events.scss";
 
+const configDate = {
+  rules: [
+    {
+      type: "object",
+      required: true,
+      message: "Пожалуйста, выберите дату и время регистрации",
+    },
+  ],
+};
 function EventRegisterDate({ name }) {
-  const configDate = {
-    rules: [
-      {
-        type: "object",
-        required: true,
-        message: "Пожалуйста, выберите дату и время регистрации",
-      },
-    ],
-  };
   return (
     <>
       <Typography.Text>Регистрация</Typography.Text>

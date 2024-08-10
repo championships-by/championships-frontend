@@ -26,11 +26,11 @@ function JudgmentEvents() {
         .getEventWithNominations({ limit: 49 })
         .then((response) => response.json())
         .then((response) => {
-          const formattedObject = response.map((user) => ({
+          const formattedDate = response.map((user) => ({
             ...user,
             date: ChangeDateFormat(user.date),
           }));
-          return formattedObject;
+          return formattedDate;
         })
         .then((data) => setEvents(data))
         .catch(() =>

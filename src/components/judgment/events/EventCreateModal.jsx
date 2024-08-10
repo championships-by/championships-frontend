@@ -13,17 +13,18 @@ import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationS
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import { eventApi } from "@api";
+import { Locale } from "@constants"
 
 function EventCreateModal({ isOpen, onOk, onCancel, name }) {
   const [form] = Form.useForm();
 
-  const create_event_request = async () => {
+  const createEventRequest = async () => {
     const body = JSON.stringify({
       name: form.getFieldValue("event_name"),
-      date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
+      date: dayjs(form.getFieldValue("event_date")).format(Locale.dataFormat),
     });
 
-    await eventApi.setEvent(body);
+    eventApi.setEvent(body);
   };
 
   const onFinish = () => {
@@ -64,9 +65,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
         <Button
           type="primary"
           htmlType="submit"
-          onClick={() => {
-            create_event_request();
-          }}
+          onClick={createEventRequest}
         >
           Сохранить
         </Button>
