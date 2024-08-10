@@ -1,10 +1,10 @@
 import { Flex, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Queries from "./api/Queries";
+import Queries from "../api/Queries";
 import "./sass/groupStage.scss";
 
-export default function TableGroupStage() {
+export const TableGroupStage = () => {
   const [dataParticipant, setParticipant] = useState([]);
   const columns = [
     {
@@ -176,4 +176,4 @@ export default function TableGroupStage() {
       ))}
     </Flex>
   );
-}
+};
