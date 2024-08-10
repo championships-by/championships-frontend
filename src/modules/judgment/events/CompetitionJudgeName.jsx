@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Typography, Select, Space, Flex, Input } from "antd";
-import { AlertOutlined } from "@ant-design/icons";
+import { UsergroupAddOutlined } from "@ant-design/icons";
 import "./sass/events.scss";
 
 function CompetitionType() {
@@ -36,7 +36,7 @@ function CompetitionType() {
         <Flex>
           <Space.Compact>
             <Input
-              prefix={<AlertOutlined/>}
+              prefix={<UsergroupAddOutlined/>}
               className="events__competition-judge__input"
               disabled
             />
