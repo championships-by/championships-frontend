@@ -7,7 +7,17 @@ import "./sass/events.scss";
 
 function EventRegulation({ name }) {
   return (
-    <FormItem name={name} hasFeedback validateFirst>
+    <FormItem
+      name={name}
+      hasFeedback
+      validateFirst
+      rules={[
+        {
+          required: true,
+          message: "Пожалуйста, загрузите положение о проведении мероприятия",
+        },
+      ]}
+    >
       <Flex gap="middle">
         <Typography.Text>Положение о проведении мероприятия: </Typography.Text>
         <Upload

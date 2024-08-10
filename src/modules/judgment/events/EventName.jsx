@@ -1,5 +1,6 @@
 import { Typography, Input, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
+import { FlagOutlined } from "@ant-design/icons";
 import "./sass/events.scss";
 
 function EventName({ name }) {
@@ -36,6 +37,7 @@ function EventName({ name }) {
       <Flex vertical>
         <Typography.Text>Название мероприятия</Typography.Text>
         <Input
+          prefix={<FlagOutlined />}
           allowClear
           placeholder="Введите название мероприятия"
           id="event_name_input"
