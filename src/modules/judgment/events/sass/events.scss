@@ -135,4 +135,13 @@
       margin-left: 2%;
     }
   }
+  &__event-level{
+    &__icon{
+      width: 40px;
+
+    }
+    &__div{
+      display: flex;
+    }
+  }
 }

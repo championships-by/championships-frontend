@@ -1,5 +1,6 @@
-import { Typography, Select, Flex } from "antd";
+import { Typography, Select, Input } from "antd";
 import FormItem from "antd/es/form/FormItem";
+import { StarOutlined } from "@ant-design/icons";
 import "./sass/events.scss";
 
 const options = [
@@ -8,18 +9,25 @@ const options = [
   { value: "district", label: <span>Районный</span> },
   { value: "town", label: <span>Городской</span> },
   { value: "other", label: <span>Другое</span> },
-]
+];
+
 function EventLevel({ name }) {
   return (
     <FormItem name={name} hasFeedback validateFirst>
-      <Flex vertical>
-        <Typography.Text>Уровень мероприятия</Typography.Text>
+      <Typography.Text>Уровень мероприятия</Typography.Text>
+      <div  className="events__event-level__div">
+        <Input 
+          disabled
+          prefix={<StarOutlined />}
+          className="events__event-level__icon"
+        />
         <Select
           placeholder="Выберите уровень мероприятия"
           options={options}
         />
-      </Flex>
+      </div>
     </FormItem>
   );
 }
+
 export default EventLevel;
