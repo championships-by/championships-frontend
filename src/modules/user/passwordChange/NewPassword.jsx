@@ -15,11 +15,19 @@ function NewPassword({ name }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста введите пароль",
+            message: "Пожалуйста, введите пароль",
           },
           {
             min: 8,
             message: "Минимальная длина пароля - 8 символов",
+          },
+          {
+            pattern: /[a-zA-Z]/,
+            message: "Пароль должен содержать латинские буквы",
+          },
+          {
+            pattern: /\d/,
+            message: "Пароль должен содержать цифры",
           },
         ]}
         className="password-change__new-password__formitem"

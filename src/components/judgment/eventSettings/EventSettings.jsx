@@ -3,7 +3,8 @@ import {
   Typography,
   Breadcrumb,
   Table,
-  Flex,
+  Row,
+  Col,
   message,
   Form,
   Space,
@@ -15,8 +16,11 @@ import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
 import EventDate from "@modules/judgment/events/EventDate";
+import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventDescription from "@modules/judgment/events/EventDescription";
+import EventRequirements from "@modules/judgment/events/EventRequirements";
 import EventEmail from "@modules/judgment/events/EventEmail";
+import EventLevel from "@modules/judgment/events/EventLevel";
 import EventPlace from "@modules/judgment/events/EventPlace";
 import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationSwitch";
 import EventRegulation from "@modules/judgment/events/EventRegulation";
@@ -33,18 +37,29 @@ const columns = [
     key: "name_nomination",
   },
   {
-    title: "Количество зарегестрированных участников",
-    dataIndex: "porticipants_count",
-    key: "porticipants_count",
+    title: "Тип соревнований",
+    dataIndex: "compitation_type",
+    key: "compitation_type",
+  },
+  {
+    title: "Регламент",
+    key: "regulations",
+    render: () => (
+      <Space>
+        <Button type="text" icon={<LinkOutlined />} />
+      </Space>
+    ),
   },
   {
     title: "Действия",
     key: "action",
     render: () => (
-      <Flex>
+      <Space>
         <Button type="text" icon={<EditOutlined />} />
+        <Button type="text" icon={<TrophyOutlined />} />
+        <Button type="text" icon={<TeamOutlined />} />
         <Button type="text" icon={<DeleteOutlined />} />
-      </Flex>
+      </Space>
     ),
   },
 ];
@@ -59,18 +74,17 @@ function EventSettings() {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (eventID !== undefined) {
+    if (!eventID) {
       try {
         eventApi
           .getEvent(eventID)
           .then((response) => response.json())
-          .then((data) => setEvent(data))
-          .then((dataEvent) => {
+          .then((data) => {
+            setEvent(data);
             form.setFieldsValue({
-              event_name: dataEvent?.event_data?.name,
-              event_date: dataEvent?.event_data?.date,
-            }); // #TODO
-
+              event_name: data?.event_data?.name,
+              event_date: data?.event_data?.date,
+            });
             setTimeout(() => setIsLoading(false), 300);
           });
       } catch (error) {
@@ -81,7 +95,7 @@ function EventSettings() {
     } else {
       setTimeout(() => setIsLoading(false), 300);
     }
-  }, [eventID]);
+  }, [eventID, form]);
 
   const update_event_request = async () => {
     const body = JSON.stringify({
@@ -97,7 +111,7 @@ function EventSettings() {
     const body = JSON.stringify({
       name: form.getFieldValue("event_name"),
       date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
-    }); // #TODO
+    });
 
     eventApi.setEvent(body);
   };
@@ -126,83 +140,82 @@ function EventSettings() {
   };
 
   return (
-    <Flex vertical gap="middle">
-      <div>
-        <Loader show={isLoading} />
-        <Typography.Title level={2}>
-          Редактирование мероприятия
-        </Typography.Title>
-        <Breadcrumb
-          items={[
-            {
-              title: "Мероприятия",
-              href: "./",
-            },
-            {
-              title: "Hастройка мероприятия",
-            },
-          ]}
-        />
-      </div>
-      <Form
-        form={form}
-        layout="vertical"
-        variant="filled"
-        requiredMark="Default"
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Flex vertical align="center">
-          <Typography.Title level={2}>Данные мероприятия</Typography.Title>
-        </Flex>
-        <Flex vertical className="event-settings__form-flex">
-          <EventName name="event_name" />
-          <EventEmail name="event_email" />
-          <EventPlace name="event_place" />
-          <EventLogo name="event_logo" />
-          <EventDate name="event_date" />
-          <EventRegistrationSwitch name="event_registartion" />
-          <EventRegulation name="event_regulation" />
-          <EventDescription name="event_description" />
-        </Flex>
-        <Button
-          type="primary"
-          htmlType="submit"
-          loading={loadings[0]}
-          onClick={() => {
-            enterLoading(0);
-            if (eventID === undefined) {
-              create_event_request();
-            } else {
-              update_event_request();
-            }
-          }}
-        >
-          Сохранить данные
-        </Button>
-      </Form>
-      <Space direction="vertical" size="middle">
-        <Flex vertical align="center">
-          <Typography.Title level={2}>Компетенции</Typography.Title>
-        </Flex>
-        <Flex vertical align="flex-end">
+    <div>
+      <Loader show={isLoading} />
+      <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
+      <Breadcrumb
+        items={[
+          {
+            title: "Мероприятия",
+            href: "./",
+          },
+          {
+            title: "Настройка мероприятия",
+          },
+        ]}
+      />
+      <Row gutter={16}>
+        <Col xs={24} md={8}>
+          <Form
+            form={form}
+            layout="vertical"
+            requiredMark="optional"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+          >
+            <Typography.Title level={3}>Данные мероприятия</Typography.Title>
+            <EventName name="event_name" />
+            <EventLogo name="event_logo" />
+            <EventEmail name="event_email" />
+            <EventPlace name="event_place" />
+            <EventRegulation name="event_regulation" />
+            <EventRegisterDate name="event_register_date" />
+            <EventDate name="event_date" />
+            <EventRegistrationSwitch name="event_registartion" />
+            <EventDescription name="event_description" />
+            <EventLevel name="event_level" />
+            <EventRequirements name="event_requirements" />
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loadings[0]}
+              onClick={() => {
+                enterLoading(0);
+                if (!eventID) {
+                  create_event_request();
+                } else {
+                  update_event_request();
+                }
+              }}
+            >
+              Сохранить данные
+            </Button>
+          </Form>
+        </Col>
+        <Col xs={24} md={16}>
+          <Typography.Title
+            level={3}
+            className="event-settings__compitation-title"
+          >
+            Компетенции
+          </Typography.Title>
           <Button
             onClick={() => setIsAddCompitationModalOpen(true)}
             type="primary"
+            className="event-settings__add-compitation-btn"
           >
-            {" "}
-            Добавить компетенцию{" "}
+            Добавить компетенцию
           </Button>
-        </Flex>
-        <Table columns={columns} />
-      </Space>
+          <Table columns={columns} dataSource={dataEvent.competitions} />
+        </Col>
+      </Row>
       <CompitationModal
         name="Добавить компетенцию"
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
       />
-    </Flex>
+    </div>
   );
 }
 

@@ -11,4 +11,12 @@
   &__cancelButton {
     margin-top: 40px;
   }
+  &__compitation-title {
+    width: fit-content;
+    display: inline-block;
+  }
+  &__add-compitation-btn {
+    float: right;
+    margin-top: 24px;
+  }
 }

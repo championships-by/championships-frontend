@@ -103,7 +103,15 @@
   }
   &__event-date {
     &__datepicker {
-      width: 100%;
+      width: 90%;
+      float: right;
+    }
+    &__datepickercontainer {
+      margin-top: 0;
+  
+      &:nth-child(even) {
+        margin-top: 15px;
+      }
     }
   }
   &__event-description {
@@ -129,6 +137,16 @@
   &__event-registration-switch {
     &__switch {
       width: 10%;
+      margin-left: 2%;
+    }
+  }
+  &__event-level{
+    &__icon{
+      width: 40px;
+
+    }
+    &__div{
+      display: flex;
     }
   }
 }

@@ -1,12 +1,22 @@
-import { Table, Flex, List, Button, Typography, Modal, Tooltip } from "antd";
+import {
+  Table,
+  Flex,
+  List,
+  Button,
+  Typography,
+  Modal,
+  Tooltip,
+  message,
+} from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@constants";
+import { eventApi } from "@api";
 
 function JudgmentEventsTable({ EventsData }) {
   const navigate = useNavigate();
 
-  const deleteUserConfirm = () => {
+  const deleteEventConfirm = (id) => {
     Modal.confirm({
       title: "Вы уверены?",
       content: "Вы уверены что хотите удалить это мероприятие?",
@@ -18,6 +28,17 @@ function JudgmentEventsTable({ EventsData }) {
       ),
       okText: "Да",
       cancelText: "Отмена",
+      onOk: () => {
+        const body = JSON.stringify({
+          id: id,
+        });
+        try {
+          eventApi.deleteEvent(body);
+          message.success("Мероприятие успешно удалено.");
+        } catch (error) {
+          message.error("Ошибка: Невозможно удалить мероприятие.");
+        }
+      },
     });
   };
 
@@ -66,7 +87,7 @@ function JudgmentEventsTable({ EventsData }) {
             <Button
               type="text"
               icon={<DeleteOutlined />}
-              onClick={() => deleteUserConfirm()}
+              onClick={() => deleteEventConfirm(id)}
             />
           </Tooltip>
         </Flex>
