@@ -23,6 +23,7 @@ function AuthEmailInput({ value, onChange }) {
     >
       <Input
         type="email"
+        defaultValue="Alert"
         // pattern="+@gmail.com"
         id="user_email_input"
         placeholder="Email..."
