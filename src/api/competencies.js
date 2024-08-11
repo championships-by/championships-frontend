@@ -7,4 +7,15 @@ export const competenciesApi = {
         accept: "application/json",
       },
     }),
+
+  getCompetenciesEventData: (eventID) =>
+    axios.get(`${API_PATH}/nomination_event/nomination_event_data`, {
+      params: {
+        event_id: eventID,
+      },
+      headers: {
+        Accept: "application/json",
+      },
+      withCredentials: true,
+    }),
 };

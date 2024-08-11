@@ -95,7 +95,7 @@ function JudgmentEventsTable({ EventsData }) {
     },
   ];
 
-  return <Table dataSource={EventsData} columns={columns} />;
+  return <Table dataSource={EventsData} columns={columns}/>;
 }
 
 export default JudgmentEventsTable;

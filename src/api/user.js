@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const userApi = {
   getProfile: () =>
     fetch(`${API_PATH}/user/profile`, {
@@ -41,4 +43,15 @@ export const userApi = {
       credentials: "include",
     });
   },
+  getJudges: ({ limit }) =>
+    axios.get(`${API_PATH}/user/judges`, {
+      params: {
+        offset: 0,
+        limit: limit,
+      },
+      headers: {
+        Accept: "application/json",
+      },
+      credentials: "include",
+    }),
 };

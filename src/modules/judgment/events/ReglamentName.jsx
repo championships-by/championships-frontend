@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Typography, Input, Form, Space } from "antd"; 
 import {LinkOutlined } from "@ant-design/icons";
+const {Text} = Typography
 
 function ReglamentName() {
   const [inputValue, setInputValue] = useState("");
@@ -50,9 +51,9 @@ function ReglamentName() {
         <Typography.Text type="secondary">
           Пример: http://google.com или https://google.com
         </Typography.Text>
-        <Typography.Text type="danger">
-          *Внимательно проверьте права доступа к файлу
-        </Typography.Text>
+        <Text  type="danger">
+          ВНИМАНИЕ!Проверьте права доступа к файлу
+        </Text>
       </Space>
     </Form.Item>
   );

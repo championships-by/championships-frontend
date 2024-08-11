@@ -206,7 +206,7 @@ function EventSettings() {
           >
             Добавить компетенцию
           </Button>
-          <Table columns={columns} dataSource={dataEvent.competitions} />
+          <Table columns={columns} dataSource={dataEvent.competitions} locale={{emptyText: "Нет данных"}}/>
         </Col>
       </Row>
       <CompitationModal
