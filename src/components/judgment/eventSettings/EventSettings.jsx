@@ -57,7 +57,7 @@ const columns = [
     key: "action",
     render: () => (
       <Space>
-        <Button type="text" icon={<EditOutlined />} />
+        <Button type="text" icon={<EditOutlined />} onClick={() => ShowModal()} />
         <Button type="text" icon={<TrophyOutlined />} />
         <Button type="text" icon={<TeamOutlined />} />
         <Button type="text" icon={<DeleteOutlined />} />
@@ -66,15 +66,55 @@ const columns = [
   },
 ];
 
-function EventSettings() {
+function EventSettings() { 
+  const columns = [
+    {
+      title: "Название компетенции",
+      dataIndex: "nomination_name",
+      key: "nomination_name",
+    },
+    {
+      title: "Тип соревнований",
+      dataIndex: "type",
+      key: "type",
+    },
+    //Колонка пока закоменчена,потому что пока нет эндпоинта,который бы был с регламентом
+    // {
+    //   title: "Регламент",
+    //   key: "regulations",
+    //   render: () => (
+    //     <Space>
+    //       <Button type="text" icon={<LinkOutlined />} />
+    //     </Space>
+    //   ),
+    // },
+    {
+      title: "Действия",
+      key: "action",
+      render: () => (
+        <Space>
+          <Button type="text" icon={<EditOutlined />} onClick={() => openEditModal()}/>
+          <Button type="text" icon={<TrophyOutlined />} />
+          <Button type="text" icon={<TeamOutlined />} />
+          <Button type="text" icon={<DeleteOutlined />} />
+        </Space>
+      ),
+    },
+  ];
+  
   const [isLoading, setIsLoading] = useState(true);
   const [loadings, setLoadings] = useState([]);
   const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
     useState(false);
   const [dataEvent, setEvent] = useState({});
+  const [ isEditModalOpen,setIsEditModalOpen ] = useState(false)
   const [dataNomination, setDataNomination] = useState([])
   const { eventID } = useParams();
   const [form] = Form.useForm();
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true)
+  }
 
   useEffect(() => {
     competenciesApi
@@ -225,6 +265,13 @@ function EventSettings() {
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
       />
+      <CompitationModal
+      name="Редактировать компитенцию"
+      isOpen={isEditModalOpen}
+      onOk={() => setIsEditModalOpen(false)}
+      onCancel={() => setIsEditModalOpen(false)}
+      />
+      
     </div>
   );
 }
