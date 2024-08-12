@@ -9,7 +9,7 @@ import {
   Form,
   Space,
 } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, TrophyOutlined,TeamOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -29,27 +29,29 @@ import CompitationModal from "./EventSettingsModal";
 
 import "./sass/event-settings.scss";
 import { eventApi } from "@api";
+import { competenciesApi } from "@api";
 
 const columns = [
   {
     title: "Название компетенции",
-    dataIndex: "name_compitation",
-    key: "name_nomination",
+    dataIndex: "nomination_name",
+    key: "nomination_name",
   },
   {
     title: "Тип соревнований",
-    dataIndex: "compitation_type",
-    key: "compitation_type",
+    dataIndex: "type",
+    key: "type",
   },
-  {
-    title: "Регламент",
-    key: "regulations",
-    render: () => (
-      <Space>
-        <Button type="text" icon={<LinkOutlined />} />
-      </Space>
-    ),
-  },
+  //Колонка пока закоменчена,потому что пока нет эндпоинта,который бы был с регламентом
+  // {
+  //   title: "Регламент",
+  //   key: "regulations",
+  //   render: () => (
+  //     <Space>
+  //       <Button type="text" icon={<LinkOutlined />} />
+  //     </Space>
+  //   ),
+  // },
   {
     title: "Действия",
     key: "action",
@@ -70,9 +72,17 @@ function EventSettings() {
   const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
     useState(false);
   const [dataEvent, setEvent] = useState({});
+  const [dataNomination, setDataNomination] = useState([])
   const { eventID } = useParams();
   const [form] = Form.useForm();
 
+  useEffect(() => {
+    competenciesApi
+      .getCompetenciesEventData(eventID)
+      .then((response) => setDataNomination(response.data))
+  })
+
+  //Я пока хз что делать с этим и для чего этот запрос кроме загрузки страницы
   useEffect(() => {
     if (!eventID) {
       try {
@@ -96,6 +106,7 @@ function EventSettings() {
       setTimeout(() => setIsLoading(false), 300);
     }
   }, [eventID, form]);
+
 
   const update_event_request = async () => {
     const body = JSON.stringify({
@@ -138,7 +149,6 @@ function EventSettings() {
       });
     }, 6000);
   };
-
   return (
     <div>
       <Loader show={isLoading} />
@@ -206,7 +216,7 @@ function EventSettings() {
           >
             Добавить компетенцию
           </Button>
-          <Table columns={columns} dataSource={dataEvent.competitions} locale={{emptyText: "Нет данных"}}/>
+          <Table columns={columns} dataSource={dataNomination} locale={{emptyText: "Нет данных"}}/>
         </Col>
       </Row>
       <CompitationModal

@@ -16,6 +16,6 @@ export const competenciesApi = {
       headers: {
         Accept: "application/json",
       },
-      withCredentials: true,
+      credentials: "include",
     }),
 };
