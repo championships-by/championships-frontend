@@ -15,6 +15,7 @@ const items = [
     children: <ResultTableTimeMatches />,
   },
 ];
+
 function TabMatches() {
   return <Tabs className="Tabs" defaultActiveKey="1" items={items} />;
 }
