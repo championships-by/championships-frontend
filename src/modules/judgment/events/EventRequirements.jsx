@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import TextArea from "antd/es/input/TextArea";
 import "./sass/events.scss";
 
-function EventDescription({ name }) {
+function EventRequirements({ name }) {
   return (
     <FormItem
       name={name}
@@ -12,7 +12,7 @@ function EventDescription({ name }) {
       rules={[
         {
           required: true,
-          message: "Пожалуйста, введите описание мероприятия",
+          message: "Пожалуйста, введите требования для участия в мероприятии",
         },
         {
           max: 500,
@@ -25,9 +25,9 @@ function EventDescription({ name }) {
       ]}
     >
       <Flex vertical>
-        <Typography.Text>Описание мероприятия</Typography.Text>
+        <Typography.Text>Что нужно для участия</Typography.Text>
         <TextArea
-          rows={6}
+          rows={3}
           allowClear
           placeholder="Введите описание мероприятия"
           id="event_description_input"
@@ -38,4 +38,4 @@ function EventDescription({ name }) {
     </FormItem>
   );
 }
-export default EventDescription;
+export default EventRequirements;

@@ -1,6 +1,7 @@
 import AdminPanel from "@components/adminPanel/AdminPanel";
 import Auth from "@components/auth/Auth";
 import EventsRegistration from "@components/eventRegistration/EventRegistration";
+import EventSettings from "@components/judgment/eventSettings/EventSettings";
 import Events from "@components/events/Events";
 import Competencies from "@components/judgment/competencies/Competencies";
 import EventSettings from "@components/judgment/eventSettings/eventSettings";

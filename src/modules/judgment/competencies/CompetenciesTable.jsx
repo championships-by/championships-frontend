@@ -1,6 +1,6 @@
 import { Flex, Tooltip, Table, Button, InputNumber } from "antd";
 import { useEffect, useState } from "react";
-import { getCompetencies } from "./api/api";
+import { competenciesApi } from "@api";
 
 import "./sass/competencies-criteria.scss";
 
@@ -65,7 +65,7 @@ function CompetenciesTable() {
   const [competencies, setCompetencies] = useState([]);
   useEffect(() => {
     (async () => {
-      const response = await getCompetencies();
+      const response = await competenciesApi.getCompetencies();
       setCompetencies(response);
     })();
   }, []);

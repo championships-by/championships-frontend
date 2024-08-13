@@ -6,3 +6,4 @@ export * from "./match";
 export * from "./participant";
 export * from "./team";
 export * from "./user";
+export * from "./competencies";

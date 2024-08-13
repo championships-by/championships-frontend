@@ -30,6 +30,19 @@ export const eventApi = {
       credentials: "include",
     });
   },
+  deleteEvent: (body) => {
+    const headers = new Headers();
+    headers.append("accept", "application/json");
+    headers.append("Content-Type", "application/json");
+
+    return fetch(`${API_PATH}/event/event`, {
+      method: "DELETE",
+      headers,
+      body,
+      redirect: "follow",
+      credentials: "include",
+    });
+  },
   setEvent: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
