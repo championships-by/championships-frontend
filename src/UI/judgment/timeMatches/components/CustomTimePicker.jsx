@@ -1,6 +1,7 @@
 import { Button, TimePicker } from "antd";
 import { useState } from "react";
-import { defaultFormat, formatTime } from "../utils";
+
+import { defaultFormat, formatTime } from "@utils";
 import "./customTimePicker.scss";
 
 export const CustomTimePicker = ({ id, onTimeChange }) => {

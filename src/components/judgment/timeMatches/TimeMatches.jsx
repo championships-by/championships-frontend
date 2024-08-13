@@ -1,7 +1,6 @@
+import ResultTableTimeMatches from "@ui/judgment/timeMatches/ResultTableTimeMatches";
+import TableTimeMatches from "@ui/judgment/timeMatches/TableTimeMatches";
 import { Tabs } from "antd";
-import ResultTableTimeMatches from "./resultTableTimeMatches";
-import "./sass/timeMatches.scss";
-import TableTimeMatches from "./tableTimeMatches";
 
 const items = [
   {
@@ -16,8 +15,6 @@ const items = [
   },
 ];
 
-function TabMatches() {
+export default function TimeMatches() {
   return <Tabs className="Tabs" defaultActiveKey="1" items={items} />;
 }
-
-export default TabMatches;

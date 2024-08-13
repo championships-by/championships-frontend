@@ -1,17 +1,17 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { timeMatchesApi } from "@api/timeMatches";
+import {
+  defaultFormat,
+  formatTimeToString,
+  generateColumns,
+  transformTimeMatchesData,
+} from "@utils";
 import { Button, Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CustomTimePicker } from "./components";
 import { timeMatchEventEmitter, TimeMatchEvents } from "./events";
-import {
-  defaultFormat,
-  formatTimeToString,
-  generateColumns,
-  transformTimeMatchesData,
-} from "./utils";
 
 function TableTimeMatches() {
   const [timeMatchesData, setTimeMatchesData] = useState([]);

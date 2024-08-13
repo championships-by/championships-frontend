@@ -108,6 +108,7 @@ module.exports = (env) => {
         "@components": path.resolve(__dirname, "src", "components"),
         "@constants": path.resolve(__dirname, "src", "constants"),
         "@sass": path.resolve(__dirname, "src", "sass"),
+        "@ui": path.resolve(__dirname, "src", "UI"),
         "@modules": path.resolve(__dirname, "src", "modules"),
         "@utils": path.resolve(__dirname, "src", "utils"),
         "@node_modules": path.resolve(__dirname, "node_modules"),
