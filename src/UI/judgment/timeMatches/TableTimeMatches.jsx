@@ -132,31 +132,25 @@ function TableTimeMatches() {
     };
   }, [timeMatchesData]);
 
-  return (
-    <>
-      {isLoading ? (
-        <LoadingOutlined />
+  return isLoading ? (
+    <LoadingOutlined />
+  ) : (
+    <Flex vertical gap="large">
+      {isErrorOccurred ? (
+        <Typography>При попытке получить данных произошла ошибка</Typography>
       ) : (
-        <Flex vertical gap="large">
-          {isErrorOccurred ? (
-            <Typography>
-              При попытке получить данных произошла ошибка
-            </Typography>
-          ) : (
-            <>
-              <Table
-                pagination={false}
-                columns={columns}
-                dataSource={timeMatchesData}
-              />
-              <Button style={{ margin: "10px 0px 10px 0px" }} type="primary">
-                Завершить этап
-              </Button>
-            </>
-          )}
-        </Flex>
+        <>
+          <Table
+            pagination={false}
+            columns={columns}
+            dataSource={timeMatchesData}
+          />
+          <Button style={{ margin: "10px 0px 10px 0px" }} type="primary">
+            Завершить этап
+          </Button>
+        </>
       )}
-    </>
+    </Flex>
   );
 }
 
