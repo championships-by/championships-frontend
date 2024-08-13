@@ -9,7 +9,6 @@ function ReglamentName() {
     const { value } = e.target;
     setInputValue(value);
 
-    
     if (!value.startsWith("http://") && !value.startsWith("https://")) {
       setHasHttp(false);
     } else {
@@ -30,7 +29,9 @@ function ReglamentName() {
         {
           validator: (_, value) => {
             if (!hasHttp) {
-              return Promise.reject(new Error("Ссылка не соответствует допустимому шаблону"));
+              return Promise.reject(
+                new Error("Ссылка не соответствует допустимому шаблону")
+              );
             }
             return Promise.resolve();
           },
