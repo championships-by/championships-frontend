@@ -6,6 +6,7 @@ import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import { ROUTES } from "@constants";
 import EventTable from "@components/judgment/events/JudgmentEventsTable";
 import { eventApi } from "@api";
+import EventCreateModal from "./EventCreateModal";
 
 function ChangeDateFormat(date) {
   const parts = date.split("-");
@@ -16,6 +17,7 @@ function ChangeDateFormat(date) {
 function JudgmentEvents() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataEvents, setEvents] = useState([]);
+  const [IsEventCreateModalOpen, setIsEventCreateModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,11 +26,11 @@ function JudgmentEvents() {
         .getEventWithNominations({ limit: 49 })
         .then((response) => response.json())
         .then((response) => {
-          const formattedObject = response.map((user) => ({
+          const formattedDate = response.map((user) => ({
             ...user,
             date: ChangeDateFormat(user.date),
           }));
-          return formattedObject;
+          return formattedDate;
         })
         .then((data) => setEvents(data))
         .catch(() =>
@@ -44,12 +46,15 @@ function JudgmentEvents() {
       <Loader show={isLoading} />
       <Typography.Title level={2}>Редактирование мероприятий</Typography.Title>
       <AdminPanelControls>
-        <Button
-          type="primary"
-          onClick={() => navigate(ROUTES.JUDGMENT_CREATE.PATH)}
-        >
+        <Button type="primary" onClick={() => setIsEventCreateModalOpen(true)}>
           {ROUTES.JUDGMENT_CREATE.TITLE}
         </Button>
+        <EventCreateModal
+          name="Добавить мероприятие"
+          isOpen={IsEventCreateModalOpen}
+          onOk={() => setIsEventCreateModalOpen(false)}
+          onCancel={() => setIsEventCreateModalOpen(false)}
+        />
       </AdminPanelControls>
 
       <EventTable EventsData={dataEvents} />
