@@ -1,3 +1,4 @@
+import { useMatches } from "./useMatches";
 import { useTabs } from "./useTabs";
 
-export { useTabs };
+export { useMatches, useTabs };
