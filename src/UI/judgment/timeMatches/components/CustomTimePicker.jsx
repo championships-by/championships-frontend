@@ -21,40 +21,36 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
     setIsOpen(true);
   };
 
-  return (
-    <>
-      {!isDisqualified ? (
-        <TimePicker
-          value={value}
-          onChange={(time) => {
-            setValue(time);
-            onTimeChange(id, time, isDisqualified);
-          }}
-          variant="borderless"
-          open={isOpen}
-          onClick={handleInputClick}
-          showNow={false}
-          needConfirm={false}
-          defaultValue={formatTime()}
-          defaultOpenValue={formatTime()}
-          format={{ format: defaultFormat, type: "mask" }}
-          changeOnScroll
-          renderExtraFooter={() => (
-            <div className="extra-footer">
-              <Button size="middle" type="text" onClick={handleDisqualify}>
-                Дискв.
-              </Button>
-              <Button size="middle" type="primary" onClick={handleOk}>
-                Ок
-              </Button>
-            </div>
-          )}
-        />
-      ) : (
-        <span style={{ cursor: "pointer" }} onClick={() => handleDisqualify()}>
-          Дискв.
-        </span>
+  return !isDisqualified ? (
+    <TimePicker
+      value={value}
+      onChange={(time) => {
+        setValue(time);
+        onTimeChange(id, time, isDisqualified);
+      }}
+      variant="borderless"
+      open={isOpen}
+      onClick={handleInputClick}
+      showNow={false}
+      needConfirm={false}
+      defaultValue={formatTime()}
+      defaultOpenValue={formatTime()}
+      format={{ format: defaultFormat, type: "mask" }}
+      changeOnScroll
+      renderExtraFooter={() => (
+        <div className="extra-footer">
+          <Button size="middle" type="text" onClick={handleDisqualify}>
+            Дискв.
+          </Button>
+          <Button size="middle" type="primary" onClick={handleOk}>
+            Ок
+          </Button>
+        </div>
       )}
-    </>
+    />
+  ) : (
+    <span style={{ cursor: "pointer" }} onClick={() => handleDisqualify()}>
+      Дискв.
+    </span>
   );
 };
