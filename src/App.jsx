@@ -5,7 +5,7 @@ import Events from "@components/events/Events";
 import Competencies from "@components/judgment/competencies/Competencies";
 import EventSettings from "@components/judgment/eventSettings/eventSettings";
 import Judgment from "@components/judgment/events/JudgmentEvents";
-import GroupStage from "@components/judgment/groupStage/GroupStage";
+import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
 import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
 import Participants from "@components/participants/Participants";
@@ -55,7 +55,7 @@ function App() {
             </Route>
             <Route
               path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
-              element={<GroupStage />}
+              element={<JudgmentGroupStage />}
             />
             <Route
               path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
