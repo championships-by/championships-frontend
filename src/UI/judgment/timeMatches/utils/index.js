@@ -3,9 +3,9 @@ import {
   defaultTime,
   formatTime,
   formatTimeToString,
-} from "./format-time";
-import { generateColumns } from "./generate-columns";
-import { transformTimeMatchesData } from "./transform-time-matches-data";
+} from "./formatTime";
+import { generateColumns } from "./generateColumns";
+import { transformTimeMatchesData } from "./transformTimeMatchesData";
 
 export {
   defaultFormat,

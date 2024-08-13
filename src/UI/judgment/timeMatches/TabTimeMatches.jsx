@@ -1,7 +1,7 @@
 import { Tabs } from "antd";
-import ResultTableTimeMatches from "./result-table-time-matches";
-import "./sass/time-matches.scss";
-import TableTimeMatches from "./table-time-matches";
+import ResultTableTimeMatches from "./resultTableTimeMatches";
+import "./sass/timeMatches.scss";
+import TableTimeMatches from "./tableTimeMatches";
 
 const items = [
   {

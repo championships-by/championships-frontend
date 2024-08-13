@@ -1,4 +1,4 @@
-import TabMatches from "../../../UI/judgment/time-matches/tab-time-matches";
+import TabMatches from "../../../UI/judgment/timeMatches/tabTimeMatches";
 
 function TimeMatches() {
   return <TabMatches />;

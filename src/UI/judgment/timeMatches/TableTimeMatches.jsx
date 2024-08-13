@@ -3,7 +3,7 @@ import { Button, Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { timeMatchesApi } from "./api/time-matches-api";
+import { timeMatchesApi } from "./api/timeMatchesApi";
 import { CustomTimePicker } from "./components";
 import { timeMatchEventEmitter, TimeMatchEvents } from "./events";
 import {
