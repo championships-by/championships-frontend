@@ -15,26 +15,26 @@ export const TabsContext = createContext();
  * Context provider for managing tabs.
  *
  * @param {Object} props
- * @param {Object} props.initialTabs Initial tabs object.
+ * @param {Array<Object>} props.initialTabs Initial tabs array.
  * @param {ReactNode} props.children Children components.
  * @returns {JSX.Element}
  */
 export const TabsProvider = ({ initialTabs, children }) => {
-  const [tabs, setTabs] = useState({});
+  const [tabs, setTabs] = useState([]);
 
   /**
    * Create a new tab or multiple tabs.
    *
-   * @param {Object} newTabs Object with new tabs, where keys are tab IDs and values are tab objects.
+   * @param {Array<Object>} newTabs Array of new tabs.
    * @example
-   * createTabs({ [Tabs.TAB_3]: { title: "Tab #3" } });
-   * createTabs({
-   *   [Tabs.TAB_4]: { title: "Tab #4" },
-   *   [Tabs.TAB_5]: { title: "Tab #5" },
-   * });
+   * createTabs([{ id: Tabs.TAB_3, title: "Tab #3" }]);
+   * createTabs([
+   *   { id: Tabs.TAB_4, title: "Tab #4" },
+   *   { id: Tabs.TAB_5, title: "Tab #5" },
+   * ]);
    */
   const createTabs = useCallback(
-    (newTabs) => setTabs((prevTabs) => ({ ...prevTabs, ...newTabs })),
+    (newTabs) => setTabs((prevTabs) => [...prevTabs, ...newTabs]),
     []
   );
 
@@ -46,37 +46,33 @@ export const TabsProvider = ({ initialTabs, children }) => {
    * deleteTabs([Tabs.TAB_3, Tabs.TAB_4]);
    */
   const deleteTabs = useCallback((keys) => {
-    setTabs((prevTabs) => {
-      const newTabs = { ...prevTabs };
-      keys.forEach((key) => delete newTabs[key]);
-      return newTabs;
-    });
+    setTabs((prevTabs) => prevTabs.filter((tab) => !keys.includes(tab.id)));
   }, []);
 
   /**
    * Update one or multiple tabs.
    *
-   * @param {Object} updates Object with updates, where keys are tab IDs and values are update objects.
+   * @param {Array<Object>} updates Array of updates, where each object has an `id` property and update properties.
    * @example
-   * updateTabs({
-   *   [Tabs.TAB_3]: { title: "New title" },
-   *   [Tabs.TAB_4]: { content: "New content" },
-   * });
+   * updateTabs([
+   *   { id: Tabs.TAB_3, title: "New title" },
+   *   { id: Tabs.TAB_4, content: "New content" },
+   * ]);
    */
   const updateTabs = useCallback((updates) => {
     setTabs((prevTabs) => {
-      const newTabs = { ...prevTabs };
-      Object.keys(updates).forEach((key) => {
-        if (prevTabs[key]) {
-          newTabs[key] = { ...prevTabs[key], ...updates[key] };
-        }
+      return prevTabs.map((tab) => {
+        const update = updates.find((update) => update.id === tab.id);
+        return update ? { ...tab, ...update } : tab;
       });
-      return newTabs;
     });
   }, []);
 
   useEffect(() => {
-    setTabs(initialTabs);
+    const transformedTabs = Object.values(initialTabs).map((tab) => ({
+      ...tab,
+    }));
+    setTabs(transformedTabs);
   }, [initialTabs]);
 
   const context = useMemo(
@@ -86,7 +82,7 @@ export const TabsProvider = ({ initialTabs, children }) => {
       deleteTabs,
       updateTabs,
     }),
-    [createTabs, deleteTabs, tabs, updateTabs]
+    [tabs, createTabs, deleteTabs, updateTabs]
   );
 
   return (
