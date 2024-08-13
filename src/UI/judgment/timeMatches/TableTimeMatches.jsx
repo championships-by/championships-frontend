@@ -1,7 +1,7 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { timeMatchesApi } from "@api/timeMatches";
+import { defaultFormat } from "@constants";
 import {
-  defaultFormat,
   formatTimeToString,
   generateColumns,
   transformTimeMatchesData,
