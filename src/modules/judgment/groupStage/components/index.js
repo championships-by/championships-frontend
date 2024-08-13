@@ -1,4 +1,5 @@
+import { MatchCard } from "./MatchCard";
 import { MatchesGroupStage } from "./MatchesGroupStage";
 import { TableGroupStage } from "./TableGroupStage";
 
-export { MatchesGroupStage, TableGroupStage };
+export { MatchCard, MatchesGroupStage, TableGroupStage };
