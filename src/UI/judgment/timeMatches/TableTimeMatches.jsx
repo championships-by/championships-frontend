@@ -26,7 +26,7 @@ function TableTimeMatches() {
         key: "place",
         dataIndex: "place",
         title: "№ п/п",
-        render: (text, record, index) => <>{index + 1}</>,
+        render: (text, record, index) => index + 1,
       },
       {
         key: "teamName",
