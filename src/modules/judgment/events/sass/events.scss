@@ -103,7 +103,7 @@
     }
     &__datepickercontainer {
       margin-top: 0;
-  
+
       &:nth-child(even) {
         margin-top: 15px;
       }
@@ -135,12 +135,11 @@
       margin-left: 2%;
     }
   }
-  &__event-level{
-    &__icon{
+  &__event-level {
+    &__icon {
       width: 40px;
-
     }
-    &__div{
+    &__div {
       display: flex;
     }
   }

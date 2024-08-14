@@ -13,7 +13,7 @@ import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationS
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import { eventApi } from "@api";
-import { Locale } from "@constants"
+import { Locale } from "@constants";
 
 function EventCreateModal({ isOpen, onOk, onCancel, name }) {
   const [form] = Form.useForm();
@@ -62,11 +62,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
         <EventLevel name="event_level" />
         <EventDescription name="event_description" />
         <EventRequirements name="event_requirements" />
-        <Button
-          type="primary"
-          htmlType="submit"
-          onClick={createEventRequest}
-        >
+        <Button type="primary" htmlType="submit" onClick={createEventRequest}>
           Сохранить
         </Button>
       </Form>
