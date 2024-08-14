@@ -1,4 +1,2 @@
-import { useMatches } from "./useMatches";
-import { useTabs } from "./useTabs";
-
-export { useMatches, useTabs };
+export * from "./useMatches";
+export * from "./useTabs";
