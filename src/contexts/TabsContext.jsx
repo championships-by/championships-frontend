@@ -46,7 +46,10 @@ export const TabsProvider = ({ initialTabs, children }) => {
    * deleteTabs([Tabs.TAB_3, Tabs.TAB_4]);
    */
   const deleteTabs = useCallback((keys) => {
-    setTabs((prevTabs) => prevTabs.filter((tab) => !keys.includes(tab.id)));
+    setTabs((prevTabs) => {
+      const set = new Set(keys);
+      return prevTabs.filter((tab) => !set.has(tab.key));
+    });
   }, []);
 
   /**
