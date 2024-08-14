@@ -19,42 +19,38 @@ export const MatchesGroupStage = () => {
     handleCloseModal,
   } = useMatches();
 
-  return (
-    <>
-      {isLoading ? (
-        <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
-      ) : error ? (
-        <div style={{ textAlign: "center", padding: 20 }}>
-          <h2>Ошибка загрузки данных</h2>
-          <p>{error}</p>
-        </div>
-      ) : (
-        <div className="matches-group-stage">
-          {matches.map((match) => (
-            <MatchCard
-              key={match.id}
-              id={match.id}
-              team1={match.team1}
-              team2={match.team2}
-              onEditScore={() => handleEditScore(match)}
-            />
-          ))}
-          {selectedMatch && (
-            <EditMatchScoreModal
-              isOpen={isModalOpen}
-              match={selectedMatch}
-              onSubmit={(data) =>
-                handleSubmitScore({
-                  ...data,
-                  eventId,
-                  nominationId,
-                })
-              }
-              onClose={handleCloseModal}
-            />
-          )}
-        </div>
+  return isLoading ? (
+    <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
+  ) : error ? (
+    <div style={{ textAlign: "center", padding: 20 }}>
+      <h2>Ошибка загрузки данных</h2>
+      <p>{error}</p>
+    </div>
+  ) : (
+    <div className="matches-group-stage">
+      {matches.map((match) => (
+        <MatchCard
+          key={match.id}
+          id={match.id}
+          team1={match.team1}
+          team2={match.team2}
+          onEditScore={() => handleEditScore(match)}
+        />
+      ))}
+      {selectedMatch && (
+        <EditMatchScoreModal
+          isOpen={isModalOpen}
+          match={selectedMatch}
+          onSubmit={(data) =>
+            handleSubmitScore({
+              ...data,
+              eventId,
+              nominationId,
+            })
+          }
+          onClose={handleCloseModal}
+        />
       )}
-    </>
+    </div>
   );
 };
