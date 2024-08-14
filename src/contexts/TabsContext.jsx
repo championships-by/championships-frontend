@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 /**
  * Context for managing tabs.
@@ -78,15 +72,12 @@ export const TabsProvider = ({ initialTabs, children }) => {
     setTabs(transformedTabs);
   }, [initialTabs]);
 
-  const context = useMemo(
-    () => ({
-      tabs,
-      createTabs,
-      deleteTabs,
-      updateTabs,
-    }),
-    [tabs, createTabs, deleteTabs, updateTabs]
-  );
+  const context = {
+    tabs,
+    createTabs,
+    deleteTabs,
+    updateTabs,
+  };
 
   return (
     <TabsContext.Provider value={context}>{children}</TabsContext.Provider>

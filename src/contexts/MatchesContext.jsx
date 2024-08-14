@@ -1,11 +1,5 @@
 import { judgmentApi } from "@api/judgment";
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 export const MatchesContext = createContext();
 
@@ -88,38 +82,22 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
     fetchData(eventId, nominationId);
   }, [fetchData, eventId, nominationId]);
 
-  const context = useMemo(
-    () => ({
-      eventId,
-      nominationId,
-      matches,
-      finalParticipants,
-      setFinalParticipants,
-      selectedMatch,
-      isModalOpen,
-      isLoading,
-      error,
-      fetchData,
-      handleEditScore,
-      handleSubmitScore,
-      handleCloseModal,
-    }),
-    [
-      eventId,
-      nominationId,
-      matches,
-      finalParticipants,
-      setFinalParticipants,
-      selectedMatch,
-      isModalOpen,
-      isLoading,
-      error,
-      fetchData,
-      handleEditScore,
-      handleSubmitScore,
-      handleCloseModal,
-    ]
-  );
+  const context = {
+    eventId,
+    nominationId,
+    matches,
+    finalParticipants,
+    setFinalParticipants,
+    selectedMatch,
+    isModalOpen,
+    isLoading,
+    error,
+    fetchData,
+    handleEditScore,
+    handleSubmitScore,
+    handleCloseModal,
+  };
+
   return (
     <MatchesContext.Provider value={context}>
       {children}
