@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Button, Flex, Modal, Table, Typography } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { participantApi } from "@api";
+import { getUniqueFilters } from "@utils";
+import { Button, Flex, Modal, Table, Typography } from "antd";
+import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
-import { participantApi } from "../../api";
 
 function ParticipantsTable({ ParticipantData }) {
   const columns = [
@@ -12,16 +13,28 @@ function ParticipantsTable({ ParticipantData }) {
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
       ),
+      sorter: (a, b) => {
+        const firstFullName = `${a.second_name} ${a.first_name} ${a.third_name}`;
+        const secondFullName = `${b.second_name} ${b.first_name} ${b.third_name}`;
+        return firstFullName.localeCompare(secondFullName);
+      },
     },
     {
       title: "Регион",
       key: "participant_region",
       dataIndex: "region",
+      filters: getUniqueFilters(ParticipantData, "region"),
+      onFilter: (value, record) => record.region === value,
+      sorter: (a, b) => a.region.localeCompare(b.region),
     },
     {
       title: "Учреждение образования",
       dataIndex: "educational_institution",
       key: "participant_organization",
+      filters: getUniqueFilters(ParticipantData, "educational_institution"),
+      onFilter: (value, record) => record.educational_institution === value,
+      sorter: (a, b) =>
+        a.educational_institution.localeCompare(b.educational_institution),
     },
     {
       title: "Действия",
