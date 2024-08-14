@@ -25,7 +25,7 @@ export const determinateTheWinner = (score1, score2) => {
 export const isScoreZero = (score1, score2) => !!(score1 === 0 && score2 === 0);
 
 export const isScoreEqual = (score1, score2) => score1 === score2;
-=======
+
 export const handlePaste = (event) => {
   event.preventDefault();
   const clipboardData = (event.clipboardData || window.clipboardData).getData(

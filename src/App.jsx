@@ -5,7 +5,7 @@ import Events from "@components/events/Events";
 import Competencies from "@components/judgment/competencies/Competencies";
 import EventSettings from "@components/judgment/eventSettings/EventSettings";
 import Judgment from "@components/judgment/events/JudgmentEvents";
-import GroupStage from "@components/judgment/groupStage/GroupStage";
+import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
 import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
 import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
