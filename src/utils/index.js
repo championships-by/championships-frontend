@@ -1,3 +1,6 @@
+import { defaultFormat, defaultTime } from "@constants";
+import dayjs from "dayjs";
+
 export const FILTER_OPTION = (input, option) =>
   (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 
@@ -43,3 +46,44 @@ export const handlePaste = (event) => {
   );
   input.dispatchEvent(new Event("input", { bubbles: true }));
 };
+
+export const formatTime = (time = defaultTime, format = defaultFormat) =>
+  dayjs(time, format);
+
+export const formatTimeToString = (
+  time = defaultTime,
+  format = defaultFormat
+) => dayjs(time, format).format(defaultFormat);
+
+export const generateColumns = (data, render) => {
+  if (data && data[0] && data[0].attempts) {
+    return data[0].attempts.map((attempt, i) => ({
+      key: `attempt-${i}`,
+      dataIndex: `attempt-${i}`,
+      title: `Попытка №${i + 1}`,
+      render: (text, record, index) => render(text, record, index, i),
+    }));
+  }
+
+  return [];
+};
+
+export const transformTimeMatchesData = (rounds) =>
+  rounds.map((round, index) => ({
+    key: `round-${index + 1}`,
+    teamName: round.team_name,
+    participant: {
+      firstName: round.participant_data.first_name,
+      secondName: round.participant_data.second_name,
+      thirdName: round.participant_data.third_name,
+    },
+    attempts: round.attempts.map(({ id, result }) => ({
+      id,
+      result,
+      isDisqualified: false,
+    })),
+    bestAttempt: {
+      id: round.best_attempt.id,
+      result: round.best_attempt.result,
+    },
+  }));

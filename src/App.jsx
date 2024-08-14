@@ -1,12 +1,12 @@
 import AdminPanel from "@components/adminPanel/AdminPanel";
 import Auth from "@components/auth/Auth";
 import EventsRegistration from "@components/eventRegistration/EventRegistration";
-import EventSettings from "@components/judgment/eventSettings/EventSettings";
 import Events from "@components/events/Events";
 import Competencies from "@components/judgment/competencies/Competencies";
-import EventSettings from "@components/judgment/eventSettings/eventSettings";
+import EventSettings from "@components/judgment/eventSettings/EventSettings";
 import Judgment from "@components/judgment/events/JudgmentEvents";
-import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
+import GroupStage from "@components/judgment/groupStage/GroupStage";
+import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
 import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
 import Participants from "@components/participants/Participants";
@@ -61,6 +61,10 @@ function App() {
             <Route
               path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
               element={<Competencies />}
+            />
+            <Route
+              path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
+              element={<TimeMatches />}
             />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />

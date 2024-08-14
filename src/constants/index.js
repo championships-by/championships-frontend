@@ -20,6 +20,7 @@ export const RESPONSE_STATUS = {
   STATUS_UNAUTHORIZED: 401,
   STATUS_FORBIDDEN: 403,
   STATUS_NOTFOUND: 404,
+  STATUS_CONFLICT: 409,
 };
 
 export const ROUTES = {
@@ -85,7 +86,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_CREATE_TEST: "create/test",
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
   JUDGMENT_GROUP_STAGE: "judgment/:eventId/:nominationId",
-  JUDGMENT_TIME_MATCHES: "test/:event_id/:nomination_id",
+  JUDGMENT_TIME_MATCHES: "matches/:eventId/:nominationId",
   JUDGMENT_COMPETENCIES: "judgment/competencies",
 };
 
@@ -145,3 +146,6 @@ export const Locale = {
   weekFormat: "YYYY-wo",
   monthFormat: "YYYY-MM",
 };
+
+export const defaultTime = "00:00.000";
+export const defaultFormat = "mm:ss.SSS";

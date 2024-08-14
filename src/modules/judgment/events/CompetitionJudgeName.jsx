@@ -31,20 +31,19 @@ function CompetitionType() {
       <Typography.Text className="events__competition-judge__text">
         Судья
       </Typography.Text>
-       <div className="events__competition-judge__div">
-      <Space>
-        <Select
-          className="events__competition-judge__select"
-          mode="multiple"
-          placeholder="Выберите судью"
-          maxTagCount="responsive"
-          options={options}
-          onSearch={handleSearch}
-        />
-      </Space>
-    </div>
+      <div className="events__competition-judge__div">
+        <Space>
+          <Select
+            className="events__competition-judge__select"
+            mode="multiple"
+            placeholder="Выберите судью"
+            maxTagCount="responsive"
+            options={options}
+            onSearch={handleSearch}
+          />
+        </Space>
+      </div>
     </>
-    
   );
 }
 
