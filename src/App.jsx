@@ -1,20 +1,21 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ROUTER_ROUTES } from "@constants";
 import AdminPanel from "@components/adminPanel/AdminPanel";
-import EventsRegistration from "@components/eventRegistration/EventRegistration";
-import EventSettings from "@components/judgment/eventSettings/EventSettings";
-import Events from "@components/events/Events";
-import UserSettings from "@components/userSettings/UserSettings";
-import UsersControl from "@components/usersControl/UsersControl";
-import Participants from "@components/participants/Participants";
-import NotFound from "@components/notFound/Notfound";
 import Auth from "@components/auth/Auth";
-import Logout from "@components/logout/Logout";
-import Judgment from "@components/judgment/events/JudgmentEvents";
-import Unauthorized from "@components/unauthorized/Unauthorized";
-import GroupStage from "@components/judgment/groupStage/GroupStage";
+import EventsRegistration from "@components/eventRegistration/EventRegistration";
+import Events from "@components/events/Events";
 import Competencies from "@components/judgment/competencies/Competencies";
+import EventSettings from "@components/judgment/eventSettings/EventSettings";
+import Judgment from "@components/judgment/events/JudgmentEvents";
+import GroupStage from "@components/judgment/groupStage/GroupStage";
+import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
+import Logout from "@components/logout/Logout";
+import NotFound from "@components/notFound/Notfound";
+import Participants from "@components/participants/Participants";
+import Unauthorized from "@components/unauthorized/Unauthorized";
+import UserSettings from "@components/userSettings/UserSettings";
 import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
+import UsersControl from "@components/usersControl/UsersControl";
+import { ROUTER_ROUTES } from "@constants";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -60,6 +61,10 @@ function App() {
             <Route
               path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
               element={<Competencies />}
+            />
+            <Route
+              path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
+              element={<TimeMatches />}
             />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />
