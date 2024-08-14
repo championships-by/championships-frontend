@@ -20,9 +20,9 @@ export const MatchesGroupStage = () => {
   } = useMatches();
 
   return isLoading ? (
-    <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
+    <Spin indicator={<LoadingOutlined className="icon" spin />} />
   ) : error ? (
-    <div style={{ textAlign: "center", padding: 20 }}>
+    <div className="error">
       <h2>Ошибка загрузки данных</h2>
       <p>{error}</p>
     </div>

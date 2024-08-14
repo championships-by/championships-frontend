@@ -1,5 +1,6 @@
 import { useMatches } from "@hooks";
 import { Checkbox, Table } from "antd";
+import "./TableGroupStage.scss";
 
 export const TableGroupStage = () => {
   const { finalParticipants } = useMatches();
@@ -37,7 +38,7 @@ export const TableGroupStage = () => {
   ];
 
   return !finalParticipants || finalParticipants.length === 0 ? (
-    <div style={{ textAlign: "center", padding: 20 }}>
+    <div className="no-data">
       <h2>Пока что нет данных о матчах</h2>
     </div>
   ) : (
