@@ -2,6 +2,9 @@ import { useMatches } from "@hooks";
 import { Button, Checkbox, Modal, Table } from "antd";
 import { useCallback, useEffect, useState } from "react";
 
+const regex = /^[^@]+/;
+const replaceRegex = /[^a-zA-Z0-9]+/g;
+
 export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
   const [tableData, setTableData] = useState([]);
 
@@ -61,8 +64,6 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
    * @returns {string} A unique key for the participant.
    */
   const getParticipantKey = useCallback((participant) => {
-    const regex = /^[^@]+/;
-    const replaceRegex = /[^a-zA-Z0-9]+/g;
     return participant.match(regex)[0].replace(replaceRegex, "-").toLowerCase();
   }, []);
 
