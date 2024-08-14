@@ -1,17 +1,17 @@
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { eventApi } from "@api";
+import { ROUTES } from "@constants";
 import {
-  Table,
+  Button,
   Flex,
   List,
-  Button,
-  Typography,
   Modal,
+  Table,
   Tooltip,
+  Typography,
   message,
 } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@constants";
-import { eventApi } from "@api";
 
 function JudgmentEventsTable({ EventsData }) {
   const navigate = useNavigate();
@@ -47,6 +47,7 @@ function JudgmentEventsTable({ EventsData }) {
       title: "Название мероприятия",
       key: "nameEvent",
       dataIndex: "name",
+      sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
       title: "Компетенции",
@@ -70,6 +71,8 @@ function JudgmentEventsTable({ EventsData }) {
       title: "Дата мероприятия",
       key: "dateEvent",
       dataIndex: "date",
+      defaultSortOrder: "ascend",
+      sorter: (a, b) => a.date.localeCompare(b.date),
     },
     {
       title: "Действия",
