@@ -4,8 +4,6 @@ import { Checkbox, Table } from "antd";
 export const TableGroupStage = () => {
   const { finalParticipants } = useMatches();
 
-  console.log(finalParticipants);
-
   const columns = [
     {
       title: "№",

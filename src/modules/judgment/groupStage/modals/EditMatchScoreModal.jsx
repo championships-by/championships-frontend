@@ -16,7 +16,6 @@ export const EditMatchScoreModal = ({ isOpen, match, onSubmit, onClose }) => {
 
   const handleSendScore = (e) => {
     e.preventDefault();
-    console.log(match);
     onSubmit({
       ...match,
       team1: { ...team1, score: team1Score },
