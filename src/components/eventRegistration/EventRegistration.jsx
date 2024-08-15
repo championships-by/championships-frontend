@@ -15,6 +15,17 @@ function EventsRegistration() {
   const [dataTeams, setTeams] = useState([]);
   const [dataEvent, setEvent] = useState({});
   const { eventID } = useParams();
+  const items = [
+    {
+      title: "Мероприятия",
+    },
+    {
+      title: dataEvent?.event_data?.name ?? "",
+    },
+    {
+      title: "Регистрация участников",
+    },
+  ];
 
   useEffect(() => {
     if (isLoading) {
@@ -45,19 +56,7 @@ function EventsRegistration() {
     <>
       <Loader show={isLoading} />
       <Typography.Title level={2}>Регистрация участников</Typography.Title>
-      <Breadcrumb
-        items={[
-          {
-            title: "Мероприятия",
-          },
-          {
-            title: dataEvent?.event_data?.name ?? "",
-          },
-          {
-            title: "Регистрация участников",
-          },
-        ]}
-      />
+      <Breadcrumb items={items} />
       <AdminPanelControls>
         <Button type="primary" onClick={() => setIsAddTeamModalOpen(true)}>
           Добавить команду

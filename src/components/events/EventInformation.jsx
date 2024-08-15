@@ -12,9 +12,12 @@ import { LinkOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
+import { changeDateFormat } from "@utils";
+import { getEventLevel } from "@utils";
+import { yaShareLink } from "@constants";
+import { eventApi } from "@api";
 
 import "./sass/events.scss";
-import { eventApi } from "@api";
 
 const columns = [
   {
@@ -54,37 +57,15 @@ function EventInformation() {
   const [dataEvent, setEvent] = useState({});
   const [dataNominations, setNomination] = useState([]);
   const { eventID } = useParams();
-
-  function ChangeDateFormat(date) {
-    const formattedDate = new Date(date);
-
-    const day = formattedDate.getDate();
-    const formattedDay = String(day).padStart(2, "0");
-
-    const month = formattedDate.getMonth() + 1;
-    const formattedMonth = String(month).padStart(2, "0");
-
-    const year = formattedDate.getFullYear();
-
-    return `${formattedDay}.${formattedMonth}.${year}`;
-  }
-
-  function getEventLevel(eventLevel) {
-    switch (eventLevel) {
-      case "republic":
-        return "Республиканский";
-      case "region":
-        return "Областной";
-      case "district":
-        return "Районный";
-      case "town":
-        return "Городской";
-      case "other":
-        return "Другое";
-      default:
-        return "Неизвестно";
-    }
-  }
+  const items = [
+    {
+      title: "Мероприятия",
+      href: "./",
+    },
+    {
+      title: dataEvent.name,
+    },
+  ];
 
   useEffect(() => {
     if (eventID) {
@@ -97,7 +78,7 @@ function EventInformation() {
             setNomination(data.nominations);
 
             const script = document.createElement("script");
-            script.src = "https://yastatic.net/share2/share.js";
+            script.src = yaShareLink;
             script.async = true;
             document.body.appendChild(script);
             setTimeout(() => setIsLoading(false), 300);
@@ -116,17 +97,7 @@ function EventInformation() {
     <div className="events__event-information__container">
       <Loader show={isLoading} />
       <Typography.Title level={2}>Информация о мероприятии</Typography.Title>
-      <Breadcrumb
-        items={[
-          {
-            title: "Мероприятия",
-            href: "./",
-          },
-          {
-            title: dataEvent.name,
-          },
-        ]}
-      />
+      <Breadcrumb items={items} />
       <Row className="events__event-information__flex-container">
         <Col span={10}>
           <img
@@ -159,12 +130,12 @@ function EventInformation() {
               <Typography.Text strong>Дата проведения</Typography.Text>
               <br />
               <Typography.Text>
-                {ChangeDateFormat(dataEvent.holding_start_date) !==
-                ChangeDateFormat(dataEvent.holding_finish_date)
-                  ? `c ${ChangeDateFormat(
+                {changeDateFormat(dataEvent.holding_start_date) !==
+                changeDateFormat(dataEvent.holding_finish_date)
+                  ? `c ${changeDateFormat(
                       dataEvent.holding_start_date
-                    )} по ${ChangeDateFormat(dataEvent.holding_finish_date)}`
-                  : ChangeDateFormat(dataEvent.holding_start_date)}
+                    )} по ${changeDateFormat(dataEvent.holding_finish_date)}`
+                  : changeDateFormat(dataEvent.holding_start_date)}
               </Typography.Text>
             </Col>
           </Row>

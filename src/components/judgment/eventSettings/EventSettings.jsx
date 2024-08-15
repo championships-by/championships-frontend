@@ -72,6 +72,15 @@ function EventSettings() {
   const [dataEvent, setEvent] = useState({});
   const { eventID } = useParams();
   const [form] = Form.useForm();
+  const items = [
+    {
+      title: "Мероприятия",
+      href: "./",
+    },
+    {
+      title: "Настройка мероприятия",
+    },
+  ];
 
   useEffect(() => {
     if (!eventID) {
@@ -143,17 +152,7 @@ function EventSettings() {
     <div>
       <Loader show={isLoading} />
       <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
-      <Breadcrumb
-        items={[
-          {
-            title: "Мероприятия",
-            href: "./",
-          },
-          {
-            title: "Настройка мероприятия",
-          },
-        ]}
-      />
+      <Breadcrumb items={items} />
       <Row gutter={16}>
         <Col xs={24} md={8}>
           <Form
