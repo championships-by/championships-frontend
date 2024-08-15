@@ -87,3 +87,25 @@ export const transformTimeMatchesData = (rounds) =>
       result: round.best_attempt.result,
     },
   }));
+
+  export const changeDateFormat = (date) => {
+    const formattedDate = dayjs(date);
+    return formattedDate.format("DD.MM.YYYY");
+  };
+
+  export const getEventLevel = (eventLevel) => {
+    switch (eventLevel) {
+      case "republic":
+        return "Республиканский";
+      case "region":
+        return "Областной";
+      case "district":
+        return "Районный";
+      case "town":
+        return "Городской";
+      case "other":
+        return "Другое";
+      default:
+        return "Неизвестно";
+    }
+  }

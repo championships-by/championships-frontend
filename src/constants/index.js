@@ -146,6 +146,6 @@ export const Locale = {
   weekFormat: "YYYY-wo",
   monthFormat: "YYYY-MM",
 };
-
+export const yaShareLink = "https://yastatic.net/share2/share.js"
 export const defaultTime = "00:00.000";
 export const defaultFormat = "mm:ss.SSS";
