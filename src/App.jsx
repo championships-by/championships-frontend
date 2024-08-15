@@ -4,6 +4,7 @@ import EventsRegistration from "@components/eventRegistration/EventRegistration"
 import Events from "@components/events/Events";
 import Competencies from "@components/judgment/competencies/Competencies";
 import EventSettings from "@components/judgment/eventSettings/EventSettings";
+import EventInformation from "@components/events/EventInformation";
 import Judgment from "@components/judgment/events/JudgmentEvents";
 import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
 import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
@@ -46,8 +47,8 @@ function App() {
             <Route path={ROUTER_ROUTES.EVENTS}>
               <Route index element={<Events />} />
               <Route
-                path={ROUTER_ROUTES.EVENT_DESCRIPTION}
-                element={<EventSettings />}
+                path={ROUTER_ROUTES.EVENTS_DESCRIPTION}
+                element={<EventInformation />}
               />
               <Route
                 path={ROUTER_ROUTES.EVENTS_REGISTRATION}
