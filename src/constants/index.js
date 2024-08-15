@@ -1,3 +1,5 @@
+import { EventEmitter } from "events";
+
 export const ZUBRONOK = "https://zubronok.by/";
 
 export const Roles = {
@@ -56,11 +58,11 @@ export const ROUTES = {
   },
   JUDGMENT_GROUP_STAGE: {
     TITLE: "Групповой этап",
-    PATH: (event_id, nomination_id) => `/judgment/${event_id}/${nomination_id}`,
+    PATH: (event_id, nomination_id) => `/judgment/events/${event_id}/${nomination_id}/group-stage`,
   },
   JUDGMENT_TIME_MATHCES: {
     TITLE: "Матчи на время",
-    PATH: (event_id, nomination_id) => `/test/${event_id}/${nomination_id}`,
+    PATH: (event_id, nomination_id) => `/judgment/events/${event_id}/${nomination_id}/time-matches`,
   },
   JUDGMENT_COMPETENCIES: {
     TITLE: "Компетенции по критериям",
@@ -85,8 +87,8 @@ export const ROUTER_ROUTES = {
   JUDGMENT_CREATE: "create",
   JUDGMENT_CREATE_TEST: "create/test",
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
-  JUDGMENT_GROUP_STAGE: "judgment/:eventId/:nominationId",
-  JUDGMENT_TIME_MATCHES: "matches/:eventId/:nominationId",
+  JUDGMENT_GROUP_STAGE: ":eventId/:nominationId/group-stage",
+  JUDGMENT_TIME_MATCHES: ":eventId/:nominationId/time-matches",
   JUDGMENT_COMPETENCIES: "judgment/competencies",
 };
 
@@ -124,18 +126,18 @@ export const Locale = {
     nextCentury: "Следующий век",
     shortWeekDays: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
     shortMonths: [
-      "Янв",
-      "Фев",
-      "Мар",
-      "Апр",
+      "Январь",
+      "Февраль",
+      "Март",
+      "Апрель",
       "Май",
       "Июнь",
       "Июль",
-      "Авг",
-      "Сент",
-      "Окт",
-      "Нояб",
-      "Дек",
+      "Август",
+      "Сентябрь",
+      "Октябрь",
+      "Ноябрь",
+      "Декабрь",
     ],
   },
   timePickerLocale: {
@@ -148,4 +150,11 @@ export const Locale = {
 };
 
 export const defaultTime = "00:00.000";
+
 export const defaultFormat = "mm:ss.SSS";
+
+export const TimeMatchEvents = {
+  UPDATE_TABLE_DATA: "updateTableData",
+};
+
+export const timeMatchEventEmitter = new EventEmitter();

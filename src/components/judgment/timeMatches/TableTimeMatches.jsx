@@ -1,6 +1,10 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { timeMatchesApi } from "@api/timeMatches";
-import { defaultFormat } from "@constants";
+import { 
+  defaultFormat, 
+  timeMatchEventEmitter, 
+  TimeMatchEvents
+} from "@constants";
 import {
   formatTimeToString,
   generateColumns,
@@ -10,8 +14,8 @@ import { Button, Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { CustomTimePicker } from "./components";
-import { timeMatchEventEmitter, TimeMatchEvents } from "./events";
+import { CustomTimePicker } from "@modules/judgment/timeMatches/CustomTimePicker";
+import "./sass/timeMatches.scss"
 
 function TableTimeMatches() {
   const [timeMatchesData, setTimeMatchesData] = useState([]);
@@ -69,9 +73,9 @@ function TableTimeMatches() {
           }, null);
 
           return bestTime ? (
-            <>{bestTime.format(defaultFormat)}</>
+            bestTime.format(defaultFormat)
           ) : (
-            <>{formatTimeToString()}</>
+            formatTimeToString()
           );
         },
       },
@@ -145,7 +149,7 @@ function TableTimeMatches() {
             columns={columns}
             dataSource={timeMatchesData}
           />
-          <Button style={{ margin: "10px 0px 10px 0px" }} type="primary">
+          <Button className = "time-matches__button" type="primary">
             Завершить этап
           </Button>
         </>

@@ -1,5 +1,5 @@
-import ResultTableTimeMatches from "@ui/judgment/timeMatches/ResultTableTimeMatches";
-import TableTimeMatches from "@ui/judgment/timeMatches/TableTimeMatches";
+import ResultTableTimeMatches from "./ResultTableTimeMatches";
+import TableTimeMatches from "./TableTimeMatches";
 import { Tabs } from "antd";
 
 const items = [

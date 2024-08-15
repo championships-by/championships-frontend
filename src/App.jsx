@@ -55,16 +55,8 @@ function App() {
               />
             </Route>
             <Route
-              path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
-              element={<JudgmentGroupStage />}
-            />
-            <Route
               path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
               element={<Competencies />}
-            />
-            <Route
-              path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
-              element={<TimeMatches />}
             />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />
@@ -75,6 +67,14 @@ function App() {
               <Route
                 path={ROUTER_ROUTES.JUDGMENT_EVENT_SETTINGS}
                 element={<EventSettings />}
+              />
+              <Route 
+                path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE} 
+                element={<JudgmentGroupStage />} 
+              />
+              <Route 
+                path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES} 
+                element={<TimeMatches />} 
               />
             </Route>
           </Route>
