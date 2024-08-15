@@ -15,12 +15,12 @@ function EventDescription({ name }) {
           message: "Пожалуйста, введите описание мероприятия",
         },
         {
-          max: 500,
-          message: "Максимальное значение 500",
+          max: 1000,
+          message: "Максимум 1000 символов",
         },
         {
           min: 5,
-          message: "Минимальное значение 5",
+          message: "Минимум 5 символов",
         },
       ]}
     >
@@ -31,7 +31,7 @@ function EventDescription({ name }) {
           allowClear
           placeholder="Введите описание мероприятия"
           id="event_description_input"
-          maxLength={255}
+          maxLength={1000}
           className="events__event-description__textarea"
         />
       </Flex>

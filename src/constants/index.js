@@ -34,7 +34,7 @@ export const ROUTES = {
   USER_SETTINGS_TEST: { TITLE: "Тест", PATH: "/settings/test" },
   EVENTS: { TITLE: "Мероприятия", PATH: "/events" },
   EVENTS_DESCRIPTION: {
-    TITLE: " Описание мероприятия",
+    TITLE: "Описание мероприятия",
     PATH: (eventID) => `/events/${eventID}`,
   },
   EVENTS_REGISTRATION: {
