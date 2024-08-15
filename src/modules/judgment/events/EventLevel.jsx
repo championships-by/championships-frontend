@@ -15,16 +15,13 @@ function EventLevel({ name }) {
   return (
     <FormItem name={name} hasFeedback validateFirst>
       <Typography.Text>Уровень мероприятия</Typography.Text>
-      <div  className="events__event-level__div">
-        <Input 
+      <div className="events__event-level__div">
+        <Input
           disabled
           prefix={<StarOutlined />}
           className="events__event-level__icon"
         />
-        <Select
-          placeholder="Выберите уровень мероприятия"
-          options={options}
-        />
+        <Select placeholder="Выберите уровень мероприятия" options={options} />
       </div>
     </FormItem>
   );

@@ -58,11 +58,13 @@ export const ROUTES = {
   },
   JUDGMENT_GROUP_STAGE: {
     TITLE: "Групповой этап",
-    PATH: (event_id, nomination_id) => `/judgment/events/${event_id}/${nomination_id}/group-stage`,
+    PATH: (event_id, nomination_id) =>
+      `/judgment/events/${event_id}/${nomination_id}/group-stage`,
   },
   JUDGMENT_TIME_MATHCES: {
     TITLE: "Матчи на время",
-    PATH: (event_id, nomination_id) => `/judgment/events/${event_id}/${nomination_id}/time-matches`,
+    PATH: (event_id, nomination_id) =>
+      `/judgment/events/${event_id}/${nomination_id}/time-matches`,
   },
   JUDGMENT_COMPETENCIES: {
     TITLE: "Компетенции по критериям",

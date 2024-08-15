@@ -51,7 +51,7 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
       )}
     />
   ) : (
-    <span className="table-time__disqualification" onClick= {handleDisqualify}>
+    <span className="table-time__disqualification" onClick={handleDisqualify}>
       Дисквалификация
     </span>
   );
