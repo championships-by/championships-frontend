@@ -42,7 +42,6 @@ function JudgmentEventsTable({ EventsData }) {
       },
     });
   };
-  console.log(EventsData);
   const columns = [
     {
       title: "Название мероприятия",
