@@ -20,10 +20,10 @@ export const eventApi = {
   changeEvent: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
-    headers.append("Content-Type", "application/json");
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
 
     return fetch(`${API_PATH}/event/event`, {
-      method: "PUT",
+      method: "PATCH",
       headers,
       body,
       redirect: "follow",
