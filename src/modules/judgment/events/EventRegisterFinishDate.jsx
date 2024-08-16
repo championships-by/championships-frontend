@@ -18,8 +18,6 @@ function EventRegisterFinishDate({ name, form }) {
           const registerStartDate = form.getFieldValue(
             "event_register_start_date"
           );
-          console.log(registerStartDate);
-          console.log(value);
           if (registerStartDate <= value) {
             return Promise.resolve();
           }

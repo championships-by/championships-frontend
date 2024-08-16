@@ -21,7 +21,6 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
   const [form] = Form.useForm();
 
   const createEventRequest = async () => {
-    console.log(form.getFieldValue("event_finish_date"));
     const body = JSON.stringify({
       name: form.getFieldValue("event_name"),
       date: dayjs(form.getFieldValue("event_date")).format(Locale.dataFormat),
