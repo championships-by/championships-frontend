@@ -1,5 +1,6 @@
 import { defaultFormat, defaultTime } from "@constants";
 import dayjs from "dayjs";
+import JSEncrypt from "jsencrypt";
 
 export const FILTER_OPTION = (input, option) =>
   (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
@@ -88,24 +89,33 @@ export const transformTimeMatchesData = (rounds) =>
     },
   }));
 
-  export const changeDateFormat = (date) => {
-    const formattedDate = dayjs(date);
-    return formattedDate.format("DD.MM.YYYY");
-  };
+export const changeDateFormat = (date) => {
+  const formattedDate = dayjs(date);
+  return formattedDate.format("DD.MM.YYYY");
+};
 
-  export const getEventLevel = (eventLevel) => {
-    switch (eventLevel) {
-      case "republic":
-        return "Республиканский";
-      case "region":
-        return "Областной";
-      case "district":
-        return "Районный";
-      case "town":
-        return "Городской";
-      case "other":
-        return "Другое";
-      default:
-        return "Неизвестно";
-    }
+export const getEventLevel = (eventLevel) => {
+  switch (eventLevel) {
+    case "republic":
+      return "Республиканский";
+    case "region":
+      return "Областной";
+    case "district":
+      return "Районный";
+    case "town":
+      return "Городской";
+    case "other":
+      return "Другое";
+    default:
+      return "Неизвестно";
   }
+};
+
+export const getEncryptedPassword = (toEncrypt, publicKey) => {
+  const encrypt = new JSEncrypt();
+  encrypt.setPublicKey(publicKey);
+
+  const encrypted = encrypt.encrypt(toEncrypt);
+
+  return encrypted;
+};
