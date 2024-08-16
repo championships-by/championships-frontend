@@ -1,17 +1,18 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { eventApi } from "@api";
-import { ROUTES } from "@constants";
 import {
-  Button,
+  Table,
   Flex,
   List,
-  Modal,
-  Table,
-  Tooltip,
+  Button,
   Typography,
+  Modal,
+  Tooltip,
   message,
 } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@constants";
+import { eventApi } from "@api";
+import { changeDateFormat } from "@utils";
 
 function JudgmentEventsTable({ EventsData }) {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ function JudgmentEventsTable({ EventsData }) {
       cancelText: "Отмена",
       onOk: () => {
         const body = JSON.stringify({
-          id: id,
+          id,
         });
         try {
           eventApi.deleteEvent(body);
@@ -41,13 +42,11 @@ function JudgmentEventsTable({ EventsData }) {
       },
     });
   };
-
   const columns = [
     {
       title: "Название мероприятия",
       key: "nameEvent",
-      dataIndex: "name",
-      sorter: (a, b) => a.name.localeCompare(b.name),
+      render: (data) => data.event?.name,
     },
     {
       title: "Компетенции",
@@ -70,20 +69,26 @@ function JudgmentEventsTable({ EventsData }) {
     {
       title: "Дата мероприятия",
       key: "dateEvent",
-      dataIndex: "date",
-      defaultSortOrder: "ascend",
-      sorter: (a, b) => a.date.localeCompare(b.date),
+      render: (data) =>
+        changeDateFormat(data.event?.holding_start_date) !==
+        changeDateFormat(data.event?.holding_finish_date)
+          ? `с ${changeDateFormat(
+              data.event?.holding_start_date
+            )} по ${changeDateFormat(data.event?.holding_finish_date)}`
+          : changeDateFormat(data.event?.holding_start_date),
     },
     {
       title: "Действия",
       key: "action",
-      render: ({ id }) => (
+      render: ({ event }) => (
         <Flex>
           <Tooltip title={ROUTES.JUDGMENT_EVENT_SETTINGS.TITLE}>
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={() => navigate(ROUTES.JUDGMENT_EVENT_SETTINGS.PATH(id))}
+              onClick={() =>
+                navigate(ROUTES.JUDGMENT_EVENT_SETTINGS.PATH(event.id))
+              }
             />
           </Tooltip>
           <Tooltip title="Удалить мероприятие">

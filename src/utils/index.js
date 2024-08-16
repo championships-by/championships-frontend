@@ -1,8 +1,31 @@
 import { defaultFormat, defaultTime } from "@constants";
 import dayjs from "dayjs";
+import JSEncrypt from "jsencrypt";
 
 export const FILTER_OPTION = (input, option) =>
   (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+
+export const MatchResult = {
+  TEAM1: "team1",
+  TEAM2: "team2",
+  DRAW: "draw",
+};
+
+export const determinateTheWinner = (score1, score2) => {
+  if (score1 > score2) {
+    return MatchResult.TEAM1;
+  }
+
+  if (score2 > score1) {
+    return MatchResult.TEAM2;
+  }
+
+  return MatchResult.DRAW;
+};
+
+export const isScoreZero = (score1, score2) => !!(score1 === 0 && score2 === 0);
+
+export const isScoreEqual = (score1, score2) => score1 === score2;
 
 export const handlePaste = (event) => {
   event.preventDefault();
@@ -66,7 +89,33 @@ export const transformTimeMatchesData = (rounds) =>
     },
   }));
 
-export const getUniqueFilters = (data, key) => {
-  const uniqueValues = [...new Set(data.map((item) => item[key]))];
-  return uniqueValues.map((value) => ({ text: value, value }));
+export const changeDateFormat = (date) => {
+  const formattedDate = dayjs(date);
+  return formattedDate.format("DD.MM.YYYY");
+};
+
+export const getEventLevel = (eventLevel) => {
+  switch (eventLevel) {
+    case "republic":
+      return "Республиканский";
+    case "region":
+      return "Областной";
+    case "district":
+      return "Районный";
+    case "town":
+      return "Городской";
+    case "other":
+      return "Другое";
+    default:
+      return "Неизвестно";
+  }
+};
+
+export const getEncryptedPassword = (toEncrypt, publicKey) => {
+  const encrypt = new JSEncrypt();
+  encrypt.setPublicKey(publicKey);
+
+  const encrypted = encrypt.encrypt(toEncrypt);
+
+  return encrypted;
 };

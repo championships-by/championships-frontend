@@ -4,6 +4,7 @@ import OldPassword from "@modules/user/passwordChange/OldPassword";
 import NewPassword from "@modules/user/passwordChange/NewPassword";
 import SecondNewPassword from "@modules/user/passwordChange/SecondNewPassword";
 import { userApi } from "@api";
+import { getEncryptedPassword } from "@utils";
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,10 +14,20 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
     setIsLoading(true);
     const { OldPassword, NewPassword, SecondNewPassword } = values;
 
+    const encrypedCurrentPassword = getEncryptedPassword(
+      OldPassword,
+      PUBLIC_KEY
+    );
+    const encrypedNewPassword = getEncryptedPassword(NewPassword, PUBLIC_KEY);
+    const encrypedNewRetypedPassword = getEncryptedPassword(
+      SecondNewPassword,
+      PUBLIC_KEY
+    );
+
     const data = {
-      current_password: OldPassword,
-      new_password: NewPassword,
-      new_password_retyped: SecondNewPassword,
+      current_password: encrypedCurrentPassword,
+      new_password: encrypedNewPassword,
+      new_password_retyped: encrypedNewRetypedPassword,
     };
 
     userApi

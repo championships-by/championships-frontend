@@ -28,7 +28,7 @@ function JudgmentEvents() {
         .then((response) => {
           const formattedDate = response.map((user) => ({
             ...user,
-            date: ChangeDateFormat(user.date),
+            date: user.date,
           }));
           return formattedDate;
         })

@@ -4,8 +4,9 @@ import EventsRegistration from "@components/eventRegistration/EventRegistration"
 import Events from "@components/events/Events";
 import Competencies from "@components/judgment/competencies/Competencies";
 import EventSettings from "@components/judgment/eventSettings/EventSettings";
+import EventInformation from "@components/events/EventInformation";
 import Judgment from "@components/judgment/events/JudgmentEvents";
-import GroupStage from "@components/judgment/groupStage/GroupStage";
+import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
 import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
 import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
@@ -46,8 +47,8 @@ function App() {
             <Route path={ROUTER_ROUTES.EVENTS}>
               <Route index element={<Events />} />
               <Route
-                path={ROUTER_ROUTES.EVENT_DESCRIPTION}
-                element={<EventSettings />}
+                path={ROUTER_ROUTES.EVENTS_DESCRIPTION}
+                element={<EventInformation />}
               />
               <Route
                 path={ROUTER_ROUTES.EVENTS_REGISTRATION}
@@ -55,16 +56,8 @@ function App() {
               />
             </Route>
             <Route
-              path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
-              element={<GroupStage />}
-            />
-            <Route
               path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
               element={<Competencies />}
-            />
-            <Route
-              path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
-              element={<TimeMatches />}
             />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />
@@ -75,6 +68,14 @@ function App() {
               <Route
                 path={ROUTER_ROUTES.JUDGMENT_EVENT_SETTINGS}
                 element={<EventSettings />}
+              />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
+                element={<JudgmentGroupStage />}
+              />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
+                element={<TimeMatches />}
               />
             </Route>
           </Route>

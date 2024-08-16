@@ -2,6 +2,7 @@ import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Button, Flex, Table, Tooltip } from "antd";
+import "./sass/timeMatches.scss";
 
 const data = [
   {
@@ -65,7 +66,7 @@ function ResultTableTimeMatches() {
       <Flex vertical gap="large">
         <Table pagination={false} columns={columns} dataSource={data} />
       </Flex>
-      <Button style={{ margin: "10px 0px 10px 0px" }} type="primary">
+      <Button className="time-matches__button" type="primary">
         Итоговый протокол
       </Button>
     </>

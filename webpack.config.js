@@ -35,6 +35,7 @@ module.exports = (env) => {
       }),
       new webpack.DefinePlugin({
         API_PATH: JSON.stringify(IS_DEV ? DEV_API_PATH : PROD_API_PATH),
+        PUBLIC_KEY: process.env.PUBLIC_KEY,
       }),
     ],
     module: {
@@ -107,8 +108,9 @@ module.exports = (env) => {
         "@assets": path.resolve(__dirname, "src", "assets"),
         "@components": path.resolve(__dirname, "src", "components"),
         "@constants": path.resolve(__dirname, "src", "constants"),
+        "@contexts": path.resolve(__dirname, "src", "contexts"),
+        "@hooks": path.resolve(__dirname, "src", "hooks"),
         "@sass": path.resolve(__dirname, "src", "sass"),
-        "@ui": path.resolve(__dirname, "src", "UI"),
         "@modules": path.resolve(__dirname, "src", "modules"),
         "@utils": path.resolve(__dirname, "src", "utils"),
         "@node_modules": path.resolve(__dirname, "node_modules"),
