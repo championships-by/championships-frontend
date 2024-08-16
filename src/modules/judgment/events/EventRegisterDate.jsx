@@ -8,29 +8,39 @@ const configDate = {
     {
       type: "object",
       required: true,
-      message: "",
+      message: "Пожалуйста, выберите дату и время регистрации",
     },
   ],
 };
-function EventRegisterStartDate({ name, form }) {
+function EventRegisterDate({ name }) {
   return (
     <>
       <Typography.Text>Регистрация</Typography.Text>
       <FormItem name={name} hasFeedback validateFirst {...configDate}>
-        <div>
+        <div className="events__event-date__datepickercontainer">
           <Typography.Text>С</Typography.Text>
           <DatePicker
             locale={Locale}
-            id="event_register_start_date"
+            id="event_date"
             format={Locale.dateTimeFormat}
             showTime={{ format: Locale.timeFormat }}
             placeholder="Выберите дату и время мероприятия"
             className="events__event-date__datepicker"
-            onChange={(value) => form.setFieldsValue({ [name]: value })}
+          />
+        </div>
+        <div className="events__event-date__datepickercontainer">
+          <Typography.Text>По</Typography.Text>
+          <DatePicker
+            locale={Locale}
+            id="event_date"
+            format={Locale.dateTimeFormat}
+            showTime={{ format: Locale.timeFormat }}
+            placeholder="Выберите дату и время мероприятия"
+            className="events__event-date__datepicker"
           />
         </div>
       </FormItem>
     </>
   );
 }
-export default EventRegisterStartDate;
+export default EventRegisterDate;

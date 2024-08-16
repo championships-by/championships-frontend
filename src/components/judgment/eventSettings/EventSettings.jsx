@@ -15,10 +15,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
-import EventStartDate from "@modules/judgment/events/EventStartDate";
-import EventFinishDate from "@modules/judgment/events/EventFinishDate";
-import EventRegisterStartDate from "@modules/judgment/events/EventRegisterStartDate";
-import EventRegisterFinishDate from "@modules/judgment/events/EventRegisterFinishDate";
+import EventDate from "@modules/judgment/events/EventDate";
+import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventDescription from "@modules/judgment/events/EventDescription";
 import EventRequirements from "@modules/judgment/events/EventRequirements";
 import EventEmail from "@modules/judgment/events/EventEmail";
@@ -170,10 +168,8 @@ function EventSettings() {
             <EventEmail name="event_email" />
             <EventPlace name="event_place" />
             <EventRegulation name="event_regulation" />
-            <EventRegisterStartDate name="event_register_start_date" />
-            <EventRegisterFinishDate name="event_register_finish_date" />
-            <EventStartDate name="event_start_date" />
-            <EventFinishDate name="event_finish_date" />
+            <EventRegisterDate name="event_register_date" />
+            <EventDate name="event_date" />
             <EventRegistrationSwitch name="event_registartion" />
             <EventDescription name="event_description" />
             <EventLevel name="event_level" />

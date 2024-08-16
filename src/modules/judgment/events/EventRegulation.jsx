@@ -13,7 +13,7 @@ function EventRegulation({ name }) {
       validateFirst
       rules={[
         {
-          required: false,
+          required: true,
           message: "Пожалуйста, загрузите положение о проведении мероприятия",
         },
       ]}
