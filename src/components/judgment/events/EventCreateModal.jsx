@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, Modal, message, Typography, Row, Col } from "antd";
 import dayjs from "dayjs";
 import EventName from "@modules/judgment/events/EventName";
-import EventStartDate from "@modules/judgment/events/EventStartDate";
-import EventFinishDate from "@modules/judgment/events/EventFinishDate";
-import EventRegisterStartDate from "@modules/judgment/events/EventRegisterStartDate";
-import EventRegisterFinishDate from "@modules/judgment/events/EventRegisterFinishDate";
+import EventDate from "@modules/judgment/events/EventDate";
+import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventDescription from "@modules/judgment/events/EventDescription";
 import EventRequirements from "@modules/judgment/events/EventRequirements";
 import EventEmail from "@modules/judgment/events/EventEmail";
@@ -58,13 +56,8 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
         <EventEmail name="event_email" />
         <EventPlace name="event_place" />
         <EventRegulation name="event_regulation" />
-        <EventRegisterStartDate name="event_register_start_date" form={form} />
-        <EventRegisterFinishDate
-          name="event_register_finish_date"
-          form={form}
-        />
-        <EventStartDate name="event_start_date" form={form} />
-        <EventFinishDate name="event_finish_date" form={form} />
+        <EventRegisterDate name="event_register_date" />
+        <EventDate name="event_date" />
         <EventRegistrationSwitch name="event_registartion" />
         <EventLevel name="event_level" />
         <EventDescription name="event_description" />
