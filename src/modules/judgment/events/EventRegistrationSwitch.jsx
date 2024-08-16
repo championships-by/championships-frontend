@@ -3,12 +3,20 @@ import FormItem from "antd/es/form/FormItem";
 
 import "./sass/events.scss";
 
-function EventName({ name }) {
+function EventName({ name, value, onChange: onChangeBase }) {
+  const onChange = (checked) => {
+    onChangeBase({ [name]: checked });
+  };
+
   return (
     <FormItem name={name} hasFeedback validateFirst>
       <div className="events__event-registration-switch">
         <Typography.Text>Опубликовать</Typography.Text>
-        <Switch className="events__event-registration-switch__switch" />
+        <Switch
+          className="events__event-registration-switch__switch"
+          checked={value}
+          onChange={onChange}
+        />
       </div>
     </FormItem>
   );

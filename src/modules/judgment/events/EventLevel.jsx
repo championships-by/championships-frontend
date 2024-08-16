@@ -11,7 +11,11 @@ const options = [
   { value: "other", label: <span>Другое</span> },
 ];
 
-function EventLevel({ name }) {
+function EventLevel({ name, value, onChange: onChangeBase }) {
+  const onChange = (value) => {
+    onChangeBase({ [name]: value });
+  };
+
   return (
     <FormItem name={name} hasFeedback validateFirst>
       <Typography.Text>Уровень мероприятия</Typography.Text>
@@ -21,7 +25,12 @@ function EventLevel({ name }) {
           prefix={<StarOutlined />}
           className="events__event-level__icon"
         />
-        <Select placeholder="Выберите уровень мероприятия" options={options} />
+        <Select
+          placeholder="Выберите уровень мероприятия"
+          options={options}
+          value={value}
+          onChange={onChange}
+        />
       </div>
     </FormItem>
   );

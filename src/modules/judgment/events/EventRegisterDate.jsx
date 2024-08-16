@@ -1,6 +1,8 @@
 import { DatePicker, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { Locale } from "@constants";
+import dayjs from "dayjs";
+
 import "./sass/events.scss";
 
 const configDate = {
@@ -12,7 +14,35 @@ const configDate = {
     },
   ],
 };
-function EventRegisterDate({ name }) {
+
+function EventRegisterDate({ name, value, onChange: onChangeBase }) {
+  const { registration_start_date, registration_finish_date } = value || {};
+
+  const onChange = (val, type) => {
+    const date = dayjs(val).toISOString();
+
+    switch (type) {
+      case "from":
+        onChangeBase({
+          [name]: {
+            ...value,
+            registration_start_date: date,
+          },
+        });
+
+        break;
+      case "to":
+        onChangeBase({
+          [name]: {
+            ...value,
+            registration_finish_date: date,
+          },
+        });
+
+        break;
+    }
+  };
+
   return (
     <>
       <Typography.Text>Регистрация</Typography.Text>
@@ -26,6 +56,8 @@ function EventRegisterDate({ name }) {
             showTime={{ format: Locale.timeFormat }}
             placeholder="Выберите дату и время мероприятия"
             className="events__event-date__datepicker"
+            value={dayjs(registration_start_date)}
+            onChange={(value) => onChange(value, "from")}
           />
         </div>
         <div className="events__event-date__datepickercontainer">
@@ -37,6 +69,8 @@ function EventRegisterDate({ name }) {
             showTime={{ format: Locale.timeFormat }}
             placeholder="Выберите дату и время мероприятия"
             className="events__event-date__datepicker"
+            value={dayjs(registration_finish_date)}
+            onChange={(value) => onChange(value, "to")}
           />
         </div>
       </FormItem>

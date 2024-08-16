@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import TextArea from "antd/es/input/TextArea";
 import "./sass/events.scss";
 
-function EventDescription({ name }) {
+function EventDescription({ name, value }) {
   return (
     <FormItem
       name={name}
@@ -27,6 +27,7 @@ function EventDescription({ name }) {
       <Flex vertical>
         <Typography.Text>Описание мероприятия</Typography.Text>
         <TextArea
+          value={value}
           rows={6}
           allowClear
           placeholder="Введите описание мероприятия"

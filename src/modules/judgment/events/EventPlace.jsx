@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import { HomeOutlined } from "@ant-design/icons";
 import "./sass/events.scss";
 
-function EventPlace({ name }) {
+function EventPlace({ name, value }) {
   return (
     <FormItem
       name={name}
@@ -37,6 +37,7 @@ function EventPlace({ name }) {
       <Flex vertical>
         <Typography.Text>Место проведения мероприятия</Typography.Text>
         <Input
+          value={value}
           prefix={<HomeOutlined />}
           allowClear
           placeholder="Введите место проведения мероприятия"
