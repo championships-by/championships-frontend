@@ -7,7 +7,7 @@ export const teamApi = {
       },
       redirect: "follow",
       credentials: "include",
-    }),
+    }).then((response) => response.json()),
   setTeams: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");

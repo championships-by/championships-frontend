@@ -87,39 +87,36 @@ function EventSettings() {
   useEffect(() => {
     if (!Object.keys(event).length) {
       try {
-        eventApi
-          .getEvent(eventID)
-          .then((response) => response.json())
-          .then((data) => {
-            setEvent(data);
+        eventApi.getEvent(eventID).then((data) => {
+          setEvent(data);
 
-            const { event } = data;
+          const { event } = data;
 
-            // event_logo
-            // event_regulation
-            const values = {
-              name: event.name,
-              participant_question_email: event.participant_question_email,
-              event_place: event.event_place,
-              description: event.description,
-              event_level: event.event_level,
-              participation_needs: event.participation_needs,
-              published: event.published,
-              registration: {
-                registration_start_date: event.registration_start_date,
-                registration_finish_date: event.registration_finish_date,
-              },
-              holding: {
-                holding_start_date: event.holding_start_date,
-                holding_finish_date: event.holding_finish_date,
-              },
-            };
+          // event_logo
+          // event_regulation
+          const values = {
+            name: event.name,
+            participant_question_email: event.participant_question_email,
+            event_place: event.event_place,
+            description: event.description,
+            event_level: event.event_level,
+            participation_needs: event.participation_needs,
+            published: event.published,
+            registration: {
+              registration_start_date: event.registration_start_date,
+              registration_finish_date: event.registration_finish_date,
+            },
+            holding: {
+              holding_start_date: event.holding_start_date,
+              holding_finish_date: event.holding_finish_date,
+            },
+          };
 
-            form.setFieldsValue(values);
-            setValues(values);
+          form.setFieldsValue(values);
+          setValues(values);
 
-            setTimeout(() => setIsLoading(false), 300);
-          });
+          setTimeout(() => setIsLoading(false), 300);
+        });
       } catch (error) {
         message.error(
           "Ошибка: Невозможно получить данные. Обратитесь к администратору..."

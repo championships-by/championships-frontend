@@ -17,7 +17,6 @@ function Participants() {
   if (isLoading) {
     participantApi
       .getParticipant()
-      .then((response) => response.json())
       .then((data) => setParticipants(data))
       .catch(() =>
         message.error("Невозможно получить данные. Обратитесь к администратору")

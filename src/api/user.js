@@ -7,7 +7,7 @@ export const userApi = {
       },
       redirect: "follow",
       credentials: "include",
-    }),
+    }).then((response) => response.json()),
   changeProfile: (body) =>
     fetch(`${API_PATH}/user/profile`, {
       method: "PATCH",
@@ -27,7 +27,7 @@ export const userApi = {
       },
       redirect: "follow",
       credentials: "include",
-    }),
+    }).then((response) => response.json()),
   setUser: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
