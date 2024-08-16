@@ -31,7 +31,7 @@ function JudgmentEventsTable({ EventsData }) {
       cancelText: "Отмена",
       onOk: () => {
         const body = JSON.stringify({
-          id: id,
+          id,
         });
         try {
           eventApi.deleteEvent(body);
@@ -80,13 +80,15 @@ function JudgmentEventsTable({ EventsData }) {
     {
       title: "Действия",
       key: "action",
-      render: ({ id }) => (
+      render: ({ event }) => (
         <Flex>
           <Tooltip title={ROUTES.JUDGMENT_EVENT_SETTINGS.TITLE}>
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={() => navigate(ROUTES.JUDGMENT_EVENT_SETTINGS.PATH(id))}
+              onClick={() =>
+                navigate(ROUTES.JUDGMENT_EVENT_SETTINGS.PATH(event.id))
+              }
             />
           </Tooltip>
           <Tooltip title="Удалить мероприятие">
