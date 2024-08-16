@@ -102,11 +102,7 @@
       float: right;
     }
     &__datepickercontainer {
-      margin-top: 0;
-
-      &:nth-child(even) {
-        margin-top: 15px;
-      }
+      margin-top: -24px;
     }
   }
   &__event-description {
@@ -131,7 +127,7 @@
   }
   &__event-registration-switch {
     &__switch {
-      width: 10%;
+      width: 25px;
       margin-left: 2%;
     }
   }

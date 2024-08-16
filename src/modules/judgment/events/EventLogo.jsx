@@ -13,7 +13,7 @@ function EventLogo({ name }) {
       validateFirst
       rules={[
         {
-          required: true,
+          required: false,
           message: "Пожалуйста, загрузите логотип",
         },
       ]}
