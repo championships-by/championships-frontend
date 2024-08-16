@@ -1,38 +1,17 @@
 import { Table, Flex, Button, Typography, Modal } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteUser, updateUser } from '@store/slices';
 import { useState } from "react";
 
-function UsersTable({ usersData }) {
+function UsersTable() {
+  const users = useSelector((state) => state.users);
+  const dispatch = useDispatch();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
-  // const delete_user_request = async () => {
-  //     const myHeaders = new Headers();
-  // 	myHeaders.append("accept", "application/json");
-  // 	myHeaders.append("Content-Type", "application/json");
-
-  // 	const raw = JSON.stringify({
-  // 	email: form.getFieldValue('email'),
-  // 	first_name: form.getFieldValue('first_name'),
-  // 	second_name: form.getFieldValue('second_name'),
-  // 	third_name: form.getFieldValue('third_name'),
-  // 	phone: form.getFieldValue('phone'),
-  // 	role: form.getFieldValue('role'),
-  // 	educational_institution: form.getFieldValue('organization'),
-  // 	password: form.getFieldValue('password'),
-  // 	});
-
-  // 	const requestOptions = {
-  // 	method: "POST",
-  // 	headers: myHeaders,
-  // 	body: raw,
-  // 	redirect: "follow",
-  // 	credentials: 'include',
-  // 	};
-  //     await fetch(`${API_PATH}/user/delete`, requestOptions)
-  // }
-
-  const deleteUserConfirm = () => {
+  const deleteUserConfirm = (id) => {
     Modal.confirm({
       title: "Вы уверены?",
       content: "Вы уверены что хотите удалить этого пользователя?",
@@ -42,17 +21,18 @@ function UsersTable({ usersData }) {
           <CancelBtn />
         </>
       ),
+      onOk: () => {
+        dispatch(deleteUser(id));
+      },
+      onCancel: () => {},
       okText: "Да",
       cancelText: "Отмена",
-    });
+    })
   };
 
-  const openEditModal = () => {
+  const openEditModal = (user) => {
+    setSelectedUser(user);
     setIsEditModalOpen(true);
-  };
-
-  const changeUserData = () => {
-    setIsEditModalOpen(false);
   };
 
   const columns = [
@@ -80,17 +60,17 @@ function UsersTable({ usersData }) {
     {
       title: "Действия",
       key: "action",
-      render: () => (
+      render: (_, { id }) => (
         <Flex>
           <Button
             type="text"
             icon={<EditOutlined />}
-            onClick={() => openEditModal()}
+            onClick={() => openEditModal(users.find((user) => user.id === id))}
           />
           <Button
             type="text"
             icon={<DeleteOutlined />}
-            onClick={() => deleteUserConfirm()}
+            onClick={() => deleteUserConfirm(id)}
           />
         </Flex>
       ),
@@ -99,12 +79,16 @@ function UsersTable({ usersData }) {
 
   return (
     <>
-      <Table dataSource={usersData} columns={columns} />
+      <Table dataSource={users} columns={columns} />
 
       <UserModal
         isOpen={isEditModalOpen}
-        onOk={() => changeUserData()}
+        onOk={(user) => {
+          dispatch(updateUser(user));
+          setIsEditModalOpen(false);
+        }}
         onCancel={() => setIsEditModalOpen(false)}
+        user={selectedUser}
       />
     </>
   );

@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import { Modal, Form, Button, message, Space } from "antd";
-import { useState } from "react";
 import FormItem from "antd/es/form/FormItem";
+import { useDispatch } from 'react-redux';
+import { setUser } from '@store/slices';
 import UserLastnameInput from "@modules/user/UserLastnameInput";
 import UserFirstnameInput from "@modules/user/UserFirstnameInput";
 import UserPatronymicInput from "@modules/user/UserPatronymicInput";
@@ -9,11 +11,11 @@ import UserEmailInput from "@modules/user/UserEmailInput";
 import UserPasswordInput from "@modules/user/UserPasswordInput";
 import UserPhoneInput from "@modules/user/UserPhoneInput";
 import UserOrganizationInput from "@modules/user/UserOrganizationInput";
-import { userApi } from "@api";
 
-function UserModal({ isOpen, onOk, onCancel }) {
+function UserModal({ isOpen, onOk, onCancel, user }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
   const onFinish = () => {
     message.success("Всё в порядке!");
@@ -25,8 +27,8 @@ function UserModal({ isOpen, onOk, onCancel }) {
     setIsLoading(false);
   };
 
-  const create_user_request = async () => {
-    const raw = JSON.stringify({
+  const handleSubmit = async () => {
+    const formData = {
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
       second_name: form.getFieldValue("second_name"),
@@ -35,11 +37,14 @@ function UserModal({ isOpen, onOk, onCancel }) {
       role: form.getFieldValue("role"),
       educational_institution: form.getFieldValue("organization"),
       password: form.getFieldValue("password"),
-    });
-
-    await userApi.setUser(raw);
+    };
+  
+    if (user.id) {
+      dispatch(setUser([formData]));
+    } else {
+      dispatch(setUser([formData]));
+    }
   };
-
   return (
     <Modal
       title="Настройка пользователя"
@@ -56,6 +61,7 @@ function UserModal({ isOpen, onOk, onCancel }) {
         requiredMark="Default"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        initialValues={user}
       >
         <UserLastnameInput name="second_name" />
         <UserFirstnameInput name="first_name" />
@@ -77,7 +83,7 @@ function UserModal({ isOpen, onOk, onCancel }) {
               loading={isLoading}
               onClick={() => {
                 setIsLoading(true);
-                create_user_request();
+                handleSubmit();
               }}
             >
               Сохранить
