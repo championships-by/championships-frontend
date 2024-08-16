@@ -110,7 +110,6 @@ module.exports = (env) => {
         "@contexts": path.resolve(__dirname, "src", "contexts"),
         "@hooks": path.resolve(__dirname, "src", "hooks"),
         "@sass": path.resolve(__dirname, "src", "sass"),
-        "@ui": path.resolve(__dirname, "src", "UI"),
         "@modules": path.resolve(__dirname, "src", "modules"),
         "@utils": path.resolve(__dirname, "src", "utils"),
         "@node_modules": path.resolve(__dirname, "node_modules"),

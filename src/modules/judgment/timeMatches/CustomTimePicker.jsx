@@ -2,7 +2,7 @@ import { defaultFormat } from "@constants";
 import { formatTime } from "@utils";
 import { Button, TimePicker } from "antd";
 import { useState } from "react";
-import "./customTimePicker.scss";
+import "./sass/CustomTimePicker.scss";
 
 export const CustomTimePicker = ({ id, onTimeChange }) => {
   const [value, setValue] = useState(formatTime());
@@ -24,6 +24,7 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
 
   return !isDisqualified ? (
     <TimePicker
+      use
       value={value}
       onChange={(time) => {
         setValue(time);
@@ -50,8 +51,8 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
       )}
     />
   ) : (
-    <span style={{ cursor: "pointer" }} onClick={() => handleDisqualify()}>
-      Дискв.
+    <span className="table-time__disqualification" onClick={handleDisqualify}>
+      Дисквалификация
     </span>
   );
 };
