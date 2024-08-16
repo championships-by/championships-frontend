@@ -23,11 +23,6 @@ function UsersSettings() {
     if (isLoading) {
       userApi
         .getProfile()
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
         .then((user) => {
           form.setFieldsValue({
             firstname: user.first_name,

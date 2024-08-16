@@ -25,7 +25,6 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
     if (isOpen) {
       participantApi
         .getParticipant()
-        .then((response) => response.json())
         .then((data) =>
           setTeamParticipants(
             data.map((participant) => ({

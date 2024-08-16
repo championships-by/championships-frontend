@@ -26,7 +26,6 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
     if (isOpen) {
       eventApi
         .getEvent(eventID)
-        .then((response) => response.json())
         .then((data) =>
           setNomination(
             data?.event_data?.nominations.map((nomination) => ({
@@ -43,7 +42,6 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
 
       participantApi
         .getParticipant()
-        .then((response) => response.json())
         .then((data) =>
           setTeamParticipants(
             data.map((participant) => ({
