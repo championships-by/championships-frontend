@@ -1,11 +1,45 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { participantApi } from "@api";
 import { getUniqueFilters } from "@utils";
 import { Button, Flex, Modal, Table, Typography } from "antd";
 import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 
 function ParticipantsTable({ ParticipantData }) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const deleteParticipantConfirm = (email) => {
+    const hide_participant_request = async () => {
+      const body = JSON.stringify({
+        participant_email: email,
+      });
+
+      await participantApi.setHideParticipant(body);
+    };
+    Modal.confirm({
+      title: "Вы уверены?",
+      content: "Вы уверены что хотите удалить этого участника?",
+      footer: (_, { OkBtn, CancelBtn }) => (
+        <>
+          <OkBtn />
+          <CancelBtn />
+        </>
+      ),
+      okText: "Да",
+      onOk: () => {
+        hide_participant_request();
+      },
+      cancelText: "Отмена",
+    });
+  };
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const changeParticipantData = () => {
+    setIsEditModalOpen(false);
+  };
+
   const columns = [
     {
       title: "ФИО",
@@ -55,41 +89,6 @@ function ParticipantsTable({ ParticipantData }) {
       ),
     },
   ];
-
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  const deleteParticipantConfirm = (email) => {
-    const hide_participant_request = async () => {
-      const body = JSON.stringify({
-        participant_email: email,
-      });
-
-      await participantApi.setHideParticipant(body);
-    };
-    Modal.confirm({
-      title: "Вы уверены?",
-      content: "Вы уверены что хотите удалить этого участника?",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      okText: "Да",
-      onOk: () => {
-        hide_participant_request();
-      },
-      cancelText: "Отмена",
-    });
-  };
-
-  const openEditModal = () => {
-    setIsEditModalOpen(true);
-  };
-
-  const changeParticipantData = () => {
-    setIsEditModalOpen(false);
-  };
 
   return (
     <div>
