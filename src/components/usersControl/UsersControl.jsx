@@ -16,7 +16,6 @@ function UsersControl() {
   if (isLoading) {
     userApi
       .getUsers()
-      .then((response) => response.json())
       .then((data) => setUsers(data))
       .catch(() =>
         message.error("Невозможно получить данные. Обратитесь к администратору")

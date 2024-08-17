@@ -4,10 +4,10 @@ import { Card, List, Tooltip, Typography } from "antd";
 import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { ROUTES } from "@constants";
-import { Locale } from "@constants"
+import { Locale } from "@constants";
 
 function EventsList({ events }) {
-  const data = events.map((event, index) => {
+  const data = events.map(({ event }, index) => {
     const navigate = useNavigate();
     return (
       <Card

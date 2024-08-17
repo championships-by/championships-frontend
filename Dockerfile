@@ -10,4 +10,4 @@ COPY package-lock.json .
 
 RUN npm install
 COPY . .
-CMD ["npm", "run", "build:prod"]
+CMD ["./entrypoint.sh"]

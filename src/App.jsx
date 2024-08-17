@@ -1,20 +1,22 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ROUTER_ROUTES } from "@constants";
 import AdminPanel from "@components/adminPanel/AdminPanel";
-import EventsRegistration from "@components/eventRegistration/EventRegistration";
-import EventSettings from "@components/judgment/eventSettings/EventSettings";
-import Events from "@components/events/Events";
-import UserSettings from "@components/userSettings/UserSettings";
-import UsersControl from "@components/usersControl/UsersControl";
-import Participants from "@components/participants/Participants";
-import NotFound from "@components/notFound/Notfound";
 import Auth from "@components/auth/Auth";
-import Logout from "@components/logout/Logout";
-import Judgment from "@components/judgment/events/JudgmentEvents";
-import Unauthorized from "@components/unauthorized/Unauthorized";
-import GroupStage from "@components/judgment/groupStage/GroupStage";
+import EventsRegistration from "@components/eventRegistration/EventRegistration";
+import Events from "@components/events/Events";
 import Competencies from "@components/judgment/competencies/Competencies";
+import EventSettings from "@components/judgment/eventSettings/EventSettings";
+import EventInformation from "@components/events/EventInformation";
+import Judgment from "@components/judgment/events/JudgmentEvents";
+import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
+import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
+import Logout from "@components/logout/Logout";
+import NotFound from "@components/notFound/Notfound";
+import Participants from "@components/participants/Participants";
+import Unauthorized from "@components/unauthorized/Unauthorized";
+import UserSettings from "@components/userSettings/UserSettings";
 import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
+import UsersControl from "@components/usersControl/UsersControl";
+import { ROUTER_ROUTES } from "@constants";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
@@ -45,18 +47,14 @@ function App() {
             <Route path={ROUTER_ROUTES.EVENTS}>
               <Route index element={<Events />} />
               <Route
-                path={ROUTER_ROUTES.EVENT_DESCRIPTION}
-                element={<EventSettings />}
+                path={ROUTER_ROUTES.EVENTS_DESCRIPTION}
+                element={<EventInformation />}
               />
               <Route
                 path={ROUTER_ROUTES.EVENTS_REGISTRATION}
                 element={<EventsRegistration />}
               />
             </Route>
-            <Route
-              path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
-              element={<GroupStage />}
-            />
             <Route
               path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
               element={<Competencies />}
@@ -70,6 +68,14 @@ function App() {
               <Route
                 path={ROUTER_ROUTES.JUDGMENT_EVENT_SETTINGS}
                 element={<EventSettings />}
+              />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
+                element={<JudgmentGroupStage />}
+              />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
+                element={<TimeMatches />}
               />
             </Route>
           </Route>

@@ -1,0 +1,16 @@
+.extra-footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  margin: 8px 0;
+  gap: 8px;
+
+  > button {
+    width: 100%;
+  }
+}
+.table-time {
+  &__disqualification {
+    cursor: pointer;
+  }
+}

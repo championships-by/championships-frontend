@@ -11,10 +11,10 @@ function CriteriaParametrs() {
 
   return (
     <div className="events__competition-criteria__div">
-      <p>Критерии оценки</p>
-      <p className="events__competition-criteria__div__maxPoints">
-        Укажите максимальное количество баллов: 
-      </p>
+      <Typography.Text>Критерии оценки: </Typography.Text>
+      <Typography.Text className="events__competition-criteria__div__maxPoints">
+        Укажите максимальное количество баллов:
+      </Typography.Text>
       <Form
         name="dynamic_form_nest_item"
         className="events__competition-criteria__form"
@@ -55,8 +55,14 @@ function CriteriaParametrs() {
                         },
                       ]}
                     >
-                      <Input className="events__competition-criteria__inputPoints"/>
-                      <MinusCircleOutlined className="events__competition-criteria__deleteButton" onClick={() => remove(name)} />
+                      <Input
+                        className="events__competition-criteria__inputPoints"
+                        placeholder="Введите максимальное количество баллов"
+                      />
+                      <MinusCircleOutlined
+                        className="events__competition-criteria__deleteButton"
+                        onClick={() => remove(name)}
+                      />
                     </Form.Item>
                   </Col>
                 </Row>

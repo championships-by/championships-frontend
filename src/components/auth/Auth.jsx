@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import { ROUTES } from "@constants";
 import { userApi, authApi } from "@api";
+import { getEncryptedPassword } from "@utils";
 
 function Auth() {
   const [isLoading, setIsLoading] = useState(true);
@@ -40,10 +41,12 @@ function Auth() {
     event.preventDefault();
     setIsFormLoading(true);
 
+    const encrypedPassword = getEncryptedPassword(password, PUBLIC_KEY);
+
     try {
       const response = await authApi.setLogin({
         email,
-        password,
+        password: encrypedPassword,
       });
 
       if (response.ok) {

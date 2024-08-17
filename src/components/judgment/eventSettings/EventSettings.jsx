@@ -66,6 +66,16 @@ const columns = [
   },
 ];
 
+const items = [
+  {
+    title: "Мероприятия",
+    href: "./",
+  },
+  {
+    title: "Настройка мероприятия",
+  },
+];
+
 function EventSettings() { 
   const columns = [
     {
@@ -126,17 +136,36 @@ function EventSettings() {
   useEffect(() => {
     if (!eventID) {
       try {
-        eventApi
-          .getEvent(eventID)
-          .then((response) => response.json())
-          .then((data) => {
-            setEvent(data);
-            form.setFieldsValue({
-              event_name: data?.event_data?.name,
-              event_date: data?.event_data?.date,
-            });
-            setTimeout(() => setIsLoading(false), 300);
-          });
+        eventApi.getEvent(eventID).then((data) => {
+          setEvent(data);
+
+          const { event } = data;
+
+          // event_logo
+          // event_regulation
+          const values = {
+            name: event.name,
+            participant_question_email: event.participant_question_email,
+            event_place: event.event_place,
+            description: event.description,
+            event_level: event.event_level,
+            participation_needs: event.participation_needs,
+            published: event.published,
+            registration: {
+              registration_start_date: event.registration_start_date,
+              registration_finish_date: event.registration_finish_date,
+            },
+            holding: {
+              holding_start_date: event.holding_start_date,
+              holding_finish_date: event.holding_finish_date,
+            },
+          };
+
+          form.setFieldsValue(values);
+          setValues(values);
+
+          setTimeout(() => setIsLoading(false), 300);
+        });
       } catch (error) {
         message.error(
           "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
@@ -147,24 +176,43 @@ function EventSettings() {
     }
   }, [eventID, form]);
 
+  const onClick = async () => {
+    enterLoading(0);
 
-  const update_event_request = async () => {
-    const body = JSON.stringify({
-      id: eventID,
-      new_name: form.getFieldValue("event_name"),
-      new_date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
+    const {
+      name,
+      participant_question_email,
+      event_place,
+      description,
+      event_level,
+      participation_needs,
+      published,
+      registration,
+      holding,
+    } = values;
+
+    const body = new URLSearchParams({
+      event_data: JSON.stringify({
+        id: eventID,
+        name,
+        participant_question_email,
+        event_place,
+        description,
+        event_level,
+        participation_needs,
+        published,
+        registration_start_date: registration.registration_start_date,
+        registration_finish_date: registration.registration_finish_date,
+        holding_start_date: holding.holding_start_date,
+        holding_finish_date: holding.holding_finish_date,
+      }),
     });
 
     eventApi.changeEvent(body);
   };
 
-  const create_event_request = async () => {
-    const body = JSON.stringify({
-      name: form.getFieldValue("event_name"),
-      date: dayjs(form.getFieldValue("event_date")).format("YYYY-MM-DD"),
-    });
-
-    eventApi.setEvent(body);
+  const onValuesChange = (values) => {
+    setValues((oldValues) => ({ ...oldValues, ...values }));
   };
 
   const onFinish = () => {
@@ -193,50 +241,60 @@ function EventSettings() {
     <div>
       <Loader show={isLoading} />
       <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
-      <Breadcrumb
-        items={[
-          {
-            title: "Мероприятия",
-            href: "./",
-          },
-          {
-            title: "Настройка мероприятия",
-          },
-        ]}
-      />
+      <Breadcrumb items={items} />
       <Row gutter={16}>
         <Col xs={24} md={8}>
           <Form
+            name="event"
             form={form}
             layout="vertical"
             requiredMark="optional"
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
+            onValuesChange={onValuesChange}
           >
             <Typography.Title level={3}>Данные мероприятия</Typography.Title>
-            <EventName name="event_name" />
-            <EventLogo name="event_logo" />
-            <EventEmail name="event_email" />
-            <EventPlace name="event_place" />
-            <EventRegulation name="event_regulation" />
-            <EventRegisterDate name="event_register_date" />
-            <EventDate name="event_date" />
-            <EventRegistrationSwitch name="event_registartion" />
-            <EventDescription name="event_description" />
-            <EventLevel name="event_level" />
-            <EventRequirements name="event_requirements" />
+            <EventName name="name" value={values.name} />
+            <EventLogo name="event_logo" value={values.event_logo} />
+            <EventEmail
+              name="participant_question_email"
+              value={values.participant_question_email}
+            />
+            <EventPlace name="event_place" value={values.event_place} />
+            <EventRegulation
+              name="event_regulation"
+              value={values.event_regulation}
+            />
+            <EventRegisterDate
+              name="registration"
+              value={values.registration}
+              onChange={onValuesChange}
+            />
+            <EventDate
+              name="holding"
+              value={values.holding}
+              onChange={onValuesChange}
+            />
+            <EventRegistrationSwitch
+              name="published"
+              value={values.published}
+              onChange={onValuesChange}
+            />
+            <EventDescription name="description" value={values.description} />
+            <EventLevel
+              name="event_level"
+              value={values.event_level}
+              onChange={onValuesChange}
+            />
+            <EventRequirements
+              name="participation_needs"
+              value={values.participation_needs}
+            />
             <Button
               type="primary"
               htmlType="submit"
               loading={loadings[0]}
-              onClick={() => {
-                enterLoading(0);
-                if (!eventID) {
-                  create_event_request();
-                } else {
-                  update_event_request();
-                }
-              }}
+              onClick={onClick}
             >
               Сохранить данные
             </Button>

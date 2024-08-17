@@ -15,12 +15,22 @@ function EventsRegistration() {
   const [dataTeams, setTeams] = useState([]);
   const [dataEvent, setEvent] = useState({});
   const { eventID } = useParams();
+  const items = [
+    {
+      title: "Мероприятия",
+    },
+    {
+      title: dataEvent?.event_data?.name ?? "",
+    },
+    {
+      title: "Регистрация участников",
+    },
+  ];
 
   useEffect(() => {
     if (isLoading) {
       eventApi
         .getEvent(eventID)
-        .then((response) => response.json())
         .then((data) => setEvent(data))
         .catch(() =>
           message.error(
@@ -30,7 +40,6 @@ function EventsRegistration() {
 
       teamApi
         .getTeam()
-        .then((response) => response.json())
         .then((data) => setTeams(data))
         .catch(() =>
           message.error(
@@ -45,19 +54,7 @@ function EventsRegistration() {
     <>
       <Loader show={isLoading} />
       <Typography.Title level={2}>Регистрация участников</Typography.Title>
-      <Breadcrumb
-        items={[
-          {
-            title: "Мероприятия",
-          },
-          {
-            title: dataEvent?.event_data?.name ?? "",
-          },
-          {
-            title: "Регистрация участников",
-          },
-        ]}
-      />
+      <Breadcrumb items={items} />
       <AdminPanelControls>
         <Button type="primary" onClick={() => setIsAddTeamModalOpen(true)}>
           Добавить команду

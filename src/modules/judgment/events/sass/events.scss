@@ -6,13 +6,13 @@
     width: 250px;
   }
   &__competition-criteria {
-    &__row{
+    &__row {
       margin-bottom: 20px;
     }
-    &__deleteButton{
+    &__deleteButton {
       margin-left: 20px;
     }
-    &item{
+    &item {
       flex: 1;
       margin-right: 8;
     }
@@ -31,13 +31,13 @@
       margin-bottom: 50px;
       width: 300px;
     }
-    &__addButton{
+    &__addButton {
       margin-top: 10px;
     }
-    &__space{
+    &__space {
       margin-bottom: 30px;
     }
-    &__inputPoints{
+    &__inputPoints {
       width: 70px;
       margin-left: 125px;
     }
@@ -46,7 +46,8 @@
     &__text {
       font-size: 16px;
     }
-    &__input{
+    &__input {
+      margin-top: 8px;
       width: 505px;
     }
   }
@@ -108,7 +109,7 @@
     }
     &__datepickercontainer {
       margin-top: 0;
-  
+
       &:nth-child(even) {
         margin-top: 15px;
       }
@@ -140,12 +141,11 @@
       margin-left: 2%;
     }
   }
-  &__event-level{
-    &__icon{
+  &__event-level {
+    &__icon {
       width: 40px;
-
     }
-    &__div{
+    &__div {
       display: flex;
     }
   }
