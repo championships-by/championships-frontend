@@ -7,7 +7,7 @@ export const eventApi = {
       },
       redirect: "follow",
       credentials: "include",
-    }),
+    }).then((response) => response.json()),
   getEventWithNominations: ({ limit }) =>
     fetch(`${API_PATH}/event/events_with_nominations?offset=0&limit=${limit}`, {
       method: "GET",
@@ -16,14 +16,14 @@ export const eventApi = {
       },
       redirect: "follow",
       credentials: "include",
-    }),
+    }).then((response) => response.json()),
   changeEvent: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
-    headers.append("Content-Type", "application/json");
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
 
     return fetch(`${API_PATH}/event/event`, {
-      method: "PUT",
+      method: "PATCH",
       headers,
       body,
       redirect: "follow",

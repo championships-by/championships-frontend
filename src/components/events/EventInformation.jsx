@@ -12,8 +12,7 @@ import { LinkOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
-import { changeDateFormat } from "@utils";
-import { getEventLevel } from "@utils";
+import { changeDateFormat, getEventLevel } from "@utils";
 import { yaShareLink } from "@constants";
 import { eventApi } from "@api";
 
@@ -70,19 +69,16 @@ function EventInformation() {
   useEffect(() => {
     if (eventID) {
       try {
-        eventApi
-          .getEvent(eventID)
-          .then((response) => response.json())
-          .then((data) => {
-            setEvent(data.event);
-            setNomination(data.nominations);
+        eventApi.getEvent(eventID).then((data) => {
+          setEvent(data.event);
+          setNomination(data.nominations);
 
-            const script = document.createElement("script");
-            script.src = yaShareLink;
-            script.async = true;
-            document.body.appendChild(script);
-            setTimeout(() => setIsLoading(false), 300);
-          });
+          const script = document.createElement("script");
+          script.src = yaShareLink;
+          script.async = true;
+          document.body.appendChild(script);
+          setTimeout(() => setIsLoading(false), 300);
+        });
       } catch (error) {
         message.error(
           "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
@@ -124,7 +120,7 @@ function EventInformation() {
                 data-limit="0"
                 data-more-button-type="short"
                 data-services="vkontakte,odnoklassniki,telegram,twitter,viber,whatsapp"
-              ></div>
+              />
             </Col>
             <Col flex="1" className="events__event-information__align-right">
               <Typography.Text strong>Дата проведения</Typography.Text>

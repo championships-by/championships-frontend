@@ -24,7 +24,6 @@ function JudgmentEvents() {
     if (isLoading) {
       eventApi
         .getEventWithNominations({ limit: 49 })
-        .then((response) => response.json())
         .then((response) => {
           const formattedDate = response.map((user) => ({
             ...user,

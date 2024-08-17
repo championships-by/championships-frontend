@@ -31,7 +31,6 @@ function EventsRegistration() {
     if (isLoading) {
       eventApi
         .getEvent(eventID)
-        .then((response) => response.json())
         .then((data) => setEvent(data))
         .catch(() =>
           message.error(
@@ -41,7 +40,6 @@ function EventsRegistration() {
 
       teamApi
         .getTeam()
-        .then((response) => response.json())
         .then((data) => setTeams(data))
         .catch(() =>
           message.error(

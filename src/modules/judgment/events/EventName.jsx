@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import { FlagOutlined } from "@ant-design/icons";
 import "./sass/events.scss";
 
-function EventName({ name }) {
+function EventName({ name, value }) {
   return (
     <FormItem
       name={name}
@@ -37,6 +37,7 @@ function EventName({ name }) {
       <Flex vertical>
         <Typography.Text>Название мероприятия</Typography.Text>
         <Input
+          value={value}
           prefix={<FlagOutlined />}
           allowClear
           placeholder="Введите название мероприятия"
