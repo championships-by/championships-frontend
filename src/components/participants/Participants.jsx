@@ -1,6 +1,6 @@
 import { Button, Flex, Typography, Tooltip } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
 import { participantApi } from "@api";
@@ -14,7 +14,8 @@ function Participants() {
     useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [dataParticipants, setParticipants] = useState([]);
-  if (isLoading) {
+
+  const getParticipant = () => {
     participantApi
       .getParticipant()
       .then((data) => setParticipants(data))
@@ -22,7 +23,23 @@ function Participants() {
         message.error("Невозможно получить данные. Обратитесь к администратору")
       )
       .finally(() => setTimeout(() => setIsLoading(false), 300));
-  }
+  };
+
+  const onOk = () => {
+    setIsAddParticipantModalOpen(false);
+
+    getParticipant();
+  };
+
+  const onCancel = () => {
+    setIsAddParticipantModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      getParticipant();
+    }
+  }, [isLoading]);
 
   return (
     <>
@@ -43,12 +60,15 @@ function Participants() {
         </Flex>
       </AdminPanelControls>
 
-      <ParticipantsTable ParticipantData={dataParticipants} />
+      <ParticipantsTable
+        ParticipantData={dataParticipants}
+        getParticipant={getParticipant}
+      />
 
       <ParticipantModal
         isOpen={isAddParticipantModalOpen}
-        onOk={() => setIsAddParticipantModalOpen(false)}
-        onCancel={() => setIsAddParticipantModalOpen(false)}
+        onOk={onOk}
+        onCancel={onCancel}
       />
     </>
   );

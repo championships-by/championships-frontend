@@ -1,11 +1,29 @@
 import React from "react";
 import { DatePicker, Flex, Input, Space, Typography } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
 import FormItem from "antd/es/form/FormItem";
-import "./sass/participant.scss";
 import { Locale } from "@constants";
 
-function ParticipantBirthdayInput() {
+import "./sass/participant.scss";
+
+const rules = [
+  {
+    type: "object",
+    required: true,
+    message: "Пожалуйста, выберите дату рождения",
+  },
+];
+
+function ParticipantBirthdayInput({ name, value, onChange: onChangeBase }) {
+  const onChange = (val) => {
+    const date = dayjs(val).toISOString();
+
+    onChangeBase({
+      [name]: date,
+    });
+  };
+
   return (
     <>
       <Typography.Text>Дата рождения</Typography.Text>
@@ -17,16 +35,10 @@ function ParticipantBirthdayInput() {
             className="participant__birthday-input__input"
           />
           <FormItem
-            name="event_date"
+            name={name}
             hasFeedback
             validateFirst
-            rules={[
-              {
-                type: "object",
-                required: true,
-                message: "Пожалуйста, выбирите дату рождения",
-              },
-            ]}
+            rules={rules}
             className="participant__birthday-input__formitem"
           >
             <DatePicker
@@ -34,6 +46,8 @@ function ParticipantBirthdayInput() {
               className="participant__birthday-input__datepicker"
               placeholder="Выберите дату рождения"
               locale={Locale}
+              value={dayjs(value)}
+              onChange={(value) => onChange(value)}
             />
           </FormItem>
         </Space.Compact>

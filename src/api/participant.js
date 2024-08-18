@@ -1,3 +1,5 @@
+import { instance } from ".";
+
 export const participantApi = {
   getParticipant: () =>
     fetch(`${API_PATH}/participant/participant?offset=0&limit=10`, {
@@ -22,16 +24,9 @@ export const participantApi = {
     });
   },
   setParticipant: (body) => {
-    const headers = new Headers();
-    headers.append("accept", "application/json");
-    headers.append("Content-Type", "application/json");
-
-    return fetch(`${API_PATH}/participant/participant`, {
-      method: "POST",
-      headers,
-      body,
-      redirect: "follow",
-      credentials: "include",
-    });
+    return instance.post("/participant/participant", body);
+  },
+  changeParticipant: (body) => {
+    return instance.put("/participant/participant", body);
   },
 };
