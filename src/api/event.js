@@ -1,3 +1,5 @@
+import { instance } from ".";
+
 export const eventApi = {
   getEvent: (eventID) =>
     fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
@@ -44,16 +46,10 @@ export const eventApi = {
     });
   },
   setEvent: (body) => {
-    const headers = new Headers();
-    headers.append("accept", "application/json");
-    headers.append("Content-Type", "application/json");
-
-    return fetch(`${API_PATH}/event/event`, {
-      method: "POST",
-      headers,
-      body,
-      redirect: "follow",
-      credentials: "include",
+    return instance.post("/event/event", body, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
   },
 };
