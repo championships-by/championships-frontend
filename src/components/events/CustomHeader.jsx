@@ -12,6 +12,7 @@ export const CustomHeader = ({ value, type, onChange, onTypeChange }) => {
   const month = value.month();
 
   const years = Array.from({ length: 10 }, (_, i) => value.year() + i - 5);
+
   return (
     <div className="customCalendar__header">
       <Select

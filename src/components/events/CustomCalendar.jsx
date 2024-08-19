@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import dayLocaleData from "dayjs/plugin/localeData";
 import { CustomHeader } from "./CustomHeader";
+
 dayjs.extend(dayLocaleData);
 
 export const CustomCalendar = () => {

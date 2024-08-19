@@ -3,6 +3,21 @@ import UserModal from "@components/usersControl/UserModal";
 import { Button, Flex, Modal, Table, Typography } from "antd";
 import { useState } from "react";
 
+const filters = [
+  {
+    text: "Админ",
+    value: "admin",
+  },
+  {
+    text: "Судейство",
+    value: "judge",
+  },
+  {
+    text: "Специалист",
+    value: "specialist",
+  },
+];
+
 function UsersTable({ usersData }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -65,6 +80,7 @@ function UsersTable({ usersData }) {
       sorter: (a, b) => {
         const firstFullName = `${a.second_name} ${a.first_name} ${a.third_name}`;
         const secondFullName = `${b.second_name} ${b.first_name} ${b.third_name}`;
+
         return firstFullName.localeCompare(secondFullName);
       },
     },
@@ -81,20 +97,7 @@ function UsersTable({ usersData }) {
         ) : (
           <Typography.Text />
         ),
-      filters: [
-        {
-          text: "Админ",
-          value: "admin",
-        },
-        {
-          text: "Судейство",
-          value: "judge",
-        },
-        {
-          text: "Специалист",
-          value: "specialist",
-        },
-      ],
+      filters: filters,
       onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
     {
