@@ -5,7 +5,10 @@ import { FlagOutlined } from "@ant-design/icons";
 
 import "./sass/events.scss";
 
-function CompitationNameInput() {
+function CompitationNameInput({ value, onInputChange }) {
+  const handleChange = (event) => {
+    onInputChange(event.target.value);
+  };
   return (
     <div className="events_compitation-name__div">
       <Typography.Text className="events__compitation-name__text">
@@ -34,6 +37,9 @@ function CompitationNameInput() {
                 placeholder="Введите название"
                 maxLength={30}
                 prefix={<FlagOutlined />}
+                value={value}
+                onChange={handleChange}
+                onBlur={onInputChange(value)}
               />
               <Typography.Text type="secondary">
                 Пример: Робофутбол

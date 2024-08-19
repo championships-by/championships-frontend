@@ -14,6 +14,7 @@ import {
   EditOutlined,
   TrophyOutlined,
   TeamOutlined,
+  LinkOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
@@ -47,26 +48,21 @@ const columns = [
     dataIndex: "type",
     key: "type",
   },
-  //Колонка пока закоменчена,потому что пока нет эндпоинта,который бы был с регламентом
-  // {
-  //   title: "Регламент",
-  //   key: "regulations",
-  //   render: () => (
-  //     <Space>
-  //       <Button type="text" icon={<LinkOutlined />} />
-  //     </Space>
-  //   ),
-  // },
+  {
+    title: "Регламент",
+    key: "regulations",
+    render: () => (
+      <Space>
+        <Button type="text" icon={<LinkOutlined />} />
+      </Space>
+    ),
+  },
   {
     title: "Действия",
     key: "action",
     render: () => (
       <Space>
-        <Button
-          type="text"
-          icon={<EditOutlined />}
-          onClick={() => ShowModal()}
-        />
+        <Button type="text" icon={<EditOutlined />} onClick={showModal} />
         <Button type="text" icon={<TrophyOutlined />} />
         <Button type="text" icon={<TeamOutlined />} />
         <Button type="text" icon={<DeleteOutlined />} />
@@ -97,26 +93,21 @@ function EventSettings() {
       dataIndex: "type",
       key: "type",
     },
-    //Колонка пока закоменчена,потому что пока нет эндпоинта,который бы был с регламентом
-    // {
-    //   title: "Регламент",
-    //   key: "regulations",
-    //   render: () => (
-    //     <Space>
-    //       <Button type="text" icon={<LinkOutlined />} />
-    //     </Space>
-    //   ),
-    // },
+    {
+      title: "Регламент",
+      key: "regulations",
+      render: () => (
+        <Space>
+          <Button type="text" icon={<LinkOutlined />} />
+        </Space>
+      ),
+    },
     {
       title: "Действия",
       key: "action",
       render: () => (
         <Space>
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => openEditModal()}
-          />
+          <Button type="text" icon={<EditOutlined />} onClick={openEditModal} />
           <Button type="text" icon={<TrophyOutlined />} />
           <Button type="text" icon={<TeamOutlined />} />
           <Button type="text" icon={<DeleteOutlined />} />
@@ -130,6 +121,7 @@ function EventSettings() {
   const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
     useState(false);
   const [dataEvent, setEvent] = useState({});
+  const [values, setValues] = useState({});
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
@@ -145,7 +137,6 @@ function EventSettings() {
       .then((response) => setDataNomination(response.data));
   });
 
-  //Я пока хз что делать с этим и для чего этот запрос кроме загрузки страницы
   useEffect(() => {
     if (!eventID) {
       try {
@@ -250,6 +241,7 @@ function EventSettings() {
       });
     }, 6000);
   };
+
   return (
     <div>
       <Loader show={isLoading} />
@@ -341,7 +333,7 @@ function EventSettings() {
         onCancel={() => setIsAddCompitationModalOpen(false)}
       />
       <CompitationModal
-        name="Редактировать компитенцию"
+        name="Редактировать компетенцию"
         isOpen={isEditModalOpen}
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}

@@ -8,7 +8,7 @@ import EventTable from "@components/judgment/events/JudgmentEventsTable";
 import { eventApi } from "@api";
 import EventCreateModal from "./EventCreateModal";
 
-function ChangeDateFormat(date) {
+function changeDateFormat(date) {
   const formattedDate = new Date(date);
 
   const month = formattedDate.getMonth() + 1;

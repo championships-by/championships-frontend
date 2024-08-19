@@ -1,20 +1,20 @@
 import React from "react";
 import { Form, Row, Col, Button, Input, Typography } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import "./sass/events.scss";
 
+const defaultCriteria = [
+  { criterion: "", maxPoints: "" },
+  { criterion: "", maxPoints: "" },
+  { criterion: "", maxPoints: "" },
+];
 function CriteriaParametrs() {
-  const defaultCriteria = [
-    { criterion: "", maxPoints: "" },
-    { criterion: "", maxPoints: "" },
-    { criterion: "", maxPoints: "" },
-  ];
-
   return (
     <div className="events__competition-criteria__div">
-      <Typography.Text>Критерии оценки: </Typography.Text>
-      <Typography.Text className="events__competition-criteria__div__maxPoints">
+      <p>Критерии оценки</p>
+      <p className="events__competition-criteria__div__maxPoints">
         Укажите максимальное количество баллов:
-      </Typography.Text>
+      </p>
       <Form
         name="dynamic_form_nest_item"
         className="events__competition-criteria__form"
@@ -58,10 +58,7 @@ function CriteriaParametrs() {
                         },
                       ]}
                     >
-                      <Input
-                        className="events__competition-criteria__inputPoints"
-                        placeholder="Введите максимальное количество баллов"
-                      />
+                      <Input className="events__competition-criteria__inputPoints" />
                       <MinusCircleOutlined
                         className="events__competition-criteria__deleteButton"
                         onClick={() => remove(name)}

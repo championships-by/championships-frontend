@@ -1,4 +1,5 @@
 import axios from "axios";
+import { instance } from "./index";
 
 export const userApi = {
   getProfile: () =>
@@ -43,15 +44,7 @@ export const userApi = {
       credentials: "include",
     });
   },
-  getJudges: ({ limit }) =>
-    axios.get(`${API_PATH}/user/judges`, {
-      params: {
-        offset: 0,
-        limit: limit,
-      },
-      headers: {
-        Accept: "application/json",
-      },
-      credentials: "include",
-    }),
+  getJudges: ({ limit }) => {
+    return instance.get(`/user/judges?offset=0&limit=${limit}`);
+  },
 };

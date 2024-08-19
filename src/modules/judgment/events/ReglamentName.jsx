@@ -3,19 +3,17 @@ import { Typography, Input, Form, Space } from "antd";
 import { LinkOutlined } from "@ant-design/icons";
 const { Text } = Typography;
 
-function ReglamentName() {
-  const [inputValue, setInputValue] = useState("");
+function ReglamentName({ value, onInputChange }) {
   const [hasHttp, setHasHttp] = useState(false);
 
   const handleChange = (e) => {
     const { value } = e.target;
-    setInputValue(value);
-
-    if (!value.startsWith("http://") && !value.startsWith("https://")) {
-      setHasHttp(false);
-    } else {
+    if (value.startsWith("http://") || value.startsWith("https://")) {
       setHasHttp(true);
+    } else {
+      setHasHttp(false);
     }
+    onInputChange(value);
   };
 
   return (
@@ -32,7 +30,7 @@ function ReglamentName() {
           validator: (_, value) => {
             if (!hasHttp) {
               return Promise.reject(
-                new Error("Ссылка не соответствует допустимому шаблону")
+                new Error("Ссылка должна начинаться с 'http://' или 'https://'")
               );
             }
             return Promise.resolve();
@@ -47,14 +45,14 @@ function ReglamentName() {
         <Input
           prefix={<LinkOutlined />}
           placeholder="Вставьте ссылку на регламент"
-          value={inputValue}
+          value={value}
           onChange={handleChange}
           className="events__competition-reglament__input"
         />
         <Typography.Text type="secondary">
           Пример: http://google.com или https://google.com
         </Typography.Text>
-        <Text type="danger">ВНИМАНИЕ!Проверьте права доступа к файлу</Text>
+        <Text type="danger">ВНИМАНИЕ! Проверьте права доступа к файлу</Text>
       </Space>
     </Form.Item>
   );

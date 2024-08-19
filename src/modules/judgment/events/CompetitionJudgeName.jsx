@@ -19,9 +19,7 @@ function CompetitionType() {
   const { eventID } = useParams();
 
   useEffect(() => {
-    competenciesApi.getCompetenciesEventData(eventID).then((response) => {
-      console.log(response.data);
-    });
+    competenciesApi.getCompetenciesEventData(eventID).then((response) => {});
   }, [eventID]);
 
   useEffect(() => {

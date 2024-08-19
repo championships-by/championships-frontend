@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Typography, Space, Select, Input, Flex } from "antd";
-import GroupStageParametrs from "./CompetitionGroupStageParametrs";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 import { DribbbleOutlined } from "@ant-design/icons";
-
 import "./sass/events.scss";
 
 const options = [
@@ -15,10 +13,6 @@ const options = [
   {
     value: "criteria",
     label: "По критериям",
-  },
-  {
-    value: "groupStage",
-    label: "Групповой этап",
   },
   {
     value: "playoffs",
@@ -34,10 +28,8 @@ function CompetitionType() {
   };
 
   const settingsComponents = {
-    groupStage: <GroupStageParametrs />,
     criteria: <CriteriaParametrs />,
     time: <TimeParametrs />,
-    playoffs: <GroupStageParametrs />,
   };
 
   return (

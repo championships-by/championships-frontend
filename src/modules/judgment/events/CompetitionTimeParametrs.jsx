@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Slider, InputNumber, Space } from "antd";
+import "./sass/events.scss";
 
 function TimeParametrs() {
   const [value, setValue] = useState(1);
