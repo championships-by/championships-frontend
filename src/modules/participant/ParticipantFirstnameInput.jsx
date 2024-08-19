@@ -4,7 +4,6 @@ import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 
 function ParticipantFirstnameInput({ name, value }) {
-  console.log(value);
   return (
     <FormItem
       name={name}
