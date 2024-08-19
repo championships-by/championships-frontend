@@ -1,7 +1,22 @@
-import { Table, Flex, Button, Typography, Modal } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
+import { Button, Flex, Modal, Table, Typography } from "antd";
 import { useState } from "react";
+
+const filters = [
+  {
+    text: "Админ",
+    value: "admin",
+  },
+  {
+    text: "Судейство",
+    value: "judge",
+  },
+  {
+    text: "Специалист",
+    value: "specialist",
+  },
+];
 
 function UsersTable({ usersData }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -62,6 +77,12 @@ function UsersTable({ usersData }) {
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
       ),
+      sorter: (a, b) => {
+        const firstFullName = `${a.second_name} ${a.first_name} ${a.third_name}`;
+        const secondFullName = `${b.second_name} ${b.first_name} ${b.third_name}`;
+
+        return firstFullName.localeCompare(secondFullName);
+      },
     },
     {
       title: "Роль",
@@ -76,6 +97,8 @@ function UsersTable({ usersData }) {
         ) : (
           <Typography.Text />
         ),
+      filters: filters,
+      onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
     {
       title: "Действия",
