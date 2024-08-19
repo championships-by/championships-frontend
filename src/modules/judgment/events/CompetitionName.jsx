@@ -5,26 +5,25 @@ import { FlagOutlined } from "@ant-design/icons";
 
 import "./sass/events.scss";
 
-function CompitationNameInput() {
+function CompitationNameInput({ value, onInputChange }) {
+  const handleChange = (event) => {
+    onInputChange(event.target.value);
+  };
   return (
     <div className="events_compitation-name__div">
-      <Typography.Text className="events_compitation-name__text">
-        Компетенция
+      <Typography.Text className="events__compitation-name__text">
+        Название компетенции
       </Typography.Text>
       <Flex>
         <Space.Compact className="events__compitation-name__space">
-          <Input
-            prefix={<FlagOutlined />}
-            className="events__compitation-name__image"
-            disabled
-          />
           <FormItem
+            name="compitation"
             hasFeedback
             validateFirst
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, выберите мероприятие",
+                message: "Пожалуйста, введите название компетенции",
               },
               {
                 min: 5,
@@ -37,6 +36,10 @@ function CompitationNameInput() {
                 className="events__compitation-name__input"
                 placeholder="Введите название"
                 maxLength={30}
+                prefix={<FlagOutlined />}
+                value={value}
+                onChange={handleChange}
+                onBlur={onInputChange(value)}
               />
               <Typography.Text type="secondary">
                 Пример: Робофутбол
