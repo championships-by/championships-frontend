@@ -17,16 +17,6 @@ function AdminPanel() {
     if (isLoading) {
       userApi
         .getProfile()
-        .then((response) => {
-          if (response.status === RESPONSE_STATUS.STATUS_OK) {
-            return response.json();
-          }
-          if (response.status === RESPONSE_STATUS.STATUS_UNAUTHORIZED) {
-            navigate("/401", { replace: true });
-          } else {
-            throw new Error(`Error ${response.status}`);
-          }
-        })
         .then((user) => {
           setRole(user.role);
           setIsLoading(false);

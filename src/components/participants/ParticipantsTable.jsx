@@ -4,7 +4,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ParticipantModal from "./ParticipantModal";
 import { participantApi } from "../../api";
 
-function ParticipantsTable({ ParticipantData }) {
+function ParticipantsTable({ ParticipantData, getParticipant }) {
   const columns = [
     {
       title: "ФИО",
@@ -26,19 +26,28 @@ function ParticipantsTable({ ParticipantData }) {
     {
       title: "Действия",
       key: "action",
-      render: ({ email }) => (
-        <Flex>
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => openEditModal()}
-          />
-        </Flex>
-      ),
+      render: (data) => {
+        const { email } = data;
+
+        return (
+          <Flex>
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={() => openEditModal(data)}
+            />
+            <Button
+              type="text"
+              icon={<DeleteOutlined />}
+              onClick={() => deleteParticipantConfirm(email)}
+            />
+          </Flex>
+        );
+      },
     },
   ];
 
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editModalData, setEditModalData] = useState(null);
 
   const deleteParticipantConfirm = (email) => {
     const hide_participant_request = async () => {
@@ -65,12 +74,18 @@ function ParticipantsTable({ ParticipantData }) {
     });
   };
 
-  const openEditModal = () => {
-    setIsEditModalOpen(true);
+  const onOk = () => {
+    setEditModalData(null);
+
+    getParticipant();
   };
 
-  const changeParticipantData = () => {
-    setIsEditModalOpen(false);
+  const onCancel = () => {
+    setEditModalData(null);
+  };
+
+  const openEditModal = (data) => {
+    setEditModalData(data);
   };
 
   return (
@@ -78,9 +93,11 @@ function ParticipantsTable({ ParticipantData }) {
       <Table dataSource={ParticipantData} columns={columns} />
 
       <ParticipantModal
-        isOpen={isEditModalOpen}
-        onOk={() => changeParticipantData()}
-        onCancel={() => setIsEditModalOpen(false)}
+        isOpen={Boolean(editModalData)}
+        data={editModalData}
+        onOk={onOk}
+        onCancel={onCancel}
+        isEdit
       />
     </div>
   );

@@ -3,7 +3,7 @@ import { Flex, Input, Typography } from "antd";
 import { BankOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 
-function ParticipantOrganizationInput({ name }) {
+function ParticipantOrganizationInput({ name, value }) {
   return (
     <FormItem
       name={name}
@@ -25,6 +25,7 @@ function ParticipantOrganizationInput({ name }) {
         <Input
           prefix={<BankOutlined />}
           placeholder="Введите учреждение образования"
+          value={value}
         />
         <Typography.Text type="secondary">
           Пример: ГУО "Гимназия-колледж искусств"

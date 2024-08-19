@@ -2,7 +2,7 @@ import { Flex, Input, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 
-function ParticipantLastnameInput({ name }) {
+function ParticipantLastnameInput({ name, value }) {
   return (
     <FormItem
       name={name}
@@ -23,6 +23,7 @@ function ParticipantLastnameInput({ name }) {
       <Flex vertical>
         <Typography.Text>Фамилия</Typography.Text>
         <Input
+          value={value}
           prefix={<UserOutlined />}
           allowClear
           placeholder="Введите фамилию"
