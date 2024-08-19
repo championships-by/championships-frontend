@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Typography, Input, Form, Space } from "antd"; 
-import {LinkOutlined } from "@ant-design/icons";
-const {Text} = Typography
+import { Typography, Input, Form, Space } from "antd";
+import { LinkOutlined } from "@ant-design/icons";
+const { Text } = Typography;
 
 function ReglamentName() {
   const [inputValue, setInputValue] = useState("");
@@ -41,9 +41,11 @@ function ReglamentName() {
       ]}
     >
       <Space direction="vertical" size={2}>
-        <Typography.Text className="events__competition-reglament__text">Регламент</Typography.Text>
+        <Typography.Text className="events__competition-reglament__text">
+          Регламент
+        </Typography.Text>
         <Input
-          prefix={<LinkOutlined/>}
+          prefix={<LinkOutlined />}
           placeholder="Вставьте ссылку на регламент"
           value={inputValue}
           onChange={handleChange}
@@ -52,9 +54,7 @@ function ReglamentName() {
         <Typography.Text type="secondary">
           Пример: http://google.com или https://google.com
         </Typography.Text>
-        <Text  type="danger">
-          ВНИМАНИЕ!Проверьте права доступа к файлу
-        </Text>
+        <Text type="danger">ВНИМАНИЕ!Проверьте права доступа к файлу</Text>
       </Space>
     </Form.Item>
   );

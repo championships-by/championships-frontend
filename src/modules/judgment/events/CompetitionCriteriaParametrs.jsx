@@ -4,9 +4,9 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 function CriteriaParametrs() {
   const defaultCriteria = [
-    { criterion: '', maxPoints: '' },
-    { criterion: '', maxPoints: '' },
-    { criterion: '', maxPoints: '' },
+    { criterion: "", maxPoints: "" },
+    { criterion: "", maxPoints: "" },
+    { criterion: "", maxPoints: "" },
   ];
 
   return (
@@ -19,7 +19,7 @@ function CriteriaParametrs() {
         name="dynamic_form_nest_item"
         className="events__competition-criteria__form"
         autoComplete="off"
-        initialValues={{ criteria: defaultCriteria }} 
+        initialValues={{ criteria: defaultCriteria }}
       >
         <Form.List name="criteria">
           {(fields, { add, remove }) => (
@@ -39,7 +39,10 @@ function CriteriaParametrs() {
                         },
                       ]}
                     >
-                      <Input className="events__competition-criteria__input" placeholder="Введите критерий" />
+                      <Input
+                        className="events__competition-criteria__input"
+                        placeholder="Введите критерий"
+                      />
                     </Form.Item>
                   </Col>
                   <Col span={10}>

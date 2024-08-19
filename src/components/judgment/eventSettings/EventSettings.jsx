@@ -9,7 +9,12 @@ import {
   Form,
   Space,
 } from "antd";
-import { DeleteOutlined, EditOutlined, TrophyOutlined,TeamOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  TrophyOutlined,
+  TeamOutlined,
+} from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -57,7 +62,11 @@ const columns = [
     key: "action",
     render: () => (
       <Space>
-        <Button type="text" icon={<EditOutlined />} onClick={() => ShowModal()} />
+        <Button
+          type="text"
+          icon={<EditOutlined />}
+          onClick={() => ShowModal()}
+        />
         <Button type="text" icon={<TrophyOutlined />} />
         <Button type="text" icon={<TeamOutlined />} />
         <Button type="text" icon={<DeleteOutlined />} />
@@ -76,7 +85,7 @@ const items = [
   },
 ];
 
-function EventSettings() { 
+function EventSettings() {
   const columns = [
     {
       title: "Название компетенции",
@@ -103,7 +112,11 @@ function EventSettings() {
       key: "action",
       render: () => (
         <Space>
-          <Button type="text" icon={<EditOutlined />} onClick={() => openEditModal()}/>
+          <Button
+            type="text"
+            icon={<EditOutlined />}
+            onClick={() => openEditModal()}
+          />
           <Button type="text" icon={<TrophyOutlined />} />
           <Button type="text" icon={<TeamOutlined />} />
           <Button type="text" icon={<DeleteOutlined />} />
@@ -111,26 +124,26 @@ function EventSettings() {
       ),
     },
   ];
-  
+
   const [isLoading, setIsLoading] = useState(true);
   const [loadings, setLoadings] = useState([]);
   const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
     useState(false);
   const [dataEvent, setEvent] = useState({});
-  const [ isEditModalOpen,setIsEditModalOpen ] = useState(false)
-  const [dataNomination, setDataNomination] = useState([])
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
   const [form] = Form.useForm();
 
   const openEditModal = () => {
-    setIsEditModalOpen(true)
-  }
+    setIsEditModalOpen(true);
+  };
 
   useEffect(() => {
     competenciesApi
       .getCompetenciesEventData(eventID)
-      .then((response) => setDataNomination(response.data))
-  })
+      .then((response) => setDataNomination(response.data));
+  });
 
   //Я пока хз что делать с этим и для чего этот запрос кроме загрузки страницы
   useEffect(() => {
@@ -314,7 +327,11 @@ function EventSettings() {
           >
             Добавить компетенцию
           </Button>
-          <Table columns={columns} dataSource={dataNomination} locale={{emptyText: "Нет данных"}}/>
+          <Table
+            columns={columns}
+            dataSource={dataNomination}
+            locale={{ emptyText: "Нет данных" }}
+          />
         </Col>
       </Row>
       <CompitationModal
@@ -324,12 +341,11 @@ function EventSettings() {
         onCancel={() => setIsAddCompitationModalOpen(false)}
       />
       <CompitationModal
-      name="Редактировать компитенцию"
-      isOpen={isEditModalOpen}
-      onOk={() => setIsEditModalOpen(false)}
-      onCancel={() => setIsEditModalOpen(false)}
+        name="Редактировать компитенцию"
+        isOpen={isEditModalOpen}
+        onOk={() => setIsEditModalOpen(false)}
+        onCancel={() => setIsEditModalOpen(false)}
       />
-      
     </div>
   );
 }

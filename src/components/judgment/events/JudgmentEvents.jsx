@@ -9,12 +9,18 @@ import { eventApi } from "@api";
 import EventCreateModal from "./EventCreateModal";
 
 function ChangeDateFormat(date) {
-  const formattedDate = new Date(date)
+  const formattedDate = new Date(date);
 
-  const month = formattedDate.getMonth() + 1
-  const formattedMonth = String(month).padStart(2,'0')
+  const month = formattedDate.getMonth() + 1;
+  const formattedMonth = String(month).padStart(2, "0");
 
-  return formattedDate.getDate() + '.' + formattedMonth + '.' + formattedDate.getFullYear()
+  return (
+    formattedDate.getDate() +
+    "." +
+    formattedMonth +
+    "." +
+    formattedDate.getFullYear()
+  );
 }
 
 function JudgmentEvents() {
