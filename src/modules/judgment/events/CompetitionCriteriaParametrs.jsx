@@ -1,71 +1,66 @@
 import React from "react";
-import { Form, Row, Col, Button, Input, Typography } from "antd";
+import { Form, Space, Button, Input, Typography } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import "./sass/events.scss";
 
-const defaultCriteria = [
-  { criterion: "", maxPoints: "" },
-  { criterion: "", maxPoints: "" },
-  { criterion: "", maxPoints: "" },
-];
 function CriteriaParametrs() {
   return (
     <div className="events__competition-criteria__div">
-      <p>Критерии оценки</p>
-      <p className="events__competition-criteria__div__maxPoints">
-        Укажите максимальное количество баллов:
-      </p>
       <Form
         name="dynamic_form_nest_item"
         className="events__competition-criteria__form"
         autoComplete="off"
-        initialValues={{ criteria: defaultCriteria }}
       >
         <Form.List name="criteria">
           {(fields, { add, remove }) => (
             <>
+              {fields.length > 0 && (
+                <>
+                  <Typography.Text>Критерии оценки:</Typography.Text>
+                  <Typography.Text className="events__competition-criteria__maxPoints">
+                    Максимальное количество баллов
+                  </Typography.Text>
+                  <br />
+                </>
+              )}
               {fields.map(({ key, name, fieldKey, ...restField }) => (
-                <Row key={key} className="events__competition-criteria__row">
-                  <Col span={10}>
-                    <Form.Item
-                      {...restField}
-                      className="events__competition-criteria__item"
-                      name={[name, "criterion"]}
-                      fieldKey={[fieldKey, "criterion"]}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Не ввели критерий",
-                        },
-                      ]}
-                    >
-                      <Input
-                        className="events__competition-criteria__input"
-                        placeholder="Введите критерий"
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={10}>
-                    <Form.Item
-                      {...restField}
-                      name={[name, "maxPoints"]}
-                      fieldKey={[fieldKey, "maxPoints"]}
-                      className="events__competition-criteria__item"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Не ввели максимальное количество баллов",
-                        },
-                      ]}
-                    >
-                      <Input className="events__competition-criteria__inputPoints" />
-                      <MinusCircleOutlined
-                        className="events__competition-criteria__deleteButton"
-                        onClick={() => remove(name)}
-                      />
-                    </Form.Item>
-                  </Col>
-                </Row>
+                <Space
+                  key={key}
+                  align="baseline"
+                  className="events__competition-criteria__space"
+                >
+                  <Form.Item
+                    {...restField}
+                    className="events__competition-criteria__item"
+                    name={[name, "criterion"]}
+                    fieldKey={[fieldKey, "criterion"]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Не ввели критерий",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Введите критерий"
+                      className="events__competition-criteria__input"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[name, "maxPoints"]}
+                    fieldKey={[fieldKey, "maxPoints"]}
+                    className="events__competition-criteria__item"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Не ввели количество баллов",
+                      },
+                    ]}
+                  >
+                    <Input className="events__competition-criteria__inputPoints" />
+                  </Form.Item>
+                  <MinusCircleOutlined onClick={() => remove(name)} />
+                </Space>
               ))}
               <Form.Item>
                 <Button

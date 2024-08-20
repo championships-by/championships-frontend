@@ -12,20 +12,16 @@
     &__deleteButton {
       margin-left: 20px;
     }
-    &item {
+    &__item {
       flex: 1;
       margin-right: 8;
     }
     &__div {
-      &__header {
-        margin-bottom: 16px;
-      }
-      &__maxPoints {
-        padding-left: 350px;
-        margin-bottom: 8px;
-      }
       margin-top: 10px;
       margin-bottom: 10px;
+    }
+    &__maxPoints {
+      margin-left: 210px;
     }
     &__input {
       margin-bottom: 50px;
@@ -38,8 +34,8 @@
       margin-bottom: 30px;
     }
     &__inputPoints {
-      width: 70px;
-      margin-left: 125px;
+      width: 100px;
+      margin-left: 20px;
     }
   }
   &__competition-reglament {
@@ -47,6 +43,7 @@
       font-size: 16px;
     }
     &__input {
+      margin-top: 8px;
       width: 505px;
     }
   }
@@ -54,17 +51,20 @@
     &__text {
       font-size: 16px;
     }
-    &__select {
-      width: 465px;
-    }
     &__input {
       width: 40px;
+      height: 35px;
+      margin-top: 10px;
+    }
+    &__name {
+      width: 500px;
+    }
+    &__select {
+      width: 465px;
+      margin-top: 10px;
     }
   }
   &__competition-type {
-    &__icon {
-      width: 40px;
-    }
     &__div {
       margin-top: 30px;
     }
@@ -72,7 +72,8 @@
       width: 100%;
     }
     &__name {
-      width: 465px;
+      width: 505px;
+      margin-top: 10px;
     }
     &__text {
       font-size: 16px;
@@ -88,7 +89,7 @@
       border: none;
     }
     &__input {
-      width: 505px;
+      width: 250%;
     }
     &__div {
       margin-bottom: 24px;
@@ -98,7 +99,6 @@
     }
     &__text {
       font-size: 16px;
-      margin-top: 20px;
     }
   }
   &__event-date {

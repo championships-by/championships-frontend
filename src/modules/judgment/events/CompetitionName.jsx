@@ -2,7 +2,6 @@ import React from "react";
 import FormItem from "antd/es/form/FormItem";
 import { Flex, Input, Space, Typography } from "antd";
 import { FlagOutlined } from "@ant-design/icons";
-
 import "./sass/events.scss";
 
 function CompitationNameInput({ value, onInputChange }) {
