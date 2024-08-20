@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Typography, Space, Select } from "antd";
+import { Typography, Space, Select, Input, Flex } from "antd";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 import { DribbbleOutlined } from "@ant-design/icons";
@@ -30,7 +30,6 @@ function CompetitionType() {
   const settingsComponents = {
     criteria: <CriteriaParametrs />,
     time: <TimeParametrs />,
-    playoffs: null,
   };
 
   return (
