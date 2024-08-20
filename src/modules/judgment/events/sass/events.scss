@@ -12,20 +12,24 @@
     &__deleteButton {
       margin-left: 20px;
     }
-    &__item {
+    &item {
       flex: 1;
       margin-right: 8;
     }
     &__div {
+      &__header {
+        margin-bottom: 16px;
+      }
+      &__maxPoints {
+        padding-left: 350px;
+        margin-bottom: 8px;
+      }
       margin-top: 10px;
       margin-bottom: 10px;
     }
-    &__maxPoints {
-      margin-left: 360px;
-    }
     &__input {
       margin-bottom: 50px;
-      width: 450px;
+      width: 300px;
     }
     &__addButton {
       margin-top: 10px;
@@ -34,8 +38,8 @@
       margin-bottom: 30px;
     }
     &__inputPoints {
-      width: 100px;
-      margin-left: 20px;
+      width: 70px;
+      margin-left: 125px;
     }
   }
   &__competition-reglament {
