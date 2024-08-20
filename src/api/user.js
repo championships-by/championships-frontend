@@ -1,3 +1,6 @@
+import axios from "axios";
+import { instance } from "./index";
+
 export const userApi = {
   getProfile: () =>
     fetch(`${API_PATH}/user/profile`, {
@@ -40,5 +43,8 @@ export const userApi = {
       redirect: "follow",
       credentials: "include",
     });
+  },
+  getJudges: ({ limit }) => {
+    return instance.get(`/user/judges?offset=0&limit=${limit}`);
   },
 };

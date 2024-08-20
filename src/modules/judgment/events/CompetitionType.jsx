@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Typography, Space, Select } from "antd";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
-
+import { DribbbleOutlined } from "@ant-design/icons";
 import "./sass/events.scss";
 
 const options = [
@@ -38,15 +38,22 @@ function CompetitionType() {
       <Typography.Text className="events__competition-type__text">
         Тип соревнований
       </Typography.Text>
-      <Space direction="vertical" className="events__competition-type__space">
-        <Select
-          placeholder="Выберите тип соревнования"
-          options={options}
-          className="events__competition-type__name"
-          onChange={handleChange}
-        />
-        {selectedValue && settingsComponents[selectedValue]}
-      </Space>
+      <Flex>
+        <Space.Compact className="events__competition-type__space">
+          <Input
+            prefix={<DribbbleOutlined />}
+            className="events__competition-type__icon"
+            disabled
+          />
+          <Select
+            placeholder="Выберите тип соревнования"
+            options={options}
+            className="events__competition-type__name"
+            onChange={handleChange}
+          />
+          {selectedValue && settingsComponents[selectedValue]}
+        </Space.Compact>
+      </Flex>
     </div>
   );
 }

@@ -8,10 +8,19 @@ import EventTable from "@components/judgment/events/JudgmentEventsTable";
 import { eventApi } from "@api";
 import EventCreateModal from "./EventCreateModal";
 
-function ChangeDateFormat(date) {
-  const parts = date.split("-");
+function changeDateFormat(date) {
+  const formattedDate = new Date(date);
 
-  return `${parts[2]}.${parts[1]}.${parts[0]}`;
+  const month = formattedDate.getMonth() + 1;
+  const formattedMonth = String(month).padStart(2, "0");
+
+  return (
+    formattedDate.getDate() +
+    "." +
+    formattedMonth +
+    "." +
+    formattedDate.getFullYear()
+  );
 }
 
 function JudgmentEvents() {

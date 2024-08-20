@@ -119,3 +119,9 @@ export const getEncryptedPassword = (toEncrypt, publicKey) => {
 
   return encrypted;
 };
+
+export const getUniqueFilters = (data, key) => {
+  const uniqueValues = [...new Set(data.map((item) => item[key]))];
+
+  return uniqueValues.map((value) => ({ text: value, value }));
+};

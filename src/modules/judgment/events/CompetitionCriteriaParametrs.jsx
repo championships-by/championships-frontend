@@ -1,7 +1,13 @@
 import React from "react";
 import { Form, Space, Button, Input, Typography } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import "./sass/events.scss";
 
+const defaultCriteria = [
+  { criterion: "", maxPoints: "" },
+  { criterion: "", maxPoints: "" },
+  { criterion: "", maxPoints: "" },
+];
 function CriteriaParametrs() {
   return (
     <div className="events__competition-criteria__div">
@@ -9,6 +15,7 @@ function CriteriaParametrs() {
         name="dynamic_form_nest_item"
         className="events__competition-criteria__form"
         autoComplete="off"
+        initialValues={{ criteria: defaultCriteria }}
       >
         <Form.List name="criteria">
           {(fields, { add, remove }) => (

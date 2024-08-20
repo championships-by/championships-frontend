@@ -43,7 +43,6 @@
       font-size: 16px;
     }
     &__input {
-      margin-top: 8px;
       width: 505px;
     }
   }
@@ -51,15 +50,17 @@
     &__text {
       font-size: 16px;
     }
-    &__name {
-      width: 500px;
-    }
     &__select {
-      width: 505px;
-      margin-top: 10px;
+      width: 465px;
+    }
+    &__input {
+      width: 40px;
     }
   }
   &__competition-type {
+    &__icon {
+      width: 40px;
+    }
     &__div {
       margin-top: 30px;
     }
@@ -67,8 +68,7 @@
       width: 100%;
     }
     &__name {
-      width: 505px;
-      margin-top: 10px;
+      width: 465px;
     }
     &__text {
       font-size: 16px;
@@ -84,7 +84,7 @@
       border: none;
     }
     &__input {
-      width: 250%;
+      width: 505px;
     }
     &__div {
       margin-bottom: 24px;
@@ -94,6 +94,7 @@
     }
     &__text {
       font-size: 16px;
+      margin-top: 20px;
     }
   }
   &__event-date {

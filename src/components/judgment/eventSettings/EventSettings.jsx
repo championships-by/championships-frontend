@@ -9,7 +9,13 @@ import {
   Form,
   Space,
 } from "antd";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  TrophyOutlined,
+  TeamOutlined,
+  LinkOutlined,
+} from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -29,17 +35,18 @@ import CompitationModal from "./EventSettingsModal";
 
 import "./sass/event-settings.scss";
 import { eventApi } from "@api";
+import { competenciesApi } from "@api";
 
 const columns = [
   {
     title: "Название компетенции",
-    dataIndex: "name_compitation",
-    key: "name_nomination",
+    dataIndex: "nomination_name",
+    key: "nomination_name",
   },
   {
     title: "Тип соревнований",
-    dataIndex: "compitation_type",
-    key: "compitation_type",
+    dataIndex: "type",
+    key: "type",
   },
   {
     title: "Регламент",
@@ -55,7 +62,7 @@ const columns = [
     key: "action",
     render: () => (
       <Space>
-        <Button type="text" icon={<EditOutlined />} />
+        <Button type="text" icon={<EditOutlined />} onClick={showModal} />
         <Button type="text" icon={<TrophyOutlined />} />
         <Button type="text" icon={<TeamOutlined />} />
         <Button type="text" icon={<DeleteOutlined />} />
@@ -75,17 +82,63 @@ const items = [
 ];
 
 function EventSettings() {
+  const columns = [
+    {
+      title: "Название компетенции",
+      dataIndex: "nomination_name",
+      key: "nomination_name",
+    },
+    {
+      title: "Тип соревнований",
+      dataIndex: "type",
+      key: "type",
+    },
+    {
+      title: "Регламент",
+      key: "regulations",
+      render: () => (
+        <Space>
+          <Button type="text" icon={<LinkOutlined />} />
+        </Space>
+      ),
+    },
+    {
+      title: "Действия",
+      key: "action",
+      render: () => (
+        <Space>
+          <Button type="text" icon={<EditOutlined />} onClick={openEditModal} />
+          <Button type="text" icon={<TrophyOutlined />} />
+          <Button type="text" icon={<TeamOutlined />} />
+          <Button type="text" icon={<DeleteOutlined />} />
+        </Space>
+      ),
+    },
+  ];
+
   const [isLoading, setIsLoading] = useState(true);
   const [loadings, setLoadings] = useState([]);
   const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
     useState(false);
-  const [event, setEvent] = useState({});
+  const [dataEvent, setEvent] = useState({});
+  const [values, setValues] = useState({});
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
   const [form] = Form.useForm();
-  const [values, setValues] = useState({});
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
 
   useEffect(() => {
-    if (!Object.keys(event).length) {
+    competenciesApi
+      .getCompetenciesEventData(eventID)
+      .then((response) => setDataNomination(response.data));
+  });
+
+  useEffect(() => {
+    if (!eventID) {
       try {
         eventApi.getEvent(eventID).then((data) => {
           setEvent(data);
@@ -125,7 +178,7 @@ function EventSettings() {
     } else {
       setTimeout(() => setIsLoading(false), 300);
     }
-  }, [eventID, form, event]);
+  }, [eventID, form]);
 
   const onClick = async () => {
     enterLoading(0);
@@ -266,7 +319,11 @@ function EventSettings() {
           >
             Добавить компетенцию
           </Button>
-          <Table columns={columns} dataSource={event.competitions} />
+          <Table
+            columns={columns}
+            dataSource={dataNomination}
+            locale={{ emptyText: "Нет данных" }}
+          />
         </Col>
       </Row>
       <CompitationModal
@@ -274,6 +331,12 @@ function EventSettings() {
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
+      />
+      <CompitationModal
+        name="Редактировать компетенцию"
+        isOpen={isEditModalOpen}
+        onOk={() => setIsEditModalOpen(false)}
+        onCancel={() => setIsEditModalOpen(false)}
       />
     </div>
   );
