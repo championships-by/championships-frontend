@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Typography, Space, Select } from "antd";
-import GroupStageParametrs from "./CompetitionGroupStageParametrs";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 
@@ -16,10 +15,6 @@ const options = [
     label: "По критериям",
   },
   {
-    value: "groupStage",
-    label: "Групповой этап",
-  },
-  {
     value: "playoffs",
     label: "Плей-офф",
   },
@@ -33,10 +28,9 @@ function CompetitionType() {
   };
 
   const settingsComponents = {
-    groupStage: <GroupStageParametrs />,
     criteria: <CriteriaParametrs />,
     time: <TimeParametrs />,
-    playoffs: <GroupStageParametrs />,
+    playoffs: null,
   };
 
   return (

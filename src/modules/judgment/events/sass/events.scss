@@ -12,20 +12,20 @@
     &__deleteButton {
       margin-left: 20px;
     }
-    &item {
+    &__item {
       flex: 1;
       margin-right: 8;
     }
     &__div {
-      &__maxPoints {
-        padding-left: 150px;
-      }
       margin-top: 10px;
       margin-bottom: 10px;
     }
+    &__maxPoints {
+      margin-left: 360px;
+    }
     &__input {
       margin-bottom: 50px;
-      width: 250px;
+      width: 450px;
     }
     &__addButton {
       margin-top: 10px;
@@ -34,7 +34,7 @@
       margin-bottom: 30px;
     }
     &__inputPoints {
-      width: 70px;
+      width: 100px;
       margin-left: 20px;
     }
   }
