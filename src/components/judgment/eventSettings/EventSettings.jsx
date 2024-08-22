@@ -73,7 +73,11 @@ function EventSettings() {
       key: "regulations",
       render: () => (
         <Space>
-          <Button type="text" icon={<LinkOutlined />} />
+          <Button
+            type="text"
+            icon={<LinkOutlined />}
+            onClick={() => openLink()}
+          />
         </Space>
       ),
     },
@@ -114,6 +118,10 @@ function EventSettings() {
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
+  };
+
+  const openLink = () => {
+    window.open("http://google.com");
   };
 
   const translateType = (type) => {
