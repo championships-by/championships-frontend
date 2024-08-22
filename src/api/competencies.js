@@ -1,4 +1,3 @@
-import axios from "axios";
 import { instance } from "./index";
 
 export const competenciesApi = {
@@ -27,6 +26,12 @@ export const competenciesApi = {
         nomination_name: nominationName,
         reglament: reglament,
       }
+    );
+  },
+
+  getTeamsForCriteriaNomination: (eventID, nominationID, nominationType) => {
+    return instance.get(
+      `${API_PATH}/team_nomination_event/team_participant?event_id=${eventID}&nomination_id=${nominationID}&type=${nominationType}`
     );
   },
 };

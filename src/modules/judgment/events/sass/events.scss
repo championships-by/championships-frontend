@@ -148,4 +148,15 @@
       display: flex;
     }
   }
+  &__competitionModal__play-off__slider {
+    width: 200px;
+    margin-right: 50px;
+  }
+  &__competitionModal__play-off__cancelButton {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  &__competitionModal__play-off__OkButton {
+    margin-top: 20px;
+  }
 }

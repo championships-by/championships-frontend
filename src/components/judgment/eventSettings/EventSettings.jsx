@@ -32,44 +32,11 @@ import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationS
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
+import CompetitionModal from "../../../modules/judgment/events/CompetitionModal";
+import ParticipantModal from "../../../modules/judgment/events/ParticipantModal";
+import { eventApi, competenciesApi } from "@api";
 
 import "./sass/event-settings.scss";
-import { eventApi } from "@api";
-import { competenciesApi } from "@api";
-
-const columns = [
-  {
-    title: "Название компетенции",
-    dataIndex: "nomination_name",
-    key: "nomination_name",
-  },
-  {
-    title: "Тип соревнований",
-    dataIndex: "type",
-    key: "type",
-  },
-  {
-    title: "Регламент",
-    key: "regulations",
-    render: () => (
-      <Space>
-        <Button type="text" icon={<LinkOutlined />} />
-      </Space>
-    ),
-  },
-  {
-    title: "Действия",
-    key: "action",
-    render: () => (
-      <Space>
-        <Button type="text" icon={<EditOutlined />} onClick={showModal} />
-        <Button type="text" icon={<TrophyOutlined />} />
-        <Button type="text" icon={<TeamOutlined />} />
-        <Button type="text" icon={<DeleteOutlined />} />
-      </Space>
-    ),
-  },
-];
 
 const items = [
   {
@@ -105,11 +72,19 @@ function EventSettings() {
     {
       title: "Действия",
       key: "action",
-      render: () => (
+      render: (record) => (
         <Space>
           <Button type="text" icon={<EditOutlined />} onClick={openEditModal} />
-          <Button type="text" icon={<TrophyOutlined />} />
-          <Button type="text" icon={<TeamOutlined />} />
+          <Button
+            type="text"
+            icon={<TrophyOutlined />}
+            onClick={() => openCompetenciesModal(record)}
+          />
+          <Button
+            type="text"
+            icon={<TeamOutlined />}
+            onClick={() => openParticipantModal(record)}
+          />
           <Button type="text" icon={<DeleteOutlined />} />
         </Space>
       ),
@@ -123,6 +98,8 @@ function EventSettings() {
   const [dataEvent, setEvent] = useState({});
   const [values, setValues] = useState({});
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [openTrophyModal, setTrophyModal] = useState(false);
+  const [participantModal, setParticipantModal] = useState(false);
   const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
   const [form] = Form.useForm();
@@ -131,10 +108,47 @@ function EventSettings() {
     setIsEditModalOpen(true);
   };
 
+  const translateType = (type) => {
+    switch (type) {
+      case "time":
+        return "По времени";
+      case "criteria":
+        return "По критериям";
+      case "olympic":
+        return "Плей-офф";
+      default:
+        return type;
+    }
+  };
+
+  const openCompetenciesModal = (record) => {
+    const competitionType = record.type;
+    if (competitionType === "Плей-офф") {
+      setTrophyModal(true);
+    } else {
+      setTrophyModal(false);
+      message.error("Указать количество групп можно только в плей-офф");
+    }
+  };
+
+  const openParticipantModal = (record) => {
+    const competitionType = record.type;
+    console.log(record);
+    if (competitionType === "По критериям") {
+      message.info("Критерии");
+    } else {
+      message.info("Остальное");
+    }
+  };
+
   useEffect(() => {
-    competenciesApi
-      .getCompetenciesEventData(eventID)
-      .then((response) => setDataNomination(response.data));
+    competenciesApi.getCompetenciesEventData(eventID).then((response) => {
+      const translatedType = response.data.map((record) => ({
+        ...record,
+        type: translateType(record.type),
+      }));
+      setDataNomination(translatedType);
+    });
   });
 
   useEffect(() => {
@@ -338,6 +352,18 @@ function EventSettings() {
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}
       />
+      <CompetitionModal
+        isOpen={openTrophyModal}
+        onOk={() => setTrophyModal(false)}
+        onCancel={() => setTrophyModal(false)}
+        name="Настройки плей-офф"
+      ></CompetitionModal>
+      <ParticipantModal
+        isOpen={participantModal}
+        onOk={() => setParticipantModal(false)}
+        onCancel={() => setParticipantModal(false)}
+        name="Участники соревнования"
+      ></ParticipantModal>
     </div>
   );
 }

@@ -54,26 +54,23 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
         inputName,
         inputReglament
       );
-      console.log("Компетенция создана", response);
       message.success("Компетенция успешно создана!");
-      onOk(); // Вызываем функцию onOk, если требуется
+      onOk();
     } catch (error) {
-      console.error("Ошибка при создании компетенции:", error);
       message.error(
         "Ошибка при создании компетенции. Пожалуйста, попробуйте снова."
       );
     } finally {
-      setIsLoading(false); // Сбрасываем состояние загрузки
+      setIsLoading(false);
     }
   };
-  console.log(selectedValue);
   return (
     <Modal
       title={name}
       className="event-settings__modal"
       open={isOpen}
       onCancel={onCancel}
-      footer={null} // Убираем стандартные кнопки
+      footer={null}
       width={600}
     >
       <Form
@@ -97,7 +94,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
             className="event-settings__saveButton"
             type="primary"
             loading={isLoading}
-            onClick={sendRequest} // Вызываем sendRequest при нажатии на кнопку "Сохранить"
+            onClick={sendRequest}
           >
             Сохранить
           </Button>
