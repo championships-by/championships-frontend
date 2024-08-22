@@ -9,15 +9,13 @@ import { Locale } from "@constants";
 function EventsList({ events }) {
   const data = events.map(({ event }, index) => {
     const navigate = useNavigate();
+    console.log(events);
     return (
       <Card
         key={index}
         size="default"
         cover={
-          <img
-            alt="test"
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-          />
+          <img alt="test" src={`http://robin-zubronok.by/${event.logo_path}`} />
         }
         actions={[
           <Tooltip title={ROUTES.EVENTS_REGISTRATION.TITLE}>

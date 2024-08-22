@@ -56,7 +56,11 @@ function EventRegisterDate({ name, value, onChange: onChangeBase }) {
             showTime={{ format: Locale.timeFormat }}
             placeholder="Выберите дату и время мероприятия"
             className="events__event-date__datepicker"
-            value={dayjs(registration_start_date)}
+            value={
+              registration_start_date
+                ? dayjs(registration_start_date)
+                : undefined
+            }
             onChange={(value) => onChange(value, "from")}
           />
         </div>
@@ -69,7 +73,11 @@ function EventRegisterDate({ name, value, onChange: onChangeBase }) {
             showTime={{ format: Locale.timeFormat }}
             placeholder="Выберите дату и время мероприятия"
             className="events__event-date__datepicker"
-            value={dayjs(registration_finish_date)}
+            value={
+              registration_finish_date
+                ? dayjs(registration_finish_date)
+                : undefined
+            }
             onChange={(value) => onChange(value, "to")}
           />
         </div>

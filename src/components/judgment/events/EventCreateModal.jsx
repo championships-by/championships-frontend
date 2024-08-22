@@ -31,30 +31,32 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
       published,
       registration,
       holding,
+      event_logo,
+      event_regulation,
     } = values;
 
     // todo formdata
     const formData = new FormData();
+    formData.append("logo", event_logo);
+    formData.append("rules", event_regulation);
 
-    const body = JSON.stringify({
-      logo: formData,
-      rules: formData,
-      event_data: {
-        name,
-        participant_question_email,
-        event_place,
-        description,
-        event_level,
-        participation_needs,
-        published,
-        registration_start_date: registration?.registration_start_date,
-        registration_finish_date: registration?.registration_finish_date,
-        holding_start_date: holding?.holding_start_date,
-        holding_finish_date: holding?.holding_finish_date,
-      },
-    });
+    const event_data = {
+      name,
+      participant_question_email,
+      event_place,
+      description,
+      event_level,
+      participation_needs,
+      published,
+      registration_start_date: registration?.registration_start_date,
+      registration_finish_date: registration?.registration_finish_date,
+      holding_start_date: holding?.holding_start_date,
+      holding_finish_date: holding?.holding_finish_date,
+    };
 
-    eventApi.setEvent(body);
+    formData.append("event_data", JSON.stringify(event_data));
+
+    eventApi.setEvent(formData);
   };
 
   const onValuesChange = (values) => {
@@ -84,9 +86,14 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
         requiredMark="optional"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        onValuesChange={onValuesChange}
       >
         <EventName name="name" value={values.name} />
-        <EventLogo name="event_logo" value={values.event_logo} />
+        <EventLogo
+          name="event_logo"
+          value={values.event_logo}
+          onChange={onValuesChange}
+        />
         <EventEmail
           name="participant_question_email"
           value={values.participant_question_email}
@@ -95,6 +102,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
         <EventRegulation
           name="event_regulation"
           value={values.event_regulation}
+          onChange={onValuesChange}
         />
         <EventRegisterDate
           name="registration"

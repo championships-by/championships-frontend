@@ -56,7 +56,7 @@ function EventDate({ name, value, onChange: onChangeBase }) {
             showTime={{ format: Locale.timeFormat }}
             placeholder="Выберите дату и время мероприятия"
             className="events__event-date__datepicker"
-            value={dayjs(holding_start_date)}
+            value={holding_start_date ? dayjs(holding_start_date) : undefined}
             onChange={(value) => onChange(value, "from")}
           />
         </div>
@@ -69,7 +69,7 @@ function EventDate({ name, value, onChange: onChangeBase }) {
             showTime={{ format: Locale.timeFormat }}
             placeholder="Выберите дату и время мероприятия"
             className="events__event-date__datepicker"
-            value={dayjs(holding_finish_date)}
+            value={holding_finish_date ? dayjs(holding_finish_date) : undefined}
             onChange={(value) => onChange(value, "to")}
           />
         </div>

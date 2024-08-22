@@ -195,7 +195,12 @@ function EventInformation() {
       <Typography.Title level={3} className="event-settings__compitation-title">
         Компетенции
       </Typography.Title>
-      <Table columns={columns} dataSource={dataNominations} rowKey="id" />
+      <Table
+        columns={columns}
+        dataSource={dataNominations}
+        rowKey="id"
+        pagination={false}
+      />
     </div>
   );
 }

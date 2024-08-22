@@ -29,6 +29,7 @@ function EventLevel({ name, value, onChange: onChangeBase }) {
           placeholder="Выберите уровень мероприятия"
           options={options}
           value={value}
+          defaultValue="republic"
           onChange={onChange}
         />
       </div>
