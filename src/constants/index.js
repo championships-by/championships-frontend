@@ -69,7 +69,7 @@ export const ROUTES = {
   JUDGMENT_COMPETENCIES: {
     TITLE: "Компетенции по критериям",
     PATH: (event_id, nomination_id) =>
-      `judgment/events/${event_id}/${nomination_id}/competencies`,
+      `judgment/events/${event_id}/${nomination_id}/criteria`,
   },
 };
 
