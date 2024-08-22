@@ -35,6 +35,7 @@ import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "../../../modules/judgment/events/CompetitionModal";
 import ParticipantModal from "../../../modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi } from "@api";
+import { Locale } from "../../../constants/index";
 
 import "./sass/event-settings.scss";
 
@@ -51,14 +52,21 @@ const items = [
 function EventSettings() {
   const columns = [
     {
-      title: "Название компетенции",
+      title: "Название компитенции",
       dataIndex: "nomination_name",
       key: "nomination_name",
+      sorter: (a, b) => a.nomination_name.localeCompare(b.nomination_name),
     },
     {
       title: "Тип соревнований",
       dataIndex: "type",
       key: "type",
+      filters: [
+        { text: "По времени", value: "По времени" },
+        { text: "По критериям", value: "По критериям" },
+        { text: "Плей-офф", value: "Плей-офф" },
+      ],
+      onFilter: (value, record) => record.type.includes(value),
     },
     {
       title: "Регламент",
@@ -133,7 +141,6 @@ function EventSettings() {
 
   const openParticipantModal = (record) => {
     const competitionType = record.type;
-    console.log(record);
     if (competitionType === "По критериям") {
       message.info("Критерии");
     } else {
@@ -336,7 +343,7 @@ function EventSettings() {
           <Table
             columns={columns}
             dataSource={dataNomination}
-            locale={{ emptyText: "Нет данных" }}
+            locale={Locale}
           />
         </Col>
       </Row>

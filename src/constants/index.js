@@ -149,6 +149,12 @@ export const Locale = {
   dateTimeFormat: "DD.MM.YYYY HH:mm",
   weekFormat: "YYYY-wo",
   monthFormat: "YYYY-MM",
+  triggerDesc: "Нажмите для сортировки по убыванию",
+  triggerAsc: "Нажмите для сортировки по возрастанию",
+  cancelSort: "Нажмите для отмены сортировки",
+  emptyText: "Нет данных",
+  filterConfirm: "Ок",
+  filterReset: "Сбросить",
 };
 export const yaShareLink = "https://yastatic.net/share2/share.js";
 export const defaultTime = "00:00.000";
