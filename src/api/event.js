@@ -48,9 +48,9 @@ export const eventApi = {
   setEvent: (body) => {
     return instance.post("/event/event", body, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data'
       },
-      method: "POST",
     });
   },
 };
