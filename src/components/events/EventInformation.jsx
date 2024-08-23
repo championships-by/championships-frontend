@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import { changeDateFormat, getEventLevel } from "@utils";
-import { yaShareLink, ROUTES } from "@constants";
+import { yaShareLink, ROUTES, url } from "@constants";
 import { eventApi } from "@api";
 
 import "./sass/events.scss";
@@ -103,7 +103,11 @@ function EventInformation() {
         <Col span={10}>
           <img
             alt="Logo"
-            src={`http://robin-zubronok.by/${dataEvent.logo_path}`}
+            src={
+              dataEvent.logo_path !== "/" && dataEvent.logo_path
+                ? `${url}/${dataEvent.logo_path}`
+                : "https://www.uznai24.su/images/company_blanklogo.png"
+            }
             className="events__event-information__img"
           />
         </Col>

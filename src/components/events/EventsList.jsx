@@ -29,7 +29,7 @@ function EventsList({ events }) {
             alt="test"
             src={
               event.logo_path !== "/" && event.logo_path
-                ? `${url}${event.logo_path}`
+                ? `${url}/${event.logo_path}`
                 : "https://www.uznai24.su/images/company_blanklogo.png"
             }
           />
