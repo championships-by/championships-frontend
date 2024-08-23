@@ -178,7 +178,7 @@ function EventSettings() {
     eventApi
       .getEvent(eventID)
       .then((response) => setEventInfo(response.nominations));
-  });
+  }, [eventID]);
 
   useEffect(() => {
     competenciesApi.getCompetenciesEventData(eventID).then((response) => {
@@ -188,7 +188,7 @@ function EventSettings() {
       }));
       setDataNomination(translatedType);
     });
-  });
+  }, [eventID]);
 
   useEffect(() => {
     if (!eventID) {
