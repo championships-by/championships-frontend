@@ -3,7 +3,7 @@ import { Flex, Input, Typography } from "antd";
 import { EyeInvisibleOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/auth.scss";
-import { mailZubronok } from "../../constants";
+import { mailZubronok } from "@constants";
 
 function AuthPasswordInput({ value, onChange }) {
   return (
