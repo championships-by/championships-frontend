@@ -161,6 +161,6 @@ export const TimeMatchEvents = {
 
 export const timeMatchEventEmitter = new EventEmitter();
 
-export const mailZubronok = "profil@zubronok.by"
+export const mailZubronok = "support@championships.by"
 
 export const url = "https://robin-zubronok.by"
