@@ -3,6 +3,7 @@ import { Flex, Input, Typography } from "antd";
 import { EyeInvisibleOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/auth.scss";
+import { mailZubronok } from "../../constants";
 
 function AuthPasswordInput({ value, onChange }) {
   return (
@@ -29,7 +30,7 @@ function AuthPasswordInput({ value, onChange }) {
         <Typography.Text type="secondary">
           Обратитесь к администратору портала.
         </Typography.Text>
-        <a href="mailto:profil@zubronok.by">profil@zubronok.by</a>
+        <a href={`mailto:${mailZubronok}`}>{mailZubronok}</a>
       </Flex>
     </FormItem>
   );

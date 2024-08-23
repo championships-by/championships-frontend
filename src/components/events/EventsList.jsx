@@ -10,8 +10,7 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { changeDateFormat, getEventLevel } from "@utils";
-import { ROUTES } from "@constants";
-import { Locale } from "@constants";
+import { ROUTES, url } from "@constants";
 
 function EventsList({ events }) {
   const data = events.map(({ event }, index) => {
@@ -30,7 +29,7 @@ function EventsList({ events }) {
             alt="test"
             src={
               event.logo_path !== "/" && event.logo_path
-                ? `http://robin-zubronok.by/${event.logo_path}`
+                ? `${url}${event.logo_path}`
                 : "https://www.uznai24.su/images/company_blanklogo.png"
             }
           />

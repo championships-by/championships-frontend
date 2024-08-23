@@ -160,3 +160,7 @@ export const TimeMatchEvents = {
 };
 
 export const timeMatchEventEmitter = new EventEmitter();
+
+export const mailZubronok = "profil@zubronok.by"
+
+export const url = "http://robin-zubronok.by/"
