@@ -9,7 +9,6 @@ import { Locale } from "@constants";
 function EventsList({ events }) {
   const data = events.map(({ event }, index) => {
     const navigate = useNavigate();
-    console.log(events);
     return (
       <Card
         key={index}
