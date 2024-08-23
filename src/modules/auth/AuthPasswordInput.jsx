@@ -28,7 +28,7 @@ function AuthPasswordInput({ value, onChange }) {
           onChange={(event) => onChange(event.target.value)}
         />
         <Typography.Text type="secondary">
-          Обратитесь к администратору портала.
+          По всем возникающим вопросам обращайтесь к администратору портала
         </Typography.Text>
         <a href={`mailto:${mailZubronok}`}>{mailZubronok}</a>
       </Flex>
