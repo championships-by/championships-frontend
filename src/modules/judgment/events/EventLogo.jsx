@@ -1,11 +1,12 @@
 import { Typography, Upload, message, Button, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
-import { FILE_UPLOADING } from "@constants";
 
-import "./sass/events.scss";
+function EventLogo({ name, onChange }) {
+  const handleFileChange = ({ file }) => {
+    onChange({ [name]: file });
+  };
 
-function EventLogo({ name }) {
   return (
     <FormItem
       name={name}
@@ -21,18 +22,10 @@ function EventLogo({ name }) {
       <Flex gap="middle">
         <Typography.Text>Логотип: </Typography.Text>
         <Upload
-          {...FILE_UPLOADING.UPLOAD}
-          accept=".jpg,.jpeg,.png,.gif,.bmp,.svg"
+          accept="image/jpg, image/jpeg, image/png"
           maxCount={1}
-          onChange={(info) => {
-            if (info.file.status !== FILE_UPLOADING.UPLOADING) {
-            }
-            if (info.file.status === FILE_UPLOADING.DONE) {
-              message.success(`${info.file.name} Файл загружен успешно`);
-            } else if (info.file.status === FILE_UPLOADING.ERROR) {
-              message.error(`${info.file.name} Ошибка загрузки файла`);
-            }
-          }}
+          beforeUpload={() => false}
+          onChange={handleFileChange}
         >
           <Button icon={<UploadOutlined />}>Загрузить</Button>
         </Upload>
@@ -40,4 +33,5 @@ function EventLogo({ name }) {
     </FormItem>
   );
 }
+
 export default EventLogo;

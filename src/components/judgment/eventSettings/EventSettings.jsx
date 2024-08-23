@@ -284,6 +284,7 @@ function EventSettings() {
               name="published"
               value={values.published}
               onChange={onValuesChange}
+              disabled={false}
             />
             <EventDescription name="description" value={values.description} />
             <EventLevel
