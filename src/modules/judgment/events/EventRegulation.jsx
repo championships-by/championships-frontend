@@ -4,9 +4,7 @@ import { UploadOutlined } from "@ant-design/icons";
 
 function EventRegulation({ name, onChange }) {
   const handleFileChange = ({ file }) => {
-    if (file.status === "done" || file.status === "removed") {
-      onChange(name, file.originFileObj);
-    }
+    onChange({ [name]: file });
   };
 
   return (
@@ -24,7 +22,7 @@ function EventRegulation({ name, onChange }) {
       <Flex gap="middle">
         <Typography.Text>Положение о проведении мероприятия: </Typography.Text>
         <Upload
-          accept=".doc,.docx,.jpg,.png,.xls,.scv,.ppt,.txt,.rtf,.pdf,.tiff"
+          accept=".pdf"
           maxCount={1}
           beforeUpload={() => false}
           onChange={handleFileChange}

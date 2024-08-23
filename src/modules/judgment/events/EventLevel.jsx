@@ -11,25 +11,27 @@ const options = [
   { value: "other", label: <span>Другое</span> },
 ];
 
-function EventLevel({ name, value, onChange: onChangeBase }) {
+const rules = [
+  {
+    required: true,
+    message: "Пожалуйста, выберите уровень мероприятия",
+  },
+];
+
+function EventLevel({ name, value, onChange: onChangeBase, form }) {
   const onChange = (value) => {
     onChangeBase({ [name]: value });
+    form.setFieldsValue({ [name]: value });
   };
 
   return (
-    <FormItem name={name} hasFeedback validateFirst>
+    <FormItem name={name} hasFeedback validateFirst rules={rules}>
       <Typography.Text>Уровень мероприятия</Typography.Text>
       <div className="events__event-level__div">
-        <Input
-          disabled
-          prefix={<StarOutlined />}
-          className="events__event-level__icon"
-        />
         <Select
           placeholder="Выберите уровень мероприятия"
           options={options}
           value={value}
-          defaultValue="republic"
           onChange={onChange}
         />
       </div>

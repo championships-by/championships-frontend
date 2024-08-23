@@ -198,6 +198,9 @@ function EventInformation() {
       <Table
         columns={columns}
         dataSource={dataNominations}
+        locale={{
+          emptyText: "Компетенции пока отсутствуют",
+        }}
         rowKey="id"
         pagination={false}
       />

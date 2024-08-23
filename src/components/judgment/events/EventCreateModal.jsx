@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Modal, message, Typography, Row, Col } from "antd";
+import {
+  Button,
+  Form,
+  Modal,
+  message,
+  Typography,
+  Row,
+  Col,
+  notification,
+} from "antd";
 import dayjs from "dayjs";
 import EventName from "@modules/judgment/events/EventName";
 import EventDate from "@modules/judgment/events/EventDate";
@@ -35,7 +44,6 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
       event_regulation,
     } = values;
 
-    // todo formdata
     const formData = new FormData();
     formData.append("logo", event_logo);
     formData.append("rules", event_regulation);
@@ -64,8 +72,15 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
   };
 
   const onFinish = () => {
-    message.success("Данные мероприятия сохранены!");
+    message.success("Мероприятие успешно создано!");
     onOk();
+    notification.info({
+      message: "Внимание!",
+      description:
+        "Для опубликования мероприятия необходимо добавить хотя бы одну компетенцию!",
+      duration: 120,
+      placement: "bottomRight",
+    });
   };
 
   const onFinishFailed = () => {
@@ -107,29 +122,33 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
         <EventRegisterDate
           name="registration"
           value={values.registration}
+          form={form}
           onChange={onValuesChange}
         />
         <EventDate
           name="holding"
           value={values.holding}
+          form={form}
           onChange={onValuesChange}
         />
         <EventRegistrationSwitch
           name="published"
           value={values.published}
           onChange={onValuesChange}
+          disabled={true}
         />
         <EventDescription name="description" value={values.description} />
         <EventLevel
           name="event_level"
           value={values.event_level}
+          form={form}
           onChange={onValuesChange}
         />
         <EventRequirements
           name="participation_needs"
           value={values.participation_needs}
         />
-        <Button type="primary" htmlType="submit" onClick={onClick}>
+        <Button type="primary" htmlType="submit" onSubmit={onClick}>
           Сохранить
         </Button>
       </Form>
