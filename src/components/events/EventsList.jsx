@@ -23,12 +23,20 @@ function EventsList({ events }) {
         key={index}
         size="default"
         hoverable
+        className="events__cards"
         onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
         cover={
-          <img alt="test" src={`http://robin-zubronok.by/${event.logo_path}`} />
+          <img
+            alt="test"
+            src={
+              event.logo_path !== "/" && event.logo_path
+                ? `http://robin-zubronok.by/${event.logo_path}`
+                : "https://www.uznai24.su/images/company_blanklogo.png"
+            }
+          />
         }
-        title={<Typography.Title level={4}>{event.name}</Typography.Title>}
       >
+        <Typography.Title level={4}>{event.name}</Typography.Title>
         <Typography.Text>
           <CalendarOutlined />
           {changeDateFormat(event.holding_start_date) !==
