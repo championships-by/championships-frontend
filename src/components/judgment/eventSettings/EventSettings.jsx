@@ -18,7 +18,7 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
 import EventDate from "@modules/judgment/events/EventDate";
@@ -35,7 +35,7 @@ import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "../../../modules/judgment/events/CompetitionModal";
 import ParticipantModal from "../../../modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi } from "@api";
-import { Locale } from "../../../constants/index";
+import { Locale, ROUTES } from "@constants";
 
 import "./sass/event-settings.scss";
 
@@ -112,9 +112,12 @@ function EventSettings() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [openTrophyModal, setTrophyModal] = useState(false);
   const [participantModal, setParticipantModal] = useState(false);
+  const [eventInfo, setEventInfo] = useState();
   const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [dataNominationID, setNominationID] = useState();
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -137,14 +140,30 @@ function EventSettings() {
     }
   };
 
+  const findNominationId = (name, response) => {
+    const nomination = response.find((item) => item.name === name);
+    return nomination ? nomination.id : null;
+  };
+
   const openCompetenciesModal = (record) => {
     const competitionType = record.type;
-    if (competitionType === "Плей-офф") {
-      setTrophyModal(true);
-    } else {
-      setTrophyModal(false);
-      message.error("Указать количество групп можно только в плей-офф");
+    const competitionName = record.nomination_name;
+    const nominationID = findNominationId(competitionName, eventInfo);
+
+    switch (competitionType) {
+      case "Плей-офф":
+        setTrophyModal(true);
+        break;
+      case "По времени":
+        navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
+        break;
+      case "По критериям":
+        navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+        break;
+      default:
+        break;
     }
+    setNominationID(nominationID);
   };
 
   const openParticipantModal = (record) => {
@@ -155,6 +174,11 @@ function EventSettings() {
       message.info("Остальное");
     }
   };
+  useEffect(() => {
+    eventApi
+      .getEvent(eventID)
+      .then((response) => setEventInfo(response.nominations));
+  });
 
   useEffect(() => {
     competenciesApi.getCompetenciesEventData(eventID).then((response) => {
@@ -372,6 +396,7 @@ function EventSettings() {
         onOk={() => setTrophyModal(false)}
         onCancel={() => setTrophyModal(false)}
         name="Настройки плей-офф"
+        nominationID={dataNominationID}
       ></CompetitionModal>
       <ParticipantModal
         isOpen={participantModal}

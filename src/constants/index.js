@@ -61,7 +61,7 @@ export const ROUTES = {
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/group-stage`,
   },
-  JUDGMENT_TIME_MATHCES: {
+  JUDGMENT_TIME_MATCHES: {
     TITLE: "Матчи на время",
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/time-matches`,
