@@ -4,6 +4,17 @@
     width: 690px;
     min-height: 360px;
     height: 360px;
+    &__registration_open{
+      color: green;
+    }
+    &__registration_closed{
+      color: red;
+    }
+  }
+
+  &__cards {
+    max-width: 20vw;
+    min-height: 450px;
   }
 
   &__list {

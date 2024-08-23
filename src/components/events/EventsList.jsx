@@ -1,58 +1,70 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, List, Tooltip, Typography } from "antd";
-import { EditOutlined, EllipsisOutlined } from "@ant-design/icons";
+import {
+  CalendarOutlined,
+  StarOutlined,
+  HomeOutlined,
+  CloseCircleOutlined,
+  CheckCircleOutlined,
+} from "@ant-design/icons";
 import dayjs from "dayjs";
-import { ROUTES } from "@constants";
-import { Locale } from "@constants";
+import { changeDateFormat, getEventLevel } from "@utils";
+import { ROUTES, url } from "@constants";
 
 function EventsList({ events }) {
   const data = events.map(({ event }, index) => {
     const navigate = useNavigate();
+    const finishDate = new Date(event.registration_finish_date);
+    const now = new Date();
     return (
       <Card
         key={index}
         size="default"
+        hoverable
+        className="events__cards"
+        onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
         cover={
-          <img alt="test" src={`http://robin-zubronok.by/${event.logo_path}`} />
-        }
-        actions={[
-          <Tooltip title={ROUTES.EVENTS_REGISTRATION.TITLE}>
-            <EditOutlined
-              key="edit"
-              onClick={() =>
-                navigate(ROUTES.EVENTS_REGISTRATION.PATH(event.id))
-              }
-            />
-          </Tooltip>,
-          <Tooltip title={ROUTES.EVENTS_DESCRIPTION.TITLE}>
-            <EllipsisOutlined
-              key="description"
-              onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
-            />
-          </Tooltip>,
-        ]}
-        title={<Typography.Title level={2}>{event.name}</Typography.Title>}
-        extra={
-          <Typography.Text type="secondary">
-            {dayjs(event.date).format(Locale.dateFormat)}
-          </Typography.Text>
+          <img
+            alt="test"
+            src={
+              event.logo_path !== "/" && event.logo_path
+                ? `${url}/${event.logo_path}`
+                : "https://www.uznai24.su/images/company_blanklogo.png"
+            }
+          />
         }
       >
-        <List
-          locale={{
-            emptyText: "Компетенции пока отсутствуют",
-          }}
-          size="small"
-          header={<Typography.Text>Компетенции: </Typography.Text>}
-          footer={
-            <Typography.Text type="secondary">
-              Регистрация открыта
-            </Typography.Text>
-          }
-          dataSource={event.nominations}
-          renderItem={(item) => <List.Item>{item.name}</List.Item>}
-        />
+        <Typography.Title level={4}>{event.name}</Typography.Title>
+        <Typography.Text>
+          <CalendarOutlined />
+          {changeDateFormat(event.holding_start_date) !==
+          changeDateFormat(event.holding_finish_date)
+            ? ` c ${changeDateFormat(
+                event.holding_start_date
+              )} по ${changeDateFormat(event.holding_finish_date)}`
+            : ` ${changeDateFormat(event.holding_start_date)}`}
+        </Typography.Text>
+        <br />
+        <Typography.Text>
+          <StarOutlined /> {getEventLevel(event.event_level)}
+        </Typography.Text>
+        <br />
+        <Typography.Text>
+          <HomeOutlined /> {event.event_place}
+        </Typography.Text>
+        <Typography.Text>
+          {finishDate <= now ? (
+            <div className="events__card__registration_closed">
+              <CloseCircleOutlined /> Регистрация закрыта
+            </div>
+          ) : (
+            <div className="events__card__registration_open">
+              <CheckCircleOutlined />
+              Регистрация открыта по {changeDateFormat(finishDate)}
+            </div>
+          )}
+        </Typography.Text>
       </Card>
     );
   });
