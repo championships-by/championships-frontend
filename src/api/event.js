@@ -11,14 +11,19 @@ export const eventApi = {
       credentials: "include",
     }).then((response) => response.json()),
   getEventWithNominations: ({ limit, published }) =>
-    fetch(`${API_PATH}/event/events_with_nominations?${published ? `published=${published}&` : ``}offset=0&limit=${limit}`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-    }).then((response) => response.json()),
+    fetch(
+      `${API_PATH}/event/events_with_nominations?${
+        published ? `published=${published}&` : ``
+      }offset=0&limit=${limit}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+        redirect: "follow",
+        credentials: "include",
+      }
+    ).then((response) => response.json()),
   changeEvent: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
@@ -48,8 +53,8 @@ export const eventApi = {
   setEvent: (body) => {
     return instance.post("/event/event", body, {
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'multipart/form-data'
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
       },
     });
   },
