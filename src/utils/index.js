@@ -69,6 +69,34 @@ export const generateColumns = (data, render) => {
   return [];
 };
 
+export const transformCriteriaData = (criteria) =>
+  criteria.map((criterion) => ({
+    id: criterion.id,
+    name: criterion.name,
+    maxScore: criterion.max_score,
+  }));
+
+export const transformCriteriaResultsData = (criteriaResults) =>
+  criteriaResults.team_data.map((team, index) => ({
+    id: index + 1,
+    team: {
+      id: team.team_data.team_id,
+      name: team.team_data.team_name,
+    },
+    participant: {
+      firstName: team.participant_data.first_name,
+      secondName: team.participant_data.second_name,
+      thirdName: team.participant_data.third_name,
+    },
+    criteria: team.criterias.map((criterion) => ({
+      id: criterion.criteria_id,
+      name: criterion.criteria_name,
+      maxScore: criterion.max_score,
+      score: criterion.score,
+    })),
+    totalScore: team.criterias.reduce((acc, obj) => (acc += obj.score), 0),
+  }));
+
 export const transformTimeMatchesData = (rounds) =>
   rounds.map((round, index) => ({
     key: `round-${index + 1}`,
@@ -125,3 +153,38 @@ export const getUniqueFilters = (data, key) => {
 
   return uniqueValues.map((value) => ({ text: value, value }));
 };
+
+export const generateCriteriaColumns = (criteria, render) =>
+  criteria.map(({ name, maxScore }, columnIndex) => ({
+    title: `Критерий: ${name} | Макс. ${maxScore}`,
+    dataIndex: `criteria${columnIndex}`,
+    key: `criteria${columnIndex}`,
+    render: (text, record, recordIndex) =>
+      render(text, record, recordIndex, columnIndex),
+  }));
+
+export const generateCompetenciesDataSource = (criteriaResults) =>
+  criteriaResults.map((result) => ({
+    key: `participant-${result.id}`,
+    team: {
+      id: result.team.id,
+      name: result.team.name,
+    },
+    participant: {
+      firstName: result.participant.firstName,
+      secondName: result.participant.secondName,
+      thirdName: result.participant.thirdName,
+    },
+    ...Object.keys(result.criteria).reduce(
+      (acc, key) => ({
+        ...acc,
+        [`criteria${key}`]: {
+          id: result.criteria[key].id,
+          score: result.criteria[key].score,
+          maxScore: result.criteria[key].maxScore,
+        },
+      }),
+      {}
+    ),
+    totalScore: result.totalScore,
+  }));

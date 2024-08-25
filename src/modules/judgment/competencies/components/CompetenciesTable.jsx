@@ -1,0 +1,94 @@
+import { LoadingOutlined } from "@ant-design/icons";
+import { competenciesApi } from "@api";
+import {
+  generateCompetenciesDataSource,
+  generateCriteriaColumns,
+  transformCriteriaData,
+  transformCriteriaResultsData,
+} from "@utils";
+import { InputNumber, Spin, Table } from "antd";
+import { useEffect, useMemo, useState } from "react";
+import { useParams } from "react-router-dom";
+
+export const CompetenciesTable = () => {
+  const [error, setError] = useState();
+  const [criteria, setCriteria] = useState([]);
+  const [dataSource, setDataSource] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { eventId, nominationId } = useParams();
+
+  const columns = useMemo(
+    () => [
+      {
+        title: "Участник",
+        dataIndex: "participant",
+        key: "participant",
+        render: (text, { participant }) => {
+          const { firstName, secondName, thirdName } = participant;
+          return `${secondName} ${firstName} ${thirdName}`;
+        },
+      },
+      ...generateCriteriaColumns(criteria, (text, record, index, columnId) => {
+        const currentCriteria = record[`criteria${columnId}`];
+        return (
+          <InputNumber
+            placeholder={currentCriteria.maxScore}
+            defaultValue={currentCriteria.score}
+            max={currentCriteria.maxScore}
+            min={0}
+            onChange={(value) => {
+              const newDataSource = [...dataSource];
+              newDataSource[index][`criteria${columnId}`].score = value;
+              newDataSource[index].totalScore = Object.keys(
+                newDataSource[index]
+              )
+                .filter((key) => key.startsWith("criteria"))
+                .reduce((acc, key) => acc + newDataSource[index][key].score, 0);
+              setDataSource(newDataSource);
+            }}
+          />
+        );
+      }),
+      {
+        title: "Итоги",
+        dataIndex: "totalScore",
+        key: "totalScore",
+      },
+    ],
+    [criteria, dataSource]
+  );
+
+  useEffect(() => {
+    setIsLoading(true);
+    Promise.all([
+      competenciesApi.getCriteria(eventId, nominationId),
+      competenciesApi.getCriteriaResults(eventId, nominationId),
+    ])
+      .then(([criteriaResponse, criteriaResultsResponse]) => {
+        const criteriaData = transformCriteriaData(criteriaResponse.data);
+        setCriteria(criteriaData);
+
+        const criteriaResultsData = transformCriteriaResultsData(
+          criteriaResultsResponse.data
+        );
+        const generatedDataSource =
+          generateCompetenciesDataSource(criteriaResultsData);
+        setDataSource(generatedDataSource);
+
+        setIsLoading(false);
+      })
+      .catch((reason) => {
+        setError(reason);
+        setIsLoading(false);
+      });
+  }, [eventId, nominationId]);
+
+  return isLoading ? (
+    <Spin indicator={<LoadingOutlined className="icon" spin />} />
+  ) : error ? (
+    <h1>Произошла ошибка</h1>
+  ) : (
+    <Table columns={columns} dataSource={dataSource} />
+  );
+};
