@@ -91,7 +91,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
   JUDGMENT_GROUP_STAGE: ":eventId/:nominationId/group-stage",
   JUDGMENT_TIME_MATCHES: ":eventId/:nominationId/time-matches",
-  JUDGMENT_COMPETENCIES: "judgment/competencies",
+  JUDGMENT_COMPETENCIES: "judgment/events/:eventId/:nominationId/criteria",
 };
 
 export const Locale = {
