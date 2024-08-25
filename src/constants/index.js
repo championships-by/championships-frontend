@@ -159,7 +159,12 @@ export const TimeMatchEvents = {
   UPDATE_TABLE_DATA: "updateTableData",
 };
 
+export const TabsButtonEvents = {
+  ON_CLICK: "onClick",
+};
+
 export const timeMatchEventEmitter = new EventEmitter();
+export const tabsButtonEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";
 

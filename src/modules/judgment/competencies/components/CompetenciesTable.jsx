@@ -1,5 +1,6 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { competenciesApi } from "@api";
+import { tabsButtonEventEmitter, TabsButtonEvents } from "@constants";
 import {
   generateCompetenciesDataSource,
   generateCriteriaColumns,
@@ -7,7 +8,7 @@ import {
   transformCriteriaResultsData,
 } from "@utils";
 import { InputNumber, Spin, Table } from "antd";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export const CompetenciesTable = () => {
@@ -87,6 +88,20 @@ export const CompetenciesTable = () => {
     [criteria, dataSource, changes]
   );
 
+  const handleCompleteStage = useCallback(() => {
+    if (changes.length <= 0) return;
+
+    changes.forEach(({ criteriaId, teamId, score }) => {
+      competenciesApi.setCriteriaResult({
+        eventId,
+        nominationId,
+        criteriaId,
+        teamId,
+        score,
+      });
+    });
+  }, [changes, eventId, nominationId]);
+
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
@@ -111,6 +126,10 @@ export const CompetenciesTable = () => {
         setIsLoading(false);
       });
   }, [eventId, nominationId]);
+
+  useEffect(() => {
+    tabsButtonEventEmitter.on(TabsButtonEvents.ON_CLICK, handleCompleteStage);
+  }, [handleCompleteStage]);
 
   return isLoading ? (
     <Spin indicator={<LoadingOutlined className="icon" spin />} />
