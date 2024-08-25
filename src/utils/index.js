@@ -93,6 +93,7 @@ export const transformCriteriaResultsData = (criteriaResults) =>
       name: criterion.criteria_name,
       maxScore: criterion.max_score,
       score: criterion.score,
+      initialScore: criterion.score,
     })),
     totalScore: team.criterias.reduce((acc, obj) => (acc += obj.score), 0),
   }));
@@ -182,6 +183,7 @@ export const generateCompetenciesDataSource = (criteriaResults) =>
           id: result.criteria[key].id,
           score: result.criteria[key].score,
           maxScore: result.criteria[key].maxScore,
+          initialScore: result.criteria[key].initialScore,
         },
       }),
       {}

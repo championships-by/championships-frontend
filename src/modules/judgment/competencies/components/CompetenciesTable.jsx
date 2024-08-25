@@ -14,6 +14,7 @@ export const CompetenciesTable = () => {
   const [error, setError] = useState();
   const [criteria, setCriteria] = useState([]);
   const [dataSource, setDataSource] = useState([]);
+  const [changes, setChanges] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const { eventId, nominationId } = useParams();
@@ -46,6 +47,33 @@ export const CompetenciesTable = () => {
                 .filter((key) => key.startsWith("criteria"))
                 .reduce((acc, key) => acc + newDataSource[index][key].score, 0);
               setDataSource(newDataSource);
+
+              const newChanges = [...changes];
+              const existingChangeIndex = newChanges.findIndex(
+                (change) =>
+                  change.criteria_id === currentCriteria.id &&
+                  change.team_id === record.team.id
+              );
+
+              if (existingChangeIndex !== -1) {
+                if (value === currentCriteria.initialScore) {
+                  newChanges.splice(existingChangeIndex, 1);
+                } else {
+                  newChanges[existingChangeIndex].score = value;
+                }
+              } else if (value !== currentCriteria.initialScore) {
+                newChanges.push({
+                  criteriaId: currentCriteria.id,
+                  teamId: record.team.id,
+                  score: value,
+                });
+              }
+
+              setChanges(
+                newChanges.filter(
+                  (change) => change.score !== currentCriteria.initialScore
+                )
+              );
             }}
           />
         );
@@ -56,7 +84,7 @@ export const CompetenciesTable = () => {
         key: "totalScore",
       },
     ],
-    [criteria, dataSource]
+    [criteria, dataSource, changes]
   );
 
   useEffect(() => {
