@@ -1,32 +1,22 @@
-import axios from "axios";
 import { instance } from "./index";
 
 export const competenciesApi = {
-  getCompetencies: () =>
-    axios.get(`${API_PATH}/breeds`, {
-      headers: {
-        accept: "application/json",
+  getCriteria: (eventId, nominationId) =>
+    instance.get(
+      `/criteria/api/criteria?event_id=${eventId}&nomination_id=${nominationId}`
+    ),
+  getCriteriaResults: (eventId, nominationId) =>
+    instance.get(
+      `/criteria/get_criteria_results?event_id=${eventId}&nomination_id=${nominationId}`
+    ),
+  setCriteriaResult: ({ eventId, nominationId, criteriaId, teamId, score }) =>
+    instance.post(`/criteria/set_criteria_result`, {
+      nomination_event: {
+        event_id: eventId,
+        nomination_id: nominationId,
       },
+      criteria_id: criteriaId,
+      team_id: teamId,
+      score,
     }),
-
-  getCompetenciesEventData: (eventID) => {
-    return instance.get(
-      `/nomination_event/nominations_event_participant_count?event_id=${eventID}`
-    );
-  },
-
-  addOlympicCompetenciesForEvent: async (
-    eventID,
-    nominationName,
-    reglament
-  ) => {
-    axios.post(
-      `${API_PATH}/nomination_event/append_nomination_for_event_olympic`,
-      {
-        event_id: eventID,
-        nomination_name: nominationName,
-        reglament: reglament,
-      }
-    );
-  },
 };
