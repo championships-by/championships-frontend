@@ -119,10 +119,20 @@ function EventSettings() {
   const navigate = useNavigate();
   const [dataNominationID, setNominationID] = useState();
 
+  const eventId = parseInt(eventID, 10);
+
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
+  const startCriteriaStage = (eventID, nominationID) => {
+    const eventId = parseInt(eventID, 10);
+    competenciesApi.startCriteriaStage(eventId, nominationID);
+  };
 
+  const startTimeStage = (eventID, nominationID) => {
+    const eventId = parseInt(eventID, 10);
+    competenciesApi.startTimeStage(eventId, nominationID);
+  };
   const openLink = () => {
     window.open("http://google.com");
   };
@@ -155,9 +165,11 @@ function EventSettings() {
         setTrophyModal(true);
         break;
       case "По времени":
+        startTimeStage(eventID, nominationID);
         navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
         break;
       case "По критериям":
+        startCriteriaStage(eventID, nominationID);
         navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
         break;
       default:

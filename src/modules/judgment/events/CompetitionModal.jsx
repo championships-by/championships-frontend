@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Slider, InputNumber, Typography, Space, Button } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "@constants";
+import { competenciesApi, eventApi } from "../../../api";
 
 function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const [groupCount, setGroupCount] = useState(1);
   const { eventID } = useParams();
   const navigate = useNavigate();
 
+  const eventId = parseInt(eventID, 10);
+
   const onChange = (value) => {
     setGroupCount(value);
+  };
+  const startCompetition = () => {
+    competenciesApi.startGroupStage(eventId, nominationID, groupCount);
   };
 
   return (
@@ -41,9 +47,10 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
         <Button
           type="primary"
           className="events__competitionModal__play-off__OkButton"
-          onClick={() =>
-            navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID))
-          }
+          onClick={() => {
+            navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID)),
+              startCompetition(eventId, nominationID, groupCount);
+          }}
         >
           Начать соревнование
         </Button>

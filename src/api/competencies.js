@@ -1,3 +1,4 @@
+import axios from "axios";
 import { instance } from "./index";
 
 export const competenciesApi = {
@@ -33,5 +34,28 @@ export const competenciesApi = {
     return instance.get(
       `${API_PATH}/team_nomination_event/team_participant?event_id=${eventID}&nomination_id=${nominationID}&type=${nominationType}`
     );
+  },
+
+  startGroupStage: (eventID, nominationID, groupCount) => {
+    axios.post(`${API_PATH}/tournaments/start_group_stage`, {
+      nomination_event: {
+        event_id: eventID,
+        nominationID_id: nominationID,
+      },
+      group_count: groupCount,
+    });
+    console.log("Запрос сработал");
+  },
+  startCriteriaStage: (eventID, nominationID) => {
+    axios.post(`${API_PATH}/tournaments/start_criteria_stage`, {
+      event_id: eventID,
+      nomination_id: nominationID,
+    });
+  },
+  startTimeStage: (eventID, nominationID) => {
+    axios.post(`${API_PATH}/tournaments/start_time_stage`, {
+      event_id: eventID,
+      nomination_id: nominationID,
+    });
   },
 };
