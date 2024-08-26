@@ -12,17 +12,28 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
   const [inputName, setInputName] = useState("");
   const [inputReglament, setInputReglament] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
-  const { event_id } = useParams();
+  const [groupCount, setGroupCount] = useState();
+  const [criteria, setCriteria] = useState([]);
+  const { eventID } = useParams();
 
+  const event_id = parseInt(eventID, 10);
   const handleInputNameChange = (value) => {
     setInputName(value);
+  };
+
+  const handleGroupCount = (value) => {
+    setGroupCount(value);
+  };
+
+  const handleCriteriaChange = (newCriteria) => {
+    setCriteria(newCriteria);
   };
 
   const handleInputReglamentChange = (value) => {
     setInputReglament(value);
   };
 
-  const handleSelectChange = (value) => {
+  const handleChange = (value) => {
     setSelectedValue(value);
   };
 
@@ -30,38 +41,37 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
     message.error("Проверьте поля для ввода!");
     setIsLoading(false);
   };
-
   const sendRequest = async () => {
-    setIsLoading(true);
-
-    let url = "";
+    // setIsLoading(true);
 
     switch (selectedValue) {
       case "time":
-        const response =
-          await competenciesApi.addOlympicCompetenciesForEvent(event_id);
+        await competenciesApi.addTimeCompetenciesForEvent(
+          event_id,
+          inputName,
+          inputReglament,
+          groupCount
+        );
+        console.log("time");
         break;
 
-      case "olympic":
+      case "playoffs":
+        // await competenciesApi.addOlympicCompetenciesForEvent(
+        //   event_id,
+        //   inputName,
+        //   inputReglament
+        // );
+        console.log("playoffs");
         break;
 
       case "criteria":
+        // await competenciesApi.addCriteriaCompetenciesForEvent(event_id);
+        console.log("criteria");
+        console.log(criteria);
         break;
-    }
-    try {
-      const response = await competenciesApi.addOlympicCompetenciesForEvent(
-        event_id,
-        inputName,
-        inputReglament
-      );
-      message.success("Компетенция успешно создана!");
-      onOk();
-    } catch (error) {
-      message.error(
-        "Ошибка при создании компетенции. Пожалуйста, попробуйте снова."
-      );
-    } finally {
-      setIsLoading(false);
+      default:
+        console.log("default");
+        break;
     }
   };
   return (
@@ -87,8 +97,11 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
           value={inputReglament}
         />
         <CompetitionJudge />
-        <CompetitionType onSelectChange={handleSelectChange} />
-
+        <CompetitionType
+          onChange={handleChange}
+          onInputChange={handleGroupCount}
+          onCriteriaChange={handleCriteriaChange}
+        />
         <Flex gap="middle">
           <Button
             className="event-settings__saveButton"

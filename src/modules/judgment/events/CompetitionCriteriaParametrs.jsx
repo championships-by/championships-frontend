@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Space, Button, Input, Typography } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
-function CriteriaParametrs() {
+function CriteriaParametrs({ onCriteriaChange }) {
+  const [criteria, setCriteria] = useState([]);
+  const handleCriteriaChange = (newCriteria) => {
+    setCriteria(newCriteria);
+    onCriteriaChange(newCriteria);
+  };
+
+  const handleSetCriteria = (fields) => {
+    const newCriteria = fields.map((field) => {
+      return {
+        criteria: field.name[1],
+        maxPoints: field.name[2],
+      };
+    });
+    handleCriteriaChange(newCriteria);
+  };
   return (
     <div className="events__competition-criteria__div">
       <Form
@@ -10,7 +25,10 @@ function CriteriaParametrs() {
         className="events__competition-criteria__form"
         autoComplete="off"
       >
-        <Form.List name="criteria">
+        <Form.List
+          name="criteria"
+          onValuesChange={(values) => handleSetCriteria(values)}
+        >
           {(fields, { add, remove }) => (
             <>
               {fields.length > 0 && (

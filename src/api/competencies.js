@@ -23,9 +23,48 @@ export const competenciesApi = {
     axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_olympic`,
       {
-        event_id: eventID,
-        nomination_name: nominationName,
-        reglament: reglament,
+        append_nomination_event_data: {
+          event_id: eventID,
+          nomination_name: nominationName,
+          reglament: reglament,
+          judges_ids: [0],
+        },
+        group_count: 0,
+        play_of_participants_count: 0,
+      }
+    );
+  },
+
+  addCriteriaCompetenciesForEvent: async (eventID, nominationID, reglament) => {
+    axios.post(
+      `${API_PATH}/nomination_event/append_nomination_for_event_criteria`,
+      {
+        append_nomination_event_data: {
+          event_id: eventID,
+          nomination_name: nominationID,
+          reglament: reglament,
+          judges_ids: [0],
+        },
+      }
+    );
+  },
+
+  addTimeCompetenciesForEvent: async (
+    eventID,
+    nominationID,
+    reglament,
+    raceRoundAmount
+  ) => {
+    axios.post(
+      `${API_PATH}/nomination_event/append_nomination_for_event_time`,
+      {
+        append_nomination_event_data: {
+          event_id: eventID,
+          nomination_name: nominationID,
+          reglament: reglament,
+          judges_ids: [6, 7],
+        },
+        race_round_amount: raceRoundAmount,
       }
     );
   },
@@ -44,7 +83,6 @@ export const competenciesApi = {
       },
       group_count: groupCount,
     });
-    console.log("Запрос сработал");
   },
   startCriteriaStage: (eventID, nominationID) => {
     axios.post(`${API_PATH}/tournaments/start_criteria_stage`, {
