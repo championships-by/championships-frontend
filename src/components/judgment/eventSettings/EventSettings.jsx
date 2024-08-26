@@ -138,15 +138,13 @@ function EventSettings() {
   });
 
   useEffect(() => {
-    if (!eventID) {
+    if (eventID) {
       try {
         eventApi.getEvent(eventID).then((data) => {
           setEvent(data);
 
           const { event } = data;
 
-          // event_logo
-          // event_regulation
           const values = {
             name: event.name,
             participant_question_email: event.participant_question_email,
@@ -164,8 +162,8 @@ function EventSettings() {
               holding_finish_date: event.holding_finish_date,
             },
           };
-
           form.setFieldsValue(values);
+
           setValues(values);
 
           setTimeout(() => setIsLoading(false), 300);
@@ -180,7 +178,7 @@ function EventSettings() {
     }
   }, [eventID, form]);
 
-  const onClick = async () => {
+  const onSubmit = async () => {
     enterLoading(0);
 
     const {
@@ -193,12 +191,14 @@ function EventSettings() {
       published,
       registration,
       holding,
+      event_logo,
+      event_regulation,
     } = values;
 
     const body = new URLSearchParams({
       event_data: JSON.stringify({
         id: eventID,
-        name,
+        name: dataEvent.event.name === name ? undefined : name,
         participant_question_email,
         event_place,
         description,
@@ -211,15 +211,41 @@ function EventSettings() {
         holding_finish_date: holding.holding_finish_date,
       }),
     });
+    try {
+      eventApi.changeEvent(body);
+    } catch (error) {
+      message.error("При редактировании мероприятия произошла ошибка.");
+    }
+    if (event_logo) {
+      try {
+        const formData = new FormData();
+        formData.append("logo", event_logo);
+        formData.append("event_id", eventID);
+        eventApi.changeLogo(formData);
+      } catch (error) {
+        message.error("При изменение логотипа произошла ошибка.");
+      }
+    }
 
-    eventApi.changeEvent(body);
+    if (event_regulation) {
+      try {
+        const formData = new FormData();
+        formData.append("rules", event_regulation);
+        formData.append("event_id", eventID);
+        eventApi.changeRegulation(formData);
+      } catch (error) {
+        message.error("При изменение положение о проведении произошла ошибка.");
+      }
+    }
   };
 
   const onValuesChange = (values) => {
+    console.log(values);
     setValues((oldValues) => ({ ...oldValues, ...values }));
   };
 
   const onFinish = () => {
+    onSubmit();
     message.success("Всё в порядке!");
   };
 
@@ -260,7 +286,12 @@ function EventSettings() {
           >
             <Typography.Title level={3}>Данные мероприятия</Typography.Title>
             <EventName name="name" value={values.name} />
-            <EventLogo name="event_logo" value={values.event_logo} />
+            <EventLogo
+              name="event_logo"
+              value={values.event_logo}
+              required={false}
+              onChange={onValuesChange}
+            />
             <EventEmail
               name="participant_question_email"
               value={values.participant_question_email}
@@ -269,15 +300,19 @@ function EventSettings() {
             <EventRegulation
               name="event_regulation"
               value={values.event_regulation}
+              required={false}
+              onChange={onValuesChange}
             />
             <EventRegisterDate
               name="registration"
               value={values.registration}
+              form={form}
               onChange={onValuesChange}
             />
             <EventDate
               name="holding"
               value={values.holding}
+              form={form}
               onChange={onValuesChange}
             />
             <EventRegistrationSwitch
@@ -290,18 +325,14 @@ function EventSettings() {
             <EventLevel
               name="event_level"
               value={values.event_level}
+              form={form}
               onChange={onValuesChange}
             />
             <EventRequirements
               name="participation_needs"
               value={values.participation_needs}
             />
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={loadings[0]}
-              onClick={onClick}
-            >
+            <Button type="primary" htmlType="submit" loading={loadings[0]}>
               Сохранить данные
             </Button>
           </Form>

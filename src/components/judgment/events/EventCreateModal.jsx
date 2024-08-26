@@ -29,7 +29,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
 
   const [values, setValues] = useState({});
 
-  const onClick = async () => {
+  const onSubmit = async () => {
     const {
       name,
       participant_question_email,
@@ -108,6 +108,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
           name="event_logo"
           value={values.event_logo}
           onChange={onValuesChange}
+          required={true}
         />
         <EventEmail
           name="participant_question_email"
@@ -118,6 +119,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
           name="event_regulation"
           value={values.event_regulation}
           onChange={onValuesChange}
+          required={true}
         />
         <EventRegisterDate
           name="registration"
@@ -148,7 +150,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
           name="participation_needs"
           value={values.participation_needs}
         />
-        <Button type="primary" htmlType="submit" onSubmit={onClick}>
+        <Button type="primary" htmlType="submit" onSubmit={onSubmit}>
           Сохранить
         </Button>
       </Form>

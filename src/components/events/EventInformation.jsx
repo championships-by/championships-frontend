@@ -94,6 +94,16 @@ function EventInformation() {
   const finishDate = new Date(dataEvent.registration_finish_date);
   const now = new Date();
 
+  const openPdf = () => {
+    const pdfUrl = `${url}/${dataEvent.event_rules}`;
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.target = "_blank";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="events__event-information__container">
       <Loader show={isLoading} />
@@ -212,7 +222,9 @@ function EventInformation() {
         {dataEvent.description}
       </Typography.Text>
       <br />
-      <Button type="primary">Положение</Button>
+      <Button type="primary" onClick={openPdf}>
+        Положение
+      </Button>
       <br />
       <Typography.Title level={3} className="event-settings__compitation-title">
         Компетенции

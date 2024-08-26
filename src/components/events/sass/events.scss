@@ -4,6 +4,12 @@
     width: 690px;
     min-height: 360px;
     height: 360px;
+    &__img {
+      padding-top: 16px;
+      width: 95%;
+      aspect-ratio: 1/1;
+      object-fit: contain;
+    }
     &__registration_open{
       color: green;
     }
