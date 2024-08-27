@@ -1,4 +1,4 @@
-import { Table, Flex, List, Button, Typography } from "antd";
+import { Table, Flex, List, Button, Typography, Tooltip } from "antd";
 import { useState } from "react";
 import {
   EditOutlined,
@@ -6,8 +6,7 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
-import ParticipantNominationModal from "@components/eventRegistration/ParticipantNominationModal";
-import TeamDeleteModal from "@components/eventRegistration/TeamDeleteModal";
+import TeamAddParticipantModal from "./TeamAddParticipantModal";
 
 function TeamsTable({ TeamsData }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -86,21 +85,20 @@ function TeamsTable({ TeamsData }) {
       fixed: "right",
       render: () => (
         <Flex>
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => openEditModal()}
-          />
-          <Button
-            type="text"
-            icon={<UsergroupAddOutlined />}
-            onClick={openParticipantModal()}
-          />
-          <Button
-            type="text"
-            icon={<DeleteOutlined />}
-            onClick={() => TeamDeleteModal}
-          />
+          <Tooltip title="Редактировать">
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={() => openEditModal()}
+            />
+          </Tooltip>
+          <Tooltip title="Добавить">
+            <Button
+              type="text"
+              icon={<UsergroupAddOutlined />}
+              onClick={() => openParticipantModal()}
+            />
+          </Tooltip>
         </Flex>
       ),
     },
@@ -115,11 +113,11 @@ function TeamsTable({ TeamsData }) {
         onOk={() => changeTeamData()}
         onCancel={() => setIsEditModalOpen(false)}
       />
-      {/* <ParticipantNominationModal
+      <TeamAddParticipantModal
         isOpen={isParticipantModalOpen}
         onOk={() => changeParticipantData()}
         onCancel={() => setIsParticipantModalOpen(false)}
-      /> */}
+      />
     </>
   );
 }

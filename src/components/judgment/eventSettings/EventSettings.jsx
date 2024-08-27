@@ -18,7 +18,7 @@ import {
 } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
 import EventDate from "@modules/judgment/events/EventDate";
@@ -32,10 +32,11 @@ import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationS
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
-
-import "./sass/event-settings.scss";
+import { ROUTES } from "@constants";
 import { eventApi } from "@api";
 import { competenciesApi } from "@api";
+
+import "./sass/event-settings.scss";
 
 const columns = [
   {
@@ -82,6 +83,8 @@ const items = [
 ];
 
 function EventSettings() {
+  const navigate = useNavigate();
+
   const columns = [
     {
       title: "Название компетенции",
@@ -240,13 +243,18 @@ function EventSettings() {
   };
 
   const onValuesChange = (values) => {
-    console.log(values);
     setValues((oldValues) => ({ ...oldValues, ...values }));
   };
 
   const onFinish = () => {
-    onSubmit();
+    try {
+      onSubmit();
+    } catch (error) {
+      return;
+    }
+
     message.success("Всё в порядке!");
+    navigate(ROUTES.JUDGMENT.PATH);
   };
 
   const onFinishFailed = () => {
