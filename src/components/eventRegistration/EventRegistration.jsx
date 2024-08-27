@@ -5,9 +5,10 @@ import TeamCreateModal from "@components/eventRegistration/TeamCreateModal";
 import TeamsTable from "@components/eventRegistration/TeamsTable";
 import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
+import { teamApi, eventApi } from "@api";
+import { ROUTES } from "@constants";
 
 import "./sass/event-registration.scss";
-import { teamApi, eventApi } from "@api";
 
 function EventsRegistration() {
   const [isAddTeamModalOpen, setIsAddTeamModalOpen] = useState(false);
@@ -18,9 +19,11 @@ function EventsRegistration() {
   const items = [
     {
       title: "Мероприятия",
+      href: "./",
     },
     {
-      title: dataEvent?.event_data?.name ?? "",
+      title: dataEvent?.event?.name ?? "",
+      href: ROUTES.EVENTS_DESCRIPTION.PATH(dataEvent?.event?.id),
     },
     {
       title: "Регистрация участников",
