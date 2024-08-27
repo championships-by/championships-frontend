@@ -24,6 +24,7 @@ function TeamNominationInput({ name, options }) {
               name="team_nomination_select"
               value=""
               showSearch
+              placeholder="Выберите компетенцию"
               filterOption={FILTER_OPTION}
               options={options}
               notFoundContent="Нет данных"
@@ -31,7 +32,6 @@ function TeamNominationInput({ name, options }) {
           </FormItem>
         </Space.Compact>
       </Flex>
-      <Typography.Text type="secondary">Робофутбол</Typography.Text>
     </Flex>
   );
 }

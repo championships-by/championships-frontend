@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Flex, Form, Modal, message } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import TeamNameInput from "@modules/team/TeamNameInput";
+import { Button, Form, Modal, message, Flex } from "antd";
+import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import TeamNominationSelect from "@modules/team/TeamNominationSelect";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
 import ParticipantEquipmentInput from "@modules/participant/ParticipantEquipmentInput";
 import ParticipantSoftwareInput from "@modules/participant/ParticipantSoftwareInput";
-import { participantApi, teamApi } from "@api";
 
 import "./sass/event-registration.scss";
 
 function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
-  const [dataTeamParticipants, setTeamParticipants] = useState([]);
-  const { eventID } = useParams();
 
   const onFinish = () => {
     message.success("Всё в порядке!");
@@ -27,67 +23,61 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      participantApi
-        .getParticipant()
-        .then((data) =>
-          setTeamParticipants(
-            data.map((participant) => ({
-              value: participant.email,
-              label: `${participant.first_name} ${participant.second_name} ${participant.third_name}`,
-            }))
-          )
-        )
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        )
-        .finally(() => setTimeout(() => setIsLoading(false), 300));
-    }
-  }, [isOpen, eventID]);
-
   return (
     <Modal
       title="Добавление участников в компетенцию"
       open={isOpen}
       onOk={onOk}
       onCancel={onCancel}
-      footer={[]}
+      footer={null}
     >
       <Form
         form={form}
         layout="vertical"
-        variant="filled"
-        requiredMark="Default"
+        requiredMark="default"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        initialValues={{
+          participants: [{}],
+        }}
       >
-        <TeamNominationSelect name="nomination" />
-        <TeamParticipantsInput name="participant" mode="single" />
-        <ParticipantEquipmentInput name="equipment" />
-        <ParticipantSoftwareInput name="software" />
-        <Button
-          className="event-registration__add-participant__add-button"
-          type="dashed"
-          onClick={() => add()}
-          block
-          icon={<PlusOutlined />}
-        >
-          Добавить участника
-        </Button>
+        <Form.List name="participants">
+          {(fields, { add, remove }) => (
+            <>
+              {fields.map(({ key, name, fieldKey, ...restField }) => (
+                <div key={key}>
+                  <TeamNominationSelect name="nomination" />
+                  <TeamParticipantsInput name="participant" mode="single" />
+                  <ParticipantEquipmentInput name="equipment" />
+                  <ParticipantSoftwareInput name="software" />
+                  {fields.length > 1 && (
+                    <Button
+                      type="dashed"
+                      block
+                      icon={<MinusCircleOutlined />}
+                      onClick={() => remove(name)}
+                      className="event-registration__add-participant__remove-button"
+                      danger
+                    >
+                      Удалить участника
+                    </Button>
+                  )}
+                </div>
+              ))}
+              <Button
+                type="dashed"
+                className="event-registration__add-participant__add-button"
+                onClick={() => add()}
+                block
+                icon={<PlusOutlined />}
+              >
+                Добавить участника
+              </Button>
+            </>
+          )}
+        </Form.List>
         <Flex gap="middle">
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={isLoading}
-            onClick={() => {
-              setIsLoading(true);
-              create_team_request();
-              onOk;
-            }}
-          >
+          <Button type="primary" htmlType="submit" loading={isLoading}>
             Сохранить
           </Button>
           <Button onClick={onCancel}>Отмена</Button>

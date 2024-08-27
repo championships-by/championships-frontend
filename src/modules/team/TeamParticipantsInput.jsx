@@ -26,6 +26,9 @@ function TeamParticipantsInput({ name, options, mode }) {
               allowClear
               mode={mode}
               showSearch
+              placeholder={
+                mode == "single" ? "Выберите участника" : "Выберите участников"
+              }
               name="team_participants_select"
               value=""
               filterOption={FILTER_OPTION}
