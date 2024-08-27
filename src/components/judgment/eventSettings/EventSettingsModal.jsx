@@ -28,7 +28,6 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
   const handleCriteriaChange = (newCriteria) => {
     setCriteria(newCriteria);
   };
-
   const handleInputReglamentChange = (value) => {
     setInputReglament(value);
   };
@@ -42,8 +41,6 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
     setIsLoading(false);
   };
   const sendRequest = async () => {
-    // setIsLoading(true);
-
     switch (selectedValue) {
       case "time":
         await competenciesApi.addTimeCompetenciesForEvent(
@@ -52,25 +49,25 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
           inputReglament,
           groupCount
         );
-        console.log("time");
         break;
 
       case "playoffs":
-        // await competenciesApi.addOlympicCompetenciesForEvent(
-        //   event_id,
-        //   inputName,
-        //   inputReglament
-        // );
-        console.log("playoffs");
+        await competenciesApi.addOlympicCompetenciesForEvent(
+          event_id,
+          inputName,
+          inputReglament
+        );
         break;
 
       case "criteria":
-        // await competenciesApi.addCriteriaCompetenciesForEvent(event_id);
-        console.log("criteria");
-        console.log(criteria);
+        await competenciesApi.addCriteriaCompetenciesForEvent(
+          event_id,
+          inputName,
+          inputReglament,
+          criteria
+        );
         break;
       default:
-        console.log("default");
         break;
     }
   };

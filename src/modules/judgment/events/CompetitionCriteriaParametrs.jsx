@@ -1,33 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Space, Button, Input, Typography } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 function CriteriaParametrs({ onCriteriaChange }) {
-  const [criteria, setCriteria] = useState([]);
-  const handleCriteriaChange = (newCriteria) => {
-    setCriteria(newCriteria);
+  const handleValuesChange = (changedValues, allValues) => {
+    const criteria = allValues.criteria || [];
+    const newCriteria = criteria.map((item) => {
+      return {
+        name: item.criterion || "",
+        max_score: parseInt(item.maxPoints, 10) || 0,
+      };
+    });
+
     onCriteriaChange(newCriteria);
   };
 
-  const handleSetCriteria = (fields) => {
-    const newCriteria = fields.map((field) => {
-      return {
-        criteria: field.name[1],
-        maxPoints: field.name[2],
-      };
-    });
-    handleCriteriaChange(newCriteria);
-  };
   return (
     <div className="events__competition-criteria__div">
       <Form
         name="dynamic_form_nest_item"
         className="events__competition-criteria__form"
         autoComplete="off"
+        onValuesChange={handleValuesChange}
       >
         <Form.List
           name="criteria"
-          onValuesChange={(values) => handleSetCriteria(values)}
+          initialValue={[{ criterion: "", maxPoints: "" }]}
         >
           {(fields, { add, remove }) => (
             <>
@@ -40,23 +38,16 @@ function CriteriaParametrs({ onCriteriaChange }) {
                   <br />
                 </>
               )}
-              {fields.map(({ key, name, fieldKey, ...restField }) => (
+              {fields.map((field) => (
                 <Space
-                  key={key}
+                  key={field.key}
                   align="baseline"
                   className="events__competition-criteria__space"
                 >
                   <Form.Item
-                    {...restField}
-                    className="events__competition-criteria__item"
-                    name={[name, "criterion"]}
-                    fieldKey={[fieldKey, "criterion"]}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Не ввели критерий",
-                      },
-                    ]}
+                    {...field}
+                    name={[field.name, "criterion"]}
+                    rules={[{ required: true, message: "Не ввели критерий" }]}
                   >
                     <Input
                       placeholder="Введите критерий"
@@ -64,27 +55,26 @@ function CriteriaParametrs({ onCriteriaChange }) {
                     />
                   </Form.Item>
                   <Form.Item
-                    {...restField}
-                    name={[name, "maxPoints"]}
-                    fieldKey={[fieldKey, "maxPoints"]}
-                    className="events__competition-criteria__item"
+                    {...field}
+                    name={[field.name, "maxPoints"]}
                     rules={[
-                      {
-                        required: true,
-                        message: "Не ввели количество баллов",
-                      },
+                      { required: true, message: "Не ввели количество баллов" },
                     ]}
                   >
-                    <Input className="events__competition-criteria__inputPoints" />
+                    <Input
+                      type="number"
+                      className="events__competition-criteria__inputPoints"
+                      min={0}
+                    />
                   </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(name)} />
+                  <MinusCircleOutlined onClick={() => remove(field.name)} />
                 </Space>
               ))}
               <Form.Item>
                 <Button
                   className="events__competition-criteria__addButton"
                   type="dashed"
-                  onClick={() => add()}
+                  onClick={() => add({ criterion: "", maxPoints: "" })}
                   block
                   icon={<PlusOutlined />}
                 >

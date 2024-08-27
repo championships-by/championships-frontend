@@ -27,15 +27,20 @@ export const competenciesApi = {
           event_id: eventID,
           nomination_name: nominationName,
           reglament: reglament,
-          judges_ids: [0],
+          judges_ids: [6, 7],
         },
-        group_count: 0,
-        play_of_participants_count: 0,
+        group_count: 1,
+        play_of_participants_count: 1,
       }
     );
   },
 
-  addCriteriaCompetenciesForEvent: async (eventID, nominationID, reglament) => {
+  addCriteriaCompetenciesForEvent: async (
+    eventID,
+    nominationID,
+    reglament,
+    criteria
+  ) => {
     axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_criteria`,
       {
@@ -43,8 +48,9 @@ export const competenciesApi = {
           event_id: eventID,
           nomination_name: nominationID,
           reglament: reglament,
-          judges_ids: [0],
+          judges_ids: [6, 7],
         },
+        criterias: criteria,
       }
     );
   },
