@@ -8,4 +8,9 @@
   &__team-edit-modal {
     top: 20;
   }
+  &__add-participant {
+    &__add-button {
+      margin-bottom: 16px;
+    }
+  }
 }

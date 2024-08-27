@@ -1,8 +1,9 @@
 import { Flex, Input, Select, Space, Typography } from "antd";
 import { FlagOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
-import "./sass/team.scss";
 import { FILTER_OPTION } from "@utils";
+
+import "./sass/team.scss";
 
 function TeamNominationInput({ name, options }) {
   return (
@@ -25,6 +26,7 @@ function TeamNominationInput({ name, options }) {
               showSearch
               filterOption={FILTER_OPTION}
               options={options}
+              notFoundContent="Нет данных"
             />
           </FormItem>
         </Space.Compact>

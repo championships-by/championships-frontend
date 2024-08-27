@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
-import { changeDateFormat, getEventLevel } from "@utils";
+import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import { yaShareLink, ROUTES, url } from "@constants";
 import { eventApi } from "@api";
 
@@ -93,16 +93,6 @@ function EventInformation() {
 
   const finishDate = new Date(dataEvent.registration_finish_date);
   const now = new Date();
-
-  const openPdf = () => {
-    const pdfUrl = `${url}/${dataEvent.event_rules}`;
-    const link = document.createElement("a");
-    link.href = pdfUrl;
-    link.target = "_blank";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   return (
     <div className="events__event-information__container">
@@ -222,7 +212,7 @@ function EventInformation() {
         {dataEvent.description}
       </Typography.Text>
       <br />
-      <Button type="primary" onClick={openPdf}>
+      <Button type="primary" onClick={() => openPdf(dataEvent.event_rules)}>
         Положение
       </Button>
       <br />

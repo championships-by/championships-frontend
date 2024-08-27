@@ -39,20 +39,10 @@ export const eventApi = {
     });
   },
   changeLogo: (formData) => {
-    return axios.post(`${API_PATH}/event/event_update_logo`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      withCredentials: true,
-    });
+    return axios.post(`${API_PATH}/event/event_update_logo`, formData);
   },
   changeRegulation: (formData) => {
-    return axios.post(`${API_PATH}/event/event_update_doc`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      withCredentials: true,
-    });
+    return axios.post(`${API_PATH}/event/event_update_doc`, formData);
   },
   deleteEvent: (body) => {
     const headers = new Headers();

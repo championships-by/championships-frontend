@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import TeamNameInput from "@modules/team/TeamNameInput";
+import TeamNominationSelect from "@modules/team/TeamNominationSelect";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
+import ParticipantEquipmentInput from "@modules/participant/ParticipantEquipmentInput";
+import ParticipantSoftwareInput from "@modules/participant/ParticipantSoftwareInput";
 import { participantApi, teamApi } from "@api";
 
-function TeamCreateModal({ isOpen, onOk, onCancel }) {
+import "./sass/event-registration.scss";
+
+function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
@@ -42,18 +48,9 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
     }
   }, [isOpen, eventID]);
 
-  const create_team_request = async () => {
-    const body = JSON.stringify({
-      name: form.getFieldValue("teamName"),
-    });
-
-    teamApi.setTeams(body);
-  };
-
   return (
     <Modal
-      title="Создание команды"
-      className="event-registration__team-create-modal"
+      title="Добавление участников в компетенцию"
       open={isOpen}
       onOk={onOk}
       onCancel={onCancel}
@@ -67,12 +64,19 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <TeamNameInput name="teamName" />
-        <TeamParticipantsInput
-          name="teamParticipants"
-          options={dataTeamParticipants}
-          mode="multiple"
-        />
+        <TeamNominationSelect name="nomination" />
+        <TeamParticipantsInput name="participant" mode="single" />
+        <ParticipantEquipmentInput name="equipment" />
+        <ParticipantSoftwareInput name="software" />
+        <Button
+          className="event-registration__add-participant__add-button"
+          type="dashed"
+          onClick={() => add()}
+          block
+          icon={<PlusOutlined />}
+        >
+          Добавить участника
+        </Button>
         <Flex gap="middle">
           <Button
             type="primary"
@@ -93,4 +97,4 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
   );
 }
 
-export default TeamCreateModal;
+export default TeamAddParticipantModal;
