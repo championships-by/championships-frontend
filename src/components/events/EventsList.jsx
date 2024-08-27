@@ -27,6 +27,7 @@ function EventsList({ events }) {
         cover={
           <img
             alt="test"
+            className="events__card__img"
             src={
               event.logo_path !== "/" && event.logo_path
                 ? `${url}/${event.logo_path}`
@@ -60,8 +61,8 @@ function EventsList({ events }) {
             </div>
           ) : (
             <div className="events__card__registration_open">
-              <CheckCircleOutlined />
-              Регистрация открыта по {changeDateFormat(finishDate)}
+              <CheckCircleOutlined /> Регистрация открыта по{" "}
+              {changeDateFormat(finishDate)}
             </div>
           )}
         </Typography.Text>

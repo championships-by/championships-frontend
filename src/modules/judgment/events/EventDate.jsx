@@ -20,23 +20,29 @@ function EventDate({ name, value, onChange: onChangeBase, form }) {
 
   const onChange = (val, type) => {
     const date = dayjs(val).toISOString();
+    switch (type) {
+      case "from": {
+        form.setFieldsValue({
+          [`${name}_holding_start_date`]: date,
+        });
+        onChangeBase({
+          ...value,
+          holding_start_date: date,
+        });
 
-    if (type === "from") {
-      form.setFieldsValue({
-        [`${name}_holding_start_date`]: date,
-      });
-      onChangeBase({
-        ...value,
-        holding_start_date: date,
-      });
-    } else if (type === "to") {
-      form.setFieldsValue({
-        [`${name}_holding_finish_date`]: date,
-      });
-      onChangeBase({
-        ...value,
-        holding_finish_date: date,
-      });
+        break;
+      }
+      case "to": {
+        form.setFieldsValue({
+          [`${name}_holding_finish_date`]: date,
+        });
+        onChangeBase({
+          ...value,
+          holding_finish_date: date,
+        });
+
+        break;
+      }
     }
   };
 
@@ -56,10 +62,14 @@ function EventDate({ name, value, onChange: onChangeBase, form }) {
             id={`${name}_holding_start_date`}
             format={Locale.dateTimeFormat}
             showTime={{ format: Locale.timeFormat }}
-            placeholder="Выберите дату и время мероприятия"
+            placeholder="Выберите дату и время начала мероприятия"
             className="events__event-date__datepicker"
-            value={holding_start_date ? dayjs(holding_start_date) : undefined}
-            onChange={(value) => onChange(value, "from")}
+            defaultValue={
+              holding_start_date ? dayjs(holding_start_date) : undefined
+            }
+            onChange={(value) => {
+              onChange(value, "from");
+            }}
           />
         </div>
       </FormItem>
@@ -76,10 +86,14 @@ function EventDate({ name, value, onChange: onChangeBase, form }) {
             id={`${name}_holding_finish_date`}
             format={Locale.dateTimeFormat}
             showTime={{ format: Locale.timeFormat }}
-            placeholder="Выберите дату и время мероприятия"
+            placeholder="Выберите дату и время окончания мероприятия"
             className="events__event-date__datepicker"
-            value={holding_finish_date ? dayjs(holding_finish_date) : undefined}
-            onChange={(value) => onChange(value, "to")}
+            defaultValue={
+              holding_finish_date ? dayjs(holding_finish_date) : undefined
+            }
+            onChange={(value) => {
+              onChange(value, "to");
+            }}
           />
         </div>
       </FormItem>

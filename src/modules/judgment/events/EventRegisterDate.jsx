@@ -23,26 +23,33 @@ function EventRegisterDate({ name, value, onChange: onChangeBase, form }) {
   const onChange = (val, type) => {
     const date = dayjs(val).toISOString();
 
-    if (type === "from") {
-      form.setFieldsValue({
-        [`${name}_registration_start_date`]: date,
-      });
-      onChangeBase({
-        [name]: {
-          ...value,
-          registration_start_date: date,
-        },
-      });
-    } else if (type === "to") {
-      form.setFieldsValue({
-        [`${name}_registration_finish_date`]: date,
-      });
-      onChangeBase({
-        [name]: {
-          ...value,
-          registration_finish_date: date,
-        },
-      });
+    switch (type) {
+      case "from": {
+        form.setFieldsValue({
+          [`${name}_registration_start_date`]: date,
+        });
+        onChangeBase({
+          [name]: {
+            ...value,
+            registration_start_date: date,
+          },
+        });
+
+        break;
+      }
+      case "to": {
+        form.setFieldsValue({
+          [`${name}_registration_finish_date`]: date,
+        });
+        onChangeBase({
+          [name]: {
+            ...value,
+            registration_finish_date: date,
+          },
+        });
+
+        break;
+      }
     }
   };
 
@@ -62,14 +69,16 @@ function EventRegisterDate({ name, value, onChange: onChangeBase, form }) {
             id={`${name}_registration_start_date`}
             format={Locale.dateTimeFormat}
             showTime={{ format: Locale.timeFormat }}
-            placeholder="Выберите дату и время регистрации"
+            placeholder="Выберите дату и время начала регистрации"
             className="events__event-date__datepicker"
-            value={
+            defaultValue={
               registration_start_date
                 ? dayjs(registration_start_date)
                 : undefined
             }
-            onChange={(value) => onChange(value, "from")}
+            onChange={(value) => {
+              onChange(value, "from");
+            }}
           />
         </div>
       </FormItem>
@@ -86,14 +95,16 @@ function EventRegisterDate({ name, value, onChange: onChangeBase, form }) {
             id={`${name}_registration_finish_date`}
             format={Locale.dateTimeFormat}
             showTime={{ format: Locale.timeFormat }}
-            placeholder="Выберите дату и время регистрации"
+            placeholder="Выберите дату и время окончания регистрации"
             className="events__event-date__datepicker"
-            value={
+            defaultValue={
               registration_finish_date
                 ? dayjs(registration_finish_date)
                 : undefined
             }
-            onChange={(value) => onChange(value, "to")}
+            onChange={(value) => {
+              onChange(value, "to");
+            }}
           />
         </div>
       </FormItem>
