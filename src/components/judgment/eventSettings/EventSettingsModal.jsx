@@ -14,6 +14,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
   const [selectedValue, setSelectedValue] = useState("");
   const [groupCount, setGroupCount] = useState();
   const [criteria, setCriteria] = useState([]);
+  const [selectedJudges, setSelectedJudges] = useState([]);
   const { eventID } = useParams();
 
   const event_id = parseInt(eventID, 10);
@@ -36,6 +37,10 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
     setSelectedValue(value);
   };
 
+  const handleChangeJudges = (value) => {
+    setSelectedJudges(value);
+  };
+
   const onFinishFailed = () => {
     message.error("Проверьте поля для ввода!");
     setIsLoading(false);
@@ -47,6 +52,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
           event_id,
           inputName,
           inputReglament,
+          selectedJudges,
           groupCount
         );
         break;
@@ -55,7 +61,9 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
         await competenciesApi.addOlympicCompetenciesForEvent(
           event_id,
           inputName,
-          inputReglament
+          inputReglament,
+          selectedJudges,
+          groupCount
         );
         break;
 
@@ -64,6 +72,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
           event_id,
           inputName,
           inputReglament,
+          selectedJudges,
           criteria
         );
         break;
@@ -93,7 +102,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
           onInputChange={handleInputReglamentChange}
           value={inputReglament}
         />
-        <CompetitionJudge />
+        <CompetitionJudge onJudgeChange={handleChangeJudges} />
         <CompetitionType
           onChange={handleChange}
           onInputChange={handleGroupCount}

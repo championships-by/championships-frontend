@@ -20,7 +20,13 @@ function TimeParametrs({ onInputChange }) {
           value={typeof value === "number" ? value : 1}
           onChange={onChange}
         />
-        <InputNumber min={1} max={10} value={value} onChange={onChange} />
+        <InputNumber
+          min={1}
+          max={10}
+          value={value}
+          onChange={onChange}
+          defaultValue={3}
+        />
       </Space>
     </div>
   );

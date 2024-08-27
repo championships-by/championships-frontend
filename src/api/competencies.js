@@ -18,7 +18,8 @@ export const competenciesApi = {
   addOlympicCompetenciesForEvent: async (
     eventID,
     nominationName,
-    reglament
+    reglament,
+    selectedJudges
   ) => {
     axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_olympic`,
@@ -27,7 +28,7 @@ export const competenciesApi = {
           event_id: eventID,
           nomination_name: nominationName,
           reglament: reglament,
-          judges_ids: [6, 7],
+          judges_ids: selectedJudges,
         },
         group_count: 1,
         play_of_participants_count: 1,
@@ -39,6 +40,7 @@ export const competenciesApi = {
     eventID,
     nominationID,
     reglament,
+    selectedJudges,
     criteria
   ) => {
     axios.post(
@@ -48,7 +50,7 @@ export const competenciesApi = {
           event_id: eventID,
           nomination_name: nominationID,
           reglament: reglament,
-          judges_ids: [6, 7],
+          judges_ids: selectedJudges,
         },
         criterias: criteria,
       }
@@ -59,6 +61,7 @@ export const competenciesApi = {
     eventID,
     nominationID,
     reglament,
+    selectedJudges,
     raceRoundAmount
   ) => {
     axios.post(
@@ -68,7 +71,7 @@ export const competenciesApi = {
           event_id: eventID,
           nomination_name: nominationID,
           reglament: reglament,
-          judges_ids: [6, 7],
+          judges_ids: selectedJudges,
         },
         race_round_amount: raceRoundAmount,
       }

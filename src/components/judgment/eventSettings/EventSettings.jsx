@@ -388,6 +388,7 @@ function EventSettings() {
             columns={columns}
             dataSource={dataNomination}
             locale={Locale}
+            pagination={false}
           />
         </Col>
       </Row>

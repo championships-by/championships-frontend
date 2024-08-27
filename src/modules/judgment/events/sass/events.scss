@@ -82,6 +82,9 @@
   &__compitation-name {
     &__space {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
     &__image {
       width: 38px;
@@ -89,7 +92,12 @@
       border: none;
     }
     &__input {
-      width: 250%;
+      width: 505px;
+      box-sizing: border-box;
+      margin-bottom: 0;
+    }
+    &__example {
+      margin-top: 0px;
     }
     &__div {
       margin-bottom: 24px;
