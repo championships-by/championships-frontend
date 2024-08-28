@@ -105,4 +105,10 @@ export const competenciesApi = {
       nomination_id: nominationID,
     });
   },
+  deleteNomination: (data) => {
+    console.log(data);
+    axios.delete(`${API_PATH}/nomination_event/delete_nomination_from_event`, {
+      data,
+    });
+  },
 };

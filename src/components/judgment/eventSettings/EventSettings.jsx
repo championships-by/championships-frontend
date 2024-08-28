@@ -33,8 +33,8 @@ import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationS
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
-import CompetitionModal from "../../../modules/judgment/events/CompetitionModal";
-import ParticipantModal from "../../../modules/judgment/events/ParticipantModal";
+import CompetitionModal from "@modules/judgment/events/CompetitionModal";
+import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi } from "@api";
 import { Locale, ROUTES } from "@constants";
 
@@ -51,8 +51,6 @@ const items = [
 ];
 
 function EventSettings() {
-  // const navigate = useNavigate();
-
   const columns = [
     {
       title: "Название компитенции",
@@ -103,15 +101,19 @@ function EventSettings() {
               onClick={() => openCompetenciesModal(record)}
             />
           </Tooltip>
-          <Tooltip title="Участники соревнования">
+          <Tooltip title="Участники">
             <Button
               type="text"
               icon={<TeamOutlined />}
               onClick={() => openParticipantModal(record)}
             />
           </Tooltip>
-          <Tooltip title="Удалить соревнование">
-            <Button type="text" icon={<DeleteOutlined />} />
+          <Tooltip title="Удалить">
+            <Button
+              type="text"
+              icon={<DeleteOutlined />}
+              onClick={() => deleteNominations(record)}
+            />
           </Tooltip>
         </Space>
       ),
@@ -150,7 +152,7 @@ function EventSettings() {
     window.open("http://google.com");
   };
 
-  const translateType = (type) => {
+  const translateTypeFromEnglishIntoRussian = (type) => {
     switch (type) {
       case "time":
         return "По времени";
@@ -163,9 +165,37 @@ function EventSettings() {
     }
   };
 
+  const translateTypeFromRussianIntoEnglish = (type) => {
+    switch (type) {
+      case "По критериям":
+        return "criteria";
+      case "По времени":
+        return "time";
+      case "Плей-офф":
+        return "olympic";
+      default:
+        return type;
+    }
+  };
+
   const findNominationId = (name, response) => {
     const nomination = response.find((item) => item.name === name);
     return nomination ? nomination.id : null;
+  };
+
+  const deleteNominations = (record) => {
+    const eventId = parseInt(eventID, 10);
+    const nominationType = translateTypeFromRussianIntoEnglish(record.type);
+    const nominationName = record.nomination_name;
+    const nominationID = findNominationId(nominationName, eventInfo);
+
+    const data = {
+      event_id: eventId,
+      nomination_id: nominationID,
+      type: nominationType,
+    };
+
+    competenciesApi.deleteNomination(data);
   };
 
   const openCompetenciesModal = (record) => {
@@ -209,7 +239,7 @@ function EventSettings() {
     competenciesApi.getCompetenciesEventData(eventID).then((response) => {
       const translatedType = response.data.map((record) => ({
         ...record,
-        type: translateType(record.type),
+        type: translateTypeFromEnglishIntoRussian(record.type),
       }));
       setDataNomination(translatedType);
     });
