@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Space, Button, Input, Typography } from "antd";
+import { Form, Space, Button, Input, Typography, Tooltip } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 function CriteriaParametrs({ onCriteriaChange }) {
@@ -67,7 +67,9 @@ function CriteriaParametrs({ onCriteriaChange }) {
                       min={0}
                     />
                   </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(field.name)} />
+                  <Tooltip title="Удалить критерий">
+                    <MinusCircleOutlined onClick={() => remove(field.name)} />
+                  </Tooltip>
                 </Space>
               ))}
               <Form.Item>
