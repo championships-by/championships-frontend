@@ -8,6 +8,7 @@ import {
   message,
   Form,
   Space,
+  Tooltip,
 } from "antd";
 import {
   DeleteOutlined,
@@ -17,8 +18,8 @@ import {
   LinkOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect, useLayoutEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
 import EventDate from "@modules/judgment/events/EventDate";
@@ -32,90 +33,23 @@ import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationS
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
+import CompetitionModal from "../../../modules/judgment/events/CompetitionModal";
+import ParticipantModal from "../../../modules/judgment/events/ParticipantModal";
+import { eventApi, competenciesApi } from "@api";
+import { Locale, ROUTES } from "@constants";
 
 import "./sass/event-settings.scss";
-import { eventApi } from "@api";
-import { competenciesApi } from "@api";
 
-const columns = [
-  {
-    title: "Название компетенции",
-    dataIndex: "nomination_name",
-    key: "nomination_name",
-  },
-  {
-    title: "Тип соревнований",
-    dataIndex: "type",
-    key: "type",
-  },
-  {
-    title: "Регламент",
-    key: "regulations",
-    render: () => (
-      <Space>
-        <Button type="text" icon={<LinkOutlined />} />
-      </Space>
-    ),
-  },
-  {
-    title: "Действия",
-    key: "action",
-    render: () => (
-      <Space>
-        <Button type="text" icon={<EditOutlined />} onClick={showModal} />
-        <Button type="text" icon={<TrophyOutlined />} />
-        <Button type="text" icon={<TeamOutlined />} />
-        <Button type="text" icon={<DeleteOutlined />} />
-      </Space>
-    ),
-  },
-];
+const eventsBreadcromb = {
+  title: "Управление мероприятиями",
+  href: ROUTES.JUDGMENT.PATH,
+};
 
-const items = [
-  {
-    title: "Мероприятия",
-    href: "./",
-  },
-  {
-    title: "Настройка мероприятия",
-  },
-];
+const editEventBreadcromb = {
+  title: "Редактирование мероприятия",
+};
 
 function EventSettings() {
-  const columns = [
-    {
-      title: "Название компетенции",
-      dataIndex: "nomination_name",
-      key: "nomination_name",
-    },
-    {
-      title: "Тип соревнований",
-      dataIndex: "type",
-      key: "type",
-    },
-    {
-      title: "Регламент",
-      key: "regulations",
-      render: () => (
-        <Space>
-          <Button type="text" icon={<LinkOutlined />} />
-        </Space>
-      ),
-    },
-    {
-      title: "Действия",
-      key: "action",
-      render: () => (
-        <Space>
-          <Button type="text" icon={<EditOutlined />} onClick={openEditModal} />
-          <Button type="text" icon={<TrophyOutlined />} />
-          <Button type="text" icon={<TeamOutlined />} />
-          <Button type="text" icon={<DeleteOutlined />} />
-        </Space>
-      ),
-    },
-  ];
-
   const [isLoading, setIsLoading] = useState(true);
   const [loadings, setLoadings] = useState([]);
   const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
@@ -123,30 +57,173 @@ function EventSettings() {
   const [dataEvent, setEvent] = useState({});
   const [values, setValues] = useState({});
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [openTrophyModal, setTrophyModal] = useState(false);
+  const [participantModal, setParticipantModal] = useState(false);
+  const [eventInfo, setEventInfo] = useState();
   const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [dataNominationID, setNominationID] = useState();
+  const items = [
+    eventsBreadcromb,
+    {
+      title: dataEvent?.event?.name ?? "",
+      href: ROUTES.EVENTS_DESCRIPTION.PATH(dataEvent?.event?.id),
+    },
+    editEventBreadcromb,
+  ];
+
+  const columns = [
+    {
+      title: "Название компетенции",
+      dataIndex: "nomination_name",
+      key: "nomination_name",
+      sorter: (a, b) => a.nomination_name.localeCompare(b.nomination_name),
+    },
+    {
+      title: "Тип соревнований",
+      dataIndex: "type",
+      key: "type",
+      filters: [
+        { text: "По времени", value: "По времени" },
+        { text: "По критериям", value: "По критериям" },
+        { text: "Плей-офф", value: "Плей-офф" },
+      ],
+      onFilter: (value, record) => record.type.includes(value),
+    },
+    {
+      title: "Регламент",
+      key: "regulations",
+      render: () => (
+        <Space>
+          <Button
+            type="text"
+            icon={<LinkOutlined />}
+            onClick={() => openLink()}
+          />
+        </Space>
+      ),
+    },
+    {
+      title: "Действия",
+      key: "action",
+      render: (record) => (
+        <Space>
+          <Tooltip title="Редактировать">
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={openEditModal}
+            />
+          </Tooltip>
+          <Tooltip title="Начать соревнование">
+            <Button
+              type="text"
+              icon={<TrophyOutlined />}
+              onClick={() => openCompetenciesModal(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Участники соревнования">
+            <Button
+              type="text"
+              icon={<TeamOutlined />}
+              onClick={() => openParticipantModal(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Удалить соревнование">
+            <Button type="text" icon={<DeleteOutlined />} />
+          </Tooltip>
+        </Space>
+      ),
+    },
+  ];
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
+  const startCriteriaStage = (eventID, nominationID) => {
+    const eventId = parseInt(eventID, 10);
+    competenciesApi.startCriteriaStage(eventId, nominationID);
+  };
+
+  const startTimeStage = (eventID, nominationID) => {
+    const eventId = parseInt(eventID, 10);
+    competenciesApi.startTimeStage(eventId, nominationID);
+  };
+  const openLink = () => {
+    window.open("http://google.com");
+  };
+
+  const translateType = (type) => {
+    switch (type) {
+      case "time":
+        return "По времени";
+      case "criteria":
+        return "По критериям";
+      case "olympic":
+        return "Плей-офф";
+      default:
+        return type;
+    }
+  };
+
+  const findNominationId = (name, response) => {
+    const nomination = response.find((item) => item.name === name);
+    return nomination ? nomination.id : null;
+  };
+
+  const openCompetenciesModal = (record) => {
+    const competitionType = record.type;
+    const competitionName = record.nomination_name;
+    const nominationID = findNominationId(competitionName, eventInfo);
+
+    switch (competitionType) {
+      case "Плей-офф":
+        setTrophyModal(true);
+        break;
+      case "По времени":
+        startTimeStage(eventID, nominationID);
+        navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
+        break;
+      case "По критериям":
+        startCriteriaStage(eventID, nominationID);
+        navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+        break;
+      default:
+        break;
+    }
+    setNominationID(nominationID);
+  };
+
+  const openParticipantModal = (record) => {
+    const competitionType = record.type;
+    if (competitionType === "По критериям") {
+      message.info("Критерии");
+    } else {
+      message.info("Остальное");
+    }
+  };
 
   useEffect(() => {
-    competenciesApi
-      .getCompetenciesEventData(eventID)
-      .then((response) => setDataNomination(response.data));
-  });
+    competenciesApi.getCompetenciesEventData(eventID).then((response) => {
+      const translatedType = response.data.map((record) => ({
+        ...record,
+        type: translateType(record.type),
+      }));
+      setDataNomination(translatedType);
+    });
+  }, [eventID]);
 
   useEffect(() => {
-    if (!eventID) {
+    if (eventID) {
       try {
         eventApi.getEvent(eventID).then((data) => {
           setEvent(data);
+          setEventInfo(data.nominations);
 
           const { event } = data;
 
-          // event_logo
-          // event_regulation
           const values = {
             name: event.name,
             participant_question_email: event.participant_question_email,
@@ -164,8 +241,8 @@ function EventSettings() {
               holding_finish_date: event.holding_finish_date,
             },
           };
-
           form.setFieldsValue(values);
+
           setValues(values);
 
           setTimeout(() => setIsLoading(false), 300);
@@ -180,7 +257,7 @@ function EventSettings() {
     }
   }, [eventID, form]);
 
-  const onClick = async () => {
+  const onSubmit = async () => {
     enterLoading(0);
 
     const {
@@ -193,12 +270,14 @@ function EventSettings() {
       published,
       registration,
       holding,
+      event_logo,
+      event_regulation,
     } = values;
 
     const body = new URLSearchParams({
       event_data: JSON.stringify({
         id: eventID,
-        name,
+        name: dataEvent.event.name === name ? undefined : name,
         participant_question_email,
         event_place,
         description,
@@ -212,15 +291,56 @@ function EventSettings() {
       }),
     });
 
-    eventApi.changeEvent(body);
+    let eventSuccess = true;
+
+    try {
+      await eventApi.changeEvent(body);
+    } catch (error) {
+      message.error("При редактировании мероприятия произошла ошибка.");
+      eventSuccess = false;
+    }
+
+    let logoSuccess = true;
+
+    if (event_logo) {
+      try {
+        const formDataLogo = new FormData();
+        formDataLogo.append("logo", event_logo);
+        formDataLogo.append("event_id", eventID);
+        await eventApi.changeLogo(formDataLogo);
+      } catch (error) {
+        message.error("При изменении логотипа произошла ошибка.");
+        logoSuccess = false;
+      }
+    }
+
+    let regulationSuccess = true;
+
+    if (event_regulation) {
+      try {
+        const formDataRegulation = new FormData();
+        formDataRegulation.append("rules", event_regulation);
+        formDataRegulation.append("event_id", eventID);
+        await eventApi.changeRegulation(formDataRegulation);
+      } catch (error) {
+        message.error("При изменении положения о проведении произошла ошибка.");
+        regulationSuccess = false;
+      }
+    }
+
+    return eventSuccess && logoSuccess && regulationSuccess;
   };
 
   const onValuesChange = (values) => {
     setValues((oldValues) => ({ ...oldValues, ...values }));
   };
 
-  const onFinish = () => {
-    message.success("Всё в порядке!");
+  const onFinish = async () => {
+    const success = await onSubmit();
+    if (success) {
+      message.success("Всё в порядке!");
+      navigate(ROUTES.JUDGMENT.PATH);
+    }
   };
 
   const onFinishFailed = () => {
@@ -260,7 +380,13 @@ function EventSettings() {
           >
             <Typography.Title level={3}>Данные мероприятия</Typography.Title>
             <EventName name="name" value={values.name} />
-            <EventLogo name="event_logo" value={values.event_logo} />
+            <EventLogo
+              name="event_logo"
+              value={values.event_logo}
+              required={false}
+              onChange={onValuesChange}
+              form={form}
+            />
             <EventEmail
               name="participant_question_email"
               value={values.participant_question_email}
@@ -269,16 +395,23 @@ function EventSettings() {
             <EventRegulation
               name="event_regulation"
               value={values.event_regulation}
+              required={false}
+              onChange={onValuesChange}
+              form={form}
             />
             <EventRegisterDate
               name="registration"
               value={values.registration}
+              form={form}
               onChange={onValuesChange}
+              isEdit={true}
             />
             <EventDate
               name="holding"
               value={values.holding}
+              form={form}
               onChange={onValuesChange}
+              isEdit={true}
             />
             <EventRegistrationSwitch
               name="published"
@@ -290,18 +423,14 @@ function EventSettings() {
             <EventLevel
               name="event_level"
               value={values.event_level}
+              form={form}
               onChange={onValuesChange}
             />
             <EventRequirements
               name="participation_needs"
               value={values.participation_needs}
             />
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={loadings[0]}
-              onClick={onClick}
-            >
+            <Button type="primary" htmlType="submit" loading={loadings[0]}>
               Сохранить данные
             </Button>
           </Form>
@@ -323,7 +452,8 @@ function EventSettings() {
           <Table
             columns={columns}
             dataSource={dataNomination}
-            locale={{ emptyText: "Нет данных" }}
+            locale={Locale}
+            pagination={false}
           />
         </Col>
       </Row>
@@ -339,6 +469,19 @@ function EventSettings() {
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}
       />
+      <CompetitionModal
+        isOpen={openTrophyModal}
+        onOk={() => setTrophyModal(false)}
+        onCancel={() => setTrophyModal(false)}
+        name="Настройки плей-офф"
+        nominationID={dataNominationID}
+      ></CompetitionModal>
+      <ParticipantModal
+        isOpen={participantModal}
+        onOk={() => setParticipantModal(false)}
+        onCancel={() => setParticipantModal(false)}
+        name="Участники соревнования"
+      ></ParticipantModal>
     </div>
   );
 }

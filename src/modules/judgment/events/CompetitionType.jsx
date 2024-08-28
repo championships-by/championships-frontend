@@ -20,19 +20,25 @@ const options = [
   },
 ];
 
-function CompetitionType() {
+function CompetitionType({ onChange, onInputChange, onCriteriaChange }) {
   const [selectedValue, setSelectedValue] = useState("");
+  const [groupCount, setGroupCount] = useState();
 
   const handleChange = (value) => {
     setSelectedValue(value);
+    onChange(value);
+  };
+
+  const handleChangeGroupCount = (value) => {
+    setGroupCount(value);
+    onInputChange(value);
   };
 
   const settingsComponents = {
-    criteria: <CriteriaParametrs />,
-    time: <TimeParametrs />,
+    criteria: <CriteriaParametrs onCriteriaChange={onCriteriaChange} />,
+    time: <TimeParametrs onInputChange={handleChangeGroupCount} />,
     playoffs: null,
   };
-
   return (
     <div className="events__competition-type__div">
       <Typography.Text className="events__competition-type__text">

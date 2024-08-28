@@ -2,9 +2,12 @@ import { Typography, Upload, message, Button, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
 
-function EventLogo({ name, onChange }) {
-  const handleFileChange = ({ file }) => {
-    onChange({ [name]: file });
+import "./sass/events.scss";
+
+function EventLogo({ name, onChange: onChangeBase, required, form }) {
+  const onChange = ({ file }) => {
+    onChangeBase({ [name]: file });
+    form.setFieldsValue({ [name]: file });
   };
 
   return (
@@ -14,7 +17,7 @@ function EventLogo({ name, onChange }) {
       validateFirst
       rules={[
         {
-          required: true,
+          required: required,
           message: "Пожалуйста, загрузите логотип",
         },
       ]}
@@ -25,11 +28,14 @@ function EventLogo({ name, onChange }) {
           accept="image/jpg, image/jpeg, image/png"
           maxCount={1}
           beforeUpload={() => false}
-          onChange={handleFileChange}
+          onChange={onChange}
         >
           <Button icon={<UploadOutlined />}>Загрузить</Button>
         </Upload>
       </Flex>
+      <Typography.Text type="secondary">
+        Расширения: PNG, JPG, JPEG.
+      </Typography.Text>
     </FormItem>
   );
 }

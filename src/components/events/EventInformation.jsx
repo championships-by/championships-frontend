@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
-import { changeDateFormat, getEventLevel } from "@utils";
+import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import { yaShareLink, ROUTES, url } from "@constants";
 import { eventApi } from "@api";
 
@@ -61,7 +61,7 @@ function EventInformation() {
   const items = [
     {
       title: "Мероприятия",
-      href: "./",
+      href: ROUTES.EVENTS.PATH,
     },
     {
       title: dataEvent.name,
@@ -212,7 +212,9 @@ function EventInformation() {
         {dataEvent.description}
       </Typography.Text>
       <br />
-      <Button type="primary">Положение</Button>
+      <Button type="primary" onClick={() => openPdf(dataEvent.event_rules)}>
+        Положение
+      </Button>
       <br />
       <Typography.Title level={3} className="event-settings__compitation-title">
         Компетенции

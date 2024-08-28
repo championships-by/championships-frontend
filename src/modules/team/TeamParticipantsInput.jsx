@@ -1,13 +1,16 @@
 import { Flex, Input, Select, Space, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
-import "./sass/team.scss";
 import { FILTER_OPTION } from "@utils";
 
-function TeamParticipantsInput({ name, options }) {
+import "./sass/team.scss";
+
+function TeamParticipantsInput({ name, options, mode }) {
   return (
     <Flex vertical className="team__team-participants-input__flex">
-      <Typography.Text>Участники</Typography.Text>
+      <Typography.Text>
+        {mode == "single" ? "Участник" : "Участники"}
+      </Typography.Text>
       <Flex>
         <Space.Compact className="team__team-participants-input__space">
           <Input
@@ -21,17 +24,20 @@ function TeamParticipantsInput({ name, options }) {
           >
             <Select
               allowClear
-              mode="multiple"
+              mode={mode}
               showSearch
+              placeholder={
+                mode == "single" ? "Выберите участника" : "Выберите участников"
+              }
               name="team_participants_select"
               value=""
               filterOption={FILTER_OPTION}
               options={options}
+              notFoundContent="Нет данных"
             />
           </FormItem>
         </Space.Compact>
       </Flex>
-      <Typography.Text type="secondary">Робофутбол</Typography.Text>
     </Flex>
   );
 }

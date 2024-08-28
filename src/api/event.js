@@ -1,3 +1,4 @@
+import axios from "axios";
 import { instance } from ".";
 
 export const eventApi = {
@@ -36,6 +37,12 @@ export const eventApi = {
       redirect: "follow",
       credentials: "include",
     });
+  },
+  changeLogo: (formData) => {
+    return axios.post(`${API_PATH}/event/event_update_logo`, formData);
+  },
+  changeRegulation: (formData) => {
+    return axios.post(`${API_PATH}/event/event_update_doc`, formData);
   },
   deleteEvent: (body) => {
     const headers = new Headers();

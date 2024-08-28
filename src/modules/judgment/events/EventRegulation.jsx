@@ -2,9 +2,12 @@ import { Typography, Upload, message, Button, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
 
-function EventRegulation({ name, onChange }) {
-  const handleFileChange = ({ file }) => {
-    onChange({ [name]: file });
+import "./sass/events.scss";
+
+function EventRegulation({ name, onChange: onChangeBase, required, form }) {
+  const onChange = ({ file }) => {
+    onChangeBase({ [name]: file });
+    form.setFieldsValue({ [name]: file });
   };
 
   return (
@@ -14,7 +17,7 @@ function EventRegulation({ name, onChange }) {
       validateFirst
       rules={[
         {
-          required: true,
+          required: required,
           message: "Пожалуйста, загрузите положение о проведении мероприятия",
         },
       ]}
@@ -25,11 +28,12 @@ function EventRegulation({ name, onChange }) {
           accept=".pdf"
           maxCount={1}
           beforeUpload={() => false}
-          onChange={handleFileChange}
+          onChange={onChange}
         >
           <Button icon={<UploadOutlined />}>Загрузить</Button>
         </Upload>
       </Flex>
+      <Typography.Text type="secondary">Расширение: PDF.</Typography.Text>
     </FormItem>
   );
 }

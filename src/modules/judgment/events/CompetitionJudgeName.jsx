@@ -10,11 +10,12 @@ function getFullName(item) {
   return item.first_name + " " + item.second_name + " " + item.third_name;
 }
 
-function CompetitionType() {
+function CompetitionType({ onJudgeChange }) {
   const [options, setOptions] = useState([]);
   const { limit } = useParams();
   const [inputValue, setInputValue] = useState("");
   const [dataCompetencies, setDataCompetencies] = useState([]);
+  const [selectedJudges, setSelectedJudges] = useState([]);
 
   const { eventID } = useParams();
 
@@ -27,7 +28,7 @@ function CompetitionType() {
       .getJudges({ limit: 49 })
       .then((response) => {
         const judgeOptions = response.data.map((item) => ({
-          value: getFullName(item),
+          value: item.id,
           label: getFullName(item),
         }));
         setOptions(judgeOptions);
@@ -52,6 +53,11 @@ function CompetitionType() {
     }
   };
 
+  const handleChange = (value) => {
+    setSelectedJudges(value);
+    onJudgeChange(value);
+  };
+
   return (
     <>
       <Typography.Text className="events__competition-judge__text">
@@ -71,7 +77,9 @@ function CompetitionType() {
               placeholder="Выберите судью"
               maxTagCount="responsive"
               options={options}
+              onChange={handleChange}
               onSearch={handleSearch}
+              value={selectedJudges}
               notFoundContent={"Не удалось найти"}
             />
           </Space.Compact>

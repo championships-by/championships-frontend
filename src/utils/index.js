@@ -1,4 +1,4 @@
-import { defaultFormat, defaultTime } from "@constants";
+import { defaultFormat, defaultTime, url } from "@constants";
 import dayjs from "dayjs";
 import JSEncrypt from "jsencrypt";
 
@@ -190,3 +190,13 @@ export const generateCompetenciesDataSource = (criteriaResults) =>
     ),
     totalScore: result.totalScore,
   }));
+
+export const openPdf = (eventRulesPath) => {
+  const pdfUrl = `${url}/${eventRulesPath}`;
+  const link = document.createElement("a");
+  link.href = pdfUrl;
+  link.target = "_blank";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
