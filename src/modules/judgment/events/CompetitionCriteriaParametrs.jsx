@@ -1,16 +1,32 @@
 import React from "react";
-import { Form, Space, Button, Input, Typography } from "antd";
+import { Form, Space, Button, Input, Typography, Tooltip } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
-function CriteriaParametrs() {
+function CriteriaParametrs({ onCriteriaChange }) {
+  const handleValuesChange = (changedValues, allValues) => {
+    const criteria = allValues.criteria || [];
+    const newCriteria = criteria.map((item) => {
+      return {
+        name: item.criterion || "",
+        max_score: parseInt(item.maxPoints, 10) || 0,
+      };
+    });
+
+    onCriteriaChange(newCriteria);
+  };
+
   return (
     <div className="events__competition-criteria__div">
       <Form
         name="dynamic_form_nest_item"
         className="events__competition-criteria__form"
         autoComplete="off"
+        onValuesChange={handleValuesChange}
       >
-        <Form.List name="criteria">
+        <Form.List
+          name="criteria"
+          initialValue={[{ criterion: "", maxPoints: "" }]}
+        >
           {(fields, { add, remove }) => (
             <>
               {fields.length > 0 && (
@@ -22,23 +38,16 @@ function CriteriaParametrs() {
                   <br />
                 </>
               )}
-              {fields.map(({ key, name, fieldKey, ...restField }) => (
+              {fields.map((field) => (
                 <Space
-                  key={key}
+                  key={field.key}
                   align="baseline"
                   className="events__competition-criteria__space"
                 >
                   <Form.Item
-                    {...restField}
-                    className="events__competition-criteria__item"
-                    name={[name, "criterion"]}
-                    fieldKey={[fieldKey, "criterion"]}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Не ввели критерий",
-                      },
-                    ]}
+                    {...field}
+                    name={[field.name, "criterion"]}
+                    rules={[{ required: true, message: "Не ввели критерий" }]}
                   >
                     <Input
                       placeholder="Введите критерий"
@@ -46,27 +55,28 @@ function CriteriaParametrs() {
                     />
                   </Form.Item>
                   <Form.Item
-                    {...restField}
-                    name={[name, "maxPoints"]}
-                    fieldKey={[fieldKey, "maxPoints"]}
-                    className="events__competition-criteria__item"
+                    {...field}
+                    name={[field.name, "maxPoints"]}
                     rules={[
-                      {
-                        required: true,
-                        message: "Не ввели количество баллов",
-                      },
+                      { required: true, message: "Не ввели количество баллов" },
                     ]}
                   >
-                    <Input className="events__competition-criteria__inputPoints" />
+                    <Input
+                      type="number"
+                      className="events__competition-criteria__inputPoints"
+                      min={0}
+                    />
                   </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(name)} />
+                  <Tooltip title="Удалить критерий">
+                    <MinusCircleOutlined onClick={() => remove(field.name)} />
+                  </Tooltip>
                 </Space>
               ))}
               <Form.Item>
                 <Button
                   className="events__competition-criteria__addButton"
                   type="dashed"
-                  onClick={() => add()}
+                  onClick={() => add({ criterion: "", maxPoints: "" })}
                   block
                   icon={<PlusOutlined />}
                 >

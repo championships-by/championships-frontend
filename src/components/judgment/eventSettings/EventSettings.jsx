@@ -8,6 +8,7 @@ import {
   message,
   Form,
   Space,
+  Tooltip,
 } from "antd";
 import {
   DeleteOutlined,
@@ -32,45 +33,12 @@ import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationS
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
-import { ROUTES } from "@constants";
-import { eventApi } from "@api";
-import { competenciesApi } from "@api";
+import CompetitionModal from "../../../modules/judgment/events/CompetitionModal";
+import ParticipantModal from "../../../modules/judgment/events/ParticipantModal";
+import { eventApi, competenciesApi } from "@api";
+import { Locale, ROUTES } from "@constants";
 
 import "./sass/event-settings.scss";
-
-const columns = [
-  {
-    title: "Название компетенции",
-    dataIndex: "nomination_name",
-    key: "nomination_name",
-  },
-  {
-    title: "Тип соревнований",
-    dataIndex: "type",
-    key: "type",
-  },
-  {
-    title: "Регламент",
-    key: "regulations",
-    render: () => (
-      <Space>
-        <Button type="text" icon={<LinkOutlined />} />
-      </Space>
-    ),
-  },
-  {
-    title: "Действия",
-    key: "action",
-    render: () => (
-      <Space>
-        <Button type="text" icon={<EditOutlined />} onClick={showModal} />
-        <Button type="text" icon={<TrophyOutlined />} />
-        <Button type="text" icon={<TeamOutlined />} />
-        <Button type="text" icon={<DeleteOutlined />} />
-      </Space>
-    ),
-  },
-];
 
 const items = [
   {
@@ -83,37 +51,68 @@ const items = [
 ];
 
 function EventSettings() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const columns = [
     {
-      title: "Название компетенции",
+      title: "Название компитенции",
       dataIndex: "nomination_name",
       key: "nomination_name",
+      sorter: (a, b) => a.nomination_name.localeCompare(b.nomination_name),
     },
     {
       title: "Тип соревнований",
       dataIndex: "type",
       key: "type",
+      filters: [
+        { text: "По времени", value: "По времени" },
+        { text: "По критериям", value: "По критериям" },
+        { text: "Плей-офф", value: "Плей-офф" },
+      ],
+      onFilter: (value, record) => record.type.includes(value),
     },
     {
       title: "Регламент",
       key: "regulations",
       render: () => (
         <Space>
-          <Button type="text" icon={<LinkOutlined />} />
+          <Button
+            type="text"
+            icon={<LinkOutlined />}
+            onClick={() => openLink()}
+          />
         </Space>
       ),
     },
     {
       title: "Действия",
       key: "action",
-      render: () => (
+      render: (record) => (
         <Space>
-          <Button type="text" icon={<EditOutlined />} onClick={openEditModal} />
-          <Button type="text" icon={<TrophyOutlined />} />
-          <Button type="text" icon={<TeamOutlined />} />
-          <Button type="text" icon={<DeleteOutlined />} />
+          <Tooltip title="Редактировать">
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={openEditModal}
+            />
+          </Tooltip>
+          <Tooltip title="Начать соревнование">
+            <Button
+              type="text"
+              icon={<TrophyOutlined />}
+              onClick={() => openCompetenciesModal(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Участники соревнования">
+            <Button
+              type="text"
+              icon={<TeamOutlined />}
+              onClick={() => openParticipantModal(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Удалить соревнование">
+            <Button type="text" icon={<DeleteOutlined />} />
+          </Tooltip>
         </Space>
       ),
     },
@@ -126,19 +125,95 @@ function EventSettings() {
   const [dataEvent, setEvent] = useState({});
   const [values, setValues] = useState({});
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [openTrophyModal, setTrophyModal] = useState(false);
+  const [participantModal, setParticipantModal] = useState(false);
+  const [eventInfo, setEventInfo] = useState();
   const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [dataNominationID, setNominationID] = useState();
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
+  const startCriteriaStage = (eventID, nominationID) => {
+    const eventId = parseInt(eventID, 10);
+    competenciesApi.startCriteriaStage(eventId, nominationID);
+  };
+
+  const startTimeStage = (eventID, nominationID) => {
+    const eventId = parseInt(eventID, 10);
+    competenciesApi.startTimeStage(eventId, nominationID);
+  };
+  const openLink = () => {
+    window.open("http://google.com");
+  };
+
+  const translateType = (type) => {
+    switch (type) {
+      case "time":
+        return "По времени";
+      case "criteria":
+        return "По критериям";
+      case "olympic":
+        return "Плей-офф";
+      default:
+        return type;
+    }
+  };
+
+  const findNominationId = (name, response) => {
+    const nomination = response.find((item) => item.name === name);
+    return nomination ? nomination.id : null;
+  };
+
+  const openCompetenciesModal = (record) => {
+    const competitionType = record.type;
+    const competitionName = record.nomination_name;
+    const nominationID = findNominationId(competitionName, eventInfo);
+
+    switch (competitionType) {
+      case "Плей-офф":
+        setTrophyModal(true);
+        break;
+      case "По времени":
+        startTimeStage(eventID, nominationID);
+        navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
+        break;
+      case "По критериям":
+        startCriteriaStage(eventID, nominationID);
+        navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+        break;
+      default:
+        break;
+    }
+    setNominationID(nominationID);
+  };
+
+  const openParticipantModal = (record) => {
+    const competitionType = record.type;
+    if (competitionType === "По критериям") {
+      message.info("Критерии");
+    } else {
+      message.info("Остальное");
+    }
+  };
+  useEffect(() => {
+    eventApi
+      .getEvent(eventID)
+      .then((response) => setEventInfo(response.nominations));
+  }, [eventID]);
 
   useEffect(() => {
-    competenciesApi
-      .getCompetenciesEventData(eventID)
-      .then((response) => setDataNomination(response.data));
-  });
+    competenciesApi.getCompetenciesEventData(eventID).then((response) => {
+      const translatedType = response.data.map((record) => ({
+        ...record,
+        type: translateType(record.type),
+      }));
+      setDataNomination(translatedType);
+    });
+  }, [eventID]);
 
   useEffect(() => {
     if (eventID) {
@@ -362,7 +437,8 @@ function EventSettings() {
           <Table
             columns={columns}
             dataSource={dataNomination}
-            locale={{ emptyText: "Нет данных" }}
+            locale={Locale}
+            pagination={false}
           />
         </Col>
       </Row>
@@ -378,6 +454,19 @@ function EventSettings() {
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}
       />
+      <CompetitionModal
+        isOpen={openTrophyModal}
+        onOk={() => setTrophyModal(false)}
+        onCancel={() => setTrophyModal(false)}
+        name="Настройки плей-офф"
+        nominationID={dataNominationID}
+      ></CompetitionModal>
+      <ParticipantModal
+        isOpen={participantModal}
+        onOk={() => setParticipantModal(false)}
+        onCancel={() => setParticipantModal(false)}
+        name="Участники соревнования"
+      ></ParticipantModal>
     </div>
   );
 }

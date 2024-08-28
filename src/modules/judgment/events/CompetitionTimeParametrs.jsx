@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Slider, InputNumber, Space } from "antd";
 import "./sass/events.scss";
 
-function TimeParametrs() {
+function TimeParametrs({ onInputChange }) {
   const [value, setValue] = useState(1);
 
   const onChange = (value) => {
     setValue(value);
+    onInputChange(value);
   };
   return (
     <div>
@@ -19,7 +20,13 @@ function TimeParametrs() {
           value={typeof value === "number" ? value : 1}
           onChange={onChange}
         />
-        <InputNumber min={1} max={10} value={value} onChange={onChange} />
+        <InputNumber
+          min={1}
+          max={10}
+          value={value}
+          onChange={onChange}
+          defaultValue={3}
+        />
       </Space>
     </div>
   );

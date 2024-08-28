@@ -61,14 +61,15 @@ export const ROUTES = {
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/group-stage`,
   },
-  JUDGMENT_TIME_MATHCES: {
+  JUDGMENT_TIME_MATCHES: {
     TITLE: "Матчи на время",
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/time-matches`,
   },
   JUDGMENT_COMPETENCIES: {
     TITLE: "Компетенции по критериям",
-    PATH: "judgment/competencies",
+    PATH: (event_id, nomination_id) =>
+      `judgment/events/${event_id}/${nomination_id}/criteria`,
   },
 };
 
@@ -91,7 +92,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
   JUDGMENT_GROUP_STAGE: ":eventId/:nominationId/group-stage",
   JUDGMENT_TIME_MATCHES: ":eventId/:nominationId/time-matches",
-  JUDGMENT_COMPETENCIES: "judgment/competencies",
+  JUDGMENT_COMPETENCIES: ":eventId/:nominationId/competencies",
 };
 
 export const Locale = {
@@ -149,6 +150,12 @@ export const Locale = {
   dateTimeFormat: "DD.MM.YYYY HH:mm",
   weekFormat: "YYYY-wo",
   monthFormat: "YYYY-MM",
+  triggerDesc: "Нажмите для сортировки по убыванию",
+  triggerAsc: "Нажмите для сортировки по возрастанию",
+  cancelSort: "Нажмите для отмены сортировки",
+  emptyText: "Нет данных",
+  filterConfirm: "Ок",
+  filterReset: "Сбросить",
 };
 export const yaShareLink = "https://yastatic.net/share2/share.js";
 export const defaultTime = "00:00.000";
