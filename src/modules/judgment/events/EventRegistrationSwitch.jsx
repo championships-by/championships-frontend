@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 
 import "./sass/events.scss";
 
-function EventName({ name, value, onChange: onChangeBase }) {
+function EventName({ name, value, onChange: onChangeBase, disabled }) {
   const onChange = (checked) => {
     onChangeBase({ [name]: checked });
   };
@@ -16,6 +16,7 @@ function EventName({ name, value, onChange: onChangeBase }) {
           className="events__event-registration-switch__switch"
           checked={value}
           onChange={onChange}
+          disabled={disabled}
         />
       </div>
     </FormItem>

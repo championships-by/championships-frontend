@@ -10,10 +10,11 @@ import {
 } from "antd";
 import { LinkOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
-import { changeDateFormat, getEventLevel } from "@utils";
-import { yaShareLink } from "@constants";
+import { changeDateFormat, getEventLevel, openPdf } from "@utils";
+import { yaShareLink, ROUTES, url } from "@constants";
 import { eventApi } from "@api";
 
 import "./sass/events.scss";
@@ -56,6 +57,7 @@ function EventInformation() {
   const [dataEvent, setEvent] = useState({});
   const [dataNominations, setNomination] = useState([]);
   const { eventID } = useParams();
+  const navigate = useNavigate();
   const items = [
     {
       title: "Мероприятия",
@@ -89,6 +91,9 @@ function EventInformation() {
     }
   }, [eventID]);
 
+  const finishDate = new Date(dataEvent.registration_finish_date);
+  const now = new Date();
+
   return (
     <div className="events__event-information__container">
       <Loader show={isLoading} />
@@ -98,7 +103,11 @@ function EventInformation() {
         <Col span={10}>
           <img
             alt="Logo"
-            src={`http://robin-zubronok.by/${dataEvent.logo_path}`}
+            src={
+              dataEvent.logo_path !== "/" && dataEvent.logo_path
+                ? `${url}/${dataEvent.logo_path}`
+                : "https://www.uznai24.su/images/company_blanklogo.png"
+            }
             className="events__event-information__img"
           />
         </Col>
@@ -171,7 +180,18 @@ function EventInformation() {
             className="events__event-information__rows-margin"
           >
             <Col>
-              <Button type="primary">Положение</Button>
+              {finishDate > now ? (
+                <Button
+                  onClick={() =>
+                    navigate(ROUTES.EVENTS_REGISTRATION.PATH(dataEvent.id))
+                  }
+                  type="primary"
+                >
+                  Регистрация участников
+                </Button>
+              ) : (
+                <Typography.Text>Регистрация закрыта</Typography.Text>
+              )}
             </Col>
             <Col flex="1" className="events__event-information__align-right">
               <Typography.Text strong>
@@ -192,10 +212,22 @@ function EventInformation() {
         {dataEvent.description}
       </Typography.Text>
       <br />
+      <Button type="primary" onClick={() => openPdf(dataEvent.event_rules)}>
+        Положение
+      </Button>
+      <br />
       <Typography.Title level={3} className="event-settings__compitation-title">
         Компетенции
       </Typography.Title>
-      <Table columns={columns} dataSource={dataNominations} rowKey="id" />
+      <Table
+        columns={columns}
+        dataSource={dataNominations}
+        locale={{
+          emptyText: "Компетенции пока отсутствуют",
+        }}
+        rowKey="id"
+        pagination={false}
+      />
     </div>
   );
 }

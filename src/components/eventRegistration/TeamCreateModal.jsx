@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
 import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import { participantApi } from "@api";
+import { participantApi, teamApi } from "@api";
 
 function TeamCreateModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -71,6 +71,7 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
         <TeamParticipantsInput
           name="teamParticipants"
           options={dataTeamParticipants}
+          mode="multiple"
         />
         <Flex gap="middle">
           <Button
