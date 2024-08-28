@@ -19,7 +19,7 @@ function EventsRegistration() {
   const items = [
     {
       title: "Мероприятия",
-      href: "./",
+      href: ROUTES.EVENTS.PATH,
     },
     {
       title: dataEvent?.event?.name ?? "",
