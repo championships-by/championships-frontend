@@ -51,7 +51,7 @@ const items = [
 ];
 
 function EventSettings() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const columns = [
     {
@@ -133,8 +133,6 @@ function EventSettings() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [dataNominationID, setNominationID] = useState();
-
-  const eventId = parseInt(eventID, 10);
 
   const openEditModal = () => {
     setIsEditModalOpen(true);

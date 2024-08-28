@@ -88,7 +88,7 @@ export const competenciesApi = {
     axios.post(`${API_PATH}/tournaments/start_group_stage`, {
       nomination_event: {
         event_id: eventID,
-        nominationID_id: nominationID,
+        nomination_id: nominationID,
       },
       group_count: groupCount,
     });
