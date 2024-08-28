@@ -48,9 +48,9 @@ function Participants() {
 
       <AdminPanelControls>
         <Flex gap="small">
-          <Tooltip title="Сохранить список участников">
+          {/*<Tooltip title="Сохранить список участников">
             <Button type="primary" icon={<DownloadOutlined />} />
-          </Tooltip>
+          </Tooltip>*/}
           <Button
             type="primary"
             onClick={() => setIsAddParticipantModalOpen(true)}

@@ -64,23 +64,32 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
 
     formData.append("event_data", JSON.stringify(event_data));
 
-    eventApi.setEvent(formData);
+    try {
+      await eventApi.setEvent(formData);
+      return true;
+    } catch (error) {
+      message.error("При создании мероприятия произошла ошибка.");
+      return false;
+    }
   };
 
   const onValuesChange = (values) => {
     setValues((oldValues) => ({ ...oldValues, ...values }));
   };
 
-  const onFinish = () => {
-    message.success("Мероприятие успешно создано!");
-    onOk();
-    notification.info({
-      message: "Внимание!",
-      description:
-        "Для опубликования мероприятия необходимо добавить хотя бы одну компетенцию!",
-      duration: 120,
-      placement: "bottomRight",
-    });
+  const onFinish = async () => {
+    const success = await onSubmit();
+    if (success) {
+      message.success("Мероприятие успешно создано!");
+      onOk();
+      notification.info({
+        message: "Внимание!",
+        description:
+          "Для опубликования мероприятия необходимо добавить хотя бы одну компетенцию!",
+        duration: 120,
+        placement: "bottomRight",
+      });
+    }
   };
 
   const onFinishFailed = () => {
@@ -109,6 +118,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
           value={values.event_logo}
           onChange={onValuesChange}
           required={true}
+          form={form}
         />
         <EventEmail
           name="participant_question_email"
@@ -120,6 +130,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
           value={values.event_regulation}
           onChange={onValuesChange}
           required={true}
+          form={form}
         />
         <EventRegisterDate
           name="registration"
@@ -150,7 +161,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
           name="participation_needs"
           value={values.participation_needs}
         />
-        <Button type="primary" htmlType="submit" onSubmit={onSubmit}>
+        <Button type="primary" htmlType="submit">
           Сохранить
         </Button>
       </Form>

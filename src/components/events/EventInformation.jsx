@@ -61,7 +61,7 @@ function EventInformation() {
   const items = [
     {
       title: "Мероприятия",
-      href: "./",
+      href: ROUTES.EVENTS.PATH,
     },
     {
       title: dataEvent.name,
