@@ -9,17 +9,17 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const { eventID } = useParams();
   const navigate = useNavigate();
 
+  const eventId = parseInt(eventID, 10);
   const onChange = (value) => {
     setGroupCount(value);
   };
   const startCompetition = () => {
-    const eventId = parseInt(eventID, 10);
     const data = {
       nomination_event: {
         event_id: eventId,
         nomination_id: nominationID,
       },
-      groupCount: groupCount,
+      group_count: groupCount,
     };
     competenciesApi.startGroupStage(data);
   };
