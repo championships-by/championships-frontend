@@ -67,7 +67,7 @@ function CriteriaParametrs({ onCriteriaChange }) {
                       min={0}
                     />
                   </Form.Item>
-                  <Tooltip title="Удалить критерий">
+                  <Tooltip title="Удалить">
                     <MinusCircleOutlined onClick={() => remove(field.name)} />
                   </Tooltip>
                 </Space>

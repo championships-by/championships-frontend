@@ -5,17 +5,23 @@ import { ROUTES } from "@constants";
 import { competenciesApi, eventApi } from "../../../api";
 
 function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
-  const [groupCount, setGroupCount] = useState(1);
+  const [groupCount, setGroupCount] = useState(3);
   const { eventID } = useParams();
   const navigate = useNavigate();
-
-  const eventId = parseInt(eventID, 10);
 
   const onChange = (value) => {
     setGroupCount(value);
   };
   const startCompetition = () => {
-    competenciesApi.startGroupStage(eventId, nominationID, groupCount);
+    const eventId = parseInt(eventID, 10);
+    const data = {
+      nomination_event: {
+        event_id: eventId,
+        nomination_id: nominationID,
+      },
+      groupCount: groupCount,
+    };
+    competenciesApi.startGroupStage(data);
   };
 
   return (

@@ -54,14 +54,14 @@ function EventSettings() {
   const columns = [
     {
       title: "Название компитенции",
-      dataIndex: "nomination_name",
-      key: "nomination_name",
+      dataIndex: "name",
+      key: "name",
       sorter: (a, b) => a.nomination_name.localeCompare(b.nomination_name),
     },
     {
       title: "Тип соревнований",
-      dataIndex: "type",
-      key: "type",
+      dataIndex: "kind",
+      key: "kind",
       filters: [
         { text: "По времени", value: "По времени" },
         { text: "По критериям", value: "По критериям" },
@@ -71,13 +71,13 @@ function EventSettings() {
     },
     {
       title: "Регламент",
-      key: "regulations",
-      render: () => (
+      key: "reglament",
+      render: (record) => (
         <Space>
           <Button
             type="text"
             icon={<LinkOutlined />}
-            onClick={() => openLink()}
+            onClick={() => openLink(record)}
           />
         </Space>
       ),
@@ -141,15 +141,23 @@ function EventSettings() {
   };
   const startCriteriaStage = (eventID, nominationID) => {
     const eventId = parseInt(eventID, 10);
-    competenciesApi.startCriteriaStage(eventId, nominationID);
+    const data = {
+      event_id: eventId,
+      nomination_id: nominationID,
+    };
+    competenciesApi.startCriteriaStage(data);
   };
 
   const startTimeStage = (eventID, nominationID) => {
     const eventId = parseInt(eventID, 10);
-    competenciesApi.startTimeStage(eventId, nominationID);
+    const data = {
+      event_id: eventId,
+      nomination_id: nominationID,
+    };
+    competenciesApi.startTimeStage(data);
   };
-  const openLink = () => {
-    window.open("http://google.com");
+  const openLink = (record) => {
+    window.open(record.reglament);
   };
 
   const translateTypeFromEnglishIntoRussian = (type) => {
@@ -185,8 +193,8 @@ function EventSettings() {
 
   const deleteNominations = (record) => {
     const eventId = parseInt(eventID, 10);
-    const nominationType = translateTypeFromRussianIntoEnglish(record.type);
-    const nominationName = record.nomination_name;
+    const nominationType = translateTypeFromRussianIntoEnglish(record.kind);
+    const nominationName = record.name;
     const nominationID = findNominationId(nominationName, eventInfo);
 
     const data = {
@@ -197,10 +205,9 @@ function EventSettings() {
 
     competenciesApi.deleteNomination(data);
   };
-
   const openCompetenciesModal = (record) => {
-    const competitionType = record.type;
-    const competitionName = record.nomination_name;
+    const competitionType = record.kind;
+    const competitionName = record.name;
     const nominationID = findNominationId(competitionName, eventInfo);
 
     switch (competitionType) {
@@ -230,9 +237,13 @@ function EventSettings() {
     }
   };
   useEffect(() => {
-    eventApi
-      .getEvent(eventID)
-      .then((response) => setEventInfo(response.nominations));
+    eventApi.getEvent(eventID).then((response) => {
+      const translatedType = response.nominations.map((item) => ({
+        ...item,
+        kind: translateTypeFromEnglishIntoRussian(item.kind),
+      }));
+      setEventInfo(translatedType);
+    });
   }, [eventID]);
 
   useEffect(() => {
@@ -380,7 +391,6 @@ function EventSettings() {
       });
     }, 6000);
   };
-
   return (
     <div>
       <Loader show={isLoading} />
@@ -466,7 +476,7 @@ function EventSettings() {
           </Button>
           <Table
             columns={columns}
-            dataSource={dataNomination}
+            dataSource={eventInfo}
             locale={Locale}
             pagination={false}
           />
