@@ -15,66 +15,24 @@ export const competenciesApi = {
     );
   },
 
-  addOlympicCompetenciesForEvent: async (
-    eventID,
-    nominationName,
-    reglament,
-    selectedJudges
-  ) => {
+  addOlympicCompetenciesForEvent: async (data) => {
     axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_olympic`,
-      {
-        append_nomination_event_data: {
-          event_id: eventID,
-          nomination_name: nominationName,
-          reglament: reglament,
-          judges_ids: selectedJudges,
-        },
-        group_count: 1,
-        play_of_participants_count: 1,
-      }
+      data
     );
   },
 
-  addCriteriaCompetenciesForEvent: async (
-    eventID,
-    nominationID,
-    reglament,
-    selectedJudges,
-    criteria
-  ) => {
+  addCriteriaCompetenciesForEvent: async (data) => {
     axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_criteria`,
-      {
-        append_nomination_event_data: {
-          event_id: eventID,
-          nomination_name: nominationID,
-          reglament: reglament,
-          judges_ids: selectedJudges,
-        },
-        criterias: criteria,
-      }
+      data
     );
   },
 
-  addTimeCompetenciesForEvent: async (
-    eventID,
-    nominationID,
-    reglament,
-    selectedJudges,
-    raceRoundAmount
-  ) => {
+  addTimeCompetenciesForEvent: async (data) => {
     axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_time`,
-      {
-        append_nomination_event_data: {
-          event_id: eventID,
-          nomination_name: nominationID,
-          reglament: reglament,
-          judges_ids: selectedJudges,
-        },
-        race_round_amount: raceRoundAmount,
-      }
+      data
     );
   },
 
@@ -84,25 +42,18 @@ export const competenciesApi = {
     );
   },
 
-  startGroupStage: (eventID, nominationID, groupCount) => {
-    axios.post(`${API_PATH}/tournaments/start_group_stage`, {
-      nomination_event: {
-        event_id: eventID,
-        nomination_id: nominationID,
-      },
-      group_count: groupCount,
-    });
+  startGroupStage: (data) => {
+    axios.post(`${API_PATH}/tournaments/start_group_stage`, data);
   },
-  startCriteriaStage: (eventID, nominationID) => {
-    axios.post(`${API_PATH}/tournaments/start_criteria_stage`, {
-      event_id: eventID,
-      nomination_id: nominationID,
-    });
+  startCriteriaStage: (data) => {
+    axios.post(`${API_PATH}/tournaments/start_criteria_stage`, data);
   },
-  startTimeStage: (eventID, nominationID) => {
-    axios.post(`${API_PATH}/tournaments/start_time_stage`, {
-      event_id: eventID,
-      nomination_id: nominationID,
+  startTimeStage: (data) => {
+    axios.post(`${API_PATH}/tournaments/start_time_stage`, data);
+  },
+  deleteNomination: (data) => {
+    axios.delete(`${API_PATH}/nomination_event/delete_nomination_from_event`, {
+      data,
     });
   },
 };

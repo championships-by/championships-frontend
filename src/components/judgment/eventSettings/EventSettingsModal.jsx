@@ -17,7 +17,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
   const [selectedJudges, setSelectedJudges] = useState([]);
   const { eventID } = useParams();
 
-  const event_id = parseInt(eventID, 10);
+  const eventId = parseInt(eventID, 10);
   const handleInputNameChange = (value) => {
     setInputName(value);
   };
@@ -46,35 +46,27 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
     setIsLoading(false);
   };
   const sendRequest = async () => {
+    const data = {
+      append_nomination_event_data: {
+        event_id: eventId,
+        nomination_name: inputName,
+        reglament: inputReglament,
+        judges_ids: selectedJudges,
+      },
+    };
     switch (selectedValue) {
       case "time":
-        await competenciesApi.addTimeCompetenciesForEvent(
-          event_id,
-          inputName,
-          inputReglament,
-          selectedJudges,
-          groupCount
-        );
+        Object.assign(data, { race_round_amount: groupCount });
+        await competenciesApi.addTimeCompetenciesForEvent(data);
         break;
 
       case "playoffs":
-        await competenciesApi.addOlympicCompetenciesForEvent(
-          event_id,
-          inputName,
-          inputReglament,
-          selectedJudges,
-          groupCount
-        );
+        await competenciesApi.addOlympicCompetenciesForEvent(data);
         break;
 
       case "criteria":
-        await competenciesApi.addCriteriaCompetenciesForEvent(
-          event_id,
-          inputName,
-          inputReglament,
-          selectedJudges,
-          criteria
-        );
+        Object.assign(data, { criterias: criteria });
+        await competenciesApi.addCriteriaCompetenciesForEvent(data);
         break;
       default:
         break;

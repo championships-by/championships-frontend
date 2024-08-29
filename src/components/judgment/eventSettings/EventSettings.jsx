@@ -33,8 +33,8 @@ import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationS
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
-import CompetitionModal from "../../../modules/judgment/events/CompetitionModal";
-import ParticipantModal from "../../../modules/judgment/events/ParticipantModal";
+import CompetitionModal from "@modules/judgment/events/CompetitionModal";
+import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi } from "@api";
 import { Locale, ROUTES } from "@constants";
 
@@ -83,8 +83,8 @@ function EventSettings() {
     },
     {
       title: "Тип соревнований",
-      dataIndex: "type",
-      key: "type",
+      dataIndex: "kind",
+      key: "kind",
       filters: [
         { text: "По времени", value: "По времени" },
         { text: "По критериям", value: "По критериям" },
@@ -94,13 +94,13 @@ function EventSettings() {
     },
     {
       title: "Регламент",
-      key: "regulations",
-      render: () => (
+      key: "reglament",
+      render: (record) => (
         <Space>
           <Button
             type="text"
             icon={<LinkOutlined />}
-            onClick={() => openLink()}
+            onClick={() => openLink(record)}
           />
         </Space>
       ),
@@ -124,15 +124,19 @@ function EventSettings() {
               onClick={() => openCompetenciesModal(record)}
             />
           </Tooltip>
-          <Tooltip title="Участники соревнования">
+          <Tooltip title="Участники">
             <Button
               type="text"
               icon={<TeamOutlined />}
               onClick={() => openParticipantModal(record)}
             />
           </Tooltip>
-          <Tooltip title="Удалить соревнование">
-            <Button type="text" icon={<DeleteOutlined />} />
+          <Tooltip title="Удалить">
+            <Button
+              type="text"
+              icon={<DeleteOutlined />}
+              onClick={() => deleteNominations(record)}
+            />
           </Tooltip>
         </Space>
       ),
@@ -144,18 +148,26 @@ function EventSettings() {
   };
   const startCriteriaStage = (eventID, nominationID) => {
     const eventId = parseInt(eventID, 10);
-    competenciesApi.startCriteriaStage(eventId, nominationID);
+    const data = {
+      event_id: eventId,
+      nomination_id: nominationID,
+    };
+    competenciesApi.startCriteriaStage(data);
   };
 
   const startTimeStage = (eventID, nominationID) => {
     const eventId = parseInt(eventID, 10);
-    competenciesApi.startTimeStage(eventId, nominationID);
+    const data = {
+      event_id: eventId,
+      nomination_id: nominationID,
+    };
+    competenciesApi.startTimeStage(data);
   };
-  const openLink = () => {
-    window.open("http://google.com");
+  const openLink = (record) => {
+    window.open(record.reglament);
   };
 
-  const translateType = (type) => {
+  const translateTypeFromEnglishIntoRussian = (type) => {
     switch (type) {
       case "time":
         return "По времени";
@@ -168,14 +180,41 @@ function EventSettings() {
     }
   };
 
+  const translateTypeFromRussianIntoEnglish = (type) => {
+    switch (type) {
+      case "По критериям":
+        return "criteria";
+      case "По времени":
+        return "time";
+      case "Плей-офф":
+        return "olympic";
+      default:
+        return type;
+    }
+  };
+
   const findNominationId = (name, response) => {
     const nomination = response.find((item) => item.name === name);
     return nomination ? nomination.id : null;
   };
 
+  const deleteNominations = (record) => {
+    const eventId = parseInt(eventID, 10);
+    const nominationType = translateTypeFromRussianIntoEnglish(record.kind);
+    const nominationName = record.name;
+    const nominationID = findNominationId(nominationName, eventInfo);
+
+    const data = {
+      event_id: eventId,
+      nomination_id: nominationID,
+      type: nominationType,
+    };
+
+    competenciesApi.deleteNomination(data);
+  };
   const openCompetenciesModal = (record) => {
-    const competitionType = record.type;
-    const competitionName = record.nomination_name;
+    const competitionType = record.kind;
+    const competitionName = record.name;
     const nominationID = findNominationId(competitionName, eventInfo);
 
     switch (competitionType) {
@@ -204,12 +243,21 @@ function EventSettings() {
       message.info("Остальное");
     }
   };
+  useEffect(() => {
+    eventApi.getEvent(eventID).then((response) => {
+      const translatedType = response.nominations.map((item) => ({
+        ...item,
+        kind: translateTypeFromEnglishIntoRussian(item.kind),
+      }));
+      setEventInfo(translatedType);
+    });
+  }, [eventID]);
 
   useEffect(() => {
     competenciesApi.getCompetenciesEventData(eventID).then((response) => {
       const translatedType = response.data.map((record) => ({
         ...record,
-        type: translateType(record.type),
+        type: translateTypeFromEnglishIntoRussian(record.type),
       }));
       setDataNomination(translatedType);
     });
@@ -361,7 +409,6 @@ function EventSettings() {
       });
     }, 6000);
   };
-
   return (
     <div>
       <Loader show={isLoading} />
@@ -451,7 +498,7 @@ function EventSettings() {
           </Button>
           <Table
             columns={columns}
-            dataSource={dataNomination}
+            dataSource={eventInfo}
             locale={Locale}
             pagination={false}
           />

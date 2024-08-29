@@ -93,20 +93,22 @@
     }
     &__input {
       width: 505px;
-      box-sizing: border-box;
-      margin-bottom: 0;
+      margin-top: 8px;
     }
     &__example {
       margin-top: 0px;
     }
     &__div {
-      margin-bottom: 24px;
+      margin-top: 10px;
     }
     &__autocomplete {
       width: 100%;
     }
     &__text {
       font-size: 16px;
+    }
+    &__example {
+      margin-top: 10px;
     }
   }
   &__event-date {
