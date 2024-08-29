@@ -4,9 +4,10 @@ import { UploadOutlined } from "@ant-design/icons";
 
 import "./sass/events.scss";
 
-function EventRegulation({ name, onChange: onChangeBase, required }) {
+function EventRegulation({ name, onChange: onChangeBase, required, form }) {
   const onChange = ({ file }) => {
     onChangeBase({ [name]: file });
+    form.setFieldsValue({ [name]: file });
   };
 
   return (
