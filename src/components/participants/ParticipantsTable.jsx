@@ -7,7 +7,6 @@ import dayjs from "dayjs";
 import { Locale } from "@constants";
 
 function ParticipantsTable({ ParticipantData, getParticipant }) {
-  console.log(ParticipantData);
   const columns = [
     {
       title: "ФИО",
