@@ -40,17 +40,33 @@ import { Locale, ROUTES, Types } from "@constants";
 
 import "./sass/event-settings.scss";
 
-const items = [
-  {
-    title: "Мероприятия",
-    href: "./",
-  },
-  {
-    title: "Настройка мероприятия",
-  },
-];
+const eventsBreadcromb = {
+  title: "Управление мероприятиями",
+  href: ROUTES.JUDGMENT.PATH,
+};
+
+const editEventBreadcromb = {
+  title: "Редактирование мероприятия",
+};
 
 function EventSettings() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadings, setLoadings] = useState([]);
+  const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
+    useState(false);
+  const [dataEvent, setEvent] = useState({});
+  const [values, setValues] = useState({});
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [openTrophyModal, setTrophyModal] = useState(false);
+  const [participantModal, setParticipantModal] = useState(false);
+  const [eventInfo, setEventInfo] = useState();
+  const [dataNomination, setDataNomination] = useState([]);
+  const { eventID } = useParams();
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [dataNominationID, setNominationID] = useState();
+  const [participantsInfo, setParticipantsInfo] = useState([]);
+
   const columns = [
     {
       title: "Название компитенции",
@@ -120,22 +136,14 @@ function EventSettings() {
     },
   ];
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadings, setLoadings] = useState([]);
-  const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
-    useState(false);
-  const [dataEvent, setEvent] = useState({});
-  const [values, setValues] = useState({});
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [openTrophyModal, setTrophyModal] = useState(false);
-  const [participantModal, setParticipantModal] = useState(false);
-  const [eventInfo, setEventInfo] = useState();
-  const [dataNomination, setDataNomination] = useState([]);
-  const { eventID } = useParams();
-  const [form] = Form.useForm();
-  const navigate = useNavigate();
-  const [dataNominationID, setNominationID] = useState();
-  const [participantsInfo, setParticipantsInfo] = useState([]);
+  const items = [
+    eventsBreadcromb,
+    {
+      title: dataEvent?.event?.name ?? "",
+      href: ROUTES.EVENTS_DESCRIPTION.PATH(dataEvent?.event?.id),
+    },
+    editEventBreadcromb,
+  ];
 
   const eventId = parseInt(eventID, 10);
 
@@ -335,47 +343,57 @@ function EventSettings() {
         holding_finish_date: holding.holding_finish_date,
       }),
     });
+
+    let eventSuccess = true;
+
     try {
-      eventApi.changeEvent(body);
+      await eventApi.changeEvent(body);
     } catch (error) {
       message.error("При редактировании мероприятия произошла ошибка.");
+      eventSuccess = false;
     }
+
+    let logoSuccess = true;
+
     if (event_logo) {
       try {
-        const formData = new FormData();
-        formData.append("logo", event_logo);
-        formData.append("event_id", eventID);
-        eventApi.changeLogo(formData);
+        const formDataLogo = new FormData();
+        formDataLogo.append("logo", event_logo);
+        formDataLogo.append("event_id", eventID);
+        await eventApi.changeLogo(formDataLogo);
       } catch (error) {
-        message.error("При изменение логотипа произошла ошибка.");
+        message.error("При изменении логотипа произошла ошибка.");
+        logoSuccess = false;
       }
     }
 
+    let regulationSuccess = true;
+
     if (event_regulation) {
       try {
-        const formData = new FormData();
-        formData.append("rules", event_regulation);
-        formData.append("event_id", eventID);
-        eventApi.changeRegulation(formData);
+        const formDataRegulation = new FormData();
+        formDataRegulation.append("rules", event_regulation);
+        formDataRegulation.append("event_id", eventID);
+        await eventApi.changeRegulation(formDataRegulation);
       } catch (error) {
-        message.error("При изменение положение о проведении произошла ошибка.");
+        message.error("При изменении положения о проведении произошла ошибка.");
+        regulationSuccess = false;
       }
     }
+
+    return eventSuccess && logoSuccess && regulationSuccess;
   };
 
   const onValuesChange = (values) => {
     setValues((oldValues) => ({ ...oldValues, ...values }));
   };
 
-  const onFinish = () => {
-    try {
-      onSubmit();
-    } catch (error) {
-      return;
+  const onFinish = async () => {
+    const success = await onSubmit();
+    if (success) {
+      message.success("Данные сохранены успешно!");
+      navigate(ROUTES.JUDGMENT.PATH);
     }
-
-    message.success("Всё в порядке!");
-    navigate(ROUTES.JUDGMENT.PATH);
   };
 
   const onFinishFailed = () => {
@@ -419,6 +437,7 @@ function EventSettings() {
               value={values.event_logo}
               required={false}
               onChange={onValuesChange}
+              form={form}
             />
             <EventEmail
               name="participant_question_email"
@@ -430,18 +449,21 @@ function EventSettings() {
               value={values.event_regulation}
               required={false}
               onChange={onValuesChange}
+              form={form}
             />
             <EventRegisterDate
               name="registration"
               value={values.registration}
               form={form}
               onChange={onValuesChange}
+              isEdit={true}
             />
             <EventDate
               name="holding"
               value={values.holding}
               form={form}
               onChange={onValuesChange}
+              isEdit={true}
             />
             <EventRegistrationSwitch
               name="published"
