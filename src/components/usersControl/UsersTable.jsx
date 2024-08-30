@@ -2,6 +2,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
 import { Button, Flex, Modal, Table, Typography } from "antd";
 import { useState } from "react";
+import { Locale } from "@constants";
 
 const filters = [
   {
@@ -122,7 +123,7 @@ function UsersTable({ usersData }) {
 
   return (
     <>
-      <Table dataSource={usersData} columns={columns} />
+      <Table dataSource={usersData} columns={columns} locale={Locale} />
 
       <UserModal
         isOpen={isEditModalOpen}
