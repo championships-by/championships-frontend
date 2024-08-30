@@ -35,7 +35,7 @@ import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
-import { eventApi, competenciesApi } from "@api";
+import { eventApi, competenciesApi, participantApi } from "@api";
 import { Locale, ROUTES } from "@constants";
 
 import "./sass/event-settings.scss";
@@ -135,23 +135,24 @@ function EventSettings() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [dataNominationID, setNominationID] = useState();
+  const [participantsInfo, setParticipantsInfo] = useState([]);
+
+  const eventId = parseInt(eventID, 10);
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
   const startCriteriaStage = (eventID, nominationID) => {
-    const eventId = parseInt(eventID, 10);
     const data = {
-      event_id: eventId,
+      event_id: eventID,
       nomination_id: nominationID,
     };
     competenciesApi.startCriteriaStage(data);
   };
 
   const startTimeStage = (eventID, nominationID) => {
-    const eventId = parseInt(eventID, 10);
     const data = {
-      event_id: eventId,
+      event_id: eventID,
       nomination_id: nominationID,
     };
     competenciesApi.startTimeStage(data);
@@ -215,11 +216,11 @@ function EventSettings() {
         setTrophyModal(true);
         break;
       case "По времени":
-        startTimeStage(eventID, nominationID);
+        startTimeStage(eventId, nominationID);
         navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
         break;
       case "По критериям":
-        startCriteriaStage(eventID, nominationID);
+        startCriteriaStage(eventId, nominationID);
         navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
         break;
       default:
@@ -228,13 +229,17 @@ function EventSettings() {
     setNominationID(nominationID);
   };
 
-  const openParticipantModal = (record) => {
-    const competitionType = record.type;
-    if (competitionType === "По критериям") {
-      message.info("Критерии");
-    } else {
-      message.info("Остальное");
-    }
+  const openParticipantModal = async (record) => {
+    const competitionType = translateTypeFromRussianIntoEnglish(record.kind);
+    const competitionName = record.name;
+    const nominationID = findNominationId(competitionName, eventInfo);
+
+    await participantApi
+      .getParticipantsWithInfo(eventId, nominationID, competitionType)
+      .then((response) => {
+        setParticipantsInfo(response.data);
+      });
+    setParticipantModal(true);
   };
   useEffect(() => {
     eventApi.getEvent(eventID).then((response) => {
@@ -506,6 +511,7 @@ function EventSettings() {
         onOk={() => setParticipantModal(false)}
         onCancel={() => setParticipantModal(false)}
         name="Участники соревнования"
+        data={participantsInfo}
       ></ParticipantModal>
     </div>
   );

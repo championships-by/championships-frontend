@@ -29,4 +29,9 @@ export const participantApi = {
   changeParticipant: (body) => {
     return instance.put("/participant/participant", body);
   },
+  getParticipantsWithInfo: async (eventID, nominationID, competitionType) => {
+    return instance.get(
+      `/nomination_event/team_participants_of_nomination_event?related=true&event_id=${eventID}&nomination_id=${nominationID}&kind=${competitionType}`
+    );
+  },
 };
