@@ -65,6 +65,8 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
         onOk={onOk}
         onCancel={onCancel}
         footer={null}
+        className="events__participantModal__modal"
+        width={800}
       >
         <Table
           columns={columns}
@@ -72,15 +74,6 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
           pagination={false}
           locale={Locale}
         />
-        <Button
-          type="primary"
-          className="events__participantModal__printButton"
-        >
-          Отправить на печать
-        </Button>
-        <Button className="events__participantModal__downloadButton">
-          Скачать
-        </Button>
       </Modal>
     </div>
   );

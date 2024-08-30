@@ -17,6 +17,12 @@ export const FILE_UPLOADING = {
   },
 };
 
+export const Types = {
+  CRITERIA: "По критериям",
+  TIME: "По времени",
+  OLYMPIC: "Плей-офф",
+};
+
 export const RESPONSE_STATUS = {
   STATUS_OK: 200,
   STATUS_UNAUTHORIZED: 401,

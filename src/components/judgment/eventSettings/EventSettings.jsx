@@ -36,7 +36,7 @@ import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi } from "@api";
-import { Locale, ROUTES } from "@constants";
+import { Locale, ROUTES, Types } from "@constants";
 
 import "./sass/event-settings.scss";
 
@@ -63,11 +63,11 @@ function EventSettings() {
       dataIndex: "kind",
       key: "kind",
       filters: [
-        { text: "По времени", value: "По времени" },
-        { text: "По критериям", value: "По критериям" },
-        { text: "Плей-офф", value: "Плей-офф" },
+        { text: "По времени", value: Types.TIME },
+        { text: "По критериям", value: Types.CRITERIA },
+        { text: "Плей-офф", value: Types.OLYMPIC },
       ],
-      onFilter: (value, record) => record.type.includes(value),
+      onFilter: (value, record) => record.kind.includes(value),
     },
     {
       title: "Регламент",
@@ -212,14 +212,14 @@ function EventSettings() {
     const nominationID = findNominationId(competitionName, eventInfo);
 
     switch (competitionType) {
-      case "Плей-офф":
+      case Types.OLYMPIC:
         setTrophyModal(true);
         break;
-      case "По времени":
+      case Types.TIME:
         startTimeStage(eventId, nominationID);
         navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
         break;
-      case "По критериям":
+      case Types.CRITERIA:
         startCriteriaStage(eventId, nominationID);
         navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
         break;
