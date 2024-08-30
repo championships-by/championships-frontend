@@ -3,8 +3,11 @@ import { getUniqueFilters } from "@utils";
 import { Button, Flex, Modal, Table, Typography } from "antd";
 import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
+import dayjs from "dayjs";
+import { Locale } from "@constants";
 
 function ParticipantsTable({ ParticipantData, getParticipant }) {
+  console.log(ParticipantData);
   const columns = [
     {
       title: "ФИО",
@@ -27,13 +30,13 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
       sorter: (a, b) => a.region.localeCompare(b.region),
     },
     {
-      title: "Учреждение образования",
-      dataIndex: "educational_institution",
+      title: "Дата рождения",
+      dataIndex: "birth_date",
+      render: (birth_date) => dayjs(birth_date).format(Locale.dateFormat),
       key: "participant_organization",
-      filters: getUniqueFilters(ParticipantData, "educational_institution"),
-      onFilter: (value, record) => record.educational_institution === value,
-      sorter: (a, b) =>
-        a.educational_institution.localeCompare(b.educational_institution),
+      filters: getUniqueFilters(ParticipantData, "birth_date"),
+      onFilter: (value, record) => record.birth_date === value,
+      sorter: (a, b) => a.birth_date.localeCompare(b.birth_date),
     },
     {
       title: "Действия",
@@ -102,7 +105,7 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
 
   return (
     <div>
-      <Table dataSource={ParticipantData} columns={columns} />
+      <Table dataSource={ParticipantData} columns={columns} locale={Locale} />
 
       <ParticipantModal
         isOpen={Boolean(editModalData)}

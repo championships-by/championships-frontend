@@ -5,7 +5,11 @@ import { FILTER_OPTION } from "@utils";
 
 import "./sass/team.scss";
 
-function TeamNominationInput({ name, options }) {
+function TeamNominationInput({ name, options, onChange: onChangeBase }) {
+  const onChange = (value) => {
+    onChangeBase(value);
+  };
+
   return (
     <Flex vertical className="team__team-nomination-select__flex">
       <Typography.Text>Компетенция</Typography.Text>
@@ -22,12 +26,12 @@ function TeamNominationInput({ name, options }) {
           >
             <Select
               name="team_nomination_select"
-              value=""
               showSearch
               placeholder="Выберите компетенцию"
               filterOption={FILTER_OPTION}
               options={options}
               notFoundContent="Нет данных"
+              onChange={(value) => onChange(value)}
             />
           </FormItem>
         </Space.Compact>

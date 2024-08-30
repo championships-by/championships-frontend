@@ -7,7 +7,7 @@ function ParticipantEquipmentInput({ name }) {
   return (
     <FormItem name={name}>
       <Flex vertical>
-        <Typography.Text>Привозимое оборудование участника</Typography.Text>
+        <Typography.Text>Оборудование участника</Typography.Text>
         <Input
           prefix={<LaptopOutlined />}
           placeholder="Введите привозимое оборудование участника"

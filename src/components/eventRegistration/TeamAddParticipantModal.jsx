@@ -6,12 +6,81 @@ import TeamNominationSelect from "@modules/team/TeamNominationSelect";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
 import ParticipantEquipmentInput from "@modules/participant/ParticipantEquipmentInput";
 import ParticipantSoftwareInput from "@modules/participant/ParticipantSoftwareInput";
+import ParticipantAdditionalOrganizationInput from "@modules/participant/ParticipantAdditionalOrganizationInput.jsx";
+import ParticipantTeacherFirstnameInput from "@modules/participant/ParticipantTeacherFirstnameInput.jsx";
+import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTeacherLastnameInput.jsx";
+import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
+import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
+import { eventApi, competenciesApi } from "@api";
 
 import "./sass/event-registration.scss";
 
 function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [nominationsOptions, setNominationOptions] = useState({});
+  const [dataNominations, setNomination] = useState({});
+  const [dataTeamParticipants, setTeamParticipants] = useState([]);
+  const { eventID } = useParams();
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (isOpen) {
+      eventApi
+        .getEvent(eventID)
+        .then((data) => {
+          setNominationOptions(
+            data?.nominations.map((nomination) => ({
+              value: nomination.id,
+              label: nomination.name,
+            }))
+          );
+          setNomination(
+            data?.nominations.map((nomination) => ({
+              id: nomination.id,
+              kind: nomination.kind,
+            }))
+          );
+        })
+        .catch(() =>
+          message.error(
+            "Невозможно получить данные. Обратитесь к администратору"
+          )
+        );
+    }
+  });
+
+  const onNominationChange = (nominationID) => {
+    const related = false;
+    const selectedNomination = dataNominations.find(
+      (nom) => nom.id === nominationID
+    );
+    const nominationsOptions = [];
+    const kind = selectedNomination ? selectedNomination.kind : null;
+    competenciesApi
+      .getParticipantsNominationEvent(eventID, nominationID, related, kind)
+      .then((response) => {
+        const { data } = response;
+        data.forEach(({ team }) => {
+          if (team.participants && team.participants.length > 0) {
+            team.participants.forEach((participant) => {
+              const firstName = participant.participant_data.first_name;
+              const secondName = participant.participant_data.second_name;
+              const thirdName = participant.participant_data.third_name;
+
+              nominationsOptions.push({
+                value: participant.participant_data.id,
+                label: `${firstName} ${secondName} ${thirdName}`,
+              });
+            });
+          }
+        });
+
+        setTeamParticipants(nominationsOptions);
+      })
+      .catch(() =>
+        message.error("Невозможно получить данные. Обратитесь к администратору")
+      );
+  };
 
   const onFinish = () => {
     message.success("Всё в порядке!");
@@ -46,10 +115,23 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
             <>
               {fields.map(({ key, name, fieldKey, ...restField }) => (
                 <div key={key}>
-                  <TeamNominationSelect name="nomination" />
-                  <TeamParticipantsInput name="participant" mode="single" />
-                  <ParticipantEquipmentInput name="equipment" />
+                  <TeamNominationSelect
+                    name="nomination"
+                    options={nominationsOptions}
+                    onChange={onNominationChange}
+                  />
+                  <TeamParticipantsInput
+                    name="participant"
+                    mode="single"
+                    options={dataTeamParticipants}
+                  />
+                  <ParticipantTeacherLastnameInput name="supervisor_second_name" />
+                  <ParticipantTeacherFirstnameInput name="supervisor_first_name" />
+                  <ParticipantTeacherPatronymicInput name="supervisor_third_name" />
+                  <ParticipantOrganizationInput name="educational_institution" />
+                  <ParticipantAdditionalOrganizationInput name="additional_educational_institution" />
                   <ParticipantSoftwareInput name="software" />
+                  <ParticipantEquipmentInput name="equipment" />
                   {fields.length > 1 && (
                     <Button
                       type="dashed"
