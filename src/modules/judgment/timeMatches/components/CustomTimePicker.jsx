@@ -2,7 +2,7 @@ import { defaultFormat } from "@constants";
 import { formatTime } from "@utils";
 import { Button, TimePicker } from "antd";
 import { useState } from "react";
-import "./sass/CustomTimePicker.scss";
+import "./CustomTimePicker.scss";
 
 export const CustomTimePicker = ({ id, onTimeChange }) => {
   const [value, setValue] = useState(formatTime());

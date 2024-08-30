@@ -135,3 +135,10 @@ export const openPdf = (eventRulesPath) => {
   link.click();
   document.body.removeChild(link);
 };
+
+export const transformStageStatus = (info) => ({
+  regulations: info.reglament,
+  registrationFinished: info.registration_finished,
+  tournamentStarted: info.tournament_started,
+  tournamentFinished: info.tournament_finished,
+});

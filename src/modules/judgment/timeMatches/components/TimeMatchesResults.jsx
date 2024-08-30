@@ -2,7 +2,6 @@ import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Button, Flex, Table, Tooltip } from "antd";
-import "./sass/timeMatches.scss";
 
 const data = [
   {
@@ -60,7 +59,7 @@ const columns = [
   },
 ];
 
-function ResultTableTimeMatches() {
+export const TimeMatchesResults = () => {
   return (
     <>
       <Flex vertical gap="large">
@@ -71,5 +70,4 @@ function ResultTableTimeMatches() {
       </Button>
     </>
   );
-}
-export default ResultTableTimeMatches;
+};

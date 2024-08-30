@@ -2,22 +2,22 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { timeMatchesApi } from "@api/timeMatches";
 import {
   defaultFormat,
+  RESPONSE_STATUS,
   timeMatchEventEmitter,
   TimeMatchEvents,
 } from "@constants";
+import { CustomTimePicker } from "@modules/judgment/timeMatches/components";
 import {
   formatTimeToString,
   generateColumns,
   transformTimeMatchesData,
 } from "@utils";
-import { Button, Flex, Table, Typography } from "antd";
+import { Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { CustomTimePicker } from "@modules/judgment/timeMatches/CustomTimePicker";
-import "./sass/timeMatches.scss";
 
-function TableTimeMatches() {
+export const TimeMatchesTable = () => {
   const [timeMatchesData, setTimeMatchesData] = useState([]);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -86,7 +86,7 @@ function TableTimeMatches() {
     timeMatchesApi
       .getTimeMatches({ eventId, nominationId })
       .then((response) => {
-        if (response.status.ok) {
+        if (response.status === RESPONSE_STATUS.STATUS_OK) {
           const transformedData = transformTimeMatchesData(response.data);
           setTimeMatchesData(transformedData);
         } else {
@@ -141,19 +141,12 @@ function TableTimeMatches() {
       {isErrorOccurred ? (
         <Typography>При попытке получить данных произошла ошибка</Typography>
       ) : (
-        <>
-          <Table
-            pagination={false}
-            columns={columns}
-            dataSource={timeMatchesData}
-          />
-          <Button className="time-matches__button" type="primary">
-            Завершить этап
-          </Button>
-        </>
+        <Table
+          pagination={false}
+          columns={columns}
+          dataSource={timeMatchesData}
+        />
       )}
     </Flex>
   );
-}
-
-export default TableTimeMatches;
+};
