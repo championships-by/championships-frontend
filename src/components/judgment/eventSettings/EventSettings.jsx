@@ -226,8 +226,8 @@ function EventSettings() {
       okText: "Да",
       onOk: () => {
         getNominationInfo()
-          .then((response) => {
-            message.success("Удаление прошло успешно!");
+          .then(() => {
+            message.success("Компетенция успешно удалена!");
           })
           .catch(() => {
             message.error("При удалении произошла ошибка!");
