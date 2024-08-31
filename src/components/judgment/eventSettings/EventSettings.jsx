@@ -18,7 +18,7 @@ import {
   LinkOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
@@ -35,8 +35,8 @@ import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
-import { eventApi, competenciesApi } from "@api";
-import { Locale, ROUTES } from "@constants";
+import { eventApi, competenciesApi, participantApi } from "@api";
+import { Locale, ROUTES, NOMINATION_TYPES } from "@constants";
 
 import "./sass/event-settings.scss";
 
@@ -65,20 +65,13 @@ function EventSettings() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [dataNominationID, setNominationID] = useState();
-  const items = [
-    eventsBreadcromb,
-    {
-      title: dataEvent?.event?.name ?? "",
-      href: ROUTES.EVENTS_DESCRIPTION.PATH(dataEvent?.event?.id),
-    },
-    editEventBreadcromb,
-  ];
+  const [participantsInfo, setParticipantsInfo] = useState([]);
 
   const columns = [
     {
       title: "Название компетенции",
-      dataIndex: "nomination_name",
-      key: "nomination_name",
+      dataIndex: "name",
+      key: "name",
       sorter: (a, b) => a.nomination_name.localeCompare(b.nomination_name),
     },
     {
@@ -86,11 +79,11 @@ function EventSettings() {
       dataIndex: "kind",
       key: "kind",
       filters: [
-        { text: "По времени", value: "По времени" },
-        { text: "По критериям", value: "По критериям" },
-        { text: "Плей-офф", value: "Плей-офф" },
+        { text: "По времени", value: NOMINATION_TYPES.TIME },
+        { text: "По критериям", value: NOMINATION_TYPES.CRITERIA },
+        { text: "Плей-офф", value: NOMINATION_TYPES.OLYMPIC },
       ],
-      onFilter: (value, record) => record.type.includes(value),
+      onFilter: (value, record) => record.kind.includes(value),
     },
     {
       title: "Регламент",
@@ -143,22 +136,31 @@ function EventSettings() {
     },
   ];
 
+  const items = [
+    eventsBreadcromb,
+    {
+      title: dataEvent?.event?.name ?? "",
+      href: ROUTES.EVENTS_DESCRIPTION.PATH(dataEvent?.event?.id),
+    },
+    editEventBreadcromb,
+  ];
+
+  const eventId = parseInt(eventID, 10);
+
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
   const startCriteriaStage = (eventID, nominationID) => {
-    const eventId = parseInt(eventID, 10);
     const data = {
-      event_id: eventId,
+      event_id: eventID,
       nomination_id: nominationID,
     };
     competenciesApi.startCriteriaStage(data);
   };
 
   const startTimeStage = (eventID, nominationID) => {
-    const eventId = parseInt(eventID, 10);
     const data = {
-      event_id: eventId,
+      event_id: eventID,
       nomination_id: nominationID,
     };
     competenciesApi.startTimeStage(data);
@@ -218,15 +220,15 @@ function EventSettings() {
     const nominationID = findNominationId(competitionName, eventInfo);
 
     switch (competitionType) {
-      case "Плей-офф":
+      case NOMINATION_TYPES.OLYMPIC:
         setTrophyModal(true);
         break;
-      case "По времени":
-        startTimeStage(eventID, nominationID);
+      case NOMINATION_TYPES.TIME:
+        startTimeStage(eventId, nominationID);
         navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
         break;
-      case "По критериям":
-        startCriteriaStage(eventID, nominationID);
+      case NOMINATION_TYPES.CRITERIA:
+        startCriteriaStage(eventId, nominationID);
         navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
         break;
       default:
@@ -236,12 +238,16 @@ function EventSettings() {
   };
 
   const openParticipantModal = (record) => {
-    const competitionType = record.type;
-    if (competitionType === "По критериям") {
-      message.info("Критерии");
-    } else {
-      message.info("Остальное");
-    }
+    const competitionType = translateTypeFromRussianIntoEnglish(record.kind);
+    const competitionName = record.name;
+    const nominationID = findNominationId(competitionName, eventInfo);
+
+    participantApi
+      .getParticipantsWithInfo(eventId, nominationID, competitionType)
+      .then((response) => {
+        setParticipantsInfo(response);
+      });
+    setParticipantModal(true);
   };
   useEffect(() => {
     eventApi.getEvent(eventID).then((response) => {
@@ -268,7 +274,6 @@ function EventSettings() {
       try {
         eventApi.getEvent(eventID).then((data) => {
           setEvent(data);
-          setEventInfo(data.nominations);
 
           const { event } = data;
 
@@ -528,6 +533,7 @@ function EventSettings() {
         onOk={() => setParticipantModal(false)}
         onCancel={() => setParticipantModal(false)}
         name="Участники соревнования"
+        data={participantsInfo}
       ></ParticipantModal>
     </div>
   );

@@ -75,7 +75,7 @@ function CompetitionType({ onJudgeChange }) {
               className="events__competition-judge__select"
               mode="multiple"
               placeholder="Выберите судью"
-              maxTagCount="responsive"
+              maxTagCount={10}
               options={options}
               onChange={handleChange}
               onSearch={handleSearch}
