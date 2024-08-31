@@ -9,6 +9,7 @@ const columns = [
     title: "ФИО",
     dataIndex: "fullName",
     key: "fullName",
+    sorter: (a, b) => a.fullName.localeCompare(b.fullName),
   },
   {
     title: "Учреждение образования",

@@ -107,7 +107,7 @@ function EventSettings() {
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={openEditModal}
+              onClick={() => openEditModal(record)}
             />
           </Tooltip>
           <Tooltip title="Начать соревнование">
@@ -147,8 +147,8 @@ function EventSettings() {
 
   const eventId = parseInt(eventID, 10);
 
-  const openEditModal = () => {
-    setIsEditModalOpen(true);
+  const openEditModal = (record) => {
+    const NominationName = setIsEditModalOpen(true);
   };
   const startCriteriaStage = (eventID, nominationID) => {
     const data = {
@@ -229,7 +229,7 @@ function EventSettings() {
         break;
       case NOMINATION_TYPES.CRITERIA:
         startCriteriaStage(eventId, nominationID);
-        navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+        navigate(ROUTES.JUDGMENT_COMPETENCIES.PATH(eventID, nominationID));
         break;
       default:
         break;
