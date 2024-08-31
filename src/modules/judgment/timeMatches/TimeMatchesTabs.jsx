@@ -117,12 +117,19 @@ export const TimeMatchesTabs = () => {
         },
         {
           ...tabs[1],
-          disabled: !(
-            stageStatus.registrationFinished &&
-            stageStatus.tournamentStarted &&
-            stageStatus.tournamentFinished
+          // disabled: !(
+          //   stageStatus.registrationFinished &&
+          //   stageStatus.tournamentStarted &&
+          //   stageStatus.tournamentFinished
+          // ),
+          disabled: false,
+          children: (
+            <TimeMatchesResults
+              timeMatches={timeMatches}
+              isLoading={isLoading}
+              isErrorOccurred={isErrorOccurred}
+            />
           ),
-          children: <TimeMatchesResults />,
         },
       ]}
       tabBarExtraContent={{

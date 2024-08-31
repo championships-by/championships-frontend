@@ -1,39 +1,21 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
-import { Button, Flex, Table, Tooltip } from "antd";
-
-const data = [
-  {
-    place: "1",
-    participants: "Иванов Иван Иванович",
-    best_attempt: "2:49:35",
-  },
-  {
-    place: "2",
-    participants: "Егоров Егор Егорович",
-    best_attempt: "2:41:30",
-  },
-  {
-    place: "3",
-    participants: "Кириллов Кирилл Кириллович",
-    best_attempt: "2:40:12",
-  },
-];
+import { Flex, Table, Tooltip, Typography } from "antd";
 
 const columns = [
   {
-    title: <Tooltip></Tooltip>,
     key: "medal",
-    render: (record) => (
+    render: (text, record, index) => (
       <div>
         <img
           src={
-            record.place === "1"
+            index + 1 === 1
               ? GoldMedal
-              : record.place === "2"
+              : index + 1 === 2
                 ? SilverMedal
-                : record.place === "3"
+                : index + 1 === 3
                   ? BronzeMedal
                   : ""
           }
@@ -46,28 +28,37 @@ const columns = [
     title: <Tooltip title="Место">Место</Tooltip>,
     dataIndex: "place",
     key: "place",
+    render: (text, record, index) => index + 1,
   },
   {
     title: <Tooltip title="Участник">Участники</Tooltip>,
-    dataIndex: "participants",
-    key: "participants",
+    dataIndex: "participant",
+    key: "participant",
+    render: ({ firstName, secondName, thirdName }) =>
+      `${secondName} ${firstName} ${thirdName}`,
   },
   {
     title: <Tooltip title="Лучшее время">Лучшее время</Tooltip>,
-    dataIndex: "best_attempt",
-    key: "best_attempt",
+    dataIndex: "bestAttempt",
+    key: "bestAttempt",
+    render: ({ result }) => result ?? "-",
   },
 ];
 
-export const TimeMatchesResults = () => {
-  return (
-    <>
-      <Flex vertical gap="large">
-        <Table pagination={false} columns={columns} dataSource={data} />
-      </Flex>
-      <Button className="time-matches__button" type="primary">
-        Итоговый протокол
-      </Button>
-    </>
+export const TimeMatchesResults = ({
+  timeMatches,
+  isLoading,
+  isErrorOccurred,
+}) => {
+  return isLoading ? (
+    <LoadingOutlined />
+  ) : (
+    <Flex vertical gap="large">
+      {isErrorOccurred ? (
+        <Typography>При попытке получить данных произошла ошибка</Typography>
+      ) : (
+        <Table pagination={false} columns={columns} dataSource={timeMatches} />
+      )}
+    </Flex>
   );
 };

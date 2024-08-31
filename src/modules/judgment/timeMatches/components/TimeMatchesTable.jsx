@@ -70,7 +70,19 @@ export const TimeMatchesTable = ({
       {isErrorOccurred ? (
         <Typography>При попытке получить данных произошла ошибка</Typography>
       ) : (
-        <Table pagination={false} columns={columns} dataSource={timeMatches} />
+        <Table
+          pagination={false}
+          columns={columns}
+          dataSource={timeMatches.sort((a, b) => {
+            if (dayjs(a.bestAttempt.result).isBefore(b.bestAttempt.result)) {
+              return -1;
+            }
+            if (dayjs(a.bestAttempt.result).isAfter(b.bestAttempt.result)) {
+              return 1;
+            }
+            return 0;
+          })}
+        />
       )}
     </Flex>
   );
