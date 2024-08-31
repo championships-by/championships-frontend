@@ -9,6 +9,7 @@ import {
   Form,
   Space,
   Tooltip,
+  Modal,
 } from "antd";
 import {
   DeleteOutlined,
@@ -201,18 +202,39 @@ function EventSettings() {
   };
 
   const deleteNominations = (record) => {
-    const eventId = parseInt(eventID, 10);
-    const nominationType = translateTypeFromRussianIntoEnglish(record.kind);
-    const nominationName = record.name;
-    const nominationID = findNominationId(nominationName, eventInfo);
-
-    const data = {
-      event_id: eventId,
-      nomination_id: nominationID,
-      type: nominationType,
+    const getNominationInfo = () => {
+      const eventId = parseInt(eventID, 10);
+      const nominationType = translateTypeFromRussianIntoEnglish(record.kind);
+      const nominationName = record.name;
+      const nominationID = findNominationId(nominationName, eventInfo);
+      const data = {
+        event_id: eventId,
+        nomination_id: nominationID,
+        type: nominationType,
+      };
+      return competenciesApi.deleteNomination(data);
     };
-
-    competenciesApi.deleteNomination(data);
+    Modal.confirm({
+      title: "Вы уверены?",
+      content: "Вы уверены что хотите удалить эту номинацию?",
+      footer: (_, { OkBtn, CancelBtn }) => (
+        <>
+          <OkBtn />
+          <CancelBtn />
+        </>
+      ),
+      okText: "Да",
+      onOk: () => {
+        getNominationInfo()
+          .then((response) => {
+            message.success("Удаление прошло успешно!");
+          })
+          .catch(() => {
+            message.error("При удалении произошла ошибка!");
+          });
+      },
+      cancelText: "Отмена",
+    });
   };
   const openCompetenciesModal = (record) => {
     const competitionType = record.kind;
