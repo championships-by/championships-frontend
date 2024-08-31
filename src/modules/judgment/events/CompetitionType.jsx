@@ -20,7 +20,7 @@ const options = [
   },
 ];
 
-function CompetitionType({ onChange, onInputChange, onCriteriaChange }) {
+function CompetitionType({ onChange, onInputChange, onCriteriaChange, mode }) {
   const [selectedValue, setSelectedValue] = useState("");
   const [groupCount, setGroupCount] = useState();
 
@@ -50,6 +50,7 @@ function CompetitionType({ onChange, onInputChange, onCriteriaChange }) {
           options={options}
           className="events__competition-type__name"
           onChange={handleChange}
+          disabled={mode === "edit"}
         />
         {selectedValue && settingsComponents[selectedValue]}
       </Space>

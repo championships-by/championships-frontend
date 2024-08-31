@@ -149,7 +149,10 @@ function EventSettings() {
   const eventId = parseInt(eventID, 10);
 
   const openEditModal = (record) => {
-    const NominationName = setIsEditModalOpen(true);
+    setIsEditModalOpen(true);
+    console.log(record.name);
+    console.log(record.reglament);
+    console.log(record);
   };
   const startCriteriaStage = (eventID, nominationID) => {
     const data = {
@@ -539,6 +542,7 @@ function EventSettings() {
       />
       <CompitationModal
         name="Редактировать компетенцию"
+        mode="edit"
         isOpen={isEditModalOpen}
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}

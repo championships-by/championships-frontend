@@ -7,7 +7,13 @@ import CompetitionType from "@modules/judgment/events/CompetitionType";
 import { competenciesApi } from "@api";
 import { useParams } from "react-router-dom";
 
-function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
+function EventSettingsCompitations({
+  isOpen,
+  onOk,
+  onCancel,
+  name,
+  mode = "create",
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputName, setInputName] = useState("");
   const [inputReglament, setInputReglament] = useState("");
@@ -46,6 +52,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
     setIsLoading(false);
   };
   const sendRequest = async () => {
+    setIsLoading(true);
     const data = {
       append_nomination_event_data: {
         event_id: eventId,
@@ -57,16 +64,28 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
     switch (selectedValue) {
       case "time":
         Object.assign(data, { race_round_amount: groupCount });
-        await competenciesApi.addTimeCompetenciesForEvent(data);
+        await competenciesApi.addTimeCompetenciesForEvent(data).then(() => {
+          message.success("Номинация успешно добавлена");
+          setIsLoading(false);
+          onCancel();
+        });
         break;
 
       case "playoffs":
-        await competenciesApi.addOlympicCompetenciesForEvent(data);
+        await competenciesApi.addOlympicCompetenciesForEvent(data).then(() => {
+          message.success("Номинация успешно добавлена");
+          setIsLoading(false);
+          onCancel();
+        });
         break;
 
       case "criteria":
         Object.assign(data, { criterias: criteria });
-        await competenciesApi.addCriteriaCompetenciesForEvent(data);
+        await competenciesApi.addCriteriaCompetenciesForEvent(data).then(() => {
+          message.success("Номинация успешно добавлена");
+          setIsLoading(false);
+          onCancel();
+        });
         break;
       default:
         break;
@@ -96,9 +115,16 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
         />
         <CompetitionJudge onJudgeChange={handleChangeJudges} />
         <CompetitionType
-          onChange={handleChange}
+          onChange={(value) => {
+            if (mode == "edit") {
+              return;
+            }
+            handleChange(value);
+          }}
           onInputChange={handleGroupCount}
           onCriteriaChange={handleCriteriaChange}
+          disabled={mode === "edit"}
+          mode={mode}
         />
         <Flex gap="middle">
           <Button
@@ -107,7 +133,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
             loading={isLoading}
             onClick={sendRequest}
           >
-            Сохранить
+            {mode === "edit" ? "Обновить" : "Сохранить"}
           </Button>
           <Button className="event-settings__cancelButton" onClick={onCancel}>
             Отмена

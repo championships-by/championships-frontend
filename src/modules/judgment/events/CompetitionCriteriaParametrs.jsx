@@ -74,7 +74,7 @@ function CriteriaParametrs({ onCriteriaChange }) {
                           remove(field.name);
                         } else {
                           message.warning(
-                            "Минимум один критерий должен быть установлен."
+                            "Минимум один критерий оценки должен быть установлен"
                           );
                         }
                       }}
