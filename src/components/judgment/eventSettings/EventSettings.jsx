@@ -391,7 +391,7 @@ function EventSettings() {
   const onFinish = async () => {
     const success = await onSubmit();
     if (success) {
-      message.success("Данные сохранены успешно!");
+      message.success("Данные успешно сохранены");
       navigate(ROUTES.JUDGMENT.PATH);
     }
   };

@@ -35,7 +35,7 @@ function JudgmentEventsTable({ EventsData }) {
         });
         try {
           eventApi.deleteEvent(body);
-          message.success("Мероприятие успешно удалено.");
+          message.success("Мероприятие успешно удалено");
         } catch (error) {
           message.error("Ошибка: Невозможно удалить мероприятие.");
         }
