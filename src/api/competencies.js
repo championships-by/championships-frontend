@@ -13,6 +13,11 @@ export const competenciesApi = {
       `/nomination_event/nominations_event_participant_count?event_id=${eventID}`
     );
   },
+  getParticipantsNominationEvent: (eventID, nominationID, related, kind) => {
+    return instance.get(
+      `/nomination_event/team_participants_of_nomination_event?related=${related}&event_id=${eventID}&nomination_id=${nominationID}&kind=${kind}`
+    );
+  },
   addOlympicCompetenciesForEvent: async (data) => {
     axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_olympic`,

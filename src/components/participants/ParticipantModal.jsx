@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { Button, Flex, Form, Modal, message, Checkbox } from "antd";
-import ParticipantAdditionalOrganizationInput from "@modules/participant/ParticipantAdditionalOrganizationInput.jsx";
 import ParticipantBirthdayInput from "@modules/participant/ParticipantBirthdayInput.jsx";
 import ParticipantEmailInput from "@modules/participant/ParticipantEmailInput.jsx";
 import ParticipantFirstnameInput from "@modules/participant/ParticipantFirstnameInput.jsx";
 import ParticipantLastnameInput from "@modules/participant/ParticipantLastnameInput.jsx";
 import ParticipantPatronymicInput from "@modules/participant/ParticipantPatronymicInput.jsx";
 import ParticipantRegionSelect from "@modules/participant/ParticipantRegionSelect.jsx";
-import ParticipantTeacherFirstnameInput from "@modules/participant/ParticipantTeacherFirstnameInput.jsx";
-import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTeacherLastnameInput.jsx";
-import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
-import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
 import { participantApi } from "@api";
 
 function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
@@ -109,26 +104,6 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
           name="region"
           value={values.region}
           onChange={onValuesChange}
-        />
-        <ParticipantOrganizationInput
-          name="educational_institution"
-          value={values.educational_institution}
-        />
-        <ParticipantTeacherLastnameInput
-          name="supervisor_second_name"
-          value={values.supervisor_second_name}
-        />
-        <ParticipantTeacherFirstnameInput
-          name="supervisor_first_name"
-          value={values.supervisor_first_name}
-        />
-        <ParticipantTeacherPatronymicInput
-          name="supervisor_third_name"
-          value={values.supervisor_third_name}
-        />
-        <ParticipantAdditionalOrganizationInput
-          name="additional_educational_institution"
-          value={values.additional_educational_institution}
         />
         <Flex vertical gap="large">
           <Checkbox

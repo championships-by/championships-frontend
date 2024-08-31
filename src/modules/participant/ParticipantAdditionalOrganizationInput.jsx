@@ -17,7 +17,7 @@ function ParticipantAdditionalOrganiztionInput({ name, value }) {
           value={value}
         />
         <Typography.Text type="secondary">
-          Пример: Очумелые ручки
+          Пример: ГУО "Центр дополнительного образования"
         </Typography.Text>
       </Flex>
     </FormItem>
