@@ -17,7 +17,7 @@ export const FILE_UPLOADING = {
   },
 };
 
-export const Types = {
+export const NOMINATION_TYPES = {
   CRITERIA: "По критериям",
   TIME: "По времени",
   OLYMPIC: "Плей-офф",

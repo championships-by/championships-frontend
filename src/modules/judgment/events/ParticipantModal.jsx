@@ -32,27 +32,29 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
 
   useEffect(() => {
     if (data) {
-      const participants = data.reduce((acc, item) => {
-        const participantsArray =
-          item.team.participants?.map((participantItem) => {
-            return {
-              fullName:
-                participantItem.participant_data.first_name +
-                " " +
-                participantItem.participant_data.second_name +
-                " " +
-                participantItem.participant_data.third_name,
-              educational_institution:
-                participantItem.participant_additional_data
-                  .educational_institution.educational_institution,
-              equipments:
-                participantItem.participant_additional_data.equipments,
-              softwares: participantItem.participant_additional_data.softwares,
-            };
-          }) || [];
-
-        return [...acc, ...participantsArray];
-      }, []);
+      const participants = data
+        .map((item) => {
+          return (
+            item.team.participants?.map((participantItem) => {
+              return {
+                fullName:
+                  participantItem.participant_data.first_name +
+                  " " +
+                  participantItem.participant_data.second_name +
+                  " " +
+                  participantItem.participant_data.third_name,
+                educational_institution:
+                  participantItem.participant_additional_data
+                    .educational_institution.educational_institution,
+                equipments:
+                  participantItem.participant_additional_data.equipments,
+                softwares:
+                  participantItem.participant_additional_data.softwares,
+              };
+            }) || []
+          );
+        })
+        .flat();
 
       setParticipantsInfo(participants);
     }

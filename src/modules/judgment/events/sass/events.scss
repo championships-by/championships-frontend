@@ -159,12 +159,16 @@
       display: flex;
     }
   }
-  &__participantModal__printButton {
-    margin-top: 20px;
+  &__participantModal {
+    &__printButton {
+      margin-top: 20px;
+    }
   }
   &__participantModal__downloadButton {
-    margin-top: 20px;
-    margin-left: 20px;
+    &__downloadButton {
+      margin-top: 20px;
+      margin-left: 20px;
+    }
   }
   &__competitionModal__play-off__slider {
     width: 200px;

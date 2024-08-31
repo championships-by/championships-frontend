@@ -36,7 +36,7 @@ import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi } from "@api";
-import { Locale, ROUTES, Types } from "@constants";
+import { Locale, ROUTES, NOMINATION_TYPES } from "@constants";
 
 import "./sass/event-settings.scss";
 
@@ -69,7 +69,7 @@ function EventSettings() {
 
   const columns = [
     {
-      title: "Название компитенции",
+      title: "Название компетенции",
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.nomination_name.localeCompare(b.nomination_name),
@@ -79,9 +79,9 @@ function EventSettings() {
       dataIndex: "kind",
       key: "kind",
       filters: [
-        { text: "По времени", value: Types.TIME },
-        { text: "По критериям", value: Types.CRITERIA },
-        { text: "Плей-офф", value: Types.OLYMPIC },
+        { text: "По времени", value: NOMINATION_TYPES.TIME },
+        { text: "По критериям", value: NOMINATION_TYPES.CRITERIA },
+        { text: "Плей-офф", value: NOMINATION_TYPES.OLYMPIC },
       ],
       onFilter: (value, record) => record.kind.includes(value),
     },
@@ -220,14 +220,14 @@ function EventSettings() {
     const nominationID = findNominationId(competitionName, eventInfo);
 
     switch (competitionType) {
-      case Types.OLYMPIC:
+      case NOMINATION_TYPES.OLYMPIC:
         setTrophyModal(true);
         break;
-      case Types.TIME:
+      case NOMINATION_TYPES.TIME:
         startTimeStage(eventId, nominationID);
         navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
         break;
-      case Types.CRITERIA:
+      case NOMINATION_TYPES.CRITERIA:
         startCriteriaStage(eventId, nominationID);
         navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
         break;
@@ -237,15 +237,15 @@ function EventSettings() {
     setNominationID(nominationID);
   };
 
-  const openParticipantModal = async (record) => {
+  const openParticipantModal = (record) => {
     const competitionType = translateTypeFromRussianIntoEnglish(record.kind);
     const competitionName = record.name;
     const nominationID = findNominationId(competitionName, eventInfo);
 
-    await participantApi
+    participantApi
       .getParticipantsWithInfo(eventId, nominationID, competitionType)
       .then((response) => {
-        setParticipantsInfo(response.data);
+        setParticipantsInfo(response);
       });
     setParticipantModal(true);
   };
