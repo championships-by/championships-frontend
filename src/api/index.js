@@ -2,13 +2,14 @@ import axios from "axios";
 
 // todo перенести все на axios
 export * from "./auth";
+export * from "./competencies";
 export * from "./event";
 export * from "./judgment";
 export * from "./match";
 export * from "./participant";
 export * from "./team";
+export * from "./timeMatches";
 export * from "./user";
-export * from "./competencies";
 
 export const instance = axios.create({
   baseURL: API_PATH,

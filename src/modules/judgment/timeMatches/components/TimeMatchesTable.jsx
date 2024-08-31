@@ -1,29 +1,18 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { timeMatchesApi } from "@api/timeMatches";
-import {
-  defaultFormat,
-  RESPONSE_STATUS,
-  timeMatchEventEmitter,
-  TimeMatchEvents,
-} from "@constants";
+import { defaultFormat } from "@constants";
 import { CustomTimePicker } from "@modules/judgment/timeMatches/components";
-import {
-  formatTimeToString,
-  generateColumns,
-  transformTimeMatchesData,
-} from "@utils";
+import { formatTimeToString, generateColumns } from "@utils";
 import { Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useMemo } from "react";
 
-export const TimeMatchesTable = () => {
-  const [timeMatchesData, setTimeMatchesData] = useState([]);
-  const [isErrorOccurred, setIsErrorOccurred] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { eventId, nominationId } = useParams();
-
+export const TimeMatchesTable = ({
+  editable,
+  timeMatches,
+  isLoading,
+  isErrorOccurred,
+  onTimeChange,
+}) => {
   const columns = useMemo(
     () => [
       {
@@ -37,18 +26,11 @@ export const TimeMatchesTable = () => {
         dataIndex: "teamName",
         title: "Участники",
       },
-      ...generateColumns(timeMatchesData, (text, record, index, attemptId) => (
+      ...generateColumns(timeMatches, (text, record, index, columnId) => (
         <CustomTimePicker
-          id={record.attempts[attemptId].id}
-          onTimeChange={(id, time, isDisqualified) => {
-            timeMatchEventEmitter.emit(
-              TimeMatchEvents.UPDATE_TABLE_DATA,
-              id,
-              time,
-              index,
-              isDisqualified
-            );
-          }}
+          id={record.attempts[columnId].id}
+          disabled={!editable}
+          onTimeChange={onTimeChange}
         />
       )),
       {
@@ -78,61 +60,8 @@ export const TimeMatchesTable = () => {
         },
       },
     ],
-    [timeMatchesData]
+    [editable, onTimeChange, timeMatches]
   );
-
-  useEffect(() => {
-    setIsLoading(true);
-    timeMatchesApi
-      .getTimeMatches({ eventId, nominationId })
-      .then((response) => {
-        if (response.status === RESPONSE_STATUS.STATUS_OK) {
-          const transformedData = transformTimeMatchesData(response.data);
-          setTimeMatchesData(transformedData);
-        } else {
-          setIsErrorOccurred(true);
-        }
-      })
-      .catch(() => setIsErrorOccurred(true))
-      .finally(() => setIsLoading(false));
-  }, [eventId, nominationId]);
-
-  useEffect(() => {
-    const handleUpdateTime = (id, time, index, isDisqualified) => {
-      setTimeMatchesData((prevData) =>
-        prevData.map((item, idx) => {
-          if (idx === index) {
-            return {
-              ...item,
-              attempts: item.attempts.map((attempt) => {
-                if (attempt.id === id) {
-                  return {
-                    ...attempt,
-                    result: formatTimeToString(time),
-                    isDisqualified,
-                  };
-                }
-                return attempt;
-              }),
-            };
-          }
-          return item;
-        })
-      );
-    };
-
-    timeMatchEventEmitter.on(
-      TimeMatchEvents.UPDATE_TABLE_DATA,
-      handleUpdateTime
-    );
-
-    return () => {
-      timeMatchEventEmitter.removeListener(
-        TimeMatchEvents.UPDATE_TABLE_DATA,
-        handleUpdateTime
-      );
-    };
-  }, [timeMatchesData]);
 
   return isLoading ? (
     <LoadingOutlined />
@@ -141,11 +70,7 @@ export const TimeMatchesTable = () => {
       {isErrorOccurred ? (
         <Typography>При попытке получить данных произошла ошибка</Typography>
       ) : (
-        <Table
-          pagination={false}
-          columns={columns}
-          dataSource={timeMatchesData}
-        />
+        <Table pagination={false} columns={columns} dataSource={timeMatches} />
       )}
     </Flex>
   );
