@@ -16,7 +16,7 @@ function UserModal({ isOpen, onOk, onCancel }) {
   const [form] = Form.useForm();
 
   const onFinish = () => {
-    message.success("Всё в порядке!");
+    message.success("Пользователь успешно создан");
     setIsLoading(false);
   };
 
