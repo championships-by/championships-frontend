@@ -179,6 +179,8 @@ export const TimeMatchEvents = {
   UPDATE_TABLE_DATA: "updateTableData",
 };
 
+export const ModalType = { ADD: "add", EDIT: "edit" };
+
 export const timeMatchEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";

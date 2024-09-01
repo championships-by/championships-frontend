@@ -1,6 +1,6 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
-import { Locale } from "@constants";
+import { Locale, ModalType } from "@constants";
 import { Button, Flex, Modal, Table, Typography } from "antd";
 import { useState } from "react";
 
@@ -126,6 +126,7 @@ function UsersTable({ usersData }) {
       <Table dataSource={usersData} columns={columns} locale={Locale} />
 
       <UserModal
+        type={ModalType.EDIT}
         isOpen={isEditModalOpen}
         onOk={() => changeUserData()}
         onCancel={() => setIsEditModalOpen(false)}

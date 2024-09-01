@@ -1,10 +1,10 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Locale, ModalType } from "@constants";
 import { getUniqueFilters } from "@utils";
 import { Button, Flex, Modal, Table, Typography } from "antd";
+import dayjs from "dayjs";
 import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
-import dayjs from "dayjs";
-import { Locale } from "@constants";
 
 function ParticipantsTable({ ParticipantData, getParticipant }) {
   const columns = [
@@ -107,6 +107,7 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
       <Table dataSource={ParticipantData} columns={columns} locale={Locale} />
 
       <ParticipantModal
+        type={ModalType.EDIT}
         isOpen={Boolean(editModalData)}
         data={editModalData}
         onOk={onOk}
