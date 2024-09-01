@@ -1,7 +1,7 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
 import { Locale, ModalType } from "@constants";
-import { Button, Flex, Modal, Table, Typography } from "antd";
+import { Button, Flex, Table, Typography } from "antd";
 import { useState } from "react";
 
 const filters = [
@@ -47,21 +47,6 @@ function UsersTable({ usersData }) {
   // 	};
   //     await fetch(`${API_PATH}/user/delete`, requestOptions)
   // }
-
-  const deleteUserConfirm = () => {
-    Modal.confirm({
-      title: "Вы уверены?",
-      content: "Вы уверены что хотите удалить этого пользователя?",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      okText: "Да",
-      cancelText: "Отмена",
-    });
-  };
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -110,11 +95,6 @@ function UsersTable({ usersData }) {
             type="text"
             icon={<EditOutlined />}
             onClick={() => openEditModal()}
-          />
-          <Button
-            type="text"
-            icon={<DeleteOutlined />}
-            onClick={() => deleteUserConfirm()}
           />
         </Flex>
       ),

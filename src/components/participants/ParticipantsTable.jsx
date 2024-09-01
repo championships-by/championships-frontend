@@ -1,7 +1,7 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import { Locale, ModalType } from "@constants";
 import { getUniqueFilters } from "@utils";
-import { Button, Flex, Modal, Table, Typography } from "antd";
+import { Button, Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
@@ -50,11 +50,6 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
               icon={<EditOutlined />}
               onClick={() => openEditModal(data)}
             />
-            <Button
-              type="text"
-              icon={<DeleteOutlined />}
-              onClick={() => deleteParticipantConfirm(email)}
-            />
           </Flex>
         );
       },
@@ -62,31 +57,6 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
   ];
 
   const [editModalData, setEditModalData] = useState(null);
-
-  const deleteParticipantConfirm = (email) => {
-    const hide_participant_request = async () => {
-      const body = JSON.stringify({
-        participant_email: email,
-      });
-
-      await participantApi.setHideParticipant(body);
-    };
-    Modal.confirm({
-      title: "Вы уверены?",
-      content: "Вы уверены что хотите удалить этого участника?",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      okText: "Да",
-      onOk: () => {
-        hide_participant_request();
-      },
-      cancelText: "Отмена",
-    });
-  };
 
   const onOk = () => {
     setEditModalData(null);

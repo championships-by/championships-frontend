@@ -1,47 +1,12 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { eventApi } from "@api";
+import { EditOutlined } from "@ant-design/icons";
 import { Locale, ROUTES } from "@constants";
 import { changeDateFormat } from "@utils";
-import {
-  Button,
-  Flex,
-  List,
-  Modal,
-  Table,
-  Tooltip,
-  Typography,
-  message,
-} from "antd";
+import { Button, Flex, List, Table, Tooltip, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
 function JudgmentEventsTable({ EventsData }) {
   const navigate = useNavigate();
 
-  const deleteEventConfirm = (id) => {
-    Modal.confirm({
-      title: "Вы уверены?",
-      content: "Вы уверены что хотите удалить это мероприятие?",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      okText: "Да",
-      cancelText: "Отмена",
-      onOk: () => {
-        const body = JSON.stringify({
-          id,
-        });
-        try {
-          eventApi.deleteEvent(body);
-          message.success("Мероприятие успешно удалено");
-        } catch (error) {
-          message.error("Ошибка: Невозможно удалить мероприятие.");
-        }
-      },
-    });
-  };
   const columns = [
     {
       title: "Название мероприятия",
@@ -93,13 +58,6 @@ function JudgmentEventsTable({ EventsData }) {
               onClick={() =>
                 navigate(ROUTES.JUDGMENT_EVENT_SETTINGS.PATH(event.id))
               }
-            />
-          </Tooltip>
-          <Tooltip title="Удалить мероприятие">
-            <Button
-              type="text"
-              icon={<DeleteOutlined />}
-              onClick={() => deleteEventConfirm(id)}
             />
           </Tooltip>
         </Flex>
