@@ -51,7 +51,8 @@ function EventSettingsCompitations({
     message.error("Проверьте поля для ввода!");
     setIsLoading(false);
   };
-  const sendRequest = async () => {
+
+  const onFinish = async () => {
     setIsLoading(true);
     const data = {
       append_nomination_event_data: {
@@ -91,6 +92,7 @@ function EventSettingsCompitations({
         break;
     }
   };
+
   return (
     <Modal
       title={name}
@@ -103,16 +105,41 @@ function EventSettingsCompitations({
       <Form
         layout="vertical"
         requiredMark="default"
+        onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <CompetitionName
-          onInputChange={handleInputNameChange}
-          value={inputName}
-        />
-        <ReglamentName
-          onInputChange={handleInputReglamentChange}
-          value={inputReglament}
-        />
+        <Form.Item
+          name="name"
+          rules={[
+            {
+              required: true,
+              message: "Введите название компетенции",
+              whitespace: true,
+            },
+          ]}
+          validateTrigger={["onChange", "onBlur"]}
+        >
+          <CompetitionName
+            onInputChange={handleInputNameChange}
+            value={inputName}
+          />
+        </Form.Item>
+        <Form.Item
+          name="reglament"
+          rules={[
+            {
+              required: true,
+              message: "Введите регламент",
+              whitespace: true,
+            },
+          ]}
+          validateTrigger={["onChange", "onBlur"]}
+        >
+          <ReglamentName
+            onInputChange={handleInputReglamentChange}
+            value={inputReglament}
+          />
+        </Form.Item>
         <CompetitionJudge onJudgeChange={handleChangeJudges} />
         <CompetitionType
           onChange={(value) => {
@@ -131,7 +158,7 @@ function EventSettingsCompitations({
             className="event-settings__saveButton"
             type="primary"
             loading={isLoading}
-            onClick={sendRequest}
+            htmlType="submit"
           >
             Сохранить
           </Button>
