@@ -9,6 +9,7 @@ import {
   Form,
   Space,
   Tooltip,
+  Modal,
 } from "antd";
 import {
   DeleteOutlined,
@@ -107,7 +108,7 @@ function EventSettings() {
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={openEditModal}
+              onClick={() => openEditModal(record)}
             />
           </Tooltip>
           <Tooltip title="Начать соревнование">
@@ -201,18 +202,39 @@ function EventSettings() {
   };
 
   const deleteNominations = (record) => {
-    const eventId = parseInt(eventID, 10);
-    const nominationType = translateTypeFromRussianIntoEnglish(record.kind);
-    const nominationName = record.name;
-    const nominationID = findNominationId(nominationName, eventInfo);
-
-    const data = {
-      event_id: eventId,
-      nomination_id: nominationID,
-      type: nominationType,
+    const getNominationInfo = () => {
+      const eventId = parseInt(eventID, 10);
+      const nominationType = translateTypeFromRussianIntoEnglish(record.kind);
+      const nominationName = record.name;
+      const nominationID = findNominationId(nominationName, eventInfo);
+      const data = {
+        event_id: eventId,
+        nomination_id: nominationID,
+        type: nominationType,
+      };
+      return competenciesApi.deleteNomination(data);
     };
-
-    competenciesApi.deleteNomination(data);
+    Modal.confirm({
+      title: "Вы уверены?",
+      content: "Вы уверены что хотите удалить эту номинацию?",
+      footer: (_, { OkBtn, CancelBtn }) => (
+        <>
+          <OkBtn />
+          <CancelBtn />
+        </>
+      ),
+      okText: "Да",
+      onOk: () => {
+        getNominationInfo()
+          .then(() => {
+            message.success("Компетенция успешно удалена!");
+          })
+          .catch(() => {
+            message.error("При удалении произошла ошибка!");
+          });
+      },
+      cancelText: "Отмена",
+    });
   };
   const openCompetenciesModal = (record) => {
     const competitionType = record.kind;
@@ -229,7 +251,7 @@ function EventSettings() {
         break;
       case NOMINATION_TYPES.CRITERIA:
         startCriteriaStage(eventId, nominationID);
-        navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+        navigate(ROUTES.JUDGMENT_COMPETENCIES.PATH(eventID, nominationID));
         break;
       default:
         break;
@@ -517,6 +539,7 @@ function EventSettings() {
       />
       <CompitationModal
         name="Редактировать компетенцию"
+        mode="edit"
         isOpen={isEditModalOpen}
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}
