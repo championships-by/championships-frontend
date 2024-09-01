@@ -72,10 +72,10 @@ export const ROUTES = {
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/time-matches`,
   },
-  JUDGMENT_COMPETENCIES: {
+  JUDGMENT_CRITERIA: {
     TITLE: "Компетенции по критериям",
     PATH: (event_id, nomination_id) =>
-      `/judgment/events/${event_id}/${nomination_id}/competencies`,
+      `/judgment/events/${event_id}/${nomination_id}/criteria`,
   },
 };
 
@@ -98,7 +98,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
   JUDGMENT_GROUP_STAGE: ":eventId/:nominationId/group-stage",
   JUDGMENT_TIME_MATCHES: ":eventId/:nominationId/time-matches",
-  JUDGMENT_COMPETENCIES: ":eventId/:nominationId/competencies",
+  JUDGMENT_CRITERIA: ":eventId/:nominationId/criteria",
 };
 
 export const Locale = {

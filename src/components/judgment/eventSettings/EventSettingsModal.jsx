@@ -65,7 +65,7 @@ function EventSettingsCompitations({
       case "time":
         Object.assign(data, { race_round_amount: groupCount });
         await competenciesApi.addTimeCompetenciesForEvent(data).then(() => {
-          message.success("Номинация успешно добавлена");
+          message.success("Компетенция успешно добавлена");
           setIsLoading(false);
           onCancel();
         });
@@ -73,7 +73,7 @@ function EventSettingsCompitations({
 
       case "playoffs":
         await competenciesApi.addOlympicCompetenciesForEvent(data).then(() => {
-          message.success("Номинация успешно добавлена");
+          message.success("Компетенция успешно добавлена");
           setIsLoading(false);
           onCancel();
         });
@@ -82,7 +82,7 @@ function EventSettingsCompitations({
       case "criteria":
         Object.assign(data, { criterias: criteria });
         await competenciesApi.addCriteriaCompetenciesForEvent(data).then(() => {
-          message.success("Номинация успешно добавлена");
+          message.success("Компетенция успешно добавлена");
           setIsLoading(false);
           onCancel();
         });

@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@constants";
+import { ROUTES, Locale } from "@constants";
 import { eventApi } from "@api";
 import { changeDateFormat } from "@utils";
 
@@ -103,7 +103,7 @@ function JudgmentEventsTable({ EventsData }) {
     },
   ];
 
-  return <Table dataSource={EventsData} columns={columns} />;
+  return <Table dataSource={EventsData} columns={columns} locale={Locale} />;
 }
 
 export default JudgmentEventsTable;

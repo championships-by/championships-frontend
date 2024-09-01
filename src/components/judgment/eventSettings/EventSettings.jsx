@@ -227,10 +227,10 @@ function EventSettings() {
       onOk: () => {
         getNominationInfo()
           .then(() => {
-            message.success("Компетенция успешно удалена!");
+            message.success("Компетенция успешно удалена");
           })
           .catch(() => {
-            message.error("При удалении произошла ошибка!");
+            message.error("При удалении произошла ошибка");
           });
       },
       cancelText: "Отмена",
@@ -251,7 +251,7 @@ function EventSettings() {
         break;
       case NOMINATION_TYPES.CRITERIA:
         startCriteriaStage(eventId, nominationID);
-        navigate(ROUTES.JUDGMENT_COMPETENCIES.PATH(eventID, nominationID));
+        navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID));
         break;
       default:
         break;
