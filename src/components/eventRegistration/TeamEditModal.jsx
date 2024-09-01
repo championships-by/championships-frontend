@@ -34,15 +34,11 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
         new_name: form.getFieldValue("teamName"),
       };
 
-      const response = await teamApi.updateTeam(body);
+      await teamApi.updateTeam(body);
 
-      if (response.status >= 200 && response.status < 300) {
-        message.success("Данные сохранены успешно!");
-        form.resetFields();
-        onOk();
-      } else {
-        message.error("Произошла ошибка! Попробуйте снова.");
-      }
+      message.success("Данные сохранены успешно!");
+      form.resetFields();
+      onOk();
     } catch (error) {
       message.error("Произошла ошибка! Попробуйте снова.");
     } finally {

@@ -19,15 +19,11 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
         participants_ids: form.getFieldValue("teamParticipants"),
       });
 
-      const response = await teamApi.setTeams(body);
+      await teamApi.setTeams(body);
 
-      if (response.status >= 200 && response.status < 300) {
-        message.success("Данные сохранены успешно!");
-        form.resetFields();
-        onOk();
-      } else {
-        message.error("Произошла ошибка! Попробуйте снова.");
-      }
+      message.success("Данные сохранены успешно!");
+      form.resetFields();
+      onOk();
     } catch (error) {
       message.error("Произошла ошибка! Попробуйте снова.");
     } finally {

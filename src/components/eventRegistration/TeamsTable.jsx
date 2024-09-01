@@ -3,6 +3,7 @@ import { useState } from "react";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
+import { Locale } from "@constants";
 
 function TeamsTable({ TeamsData }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -106,7 +107,12 @@ function TeamsTable({ TeamsData }) {
 
   return (
     <>
-      <Table dataSource={TeamsData} columns={columns} bordered />
+      <Table
+        dataSource={TeamsData}
+        columns={columns}
+        bordered
+        locale={Locale}
+      />
 
       <TeamEditModal
         isOpen={isEditModalOpen}

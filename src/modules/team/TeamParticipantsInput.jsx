@@ -1,5 +1,4 @@
 import { Flex, Input, Select, Space, Typography } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import { FILTER_OPTION } from "@utils";
 
@@ -8,9 +7,9 @@ import "./sass/team.scss";
 function TeamParticipantsInput({ name, options, mode, disabled }) {
   const rules = [
     {
-      required: disabled ? false : true,
+      required: !disabled,
       message:
-        mode == "multiple"
+        mode === "multiple"
           ? "Пожалуйста, выберите участников"
           : "Пожалуйста, выберите участника",
     },
