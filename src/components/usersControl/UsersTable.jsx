@@ -1,7 +1,7 @@
 import { EditOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
 import { Locale, ModalType } from "@constants";
-import { Button, Flex, Table, Typography } from "antd";
+import { Button, Flex, Table, Tooltip, Typography } from "antd";
 import { useState } from "react";
 
 const filters = [
@@ -91,11 +91,13 @@ function UsersTable({ usersData }) {
       key: "action",
       render: () => (
         <Flex>
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => openEditModal()}
-          />
+          <Tooltip title="Редактирование">
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={() => openEditModal()}
+            />
+          </Tooltip>
         </Flex>
       ),
     },

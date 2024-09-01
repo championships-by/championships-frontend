@@ -1,7 +1,7 @@
 import { EditOutlined } from "@ant-design/icons";
 import { Locale, ModalType } from "@constants";
 import { getUniqueFilters } from "@utils";
-import { Button, Flex, Table, Typography } from "antd";
+import { Button, Flex, Table, Tooltip, Typography } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
@@ -45,11 +45,13 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
 
         return (
           <Flex>
-            <Button
-              type="text"
-              icon={<EditOutlined />}
-              onClick={() => openEditModal(data)}
-            />
+            <Tooltip title="Редактирование">
+              <Button
+                type="text"
+                icon={<EditOutlined />}
+                onClick={() => openEditModal(data)}
+              />
+            </Tooltip>
           </Flex>
         );
       },
