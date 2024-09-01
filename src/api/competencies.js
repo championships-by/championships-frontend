@@ -57,8 +57,11 @@ export const competenciesApi = {
   finishTimeStage: (data) =>
     instance.post(`${API_PATH}/tournaments/finish_time_stage`, data),
   deleteNomination: (data) => {
-    axios.delete(`${API_PATH}/nomination_event/delete_nomination_from_event`, {
-      data,
-    });
+    return axios.delete(
+      `${API_PATH}/nomination_event/delete_nomination_from_event`,
+      {
+        data,
+      }
+    );
   },
 };

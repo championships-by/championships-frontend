@@ -17,6 +17,12 @@ export const FILE_UPLOADING = {
   },
 };
 
+export const NOMINATION_TYPES = {
+  CRITERIA: "По критериям",
+  TIME: "По времени",
+  OLYMPIC: "Плей-офф",
+};
+
 export const RESPONSE_STATUS = {
   STATUS_OK: 200,
   STATUS_UNAUTHORIZED: 401,
@@ -69,7 +75,7 @@ export const ROUTES = {
   JUDGMENT_COMPETENCIES: {
     TITLE: "Компетенции по критериям",
     PATH: (event_id, nomination_id) =>
-      `judgment/events/${event_id}/${nomination_id}/criteria`,
+      `/judgment/events/${event_id}/${nomination_id}/competencies`,
   },
 };
 

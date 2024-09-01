@@ -62,6 +62,7 @@
     &__select {
       width: 465px;
       margin-top: 10px;
+      flex: 1;
     }
   }
   &__competition-type {
@@ -156,6 +157,17 @@
     }
     &__div {
       display: flex;
+    }
+  }
+  &__participantModal {
+    &__printButton {
+      margin-top: 20px;
+    }
+  }
+  &__participantModal__downloadButton {
+    &__downloadButton {
+      margin-top: 20px;
+      margin-left: 20px;
     }
   }
   &__competitionModal__play-off__slider {

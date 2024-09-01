@@ -80,7 +80,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
   const onFinish = async () => {
     const success = await onSubmit();
     if (success) {
-      message.success("Мероприятие успешно создано!");
+      message.success("Мероприятие успешно создано");
       onOk();
       notification.info({
         message: "Внимание!",
