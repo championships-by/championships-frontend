@@ -22,21 +22,21 @@ export const competenciesApi = {
   },
 
   addOlympicCompetenciesForEvent: async (data) => {
-    axios.post(
+    return axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_olympic`,
       data
     );
   },
 
   addCriteriaCompetenciesForEvent: async (data) => {
-    axios.post(
+    return axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_criteria`,
       data
     );
   },
 
   addTimeCompetenciesForEvent: async (data) => {
-    axios.post(
+    return axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_time`,
       data
     );
@@ -48,14 +48,14 @@ export const competenciesApi = {
     );
   },
 
-  startGroupStage: (data) => {
-    axios.post(`${API_PATH}/tournaments/start_group_stage`, data);
+  startGroupStage: async (data) => {
+    return axios.post(`${API_PATH}/tournaments/start_group_stage`, data);
   },
-  startCriteriaStage: (data) => {
-    axios.post(`${API_PATH}/tournaments/start_criteria_stage`, data);
+  startCriteriaStage: async (data) => {
+    return axios.post(`${API_PATH}/tournaments/start_criteria_stage`, data);
   },
-  startTimeStage: (data) => {
-    axios.post(`${API_PATH}/tournaments/start_time_stage`, data);
+  startTimeStage: async (data) => {
+    return axios.post(`${API_PATH}/tournaments/start_time_stage`, data);
   },
   deleteNomination: (data) => {
     return axios.delete(

@@ -60,6 +60,7 @@ function EventSettings() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [openTrophyModal, setTrophyModal] = useState(false);
   const [participantModal, setParticipantModal] = useState(false);
+  const [competenciesModal, setCompetenciesModal] = useState(false);
   const [eventInfo, setEventInfo] = useState();
   const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
@@ -240,23 +241,51 @@ function EventSettings() {
     const competitionType = record.kind;
     const competitionName = record.name;
     const nominationID = findNominationId(competitionName, eventInfo);
-
+    setNominationID(nominationID);
     switch (competitionType) {
       case NOMINATION_TYPES.OLYMPIC:
         setTrophyModal(true);
         break;
-      case NOMINATION_TYPES.TIME:
-        startTimeStage(eventId, nominationID);
-        navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
-        break;
-      case NOMINATION_TYPES.CRITERIA:
-        startCriteriaStage(eventId, nominationID);
-        navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID));
-        break;
       default:
+        Modal.confirm({
+          title: "Вы уверены?",
+          content:
+            "Вы уверены, что хотите начать соревнование? Отменить данное действие будет невозможно!",
+          footer: (_, { OkBtn, CancelBtn }) => (
+            <>
+              <OkBtn />
+              <CancelBtn />
+            </>
+          ),
+          okText: "Да",
+          onOk: async () => {
+            try {
+              switch (competitionType) {
+                case NOMINATION_TYPES.TIME:
+                  await startTimeStage(eventId, nominationID);
+                  message.success("Соревнование успешно начато");
+                  navigate(
+                    ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
+                  );
+                  break;
+                case NOMINATION_TYPES.CRITERIA:
+                  await startCriteriaStage(eventId, nominationID);
+                  message.success("Соревнование успешно начато");
+                  navigate(
+                    ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
+                  );
+                  break;
+                default:
+                  break;
+              }
+            } catch (error) {
+              message.error("Произошла ошибка");
+            }
+          },
+          cancelText: "Отмена",
+        });
         break;
     }
-    setNominationID(nominationID);
   };
 
   const openParticipantModal = (record) => {
