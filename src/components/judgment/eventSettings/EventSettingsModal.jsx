@@ -133,7 +133,7 @@ function EventSettingsCompitations({
             loading={isLoading}
             onClick={sendRequest}
           >
-            {mode === "edit" ? "Обновить" : "Сохранить"}
+            Сохранить
           </Button>
           <Button className="event-settings__cancelButton" onClick={onCancel}>
             Отмена

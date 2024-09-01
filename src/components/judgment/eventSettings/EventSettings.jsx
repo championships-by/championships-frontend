@@ -148,11 +148,8 @@ function EventSettings() {
 
   const eventId = parseInt(eventID, 10);
 
-  const openEditModal = (record) => {
+  const openEditModal = () => {
     setIsEditModalOpen(true);
-    console.log(record.name);
-    console.log(record.reglament);
-    console.log(record);
   };
   const startCriteriaStage = (eventID, nominationID) => {
     const data = {
