@@ -6,15 +6,19 @@ import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
 import { participantApi } from "@api";
 import { teamApi } from "../../api";
 
-function TeamEditModal({ isOpen, onOk, onCancel }) {
+function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
   const { eventID } = useParams();
 
   const onFinish = () => {
-    message.success("Всё в порядке!");
-    setIsLoading(false);
+    if (form.getFieldValue("teamName") == teamName) {
+      message.success("Данные сохранены успешно!");
+      onOk();
+    } else {
+      onSubmit();
+    }
   };
 
   const onFinishFailed = () => {
@@ -22,8 +26,33 @@ function TeamEditModal({ isOpen, onOk, onCancel }) {
     setIsLoading(false);
   };
 
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const body = {
+        id: teamID,
+        new_name: form.getFieldValue("teamName"),
+      };
+
+      const response = await teamApi.updateTeam(body);
+
+      if (response.status >= 200 && response.status < 300) {
+        message.success("Данные сохранены успешно!");
+        form.resetFields();
+        onOk();
+      } else {
+        message.error("Произошла ошибка! Попробуйте снова.");
+      }
+    } catch (error) {
+      message.error("Произошла ошибка! Попробуйте снова.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (isOpen) {
+      form.setFieldsValue({ ["teamName"]: teamName });
       participantApi
         .getParticipant()
         .then((data) =>
@@ -72,18 +101,11 @@ function TeamEditModal({ isOpen, onOk, onCancel }) {
         <TeamParticipantsInput
           name="teamParticipants"
           options={dataTeamParticipants}
+          mode="multiple"
+          disabled={true}
         />
         <Flex gap="middle">
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={isLoading}
-            onClick={() => {
-              setIsLoading(true);
-              create_team_request();
-              onOk;
-            }}
-          >
+          <Button type="primary" htmlType="submit" loading={isLoading}>
             Сохранить
           </Button>
           <Button onClick={onCancel}>Отмена</Button>

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export const teamApi = {
   getTeam: () =>
     fetch(`${API_PATH}/team/teams?offset=0&limit=49`, {
@@ -20,5 +22,8 @@ export const teamApi = {
       redirect: "follow",
       credentials: "include",
     });
+  },
+  updateTeam: (data) => {
+    return axios.put(`${API_PATH}/team/teams`, data);
   },
 };

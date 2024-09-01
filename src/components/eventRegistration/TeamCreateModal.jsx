@@ -11,9 +11,32 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
   const { eventID } = useParams();
 
+  const onSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const body = JSON.stringify({
+        name: form.getFieldValue("teamName"),
+        participants_ids: form.getFieldValue("teamParticipants"),
+      });
+
+      const response = await teamApi.setTeams(body);
+
+      if (response.status >= 200 && response.status < 300) {
+        message.success("Данные сохранены успешно!");
+        form.resetFields();
+        onOk();
+      } else {
+        message.error("Произошла ошибка! Попробуйте снова.");
+      }
+    } catch (error) {
+      message.error("Произошла ошибка! Попробуйте снова.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const onFinish = () => {
-    message.success("Всё в порядке!");
-    setIsLoading(false);
+    onSubmit();
   };
 
   const onFinishFailed = () => {
@@ -28,7 +51,7 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
         .then((data) =>
           setTeamParticipants(
             data.map((participant) => ({
-              value: participant.email,
+              value: participant.id,
               label: `${participant.first_name} ${participant.second_name} ${participant.third_name}`,
             }))
           )
@@ -41,14 +64,6 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
         .finally(() => setTimeout(() => setIsLoading(false), 300));
     }
   }, [isOpen, eventID]);
-
-  const create_team_request = async () => {
-    const body = JSON.stringify({
-      name: form.getFieldValue("teamName"),
-    });
-
-    teamApi.setTeams(body);
-  };
 
   return (
     <Modal
@@ -74,16 +89,7 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
           mode="multiple"
         />
         <Flex gap="middle">
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={isLoading}
-            onClick={() => {
-              setIsLoading(true);
-              create_team_request();
-              onOk;
-            }}
-          >
+          <Button type="primary" htmlType="submit" loading={isLoading}>
             Сохранить
           </Button>
           <Button onClick={onCancel}>Отмена</Button>

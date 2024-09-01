@@ -5,7 +5,17 @@ import { FILTER_OPTION } from "@utils";
 
 import "./sass/team.scss";
 
-function TeamParticipantsInput({ name, options, mode }) {
+function TeamParticipantsInput({ name, options, mode, disabled }) {
+  const rules = [
+    {
+      required: disabled ? false : true,
+      message:
+        mode == "multiple"
+          ? "Пожалуйста, выберите участников"
+          : "Пожалуйста, выберите участника",
+    },
+  ];
+
   return (
     <Flex vertical className="team__team-participants-input__flex">
       <Typography.Text>
@@ -13,19 +23,16 @@ function TeamParticipantsInput({ name, options, mode }) {
       </Typography.Text>
       <Flex>
         <Space.Compact className="team__team-participants-input__space">
-          <Input
-            prefix={<UserOutlined />}
-            className="team__team-participants-input__input"
-            disabled
-          />
           <FormItem
             name={name}
             className="team__team-participants-input__formitem"
+            rules={rules}
           >
             <Select
               allowClear
               mode={mode}
               showSearch
+              disabled={disabled}
               placeholder={
                 mode == "single" ? "Выберите участника" : "Выберите участников"
               }
