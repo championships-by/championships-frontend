@@ -1,18 +1,18 @@
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { eventApi } from "@api";
+import { Locale, ROUTES } from "@constants";
+import { changeDateFormat } from "@utils";
 import {
-  Table,
+  Button,
   Flex,
   List,
-  Button,
-  Typography,
   Modal,
+  Table,
   Tooltip,
+  Typography,
   message,
 } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@constants";
-import { eventApi } from "@api";
-import { changeDateFormat } from "@utils";
 
 function JudgmentEventsTable({ EventsData }) {
   const navigate = useNavigate();
@@ -47,6 +47,7 @@ function JudgmentEventsTable({ EventsData }) {
       title: "Название мероприятия",
       key: "nameEvent",
       render: (data) => data.event?.name,
+      sorter: (a, b) => a.event.name.localeCompare(b.event.name),
     },
     {
       title: "Компетенции",
@@ -76,6 +77,9 @@ function JudgmentEventsTable({ EventsData }) {
               data.event?.holding_start_date
             )} по ${changeDateFormat(data.event?.holding_finish_date)}`
           : changeDateFormat(data.event?.holding_start_date),
+      sorter: (a, b) =>
+        new Date(a.event.holding_start_date) -
+        new Date(b.event.holding_start_date),
     },
     {
       title: "Действия",
@@ -103,7 +107,13 @@ function JudgmentEventsTable({ EventsData }) {
     },
   ];
 
-  return <Table dataSource={EventsData} columns={columns} />;
+  return (
+    <Table
+      locale={Locale.tableLocale}
+      dataSource={EventsData}
+      columns={columns}
+    />
+  );
 }
 
 export default JudgmentEventsTable;

@@ -1,8 +1,8 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
+import { Locale } from "@constants";
 import { Button, Flex, Modal, Table, Typography } from "antd";
 import { useState } from "react";
-import { Locale } from "@constants";
 
 const filters = [
   {
