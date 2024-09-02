@@ -42,7 +42,7 @@ import { Locale, ROUTES, NOMINATION_TYPES } from "@constants";
 import "./sass/event-settings.scss";
 
 const eventsBreadcromb = {
-  title: "Управление мероприятиями",
+  title: "Редактирование мероприятия",
   href: ROUTES.JUDGMENT.PATH,
 };
 

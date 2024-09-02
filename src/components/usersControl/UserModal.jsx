@@ -45,8 +45,8 @@ function UserModal({ isOpen, onOk, onCancel, type }) {
     <Modal
       title={
         type === ModalType.ADD
-          ? "Создание пользователя"
-          : "Редактирование пользователя"
+          ? "Добавить пользователя"
+          : "Редактировать пользователя"
       }
       className="user-control__modal"
       open={isOpen}
