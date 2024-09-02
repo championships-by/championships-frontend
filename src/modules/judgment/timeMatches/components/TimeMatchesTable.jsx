@@ -68,7 +68,7 @@ export const TimeMatchesTable = ({
   ) : (
     <Flex vertical gap="large">
       {isErrorOccurred ? (
-        <Typography>При попытке получить данных произошла ошибка</Typography>
+        <Typography>При попытке получить данные произошла ошибка</Typography>
       ) : (
         <Table pagination={false} columns={columns} dataSource={timeMatches} />
       )}
