@@ -10,13 +10,15 @@ function UserPhoneInput({ name }) {
       <FormItem
         name={name}
         normalize={(value) => {
-          const formattedValue = value.replace(/[^0-9]/g, '');
+          const formattedValue = value.replace(/[^0-9]/g, "");
           const parts = [
-            formattedValue.length >= 0 ? "+375" : "",
+            formattedValue.length > 0 ? "+375" : "",
             formattedValue.length > 3 ? `(${formattedValue.slice(3, 5)}` : "",
             formattedValue.length > 5 ? `)${formattedValue.slice(5, 8)}` : "",
             formattedValue.length > 8 ? `-${formattedValue.slice(8, 10)}` : "",
-            formattedValue.length > 10 ? `-${formattedValue.slice(10, 12)}` : "",
+            formattedValue.length > 10
+              ? `-${formattedValue.slice(10, 12)}`
+              : "",
           ];
           return parts.filter(Boolean).join("");
         }}

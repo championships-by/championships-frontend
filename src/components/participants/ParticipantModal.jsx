@@ -43,6 +43,9 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
 
     try {
       if (isEdit) {
+        if (values.email === data.email) {
+          delete values.email;
+        }
         const body = JSON.stringify({
           id: values.id,
           participant_data: values,
@@ -69,7 +72,9 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
   return (
     <Modal
       title={
-        type === ModalType.ADD ? "Добавить участника" : "Редактировать участника"
+        type === ModalType.ADD
+          ? "Добавить участника"
+          : "Редактировать участника"
       }
       className="participants__modal"
       open={isOpen}
