@@ -87,7 +87,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
 
   return (
     <Modal
-      title="Создание мероприятия"
+      title="Создать мероприятия"
       open={isOpen}
       onCancel={onCancel}
       footer={null}

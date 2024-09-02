@@ -439,7 +439,7 @@ function EventSettings() {
   return (
     <div>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
+      <Typography.Title level={2}>Управление мероприятиями</Typography.Title>
       <Breadcrumb items={items} />
       <Row gutter={16}>
         <Col xs={24} md={8}>
