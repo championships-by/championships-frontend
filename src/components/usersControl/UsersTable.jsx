@@ -58,7 +58,7 @@ function UsersTable({ usersData }) {
 
   const columns = [
     {
-      title: "ФИО",
+      title: "Фамилия имя отчество",
       key: "fullname",
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
