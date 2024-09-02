@@ -19,7 +19,7 @@ export const competenciesApi = {
     );
   },
   addOlympicCompetenciesForEvent: async (data) => {
-    return axios.post(
+    axios.post(
       `${API_PATH}/nomination_event/append_nomination_for_event_olympic`,
       data
     );
