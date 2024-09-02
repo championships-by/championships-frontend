@@ -11,7 +11,7 @@ export const teamApi = {
       credentials: "include",
     }).then((response) => response.json()),
   setTeams: (body) => {
-    return instance.post(`${API_PATH}/team/teams`, body)
+    return instance.post(`${API_PATH}/team/teams`, body);
   },
   updateTeam: (data) => {
     return instance.put(`${API_PATH}/team/teams`, data);
