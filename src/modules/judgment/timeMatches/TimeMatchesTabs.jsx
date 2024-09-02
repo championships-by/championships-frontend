@@ -150,12 +150,11 @@ export const TimeMatchesTabs = () => {
         },
         {
           ...tabs[1],
-          // disabled: !(
-          //   stageStatus.registrationFinished &&
-          //   stageStatus.tournamentStarted &&
-          //   stageStatus.tournamentFinished
-          // ),
-          disabled: false,
+          disabled: !(
+            stageStatus.registrationFinished &&
+            stageStatus.tournamentStarted &&
+            stageStatus.tournamentFinished
+          ),
           children: (
             <TimeMatchesResults
               timeMatches={timeMatches}
