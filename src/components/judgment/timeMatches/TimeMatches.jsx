@@ -1,20 +1,11 @@
-import ResultTableTimeMatches from "./ResultTableTimeMatches";
-import TableTimeMatches from "./TableTimeMatches";
-import { Tabs } from "antd";
-
-const items = [
-  {
-    key: "1",
-    label: "Таблица",
-    children: <TableTimeMatches />,
-  },
-  {
-    key: "2",
-    label: "Итоги",
-    children: <ResultTableTimeMatches />,
-  },
-];
+import { TabsProvider } from "@contexts/TabsContext";
+import { TimeMatchesTabs } from "@modules/judgment/timeMatches/TimeMatchesTabs";
+import { timeMatchesTabs } from "@modules/judgment/timeMatches/constants";
 
 export default function TimeMatches() {
-  return <Tabs className="Tabs" defaultActiveKey="1" items={items} />;
+  return (
+    <TabsProvider initialTabs={timeMatchesTabs}>
+      <TimeMatchesTabs />
+    </TabsProvider>
+  );
 }

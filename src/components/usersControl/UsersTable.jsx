@@ -1,20 +1,20 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
-import { Button, Flex, Modal, Table, Typography } from "antd";
+import { Locale, ModalType } from "@constants";
+import { Button, Flex, Table, Tooltip, Typography } from "antd";
 import { useState } from "react";
-import { Locale } from "@constants";
 
 const filters = [
   {
-    text: "Админ",
+    text: "Администратор",
     value: "admin",
   },
   {
-    text: "Судейство",
+    text: "Судья",
     value: "judge",
   },
   {
-    text: "Специалист",
+    text: "Менеджер",
     value: "specialist",
   },
 ];
@@ -48,21 +48,6 @@ function UsersTable({ usersData }) {
   //     await fetch(`${API_PATH}/user/delete`, requestOptions)
   // }
 
-  const deleteUserConfirm = () => {
-    Modal.confirm({
-      title: "Вы уверены?",
-      content: "Вы уверены что хотите удалить этого пользователя?",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      okText: "Да",
-      cancelText: "Отмена",
-    });
-  };
-
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
@@ -90,11 +75,11 @@ function UsersTable({ usersData }) {
       key: "role",
       render: (_, { role }) =>
         role === "admin" ? (
-          <Typography.Text>Админ</Typography.Text>
+          <Typography.Text>Администратор</Typography.Text>
         ) : role === "judge" ? (
-          <Typography.Text>Судейство</Typography.Text>
+          <Typography.Text>Судья</Typography.Text>
         ) : role === "specialist" ? (
-          <Typography.Text>Специалист</Typography.Text>
+          <Typography.Text>Менеджер</Typography.Text>
         ) : (
           <Typography.Text />
         ),
@@ -106,16 +91,13 @@ function UsersTable({ usersData }) {
       key: "action",
       render: () => (
         <Flex>
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => openEditModal()}
-          />
-          <Button
-            type="text"
-            icon={<DeleteOutlined />}
-            onClick={() => deleteUserConfirm()}
-          />
+          <Tooltip title="Редактирование">
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={() => openEditModal()}
+            />
+          </Tooltip>
         </Flex>
       ),
     },
@@ -126,6 +108,7 @@ function UsersTable({ usersData }) {
       <Table dataSource={usersData} columns={columns} locale={Locale} />
 
       <UserModal
+        type={ModalType.EDIT}
         isOpen={isEditModalOpen}
         onOk={() => changeUserData()}
         onCancel={() => setIsEditModalOpen(false)}

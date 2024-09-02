@@ -1,17 +1,18 @@
-import { Modal, Form, Button, message, Space } from "antd";
-import { useState } from "react";
-import FormItem from "antd/es/form/FormItem";
-import UserLastnameInput from "@modules/user/UserLastnameInput";
-import UserFirstnameInput from "@modules/user/UserFirstnameInput";
-import UserPatronymicInput from "@modules/user/UserPatronymicInput";
-import UserRoleInput from "@modules/user/UserRoleInput";
-import UserEmailInput from "@modules/user/UserEmailInput";
-import UserPasswordInput from "@modules/user/UserPasswordInput";
-import UserPhoneInput from "@modules/user/UserPhoneInput";
-import UserOrganizationInput from "@modules/user/UserOrganizationInput";
 import { userApi } from "@api";
+import { ModalType } from "@constants";
+import UserEmailInput from "@modules/user/UserEmailInput";
+import UserFirstnameInput from "@modules/user/UserFirstnameInput";
+import UserLastnameInput from "@modules/user/UserLastnameInput";
+import UserOrganizationInput from "@modules/user/UserOrganizationInput";
+import UserPasswordInput from "@modules/user/UserPasswordInput";
+import UserPatronymicInput from "@modules/user/UserPatronymicInput";
+import UserPhoneInput from "@modules/user/UserPhoneInput";
+import UserRoleInput from "@modules/user/UserRoleInput";
+import { Button, Form, message, Modal, Space } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import { useState } from "react";
 
-function UserModal({ isOpen, onOk, onCancel }) {
+function UserModal({ isOpen, onOk, onCancel, type }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
@@ -42,7 +43,11 @@ function UserModal({ isOpen, onOk, onCancel }) {
 
   return (
     <Modal
-      title="Настройка пользователя"
+      title={
+        type === ModalType.ADD
+          ? "Добавить пользователя"
+          : "Редактировать пользователя"
+      }
       className="user-control__modal"
       open={isOpen}
       onOk={onOk}

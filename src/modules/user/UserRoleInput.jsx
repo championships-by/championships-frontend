@@ -39,9 +39,6 @@ function UserRoleInput({ name, ...props }) {
           </FormItem>
         </Space.Compact>
       </Flex>
-      <Typography.Text type="secondary">
-        Обратитесь к администратору сайта, чтобы изменить роль
-      </Typography.Text>
     </Flex>
   );
 }

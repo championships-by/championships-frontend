@@ -52,7 +52,7 @@ function JudgmentEvents() {
   return (
     <>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Редактирование мероприятий</Typography.Title>
+      <Typography.Title level={2}>Управление мероприятиями</Typography.Title>
       <AdminPanelControls>
         <Button type="primary" onClick={() => setIsEventCreateModalOpen(true)}>
           {ROUTES.JUDGMENT_CREATE.TITLE}
