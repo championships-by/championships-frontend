@@ -9,6 +9,7 @@ import {
 import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { isTimeMatchesFilled } from "../../../utils";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 import { TimeMatchesTabsEnum } from "./constants";
 
@@ -19,6 +20,7 @@ export const TimeMatchesTabs = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [stageStatus, setStageStatus] = useState({});
   const [timeMatches, setTimeMatches] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
 
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
@@ -40,7 +42,12 @@ export const TimeMatchesTabs = () => {
 
   const handleCompleteStage = useCallback(async () => {
     try {
-      await timeMatches.forEach((timeMatch) =>
+      if (!isTimeMatchesFilled(timeMatches)) {
+        message.warning("Заполните все поля!");
+        return;
+      }
+
+      timeMatches.forEach((timeMatch) =>
         timeMatch.attempts.forEach(({ id, time }) =>
           timeMatchesApi.setTimeMatch({
             eventId,
@@ -65,35 +72,40 @@ export const TimeMatchesTabs = () => {
     } catch (error) {
       message.error("Произошла неизвестная ошибка");
     }
-  }, [eventId, nominationId]);
+  }, [eventId, nominationId, timeMatches]);
 
   useEffect(() => {
-    setIsLoading(true);
-    Promise.all([
-      competenciesApi.getNominationEventInfo({
-        eventId,
-        nominationId,
-      }),
-      timeMatchesApi.getTimeMatches({ eventId, nominationId }),
-    ])
-      .then(([stageStatusResponse, timeMatchesResponse]) => {
-        if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
-          const transformedStageStatus = transformStageStatus(
-            stageStatusResponse.data
-          );
-          setStageStatus(transformedStageStatus);
-        }
+    if (!isDataLoaded) {
+      setIsLoading(true);
+      Promise.all([
+        competenciesApi.getNominationEventInfo({
+          eventId,
+          nominationId,
+        }),
+        timeMatchesApi.getTimeMatches({ eventId, nominationId }),
+      ])
+        .then(([stageStatusResponse, timeMatchesResponse]) => {
+          if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
+            const transformedStageStatus = transformStageStatus(
+              stageStatusResponse.data
+            );
+            setStageStatus(transformedStageStatus);
+          }
 
-        if (timeMatchesResponse.status === RESPONSE_STATUS.STATUS_OK) {
-          const transformedTimeMatches = transformTimeMatchesData(
-            timeMatchesResponse.data
-          );
-          setTimeMatches(transformedTimeMatches);
-        }
-      })
-      .catch(() => setIsErrorOccurred(true))
-      .finally(() => setIsLoading(false));
-  }, [eventId, nominationId, handleCompleteStage]);
+          if (timeMatchesResponse.status === RESPONSE_STATUS.STATUS_OK) {
+            const transformedTimeMatches = transformTimeMatchesData(
+              timeMatchesResponse.data
+            );
+            setTimeMatches(transformedTimeMatches);
+          }
+        })
+        .catch(() => setIsErrorOccurred(true))
+        .finally(() => {
+          setIsLoading(false);
+          setIsDataLoaded(true);
+        });
+    }
+  }, [eventId, nominationId, isDataLoaded]);
 
   return (
     <Tabs

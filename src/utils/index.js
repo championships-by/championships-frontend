@@ -142,3 +142,11 @@ export const transformStageStatus = (info) => ({
   tournamentStarted: info.tournament_started,
   tournamentFinished: info.tournament_finished,
 });
+
+export const isTimeMatchesFilled = (timeMatches) => {
+  return !timeMatches.some((timeMatch) => {
+    return timeMatch.attempts.some(({ time }) => {
+      return !time || time === undefined || time === null;
+    });
+  });
+};
