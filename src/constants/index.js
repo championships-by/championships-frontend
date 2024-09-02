@@ -40,6 +40,8 @@ export const ROUTES = {
   USERS_CONTROL: { TITLE: "Управление пользователями", PATH: "/users" },
   USER_SETTINGS: { TITLE: "Настройки пользователя", PATH: "/settings" },
   USER_SETTINGS_TEST: { TITLE: "Тест", PATH: "/settings/test" },
+  ABOUT_PROGRAM: { TITLE: "О программе", PATH: "/about" },
+  FEEDBACK: { TITLE: "Обратная связь", PATH: "/feedback" },
   EVENTS: { TITLE: "Мероприятия", PATH: "/events" },
   EVENTS_DESCRIPTION: {
     TITLE: "Описание мероприятия",
@@ -89,6 +91,8 @@ export const ROUTER_ROUTES = {
   USERS_CONTROL: "users",
   USER_SETTINGS: "settings",
   USER_SETTINGS_TEST: "settings/test",
+  ABOUT_PROGRAM: "about",
+  FEEDBACK: "feedback",
   EVENTS: "events",
   EVENTS_DESCRIPTION: ":eventID",
   EVENTS_REGISTRATION: ":eventID/registration",

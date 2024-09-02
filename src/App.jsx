@@ -15,18 +15,23 @@ import Unauthorized from "@components/unauthorized/Unauthorized";
 import UserSettings from "@components/userSettings/UserSettings";
 import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
 import UsersControl from "@components/usersControl/UsersControl";
+import UserSupport from "@components/userSupport/UserSupport";
+import Feedback from "@components/userSupport/Feedback";
+import AboutProgram from "@components/userSupport/AboutProgram";
 import { ROUTER_ROUTES } from "@constants";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <BrowserRouter>
+      <UserSupport />
       <Routes>
         <Route path={ROUTER_ROUTES.NOT_FOUND} element={<NotFound />} />
         <Route path={ROUTER_ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
         <Route path={ROUTER_ROUTES.ROOT}>
           <Route index element={<Auth />} />
           <Route path={ROUTER_ROUTES.LOGOUT} element={<Logout />} />
+
           <Route path={ROUTER_ROUTES.ADMIN_PANEL} element={<AdminPanel />}>
             <Route
               path={ROUTER_ROUTES.PARTICIPANTS}
@@ -43,6 +48,11 @@ function App() {
             <Route
               path={ROUTER_ROUTES.USER_SETTINGS_TEST}
               element={<UsersSettingsTest />}
+            />
+            <Route path={ROUTER_ROUTES.FEEDBACK} element={<Feedback />} />
+            <Route
+              path={ROUTER_ROUTES.ABOUT_PROGRAM}
+              element={<AboutProgram />}
             />
             <Route path={ROUTER_ROUTES.EVENTS}>
               <Route index element={<Events />} />

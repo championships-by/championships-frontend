@@ -7,7 +7,6 @@ import EventLogo from "@modules/judgment/events/EventLogo";
 import EventName from "@modules/judgment/events/EventName";
 import EventPlace from "@modules/judgment/events/EventPlace";
 import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
-import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationSwitch";
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventRequirements from "@modules/judgment/events/EventRequirements";
 import { Button, Form, message, Modal, notification } from "antd";
@@ -132,12 +131,6 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
           value={values.holding}
           form={form}
           onChange={onValuesChange}
-        />
-        <EventRegistrationSwitch
-          name="published"
-          value={values.published}
-          onChange={onValuesChange}
-          disabled={true}
         />
         <EventDescription name="description" value={values.description} />
         <EventLevel
