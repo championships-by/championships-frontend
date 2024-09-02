@@ -1,41 +1,25 @@
 import { PhoneOutlined } from "@ant-design/icons";
 import { Flex, Input, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import React, { useEffect, useState } from "react";
 import "./sass/user.scss";
 
-function UserPhoneInput({ name, number }) {
-  const [phoneNumber, setPhoneNumber] = useState(number ?? "");
-
-  useEffect(() => {
-    setPhoneNumber(number ?? "");
-  }, [number]);
-
-  const handlePhoneChange = (event) => {
-    const inputValue = event.target.value.replace(/\D/g, "");
-    const parts = [
-      inputValue.length > 0 ? "+375" : "",
-      inputValue.length > 3 ? `(${inputValue.slice(3, 5)})` : "",
-      inputValue.length > 5 ? `${inputValue.slice(5, 8)}` : "",
-      inputValue.length > 8 ? `-${inputValue.slice(8, 10)}` : "",
-      inputValue.length > 10 ? `-${inputValue.slice(10, 12)}` : "",
-    ];
-    const formattedValue = parts.filter(Boolean).join("");
-    setPhoneNumber(formattedValue);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key == "Backspace") {
-      const currentValue = phoneNumber.replace(/\D/g, "");
-      const newValue = currentValue.slice(0, -1);
-      handlePhoneChange({ target: { value: newValue } });
-    }
-  };
-
+function UserPhoneInput({ name }) {
   return (
     <Flex vertical className="user__phone-input__flex">
       <Typography.Text>Телефон</Typography.Text>
       <FormItem
+        name={name}
+        normalize={(value) => {
+          const formattedValue = value.replace(/[^0-9]/g, '');
+          const parts = [
+            formattedValue.length >= 0 ? "+375" : "",
+            formattedValue.length > 3 ? `(${formattedValue.slice(3, 5)}` : "",
+            formattedValue.length > 5 ? `)${formattedValue.slice(5, 8)}` : "",
+            formattedValue.length > 8 ? `-${formattedValue.slice(8, 10)}` : "",
+            formattedValue.length > 10 ? `-${formattedValue.slice(10, 12)}` : "",
+          ];
+          return parts.filter(Boolean).join("");
+        }}
         hasFeedback
         validateFirst
         rules={[
@@ -52,9 +36,6 @@ function UserPhoneInput({ name, number }) {
         className="user__phone-input__formitem"
       >
         <Input
-          value={phoneNumber}
-          onChange={handlePhoneChange}
-          onKeyDown={handleKeyDown}
           prefix={<PhoneOutlined />}
           type="tel"
           allowClear
