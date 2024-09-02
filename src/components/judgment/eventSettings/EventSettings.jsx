@@ -42,7 +42,7 @@ import { Locale, ROUTES, NOMINATION_TYPES } from "@constants";
 import "./sass/event-settings.scss";
 
 const eventsBreadcromb = {
-  title: "Редактирование мероприятия",
+  title: "Управление мероприятиями",
   href: ROUTES.JUDGMENT.PATH,
 };
 
@@ -468,7 +468,7 @@ function EventSettings() {
   return (
     <div>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Управление мероприятиями</Typography.Title>
+      <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
       <Breadcrumb items={items} />
       <Row gutter={16}>
         <Col xs={24} md={8}>
