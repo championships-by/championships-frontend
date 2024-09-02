@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Form,
-  Modal,
-  message,
-  Typography,
-  Row,
-  Col,
-  notification,
-} from "antd";
-import dayjs from "dayjs";
-import EventName from "@modules/judgment/events/EventName";
+import { eventApi } from "@api";
 import EventDate from "@modules/judgment/events/EventDate";
-import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventDescription from "@modules/judgment/events/EventDescription";
-import EventRequirements from "@modules/judgment/events/EventRequirements";
 import EventEmail from "@modules/judgment/events/EventEmail";
 import EventLevel from "@modules/judgment/events/EventLevel";
+import EventLogo from "@modules/judgment/events/EventLogo";
+import EventName from "@modules/judgment/events/EventName";
 import EventPlace from "@modules/judgment/events/EventPlace";
+import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationSwitch";
 import EventRegulation from "@modules/judgment/events/EventRegulation";
-import EventLogo from "@modules/judgment/events/EventLogo";
-import { eventApi } from "@api";
-import { Locale } from "@constants";
+import EventRequirements from "@modules/judgment/events/EventRequirements";
+import { Button, Form, message, Modal, notification } from "antd";
+import React, { useState } from "react";
 
 function EventCreateModal({ isOpen, onOk, onCancel, name }) {
   const [form] = Form.useForm();

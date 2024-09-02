@@ -1,11 +1,12 @@
+import { CloseCircleOutlined } from "@ant-design/icons";
 import { defaultFormat } from "@constants";
 import { formatTime } from "@utils";
 import { Button, TimePicker } from "antd";
 import { useState } from "react";
-import "./sass/CustomTimePicker.scss";
+import "./CustomTimePicker.scss";
 
-export const CustomTimePicker = ({ id, onTimeChange }) => {
-  const [value, setValue] = useState(formatTime());
+export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
+  const [value, setValue] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isDisqualified, setIsDisqualified] = useState(false);
 
@@ -22,9 +23,15 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
     setIsOpen(true);
   };
 
+  const handleClear = () => {
+    setValue(null);
+    onTimeChange(id, null, isDisqualified);
+  };
+
   return !isDisqualified ? (
     <TimePicker
-      use
+      placeholder="Выберите время"
+      disabled={disabled}
       value={value}
       onChange={(time) => {
         setValue(time);
@@ -38,6 +45,9 @@ export const CustomTimePicker = ({ id, onTimeChange }) => {
       defaultValue={formatTime()}
       defaultOpenValue={formatTime()}
       format={{ format: defaultFormat, type: "mask" }}
+      allowClear={{
+        clearIcon: <CloseCircleOutlined onClick={handleClear} />,
+      }}
       changeOnScroll
       renderExtraFooter={() => (
         <div className="extra-footer">

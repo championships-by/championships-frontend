@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { Flex, Input, Typography } from "antd";
 import { PhoneOutlined } from "@ant-design/icons";
+import { Flex, Input, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
+import React, { useEffect, useState } from "react";
 import "./sass/user.scss";
 
-function UserPhoneInput({ name }) {
-  const [phoneNumber, setPhoneNumber] = useState("");
+function UserPhoneInput({ name, number }) {
+  const [phoneNumber, setPhoneNumber] = useState(number ?? "");
+
+  useEffect(() => {
+    setPhoneNumber(number ?? "");
+  }, [number]);
 
   const handlePhoneChange = (event) => {
     const inputValue = event.target.value.replace(/\D/g, "");

@@ -38,7 +38,7 @@ export const ROUTES = {
   LOGOUT: { TITLE: "Выход", PATH: "/logout" },
   PARTICIPANTS: { TITLE: "Управление участниками", PATH: "/participants" },
   USERS_CONTROL: { TITLE: "Управление пользователями", PATH: "/users" },
-  USER_SETTINGS: { TITLE: "Настройка аккаунта", PATH: "/settings" },
+  USER_SETTINGS: { TITLE: "Настройки пользователя", PATH: "/settings" },
   USER_SETTINGS_TEST: { TITLE: "Тест", PATH: "/settings/test" },
   EVENTS: { TITLE: "Мероприятия", PATH: "/events" },
   EVENTS_DESCRIPTION: {
@@ -49,17 +49,17 @@ export const ROUTES = {
     TITLE: "Регистрация участников",
     PATH: (eventID) => `/events/${eventID}/registration`,
   },
-  JUDGMENT: { TITLE: "Судейство", PATH: "/judgment/events" },
+  JUDGMENT: { TITLE: "Редактирование мероприятий", PATH: "/judgment/events" },
   JUDGMENT_CREATE: {
-    TITLE: "Создание мероприятия",
+    TITLE: "Создать мероприятие",
     PATH: "/judgment/events/create",
   },
   JUDGMENT_CREATE_TEST: {
-    TITLE: "Создание мероприятия",
+    TITLE: "Создать мероприятие",
     PATH: "/judgment/events/create/test",
   },
   JUDGMENT_EVENT_SETTINGS: {
-    TITLE: "Редактирование мероприятия",
+    TITLE: "Редактирование",
     PATH: (eventID) => `/judgment/events/${eventID}/settings`,
   },
   JUDGMENT_GROUP_STAGE: {
@@ -152,6 +152,13 @@ export const Locale = {
   timePickerLocale: {
     placeholder: "Выберите время",
   },
+  tableLocale: {
+    triggerDesc: "Нажмите, чтобы сортировать по убыванию",
+    triggerAsc: "Нажмите, чтобы сортировать по возрастанию",
+    cancelSort: "Нажмите, чтобы отменить сортировку",
+    filterReset: "Отменить",
+    filterConfirm: "Ок",
+  },
   dateFormat: "DD.MM.YYYY",
   dateTimeFormat: "DD.MM.YYYY HH:mm",
   weekFormat: "YYYY-wo",
@@ -171,6 +178,8 @@ export const defaultFormat = "mm:ss.SSS";
 export const TimeMatchEvents = {
   UPDATE_TABLE_DATA: "updateTableData",
 };
+
+export const ModalType = { ADD: "add", EDIT: "edit" };
 
 export const timeMatchEventEmitter = new EventEmitter();
 
