@@ -3,13 +3,13 @@ import { RESPONSE_STATUS } from "@constants";
 import { useTabs } from "@hooks/useTabs";
 import {
   formatTimeToString,
+  isTimeMatchesFilled,
   transformStageStatus,
   transformTimeMatchesData,
 } from "@utils";
 import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { isTimeMatchesFilled } from "../../../utils";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 import { TimeMatchesTabsEnum } from "./constants";
 
@@ -22,6 +22,7 @@ export const TimeMatchesTabs = () => {
   const [timeMatches, setTimeMatches] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
+  const [isStageFinished, setIsStageFinished] = useState(false);
 
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
     setTimeMatches((prev) =>
@@ -42,18 +43,20 @@ export const TimeMatchesTabs = () => {
 
   const handleCompleteStage = useCallback(async () => {
     try {
+      console.log(timeMatches);
+
       if (!isTimeMatchesFilled(timeMatches)) {
         message.warning("Заполните все поля!");
         return;
       }
 
       timeMatches.forEach((timeMatch) =>
-        timeMatch.attempts.forEach(({ id, time }) =>
+        timeMatch.attempts.forEach(({ id, result }) =>
           timeMatchesApi.setTimeMatch({
             eventId,
             nominationId,
             raceRoundId: id,
-            result: time,
+            result,
           })
         )
       );
@@ -74,6 +77,10 @@ export const TimeMatchesTabs = () => {
     }
   }, [eventId, nominationId, timeMatches]);
 
+  const handleDownload = useCallback(() => {
+    console.log("download file");
+  }, []);
+
   useEffect(() => {
     if (!isDataLoaded) {
       setIsLoading(true);
@@ -90,6 +97,10 @@ export const TimeMatchesTabs = () => {
               stageStatusResponse.data
             );
             setStageStatus(transformedStageStatus);
+
+            if (stageStatus.tournamentFinished) {
+              setIsStageFinished(true);
+            }
           }
 
           if (timeMatchesResponse.status === RESPONSE_STATUS.STATUS_OK) {
@@ -145,8 +156,11 @@ export const TimeMatchesTabs = () => {
       ]}
       tabBarExtraContent={{
         right: (
-          <Button onClick={handleCompleteStage} type="primary">
-            Завершить этап
+          <Button
+            onClick={isStageFinished ? handleDownload : handleCompleteStage}
+            type="primary"
+          >
+            {isStageFinished ? "Итоговый протокол" : "Завершить этап"}
           </Button>
         ),
       }}

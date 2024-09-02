@@ -145,8 +145,8 @@ export const transformStageStatus = (info) => ({
 
 export const isTimeMatchesFilled = (timeMatches) => {
   return !timeMatches.some((timeMatch) => {
-    return timeMatch.attempts.some(({ time }) => {
-      return !time || time === undefined || time === null;
+    return timeMatch.attempts.some(({ result }) => {
+      return !result || result === undefined || result === null;
     });
   });
 };
