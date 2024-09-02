@@ -26,9 +26,8 @@ export const TimeMatchesTabs = () => {
 
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
     setTimeMatches((prev) =>
-      prev.map((timeMatch) => ({
-        ...timeMatch,
-        attempts: timeMatch.attempts.map((attempt) =>
+      prev.map((timeMatch) => {
+        const updatedAttempts = timeMatch.attempts.map((attempt) =>
           attempt.id === id
             ? {
                 ...attempt,
@@ -36,15 +35,26 @@ export const TimeMatchesTabs = () => {
                 isDisqualified,
               }
             : attempt
-        ),
-      }))
+        );
+
+        const bestAttempt = updatedAttempts.reduce((best, current) => {
+          if (!best || current.result < best.result) {
+            return current;
+          }
+          return best;
+        }, null);
+
+        return {
+          ...timeMatch,
+          attempts: updatedAttempts,
+          bestAttempt,
+        };
+      })
     );
   }, []);
 
   const handleCompleteStage = useCallback(async () => {
     try {
-      console.log(timeMatches);
-
       if (!isTimeMatchesFilled(timeMatches)) {
         message.warning("Заполните все поля!");
         return;
@@ -140,11 +150,12 @@ export const TimeMatchesTabs = () => {
         },
         {
           ...tabs[1],
-          disabled: !(
-            stageStatus.registrationFinished &&
-            stageStatus.tournamentStarted &&
-            stageStatus.tournamentFinished
-          ),
+          // disabled: !(
+          //   stageStatus.registrationFinished &&
+          //   stageStatus.tournamentStarted &&
+          //   stageStatus.tournamentFinished
+          // ),
+          disabled: false,
           children: (
             <TimeMatchesResults
               timeMatches={timeMatches}

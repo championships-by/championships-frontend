@@ -3,6 +3,7 @@ import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Flex, Table, Tooltip, Typography } from "antd";
+import dayjs from "dayjs";
 
 const columns = [
   {
@@ -41,7 +42,7 @@ const columns = [
     title: <Tooltip title="Лучшее время">Лучшее время</Tooltip>,
     dataIndex: "bestAttempt",
     key: "bestAttempt",
-    render: ({ result }) => result ?? "-",
+    render: (text, record) => record.bestAttempt.result ?? "-",
   },
 ];
 
@@ -57,7 +58,19 @@ export const TimeMatchesResults = ({
       {isErrorOccurred ? (
         <Typography>При попытке получить данных произошла ошибка</Typography>
       ) : (
-        <Table pagination={false} columns={columns} dataSource={timeMatches} />
+        <Table
+          pagination={false}
+          columns={columns}
+          dataSource={timeMatches.sort((a, b) => {
+            if (dayjs(a.bestAttempt.result).isBefore(b.bestAttempt.result)) {
+              return -1;
+            }
+            if (dayjs(a.bestAttempt.result).isAfter(b.bestAttempt.result)) {
+              return 1;
+            }
+            return 0;
+          })}
+        />
       )}
     </Flex>
   );
