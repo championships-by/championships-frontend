@@ -65,13 +65,7 @@ function JudgmentEventsTable({ EventsData }) {
     },
   ];
 
-  return (
-    <Table
-      locale={Locale.tableLocale}
-      dataSource={EventsData}
-      columns={columns}
-    />
-  );
+  return <Table locale={Locale} dataSource={EventsData} columns={columns} />;
 }
 
 export default JudgmentEventsTable;
