@@ -9,7 +9,7 @@ import ParticipantModal from "./ParticipantModal";
 function ParticipantsTable({ ParticipantData, getParticipant }) {
   const columns = [
     {
-      title: "ФИО",
+      title: "Фамилия имя отчество",
       key: "participant_fullname",
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
