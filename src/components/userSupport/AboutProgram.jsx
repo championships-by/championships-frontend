@@ -4,6 +4,7 @@ import bntuLogo from "@assets/img/bntu-logo.png";
 import fitrLogo from "@assets/img/fitr-logo.png";
 import schoolLogo from "@assets/img/school-logo.png";
 import laptop from "@assets/img/laptop.png";
+import { bntuSite, zubronokSite, fitrSite, gymnSite } from "@constants";
 
 import "./sass/user-support.scss";
 
@@ -11,33 +12,46 @@ function AboutProgram() {
   return (
     <div className="user-support">
       <Typography.Title level={2}>О портале</Typography.Title>
-      <Typography.Title level={3}>
-        Республиканская единая система управления соревнованиями
-      </Typography.Title>
+      <Typography.Text className="user-support__about__text">
+        Республиканская единая система управления соревнованиями - это система
+        управления мероприятиями и соревнованиями. Все процессы
+        автоматизированы, что позволяет экономить ресурсы и время на организацию
+        проведения соревнований разного уровня от городского до
+        республиканского.
+      </Typography.Text>
       <Row align="middle">
-        <Col span={17}>
-          <Typography.Text strong>1. Удобство: </Typography.Text>
-          <Typography.Text>
+        <Col span={13} className="user-support__about__text1">
+          <Typography.Title level={3}>Преимущества</Typography.Title>
+          <Typography.Text strong className="user-support__about__text">
+            1. Удобство:{" "}
+          </Typography.Text>
+          <Typography.Text className="user-support__about__text">
             Регистрация онлайн, без привязки ко времени и месту.
           </Typography.Text>
           <br />
-          <Typography.Text>
+          <Typography.Text className="user-support__about__text">
             2. Упрощенное управление участниками и данными соревнований.
           </Typography.Text>
           <br />
-          <Typography.Text strong>3. Расширение охвата: </Typography.Text>
-          <Typography.Text>
+          <Typography.Text strong className="user-support__about__text">
+            3. Расширение охвата:{" "}
+          </Typography.Text>
+          <Typography.Text className="user-support__about__text">
             Легкий доступ для участников из разных регионов.
           </Typography.Text>
           <br />
-          <Typography.Text strong>4. Гибкость: </Typography.Text>
-          <Typography.Text>Настройка под нужды соревнований.</Typography.Text>
+          <Typography.Text strong className="user-support__about__text">
+            4. Гибкость:{" "}
+          </Typography.Text>
+          <Typography.Text className="user-support__about__text">
+            Настройка под нужды соревнований.
+          </Typography.Text>
           <br />
-          <Typography.Text>
+          <Typography.Text className="user-support__about__text">
             5. Автоматическая генерация текущих и итоговых протоколов.
           </Typography.Text>
         </Col>
-        <Col span={7}>
+        <Col span={11}>
           <img src={laptop} className="user-support__about__laptop-img" />
         </Col>
       </Row>
@@ -48,23 +62,29 @@ function AboutProgram() {
       </Row>
       <Row>
         <Col span={8} className="user-support__about__logo-container">
-          <img src={logo} className="user-support__about__logo" />
+          <a href={zubronokSite}>
+            <img src={logo} className="user-support__about__logo" />
+          </a>
         </Col>
         <Col span={8} className="user-support__about__logo-container">
-          <img src={fitrLogo} className="user-support__about__fitrLogo" />
-          <img src={bntuLogo} className="user-support__about__bntuLogo" />
+          <a href={fitrSite}>
+            <img src={fitrLogo} className="user-support__about__fitrLogo" />
+          </a>
+          <a href={bntuSite}>
+            <img src={bntuLogo} className="user-support__about__bntuLogo" />
+          </a>
         </Col>
         <Col span={8} className="user-support__about__logo-container">
-          <img src={schoolLogo} className="user-support__about__logo" />
+          <a href={gymnSite}>
+            <img src={schoolLogo} className="user-support__about__logo" />
+          </a>
         </Col>
       </Row>
       <Row>
         <Col span={8} className="user-support__about__titles">
-          <Typography.Text strong>
-            Учреждение образования национальный детский
-            образовательно-оздоровительный центр{" "}
-          </Typography.Text>
+          <Typography.Text strong>Учреждение образования </Typography.Text>
           <Typography.Text strong className="user-support__about__institution">
+            «Национальной детский образовательно-оздоровительный центр
             «Зубренок»
           </Typography.Text>
         </Col>
@@ -82,7 +102,7 @@ function AboutProgram() {
             Государственное учреждение образования{" "}
           </Typography.Text>
           <Typography.Text strong className="user-support__about__institution">
-            «Гимназия 61 г. Минска»
+            «Гимназия №61 г. Минска»
           </Typography.Text>
         </Col>
       </Row>
