@@ -1,0 +1,37 @@
+.user-support {
+    width: calc(100vw - 128px);
+    &__about {
+        &__laptop-img {
+            width: 30vw;
+        }
+        &__logo {
+            width: 7vw;
+        }
+        &__bntuLogo, &__fitrLogo {
+            width: 8vw;
+        }
+        &__logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px; 
+        }
+        &__titles {
+            margin-top: 16px;
+            text-align: center;
+        }
+        &__institution {
+            color: #3679FF;
+        }
+    }
+    &__feedback {
+        &__laptop-img {
+            width: 50vw;
+        }
+        &__img-container {
+            margin-top: 5vw;
+            width: 100%;
+            text-align: center;
+        }
+    }
+}
