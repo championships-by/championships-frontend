@@ -1,15 +1,9 @@
 import { instance } from ".";
 
 export const participantApi = {
-  getParticipant: () =>
-    fetch(`${API_PATH}/participant/participant?offset=0&limit=10`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-    }).then((response) => response.json()),
+  getParticipant: () => {
+    return instance.get("/participant/participant?offset=0&limit=49").then((response) => response.data);
+  },
   setHideParticipant: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
