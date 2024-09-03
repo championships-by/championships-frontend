@@ -7,7 +7,7 @@ function Feedback() {
   return (
     <div className="user-support">
       <Typography.Title level={2}>Обратная связь</Typography.Title>
-      <Typography.Text strong>
+      <Typography.Text className="user-support__feedback__text">
         Спасибо, что посетили наш РЕСУРС. Если вы хотите оставить отзыв о
         Республиканской единой системе управления соревнованиями, вы можете
         написать нам на почту{" "}

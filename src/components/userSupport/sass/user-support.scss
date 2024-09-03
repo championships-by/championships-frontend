@@ -2,7 +2,8 @@
     width: calc(100vw - 128px);
     &__about {
         &__laptop-img {
-            width: 30vw;
+            width: 27vw;
+            margin-left: 100px;
         }
         &__logo {
             width: 7vw;
@@ -23,6 +24,9 @@
         &__institution {
             color: #3679FF;
         }
+        &__text {
+            font-size: 18px;
+        }
     }
     &__feedback {
         &__laptop-img {
@@ -32,6 +36,9 @@
             margin-top: 5vw;
             width: 100%;
             text-align: center;
+        }
+        &__text {
+            font-size: 18px;
         }
     }
 }

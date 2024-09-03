@@ -31,7 +31,6 @@ function App() {
         <Route path={ROUTER_ROUTES.ROOT}>
           <Route index element={<Auth />} />
           <Route path={ROUTER_ROUTES.LOGOUT} element={<Logout />} />
-
           <Route path={ROUTER_ROUTES.ADMIN_PANEL} element={<AdminPanel />}>
             <Route
               path={ROUTER_ROUTES.PARTICIPANTS}
