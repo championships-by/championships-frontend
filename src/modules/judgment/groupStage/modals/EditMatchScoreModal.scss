@@ -1,0 +1,36 @@
+.edit-match-score-modal {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-gap: 1em;
+  margin: 10px 0;
+
+  &__header-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 1em;
+    background-color: #f6f5f5;
+    padding: 8px 10px;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0px;
+    }
+  }
+
+  &__input-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 1em;
+
+    & > div {
+      width: 100%;
+    }
+
+    h5 {
+      font-weight: 400;
+      margin: 0 0 0 10px;
+    }
+  }
+}

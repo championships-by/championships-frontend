@@ -1,37 +1,49 @@
 import { Flex, Input, Select, Space, Typography } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
-import "./sass/team.scss";
 import { FILTER_OPTION } from "@utils";
 
-function TeamParticipantsInput({ name, options }) {
+import "./sass/team.scss";
+
+function TeamParticipantsInput({ name, options, mode, disabled }) {
+  const rules = [
+    {
+      required: !disabled,
+      message:
+        mode === "multiple"
+          ? "Пожалуйста, выберите участников"
+          : "Пожалуйста, выберите участника",
+    },
+  ];
+
   return (
     <Flex vertical className="team__team-participants-input__flex">
-      <Typography.Text>Участники</Typography.Text>
+      <Typography.Text>
+        {mode == "single" ? "Участник" : "Участники"}
+      </Typography.Text>
       <Flex>
         <Space.Compact className="team__team-participants-input__space">
-          <Input
-            prefix={<UserOutlined />}
-            className="team__team-participants-input__input"
-            disabled
-          />
           <FormItem
             name={name}
             className="team__team-participants-input__formitem"
+            rules={rules}
           >
             <Select
               allowClear
-              mode="multiple"
+              mode={mode}
               showSearch
+              disabled={disabled}
+              placeholder={
+                mode == "single" ? "Выберите участника" : "Выберите участников"
+              }
               name="team_participants_select"
               value=""
               filterOption={FILTER_OPTION}
               options={options}
+              notFoundContent="Нет данных"
             />
           </FormItem>
         </Space.Compact>
       </Flex>
-      <Typography.Text type="secondary">Робофутбол</Typography.Text>
     </Flex>
   );
 }

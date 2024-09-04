@@ -1,10 +1,12 @@
+import { TabsProvider } from "@contexts/TabsContext";
 import CompetenciesTab from "@modules/judgment/competencies/CompetenciesTab";
+import { competenciesTabs } from "@modules/judgment/competencies/constants";
 
 function Competencies() {
   return (
-    <div className="tabs-container">
+    <TabsProvider initialTabs={competenciesTabs}>
       <CompetenciesTab />
-    </div>
+    </TabsProvider>
   );
 }
 

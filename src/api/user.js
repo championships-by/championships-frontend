@@ -1,3 +1,6 @@
+import axios from "axios";
+import { instance } from "./index";
+
 export const userApi = {
   getProfile: () =>
     fetch(`${API_PATH}/user/profile`, {
@@ -7,7 +10,7 @@ export const userApi = {
       },
       redirect: "follow",
       credentials: "include",
-    }),
+    }).then((response) => response.json()),
   changeProfile: (body) =>
     fetch(`${API_PATH}/user/profile`, {
       method: "PATCH",
@@ -27,7 +30,7 @@ export const userApi = {
       },
       redirect: "follow",
       credentials: "include",
-    }),
+    }).then((response) => response.json()),
   setUser: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
@@ -40,5 +43,8 @@ export const userApi = {
       redirect: "follow",
       credentials: "include",
     });
+  },
+  getJudges: ({ limit }) => {
+    return instance.get(`/user/judges?offset=0&limit=${limit}`);
   },
 };

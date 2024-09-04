@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import { Flex, Input, Typography } from "antd";
 import { TeamOutlined } from "@ant-design/icons";
 
-function ParticipantTeacherPatronymicInput({ name }) {
+function ParticipantTeacherPatronymicInput({ name, value }) {
   return (
     <FormItem name={name} hasFeedback validateFirst>
       <Flex vertical>
@@ -16,6 +16,7 @@ function ParticipantTeacherPatronymicInput({ name }) {
           placeholder="Введите отчество педагога"
           id="participant_teacher_sname_input"
           maxLength={255}
+          value={value}
         />
         <Typography.Text type="secondary">Пример: Иванович</Typography.Text>
       </Flex>

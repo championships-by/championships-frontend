@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Button, Typography, message, Form, Col, Row } from "antd";
-import FormItem from "antd/es/form/FormItem";
-import UserLastnameInput from "@modules/user/UserLastnameInput";
-import UserFirstnameInput from "@modules/user/UserFirstnameInput";
-import UserPatronymicInput from "@modules/user/UserPatronymicInput";
-import UserRoleInput from "@modules/user/UserRoleInput";
-import UserEmailInput from "@modules/user/UserEmailInput";
-import UserPhoneInput from "@modules/user/UserPhoneInput";
-import UserOrganizationInput from "@modules/user/UserOrganizationInput";
 import Loader from "@components/loader/Loader";
+import UserEmailInput from "@modules/user/UserEmailInput";
+import UserFirstnameInput from "@modules/user/UserFirstnameInput";
+import UserLastnameInput from "@modules/user/UserLastnameInput";
+import UserOrganizationInput from "@modules/user/UserOrganizationInput";
+import UserPatronymicInput from "@modules/user/UserPatronymicInput";
+import UserPhoneInput from "@modules/user/UserPhoneInput";
+import UserRoleInput from "@modules/user/UserRoleInput";
+import { Button, Col, Form, Row, Typography, message } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import React, { useEffect, useState } from "react";
 import UserPasswordModal from "./UserPasswordChange";
 
-import "./sass/user-settings.scss";
 import { userApi } from "@api";
+import "./sass/user-settings.scss";
 
 function UsersSettings() {
+  const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [form] = Form.useForm();
@@ -23,12 +24,9 @@ function UsersSettings() {
     if (isLoading) {
       userApi
         .getProfile()
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
         .then((user) => {
+          setUser(user);
+
           form.setFieldsValue({
             firstname: user.first_name,
             lastname: user.second_name,
@@ -108,7 +106,7 @@ function UsersSettings() {
           </Col>
           <Col span={8}>
             <UserEmailInput name="email" />
-            <UserPhoneInput name="phone" />
+            <UserPhoneInput name="phone" number={user.phone} />
             <Button
               type="primary"
               onClick={() => setIsUserPasswordModalOpen(true)}

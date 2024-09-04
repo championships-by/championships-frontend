@@ -19,9 +19,6 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react", "react-hooks", "prettier", "only-warn"],
-  rules: {
-    "prettier/prettier": ["error", {}, { usePrettierrc: true }],
-  },
   settings: {
     react: {
       version: "detect",

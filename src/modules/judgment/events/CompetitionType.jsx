@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Typography, Space, Select } from "antd";
-import GroupStageParametrs from "./CompetitionGroupStageParametrs";
+import { Typography, Space, Select, Flex } from "antd";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 
@@ -16,29 +15,30 @@ const options = [
     label: "По критериям",
   },
   {
-    value: "groupStage",
-    label: "Групповой этап",
-  },
-  {
     value: "playoffs",
     label: "Плей-офф",
   },
 ];
 
-function CompetitionType() {
+function CompetitionType({ onChange, onInputChange, onCriteriaChange, mode }) {
   const [selectedValue, setSelectedValue] = useState("");
+  const [groupCount, setGroupCount] = useState();
 
   const handleChange = (value) => {
     setSelectedValue(value);
+    onChange(value);
+  };
+
+  const handleChangeGroupCount = (value) => {
+    setGroupCount(value);
+    onInputChange(value);
   };
 
   const settingsComponents = {
-    groupStage: <GroupStageParametrs />,
-    criteria: <CriteriaParametrs />,
-    time: <TimeParametrs />,
-    playoffs: <GroupStageParametrs />,
+    criteria: <CriteriaParametrs onCriteriaChange={onCriteriaChange} />,
+    time: <TimeParametrs onInputChange={handleChangeGroupCount} />,
+    playoffs: null,
   };
-
   return (
     <div className="events__competition-type__div">
       <Typography.Text className="events__competition-type__text">
@@ -50,6 +50,7 @@ function CompetitionType() {
           options={options}
           className="events__competition-type__name"
           onChange={handleChange}
+          disabled={mode === "edit"}
         />
         {selectedValue && settingsComponents[selectedValue]}
       </Space>

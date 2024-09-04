@@ -1,6 +1,25 @@
-import { Table, Flex, Button, Typography, Modal } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
+import { Locale, ModalType } from "@constants";
+import { Button, Flex, Table, Tooltip, Typography } from "antd";
+import { useState } from "react";
+
+const filters = [
+  {
+    text: "Администратор",
+    value: "admin",
+  },
+  {
+    text: "Судья",
+    value: "judge",
+  },
+  {
+    text: "Менеджер",
+    value: "specialist",
+  },
+];
+
+function UsersTable({ usersData }) {
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteUser, updateUser, getUsersSelector } from '@store/users';
 import { useState } from "react";
@@ -10,7 +29,6 @@ function UsersTable() {
   const dispatch = useDispatch();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-
   const deleteUserConfirm = (id) => {
     Modal.confirm({
       title: "Вы уверены?",
@@ -37,31 +55,46 @@ function UsersTable() {
 
   const columns = [
     {
-      title: "ФИО",
+      title: "Фамилия имя отчество",
       key: "fullname",
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
       ),
+      sorter: (a, b) => {
+        const firstFullName = `${a.second_name} ${a.first_name} ${a.third_name}`;
+        const secondFullName = `${b.second_name} ${b.first_name} ${b.third_name}`;
+
+        return firstFullName.localeCompare(secondFullName);
+      },
     },
     {
       title: "Роль",
       key: "role",
       render: (_, { role }) =>
         role === "admin" ? (
-          <Typography.Text>Админ</Typography.Text>
+          <Typography.Text>Администратор</Typography.Text>
         ) : role === "judge" ? (
-          <Typography.Text>Судейство</Typography.Text>
+          <Typography.Text>Судья</Typography.Text>
         ) : role === "specialist" ? (
-          <Typography.Text>Специалист</Typography.Text>
+          <Typography.Text>Менеджер</Typography.Text>
         ) : (
           <Typography.Text />
         ),
+      filters: filters,
+      onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
     {
       title: "Действия",
       key: "action",
       render: (_, { id }) => (
         <Flex>
+          <Tooltip title="Редактирование">
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={() => openEditModal()}
+            />
+          </Tooltip>
           <Button
             type="text"
             icon={<EditOutlined />}
@@ -79,9 +112,12 @@ function UsersTable() {
 
   return (
     <>
+      <Table dataSource={usersData} columns={columns} locale={Locale} />
+=======
       <Table dataSource={users} columns={columns} />
 
       <UserModal
+        type={ModalType.EDIT}
         isOpen={isEditModalOpen}
         onOk={(user) => {
           dispatch(updateUser(user));

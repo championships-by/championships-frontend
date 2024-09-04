@@ -8,10 +8,19 @@ import EventTable from "@components/judgment/events/JudgmentEventsTable";
 import { eventApi } from "@api";
 import EventCreateModal from "./EventCreateModal";
 
-function ChangeDateFormat(date) {
-  const parts = date.split("-");
+function changeDateFormat(date) {
+  const formattedDate = new Date(date);
 
-  return `${parts[2]}.${parts[1]}.${parts[0]}`;
+  const month = formattedDate.getMonth() + 1;
+  const formattedMonth = String(month).padStart(2, "0");
+
+  return (
+    formattedDate.getDate() +
+    "." +
+    formattedMonth +
+    "." +
+    formattedDate.getFullYear()
+  );
 }
 
 function JudgmentEvents() {
@@ -24,11 +33,10 @@ function JudgmentEvents() {
     if (isLoading) {
       eventApi
         .getEventWithNominations({ limit: 49 })
-        .then((response) => response.json())
         .then((response) => {
           const formattedDate = response.map((user) => ({
             ...user,
-            date: ChangeDateFormat(user.date),
+            date: user.date,
           }));
           return formattedDate;
         })
@@ -44,7 +52,7 @@ function JudgmentEvents() {
   return (
     <>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Редактирование мероприятий</Typography.Title>
+      <Typography.Title level={2}>Управление мероприятиями</Typography.Title>
       <AdminPanelControls>
         <Button type="primary" onClick={() => setIsEventCreateModalOpen(true)}>
           {ROUTES.JUDGMENT_CREATE.TITLE}

@@ -1,19 +1,19 @@
-import { Table, Flex, List, Button, Typography } from "antd";
+import { Table, Flex, List, Button, Typography, Tooltip } from "antd";
 import { useState } from "react";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  UsergroupAddOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
-import ParticipantNominationModal from "@components/eventRegistration/ParticipantNominationModal";
-import TeamDeleteModal from "@components/eventRegistration/TeamDeleteModal";
+import TeamAddParticipantModal from "./TeamAddParticipantModal";
+import { Locale } from "@constants";
 
 function TeamsTable({ TeamsData }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
+  const [selectedTeamId, setSelectedTeamId] = useState();
+  const [selectedTeamName, setSelectedTeamName] = useState();
 
-  const openEditModal = () => {
+  const openEditModal = (id, name) => {
+    setSelectedTeamId(id);
+    setSelectedTeamName(name);
     setIsEditModalOpen(true);
   };
 
@@ -84,23 +84,22 @@ function TeamsTable({ TeamsData }) {
       width: "10%",
       key: "action",
       fixed: "right",
-      render: () => (
+      render: (_, team) => (
         <Flex>
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => openEditModal()}
-          />
-          <Button
-            type="text"
-            icon={<UsergroupAddOutlined />}
-            onClick={openParticipantModal()}
-          />
-          <Button
-            type="text"
-            icon={<DeleteOutlined />}
-            onClick={() => TeamDeleteModal}
-          />
+          <Tooltip title="Редактировать">
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={() => openEditModal(team.id, team.name)}
+            />
+          </Tooltip>
+          <Tooltip title="Добавить">
+            <Button
+              type="text"
+              icon={<UsergroupAddOutlined />}
+              onClick={() => openParticipantModal()}
+            />
+          </Tooltip>
         </Flex>
       ),
     },
@@ -108,18 +107,25 @@ function TeamsTable({ TeamsData }) {
 
   return (
     <>
-      <Table dataSource={TeamsData} columns={columns} bordered />
+      <Table
+        dataSource={TeamsData}
+        columns={columns}
+        bordered
+        locale={Locale}
+      />
 
       <TeamEditModal
         isOpen={isEditModalOpen}
         onOk={() => changeTeamData()}
         onCancel={() => setIsEditModalOpen(false)}
+        teamID={selectedTeamId}
+        teamName={selectedTeamName}
       />
-      {/* <ParticipantNominationModal
+      <TeamAddParticipantModal
         isOpen={isParticipantModalOpen}
         onOk={() => changeParticipantData()}
         onCancel={() => setIsParticipantModalOpen(false)}
-      /> */}
+      />
     </>
   );
 }

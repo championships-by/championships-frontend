@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import { Flex, Input, Typography } from "antd";
 import { BankOutlined } from "@ant-design/icons";
 
-function ParticipantAdditionalOrganiztionInput({ name }) {
+function ParticipantAdditionalOrganiztionInput({ name, value }) {
   return (
     <FormItem name={name}>
       <Flex vertical>
@@ -14,9 +14,10 @@ function ParticipantAdditionalOrganiztionInput({ name }) {
           prefix={<BankOutlined />}
           placeholder="Введите учереждение дополнительного образования"
           id="participant_additionalorganization_input"
+          value={value}
         />
         <Typography.Text type="secondary">
-          Пример: Очумелые ручки
+          Пример: ГУО "Центр дополнительного образования"
         </Typography.Text>
       </Flex>
     </FormItem>

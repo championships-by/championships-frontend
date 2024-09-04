@@ -3,7 +3,7 @@ name: DOCKERBUILD
 on:
   push:
     branches:
-        - dev
+      - dev
 
 jobs:
   build:

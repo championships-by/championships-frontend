@@ -4,7 +4,7 @@ import { MailOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/participant.scss";
 
-function ParticipnatEmailInput({ name }) {
+function ParticipnatEmailInput({ name, value }) {
   return (
     <Flex vertical className="participant__email-input__flex">
       <Typography.Text>Email</Typography.Text>
@@ -26,6 +26,7 @@ function ParticipnatEmailInput({ name }) {
         className="participant__email-input__formitem"
       >
         <Input
+          value={value}
           prefix={<MailOutlined />}
           type="email"
           placeholder="Введите Email"

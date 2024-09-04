@@ -3,7 +3,7 @@ import { Flex, Input, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 
-function ParticipantFirstnameInput({ name }) {
+function ParticipantFirstnameInput({ name, value }) {
   return (
     <FormItem
       name={name}
@@ -28,6 +28,7 @@ function ParticipantFirstnameInput({ name }) {
           placeholder="Введите имя"
           maxLength={255}
           id="participant_fname_input"
+          value={value}
         />
         <Typography.Text type="secondary">Пример: Иван</Typography.Text>
       </Flex>

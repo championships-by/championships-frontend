@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import { MailOutlined } from "@ant-design/icons";
 import "./sass/events.scss";
 
-function EventEmail({ name }) {
+function EventEmail({ name, value }) {
   return (
     <FormItem
       name={name}
@@ -23,7 +23,8 @@ function EventEmail({ name }) {
       <Flex vertical>
         <Typography.Text>Email для вопросов участников</Typography.Text>
         <Input
-          prefix={<MailOutlined/>}
+          value={value}
+          prefix={<MailOutlined />}
           allowClear
           placeholder="Введите email для вопросов участников"
           id="event_email_input"

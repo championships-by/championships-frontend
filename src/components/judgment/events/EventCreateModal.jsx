@@ -1,35 +1,83 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form, Modal, message, Typography, Row, Col } from "antd";
-import dayjs from "dayjs";
-import EventName from "@modules/judgment/events/EventName";
+import { eventApi } from "@api";
 import EventDate from "@modules/judgment/events/EventDate";
-import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventDescription from "@modules/judgment/events/EventDescription";
-import EventRequirements from "@modules/judgment/events/EventRequirements";
 import EventEmail from "@modules/judgment/events/EventEmail";
 import EventLevel from "@modules/judgment/events/EventLevel";
-import EventPlace from "@modules/judgment/events/EventPlace";
-import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationSwitch";
-import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
-import { eventApi } from "@api";
-import { Locale } from "@constants"
+import EventName from "@modules/judgment/events/EventName";
+import EventPlace from "@modules/judgment/events/EventPlace";
+import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
+import EventRegulation from "@modules/judgment/events/EventRegulation";
+import EventRequirements from "@modules/judgment/events/EventRequirements";
+import { Button, Form, message, Modal, notification } from "antd";
+import React, { useState } from "react";
 
 function EventCreateModal({ isOpen, onOk, onCancel, name }) {
   const [form] = Form.useForm();
 
-  const createEventRequest = async () => {
-    const body = JSON.stringify({
-      name: form.getFieldValue("event_name"),
-      date: dayjs(form.getFieldValue("event_date")).format(Locale.dataFormat),
-    });
+  const [values, setValues] = useState({});
 
-    eventApi.setEvent(body);
+  const onSubmit = async () => {
+    const {
+      name,
+      participant_question_email,
+      event_place,
+      description,
+      event_level,
+      participation_needs,
+      published,
+      registration,
+      holding,
+      event_logo,
+      event_regulation,
+    } = values;
+
+    const formData = new FormData();
+    formData.append("logo", event_logo);
+    formData.append("rules", event_regulation);
+
+    const event_data = {
+      name,
+      participant_question_email,
+      event_place,
+      description,
+      event_level,
+      participation_needs,
+      published,
+      registration_start_date: registration?.registration_start_date,
+      registration_finish_date: registration?.registration_finish_date,
+      holding_start_date: holding?.holding_start_date,
+      holding_finish_date: holding?.holding_finish_date,
+    };
+
+    formData.append("event_data", JSON.stringify(event_data));
+
+    try {
+      await eventApi.setEvent(formData);
+      return true;
+    } catch (error) {
+      message.error("При создании мероприятия произошла ошибка.");
+      return false;
+    }
   };
 
-  const onFinish = () => {
-    message.success("Данные мероприятия сохранены!");
-    onOk();
+  const onValuesChange = (values) => {
+    setValues((oldValues) => ({ ...oldValues, ...values }));
+  };
+
+  const onFinish = async () => {
+    const success = await onSubmit();
+    if (success) {
+      message.success("Мероприятие успешно создано");
+      onOk();
+      notification.info({
+        message: "Внимание!",
+        description:
+          "Для опубликования мероприятия необходимо добавить хотя бы одну компетенцию!",
+        duration: 120,
+        placement: "bottomRight",
+      });
+    }
   };
 
   const onFinishFailed = () => {
@@ -38,7 +86,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
 
   return (
     <Modal
-      title="Создание мероприятия"
+      title="Создать мероприятие"
       open={isOpen}
       onCancel={onCancel}
       footer={null}
@@ -50,23 +98,52 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
         requiredMark="optional"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        onValuesChange={onValuesChange}
       >
-        <EventName name="event_name" />
-        <EventLogo name="event_logo" />
-        <EventEmail name="event_email" />
-        <EventPlace name="event_place" />
-        <EventRegulation name="event_regulation" />
-        <EventRegisterDate name="event_register_date" />
-        <EventDate name="event_date" />
-        <EventRegistrationSwitch name="event_registartion" />
-        <EventLevel name="event_level" />
-        <EventDescription name="event_description" />
-        <EventRequirements name="event_requirements" />
-        <Button
-          type="primary"
-          htmlType="submit"
-          onClick={createEventRequest}
-        >
+        <EventName name="name" value={values.name} />
+        <EventLogo
+          name="event_logo"
+          value={values.event_logo}
+          onChange={onValuesChange}
+          required={true}
+          form={form}
+        />
+        <EventEmail
+          name="participant_question_email"
+          value={values.participant_question_email}
+        />
+        <EventPlace name="event_place" value={values.event_place} />
+        <EventRegulation
+          name="event_regulation"
+          value={values.event_regulation}
+          onChange={onValuesChange}
+          required={true}
+          form={form}
+        />
+        <EventRegisterDate
+          name="registration"
+          value={values.registration}
+          form={form}
+          onChange={onValuesChange}
+        />
+        <EventDate
+          name="holding"
+          value={values.holding}
+          form={form}
+          onChange={onValuesChange}
+        />
+        <EventDescription name="description" value={values.description} />
+        <EventLevel
+          name="event_level"
+          value={values.event_level}
+          form={form}
+          onChange={onValuesChange}
+        />
+        <EventRequirements
+          name="participation_needs"
+          value={values.participation_needs}
+        />
+        <Button type="primary" htmlType="submit">
           Сохранить
         </Button>
       </Form>

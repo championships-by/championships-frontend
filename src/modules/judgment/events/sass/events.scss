@@ -6,35 +6,35 @@
     width: 250px;
   }
   &__competition-criteria {
-    &__row{
+    &__row {
       margin-bottom: 20px;
     }
-    &__deleteButton{
+    &__deleteButton {
       margin-left: 20px;
     }
-    &item{
+    &__item {
       flex: 1;
       margin-right: 8;
     }
     &__div {
-      &__maxPoints{
-        padding-left: 150px;
-      }
       margin-top: 10px;
       margin-bottom: 10px;
     }
+    &__maxPoints {
+      margin-left: 210px;
+    }
     &__input {
       margin-bottom: 50px;
-      width: 250px;
+      width: 300px;
     }
-    &__addButton{
+    &__addButton {
       margin-top: 10px;
     }
-    &__space{
+    &__space {
       margin-bottom: 30px;
     }
-    &__inputPoints{
-      width: 70px;
+    &__inputPoints {
+      width: 100px;
       margin-left: 20px;
     }
   }
@@ -42,7 +42,7 @@
     &__text {
       font-size: 16px;
     }
-    &__input{
+    &__input {
       margin-top: 8px;
       width: 505px;
     }
@@ -51,12 +51,18 @@
     &__text {
       font-size: 16px;
     }
+    &__input {
+      width: 40px;
+      height: 35px;
+      margin-top: 10px;
+    }
     &__name {
       width: 500px;
     }
     &__select {
-      width: 505px;
+      width: 465px;
       margin-top: 10px;
+      flex: 1;
     }
   }
   &__competition-type {
@@ -77,6 +83,9 @@
   &__compitation-name {
     &__space {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
     &__image {
       width: 38px;
@@ -84,16 +93,23 @@
       border: none;
     }
     &__input {
-      width: 250%;
+      width: 505px;
+      margin-top: 8px;
+    }
+    &__example {
+      margin-top: 0px;
     }
     &__div {
-      margin-bottom: 24px;
+      margin-top: 10px;
     }
     &__autocomplete {
       width: 100%;
     }
     &__text {
       font-size: 16px;
+    }
+    &__example {
+      margin-top: 10px;
     }
   }
   &__event-date {
@@ -103,7 +119,7 @@
     }
     &__datepickercontainer {
       margin-top: 0;
-  
+
       &:nth-child(even) {
         margin-top: 15px;
       }
@@ -131,17 +147,38 @@
   }
   &__event-registration-switch {
     &__switch {
-      width: 10%;
+      width: 20px;
       margin-left: 2%;
     }
   }
-  &__event-level{
-    &__icon{
+  &__event-level {
+    &__icon {
       width: 40px;
-
     }
-    &__div{
+    &__div {
       display: flex;
     }
+  }
+  &__participantModal {
+    &__printButton {
+      margin-top: 20px;
+    }
+  }
+  &__participantModal__downloadButton {
+    &__downloadButton {
+      margin-top: 20px;
+      margin-left: 20px;
+    }
+  }
+  &__competitionModal__play-off__slider {
+    width: 200px;
+    margin-right: 50px;
+  }
+  &__competitionModal__play-off__cancelButton {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  &__competitionModal__play-off__OkButton {
+    margin-top: 20px;
   }
 }

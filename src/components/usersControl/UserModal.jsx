@@ -1,3 +1,5 @@
+import { userApi } from "@api";
+import { ModalType } from "@constants";
 import React, { useState } from 'react';
 import { Modal, Form, Button, message, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
@@ -8,8 +10,18 @@ import UserFirstnameInput from "@modules/user/UserFirstnameInput";
 import UserPatronymicInput from "@modules/user/UserPatronymicInput";
 import UserRoleInput from "@modules/user/UserRoleInput";
 import UserEmailInput from "@modules/user/UserEmailInput";
+import UserFirstnameInput from "@modules/user/UserFirstnameInput";
+import UserLastnameInput from "@modules/user/UserLastnameInput";
+import UserOrganizationInput from "@modules/user/UserOrganizationInput";
 import UserPasswordInput from "@modules/user/UserPasswordInput";
+import UserPatronymicInput from "@modules/user/UserPatronymicInput";
 import UserPhoneInput from "@modules/user/UserPhoneInput";
+import UserRoleInput from "@modules/user/UserRoleInput";
+import { Button, Form, message, Modal, Space } from "antd";
+import FormItem from "antd/es/form/FormItem";
+import { useState } from "react";
+
+function UserModal({ isOpen, onOk, onCancel, type }) {
 import UserOrganizationInput from "@modules/user/UserOrganizationInput";
 
 function UserModal({ isOpen, onOk, onCancel, user }) {
@@ -18,7 +30,7 @@ function UserModal({ isOpen, onOk, onCancel, user }) {
   const dispatch = useDispatch();
 
   const onFinish = () => {
-    message.success("Всё в порядке!");
+    message.success("Пользователь успешно создан");
     setIsLoading(false);
   };
 
@@ -47,7 +59,11 @@ function UserModal({ isOpen, onOk, onCancel, user }) {
   };
   return (
     <Modal
-      title="Настройка пользователя"
+      title={
+        type === ModalType.ADD
+          ? "Добавить пользователя"
+          : "Редактировать пользователя"
+      }
       className="user-control__modal"
       open={isOpen}
       onOk={onOk}

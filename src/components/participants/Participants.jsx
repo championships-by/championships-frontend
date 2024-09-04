@@ -1,9 +1,9 @@
-import { Button, Flex, Typography, Tooltip } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { participantApi } from "@api";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
-import { participantApi } from "@api";
+import { ModalType } from "@constants";
+import { Button, Flex, Typography, message } from "antd";
+import { useEffect, useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";
 
@@ -14,16 +14,32 @@ function Participants() {
     useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [dataParticipants, setParticipants] = useState([]);
-  if (isLoading) {
+
+  const getParticipant = () => {
     participantApi
       .getParticipant()
-      .then((response) => response.json())
       .then((data) => setParticipants(data))
       .catch(() =>
         message.error("Невозможно получить данные. Обратитесь к администратору")
       )
       .finally(() => setTimeout(() => setIsLoading(false), 300));
-  }
+  };
+
+  const onOk = () => {
+    setIsAddParticipantModalOpen(false);
+
+    getParticipant();
+  };
+
+  const onCancel = () => {
+    setIsAddParticipantModalOpen(false);
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      getParticipant();
+    }
+  }, [isLoading]);
 
   return (
     <>
@@ -32,9 +48,9 @@ function Participants() {
 
       <AdminPanelControls>
         <Flex gap="small">
-          <Tooltip title="Сохранить список участников">
+          {/*<Tooltip title="Сохранить список участников">
             <Button type="primary" icon={<DownloadOutlined />} />
-          </Tooltip>
+          </Tooltip>*/}
           <Button
             type="primary"
             onClick={() => setIsAddParticipantModalOpen(true)}
@@ -44,12 +60,16 @@ function Participants() {
         </Flex>
       </AdminPanelControls>
 
-      <ParticipantsTable ParticipantData={dataParticipants} />
+      <ParticipantsTable
+        ParticipantData={dataParticipants}
+        getParticipant={getParticipant}
+      />
 
       <ParticipantModal
+        type={ModalType.ADD}
         isOpen={isAddParticipantModalOpen}
-        onOk={() => setIsAddParticipantModalOpen(false)}
-        onCancel={() => setIsAddParticipantModalOpen(false)}
+        onOk={onOk}
+        onCancel={onCancel}
       />
     </>
   );

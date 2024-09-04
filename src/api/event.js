@@ -1,3 +1,6 @@
+import axios from "axios";
+import { instance } from ".";
+
 export const eventApi = {
   getEvent: (eventID) =>
     fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
@@ -7,28 +10,39 @@ export const eventApi = {
       },
       redirect: "follow",
       credentials: "include",
-    }),
-  getEventWithNominations: ({ limit }) =>
-    fetch(`${API_PATH}/event/events_with_nominations?offset=0&limit=${limit}`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-    }),
+    }).then((response) => response.json()),
+  getEventWithNominations: ({ limit, published }) =>
+    fetch(
+      `${API_PATH}/event/events_with_nominations?${
+        published ? `published=${published}&` : ``
+      }offset=0&limit=${limit}`,
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+        redirect: "follow",
+        credentials: "include",
+      }
+    ).then((response) => response.json()),
   changeEvent: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
-    headers.append("Content-Type", "application/json");
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
 
     return fetch(`${API_PATH}/event/event`, {
-      method: "PUT",
+      method: "PATCH",
       headers,
       body,
       redirect: "follow",
       credentials: "include",
     });
+  },
+  changeLogo: (formData) => {
+    return axios.post(`${API_PATH}/event/event_update_logo`, formData);
+  },
+  changeRegulation: (formData) => {
+    return axios.post(`${API_PATH}/event/event_update_doc`, formData);
   },
   deleteEvent: (body) => {
     const headers = new Headers();
@@ -44,16 +58,11 @@ export const eventApi = {
     });
   },
   setEvent: (body) => {
-    const headers = new Headers();
-    headers.append("accept", "application/json");
-    headers.append("Content-Type", "application/json");
-
-    return fetch(`${API_PATH}/event/event`, {
-      method: "POST",
-      headers,
-      body,
-      redirect: "follow",
-      credentials: "include",
+    return instance.post("/event/event", body, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
     });
   },
 };

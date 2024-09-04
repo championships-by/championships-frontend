@@ -2,15 +2,49 @@ import React, { useState } from "react";
 import { Button, Flex, Form, Modal, message } from "antd";
 import ReglamentName from "@modules/judgment/events/ReglamentName";
 import CompetitionJudge from "@modules/judgment/events/CompetitionJudgeName";
-import Competition from "@modules/judgment/events/CompetitionName";
+import CompetitionName from "@modules/judgment/events/CompetitionName";
 import CompetitionType from "@modules/judgment/events/CompetitionType";
+import { competenciesApi } from "@api";
+import { useParams } from "react-router-dom";
 
-function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
+function EventSettingsCompitations({
+  isOpen,
+  onOk,
+  onCancel,
+  name,
+  mode = "create",
+}) {
   const [isLoading, setIsLoading] = useState(false);
+  const [inputName, setInputName] = useState("");
+  const [inputReglament, setInputReglament] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
+  const [groupCount, setGroupCount] = useState();
+  const [criteria, setCriteria] = useState([]);
+  const [selectedJudges, setSelectedJudges] = useState([]);
+  const { eventID } = useParams();
 
-  const onFinish = () => {
-    message.success("Всё в порядке!");
-    setIsLoading(false);
+  const eventId = parseInt(eventID, 10);
+  const handleInputNameChange = (value) => {
+    setInputName(value);
+  };
+
+  const handleGroupCount = (value) => {
+    setGroupCount(value);
+  };
+
+  const handleCriteriaChange = (newCriteria) => {
+    setCriteria(newCriteria);
+  };
+  const handleInputReglamentChange = (value) => {
+    setInputReglament(value);
+  };
+
+  const handleChange = (value) => {
+    setSelectedValue(value);
+  };
+
+  const handleChangeJudges = (value) => {
+    setSelectedJudges(value);
   };
 
   const onFinishFailed = () => {
@@ -18,35 +52,89 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
     setIsLoading(false);
   };
 
+  const onFinish = async () => {
+    setIsLoading(true);
+    const data = {
+      append_nomination_event_data: {
+        event_id: eventId,
+        nomination_name: inputName,
+        reglament: inputReglament,
+        judges_ids: selectedJudges,
+      },
+    };
+    switch (selectedValue) {
+      case "time":
+        Object.assign(data, { race_round_amount: groupCount });
+        await competenciesApi.addTimeCompetenciesForEvent(data).then(() => {
+          message.success("Компетенция успешно добавлена");
+          setIsLoading(false);
+          onCancel();
+        });
+        break;
+
+      case "playoffs":
+        await competenciesApi.addOlympicCompetenciesForEvent(data).then(() => {
+          message.success("Компетенция успешно добавлена");
+          setIsLoading(false);
+          onCancel();
+        });
+        break;
+
+      case "criteria":
+        Object.assign(data, { criterias: criteria });
+        await competenciesApi.addCriteriaCompetenciesForEvent(data).then(() => {
+          message.success("Компетенция успешно добавлена");
+          setIsLoading(false);
+          onCancel();
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <Modal
       title={name}
       className="event-settings__modal"
       open={isOpen}
-      onOk={onOk}
       onCancel={onCancel}
-      footer={[]}
-      width={800}
+      footer={null}
+      width={600}
     >
       <Form
         layout="vertical"
-        variant="filled"
-        requiredMark="Default"
+        requiredMark="default"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Competition />
-        <ReglamentName />
-        <CompetitionJudge />
-        <CompetitionType />
-
+        <CompetitionName
+          onInputChange={handleInputNameChange}
+          value={inputName}
+        />
+        <ReglamentName
+          onInputChange={handleInputReglamentChange}
+          value={inputReglament}
+        />
+        <CompetitionJudge onJudgeChange={handleChangeJudges} />
+        <CompetitionType
+          onChange={(value) => {
+            if (mode == "edit") {
+              return;
+            }
+            handleChange(value);
+          }}
+          onInputChange={handleGroupCount}
+          onCriteriaChange={handleCriteriaChange}
+          disabled={mode === "edit"}
+          mode={mode}
+        />
         <Flex gap="middle">
           <Button
             className="event-settings__saveButton"
             type="primary"
-            htmlType="submit"
             loading={isLoading}
-            onClick={() => setIsLoading(true)}
+            htmlType="submit"
           >
             Сохранить
           </Button>

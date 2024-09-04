@@ -23,26 +23,19 @@ function UsersSettings() {
 
   if (isLoading) {
     try {
-      userApi
-        .getProfile()
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((user) => {
-          form.setFieldsValue({
-            firstname: user.first_name,
-            lastname: user.second_name,
-            patronymic: user.third_name,
-            role: user.role,
-            email: user.email,
-            phone: user.phone,
-            organization: user.educational_institution,
-          });
-
-          setTimeout(() => setIsLoading(false), 300);
+      userApi.getProfile().then((user) => {
+        form.setFieldsValue({
+          firstname: user.first_name,
+          lastname: user.second_name,
+          patronymic: user.third_name,
+          role: user.role,
+          email: user.email,
+          phone: user.phone,
+          organization: user.educational_institution,
         });
+
+        setTimeout(() => setIsLoading(false), 300);
+      });
     } catch (error) {
       message.error(
         "Ошибка: Невозможно получить данные. Обратитесь к администратору..."

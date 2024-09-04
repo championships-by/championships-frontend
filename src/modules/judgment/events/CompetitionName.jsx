@@ -1,51 +1,48 @@
 import React from "react";
-import FormItem from "antd/es/form/FormItem";
+import { Form, FormItem } from "antd";
 import { Flex, Input, Space, Typography } from "antd";
 import { FlagOutlined } from "@ant-design/icons";
 
 import "./sass/events.scss";
 
-function CompitationNameInput() {
+function CompitationNameInput({ value, onInputChange }) {
+  const handleChange = (event) => {
+    onInputChange(event.target.value);
+  };
+
   return (
-    <div className="events_compitation-name__div">
-      <Typography.Text className="events_compitation-name__text">
-        Компетенция
-      </Typography.Text>
-      <Flex>
-        <Space.Compact className="events__compitation-name__space">
-          <Input
-            prefix={<FlagOutlined />}
-            className="events__compitation-name__image"
-            disabled
-          />
-          <FormItem
-            hasFeedback
-            validateFirst
-            rules={[
-              {
-                required: true,
-                message: "Пожалуйста, выберите мероприятие",
-              },
-              {
-                min: 5,
-                message: "Минимальное значение 5",
-              },
-            ]}
-          >
-            <Flex vertical>
-              <Input
-                className="events__compitation-name__input"
-                placeholder="Введите название"
-                maxLength={30}
-              />
-              <Typography.Text type="secondary">
-                Пример: Робофутбол
-              </Typography.Text>
-            </Flex>
-          </FormItem>
-        </Space.Compact>
+    <Form.Item
+      name="name"
+      hasFeedback
+      validateFirst
+      rules={[
+        {
+          min: 5,
+          message: "Минимальное значение 5",
+        },
+        {
+          required: true,
+          message: "Введите название компетенции",
+          whitespace: true,
+        },
+      ]}
+    >
+      <Flex vertical>
+        <Typography.Text className="events__compitation-name__text">
+          Название компетенции
+        </Typography.Text>
+        <Input
+          className="events__compitation-name__input"
+          placeholder="Введите название"
+          maxLength={30}
+          prefix={<FlagOutlined />}
+          value={value}
+          onChange={handleChange}
+        ></Input>
+        <Typography.Text type="secondary">Пример: Робофутбол</Typography.Text>
       </Flex>
-    </div>
+    </Form.Item>
   );
 }
+
 export default CompitationNameInput;
