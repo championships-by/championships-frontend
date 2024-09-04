@@ -62,7 +62,7 @@ function CompetenciesTab() {
     } catch (error) {
       message.error("Произошла неизвестная ошибка");
     }
-  }, []);
+  }, [criteria, dataSource, eventId, nominationId, updateTabs]);
 
   const handleDownload = useCallback(() => {
     console.log("download file");
@@ -94,6 +94,12 @@ function CompetenciesTab() {
             criteriaResponse,
             criteriaResultsResponse,
           ]) => {
+            console.log(
+              stageStatusResponse,
+              criteriaResponse,
+              criteriaResultsResponse
+            );
+
             if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
               const transformedStageStatus = transformStageStatus(
                 stageStatusResponse.data
@@ -123,7 +129,10 @@ function CompetenciesTab() {
             }
           }
         )
-        .catch(() => setIsErrorOccurred(true))
+        .catch((reason) => {
+          console.error(reason);
+          setIsErrorOccurred(true);
+        })
         .finally(() => {
           setIsLoading(false);
           setIsDataLoaded(true);

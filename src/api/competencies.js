@@ -4,7 +4,7 @@ import { instance } from "./index";
 export const competenciesApi = {
   getCriteria: (eventId, nominationId) =>
     instance.get(
-      `/criteria/api/criteria?event_id=${eventId}&nomination_id=${nominationId}`
+      `/criteria/get_nomination_event_criterias?event_id=${eventId}&nomination_id=${nominationId}`
     ),
   getCriteriaResults: (eventId, nominationId) =>
     instance.get(

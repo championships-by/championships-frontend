@@ -51,6 +51,10 @@ export const CompetenciesTable = ({
   ) : hasError ? (
     <h1>Произошла ошибка</h1>
   ) : (
-    <Table columns={columns} dataSource={dataSource} />
+    <Table
+      locale={{ emptyText: "Нет данных" }}
+      columns={columns}
+      dataSource={dataSource}
+    />
   );
 };

@@ -54,6 +54,7 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
         <Typography>При попытке получить данных произошла ошибка</Typography>
       ) : (
         <Table
+          locale={{ emptyText: "Нет данных" }}
           pagination={false}
           columns={columns}
           dataSource={dataSource.sort((a, b) => b.totalScore - a.totalScore)}
