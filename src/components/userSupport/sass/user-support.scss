@@ -2,7 +2,8 @@
     width: calc(100vw - 128px);
     &__about {
         &__laptop-img {
-            width: 27vw;
+            width: 25vw;
+            margin-top: 16px;
             margin-left: 100px;
         }
         &__logo {
@@ -20,15 +21,13 @@
         &__titles {
             margin-top: 16px;
             text-align: center;
+            padding:0 2vw 0 2vw;
         }
         &__institution {
             color: #3679FF;
         }
         &__text {
             font-size: 16px;
-        }
-        &__text1 {
-            text-align: right;
         }
     }
     &__feedback {
@@ -41,7 +40,7 @@
             text-align: center;
         }
         &__text {
-            font-size: 18px;
+            font-size: 16px;
         }
     }
 }

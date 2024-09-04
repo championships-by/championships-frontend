@@ -27,7 +27,9 @@ function AdminPanelNav({ role }) {
             </li>
           </Tooltip>
         )}
-        {(role === Roles.ADMIN || role === Roles.SPECIALIST) && (
+        {(role === Roles.ADMIN ||
+          role === Roles.SPECIALIST ||
+          role === Roles.JUDGE) && (
           <li>
             <Tooltip placement="right" title={ROUTES.PARTICIPANTS.TITLE}>
               <NavLink

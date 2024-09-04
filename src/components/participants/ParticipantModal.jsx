@@ -19,28 +19,13 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
   useEffect(() => {
     if (data) {
       setValues(data);
-
       form.setFieldsValue({ ...data, birth_date: dayjs(data.birth_date) });
     } else {
       setValues({});
     }
   }, [data, form]);
 
-  const onFinish = () => {
-    message.success("Участник успешно создан");
-
-    setIsLoading(false);
-  };
-
-  const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
-
-    setIsLoading(false);
-  };
-
-  const onClick = async () => {
-    setIsLoading(true);
-
+  const onFinish = async () => {
     try {
       if (isEdit) {
         if (values.email === data.email) {
@@ -50,19 +35,25 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
           id: values.id,
           participant_data: values,
         });
-
         await participantApi.changeParticipant(body);
+        message.success("Участник успешно изменён");
       } else {
         const body = JSON.stringify(values);
-
-        participantApi.setParticipant(body);
+        await participantApi.setParticipant(body);
+        message.success("Участник успешно создан");
       }
 
       onOk();
-      onFinish();
     } catch {
-      onFinishFailed();
+      message.error("Произошла ошибка! Попробуйте снова.");
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const onFinishFailed = () => {
+    message.error("Проверьте поля для ввода!");
+    setIsLoading(false);
   };
 
   const onValuesChange = (values) => {
@@ -87,6 +78,8 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
         layout="vertical"
         variant="filled"
         requiredMark="Default"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
         className="participant"
         onValuesChange={onValuesChange}
       >
@@ -132,7 +125,6 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
             type="primary"
             htmlType="submit"
             loading={isLoading}
-            onClick={onClick}
           >
             Сохранить
           </Button>

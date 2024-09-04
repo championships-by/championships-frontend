@@ -20,7 +20,10 @@ function AboutProgram() {
         республиканского.
       </Typography.Text>
       <Row align="middle">
-        <Col span={13} className="user-support__about__text1">
+        <Col span={11}>
+          <img src={laptop} className="user-support__about__laptop-img" />
+        </Col>
+        <Col span={13}>
           <Typography.Title level={3}>Преимущества</Typography.Title>
           <Typography.Text strong className="user-support__about__text">
             1. Удобство:{" "}
@@ -50,9 +53,6 @@ function AboutProgram() {
           <Typography.Text className="user-support__about__text">
             5. Автоматическая генерация текущих и итоговых протоколов.
           </Typography.Text>
-        </Col>
-        <Col span={11}>
-          <img src={laptop} className="user-support__about__laptop-img" />
         </Col>
       </Row>
       <Row justify="center" align="middle">
