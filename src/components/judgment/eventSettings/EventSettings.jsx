@@ -63,6 +63,7 @@ function EventSettings() {
   const [competenciesModal, setCompetenciesModal] = useState(false);
   const [switchDisabled, setSwitchDisabled] = useState(true);
   const [eventInfo, setEventInfo] = useState();
+  const [published, setPublished] = useState(true);
   const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
   const [form] = Form.useForm();
@@ -216,28 +217,35 @@ function EventSettings() {
       };
       return competenciesApi.deleteNomination(data);
     };
-    Modal.confirm({
-      title: "Вы уверены?",
-      content: "Вы уверены что хотите удалить эту компетенцию?",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      okText: "Да",
-      onOk: () => {
-        getNominationInfo()
-          .then(() => {
-            message.success("Компетенция успешно удалена");
-            getNominations();
-          })
-          .catch(() => {
-            message.error("При удалении произошла ошибка");
-          });
-      },
-      cancelText: "Отмена",
-    });
+
+    if (eventInfo.length > 1 || !published) {
+      Modal.confirm({
+        title: "Вы уверены?",
+        content: "Вы уверены что хотите удалить эту компетенцию?",
+        footer: (_, { OkBtn, CancelBtn }) => (
+          <>
+            <OkBtn />
+            <CancelBtn />
+          </>
+        ),
+        okText: "Да",
+        onOk: () => {
+          getNominationInfo()
+            .then(() => {
+              message.success("Компетенция успешно удалена");
+              getNominations();
+            })
+            .catch(() => {
+              message.error("При удалении произошла ошибка");
+            });
+        },
+        cancelText: "Отмена",
+      });
+    } else {
+      message.error(
+        "Прежде чем удалить последнюю компетенцию, снимите мероприятие с публикации"
+      );
+    }
   };
   const openCompetenciesModal = (record) => {
     const competitionType = record.kind;
@@ -345,6 +353,7 @@ function EventSettings() {
           };
           form.setFieldsValue(values);
 
+          setPublished(values.published);
           setValues(values);
 
           setTimeout(() => setIsLoading(false), 300);

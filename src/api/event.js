@@ -12,19 +12,12 @@ export const eventApi = {
       credentials: "include",
     }).then((response) => response.json()),
   getEventWithNominations: ({ published }) =>
-    fetch(
-      `${API_PATH}/event/events_with_nominations?${
+  {
+    return instance.get(`${API_PATH}/event/events_with_nominations?${
         published ? `published=${published}&` : ``
-      }offset=0&limit=49`,
-      {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      }
-    ).then((response) => response.json()),
+      }offset=0&limit=49`).then((response) => response.data)
+  },
+
   changeEvent: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
