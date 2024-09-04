@@ -61,11 +61,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
 
   return (
     <Modal
-      title={
-        type === ModalType.ADD
-          ? "Добавить участника"
-          : "Редактировать участника"
-      }
+      title={isEdit ? "Редактировать участника" : "Добавить участника"}
       className="participants__modal"
       open={isOpen}
       onOk={onOk}
