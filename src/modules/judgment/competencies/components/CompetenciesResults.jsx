@@ -38,7 +38,7 @@ const columns = [
       `${secondName} ${firstName} ${thirdName}`,
   },
   {
-    title: <Tooltip title="Лучший счет">Лучший счет</Tooltip>,
+    title: <Tooltip title="Итоговый счет">Итоговый счет</Tooltip>,
     dataIndex: "totalScore",
     key: "totalScore",
     render: (text, record) => record.totalScore ?? "-",
