@@ -118,7 +118,13 @@ function CompetenciesTab() {
             stageStatus.tournamentStarted &&
             stageStatus.tournamentFinished
           ),
-          children: <CompetenciesResults />,
+          children: (
+            <CompetenciesResults
+              dataSource={dataSource}
+              isLoading={isLoading}
+              hasError={isErrorOccurred}
+            />
+          ),
         },
       ]}
       tabBarExtraContent={{
