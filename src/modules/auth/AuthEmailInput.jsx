@@ -7,7 +7,7 @@ function AuthEmailInput({ value, onChange }) {
   return (
     <FormItem
       name="Email"
-      сlassName="auth-email-input"
+      className="auth-email-input"
       hasFeedback
       validateFirst
       rules={[
