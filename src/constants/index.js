@@ -102,7 +102,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
   JUDGMENT_GROUP_STAGE: ":eventId/:nominationId/group-stage",
   JUDGMENT_TIME_MATCHES: ":eventId/:nominationId/time-matches",
-  JUDGMENT_COMPETENCIES: ":eventId/:nominationId/competencies",
+  JUDGMENT_COMPETENCIES: ":eventId/:nominationId/criteria",
 };
 
 export const Locale = {
@@ -183,9 +183,14 @@ export const TimeMatchEvents = {
   UPDATE_TABLE_DATA: "updateTableData",
 };
 
+export const TabsButtonEvents = {
+  ON_CLICK: "onClick",
+};
+
 export const ModalType = { ADD: "add", EDIT: "edit" };
 
 export const timeMatchEventEmitter = new EventEmitter();
+export const tabsButtonEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";
 

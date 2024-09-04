@@ -1,5 +1,5 @@
-import { instance } from ".";
 import axios from "axios";
+import { instance } from ".";
 
 export const eventApi = {
   getEvent: (eventID) =>
@@ -11,21 +11,20 @@ export const eventApi = {
       redirect: "follow",
       credentials: "include",
     }).then((response) => response.json()),
-  getEventWithNominations: ({ limit, published }) => {
-    return axios
-      .get(`${API_PATH}/event/events_with_nominations`, {
-        params: {
-          ...(published !== undefined && { published }),
-          offset: 0,
-          limit,
-        },
+  getEventWithNominations: ({ limit, published }) =>
+    fetch(
+      `${API_PATH}/event/events_with_nominations?${
+        published ? `published=${published}&` : ``
+      }offset=0&limit=${limit}`,
+      {
+        method: "GET",
         headers: {
           accept: "application/json",
         },
-        withCredentials: true,
-      })
-      .then((response) => response.data);
-  },
+        redirect: "follow",
+        credentials: "include",
+      }
+    ).then((response) => response.json()),
   changeEvent: (body) => {
     const headers = new Headers();
     headers.append("accept", "application/json");
@@ -61,6 +60,7 @@ export const eventApi = {
   setEvent: (body) => {
     return instance.post("/event/event", body, {
       headers: {
+        Accept: "application/json",
         "Content-Type": "multipart/form-data",
       },
     });
