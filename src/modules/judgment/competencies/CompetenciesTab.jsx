@@ -1,19 +1,21 @@
 import { useTabs } from "@hooks/useTabs";
-import { Button, Tabs } from "antd";
+import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { competenciesApi } from "../../../api";
 import { RESPONSE_STATUS } from "../../../constants";
 import {
   generateCompetenciesDataSource,
+  isCriteriaFilled,
   transformCriteriaData,
   transformCriteriaResultsData,
   transformStageStatus,
 } from "../../../utils";
 import { CompetenciesResults, CompetenciesTable } from "./components";
+import { CompetenciesTabsEnum } from "./constants";
 
 function CompetenciesTab() {
-  const { tabs } = useTabs();
+  const { tabs, updateTabs } = useTabs();
   const { eventId, nominationId } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -24,9 +26,47 @@ function CompetenciesTab() {
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
 
-  const handleCompleteStage = useCallback(() => {}, []);
+  const handleCompleteStage = useCallback(async () => {
+    try {
+      if (!isCriteriaFilled(criteria)) {
+        message.warning("Заполните все поля!");
+        return;
+      }
 
-  const handleDownload = useCallback(() => {}, []);
+      dataSource.forEach((result) => {
+        Object.keys(result).forEach((key) => {
+          if (key.startsWith("criteria")) {
+            const criterion = result[key];
+            competenciesApi.setCriteriaResult({
+              eventId,
+              nominationId,
+              criteriaId: criterion.id,
+              teamId: result.team.id,
+              score: criterion.score,
+            });
+          }
+        });
+      });
+
+      await competenciesApi.finishTimeStage({
+        event_id: eventId,
+        nomination_id: nominationId,
+      });
+
+      await updateTabs([
+        {
+          id: CompetenciesTabsEnum.RESULTS,
+          disabled: false,
+        },
+      ]);
+    } catch (error) {
+      message.error("Произошла неизвестная ошибка");
+    }
+  }, []);
+
+  const handleDownload = useCallback(() => {
+    console.log("download file");
+  }, []);
 
   const handleChange = useCallback(
     (value, index, columnId) => {

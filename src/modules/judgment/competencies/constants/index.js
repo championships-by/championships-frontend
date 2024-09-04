@@ -1,14 +1,14 @@
-export const CompetenciesTabs = {
+export const CompetenciesTabsEnum = {
   TABLE: "table",
   RESULTS: "results",
 };
 
 export const competenciesTabs = {
-  [CompetenciesTabs.TABLE]: {
+  [CompetenciesTabsEnum.TABLE]: {
     key: "1",
     label: "Таблица",
   },
-  [CompetenciesTabs.RESULTS]: {
+  [CompetenciesTabsEnum.RESULTS]: {
     key: "2",
     label: "Итоги",
     disabled: true,
