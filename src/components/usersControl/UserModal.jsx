@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Form, Button, message, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useDispatch } from 'react-redux';
-import { setUser } from '@store/slices';
+import { setUser, upadateUser } from '@store/users';
 import UserLastnameInput from "@modules/user/UserLastnameInput";
 import UserFirstnameInput from "@modules/user/UserFirstnameInput";
 import UserPatronymicInput from "@modules/user/UserPatronymicInput";
@@ -40,7 +40,7 @@ function UserModal({ isOpen, onOk, onCancel, user }) {
     };
   
     if (user.id) {
-      dispatch(setUser([formData]));
+      dispatch(upadateUser([formData]));
     } else {
       dispatch(setUser([formData]));
     }

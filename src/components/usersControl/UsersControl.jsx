@@ -1,7 +1,7 @@
 import { Button, message, Typography } from "antd";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '@store/slices';
+import { getUsers, getUsersSelector, getIsLoadingSelector } from '@store/users';
 import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import UserModal from "./UserModal";
@@ -11,8 +11,8 @@ import "./sass/users-control.scss";
 
 function UsersControl() {
   const dispatch = useDispatch();
-  const dataUsers = useSelector((state) => state.users);
-  const isLoading = useSelector((state) => state.isLoading);
+  const dataUsers = useSelector(getUsersSelector);
+  const isLoading = useSelector(getIsLoadingSelector);
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
 
   useEffect(() => {

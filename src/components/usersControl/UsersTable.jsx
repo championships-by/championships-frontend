@@ -2,11 +2,11 @@ import { Table, Flex, Button, Typography, Modal } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteUser, updateUser } from '@store/slices';
+import { deleteUser, updateUser, getUsersSelector } from '@store/users';
 import { useState } from "react";
 
 function UsersTable() {
-  const users = useSelector((state) => state.users);
+  const users = useSelector(getUsersSelector);
   const dispatch = useDispatch();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);

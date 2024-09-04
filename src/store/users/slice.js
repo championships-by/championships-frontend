@@ -1,10 +1,13 @@
-import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import { userApi } from '@api'; 
+import { createSlice } from '@reduxjs/toolkit';
+import { getUsers } from './thunk';
 
 export const usersSlice = createSlice({
   name: 'users',
-  initialState: [],
+  initialState: {},
   reducers: {
+    isLoading : () => {
+      return { loading: true };
+    },
     addUser: (state, action) => {
       state.push(action.payload);
     },
@@ -20,25 +23,9 @@ export const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, action) => {
-      return action.payload; // update the state with the fetched users
+      return action.payload;
     });
   },
 });
-
-export const getUsers = createAsyncThunk(
-  'users/getUsers',
-  async () => {
-    const response = await userApi.getUsers();
-    return response.json();
-  }
-);
-
-export const setUser = createAsyncThunk(
-  'users/setUsers',
-  async (body) => {
-    const response = await userApi.setUser(JSON.stringify(body));
-    return response.json();
-  }
-);
 
 export const { addUser, deleteUser, updateUser } = usersSlice.actions;
