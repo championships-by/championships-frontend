@@ -51,7 +51,8 @@ function EventSettingsCompitations({
     message.error("Проверьте поля для ввода!");
     setIsLoading(false);
   };
-  const sendRequest = async () => {
+
+  const onFinish = async () => {
     setIsLoading(true);
     const data = {
       append_nomination_event_data: {
@@ -65,7 +66,7 @@ function EventSettingsCompitations({
       case "time":
         Object.assign(data, { race_round_amount: groupCount });
         await competenciesApi.addTimeCompetenciesForEvent(data).then(() => {
-          message.success("Номинация успешно добавлена");
+          message.success("Компетенция успешно добавлена");
           setIsLoading(false);
           onCancel();
         });
@@ -73,7 +74,7 @@ function EventSettingsCompitations({
 
       case "playoffs":
         await competenciesApi.addOlympicCompetenciesForEvent(data).then(() => {
-          message.success("Номинация успешно добавлена");
+          message.success("Компетенция успешно добавлена");
           setIsLoading(false);
           onCancel();
         });
@@ -82,7 +83,7 @@ function EventSettingsCompitations({
       case "criteria":
         Object.assign(data, { criterias: criteria });
         await competenciesApi.addCriteriaCompetenciesForEvent(data).then(() => {
-          message.success("Номинация успешно добавлена");
+          message.success("Компетенция успешно добавлена");
           setIsLoading(false);
           onCancel();
         });
@@ -91,6 +92,7 @@ function EventSettingsCompitations({
         break;
     }
   };
+
   return (
     <Modal
       title={name}
@@ -103,6 +105,7 @@ function EventSettingsCompitations({
       <Form
         layout="vertical"
         requiredMark="default"
+        onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
         <CompetitionName
@@ -131,7 +134,7 @@ function EventSettingsCompitations({
             className="event-settings__saveButton"
             type="primary"
             loading={isLoading}
-            onClick={sendRequest}
+            htmlType="submit"
           >
             Сохранить
           </Button>

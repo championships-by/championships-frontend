@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Slider, InputNumber, Typography, Space, Button } from "antd";
+import {
+  Modal,
+  Slider,
+  InputNumber,
+  Typography,
+  Space,
+  Button,
+  message,
+} from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "@constants";
 import { competenciesApi, eventApi } from "@api";
@@ -21,7 +29,27 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
       },
       group_count: groupCount,
     };
-    competenciesApi.startGroupStage(data);
+    Modal.confirm({
+      title: "Вы уверены",
+      content:
+        "Вы уверены, что хотите начать соревнование? Отменить данное действие будет невозможно!",
+      footer: (_, { OkBtn, CancelBtn }) => (
+        <>
+          <OkBtn />
+          <CancelBtn />
+        </>
+      ),
+      okText: "Да",
+      onOk: async () => {
+        try {
+          await competenciesApi.startGroupStage(data);
+          message.success("Соревнование успешно начато");
+          navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+        } catch (error) {
+          message.error("Произошла ошибка");
+        }
+      },
+    });
   };
 
   return (
@@ -54,8 +82,7 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
           type="primary"
           className="events__competitionModal__play-off__OkButton"
           onClick={() => {
-            navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID)),
-              startCompetition(eventId, nominationID, groupCount);
+            startCompetition(eventId, nominationID, groupCount);
           }}
         >
           Начать соревнование

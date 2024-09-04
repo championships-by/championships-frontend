@@ -1,16 +1,15 @@
-import { participantApi } from "@api";
-import { ModalType } from "@constants";
+import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import { Button, Flex, Form, Modal, message, Checkbox } from "antd";
 import ParticipantBirthdayInput from "@modules/participant/ParticipantBirthdayInput.jsx";
 import ParticipantEmailInput from "@modules/participant/ParticipantEmailInput.jsx";
 import ParticipantFirstnameInput from "@modules/participant/ParticipantFirstnameInput.jsx";
 import ParticipantLastnameInput from "@modules/participant/ParticipantLastnameInput.jsx";
 import ParticipantPatronymicInput from "@modules/participant/ParticipantPatronymicInput.jsx";
 import ParticipantRegionSelect from "@modules/participant/ParticipantRegionSelect.jsx";
-import { Button, Checkbox, Flex, Form, Modal, message } from "antd";
-import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import { participantApi } from "@api";
 
-function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
+function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);

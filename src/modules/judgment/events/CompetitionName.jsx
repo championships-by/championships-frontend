@@ -1,7 +1,8 @@
 import React from "react";
-import { Form, FormItem } from "antd"; // Импортируем FormItem
+import { Form, FormItem } from "antd";
 import { Flex, Input, Space, Typography } from "antd";
 import { FlagOutlined } from "@ant-design/icons";
+
 import "./sass/events.scss";
 
 function CompitationNameInput({ value, onInputChange }) {
@@ -11,17 +12,18 @@ function CompitationNameInput({ value, onInputChange }) {
 
   return (
     <Form.Item
-      name="compitation"
+      name="name"
       hasFeedback
       validateFirst
       rules={[
         {
-          required: true,
-          message: "Пожалуйста,введите название компитенции",
-        },
-        {
           min: 5,
           message: "Минимальное значение 5",
+        },
+        {
+          required: true,
+          message: "Введите название компетенции",
+          whitespace: true,
         },
       ]}
     >

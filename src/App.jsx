@@ -83,7 +83,7 @@ function App() {
                 element={<TimeMatches />}
               />
               <Route
-                path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
+                path={ROUTER_ROUTES.JUDGMENT_CRITERIA}
                 element={<Competencies />}
               />
             </Route>
