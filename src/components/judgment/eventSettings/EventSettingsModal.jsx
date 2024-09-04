@@ -13,6 +13,7 @@ function EventSettingsCompitations({
   onCancel,
   name,
   mode = "create",
+  onAdd,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputName, setInputName] = useState("");
@@ -69,6 +70,7 @@ function EventSettingsCompitations({
           message.success("Компетенция успешно добавлена");
           setIsLoading(false);
           onCancel();
+          onAdd();
         });
         break;
 
@@ -77,6 +79,7 @@ function EventSettingsCompitations({
           message.success("Компетенция успешно добавлена");
           setIsLoading(false);
           onCancel();
+          onAdd();
         });
         break;
 
@@ -86,6 +89,7 @@ function EventSettingsCompitations({
           message.success("Компетенция успешно добавлена");
           setIsLoading(false);
           onCancel();
+          onAdd();
         });
         break;
       default:

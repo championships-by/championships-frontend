@@ -61,6 +61,7 @@ function EventSettings() {
   const [openTrophyModal, setTrophyModal] = useState(false);
   const [participantModal, setParticipantModal] = useState(false);
   const [competenciesModal, setCompetenciesModal] = useState(false);
+  const [switchDisabled, setSwitchDisabled] = useState(true);
   const [eventInfo, setEventInfo] = useState();
   const [dataNomination, setDataNomination] = useState([]);
   const { eventID } = useParams();
@@ -217,7 +218,7 @@ function EventSettings() {
     };
     Modal.confirm({
       title: "Вы уверены?",
-      content: "Вы уверены что хотите удалить эту номинацию?",
+      content: "Вы уверены что хотите удалить эту компетенцию?",
       footer: (_, { OkBtn, CancelBtn }) => (
         <>
           <OkBtn />
@@ -229,6 +230,7 @@ function EventSettings() {
         getNominationInfo()
           .then(() => {
             message.success("Компетенция успешно удалена");
+            getNominations();
           })
           .catch(() => {
             message.error("При удалении произошла ошибка");
@@ -300,25 +302,21 @@ function EventSettings() {
       });
     setParticipantModal(true);
   };
-  useEffect(() => {
+
+  const getNominations = () => {
     eventApi.getEvent(eventID).then((response) => {
       const translatedType = response.nominations.map((item) => ({
         ...item,
         kind: translateTypeFromEnglishIntoRussian(item.kind),
       }));
       setEventInfo(translatedType);
+      if (translatedType.length > 0) {
+        setSwitchDisabled(false);
+      } else {
+        setSwitchDisabled(true);
+      }
     });
-  }, [eventID]);
-
-  useEffect(() => {
-    competenciesApi.getCompetenciesEventData(eventID).then((response) => {
-      const translatedType = response.data.map((record) => ({
-        ...record,
-        type: translateTypeFromEnglishIntoRussian(record.type),
-      }));
-      setDataNomination(translatedType);
-    });
-  }, [eventID]);
+  };
 
   useEffect(() => {
     if (eventID) {
@@ -359,6 +357,7 @@ function EventSettings() {
     } else {
       setTimeout(() => setIsLoading(false), 300);
     }
+    getNominations();
   }, [eventID, form]);
 
   const onSubmit = async () => {
@@ -520,7 +519,7 @@ function EventSettings() {
               name="published"
               value={values.published}
               onChange={onValuesChange}
-              disabled={false}
+              disabled={switchDisabled}
             />
             <EventDescription name="description" value={values.description} />
             <EventLevel
@@ -565,6 +564,7 @@ function EventSettings() {
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
+        onAdd={getNominations}
       />
       <CompitationModal
         name="Редактировать компетенцию"
