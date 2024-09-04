@@ -4,6 +4,7 @@ import { CustomTimePicker } from "@modules/judgment/timeMatches/components";
 import { formatTimeToString, generateColumns } from "@utils";
 import { Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
+import { Locale } from "@constants";
 import { useMemo } from "react";
 
 export const TimeMatchesTable = ({
@@ -70,7 +71,12 @@ export const TimeMatchesTable = ({
       {isErrorOccurred ? (
         <Typography>При попытке получить данные произошла ошибка</Typography>
       ) : (
-        <Table pagination={false} columns={columns} dataSource={timeMatches} />
+        <Table
+          pagination={false}
+          columns={columns}
+          dataSource={timeMatches}
+          locale={Locale}
+        />
       )}
     </Flex>
   );

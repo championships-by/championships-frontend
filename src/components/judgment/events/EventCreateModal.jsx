@@ -12,7 +12,7 @@ import EventRequirements from "@modules/judgment/events/EventRequirements";
 import { Button, Form, message, Modal, notification } from "antd";
 import React, { useState } from "react";
 
-function EventCreateModal({ isOpen, onOk, onCancel, name }) {
+function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   const [form] = Form.useForm();
 
   const [values, setValues] = useState({});
@@ -69,6 +69,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name }) {
     const success = await onSubmit();
     if (success) {
       message.success("Мероприятие успешно создано");
+      onAdd();
       onOk();
       notification.info({
         message: "Внимание!",

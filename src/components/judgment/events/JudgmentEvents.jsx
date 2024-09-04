@@ -29,24 +29,26 @@ function JudgmentEvents() {
   const [IsEventCreateModalOpen, setIsEventCreateModalOpen] = useState(false);
   const navigate = useNavigate();
 
+  const getEvents = () => {
+    eventApi
+      .getEventWithNominations({})
+      .then((response) => {
+        const formattedDate = response.map((user) => ({
+          ...user,
+          date: user.date,
+        }));
+        return formattedDate;
+      })
+      .then((data) => setEvents(data))
+      .catch(() =>
+        message.error("Невозможно получить данные. Обратитесь к администратору")
+      )
+      .finally(() => setIsLoading(false));
+  };
+
   useEffect(() => {
     if (isLoading) {
-      eventApi
-        .getEventWithNominations({ limit: 49 })
-        .then((response) => {
-          const formattedDate = response.map((user) => ({
-            ...user,
-            date: user.date,
-          }));
-          return formattedDate;
-        })
-        .then((data) => setEvents(data))
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        )
-        .finally(() => setIsLoading(false));
+      getEvents();
     }
   }, [isLoading]);
   return (
@@ -62,6 +64,7 @@ function JudgmentEvents() {
           isOpen={IsEventCreateModalOpen}
           onOk={() => setIsEventCreateModalOpen(false)}
           onCancel={() => setIsEventCreateModalOpen(false)}
+          onAdd={getEvents}
         />
       </AdminPanelControls>
 

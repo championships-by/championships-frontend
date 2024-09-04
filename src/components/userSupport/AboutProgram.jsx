@@ -62,20 +62,20 @@ function AboutProgram() {
       </Row>
       <Row>
         <Col span={8} className="user-support__about__logo-container">
-          <a href={zubronokSite}>
+          <a href={zubronokSite} target="_blank">
             <img src={logo} className="user-support__about__logo" />
           </a>
         </Col>
         <Col span={8} className="user-support__about__logo-container">
-          <a href={fitrSite}>
+          <a href={fitrSite} target="_blank">
             <img src={fitrLogo} className="user-support__about__fitrLogo" />
           </a>
-          <a href={bntuSite}>
+          <a href={bntuSite} target="_blank">
             <img src={bntuLogo} className="user-support__about__bntuLogo" />
           </a>
         </Col>
         <Col span={8} className="user-support__about__logo-container">
-          <a href={gymnSite}>
+          <a href={gymnSite} target="_blank">
             <img src={schoolLogo} className="user-support__about__logo" />
           </a>
         </Col>
@@ -102,7 +102,7 @@ function AboutProgram() {
             Государственное учреждение образования{" "}
           </Typography.Text>
           <Typography.Text strong className="user-support__about__institution">
-            «Гимназия №61 г. Минска»
+            «Гимназия №61 г.Минска»
           </Typography.Text>
         </Col>
       </Row>

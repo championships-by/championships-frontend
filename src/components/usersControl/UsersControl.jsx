@@ -3,7 +3,7 @@ import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
 import { Button, message, Typography } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
 
@@ -14,7 +14,13 @@ function UsersControl() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataUsers, setUsers] = useState([]);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (isLoading) {
+      getUsers();
+    }
+  });
+
+  const getUsers = () => {
     userApi
       .getUsers()
       .then((data) => setUsers(data))
@@ -22,7 +28,7 @@ function UsersControl() {
         message.error("Невозможно получить данные. Обратитесь к администратору")
       )
       .finally(() => setTimeout(() => setIsLoading(false), 300));
-  }
+  };
 
   return (
     <div className="users-control">
@@ -39,6 +45,7 @@ function UsersControl() {
         isOpen={isAddUserModalOpen}
         onOk={() => setIsAddUserModalOpen(false)}
         onCancel={() => setIsAddUserModalOpen(false)}
+        onAdd={getUsers}
       />
     </div>
   );

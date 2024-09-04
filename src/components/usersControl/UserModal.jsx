@@ -12,12 +12,13 @@ import { Button, Form, message, Modal, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useState } from "react";
 
-function UserModal({ isOpen, onOk, onCancel, type }) {
+function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
   const onFinish = () => {
     message.success("Пользователь успешно создан");
+    onAdd();
     setIsLoading(false);
   };
 
