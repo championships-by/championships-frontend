@@ -40,6 +40,8 @@ export const ROUTES = {
   USERS_CONTROL: { TITLE: "Управление пользователями", PATH: "/users" },
   USER_SETTINGS: { TITLE: "Настройки пользователя", PATH: "/settings" },
   USER_SETTINGS_TEST: { TITLE: "Тест", PATH: "/settings/test" },
+  ABOUT_PROGRAM: { TITLE: "О программе", PATH: "/about" },
+  FEEDBACK: { TITLE: "Обратная связь", PATH: "/feedback" },
   EVENTS: { TITLE: "Мероприятия", PATH: "/events" },
   EVENTS_DESCRIPTION: {
     TITLE: "Описание мероприятия",
@@ -89,6 +91,8 @@ export const ROUTER_ROUTES = {
   USERS_CONTROL: "users",
   USER_SETTINGS: "settings",
   USER_SETTINGS_TEST: "settings/test",
+  ABOUT_PROGRAM: "about",
+  FEEDBACK: "feedback",
   EVENTS: "events",
   EVENTS_DESCRIPTION: ":eventID",
   EVENTS_REGISTRATION: ":eventID/registration",
@@ -179,10 +183,19 @@ export const TimeMatchEvents = {
   UPDATE_TABLE_DATA: "updateTableData",
 };
 
+export const TabsButtonEvents = {
+  ON_CLICK: "onClick",
+};
+
 export const ModalType = { ADD: "add", EDIT: "edit" };
 
 export const timeMatchEventEmitter = new EventEmitter();
+export const tabsButtonEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";
 
 export const url = "https://robin-zubronok.site";
+export const zubronokSite = "https://zubronok.by";
+export const bntuSite = "https://bntu.by";
+export const fitrSite = "https://bntu.by/faculties/fitr";
+export const gymnSite = "http://gymn61.minsk.edu.by";

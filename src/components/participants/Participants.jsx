@@ -2,7 +2,7 @@ import { participantApi } from "@api";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
-import { Button, Flex, Typography } from "antd";
+import { Button, Flex, Typography, message } from "antd";
 import { useEffect, useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";

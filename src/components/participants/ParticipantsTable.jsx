@@ -9,7 +9,7 @@ import ParticipantModal from "./ParticipantModal";
 function ParticipantsTable({ ParticipantData, getParticipant }) {
   const columns = [
     {
-      title: "ФИО",
+      title: "Фамилия имя отчество",
       key: "participant_fullname",
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
@@ -33,9 +33,6 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
       dataIndex: "birth_date",
       render: (birth_date) => dayjs(birth_date).format(Locale.dateFormat),
       key: "participant_organization",
-      filters: getUniqueFilters(ParticipantData, "birth_date"),
-      onFilter: (value, record) => record.birth_date === value,
-      sorter: (a, b) => a.birth_date.localeCompare(b.birth_date),
     },
     {
       title: "Действия",

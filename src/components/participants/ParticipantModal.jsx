@@ -18,47 +18,41 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   useEffect(() => {
     if (data) {
       setValues(data);
-
       form.setFieldsValue({ ...data, birth_date: dayjs(data.birth_date) });
     } else {
       setValues({});
     }
   }, [data, form]);
 
-  const onFinish = () => {
-    message.success("Участник успешно создан");
-
-    setIsLoading(false);
-  };
-
-  const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
-
-    setIsLoading(false);
-  };
-
-  const onClick = async () => {
-    setIsLoading(true);
-
+  const onFinish = async () => {
     try {
       if (isEdit) {
+        if (values.email === data.email) {
+          delete values.email;
+        }
         const body = JSON.stringify({
           id: values.id,
           participant_data: values,
         });
-
         await participantApi.changeParticipant(body);
+        message.success("Участник успешно изменён");
       } else {
         const body = JSON.stringify(values);
-
-        participantApi.setParticipant(body);
+        await participantApi.setParticipant(body);
+        message.success("Участник успешно создан");
       }
 
       onOk();
-      onFinish();
     } catch {
-      onFinishFailed();
+      message.error("Произошла ошибка! Попробуйте снова.");
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const onFinishFailed = () => {
+    message.error("Проверьте поля для ввода!");
+    setIsLoading(false);
   };
 
   const onValuesChange = (values) => {
@@ -67,7 +61,11 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
 
   return (
     <Modal
-      title="Настройка участника"
+      title={
+        type === ModalType.ADD
+          ? "Добавить участника"
+          : "Редактировать участника"
+      }
       className="participants__modal"
       open={isOpen}
       onOk={onOk}
@@ -79,6 +77,8 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
         layout="vertical"
         variant="filled"
         requiredMark="Default"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
         className="participant"
         onValuesChange={onValuesChange}
       >
@@ -124,7 +124,6 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
             type="primary"
             htmlType="submit"
             loading={isLoading}
-            onClick={onClick}
           >
             Сохранить
           </Button>

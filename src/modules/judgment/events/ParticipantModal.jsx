@@ -6,7 +6,7 @@ import "./sass/events.scss";
 
 const columns = [
   {
-    title: "ФИО",
+    title: "Фамилия имя отчество",
     dataIndex: "fullName",
     key: "fullName",
     sorter: (a, b) => a.fullName.localeCompare(b.fullName),
