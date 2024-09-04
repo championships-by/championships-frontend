@@ -156,8 +156,8 @@ export const getUniqueFilters = (data, key) => {
 };
 
 export const generateCriteriaColumns = (criteria, render) =>
-  criteria.map(({ name, maxScore }, columnIndex) => ({
-    title: `Критерий: ${name} | Макс. ${maxScore}`,
+  criteria.map(({ name }, columnIndex) => ({
+    title: name,
     dataIndex: `criteria${columnIndex}`,
     key: `criteria${columnIndex}`,
     render: (text, record, recordIndex) =>

@@ -94,12 +94,6 @@ function CompetenciesTab() {
             criteriaResponse,
             criteriaResultsResponse,
           ]) => {
-            console.log(
-              stageStatusResponse,
-              criteriaResponse,
-              criteriaResultsResponse
-            );
-
             if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
               const transformedStageStatus = transformStageStatus(
                 stageStatusResponse.data

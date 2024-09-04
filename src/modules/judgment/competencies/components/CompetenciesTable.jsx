@@ -25,16 +25,19 @@ export const CompetenciesTable = ({
       ...generateCriteriaColumns(criteria, (text, record, index, columnId) => {
         const currentCriteria = record[`criteria${columnId}`];
         return (
-          <InputNumber
-            disabled={!editable}
-            placeholder={currentCriteria.maxScore}
-            defaultValue={currentCriteria.score}
-            max={currentCriteria.maxScore}
-            min={0}
-            onChange={(value) =>
-              onChange(value, index, columnId, currentCriteria)
-            }
-          />
+          <>
+            <InputNumber
+              disabled={!editable}
+              placeholder={currentCriteria.maxScore}
+              defaultValue={currentCriteria.score}
+              max={currentCriteria.maxScore}
+              min={0}
+              onChange={(value) =>
+                onChange(value, index, columnId, currentCriteria)
+              }
+            />
+            {` / ${currentCriteria.maxScore}`}
+          </>
         );
       }),
       {
