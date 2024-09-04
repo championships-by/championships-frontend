@@ -18,7 +18,11 @@ function Feedback() {
       <br />
       <br />
       <Typography.Text className="user-support__feedback__text">
-        <Typography.Text type="danger" className="user-support__feedback__text">
+        <Typography.Text
+          strong
+          type="danger"
+          className="user-support__feedback__text"
+        >
           Внимание!{" "}
         </Typography.Text>
         Для связи с организаторами выбранного мероприятия воспользуйтесь email
