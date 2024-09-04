@@ -13,7 +13,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
   const { eventID } = useParams();
 
   const onFinish = () => {
-    if (form.getFieldValue("teamName") == teamName) {
+    if (form.getFieldValue("teamName") === teamName) {
       message.success("Данные сохранены успешно!");
       onOk();
     } else {
