@@ -108,38 +108,14 @@ function EventSettingsCompitations({
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item
-          name="name"
-          rules={[
-            {
-              required: true,
-              message: "Введите название компетенции",
-              whitespace: true,
-            },
-          ]}
-          validateTrigger={["onChange", "onBlur"]}
-        >
-          <CompetitionName
-            onInputChange={handleInputNameChange}
-            value={inputName}
-          />
-        </Form.Item>
-        <Form.Item
-          name="reglament"
-          rules={[
-            {
-              required: true,
-              message: "Введите регламент",
-              whitespace: true,
-            },
-          ]}
-          validateTrigger={["onChange", "onBlur"]}
-        >
-          <ReglamentName
-            onInputChange={handleInputReglamentChange}
-            value={inputReglament}
-          />
-        </Form.Item>
+        <CompetitionName
+          onInputChange={handleInputNameChange}
+          value={inputName}
+        />
+        <ReglamentName
+          onInputChange={handleInputReglamentChange}
+          value={inputReglament}
+        />
         <CompetitionJudge onJudgeChange={handleChangeJudges} />
         <CompetitionType
           onChange={(value) => {

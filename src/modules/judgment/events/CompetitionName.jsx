@@ -20,6 +20,11 @@ function CompitationNameInput({ value, onInputChange }) {
           min: 5,
           message: "Минимальное значение 5",
         },
+        {
+          required: true,
+          message: "Введите название компетенции",
+          whitespace: true,
+        },
       ]}
     >
       <Flex vertical>
