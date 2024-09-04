@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 echo "Building the React app..."
 npm run build:prod
 
