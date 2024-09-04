@@ -1,9 +1,9 @@
-import { Button, Flex, Typography, Tooltip } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import { participantApi } from "@api";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
-import { participantApi } from "@api";
+import { ModalType } from "@constants";
+import { Button, Flex, Typography } from "antd";
+import { useEffect, useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";
 
@@ -66,6 +66,7 @@ function Participants() {
       />
 
       <ParticipantModal
+        type={ModalType.ADD}
         isOpen={isAddParticipantModalOpen}
         onOk={onOk}
         onCancel={onCancel}

@@ -7,7 +7,13 @@ import CompetitionType from "@modules/judgment/events/CompetitionType";
 import { competenciesApi } from "@api";
 import { useParams } from "react-router-dom";
 
-function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
+function EventSettingsCompitations({
+  isOpen,
+  onOk,
+  onCancel,
+  name,
+  mode = "create",
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputName, setInputName] = useState("");
   const [inputReglament, setInputReglament] = useState("");
@@ -17,7 +23,7 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
   const [selectedJudges, setSelectedJudges] = useState([]);
   const { eventID } = useParams();
 
-  const event_id = parseInt(eventID, 10);
+  const eventId = parseInt(eventID, 10);
   const handleInputNameChange = (value) => {
     setInputName(value);
   };
@@ -46,35 +52,40 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
     setIsLoading(false);
   };
   const sendRequest = async () => {
+    setIsLoading(true);
+    const data = {
+      append_nomination_event_data: {
+        event_id: eventId,
+        nomination_name: inputName,
+        reglament: inputReglament,
+        judges_ids: selectedJudges,
+      },
+    };
     switch (selectedValue) {
       case "time":
-        await competenciesApi.addTimeCompetenciesForEvent(
-          event_id,
-          inputName,
-          inputReglament,
-          selectedJudges,
-          groupCount
-        );
+        Object.assign(data, { race_round_amount: groupCount });
+        await competenciesApi.addTimeCompetenciesForEvent(data).then(() => {
+          message.success("Номинация успешно добавлена");
+          setIsLoading(false);
+          onCancel();
+        });
         break;
 
       case "playoffs":
-        await competenciesApi.addOlympicCompetenciesForEvent(
-          event_id,
-          inputName,
-          inputReglament,
-          selectedJudges,
-          groupCount
-        );
+        await competenciesApi.addOlympicCompetenciesForEvent(data).then(() => {
+          message.success("Номинация успешно добавлена");
+          setIsLoading(false);
+          onCancel();
+        });
         break;
 
       case "criteria":
-        await competenciesApi.addCriteriaCompetenciesForEvent(
-          event_id,
-          inputName,
-          inputReglament,
-          selectedJudges,
-          criteria
-        );
+        Object.assign(data, { criterias: criteria });
+        await competenciesApi.addCriteriaCompetenciesForEvent(data).then(() => {
+          message.success("Номинация успешно добавлена");
+          setIsLoading(false);
+          onCancel();
+        });
         break;
       default:
         break;
@@ -104,9 +115,16 @@ function EventSettingsCompitations({ isOpen, onOk, onCancel, name }) {
         />
         <CompetitionJudge onJudgeChange={handleChangeJudges} />
         <CompetitionType
-          onChange={handleChange}
+          onChange={(value) => {
+            if (mode == "edit") {
+              return;
+            }
+            handleChange(value);
+          }}
           onInputChange={handleGroupCount}
           onCriteriaChange={handleCriteriaChange}
+          disabled={mode === "edit"}
+          mode={mode}
         />
         <Flex gap="middle">
           <Button

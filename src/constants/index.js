@@ -17,6 +17,12 @@ export const FILE_UPLOADING = {
   },
 };
 
+export const NOMINATION_TYPES = {
+  CRITERIA: "По критериям",
+  TIME: "По времени",
+  OLYMPIC: "Плей-офф",
+};
+
 export const RESPONSE_STATUS = {
   STATUS_OK: 200,
   STATUS_UNAUTHORIZED: 401,
@@ -32,7 +38,7 @@ export const ROUTES = {
   LOGOUT: { TITLE: "Выход", PATH: "/logout" },
   PARTICIPANTS: { TITLE: "Управление участниками", PATH: "/participants" },
   USERS_CONTROL: { TITLE: "Управление пользователями", PATH: "/users" },
-  USER_SETTINGS: { TITLE: "Настройка аккаунта", PATH: "/settings" },
+  USER_SETTINGS: { TITLE: "Настройки пользователя", PATH: "/settings" },
   USER_SETTINGS_TEST: { TITLE: "Тест", PATH: "/settings/test" },
   EVENTS: { TITLE: "Мероприятия", PATH: "/events" },
   EVENTS_DESCRIPTION: {
@@ -43,17 +49,17 @@ export const ROUTES = {
     TITLE: "Регистрация участников",
     PATH: (eventID) => `/events/${eventID}/registration`,
   },
-  JUDGMENT: { TITLE: "Судейство", PATH: "/judgment/events" },
+  JUDGMENT: { TITLE: "Управление мероприятиями", PATH: "/judgment/events" },
   JUDGMENT_CREATE: {
-    TITLE: "Создание мероприятия",
+    TITLE: "Создать мероприятие",
     PATH: "/judgment/events/create",
   },
   JUDGMENT_CREATE_TEST: {
-    TITLE: "Создание мероприятия",
+    TITLE: "Создать мероприятие",
     PATH: "/judgment/events/create/test",
   },
   JUDGMENT_EVENT_SETTINGS: {
-    TITLE: "Редактирование мероприятия",
+    TITLE: "Редактирование",
     PATH: (eventID) => `/judgment/events/${eventID}/settings`,
   },
   JUDGMENT_GROUP_STAGE: {
@@ -69,7 +75,7 @@ export const ROUTES = {
   JUDGMENT_COMPETENCIES: {
     TITLE: "Компетенции по критериям",
     PATH: (event_id, nomination_id) =>
-      `judgment/events/${event_id}/${nomination_id}/criteria`,
+      `/judgment/events/${event_id}/${nomination_id}/competencies`,
   },
 };
 
@@ -146,6 +152,13 @@ export const Locale = {
   timePickerLocale: {
     placeholder: "Выберите время",
   },
+  tableLocale: {
+    triggerDesc: "Нажмите, чтобы сортировать по убыванию",
+    triggerAsc: "Нажмите, чтобы сортировать по возрастанию",
+    cancelSort: "Нажмите, чтобы отменить сортировку",
+    filterReset: "Отменить",
+    filterConfirm: "Ок",
+  },
   dateFormat: "DD.MM.YYYY",
   dateTimeFormat: "DD.MM.YYYY HH:mm",
   weekFormat: "YYYY-wo",
@@ -170,9 +183,11 @@ export const TabsButtonEvents = {
   ON_CLICK: "onClick",
 };
 
+export const ModalType = { ADD: "add", EDIT: "edit" };
+
 export const timeMatchEventEmitter = new EventEmitter();
 export const tabsButtonEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";
 
-export const url = "https://robin-zubronok.by";
+export const url = "https://robin-zubronok.site";

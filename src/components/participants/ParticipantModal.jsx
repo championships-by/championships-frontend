@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import { Button, Flex, Form, Modal, message, Checkbox } from "antd";
-import ParticipantAdditionalOrganizationInput from "@modules/participant/ParticipantAdditionalOrganizationInput.jsx";
+import { participantApi } from "@api";
+import { ModalType } from "@constants";
 import ParticipantBirthdayInput from "@modules/participant/ParticipantBirthdayInput.jsx";
 import ParticipantEmailInput from "@modules/participant/ParticipantEmailInput.jsx";
 import ParticipantFirstnameInput from "@modules/participant/ParticipantFirstnameInput.jsx";
 import ParticipantLastnameInput from "@modules/participant/ParticipantLastnameInput.jsx";
 import ParticipantPatronymicInput from "@modules/participant/ParticipantPatronymicInput.jsx";
 import ParticipantRegionSelect from "@modules/participant/ParticipantRegionSelect.jsx";
-import ParticipantTeacherFirstnameInput from "@modules/participant/ParticipantTeacherFirstnameInput.jsx";
-import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTeacherLastnameInput.jsx";
-import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
-import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
-import { participantApi } from "@api";
+import { Button, Checkbox, Flex, Form, Modal, message } from "antd";
+import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
 
-function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
+function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
@@ -31,7 +27,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   }, [data, form]);
 
   const onFinish = () => {
-    message.success("Всё в порядке!");
+    message.success("Участник успешно создан");
 
     setIsLoading(false);
   };
@@ -47,6 +43,9 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
 
     try {
       if (isEdit) {
+        if (values.email === data.email) {
+          delete values.email;
+        }
         const body = JSON.stringify({
           id: values.id,
           participant_data: values,
@@ -72,7 +71,11 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
 
   return (
     <Modal
-      title="Настройка участника"
+      title={
+        type === ModalType.ADD
+          ? "Добавить участника"
+          : "Редактировать участника"
+      }
       className="participants__modal"
       open={isOpen}
       onOk={onOk}
@@ -109,26 +112,6 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
           name="region"
           value={values.region}
           onChange={onValuesChange}
-        />
-        <ParticipantOrganizationInput
-          name="educational_institution"
-          value={values.educational_institution}
-        />
-        <ParticipantTeacherLastnameInput
-          name="supervisor_second_name"
-          value={values.supervisor_second_name}
-        />
-        <ParticipantTeacherFirstnameInput
-          name="supervisor_first_name"
-          value={values.supervisor_first_name}
-        />
-        <ParticipantTeacherPatronymicInput
-          name="supervisor_third_name"
-          value={values.supervisor_third_name}
-        />
-        <ParticipantAdditionalOrganizationInput
-          name="additional_educational_institution"
-          value={values.additional_educational_institution}
         />
         <Flex vertical gap="large">
           <Checkbox

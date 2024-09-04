@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Space, Button, Input, Typography, Tooltip } from "antd";
+import { Form, Space, Button, Input, Typography, Tooltip, message } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 function CriteriaParametrs({ onCriteriaChange }) {
@@ -67,8 +67,18 @@ function CriteriaParametrs({ onCriteriaChange }) {
                       min={0}
                     />
                   </Form.Item>
-                  <Tooltip title="Удалить критерий">
-                    <MinusCircleOutlined onClick={() => remove(field.name)} />
+                  <Tooltip title="Удалить">
+                    <MinusCircleOutlined
+                      onClick={() => {
+                        if (fields.length > 1) {
+                          remove(field.name);
+                        } else {
+                          message.warning(
+                            "Минимум один критерий оценки должен быть установлен"
+                          );
+                        }
+                      }}
+                    />
                   </Tooltip>
                 </Space>
               ))}

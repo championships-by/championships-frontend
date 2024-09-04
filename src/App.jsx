@@ -55,10 +55,6 @@ function App() {
                 element={<EventsRegistration />}
               />
             </Route>
-            <Route
-              path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
-              element={<Competencies />}
-            />
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />
               <Route
@@ -76,6 +72,10 @@ function App() {
               <Route
                 path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
                 element={<TimeMatches />}
+              />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_COMPETENCIES}
+                element={<Competencies />}
               />
             </Route>
           </Route>

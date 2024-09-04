@@ -2,20 +2,26 @@ import React, { useState, useEffect } from "react";
 import { Modal, Slider, InputNumber, Typography, Space, Button } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "@constants";
-import { competenciesApi, eventApi } from "../../../api";
+import { competenciesApi, eventApi } from "@api";
 
 function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
-  const [groupCount, setGroupCount] = useState(1);
+  const [groupCount, setGroupCount] = useState(3);
   const { eventID } = useParams();
   const navigate = useNavigate();
 
   const eventId = parseInt(eventID, 10);
-
   const onChange = (value) => {
     setGroupCount(value);
   };
   const startCompetition = () => {
-    competenciesApi.startGroupStage(eventId, nominationID, groupCount);
+    const data = {
+      nomination_event: {
+        event_id: eventId,
+        nomination_id: nominationID,
+      },
+      group_count: groupCount,
+    };
+    competenciesApi.startGroupStage(data);
   };
 
   return (

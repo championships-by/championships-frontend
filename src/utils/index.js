@@ -200,3 +200,18 @@ export const openPdf = (eventRulesPath) => {
   link.click();
   document.body.removeChild(link);
 };
+
+export const transformStageStatus = (info) => ({
+  regulations: info.reglament,
+  registrationFinished: info.registration_finished,
+  tournamentStarted: info.tournament_started,
+  tournamentFinished: info.tournament_finished,
+});
+
+export const isTimeMatchesFilled = (timeMatches) => {
+  return !timeMatches.some((timeMatch) => {
+    return timeMatch.attempts.some(({ result }) => {
+      return !result || result === undefined || result === null;
+    });
+  });
+};
