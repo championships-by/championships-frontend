@@ -10,6 +10,7 @@ function Events() {
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
 
+  //here undefined in limit
   if (isLoading) {
     eventApi
       .getEventWithNominations({ published: true })
