@@ -2,7 +2,7 @@ import { userApi } from "@api";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
-import { Button, message, Typography } from "antd";
+import { Button, message, Typography, Row, Col, Divider } from "antd";
 import { useEffect, useState } from "react";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
@@ -33,12 +33,21 @@ function UsersControl() {
   return (
     <div className="users-control">
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Управление пользователями</Typography.Title>
-      <AdminPanelControls>
-        <Button type="primary" onClick={() => setIsAddUserModalOpen(true)}>
-          Добавить пользователя
-        </Button>
-      </AdminPanelControls>
+      <Row align="bottom">
+        <Col>
+          <Typography.Title level={2}>
+            Управление пользователями
+          </Typography.Title>
+        </Col>
+        <Col flex="auto">
+          <AdminPanelControls>
+            <Button type="primary" onClick={() => setIsAddUserModalOpen(true)}>
+              Добавить пользователя
+            </Button>
+          </AdminPanelControls>
+        </Col>
+      </Row>
+      <Divider />
       <UsersTable usersData={dataUsers} />
       <UserModal
         type={ModalType.ADD}

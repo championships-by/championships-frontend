@@ -1,4 +1,12 @@
-import { Button, Typography, message, Breadcrumb } from "antd";
+import {
+  Button,
+  Typography,
+  message,
+  Breadcrumb,
+  Row,
+  Col,
+  Divider,
+} from "antd";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import TeamCreateModal from "@components/eventRegistration/TeamCreateModal";
@@ -56,14 +64,20 @@ function EventsRegistration() {
   return (
     <>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Регистрация участников</Typography.Title>
-      <Breadcrumb items={items} />
-      <AdminPanelControls>
-        <Button type="primary" onClick={() => setIsAddTeamModalOpen(true)}>
-          Добавить команду
-        </Button>
-      </AdminPanelControls>
-
+      <Row align="bottom">
+        <Col>
+          <Typography.Title level={2}>Регистрация участников</Typography.Title>
+        </Col>
+        <Col flex="auto">
+          <AdminPanelControls>
+            <Button type="primary" onClick={() => setIsAddTeamModalOpen(true)}>
+              Добавить команду
+            </Button>
+          </AdminPanelControls>
+        </Col>
+      </Row>
+      <Divider />
+      <Breadcrumb className="event-registration__breadcrumb" items={items} />
       <TeamsTable TeamsData={dataTeams} />
 
       <TeamCreateModal

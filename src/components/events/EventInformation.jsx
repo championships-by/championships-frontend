@@ -7,6 +7,7 @@ import {
   Row,
   Col,
   Space,
+  Divider,
 } from "antd";
 import { LinkOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
@@ -15,6 +16,7 @@ import { useParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import { yaShareLink, ROUTES, url } from "@constants";
+import noLogo from "@assets/img/auth-background.png";
 import { eventApi } from "@api";
 
 import "./sass/events.scss";
@@ -98,6 +100,7 @@ function EventInformation() {
     <div className="events__event-information__container">
       <Loader show={isLoading} />
       <Typography.Title level={2}>Информация о мероприятии</Typography.Title>
+      <Divider />
       <Breadcrumb items={items} />
       <Row className="events__event-information__flex-container">
         <Col span={10}>
@@ -106,9 +109,13 @@ function EventInformation() {
             src={
               dataEvent.logo_path !== "/" && dataEvent.logo_path
                 ? `${url}/${dataEvent.logo_path}`
-                : "https://www.uznai24.su/images/company_blanklogo.png"
+                : noLogo
             }
-            className="events__event-information__img"
+            className={
+              dataEvent.logo_path !== "/" && dataEvent.logo_path
+                ? "events__event-information__img"
+                : "events__event-information__noImg"
+            }
           />
         </Col>
         <Col span={14}>
@@ -212,7 +219,11 @@ function EventInformation() {
         {dataEvent.description}
       </Typography.Text>
       <br />
-      <Button type="primary" onClick={() => openPdf(dataEvent.event_rules)}>
+      <Button
+        className="events__event-information__regulation"
+        type="primary"
+        onClick={() => openPdf(dataEvent.event_rules)}
+      >
         Положение
       </Button>
       <br />

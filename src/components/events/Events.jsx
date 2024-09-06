@@ -1,7 +1,7 @@
 import { eventApi } from "@api";
 import EventsList from "@components/events/EventsList";
 import Loader from "@components/loader/Loader";
-import { Card, Flex, Typography, message } from "antd";
+import { Card, Flex, Typography, message, Divider } from "antd";
 import { useState } from "react";
 import { CustomCalendar } from "./CustomCalendar";
 import "./sass/events.scss";
@@ -10,7 +10,6 @@ function Events() {
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
 
-  //here undefined in limit
   if (isLoading) {
     eventApi
       .getEventWithNominations({ published: true })
@@ -25,6 +24,7 @@ function Events() {
     <>
       <Loader show={isLoading} />
       <Typography.Title level={2}>Мероприятия</Typography.Title>
+      <Divider />
       <Flex vertical gap={500}>
         <Flex gap="small">
           <EventsList events={events} />

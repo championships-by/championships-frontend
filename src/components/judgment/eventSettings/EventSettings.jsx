@@ -10,6 +10,7 @@ import {
   Space,
   Tooltip,
   Modal,
+  Divider,
 } from "antd";
 import {
   DeleteOutlined,
@@ -477,6 +478,7 @@ function EventSettings() {
     <div>
       <Loader show={isLoading} />
       <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
+      <Divider />
       <Breadcrumb items={items} />
       <Row gutter={16}>
         <Col xs={24} md={8}>
