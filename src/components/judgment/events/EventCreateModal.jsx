@@ -91,7 +91,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       open={isOpen}
       onCancel={onCancel}
       footer={null}
-      width={800}
+      width={600}
     >
       <Form
         form={form}

@@ -3,10 +3,12 @@ import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Flex, Table, Tooltip, Typography } from "antd";
+import { Locale } from "@constants";
 import dayjs from "dayjs";
 
 const columns = [
   {
+    title: "№",
     key: "medal",
     render: (text, record, index) => (
       <div>
@@ -61,6 +63,7 @@ export const TimeMatchesResults = ({
         <Table
           pagination={false}
           columns={columns}
+          locale={Locale}
           dataSource={timeMatches.sort((a, b) => {
             if (dayjs(a.bestAttempt.result).isBefore(b.bestAttempt.result)) {
               return -1;

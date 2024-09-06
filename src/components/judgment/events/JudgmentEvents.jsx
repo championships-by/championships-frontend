@@ -1,4 +1,4 @@
-import { Button, Typography, message } from "antd";
+import { Button, Typography, message, Row, Col, Divider } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Loader from "@components/loader/Loader";
@@ -54,19 +54,31 @@ function JudgmentEvents() {
   return (
     <>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Управление мероприятиями</Typography.Title>
-      <AdminPanelControls>
-        <Button type="primary" onClick={() => setIsEventCreateModalOpen(true)}>
-          {ROUTES.JUDGMENT_CREATE.TITLE}
-        </Button>
-        <EventCreateModal
-          name="Добавить мероприятие"
-          isOpen={IsEventCreateModalOpen}
-          onOk={() => setIsEventCreateModalOpen(false)}
-          onCancel={() => setIsEventCreateModalOpen(false)}
-          onAdd={getEvents}
-        />
-      </AdminPanelControls>
+      <Row align="bottom">
+        <Col>
+          <Typography.Title level={2}>
+            Управление мероприятиями
+          </Typography.Title>
+        </Col>
+        <Col flex="auto">
+          <AdminPanelControls>
+            <Button
+              type="primary"
+              onClick={() => setIsEventCreateModalOpen(true)}
+            >
+              {ROUTES.JUDGMENT_CREATE.TITLE}
+            </Button>
+            <EventCreateModal
+              name="Добавить мероприятие"
+              isOpen={IsEventCreateModalOpen}
+              onOk={() => setIsEventCreateModalOpen(false)}
+              onCancel={() => setIsEventCreateModalOpen(false)}
+              onAdd={getEvents}
+            />
+          </AdminPanelControls>
+        </Col>
+      </Row>
+      <Divider />
 
       <EventTable EventsData={dataEvents} />
     </>

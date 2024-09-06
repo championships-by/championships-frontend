@@ -1,17 +1,12 @@
 import React from "react";
+import loader from "@assets/img/loader.gif";
+
 import "./sass/loader.scss";
 
 function Loader({ show, ...props }) {
   return (
     <div className={`loader ${!show && "hide"}`} {...props}>
-      <div className="loadingio-spinner-dual-ring-3e86vgusq7a">
-        <div className="ldio-92g1bd69czv">
-          <div />
-          <div>
-            <div />
-          </div>
-        </div>
-      </div>
+      <img src={loader} className="loader-gif" />
     </div>
   );
 }

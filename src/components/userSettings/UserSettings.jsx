@@ -6,7 +6,7 @@ import UserOrganizationInput from "@modules/user/UserOrganizationInput";
 import UserPatronymicInput from "@modules/user/UserPatronymicInput";
 import UserPhoneInput from "@modules/user/UserPhoneInput";
 import UserRoleInput from "@modules/user/UserRoleInput";
-import { Button, Col, Form, Row, Typography, message } from "antd";
+import { Button, Col, Form, Row, Typography, message, Divider } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import React, { useEffect, useState } from "react";
 import UserPasswordModal from "./UserPasswordChange";
@@ -88,6 +88,7 @@ function UsersSettings() {
     <>
       <Loader show={isLoading} />
       <Typography.Title level={2}>Настройки пользователя</Typography.Title>
+      <Divider />
 
       <Form
         form={form}
