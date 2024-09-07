@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Typography, Select, Space, Flex, Input } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { useSearchParams, useParams } from "react-router-dom";
-import { userApi } from "../../../api/user";
-import { competenciesApi } from "../../../api/competencies";
+import { userApi } from "@api";
+import { competenciesApi } from "@api";
 import "./sass/events.scss";
 
 function getFullName(item) {
@@ -16,6 +16,10 @@ function CompetitionType({ onJudgeChange }) {
   const [inputValue, setInputValue] = useState("");
   const [dataCompetencies, setDataCompetencies] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
+  const [selectHeight, setSelectHeight] = useState(0);
+
+  const selectRef = useRef(null);
+  const inputRef = useRef(null);
 
   const { eventID } = useParams();
 
@@ -39,6 +43,13 @@ function CompetitionType({ onJudgeChange }) {
         );
       });
   }, [limit]);
+
+  useEffect(() => {
+    if (selectRef.current) {
+      const height = selectRef.current.offsetHeight;
+      setSelectHeight(height);
+    }
+  }, [options, selectedJudges]);
 
   const handleSearch = (value) => {
     setInputValue(value);
@@ -69,9 +80,11 @@ function CompetitionType({ onJudgeChange }) {
             <Input
               prefix={<UsergroupAddOutlined />}
               className="events__competition-judge__input"
+              style={{ height: selectHeight }}
               disabled
             />
             <Select
+              ref={selectRef}
               className="events__competition-judge__select"
               mode="multiple"
               placeholder="Выберите судью"
