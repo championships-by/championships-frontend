@@ -7,7 +7,7 @@ import { competenciesApi } from "@api";
 import "./sass/events.scss";
 
 function getFullName(item) {
-  return item.first_name + " " + item.second_name + " " + item.third_name;
+  return item.second_name + " " + item.first_name + " " + item.third_name;
 }
 
 function CompetitionType({ onJudgeChange }) {

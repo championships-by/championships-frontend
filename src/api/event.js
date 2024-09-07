@@ -11,11 +11,14 @@ export const eventApi = {
       redirect: "follow",
       credentials: "include",
     }).then((response) => response.json()),
-  getEventWithNominations: ({ published }) =>
-  {
-    return instance.get(`${API_PATH}/event/events_with_nominations?${
-        published ? `published=${published}&` : ``
-      }offset=0&limit=49`).then((response) => response.data)
+  getEventWithNominations: ({ published }) => {
+    return instance
+      .get(
+        `${API_PATH}/event/events_with_nominations?${
+          published ? `published=${published}&` : ``
+        }offset=0&limit=49`
+      )
+      .then((response) => response.data);
   },
 
   changeEvent: (body) => {
