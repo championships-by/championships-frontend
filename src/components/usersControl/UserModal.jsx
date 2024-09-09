@@ -19,6 +19,7 @@ function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
   const onFinish = () => {
     message.success("Пользователь успешно создан");
     onAdd();
+    onOk();
     setIsLoading(false);
   };
 

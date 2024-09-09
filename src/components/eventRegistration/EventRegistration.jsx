@@ -38,6 +38,16 @@ function EventsRegistration() {
     },
   ];
 
+  const getTeams = () => {
+    teamApi
+      .getTeam()
+      .then((data) => setTeams(data))
+      .catch(() =>
+        message.error("Невозможно получить данные. Обратитесь к администратору")
+      )
+      .finally(() => setTimeout(() => setIsLoading(false), 300));
+  };
+
   useEffect(() => {
     if (isLoading) {
       eventApi
@@ -49,15 +59,7 @@ function EventsRegistration() {
           )
         );
 
-      teamApi
-        .getTeam()
-        .then((data) => setTeams(data))
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        )
-        .finally(() => setTimeout(() => setIsLoading(false), 300));
+      getTeams();
     }
   }, [isLoading, eventID]);
 
@@ -84,6 +86,7 @@ function EventsRegistration() {
         isOpen={isAddTeamModalOpen}
         onOk={() => setIsAddTeamModalOpen(false)}
         onCancel={() => setIsAddTeamModalOpen(false)}
+        onAdd={getTeams}
       />
     </>
   );

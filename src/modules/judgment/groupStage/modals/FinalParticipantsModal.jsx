@@ -1,6 +1,7 @@
 import { useMatches } from "@hooks";
 import { Button, Checkbox, Modal, Table } from "antd";
 import { useCallback, useEffect, useState } from "react";
+import { Locale } from "@constants";
 
 const regex = /^[^@]+/;
 const replaceRegex = /[^a-zA-Z0-9]+/g;
@@ -162,6 +163,7 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
         columns={finalParticipantsTableColumns}
         dataSource={tableData}
         pagination={false}
+        locale={Locale}
       />
     </Modal>
   );
