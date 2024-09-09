@@ -32,7 +32,7 @@ function UserRoleInput({ name, ...props }) {
                 },
                 {
                   value: "specialist",
-                  label: "Специалист",
+                  label: "Менеджер",
                 },
               ]}
             />
