@@ -21,7 +21,7 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const onChange = (value) => {
     setGroupCount(value);
   };
-  const startCompetition = () => {
+  const startCompetition = async () => {
     const data = {
       nomination_event: {
         event_id: eventId,
@@ -29,27 +29,13 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
       },
       group_count: groupCount,
     };
-    Modal.confirm({
-      title: "Вы уверены",
-      content:
-        "Вы уверены, что хотите начать соревнование? Отменить данное действие будет невозможно!",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      okText: "Да",
-      onOk: async () => {
-        try {
-          await competenciesApi.startGroupStage(data);
-          message.success("Соревнование успешно начато");
-          navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
-        } catch (error) {
-          message.error("Произошла ошибка");
-        }
-      },
-    });
+    try {
+      await competenciesApi.startGroupStage(data);
+      message.success("Соревнование успешно начато");
+      navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+    } catch (error) {
+      message.error("Произошла ошибка");
+    }
   };
 
   return (

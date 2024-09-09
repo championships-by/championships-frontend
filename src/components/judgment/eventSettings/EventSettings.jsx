@@ -10,7 +10,6 @@ import {
   Space,
   Tooltip,
   Modal,
-  Divider,
 } from "antd";
 import {
   DeleteOutlined,
@@ -66,6 +65,7 @@ function EventSettings() {
   const [eventInfo, setEventInfo] = useState();
   const [published, setPublished] = useState(true);
   const [dataNomination, setDataNomination] = useState([]);
+  const [selectedNomination, setSelectedNomination] = useState();
   const { eventID } = useParams();
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -106,6 +106,7 @@ function EventSettings() {
     {
       title: "Действия",
       key: "action",
+      dataIndex: "id",
       render: (record) => (
         <Space>
           <Tooltip title="Редактировать">
@@ -152,9 +153,11 @@ function EventSettings() {
 
   const eventId = parseInt(eventID, 10);
 
-  const openEditModal = () => {
+  const openEditModal = (id) => {
+    setSelectedNomination(id);
     setIsEditModalOpen(true);
   };
+
   const startCriteriaStage = (eventID, nominationID) => {
     const data = {
       event_id: eventID,
@@ -478,7 +481,6 @@ function EventSettings() {
     <div>
       <Loader show={isLoading} />
       <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
-      <Divider />
       <Breadcrumb items={items} />
       <Row gutter={16}>
         <Col xs={24} md={8}>
@@ -576,13 +578,16 @@ function EventSettings() {
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
         onAdd={getNominations}
+        mode="create"
       />
       <CompitationModal
         name="Редактировать компетенцию"
-        mode="edit"
         isOpen={isEditModalOpen}
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}
+        onAdd={getNominations}
+        mode="edit"
+        nominationId={selectedNomination}
       />
       <CompetitionModal
         isOpen={openTrophyModal}

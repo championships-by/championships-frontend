@@ -1,5 +1,4 @@
-import { Flex, Input, Select, Space, Typography } from "antd";
-import { FlagOutlined } from "@ant-design/icons";
+import { Flex, Select, Space, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { FILTER_OPTION } from "@utils";
 
@@ -10,19 +9,22 @@ function TeamNominationInput({ name, options, onChange: onChangeBase }) {
     onChangeBase(value);
   };
 
+  const rules = [
+    {
+      required: true,
+      message: "Пожалуйста, выберите компетенцию",
+    },
+  ];
+
   return (
     <Flex vertical className="team__team-nomination-select__flex">
       <Typography.Text>Компетенция</Typography.Text>
       <Flex>
         <Space.Compact className="team__team-nomination-select__space">
-          <Input
-            prefix={<FlagOutlined />}
-            className="team__team-nomination-select__input"
-            disabled
-          />
           <FormItem
             name={name}
             className="team__team-nomination-select__formitem"
+            rules={rules}
           >
             <Select
               name="team_nomination_select"

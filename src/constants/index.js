@@ -173,6 +173,7 @@ export const Locale = {
   emptyText: "Нет данных",
   filterConfirm: "Ок",
   filterReset: "Сбросить",
+  filterEmptyText: "Нет фильтров",
 };
 export const yaShareLink = "https://yastatic.net/share2/share.js";
 export const defaultTime = "00:00.000";

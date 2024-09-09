@@ -5,7 +5,7 @@ import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
 import { participantApi, teamApi } from "@api";
 
-function TeamCreateModal({ isOpen, onOk, onCancel }) {
+function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
@@ -23,6 +23,7 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
 
       message.success("Данные сохранены успешно!");
       form.resetFields();
+      onAdd();
       onOk();
     } catch (error) {
       message.error("Произошла ошибка! Попробуйте снова.");
