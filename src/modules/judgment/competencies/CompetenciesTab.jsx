@@ -84,7 +84,7 @@ function CompetenciesTab() {
     if (!isDataLoaded) {
       setIsLoading(true);
       Promise.all([
-        competenciesApi.getNominationEventInfo({ eventId, nominationId }),
+        competenciesApi.getNominationEventInfo(eventId, nominationId),
         competenciesApi.getCriteria(eventId, nominationId),
         competenciesApi.getCriteriaResults(eventId, nominationId),
       ])

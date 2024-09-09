@@ -6,15 +6,15 @@ import { useState } from "react";
 
 const filters = [
   {
-    text: "Администратор",
+    text: Locale.roles.admin,
     value: "admin",
   },
   {
-    text: "Судья",
+    text: Locale.roles.judge,
     value: "judge",
   },
   {
-    text: "Менеджер",
+    text: Locale.roles.specialist,
     value: "specialist",
   },
 ];
@@ -75,11 +75,11 @@ function UsersTable({ usersData }) {
       key: "role",
       render: (_, { role }) =>
         role === "admin" ? (
-          <Typography.Text>Администратор</Typography.Text>
+          <Typography.Text>{Locale.roles.admin}</Typography.Text>
         ) : role === "judge" ? (
-          <Typography.Text>Судья</Typography.Text>
+          <Typography.Text>{Locale.roles.judge}</Typography.Text>
         ) : role === "specialist" ? (
-          <Typography.Text>Менеджер</Typography.Text>
+          <Typography.Text>{Locale.roles.specialist}</Typography.Text>
         ) : (
           <Typography.Text />
         ),
@@ -95,7 +95,7 @@ function UsersTable({ usersData }) {
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={() => openEditModal()}
+              onClick={openEditModal}
             />
           </Tooltip>
         </Flex>

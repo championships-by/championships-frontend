@@ -31,7 +31,7 @@ export const TimeMatchesTabs = () => {
           attempt.id === id
             ? {
                 ...attempt,
-                result: !time ? null : formatTimeToString(time),
+                result: time ? formatTimeToString(time) : null,
                 isDisqualified,
               }
             : attempt
@@ -62,12 +62,7 @@ export const TimeMatchesTabs = () => {
 
       timeMatches.forEach((timeMatch) =>
         timeMatch.attempts.forEach(({ id, result }) =>
-          timeMatchesApi.setTimeMatch({
-            eventId,
-            nominationId,
-            raceRoundId: id,
-            result,
-          })
+          timeMatchesApi.setTimeMatch(eventId, nominationId, id, result)
         )
       );
 
@@ -95,11 +90,8 @@ export const TimeMatchesTabs = () => {
     if (!isDataLoaded) {
       setIsLoading(true);
       Promise.all([
-        competenciesApi.getNominationEventInfo({
-          eventId,
-          nominationId,
-        }),
-        timeMatchesApi.getTimeMatches({ eventId, nominationId }),
+        competenciesApi.getNominationEventInfo(eventId, nominationId),
+        timeMatchesApi.getTimeMatches(eventId, nominationId),
       ])
         .then(([stageStatusResponse, timeMatchesResponse]) => {
           if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {

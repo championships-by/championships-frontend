@@ -29,6 +29,10 @@ export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
   };
 
   return !isDisqualified ? (
+    <span className="table-time__disqualification" onClick={handleDisqualify}>
+      Дисквалификация
+    </span>
+  ) : (
     <TimePicker
       placeholder="Выберите время"
       disabled={disabled}
@@ -60,9 +64,5 @@ export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
         </div>
       )}
     />
-  ) : (
-    <span className="table-time__disqualification" onClick={handleDisqualify}>
-      Дисквалификация
-    </span>
   );
 };

@@ -208,13 +208,12 @@ export const transformStageStatus = (info) => ({
   tournamentFinished: info.tournament_finished,
 });
 
-export const isTimeMatchesFilled = (timeMatches) => {
-  return !timeMatches.some((timeMatch) => {
-    return timeMatch.attempts.some(({ result }) => {
-      return !result || result === undefined || result === null;
-    });
-  });
-};
+export const isTimeMatchesFilled = (timeMatches) =>
+  !timeMatches.some((timeMatch) =>
+    timeMatch.attempts.some(
+      ({ result }) => !result || result === undefined || result === null
+    )
+  );
 
 export const isCriteriaFilled = (criteria) =>
   criteria.every((result) =>
