@@ -1,31 +1,77 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getUsers } from './thunk';
+import { 
+  getUsers, 
+  setUser, 
+  changeUserProfile, 
+  getUserProfile, 
+  getJudges 
+} from './thunk';
 
 export const usersSlice = createSlice({
   name: 'users',
-  initialState: {},
+  initialState: { data: [], isLoading: false, error: null },
   reducers: {
-    isLoading : () => {
-      return { loading: true };
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
     addUser: (state, action) => {
-      state.push(action.payload);
+      state.data.push(action.payload);
     },
     deleteUser: (state, action) => {
-      state = state.filter((user) => user.id !== action.payload);
+      state.data = state.data.filter((user) => user.id !== action.payload);
     },
     updateUser: (state, action) => {
-      const index = state.findIndex((user) => user.id === action.payload.id);
+      const index = state.data.findIndex((user) => user.id === action.payload.id);
       if (index !== -1) {
-        state[index] = action.payload;
+        state.data[index] = action.payload;
       }
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getUsers.fulfilled, (state, action) => {
-      return action.payload;
-    });
+    builder
+      .addCase(getUsers.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getUsers.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(setUser.fulfilled, (state, action) => {
+        state.data.push(action.payload);
+      })
+      .addCase(setUser.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+      .addCase(changeUserProfile.fulfilled, (state, action) => {
+        const index = state.data.findIndex((user) => user.id === action.payload.id);
+        if (index !== -1) {
+          state.data[index] = action.payload;
+        }
+      })
+      .addCase(changeUserProfile.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.initialValues = action.payload;
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+      .addCase(getJudges.fulfilled, (state, action) => {
+        state.data = action.payload;
+      })
+      .addCase(getJudges.rejected, (state, action) => {
+        state.error = action.error.message;
+      });
   },
 });
 
-export const { addUser, deleteUser, updateUser } = usersSlice.actions;
+export const { setLoading, addUser, deleteUser, updateUser, setError } = usersSlice.actions;

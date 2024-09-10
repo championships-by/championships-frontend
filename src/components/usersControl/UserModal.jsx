@@ -1,14 +1,6 @@
-import { userApi } from "@api";
+import { useSelector } from 'react-redux';
+import { getUsersSelector, setUser, setLoading, addUser } from '@store/users';
 import { ModalType } from "@constants";
-import React, { useState } from 'react';
-import { Modal, Form, Button, message, Space } from "antd";
-import FormItem from "antd/es/form/FormItem";
-import { useDispatch } from 'react-redux';
-import { setUser, upadateUser } from '@store/users';
-import UserLastnameInput from "@modules/user/UserLastnameInput";
-import UserFirstnameInput from "@modules/user/UserFirstnameInput";
-import UserPatronymicInput from "@modules/user/UserPatronymicInput";
-import UserRoleInput from "@modules/user/UserRoleInput";
 import UserEmailInput from "@modules/user/UserEmailInput";
 import UserFirstnameInput from "@modules/user/UserFirstnameInput";
 import UserLastnameInput from "@modules/user/UserLastnameInput";
@@ -19,28 +11,25 @@ import UserPhoneInput from "@modules/user/UserPhoneInput";
 import UserRoleInput from "@modules/user/UserRoleInput";
 import { Button, Form, message, Modal, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { useState } from "react";
 
-function UserModal({ isOpen, onOk, onCancel, type }) {
-import UserOrganizationInput from "@modules/user/UserOrganizationInput";
 
-function UserModal({ isOpen, onOk, onCancel, user }) {
-  const [isLoading, setIsLoading] = useState(false);
+function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
+  const users = useSelector(getUsersSelector);
+  const isLoading = users.isLoading;
   const [form] = Form.useForm();
-  const dispatch = useDispatch();
 
   const onFinish = () => {
     message.success("Пользователь успешно создан");
-    setIsLoading(false);
+    onAdd();
+    onOk();
   };
 
   const onFinishFailed = () => {
     message.error("Проверьте поля для ввода!");
-    setIsLoading(false);
   };
 
-  const handleSubmit = async () => {
-    const formData = {
+  const createUserRequest = async () => {
+    const raw = JSON.stringify ({
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
       second_name: form.getFieldValue("second_name"),
@@ -49,14 +38,17 @@ function UserModal({ isOpen, onOk, onCancel, user }) {
       role: form.getFieldValue("role"),
       educational_institution: form.getFieldValue("organization"),
       password: form.getFieldValue("password"),
-    };
-  
-    if (user.id) {
-      dispatch(upadateUser([formData]));
-    } else {
-      dispatch(setUser([formData]));
+    });
+
+    try {
+      const response = await dispatch(setUser(raw));
+      dispatch(addUser(response.payload));
+      onFinish();
+    } catch (error) {
+      message.error("Ошибка создания пользователя!");
     }
   };
+
   return (
     <Modal
       title={
@@ -77,7 +69,6 @@ function UserModal({ isOpen, onOk, onCancel, user }) {
         requiredMark="Default"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        initialValues={user}
       >
         <UserLastnameInput name="second_name" />
         <UserFirstnameInput name="first_name" />
@@ -90,17 +81,13 @@ function UserModal({ isOpen, onOk, onCancel, user }) {
 
         <UserPhoneInput name="phone" />
         <UserOrganizationInput name="organization" />
-
         <Space>
           <FormItem>
             <Button
               type="primary"
               htmlType="submit"
               loading={isLoading}
-              onClick={() => {
-                setIsLoading(true);
-                handleSubmit();
-              }}
+              onClick={createUserRequest}
             >
               Сохранить
             </Button>

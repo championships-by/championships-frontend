@@ -1,56 +1,22 @@
 import { EditOutlined } from "@ant-design/icons";
 import UserModal from "@components/usersControl/UserModal";
-import { Locale, ModalType } from "@constants";
+import { Locale, ModalType, ROLE_FILTERS } from "@constants";
 import { Button, Flex, Table, Tooltip, Typography } from "antd";
-import { useState } from "react";
+import { useState} from "react";
+import { useDispatch } from "react-redux";
+import { updateUser } from "@store/users";
 
-const filters = [
-  {
-    text: "Администратор",
-    value: "admin",
-  },
-  {
-    text: "Судья",
-    value: "judge",
-  },
-  {
-    text: "Менеджер",
-    value: "specialist",
-  },
-];
-
-function UsersTable({ usersData }) {
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteUser, updateUser, getUsersSelector } from '@store/users';
-import { useState } from "react";
-
-function UsersTable() {
-  const users = useSelector(getUsersSelector);
-  const dispatch = useDispatch();
+function UsersTable(usersData) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const deleteUserConfirm = (id) => {
-    Modal.confirm({
-      title: "Вы уверены?",
-      content: "Вы уверены что хотите удалить этого пользователя?",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      onOk: () => {
-        dispatch(deleteUser(id));
-      },
-      onCancel: () => {},
-      okText: "Да",
-      cancelText: "Отмена",
-    })
+  const dispatch = useDispatch();
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
   };
 
-  const openEditModal = (user) => {
-    setSelectedUser(user);
-    setIsEditModalOpen(true);
+  const changeUserData = (userData) => {
+    dispatch(updateUser(userData));
+    setIsEditModalOpen(false);
   };
 
   const columns = [
@@ -80,13 +46,13 @@ function UsersTable() {
         ) : (
           <Typography.Text />
         ),
-      filters: filters,
+      filters: ROLE_FILTERS,
       onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
     {
       title: "Действия",
       key: "action",
-      render: (_, { id }) => (
+      render: () => (
         <Flex>
           <Tooltip title="Редактирование">
             <Button
@@ -95,16 +61,6 @@ function UsersTable() {
               onClick={() => openEditModal()}
             />
           </Tooltip>
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => openEditModal(users.find((user) => user.id === id))}
-          />
-          <Button
-            type="text"
-            icon={<DeleteOutlined />}
-            onClick={() => deleteUserConfirm(id)}
-          />
         </Flex>
       ),
     },
@@ -113,18 +69,12 @@ function UsersTable() {
   return (
     <>
       <Table dataSource={usersData} columns={columns} locale={Locale} />
-=======
-      <Table dataSource={users} columns={columns} />
 
       <UserModal
         type={ModalType.EDIT}
         isOpen={isEditModalOpen}
-        onOk={(user) => {
-          dispatch(updateUser(user));
-          setIsEditModalOpen(false);
-        }}
+        onOk={() => changeUserData()}
         onCancel={() => setIsEditModalOpen(false)}
-        user={selectedUser}
       />
     </>
   );
