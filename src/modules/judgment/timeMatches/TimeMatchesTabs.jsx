@@ -10,6 +10,7 @@ import {
 import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getClickHandler, getTextByTabIndex } from "../../../utils";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 import { TimeMatchesTabsEnum } from "./constants";
 
@@ -23,6 +24,17 @@ export const TimeMatchesTabs = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const onChange = (value) => {
+    setActiveTab(value);
+    isStageFinished && activeTab === "1"
+      ? setIsButtonDisabled(false)
+      : setIsButtonDisabled(true);
+  };
+
+  const handleButtonDisabled = () => setIsButtonDisabled(true);
 
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
     setTimeMatches((prev) =>
@@ -80,7 +92,7 @@ export const TimeMatchesTabs = () => {
     } catch (error) {
       message.error("Произошла неизвестная ошибка");
     }
-  }, [eventId, nominationId, timeMatches]);
+  }, [eventId, nominationId, timeMatches, updateTabs]);
 
   const handleDownload = useCallback(() => {
     console.log("download file");
@@ -100,8 +112,9 @@ export const TimeMatchesTabs = () => {
             );
             setStageStatus(transformedStageStatus);
 
-            if (stageStatus.tournamentFinished) {
+            if (transformedStageStatus.tournamentFinished) {
               setIsStageFinished(true);
+              setIsButtonDisabled(true);
             }
           }
 
@@ -122,7 +135,8 @@ export const TimeMatchesTabs = () => {
 
   return (
     <Tabs
-      defaultActiveKey="1"
+      activeKey={activeTab}
+      onChange={onChange}
       items={[
         {
           ...tabs[0],
@@ -159,10 +173,17 @@ export const TimeMatchesTabs = () => {
       tabBarExtraContent={{
         right: (
           <Button
-            onClick={isStageFinished ? handleDownload : handleCompleteStage}
+            disabled={isButtonDisabled}
+            onClick={getClickHandler(
+              () => (!isStageFinished ? 0 : 1),
+              [handleCompleteStage, handleDownload]
+            )}
             type="primary"
           >
-            {isStageFinished ? "Итоговый протокол" : "Завершить этап"}
+            {getTextByTabIndex(activeTab, [
+              "Завершить этап",
+              "Итоговый протокол",
+            ])}
           </Button>
         ),
       }}

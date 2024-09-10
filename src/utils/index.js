@@ -226,3 +226,7 @@ export const isCriteriaFilled = (criteria) =>
       return acc;
     }, true)
   );
+
+export const getTextByTabIndex = (tabIndex, arr) => arr[tabIndex - 1];
+
+export const getClickHandler = (selector, handlers) => handlers[selector()];

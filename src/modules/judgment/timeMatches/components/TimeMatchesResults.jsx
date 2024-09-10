@@ -12,19 +12,23 @@ const columns = [
     title: "№",
     key: "medal",
     render: (text, record, index) => (
-      <div className="medal-column">
-        <img
-          src={
-            index === 0
-              ? GoldMedal
-              : index === 1
-                ? SilverMedal
-                : index === 2
-                  ? BronzeMedal
-                  : ""
-          }
-        />
-      </div>
+      <>
+        {index <= 2 && (
+          <div className="medal-column">
+            <img
+              src={
+                index === 0
+                  ? GoldMedal
+                  : index === 1
+                    ? SilverMedal
+                    : index === 2
+                      ? BronzeMedal
+                      : ""
+              }
+            />
+          </div>
+        )}
+      </>
     ),
   },
   {
@@ -35,16 +39,14 @@ const columns = [
   },
   {
     title: <Tooltip title="Участник">Участники</Tooltip>,
-    dataIndex: "participant",
-    key: "participant",
-    render: ({ firstName, secondName, thirdName }) =>
-      `${secondName} ${firstName} ${thirdName}`,
+    dataIndex: "teamName",
+    key: "teamName",
   },
   {
     title: <Tooltip title="Лучшее время">Лучшее время</Tooltip>,
     dataIndex: "bestAttempt",
     key: "bestAttempt",
-    render: (text, record) => record.bestAttempt.result ?? "-",
+    render: (text, record) => record.bestAttempt.result ?? "Дисквалифицирован",
   },
 ];
 
