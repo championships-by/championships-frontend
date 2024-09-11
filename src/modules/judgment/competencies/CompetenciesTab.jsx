@@ -38,10 +38,12 @@ function CompetenciesTab() {
           if (key.startsWith("criteria")) {
             const criterion = result[key];
             competenciesApi.setCriteriaResult({
-              eventId,
-              nominationId,
-              criteriaId: criterion.id,
-              teamId: result.team.id,
+              nomination_event: {
+                event_id: eventId,
+                nomination_id: nominationId,
+              },
+              criteria_id: criterion.id,
+              team_id: result.team.id,
               score: criterion.score,
             });
           }
