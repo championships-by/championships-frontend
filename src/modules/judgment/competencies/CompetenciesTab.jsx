@@ -1,16 +1,15 @@
-import { useTabs } from "@hooks/useTabs";
-import { Button, message, Tabs } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { competenciesApi } from "../../../api";
-import { RESPONSE_STATUS } from "../../../constants";
+import { competenciesApi } from "@api";
+import { useTabs } from "@hooks";
 import {
   generateCompetenciesDataSource,
   isCriteriaFilled,
   transformCriteriaData,
   transformCriteriaResultsData,
   transformStageStatus,
-} from "../../../utils";
+} from "@utils";
+import { Button, message, Tabs } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { CompetenciesResults, CompetenciesTable } from "./components";
 import { CompetenciesTabsEnum } from "./constants";
 
@@ -96,37 +95,33 @@ function CompetenciesTab() {
             criteriaResponse,
             criteriaResultsResponse,
           ]) => {
-            if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
-              const transformedStageStatus = transformStageStatus(
-                stageStatusResponse.data
-              );
-              setStageStatus(transformedStageStatus);
+            // Getting stage status
+            const transformedStageStatus = transformStageStatus(
+              stageStatusResponse.data
+            );
+            setStageStatus(transformedStageStatus);
 
-              if (stageStatus.tournamentFinished) {
-                setIsStageFinished(true);
-              }
+            if (stageStatus.tournamentFinished) {
+              setIsStageFinished(true);
             }
 
-            if (criteriaResponse.status === RESPONSE_STATUS.STATUS_OK) {
-              const transformedCriteria = transformCriteriaData(
-                criteriaResponse.data
-              );
-              setCriteria(transformedCriteria);
-            }
+            // Getting criteria
+            const transformedCriteria = transformCriteriaData(
+              criteriaResponse.data
+            );
+            setCriteria(transformedCriteria);
 
-            if (criteriaResultsResponse.status === RESPONSE_STATUS.STATUS_OK) {
-              const transformedCriteriaResults = transformCriteriaResultsData(
-                criteriaResultsResponse.data
-              );
-              const generatedDataSource = generateCompetenciesDataSource(
-                transformedCriteriaResults
-              );
-              setDataSource(generatedDataSource);
-            }
+            // Getting data with criteria
+            const transformedCriteriaResults = transformCriteriaResultsData(
+              criteriaResultsResponse.data
+            );
+            const generatedDataSource = generateCompetenciesDataSource(
+              transformedCriteriaResults
+            );
+            setDataSource(generatedDataSource);
           }
         )
-        .catch((reason) => {
-          console.error(reason);
+        .catch(() => {
           setIsErrorOccurred(true);
         })
         .finally(() => {
