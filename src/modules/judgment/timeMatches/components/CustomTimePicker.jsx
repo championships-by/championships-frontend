@@ -6,7 +6,7 @@ import { useState } from "react";
 import "./CustomTimePicker.scss";
 
 export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
-  const [time, setTime] = useState(formatTime(value));
+  const [time, setTime] = useState(value ? formatTime(value) : null);
   const [isOpen, setIsOpen] = useState(false);
   const [isDisqualified, setIsDisqualified] = useState(false);
 
