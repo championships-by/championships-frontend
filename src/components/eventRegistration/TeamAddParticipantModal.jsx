@@ -21,7 +21,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
   const [dataNominations, setNomination] = useState({});
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
   const [nominationId, setNominationId] = useState();
-  const [nominationKind, setNominationKind] = useState();
+  const [nominationType, setNominationType] = useState();
   const { eventID } = useParams();
   const [form] = Form.useForm();
 
@@ -59,7 +59,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
     );
     const nominationsOptions = [];
     const kind = selectedNomination ? selectedNomination.kind : null;
-    setNominationKind(kind);
+    setNominationType(kind);
 
     form.setFieldsValue({
       participant: undefined,
@@ -97,12 +97,12 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
         nomination_event: {
           event_id: eventID,
           nomination_id: nominationId,
-          type: nominationKind,
+          type: nominationType,
         },
         team_id: teamID,
         team_participants: [
           {
-            participant_id: form.getFieldValue("participant"),
+            participant_id: form.getFieldValue("participant_id"),
             softwares: [
               {
                 name: form.getFieldValue("software"),
@@ -167,7 +167,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
           onChange={onNominationChange}
         />
         <TeamParticipantsInput
-          name="participant"
+          name="participant_id"
           mode="single"
           options={dataTeamParticipants}
         />
