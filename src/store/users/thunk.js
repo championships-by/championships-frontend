@@ -4,9 +4,8 @@ import { userApi } from '@api';
 export const getUsers = createAsyncThunk(
     'users/getUsers',
     async () => {
-      console.log('getUsers thunk dispatched');
       const response = await userApi.getUsers();
-      return response.json();
+      return response;
     }
   );
   
@@ -30,7 +29,7 @@ export const getUserProfile = createAsyncThunk(
     'users/getUserProfile',
     async () => {
         const response = await userApi.getProfile();
-        return response.json();
+        return response;
     }
 );
 

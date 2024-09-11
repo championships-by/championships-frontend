@@ -13,16 +13,12 @@ import './sass/users-control.scss';
 function UsersControl() {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const users = useSelector(getUsersSelector);
+  const users = useSelector(getUsersSelector)
   const isLoading = users.isLoading;
-  const usersData = users.data;
-  console.log(isLoading);
-  console.log(usersData);
-  console.log(users);
 
   useEffect(() => {
-    dispatch(getUsers);
-  }, [dispatch]);
+    dispatch(getUsers())}
+  ,[dispatch])
 
   return (
     <div className="users-control">
@@ -42,13 +38,12 @@ function UsersControl() {
         </Col>
       </Row>
       <Divider />
-      <UsersTable users= {usersData}/>
+      <UsersTable />
       <UserModal
         type={ModalType.ADD}
         isOpen={isAddUserModalOpen}
         onOk={() => setIsAddUserModalOpen(false)}
         onCancel={() => setIsAddUserModalOpen(false)}
-
       />
     </div>
   );

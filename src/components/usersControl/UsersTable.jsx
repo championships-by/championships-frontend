@@ -1,21 +1,21 @@
 import { EditOutlined } from "@ant-design/icons";
+import { getUsersSelector } from "@store/users";
+import { useSelector } from "react-redux";
 import UserModal from "@components/usersControl/UserModal";
 import { Locale, ModalType, ROLE_FILTERS } from "@constants";
-import { Button, Flex, Table, Tooltip, Typography } from "antd";
+import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
 import { useState} from "react";
-import { useDispatch } from "react-redux";
-import { updateUser } from "@store/users";
 
-function UsersTable(usersData) {
+function UsersTable() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const dispatch = useDispatch();
+  const users = useSelector(getUsersSelector)
+  const usersData = users.data;
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
   };
 
-  const changeUserData = (userData) => {
-    dispatch(updateUser(userData));
+  const changeUserData = () => {
     setIsEditModalOpen(false);
   };
 

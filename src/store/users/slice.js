@@ -11,9 +11,6 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState: { data: [], isLoading: false, error: null },
   reducers: {
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
     addUser: (state, action) => {
       state.data.push(action.payload);
     },
@@ -25,9 +22,6 @@ export const usersSlice = createSlice({
       if (index !== -1) {
         state.data[index] = action.payload;
       }
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -60,7 +54,7 @@ export const usersSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(getUserProfile.fulfilled, (state, action) => {
-        state.initialValues = action.payload;
+        state.data = action.payload;
       })
       .addCase(getUserProfile.rejected, (state, action) => {
         state.error = action.error.message;

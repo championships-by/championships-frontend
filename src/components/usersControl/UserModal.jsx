@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { getUsersSelector, setUser, setLoading, addUser } from '@store/users';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsersSelector, setUser, addUser } from '@store/users';
 import { ModalType } from "@constants";
 import UserEmailInput from "@modules/user/UserEmailInput";
 import UserFirstnameInput from "@modules/user/UserFirstnameInput";
@@ -13,14 +13,15 @@ import { Button, Form, message, Modal, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
 
 
-function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
+
+function UserModal({ isOpen, onOk, onCancel, type }) {
   const users = useSelector(getUsersSelector);
   const isLoading = users.isLoading;
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
   const onFinish = () => {
     message.success("Пользователь успешно создан");
-    onAdd();
     onOk();
   };
 
@@ -41,8 +42,7 @@ function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
     });
 
     try {
-      const response = await dispatch(setUser(raw));
-      dispatch(addUser(response.payload));
+      await dispatch(setUser(raw));
       onFinish();
     } catch (error) {
       message.error("Ошибка создания пользователя!");
