@@ -3,14 +3,7 @@ import { instance } from ".";
 
 export const eventApi = {
   getEvent: (eventID) =>
-    fetch(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-    }).then((response) => response.json()),
+    instance.get(`${API_PATH}/event/event/get_by_id?event_id=${eventID}`),
   getEventWithNominations: ({ published }) => {
     return instance
       .get(
