@@ -92,7 +92,6 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
 
   const onFinish = async () => {
     try {
-      og(form.getFieldValue("participant"));
       const body = {
         nomination_event: {
           event_id: eventID,
