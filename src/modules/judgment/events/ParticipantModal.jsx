@@ -6,7 +6,7 @@ import "./sass/events.scss";
 
 const columns = [
   {
-    title: "Фамилия имя отчество",
+    title: "Участник",
     dataIndex: "fullName",
     key: "fullName",
     sorter: (a, b) => a.fullName.localeCompare(b.fullName),
@@ -32,7 +32,8 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   const [participantsInfo, setParticipantsInfo] = useState([]);
 
   useEffect(() => {
-    if (data) {
+    if (data && isOpen) {
+      console.log(data);
       const participants = data
         .map((item) => {
           return (
@@ -48,9 +49,12 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
                   participantItem.participant_additional_data
                     .educational_institution.educational_institution,
                 equipments:
-                  participantItem.participant_additional_data.equipments,
-                softwares:
-                  participantItem.participant_additional_data.softwares,
+                  participantItem.participant_additional_data.equipments
+                    .map((equipment) => equipment.equipment)
+                    .join("\n"),
+                softwares: participantItem.participant_additional_data.softwares
+                  .map((software) => software.software)
+                  .join("\n"),
               };
             }) || []
           );
@@ -69,7 +73,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
         onCancel={onCancel}
         footer={null}
         className="events__participantModal__modal"
-        width={800}
+        width={1000}
       >
         <Table
           columns={columns}

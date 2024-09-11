@@ -106,7 +106,6 @@ function EventSettings() {
     {
       title: "Действия",
       key: "action",
-      dataIndex: "id",
       render: (record) => (
         <Space>
           <Tooltip title="Редактировать">
@@ -158,20 +157,30 @@ function EventSettings() {
     setIsEditModalOpen(true);
   };
 
-  const startCriteriaStage = (eventID, nominationID) => {
+  const startCriteriaStage = async (eventID, nominationID) => {
     const data = {
       event_id: eventID,
       nomination_id: nominationID,
     };
-    competenciesApi.startCriteriaStage(data);
+    try {
+      await competenciesApi.startCriteriaStage(data);
+    } catch (error) {
+      return "failed";
+    }
+    return "success";
   };
 
-  const startTimeStage = (eventID, nominationID) => {
+  const startTimeStage = async (eventID, nominationID) => {
     const data = {
       event_id: eventID,
       nomination_id: nominationID,
     };
-    competenciesApi.startTimeStage(data);
+    try {
+      await competenciesApi.startTimeStage(data);
+    } catch (error) {
+      return "failed";
+    }
+    return "success";
   };
   const openLink = (record) => {
     window.open(record.reglament);
@@ -276,19 +285,38 @@ function EventSettings() {
             try {
               switch (competitionType) {
                 case NOMINATION_TYPES.TIME:
-                  await startTimeStage(eventId, nominationID);
-                  message.success("Соревнование успешно начато");
-                  navigate(
-                    ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
-                  );
+                  let timeResult = await startTimeStage(eventId, nominationID);
+                  switch (timeResult) {
+                    case "success":
+                      message.success("Соревнование успешно начато");
+                      navigate(
+                        ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
+                      );
+                      break;
+                    case "failed":
+                      message.error("Произошла ошибка");
+                      break;
+                  }
+
                   break;
                 case NOMINATION_TYPES.CRITERIA:
-                  await startCriteriaStage(eventId, nominationID);
-                  message.success("Соревнование успешно начато");
-                  navigate(
-                    ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
+                  let creteriaResult = await startCriteriaStage(
+                    eventId,
+                    nominationID
                   );
+                  switch (creteriaResult) {
+                    case "success":
+                      message.success("Соревнование успешно начато");
+                      navigate(
+                        ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
+                      );
+                      break;
+                    case "failed":
+                      message.error("Произошла ошибка");
+                      break;
+                  }
                   break;
+
                 default:
                   break;
               }

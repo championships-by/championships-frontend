@@ -34,6 +34,7 @@ export const RESPONSE_STATUS = {
 export const ROUTES = {
   NOT_FOUND: { TITLE: "404", PATH: "*" },
   UNAUTHORIZED: { TITLE: "401", PATH: "/401" },
+  FORBIDDEN: { TITLE: "403", PATH: "/403" },
   AUTHORIZATION: { TITLE: "Авторизация", PATH: "/" },
   LOGOUT: { TITLE: "Выход", PATH: "/logout" },
   PARTICIPANTS: { TITLE: "Управление участниками", PATH: "/participants" },
@@ -84,6 +85,7 @@ export const ROUTES = {
 export const ROUTER_ROUTES = {
   NOT_FOUND: "*",
   UNAUTHORIZED: "/401",
+  FORBIDDEN: "/403",
   ROOT: "/",
   LOGOUT: "logout",
   ADMIN_PANEL: "",

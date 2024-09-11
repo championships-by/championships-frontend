@@ -14,6 +14,7 @@ import { competenciesApi, eventApi } from "@api";
 
 function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const [groupCount, setGroupCount] = useState(3);
+  const [isLoading, setIsLoading] = useState(false);
   const { eventID } = useParams();
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
     setGroupCount(value);
   };
   const startCompetition = async () => {
+    setIsLoading(true);
     const data = {
       nomination_event: {
         event_id: eventId,
@@ -35,6 +37,8 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
       navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
     } catch (error) {
       message.error("Произошла ошибка");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -70,6 +74,7 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
           onClick={() => {
             startCompetition(eventId, nominationID, groupCount);
           }}
+          loading={isLoading}
         >
           Начать соревнование
         </Button>

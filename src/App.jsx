@@ -12,6 +12,7 @@ import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
 import Participants from "@components/participants/Participants";
 import Unauthorized from "@components/unauthorized/Unauthorized";
+import Forbidden from "@components/forbidden/Forbidden";
 import UserSettings from "@components/userSettings/UserSettings";
 import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
 import UsersControl from "@components/usersControl/UsersControl";
@@ -28,6 +29,7 @@ function App() {
       <Routes>
         <Route path={ROUTER_ROUTES.NOT_FOUND} element={<NotFound />} />
         <Route path={ROUTER_ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
+        <Route path={ROUTER_ROUTES.FORBIDDEN} element={<Forbidden />} />
         <Route path={ROUTER_ROUTES.ROOT}>
           <Route index element={<Auth />} />
           <Route path={ROUTER_ROUTES.LOGOUT} element={<Logout />} />
