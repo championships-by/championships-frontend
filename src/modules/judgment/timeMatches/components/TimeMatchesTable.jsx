@@ -1,10 +1,9 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { defaultFormat } from "@constants";
+import { defaultFormat, Locale } from "@constants";
 import { CustomTimePicker } from "@modules/judgment/timeMatches/components";
 import { formatTimeToString, generateColumns } from "@utils";
 import { Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
-import { Locale } from "@constants";
 import { useMemo } from "react";
 
 export const TimeMatchesTable = ({
@@ -30,6 +29,7 @@ export const TimeMatchesTable = ({
       ...generateColumns(timeMatches, (text, record, index, columnId) => (
         <CustomTimePicker
           id={record.attempts[columnId].id}
+          value={record.attempts[columnId].result}
           disabled={!editable}
           onTimeChange={onTimeChange}
         />

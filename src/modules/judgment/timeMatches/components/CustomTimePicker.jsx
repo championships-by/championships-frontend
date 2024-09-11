@@ -5,8 +5,8 @@ import { Button, TimePicker } from "antd";
 import { useState } from "react";
 import "./CustomTimePicker.scss";
 
-export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
-  const [value, setValue] = useState(null);
+export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
+  const [time, setTime] = useState(formatTime(value));
   const [isOpen, setIsOpen] = useState(false);
   const [isDisqualified, setIsDisqualified] = useState(false);
 
@@ -16,7 +16,7 @@ export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
 
   const handleDisqualify = () => {
     setIsDisqualified((disqualified) => !disqualified);
-    onTimeChange(id, value, !isDisqualified);
+    onTimeChange(id, time, !isDisqualified);
   };
 
   const handleInputClick = () => {
@@ -24,22 +24,22 @@ export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
   };
 
   const handleClear = () => {
-    setValue(null);
+    setTime(null);
     onTimeChange(id, null, isDisqualified);
   };
 
-  return !isDisqualified ? (
-    <span className="table-time__disqualification" onClick={handleDisqualify}>
+  return isDisqualified ? (
+    <Button disabled={disabled} type="text" onClick={handleDisqualify}>
       Дисквалификация
-    </span>
+    </Button>
   ) : (
     <TimePicker
       placeholder="Выберите время"
       disabled={disabled}
-      value={value}
-      onChange={(time) => {
-        setValue(time);
-        onTimeChange(id, time, isDisqualified);
+      value={time}
+      onChange={(newTime) => {
+        setTime(newTime);
+        onTimeChange(id, newTime, isDisqualified);
       }}
       variant="borderless"
       open={isOpen}
