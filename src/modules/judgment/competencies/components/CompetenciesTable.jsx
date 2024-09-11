@@ -59,6 +59,7 @@ export const CompetenciesTable = ({
       columns={columns}
       dataSource={dataSource}
       pagination={false}
+      scroll={{ x: "max-content" }}
     />
   );
 };
