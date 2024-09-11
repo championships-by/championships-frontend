@@ -57,8 +57,8 @@ export const competenciesApi = {
     axios.get(
       `${API_PATH}/nomination_event/nomination_event_info?event_id=${eventId}&nomination_id=${nominationId}`
     ),
-  startGroupStage: (data) => {
-    axios.post(`${API_PATH}/tournaments/start_group_stage`, data);
+  startGroupStage: async (data) => {
+    return axios.post(`${API_PATH}/tournaments/start_group_stage`, data);
   },
   startCriteriaStage: async (data) => {
     return axios.post(`${API_PATH}/tournaments/start_criteria_stage`, data);

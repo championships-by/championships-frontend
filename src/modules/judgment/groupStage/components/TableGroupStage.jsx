@@ -42,6 +42,12 @@ export const TableGroupStage = () => {
       <h2>Пока что нет данных о матчах</h2>
     </div>
   ) : (
-    <Table columns={columns} dataSource={finalParticipants} />
+    <Table
+      columns={columns}
+      pagination={{
+        position: ["bottomCenter"],
+      }}
+      dataSource={finalParticipants}
+    />
   );
 };

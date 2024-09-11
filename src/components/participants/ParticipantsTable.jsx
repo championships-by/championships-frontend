@@ -73,7 +73,14 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
 
   return (
     <div>
-      <Table dataSource={ParticipantData} columns={columns} locale={Locale} />
+      <Table
+        dataSource={ParticipantData}
+        columns={columns}
+        pagination={{
+          position: ["bottomCenter"],
+        }}
+        locale={Locale}
+      />
 
       <ParticipantModal
         type={ModalType.EDIT}
