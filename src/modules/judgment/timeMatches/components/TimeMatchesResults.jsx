@@ -4,7 +4,7 @@ import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Flex, Table, Tooltip, Typography } from "antd";
-import dayjs from "dayjs";
+import { formatTime } from "../../../../utils";
 import "./TimeMatchesResult.scss";
 
 const columns = [
@@ -67,15 +67,11 @@ export const TimeMatchesResults = ({
           pagination={false}
           columns={columns}
           locale={Locale}
-          dataSource={timeMatches.sort((a, b) => {
-            if (dayjs(a.bestAttempt.result).isBefore(b.bestAttempt.result)) {
-              return -1;
-            }
-            if (dayjs(a.bestAttempt.result).isAfter(b.bestAttempt.result)) {
-              return 1;
-            }
-            return 0;
-          })}
+          dataSource={timeMatches.sort((a, b) =>
+            formatTime(a.bestAttempt.result).diff(
+              formatTime(b.bestAttempt.result)
+            )
+          )}
         />
       )}
     </Flex>
