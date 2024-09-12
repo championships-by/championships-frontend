@@ -1,15 +1,16 @@
-import { competenciesApi } from "@api";
-import { useTabs } from "@hooks";
+import { useTabs } from "@hooks/useTabs";
+import { Button, message, Tabs } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { competenciesApi } from "../../../api";
+import { RESPONSE_STATUS } from "../../../constants";
 import {
   generateCompetenciesDataSource,
   isCriteriaFilled,
   transformCriteriaData,
   transformCriteriaResultsData,
   transformStageStatus,
-} from "@utils";
-import { Button, message, Tabs } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+} from "../../../utils";
 import { CompetenciesResults, CompetenciesTable } from "./components";
 import { CompetenciesTabsEnum } from "./constants";
 
@@ -37,19 +38,17 @@ function CompetenciesTab() {
           if (key.startsWith("criteria")) {
             const criterion = result[key];
             competenciesApi.setCriteriaResult({
-              nomination_event: {
-                event_id: eventId,
-                nomination_id: nominationId,
-              },
-              criteria_id: criterion.id,
-              team_id: result.team.id,
+              eventId,
+              nominationId,
+              criteriaId: criterion.id,
+              teamId: result.team.id,
               score: criterion.score,
             });
           }
         });
       });
 
-      await competenciesApi.finishCriteriaStage({
+      await competenciesApi.finishTimeStage({
         event_id: eventId,
         nomination_id: nominationId,
       });
@@ -95,33 +94,37 @@ function CompetenciesTab() {
             criteriaResponse,
             criteriaResultsResponse,
           ]) => {
-            // Getting stage status
-            const transformedStageStatus = transformStageStatus(
-              stageStatusResponse.data
-            );
-            setStageStatus(transformedStageStatus);
+            if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
+              const transformedStageStatus = transformStageStatus(
+                stageStatusResponse.data
+              );
+              setStageStatus(transformedStageStatus);
 
-            if (stageStatus.tournamentFinished) {
-              setIsStageFinished(true);
+              if (stageStatus.tournamentFinished) {
+                setIsStageFinished(true);
+              }
             }
 
-            // Getting criteria
-            const transformedCriteria = transformCriteriaData(
-              criteriaResponse.data
-            );
-            setCriteria(transformedCriteria);
+            if (criteriaResponse.status === RESPONSE_STATUS.STATUS_OK) {
+              const transformedCriteria = transformCriteriaData(
+                criteriaResponse.data
+              );
+              setCriteria(transformedCriteria);
+            }
 
-            // Getting data with criteria
-            const transformedCriteriaResults = transformCriteriaResultsData(
-              criteriaResultsResponse.data
-            );
-            const generatedDataSource = generateCompetenciesDataSource(
-              transformedCriteriaResults
-            );
-            setDataSource(generatedDataSource);
+            if (criteriaResultsResponse.status === RESPONSE_STATUS.STATUS_OK) {
+              const transformedCriteriaResults = transformCriteriaResultsData(
+                criteriaResultsResponse.data
+              );
+              const generatedDataSource = generateCompetenciesDataSource(
+                transformedCriteriaResults
+              );
+              setDataSource(generatedDataSource);
+            }
           }
         )
-        .catch(() => {
+        .catch((reason) => {
+          console.error(reason);
           setIsErrorOccurred(true);
         })
         .finally(() => {

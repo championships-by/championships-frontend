@@ -1,42 +1,43 @@
 import {
+  Button,
+  Typography,
+  Breadcrumb,
+  Table,
+  Row,
+  Col,
+  message,
+  Form,
+  Space,
+  Tooltip,
+  Modal,
+} from "antd";
+import {
   DeleteOutlined,
   EditOutlined,
-  LinkOutlined,
-  TeamOutlined,
   TrophyOutlined,
+  TeamOutlined,
+  LinkOutlined,
 } from "@ant-design/icons";
-import { competenciesApi, eventApi, participantApi } from "@api";
+import dayjs from "dayjs";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
-import { Locale, NOMINATION_TYPES, ROUTES } from "@constants";
-import CompetitionModal from "@modules/judgment/events/CompetitionModal";
+import EventName from "@modules/judgment/events/EventName";
 import EventDate from "@modules/judgment/events/EventDate";
+import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventDescription from "@modules/judgment/events/EventDescription";
+import EventRequirements from "@modules/judgment/events/EventRequirements";
 import EventEmail from "@modules/judgment/events/EventEmail";
 import EventLevel from "@modules/judgment/events/EventLevel";
-import EventLogo from "@modules/judgment/events/EventLogo";
-import EventName from "@modules/judgment/events/EventName";
 import EventPlace from "@modules/judgment/events/EventPlace";
-import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationSwitch";
 import EventRegulation from "@modules/judgment/events/EventRegulation";
-import EventRequirements from "@modules/judgment/events/EventRequirements";
-import ParticipantModal from "@modules/judgment/events/ParticipantModal";
-import {
-  Breadcrumb,
-  Button,
-  Col,
-  Form,
-  message,
-  Modal,
-  Row,
-  Space,
-  Table,
-  Tooltip,
-  Typography,
-} from "antd";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
+import CompetitionModal from "@modules/judgment/events/CompetitionModal";
+import ParticipantModal from "@modules/judgment/events/ParticipantModal";
+import { eventApi, competenciesApi, participantApi } from "@api";
+import { Locale, ROUTES, NOMINATION_TYPES } from "@constants";
 
 import "./sass/event-settings.scss";
 
@@ -344,7 +345,7 @@ function EventSettings() {
 
   const getNominations = () => {
     eventApi.getEvent(eventID).then((response) => {
-      const translatedType = response.data.nominations.map((item) => ({
+      const translatedType = response.nominations.map((item) => ({
         ...item,
         kind: translateTypeFromEnglishIntoRussian(item.kind),
       }));
@@ -360,10 +361,10 @@ function EventSettings() {
   useEffect(() => {
     if (eventID) {
       try {
-        eventApi.getEvent(eventID).then((response) => {
-          setEvent(response.data);
+        eventApi.getEvent(eventID).then((data) => {
+          setEvent(data);
 
-          const { event } = response.data;
+          const { event } = data;
 
           const values = {
             name: event.name,
