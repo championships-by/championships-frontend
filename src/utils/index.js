@@ -211,7 +211,8 @@ export const transformStageStatus = (info) => ({
 export const isTimeMatchesFilled = (timeMatches) =>
   !timeMatches.some((timeMatch) =>
     timeMatch.attempts.some(
-      ({ result }) => !result || result === undefined || result === null
+      ({ result, isDisqualified }) =>
+        (!result || result === undefined || result === null) && !isDisqualified
     )
   );
 
