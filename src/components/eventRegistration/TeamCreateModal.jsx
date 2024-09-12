@@ -24,6 +24,7 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
       message.success("Данные сохранены успешно!");
       form.resetFields();
       onAdd();
+      form.resetFields();
       onOk();
     } catch (error) {
       message.error("Произошла ошибка! Попробуйте снова.");
