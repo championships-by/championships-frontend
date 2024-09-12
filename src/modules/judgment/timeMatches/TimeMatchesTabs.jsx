@@ -10,6 +10,7 @@ import {
 import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { defaultTime } from "../../../constants";
 import { getClickHandler, getTextByTabIndex } from "../../../utils";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 import { timeMatchesErrorMessages, TimeMatchesTabsEnum } from "./constants";
@@ -72,9 +73,14 @@ export const TimeMatchesTabs = () => {
 
       await Promise.allSettled(
         timeMatches.map((timeMatch) =>
-          timeMatch.attempts.map(({ id, result }) =>
+          timeMatch.attempts.map(({ id, result, isDisqualified }) =>
             timeMatchesApi
-              .setTimeMatch(eventId, nominationId, id, result)
+              .setTimeMatch(
+                eventId,
+                nominationId,
+                id,
+                !result && isDisqualified ? defaultTime : result
+              )
               .catch((reason) => console.error(reason))
           )
         )

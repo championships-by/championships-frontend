@@ -1,14 +1,18 @@
 import { CloseCircleOutlined } from "@ant-design/icons";
 import { defaultFormat } from "@constants";
-import { formatTime } from "@utils";
+import { formatTime, isAttemptDisqualified } from "@utils";
 import { Button, TimePicker } from "antd";
 import { useState } from "react";
 import "./CustomTimePicker.scss";
 
 export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
-  const [time, setTime] = useState(value ? formatTime(value) : null);
+  const [time, setTime] = useState(
+    !isAttemptDisqualified(value) && value ? formatTime(value) : null
+  );
   const [isOpen, setIsOpen] = useState(false);
-  const [isDisqualified, setIsDisqualified] = useState(false);
+  const [isDisqualified, setIsDisqualified] = useState(
+    isAttemptDisqualified(value)
+  );
 
   const handleOk = () => {
     setIsOpen(false);

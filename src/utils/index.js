@@ -231,3 +231,5 @@ export const isCriteriaFilled = (criteria) =>
 export const getTextByTabIndex = (tabIndex, arr) => arr[tabIndex - 1];
 
 export const getClickHandler = (selector, handlers) => handlers[selector()];
+
+export const isAttemptDisqualified = (value) => value === defaultTime;
