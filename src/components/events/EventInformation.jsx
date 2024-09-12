@@ -1,23 +1,22 @@
+import { InfoCircleOutlined, LinkOutlined } from "@ant-design/icons";
+import { eventApi } from "@api";
+import noLogo from "@assets/img/auth-background.png";
+import Loader from "@components/loader/Loader";
+import { ROUTES, url, yaShareLink } from "@constants";
+import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import {
-  Button,
-  Typography,
   Breadcrumb,
-  Table,
+  Button,
+  Col,
+  Divider,
   message,
   Row,
-  Col,
   Space,
-  Divider,
+  Table,
+  Typography,
 } from "antd";
-import { LinkOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import Loader from "@components/loader/Loader";
-import { changeDateFormat, getEventLevel, openPdf } from "@utils";
-import { yaShareLink, ROUTES, url } from "@constants";
-import noLogo from "@assets/img/auth-background.png";
-import { eventApi } from "@api";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./sass/events.scss";
 
@@ -73,9 +72,9 @@ function EventInformation() {
   useEffect(() => {
     if (eventID) {
       try {
-        eventApi.getEvent(eventID).then((data) => {
-          setEvent(data.event);
-          setNomination(data.nominations);
+        eventApi.getEvent(eventID).then((response) => {
+          setEvent(response.data.event);
+          setNomination(response.data.nominations);
 
           const script = document.createElement("script");
           script.src = yaShareLink;

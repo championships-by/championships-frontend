@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Button, Form, Modal, message, Flex } from "antd";
-import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
-import TeamNominationSelect from "@modules/team/TeamNominationSelect";
-import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
+import { eventApi, competenciesApi, participantApi } from "@api";
+import ParticipantAdditionalOrganizationInput from "@modules/participant/ParticipantAdditionalOrganizationInput.jsx";
 import ParticipantEquipmentInput from "@modules/participant/ParticipantEquipmentInput";
 import ParticipantSoftwareInput from "@modules/participant/ParticipantSoftwareInput";
-import ParticipantAdditionalOrganizationInput from "@modules/participant/ParticipantAdditionalOrganizationInput.jsx";
 import ParticipantTeacherFirstnameInput from "@modules/participant/ParticipantTeacherFirstnameInput.jsx";
 import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTeacherLastnameInput.jsx";
-import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
 import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
-import { eventApi, competenciesApi, participantApi } from "@api";
-
+import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
+import TeamNominationSelect from "@modules/team/TeamNominationSelect";
+import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
+import { Button, Flex, Form, Modal, message } from "antd";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import "./sass/event-registration.scss";
 
 function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
@@ -29,9 +27,9 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
     if (isOpen) {
       eventApi
         .getEvent(eventID)
-        .then((data) => {
+        .then((response) => {
           setNominationOptions(
-            data?.nominations.map((nomination) => ({
+            response.data?.nominations.map((nomination) => ({
               value: nomination.id,
               label: nomination.name,
             }))

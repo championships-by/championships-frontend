@@ -58,9 +58,8 @@ export const CompetenciesTable = ({
       locale={{ emptyText: "Нет данных" }}
       columns={columns}
       dataSource={dataSource}
-      pagination={{
-        position: ["bottomCenter"],
-      }}
+      pagination={false}
+      scroll={{ x: "max-content" }}
     />
   );
 };
