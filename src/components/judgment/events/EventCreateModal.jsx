@@ -50,6 +50,8 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       holding_finish_date: holding?.holding_finish_date,
     };
 
+    event_data.published = false;
+
     formData.append("event_data", JSON.stringify(event_data));
 
     try {
@@ -70,6 +72,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
     if (success) {
       message.success("Мероприятие успешно создано");
       onAdd();
+      form.resetFields();
       onOk();
       notification.info({
         message: "Внимание!",

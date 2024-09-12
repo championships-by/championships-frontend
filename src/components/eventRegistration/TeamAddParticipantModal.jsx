@@ -11,15 +11,17 @@ import ParticipantTeacherFirstnameInput from "@modules/participant/ParticipantTe
 import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTeacherLastnameInput.jsx";
 import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
 import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
-import { eventApi, competenciesApi } from "@api";
+import { eventApi, competenciesApi, participantApi } from "@api";
 
 import "./sass/event-registration.scss";
 
-function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
+function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
   const [isLoading, setIsLoading] = useState(false);
   const [nominationsOptions, setNominationOptions] = useState({});
   const [dataNominations, setNomination] = useState({});
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
+  const [nominationId, setNominationId] = useState();
+  const [nominationType, setNominationType] = useState();
   const { eventID } = useParams();
   const [form] = Form.useForm();
 
@@ -47,20 +49,21 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
           )
         );
     }
-  });
+  }, [isOpen, eventID]);
 
   const onNominationChange = (nominationID) => {
+    setNominationId(nominationID);
     const related = false;
     const selectedNomination = dataNominations.find(
       (nom) => nom.id === nominationID
     );
     const nominationsOptions = [];
     const kind = selectedNomination ? selectedNomination.kind : null;
+    setNominationType(kind);
 
     form.setFieldsValue({
       participant: undefined,
     });
-
     competenciesApi
       .getParticipantsNominationEvent(eventID, nominationID, related, kind)
       .then((response) => {
@@ -87,9 +90,51 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
       );
   };
 
-  const onFinish = () => {
-    message.success("Всё в порядке!");
-    setIsLoading(false);
+  const onFinish = async () => {
+    try {
+      const body = {
+        nomination_event: {
+          event_id: eventID,
+          nomination_id: nominationId,
+          type: nominationType,
+        },
+        team_id: teamID,
+        team_participants: [
+          {
+            participant_id: form.getFieldValue("participant_id"),
+            softwares: [
+              {
+                name: form.getFieldValue("software"),
+              },
+            ],
+            equipments: [
+              {
+                name: form.getFieldValue("equipment"),
+              },
+            ],
+            educational_institution: form.getFieldValue(
+              "educational_institution"
+            ),
+            additional_educational_institution: form.getFieldValue(
+              "additional_educational_institution"
+            ),
+            supervisor_first_name: form.getFieldValue("supervisor_first_name"),
+            supervisor_second_name: form.getFieldValue(
+              "supervisor_second_name"
+            ),
+            supervisor_third_name: form.getFieldValue("supervisor_third_name"),
+          },
+        ],
+      };
+      await participantApi.addParticipantToNomination(body);
+      message.success("Всё в порядке!");
+      form.resetFields();
+      onOk();
+    } catch (error) {
+      message.error("Произошла ошибка.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onFinishFailed = () => {
@@ -121,7 +166,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
           onChange={onNominationChange}
         />
         <TeamParticipantsInput
-          name="participant"
+          name="participant_id"
           mode="single"
           options={dataTeamParticipants}
         />

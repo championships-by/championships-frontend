@@ -3,9 +3,16 @@ import FormItem from "antd/es/form/FormItem";
 import { Flex, Input, Typography } from "antd";
 import { CodeOutlined } from "@ant-design/icons";
 
+const rules = [
+  {
+    required: true,
+    message: "Пожалуйста, введите оборудование",
+  },
+];
+
 function ParticipantSoftwareInput({ name }) {
   return (
-    <FormItem name={name}>
+    <FormItem name={name} rules={rules}>
       <Flex vertical>
         <Typography.Text>Программное обеспечение</Typography.Text>
         <Input
