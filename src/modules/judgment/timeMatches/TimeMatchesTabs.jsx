@@ -34,8 +34,6 @@ export const TimeMatchesTabs = () => {
       : setIsButtonDisabled(true);
   };
 
-  const handleButtonDisabled = () => setIsButtonDisabled(true);
-
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
     setTimeMatches((prev) =>
       prev.map((timeMatch) => {
@@ -90,7 +88,7 @@ export const TimeMatchesTabs = () => {
         },
       ]);
     } catch (error) {
-      message.error("Произошла неизвестная ошибка");
+      message.error("Произошла ошибка. Обратитесь к администратору сайта");
     }
   }, [eventId, nominationId, timeMatches, updateTabs]);
 
@@ -125,7 +123,15 @@ export const TimeMatchesTabs = () => {
             setTimeMatches(transformedTimeMatches);
           }
         })
-        .catch(() => setIsErrorOccurred(true))
+        .catch((error) => {
+          if (error.response && error.response.status === 404) {
+            message.error(
+              "Данные не найдены. Проверьте event_id и nomination_id."
+            );
+          } else {
+            setIsErrorOccurred(true);
+          }
+        })
         .finally(() => {
           setIsLoading(false);
           setIsDataLoaded(true);
