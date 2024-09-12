@@ -1,9 +1,9 @@
-import { eventApi, participantApi, userApi } from "@api";
-import TeamNominationInput from "@modules/team/TeamNominationSelect";
-import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import { Button, Flex, Form, Modal, message } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Button, Flex, Form, Modal, message } from "antd";
+import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
+import TeamNominationInput from "@modules/team/TeamNominationSelect";
+import { eventApi, participantApi, userApi } from "@api";
 
 function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,9 +26,9 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
     if (isOpen) {
       eventApi
         .getEvent(eventID)
-        .then((response) =>
+        .then((data) =>
           setNomination(
-            response.data?.event_data?.nominations.map((nomination) => ({
+            data?.event_data?.nominations.map((nomination) => ({
               value: nomination.name,
               label: nomination.name,
             }))

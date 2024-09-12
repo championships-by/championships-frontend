@@ -1,20 +1,20 @@
-import { eventApi, teamApi } from "@api";
-import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
+import {
+  Button,
+  Typography,
+  message,
+  Breadcrumb,
+  Row,
+  Col,
+  Divider,
+} from "antd";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import TeamCreateModal from "@components/eventRegistration/TeamCreateModal";
 import TeamsTable from "@components/eventRegistration/TeamsTable";
 import Loader from "@components/loader/Loader";
+import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
+import { teamApi, eventApi } from "@api";
 import { ROUTES } from "@constants";
-import {
-  Breadcrumb,
-  Button,
-  Col,
-  Divider,
-  Row,
-  Typography,
-  message,
-} from "antd";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 import "./sass/event-registration.scss";
 
@@ -52,7 +52,7 @@ function EventsRegistration() {
     if (isLoading) {
       eventApi
         .getEvent(eventID)
-        .then((response) => setEvent(response.data))
+        .then((data) => setEvent(data))
         .catch(() =>
           message.error(
             "Невозможно получить данные. Обратитесь к администратору"
