@@ -21,7 +21,8 @@ function TeamsTable({ TeamsData }) {
     setIsEditModalOpen(false);
   };
 
-  const openParticipantModal = () => {
+  const openParticipantModal = (teamId) => {
+    setSelectedTeamId(teamId);
     setIsParticipantModalOpen(true);
   };
 
@@ -97,7 +98,7 @@ function TeamsTable({ TeamsData }) {
             <Button
               type="text"
               icon={<UsergroupAddOutlined />}
-              onClick={() => openParticipantModal()}
+              onClick={() => openParticipantModal(team.id)}
             />
           </Tooltip>
         </Flex>
@@ -128,6 +129,7 @@ function TeamsTable({ TeamsData }) {
         isOpen={isParticipantModalOpen}
         onOk={() => changeParticipantData()}
         onCancel={() => setIsParticipantModalOpen(false)}
+        teamID={selectedTeamId}
       />
     </>
   );
