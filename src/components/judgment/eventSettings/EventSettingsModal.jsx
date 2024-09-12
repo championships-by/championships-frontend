@@ -23,6 +23,7 @@ function EventSettingsCompitations({
   const [groupCount, setGroupCount] = useState();
   const [criteria, setCriteria] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
+  const [refreshKey, setRefreshKey] = useState(0);
   const { eventID } = useParams();
   const [form] = Form.useForm();
 
@@ -81,38 +82,40 @@ function EventSettingsCompitations({
         judges_ids: selectedJudges,
       },
     };
-    switch (selectedValue) {
-      case "time":
-        Object.assign(data, { race_round_amount: groupCount });
-        await competenciesApi.addTimeCompetenciesForEvent(data).then(() => {
-          message.success("Компетенция успешно добавлена");
-          setIsLoading(false);
-          onCancel();
-          onAdd();
-        });
-        break;
+    try {
+      switch (selectedValue) {
+        case "time":
+          Object.assign(data, { race_round_amount: groupCount });
+          await competenciesApi
+            .addTimeCompetenciesForEvent(data)
+            .then(() => {});
+          break;
 
-      case "playoffs":
-        await competenciesApi.addOlympicCompetenciesForEvent(data).then(() => {
-          message.success("Компетенция успешно добавлена");
-          setIsLoading(false);
-          onCancel();
-          onAdd();
-        });
-        break;
+        case "playoffs":
+          await competenciesApi
+            .addOlympicCompetenciesForEvent(data)
+            .then(() => {});
+          break;
 
-      case "criteria":
-        Object.assign(data, { criterias: criteria });
-        await competenciesApi.addCriteriaCompetenciesForEvent(data).then(() => {
-          message.success("Компетенция успешно добавлена");
-          setIsLoading(false);
-          onCancel();
-          onAdd();
-        });
-        break;
-      default:
-        break;
+        case "criteria":
+          Object.assign(data, { criterias: criteria });
+          await competenciesApi
+            .addCriteriaCompetenciesForEvent(data)
+            .then(() => {});
+          break;
+        default:
+          break;
+      }
+      message.success("Компетенция успешно добавлена");
+      onOk();
+      onAdd();
+      setInputName("");
+      setInputReglament("");
+      setRefreshKey((prevKey) => prevKey + 1);
+    } catch (error) {
+      message.error("Произошла ошибка.");
     }
+    setIsLoading(false);
   };
 
   return (
@@ -125,6 +128,8 @@ function EventSettingsCompitations({
       width={600}
     >
       <Form
+        key={refreshKey}
+        form={form}
         layout="vertical"
         requiredMark="default"
         onFinish={onFinish}
