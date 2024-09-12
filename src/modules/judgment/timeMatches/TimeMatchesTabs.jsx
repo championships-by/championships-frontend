@@ -12,7 +12,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getClickHandler, getTextByTabIndex } from "../../../utils";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
-import { TimeMatchesTabsEnum } from "./constants";
+import { timeMatchesErrorMessages, TimeMatchesTabsEnum } from "./constants";
 
 export const TimeMatchesTabs = () => {
   const { tabs, updateTabs } = useTabs();
@@ -70,9 +70,13 @@ export const TimeMatchesTabs = () => {
         return;
       }
 
-      timeMatches.forEach((timeMatch) =>
-        timeMatch.attempts.forEach(({ id, result }) =>
-          timeMatchesApi.setTimeMatch(eventId, nominationId, id, result)
+      await Promise.allSettled(
+        timeMatches.map((timeMatch) =>
+          timeMatch.attempts.map(({ id, result }) =>
+            timeMatchesApi
+              .setTimeMatch(eventId, nominationId, id, result)
+              .catch((reason) => console.error(reason))
+          )
         )
       );
 
@@ -88,7 +92,11 @@ export const TimeMatchesTabs = () => {
         },
       ]);
     } catch (error) {
-      message.error("Произошла ошибка. Обратитесь к администратору сайта");
+      const statusCode = error.response.status;
+      const errorMessage =
+        timeMatchesErrorMessages[statusCode] ||
+        timeMatchesErrorMessages.default;
+      message.error(errorMessage);
     }
   }, [eventId, nominationId, timeMatches, updateTabs]);
 
