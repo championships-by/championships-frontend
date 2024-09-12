@@ -37,14 +37,7 @@ export const EditMatchScoreModal = ({ isOpen, match, onSubmit, onClose }) => {
       open={isOpen}
       onCancel={handleCancel}
       footer={
-        <Button
-          type="primary"
-          onClick={handleSendScore}
-          disabled={
-            isScoreEqual(team1.score, team1Score) &&
-            isScoreEqual(team2.score, team2Score)
-          }
-        >
+        <Button type="primary" onClick={handleSendScore}>
           Отправить оценки
         </Button>
       }

@@ -7,7 +7,9 @@ function AdminPanelNav({ role }) {
   return (
     <nav className="admin-panel__nav">
       <ul className="admin-panel__menu-list">
-        {(role === Roles.ADMIN || role === Roles.JUDGE) && (
+        {(role === Roles.ADMIN ||
+          role === Roles.JUDGE ||
+          role === Roles.SPECIALIST) && (
           <Tooltip placement="right" title={ROUTES.EVENTS.TITLE}>
             <li className="admin-panel__item">
               <NavLink
@@ -49,24 +51,32 @@ function AdminPanelNav({ role }) {
             </Tooltip>
           </li>
         )}
-        <li className="admin-panel__item">
-          <Tooltip placement="right" title={ROUTES.USER_SETTINGS.TITLE}>
-            <NavLink
-              to={ROUTES.USER_SETTINGS.PATH}
-              className="admin-panel__menu-link admin-panel__menu-link--settings"
-            />
-          </Tooltip>
-        </li>
+        {(role === Roles.ADMIN ||
+          role === Roles.JUDGE ||
+          role === Roles.SPECIALIST) && (
+          <li className="admin-panel__item">
+            <Tooltip placement="right" title={ROUTES.USER_SETTINGS.TITLE}>
+              <NavLink
+                to={ROUTES.USER_SETTINGS.PATH}
+                className="admin-panel__menu-link admin-panel__menu-link--settings"
+              />
+            </Tooltip>
+          </li>
+        )}
       </ul>
       <ul className="admin-panel__menu-list">
-        <li>
-          <Tooltip placement="right" title={ROUTES.LOGOUT.TITLE}>
-            <NavLink
-              to={ROUTES.LOGOUT.PATH}
-              className="admin-panel__menu-link admin-panel__menu-link--logout"
-            />
-          </Tooltip>
-        </li>
+        {(role === Roles.ADMIN ||
+          role === Roles.JUDGE ||
+          role === Roles.SPECIALIST) && (
+          <li>
+            <Tooltip placement="right" title={ROUTES.LOGOUT.TITLE}>
+              <NavLink
+                to={ROUTES.LOGOUT.PATH}
+                className="admin-panel__menu-link admin-panel__menu-link--logout"
+              />
+            </Tooltip>
+          </li>
+        )}
       </ul>
     </nav>
   );

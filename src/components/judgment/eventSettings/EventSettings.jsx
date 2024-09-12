@@ -10,7 +10,6 @@ import {
   Space,
   Tooltip,
   Modal,
-  Divider,
 } from "antd";
 import {
   DeleteOutlined,
@@ -66,6 +65,7 @@ function EventSettings() {
   const [eventInfo, setEventInfo] = useState();
   const [published, setPublished] = useState(true);
   const [dataNomination, setDataNomination] = useState([]);
+  const [selectedNomination, setSelectedNomination] = useState();
   const { eventID } = useParams();
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -152,23 +152,35 @@ function EventSettings() {
 
   const eventId = parseInt(eventID, 10);
 
-  const openEditModal = () => {
+  const openEditModal = (id) => {
+    setSelectedNomination(id);
     setIsEditModalOpen(true);
   };
-  const startCriteriaStage = (eventID, nominationID) => {
+
+  const startCriteriaStage = async (eventID, nominationID) => {
     const data = {
       event_id: eventID,
       nomination_id: nominationID,
     };
-    competenciesApi.startCriteriaStage(data);
+    try {
+      await competenciesApi.startCriteriaStage(data);
+    } catch (error) {
+      return "failed";
+    }
+    return "success";
   };
 
-  const startTimeStage = (eventID, nominationID) => {
+  const startTimeStage = async (eventID, nominationID) => {
     const data = {
       event_id: eventID,
       nomination_id: nominationID,
     };
-    competenciesApi.startTimeStage(data);
+    try {
+      await competenciesApi.startTimeStage(data);
+    } catch (error) {
+      return "failed";
+    }
+    return "success";
   };
   const openLink = (record) => {
     window.open(record.reglament);
@@ -273,19 +285,38 @@ function EventSettings() {
             try {
               switch (competitionType) {
                 case NOMINATION_TYPES.TIME:
-                  await startTimeStage(eventId, nominationID);
-                  message.success("Соревнование успешно начато");
-                  navigate(
-                    ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
-                  );
+                  let timeResult = await startTimeStage(eventId, nominationID);
+                  switch (timeResult) {
+                    case "success":
+                      message.success("Соревнование успешно начато");
+                      navigate(
+                        ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
+                      );
+                      break;
+                    case "failed":
+                      message.error("Произошла ошибка");
+                      break;
+                  }
+
                   break;
                 case NOMINATION_TYPES.CRITERIA:
-                  await startCriteriaStage(eventId, nominationID);
-                  message.success("Соревнование успешно начато");
-                  navigate(
-                    ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
+                  let creteriaResult = await startCriteriaStage(
+                    eventId,
+                    nominationID
                   );
+                  switch (creteriaResult) {
+                    case "success":
+                      message.success("Соревнование успешно начато");
+                      navigate(
+                        ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
+                      );
+                      break;
+                    case "failed":
+                      message.error("Произошла ошибка");
+                      break;
+                  }
                   break;
+
                 default:
                   break;
               }
@@ -478,7 +509,6 @@ function EventSettings() {
     <div>
       <Loader show={isLoading} />
       <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
-      <Divider />
       <Breadcrumb items={items} />
       <Row gutter={16}>
         <Col xs={24} md={8}>
@@ -576,13 +606,16 @@ function EventSettings() {
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
         onAdd={getNominations}
+        mode="create"
       />
       <CompitationModal
         name="Редактировать компетенцию"
-        mode="edit"
         isOpen={isEditModalOpen}
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}
+        onAdd={getNominations}
+        mode="edit"
+        nominationId={selectedNomination}
       />
       <CompetitionModal
         isOpen={openTrophyModal}

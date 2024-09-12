@@ -27,7 +27,7 @@ $transition: $timing ease all;
 
   &__logo {
     max-width: 100%;
-    margin-bottom: calc(50vh - 250px);
+    margin-bottom: 5px;
   }
 
   &__menu {
@@ -102,16 +102,16 @@ $transition: $timing ease all;
           &:nth-child(#{$j}):hover {
             ~ li:last-child:before {
               @include gooeyEffect($j);
-              margin-top: calc(50vh - 160px);
-              top: calc(280px / $i) * ($j - 1);
+              margin-top: 95px;
+              top: calc(var(--menu-list-height) / #{$i} * (#{$j - 1}));
               animation: gooeyEffect-#{$j} $timing 1;
             }
           }
         }
         &:last-child:hover:before {
           @include gooeyEffect($i);
-          margin-top: calc(50vh - 160px);
-          top: calc(280px / $i) * ($i - 1);
+          margin-top: 95px;
+          top: calc(var(--menu-list-height) / #{$i} * (#{$i - 1}));
           animation: gooeyEffect-#{$i} $timing 1;
         }
       }
@@ -122,7 +122,7 @@ $transition: $timing ease all;
     display: block;
     width: 100%;
     height: $linkHeight;
-    margin-bottom: 0px;
+    margin-bottom: 1px;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-radius: 15px;
@@ -142,8 +142,8 @@ $transition: $timing ease all;
     &::before {
       content: "";
       display: block;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       background-size: contain;
       background-position: center;
       background-repeat: no-repeat;

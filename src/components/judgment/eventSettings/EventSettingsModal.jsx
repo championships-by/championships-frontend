@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Flex, Form, Modal, message } from "antd";
 import ReglamentName from "@modules/judgment/events/ReglamentName";
 import CompetitionJudge from "@modules/judgment/events/CompetitionJudgeName";
@@ -12,8 +12,9 @@ function EventSettingsCompitations({
   onOk,
   onCancel,
   name,
-  mode = "create",
+  mode,
   onAdd,
+  nominationId,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputName, setInputName] = useState("");
@@ -23,6 +24,23 @@ function EventSettingsCompitations({
   const [criteria, setCriteria] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
   const { eventID } = useParams();
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (isOpen) {
+      competenciesApi
+        .getNominationEventInfo({
+          eventId: eventID,
+          nominationId: nominationId,
+        })
+        .then((response) => {
+          const data = response.data;
+        })
+        .catch((error) => {
+          console.error("Error fetching data: ", error);
+        });
+    }
+  }, [eventID, nominationId, form]);
 
   const eventId = parseInt(eventID, 10);
   const handleInputNameChange = (value) => {

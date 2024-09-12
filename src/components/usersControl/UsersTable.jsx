@@ -105,7 +105,14 @@ function UsersTable({ usersData }) {
 
   return (
     <>
-      <Table dataSource={usersData} columns={columns} locale={Locale} />
+      <Table
+        dataSource={usersData}
+        pagination={{
+          position: ["bottomCenter"],
+        }}
+        columns={columns}
+        locale={Locale}
+      />
 
       <UserModal
         type={ModalType.EDIT}

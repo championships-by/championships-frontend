@@ -112,6 +112,9 @@ function TeamsTable({ TeamsData }) {
         columns={columns}
         bordered
         locale={Locale}
+        pagination={{
+          position: ["bottomCenter"],
+        }}
       />
 
       <TeamEditModal

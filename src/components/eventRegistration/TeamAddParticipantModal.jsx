@@ -56,6 +56,11 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
     );
     const nominationsOptions = [];
     const kind = selectedNomination ? selectedNomination.kind : null;
+
+    form.setFieldsValue({
+      participant: undefined,
+    });
+
     competenciesApi
       .getParticipantsNominationEvent(eventID, nominationID, related, kind)
       .then((response) => {
@@ -69,7 +74,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
 
               nominationsOptions.push({
                 value: participant.participant_data.id,
-                label: `${firstName} ${secondName} ${thirdName}`,
+                label: `${firstName} ${thirdName} ${secondName} `,
               });
             });
           }
@@ -110,54 +115,23 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
           participants: [{}],
         }}
       >
-        <Form.List name="participants">
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, fieldKey, ...restField }) => (
-                <div key={key}>
-                  <TeamNominationSelect
-                    name="nomination"
-                    options={nominationsOptions}
-                    onChange={onNominationChange}
-                  />
-                  <TeamParticipantsInput
-                    name="participant"
-                    mode="single"
-                    options={dataTeamParticipants}
-                  />
-                  <ParticipantTeacherLastnameInput name="supervisor_second_name" />
-                  <ParticipantTeacherFirstnameInput name="supervisor_first_name" />
-                  <ParticipantTeacherPatronymicInput name="supervisor_third_name" />
-                  <ParticipantOrganizationInput name="educational_institution" />
-                  <ParticipantAdditionalOrganizationInput name="additional_educational_institution" />
-                  <ParticipantSoftwareInput name="software" />
-                  <ParticipantEquipmentInput name="equipment" />
-                  {fields.length > 1 && (
-                    <Button
-                      type="dashed"
-                      block
-                      icon={<MinusCircleOutlined />}
-                      onClick={() => remove(name)}
-                      className="event-registration__add-participant__remove-button"
-                      danger
-                    >
-                      Удалить участника
-                    </Button>
-                  )}
-                </div>
-              ))}
-              <Button
-                type="dashed"
-                className="event-registration__add-participant__add-button"
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}
-              >
-                Добавить участника
-              </Button>
-            </>
-          )}
-        </Form.List>
+        <TeamNominationSelect
+          name="nomination"
+          options={nominationsOptions}
+          onChange={onNominationChange}
+        />
+        <TeamParticipantsInput
+          name="participant"
+          mode="single"
+          options={dataTeamParticipants}
+        />
+        <ParticipantTeacherLastnameInput name="supervisor_second_name" />
+        <ParticipantTeacherFirstnameInput name="supervisor_first_name" />
+        <ParticipantTeacherPatronymicInput name="supervisor_third_name" />
+        <ParticipantOrganizationInput name="educational_institution" />
+        <ParticipantAdditionalOrganizationInput name="additional_educational_institution" />
+        <ParticipantSoftwareInput name="software" />
+        <ParticipantEquipmentInput name="equipment" />
         <Flex gap="middle">
           <Button type="primary" htmlType="submit" loading={isLoading}>
             Сохранить

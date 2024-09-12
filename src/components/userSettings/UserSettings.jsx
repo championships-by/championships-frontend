@@ -106,7 +106,7 @@ function UsersSettings() {
             />
           </Col>
           <Col span={8}>
-            <UserEmailInput name="email" />
+            <UserEmailInput name="email" disabled="true" />
             <UserPhoneInput name="phone" number={user.phone} />
             <Button
               type="primary"

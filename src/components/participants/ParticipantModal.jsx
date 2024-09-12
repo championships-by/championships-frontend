@@ -9,6 +9,8 @@ import ParticipantPatronymicInput from "@modules/participant/ParticipantPatronym
 import ParticipantRegionSelect from "@modules/participant/ParticipantRegionSelect.jsx";
 import { participantApi } from "@api";
 
+import "./sass/participants.scss";
+
 function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
@@ -114,7 +116,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
             Республики Беларусь.
           </Checkbox>
         </Flex>
-        <Flex gap="middle">
+        <Flex gap="middle" className="participants__modal__buttons">
           <Button
             disabled={!isAgreeChecked}
             type="primary"
