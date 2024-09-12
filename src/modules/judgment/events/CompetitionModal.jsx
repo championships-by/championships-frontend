@@ -78,7 +78,10 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
         >
           Начать соревнование
         </Button>
-        <Button className="events__competitionModal__play-off__cancelButton">
+        <Button
+          onClick={onCancel}
+          className="events__competitionModal__play-off__cancelButton"
+        >
           Отмена
         </Button>
       </Modal>

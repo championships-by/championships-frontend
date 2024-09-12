@@ -64,7 +64,7 @@ function TeamsTable({ TeamsData }) {
                   dataSource={participants}
                   renderItem={(item) => (
                     <List.Item>
-                      <Typography.Text>{`${item.second_name} ${item.first_name} ${item.third_name}`}</Typography.Text>
+                      <Typography.Text>{`${item.first_name} ${item.third_name} ${item.second_name}`}</Typography.Text>
                     </List.Item>
                   )}
                 />
