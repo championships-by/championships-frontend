@@ -3,8 +3,8 @@ import { Locale } from "@constants";
 import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
+import { formatTime } from "@utils";
 import { Flex, Table, Tooltip, Typography } from "antd";
-import { formatTime } from "../../../../utils";
 import "./TimeMatchesResult.scss";
 
 const columns = [

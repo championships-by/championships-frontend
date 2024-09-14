@@ -1,8 +1,10 @@
 import { competenciesApi, timeMatchesApi } from "@api";
-import { RESPONSE_STATUS } from "@constants";
+import { defaultTime, RESPONSE_STATUS } from "@constants";
 import { useTabs } from "@hooks/useTabs";
 import {
   formatTimeToString,
+  getClickHandler,
+  getTextByTabIndex,
   isTimeMatchesFilled,
   transformStageStatus,
   transformTimeMatchesData,
@@ -10,8 +12,6 @@ import {
 import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { defaultTime } from "../../../constants";
-import { getClickHandler, getTextByTabIndex } from "../../../utils";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 import { timeMatchesErrorMessages, TimeMatchesTabsEnum } from "./constants";
 
