@@ -14,6 +14,9 @@ export const participantApi = {
   setParticipant: (body) => {
     return instance.post("/participant/participant", body);
   },
+  addParticipantToNomination: (body) => {
+    return instance.post("/team_participant_nomination_event/team_participant", body);
+  },
   changeParticipant: (body) => {
     return instance.patch("/participant/participant", body);
   },

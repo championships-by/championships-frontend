@@ -1,3 +1,25 @@
+$borderRadius: 10px;
+$spacer: 1rem;
+$primary: #3679ff;
+$text: #6a778e;
+$linkHeight: $spacer * 3.5;
+$timing: 250ms;
+$transition: $timing ease all;
+
+@mixin gooeyEffect($i) {
+  @keyframes gooeyEffect-#{$i} {
+    0% {
+      transform: scale(1, 1);
+    }
+    50% {
+      transform: scale(0.5, 1.5);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }
+}
+
 .admin-panel {
   display: flex;
   flex: 1;
@@ -5,21 +27,39 @@
 
   &__logo {
     max-width: 100%;
-    margin-bottom: 50px;
+    margin-bottom: 5px;
   }
 
   &__menu {
     display: flex;
     flex-direction: column;
-
+    position: relative;
     min-width: 80px;
     width: 80px;
     padding: 10px 12px;
+    border-right: 1px solid transparent;
 
-    border-right: 1px solid rgb(229, 231, 235);
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 17px;
+      right: 0;
+      width: 1px;
+      background-color: #b8babe;
+    }
+
+    &::before {
+      bottom: 24px;
+    }
+
+    &::after {
+      bottom: 24px;
+    }
   }
 
   &__nav {
+    $ref: &;
     display: flex;
     flex: 1 0 auto;
     flex-direction: column;
@@ -31,55 +71,124 @@
     padding-left: 0;
   }
 
+  &__item {
+    &:last-child {
+      &:before {
+        content: "";
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+        top: 0;
+        width: $linkHeight;
+        height: $linkHeight;
+        background: $primary;
+        border-radius: $borderRadius * 1.75;
+        transition: $timing cubic-bezier(1, 0.2, 0.1, 1.2) all;
+      }
+    }
+
+    @for $i from 1 to 12 {
+      &:first-child:nth-last-child(#{$i}),
+      &:first-child:nth-last-child(#{$i}) ~ li {
+        &:hover {
+          ~ li:last-child:before {
+            opacity: 1;
+          }
+        }
+        &:last-child:hover:before {
+          opacity: 1;
+        }
+        @for $j from 1 to $i {
+          &:nth-child(#{$j}):hover {
+            ~ li:last-child:before {
+              @include gooeyEffect($j);
+              margin-top: 95px;
+              top: calc(var(--menu-list-height) / #{$i} * (#{$j - 1}));
+              animation: gooeyEffect-#{$j} $timing 1;
+            }
+          }
+        }
+        &:last-child:hover:before {
+          @include gooeyEffect($i);
+          margin-top: 95px;
+          top: calc(var(--menu-list-height) / #{$i} * (#{$i - 1}));
+          animation: gooeyEffect-#{$i} $timing 1;
+        }
+      }
+    }
+  }
+
   &__menu-link {
     display: block;
-
     width: 100%;
-    height: 60px;
-
-    margin-bottom: 20px;
+    height: $linkHeight;
+    margin-bottom: 1px;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-radius: 5px;
-
+    border-radius: 15px;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+    transition: $transition;
 
-    transition: 0.3s;
-
-    &.active,
-    &:hover {
-      background-color: #007aff;
-      transition: 0.3s;
+    &.active {
+      background-color: #3679ff;
+      filter: invert(0);
     }
 
     &:focus {
       outline: none;
     }
+    &::before {
+      content: "";
+      display: block;
+      width: 32px;
+      height: 32px;
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
-    &--event {
+    filter: invert(0);
+
+    &--event::before {
       background-image: url("@assets/img/event.png");
     }
 
-    &--users {
+    &--users::before {
       background-image: url("@assets/img/user.png");
     }
 
-    &--judgment {
+    &--judgment::before {
       background-image: url("@assets/img/judge.png");
     }
 
-    &--add-participants {
+    &--add-participants::before {
       background-image: url("@assets/img/add-participants.png");
     }
 
-    &--settings {
+    &--settings::before {
       background-image: url("@assets/img/settings.png");
     }
 
     &--logout {
-      background-image: url("@assets/img/logout.png");
+      &:hover {
+        background-color: #3679ff;
+        filter: invert(0);
+      }
+      &:before {
+        background-image: url("@assets/img/logout.png");
+      }
+    }
+
+    &:hover::before,
+    &.active::before {
+      filter: invert(1);
+      transition: $timing all;
     }
   }
 

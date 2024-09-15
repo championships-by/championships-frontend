@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { defaultFormat } from "@constants";
+import { defaultFormat, Locale } from "@constants";
 import { CustomTimePicker } from "@modules/judgment/timeMatches/components";
 import { formatTimeToString, generateColumns } from "@utils";
 import { Flex, Table, Typography } from "antd";
@@ -29,6 +29,7 @@ export const TimeMatchesTable = ({
       ...generateColumns(timeMatches, (text, record, index, columnId) => (
         <CustomTimePicker
           id={record.attempts[columnId].id}
+          value={record.attempts[columnId].result}
           disabled={!editable}
           onTimeChange={onTimeChange}
         />
@@ -70,7 +71,12 @@ export const TimeMatchesTable = ({
       {isErrorOccurred ? (
         <Typography>При попытке получить данные произошла ошибка</Typography>
       ) : (
-        <Table pagination={false} columns={columns} dataSource={timeMatches} />
+        <Table
+          pagination={false}
+          columns={columns}
+          dataSource={timeMatches}
+          locale={Locale}
+        />
       )}
     </Flex>
   );

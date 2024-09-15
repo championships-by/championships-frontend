@@ -12,7 +12,29 @@ function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState("unauthorized");
 
+  document.addEventListener("DOMContentLoaded", function () {
+    const menuList = document.querySelector(".admin-panel__menu-list");
+    const menuListHeight = menuList.offsetHeight;
+    document.documentElement.style.setProperty(
+      "--menu-list-height",
+      `${menuListHeight}px`
+    );
+  });
+
+  const updateMenuListHeight = () => {
+    const menuList = document.querySelector(".admin-panel__menu-list");
+    if (menuList) {
+      const menuListHeight = menuList.offsetHeight;
+      document.documentElement.style.setProperty(
+        "--menu-list-height",
+        `${menuListHeight}px`
+      );
+    }
+  };
+
   useEffect(() => {
+    updateMenuListHeight();
+
     if (isLoading) {
       userApi
         .getProfile()

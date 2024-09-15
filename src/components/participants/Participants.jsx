@@ -2,7 +2,7 @@ import { participantApi } from "@api";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
-import { Button, Flex, Typography, message } from "antd";
+import { Button, Flex, Typography, message, Row, Col, Divider } from "antd";
 import { useEffect, useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";
@@ -44,22 +44,27 @@ function Participants() {
   return (
     <>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Управление участниками</Typography.Title>
-
-      <AdminPanelControls>
-        <Flex gap="small">
-          {/*<Tooltip title="Сохранить список участников">
+      <Row align="bottom">
+        <Col>
+          <Typography.Title level={2}>Управление участниками</Typography.Title>
+        </Col>
+        <Col flex="auto">
+          <AdminPanelControls>
+            <Flex gap="small">
+              {/*<Tooltip title="Сохранить список участников">
             <Button type="primary" icon={<DownloadOutlined />} />
           </Tooltip>*/}
-          <Button
-            type="primary"
-            onClick={() => setIsAddParticipantModalOpen(true)}
-          >
-            Добавить участника
-          </Button>
-        </Flex>
-      </AdminPanelControls>
-
+              <Button
+                type="primary"
+                onClick={() => setIsAddParticipantModalOpen(true)}
+              >
+                Добавить участника
+              </Button>
+            </Flex>
+          </AdminPanelControls>
+        </Col>
+      </Row>
+      <Divider />
       <ParticipantsTable
         ParticipantData={dataParticipants}
         getParticipant={getParticipant}

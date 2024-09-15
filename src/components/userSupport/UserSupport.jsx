@@ -53,7 +53,7 @@ function UserSupport() {
           onClick={onClick}
           icon={<QuestionCircleOutlined />}
         >
-          <Tooltip placement="left" title="О программе">
+          <Tooltip placement="left" title="О портале">
             <FloatButton icon={<FileTextOutlined />} onClick={openAbout} />
           </Tooltip>
           <Tooltip placement="left" title="Обратная связь">

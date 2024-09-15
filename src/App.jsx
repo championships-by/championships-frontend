@@ -16,6 +16,7 @@ import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
 import Participants from "@components/participants/Participants";
 import Unauthorized from "@components/unauthorized/Unauthorized";
+import Forbidden from "@components/forbidden/Forbidden";
 import UserSettings from "@components/userSettings/UserSettings";
 import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
 import UsersControl from "@components/usersControl/UsersControl";
@@ -25,7 +26,7 @@ import AboutProgram from "@components/userSupport/AboutProgram";
 
 function App() {
   return (
-    <Provider store={store}>
+   <Provider store={store}>
       <BrowserRouter>
         <UserSupport />
         <Routes>
@@ -35,6 +36,40 @@ function App() {
             <Route index element={<Auth />} />
             <Route path={ROUTER_ROUTES.LOGOUT} element={<Logout />} />
             <Route path={ROUTER_ROUTES.ADMIN_PANEL} element={<AdminPanel />}>
+            <Route
+              path={ROUTER_ROUTES.PARTICIPANTS}
+              element={<Participants />}
+            />
+            <Route
+              path={ROUTER_ROUTES.USERS_CONTROL}
+              element={<UsersControl />}
+            />
+            <Route
+              path={ROUTER_ROUTES.USER_SETTINGS}
+              element={<UserSettings />}
+            />
+            <Route
+              path={ROUTER_ROUTES.USER_SETTINGS_TEST}
+              element={<UsersSettingsTest />}
+            />
+            <Route path={ROUTER_ROUTES.FEEDBACK} element={<Feedback />} />
+            <Route
+              path={ROUTER_ROUTES.ABOUT_PROGRAM}
+              element={<AboutProgram />}
+            />
+            <Route path={ROUTER_ROUTES.EVENTS}>
+              <Route index element={<Events />} />
+              <Route
+                path={ROUTER_ROUTES.EVENTS_DESCRIPTION}
+                element={<EventInformation />}
+              />
+              <Route
+                path={ROUTER_ROUTES.EVENTS_REGISTRATION}
+                element={<EventsRegistration />}
+              />
+            </Route>
+            <Route path={ROUTER_ROUTES.JUDGMENT}>
+              <Route index element={<Judgment />} />
               <Route
                 path={ROUTER_ROUTES.PARTICIPANTS}
                 element={<Participants />}

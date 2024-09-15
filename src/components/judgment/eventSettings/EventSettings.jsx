@@ -61,8 +61,11 @@ function EventSettings() {
   const [openTrophyModal, setTrophyModal] = useState(false);
   const [participantModal, setParticipantModal] = useState(false);
   const [competenciesModal, setCompetenciesModal] = useState(false);
+  const [switchDisabled, setSwitchDisabled] = useState(true);
   const [eventInfo, setEventInfo] = useState();
+  const [published, setPublished] = useState(true);
   const [dataNomination, setDataNomination] = useState([]);
+  const [selectedNomination, setSelectedNomination] = useState();
   const { eventID } = useParams();
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -149,23 +152,35 @@ function EventSettings() {
 
   const eventId = parseInt(eventID, 10);
 
-  const openEditModal = () => {
+  const openEditModal = (id) => {
+    setSelectedNomination(id);
     setIsEditModalOpen(true);
   };
-  const startCriteriaStage = (eventID, nominationID) => {
+
+  const startCriteriaStage = async (eventID, nominationID) => {
     const data = {
       event_id: eventID,
       nomination_id: nominationID,
     };
-    competenciesApi.startCriteriaStage(data);
+    try {
+      await competenciesApi.startCriteriaStage(data);
+    } catch (error) {
+      return "failed";
+    }
+    return "success";
   };
 
-  const startTimeStage = (eventID, nominationID) => {
+  const startTimeStage = async (eventID, nominationID) => {
     const data = {
       event_id: eventID,
       nomination_id: nominationID,
     };
-    competenciesApi.startTimeStage(data);
+    try {
+      await competenciesApi.startTimeStage(data);
+    } catch (error) {
+      return "failed";
+    }
+    return "success";
   };
   const openLink = (record) => {
     window.open(record.reglament);
@@ -215,27 +230,35 @@ function EventSettings() {
       };
       return competenciesApi.deleteNomination(data);
     };
-    Modal.confirm({
-      title: "Вы уверены?",
-      content: "Вы уверены что хотите удалить эту номинацию?",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      okText: "Да",
-      onOk: () => {
-        getNominationInfo()
-          .then(() => {
-            message.success("Компетенция успешно удалена");
-          })
-          .catch(() => {
-            message.error("При удалении произошла ошибка");
-          });
-      },
-      cancelText: "Отмена",
-    });
+
+    if (eventInfo.length > 1 || !published) {
+      Modal.confirm({
+        title: "Вы уверены?",
+        content: "Вы уверены что хотите удалить эту компетенцию?",
+        footer: (_, { OkBtn, CancelBtn }) => (
+          <>
+            <OkBtn />
+            <CancelBtn />
+          </>
+        ),
+        okText: "Да",
+        onOk: () => {
+          getNominationInfo()
+            .then(() => {
+              message.success("Компетенция успешно удалена");
+              getNominations();
+            })
+            .catch(() => {
+              message.error("При удалении произошла ошибка");
+            });
+        },
+        cancelText: "Отмена",
+      });
+    } else {
+      message.error(
+        "Прежде чем удалить последнюю компетенцию, снимите мероприятие с публикации"
+      );
+    }
   };
   const openCompetenciesModal = (record) => {
     const competitionType = record.kind;
@@ -262,19 +285,38 @@ function EventSettings() {
             try {
               switch (competitionType) {
                 case NOMINATION_TYPES.TIME:
-                  await startTimeStage(eventId, nominationID);
-                  message.success("Соревнование успешно начато");
-                  navigate(
-                    ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
-                  );
+                  let timeResult = await startTimeStage(eventId, nominationID);
+                  switch (timeResult) {
+                    case "success":
+                      message.success("Соревнование успешно начато");
+                      navigate(
+                        ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
+                      );
+                      break;
+                    case "failed":
+                      message.error("Произошла ошибка");
+                      break;
+                  }
+
                   break;
                 case NOMINATION_TYPES.CRITERIA:
-                  await startCriteriaStage(eventId, nominationID);
-                  message.success("Соревнование успешно начато");
-                  navigate(
-                    ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
+                  let creteriaResult = await startCriteriaStage(
+                    eventId,
+                    nominationID
                   );
+                  switch (creteriaResult) {
+                    case "success":
+                      message.success("Соревнование успешно начато");
+                      navigate(
+                        ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
+                      );
+                      break;
+                    case "failed":
+                      message.error("Произошла ошибка");
+                      break;
+                  }
                   break;
+
                 default:
                   break;
               }
@@ -300,25 +342,21 @@ function EventSettings() {
       });
     setParticipantModal(true);
   };
-  useEffect(() => {
+
+  const getNominations = () => {
     eventApi.getEvent(eventID).then((response) => {
       const translatedType = response.data.nominations.map((item) => ({
         ...item,
         kind: translateTypeFromEnglishIntoRussian(item.kind),
       }));
       setEventInfo(translatedType);
+      if (translatedType.length > 0) {
+        setSwitchDisabled(false);
+      } else {
+        setSwitchDisabled(true);
+      }
     });
-  }, [eventID]);
-
-  useEffect(() => {
-    competenciesApi.getCompetenciesEventData(eventID).then((response) => {
-      const translatedType = response.data.map((record) => ({
-        ...record,
-        type: translateTypeFromEnglishIntoRussian(record.type),
-      }));
-      setDataNomination(translatedType);
-    });
-  }, [eventID]);
+  };
 
   useEffect(() => {
     if (eventID) {
@@ -347,6 +385,7 @@ function EventSettings() {
           };
           form.setFieldsValue(values);
 
+          setPublished(values.published);
           setValues(values);
 
           setTimeout(() => setIsLoading(false), 300);
@@ -359,6 +398,7 @@ function EventSettings() {
     } else {
       setTimeout(() => setIsLoading(false), 300);
     }
+    getNominations();
   }, [eventID, form]);
 
   const onSubmit = async () => {
@@ -520,7 +560,7 @@ function EventSettings() {
               name="published"
               value={values.published}
               onChange={onValuesChange}
-              disabled={false}
+              disabled={switchDisabled}
             />
             <EventDescription name="description" value={values.description} />
             <EventLevel
@@ -565,13 +605,17 @@ function EventSettings() {
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
+        onAdd={getNominations}
+        mode="create"
       />
       <CompitationModal
         name="Редактировать компетенцию"
-        mode="edit"
         isOpen={isEditModalOpen}
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}
+        onAdd={getNominations}
+        mode="edit"
+        nominationId={selectedNomination}
       />
       <CompetitionModal
         isOpen={openTrophyModal}

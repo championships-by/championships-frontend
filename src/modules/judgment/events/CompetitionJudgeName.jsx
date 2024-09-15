@@ -1,22 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Typography, Select, Space, Flex, Input } from "antd";
 import { UsergroupAddOutlined } from "@ant-design/icons";
-import { useSearchParams, useParams } from "react-router-dom";
-import { userApi } from "../../../api/user";
-import { competenciesApi } from "../../../api/competencies";
+import { useParams } from "react-router-dom";
+import { userApi } from "@api";
+import { competenciesApi } from "@api";
 import "./sass/events.scss";
 
 function getFullName(item) {
-  return item.first_name + " " + item.second_name + " " + item.third_name;
+  return item.first_name + " " + item.third_name + " " + item.second_name;
 }
 
 function CompetitionType({ onJudgeChange }) {
   const [options, setOptions] = useState([]);
   const { limit } = useParams();
-  const [inputValue, setInputValue] = useState("");
-  const [dataCompetencies, setDataCompetencies] = useState([]);
+  const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
-
+  const [selectHeight, setSelectHeight] = useState(0);
+  const [searchInput, setSearchInput] = useState("");
+  const selectRef = useRef(null);
   const { eventID } = useParams();
 
   useEffect(() => {
@@ -40,16 +41,29 @@ function CompetitionType({ onJudgeChange }) {
       });
   }, [limit]);
 
-  const handleSearch = (value) => {
-    setInputValue(value);
+  useEffect(() => {
+    if (selectRef.current) {
+      const height = selectRef.current.offsetHeight;
+      setSelectHeight(height);
+    }
+  }, [options, selectedJudges]);
 
+  const handleSearch = (value) => {
+    setSearchInput(value);
     if (value) {
-      const filteredOptions = options.filter((item) =>
-        item.label.toLowerCase().includes(value.toLowerCase())
+      const filtered = options.filter((option) =>
+        option.label.toLowerCase().includes(value.toLowerCase())
       );
-      setOptions(filteredOptions);
+      setFilteredOptions(filtered);
     } else {
-      setOptions([]);
+      setFilteredOptions([]);
+    }
+  };
+
+  const handleDropdownVisibleChange = (open) => {
+    if (!open) {
+      setFilteredOptions([]);
+      setSearchInput("");
     }
   };
 
@@ -69,18 +83,22 @@ function CompetitionType({ onJudgeChange }) {
             <Input
               prefix={<UsergroupAddOutlined />}
               className="events__competition-judge__input"
+              style={{ height: selectHeight }}
               disabled
             />
             <Select
+              ref={selectRef}
               className="events__competition-judge__select"
               mode="multiple"
-              placeholder="Выберите судью"
+              placeholder="Начните вводить"
               maxTagCount={10}
-              options={options}
+              options={searchInput ? filteredOptions : []}
               onChange={handleChange}
               onSearch={handleSearch}
               value={selectedJudges}
+              onDropdownVisibleChange={handleDropdownVisibleChange}
               notFoundContent={"Не удалось найти"}
+              filterOption={false}
             />
           </Space.Compact>
         </Flex>

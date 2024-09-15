@@ -13,46 +13,64 @@ function AboutProgram() {
     <div className="user-support">
       <Typography.Title level={2}>О портале</Typography.Title>
       <Typography.Text className="user-support__about__text">
-        Республиканская единая система управления соревнованиями - это система
-        управления мероприятиями и соревнованиями. Все процессы
+        <Typography.Text className="user-support__about__text__blue">
+          Республиканская единая система управления соревнованиями
+        </Typography.Text>{" "}
+        - это система управления мероприятиями и соревнованиями. Все процессы
         автоматизированы, что позволяет экономить ресурсы и время на организацию
         проведения соревнований разного уровня от городского до
         республиканского.
       </Typography.Text>
       <Row align="middle">
-        <Col span={11}>
+        <Col span={9}>
           <img src={laptop} className="user-support__about__laptop-img" />
         </Col>
-        <Col span={13}>
-          <Typography.Title level={3}>Преимущества</Typography.Title>
-          <Typography.Text strong className="user-support__about__text">
-            1. Удобство:{" "}
-          </Typography.Text>
-          <Typography.Text className="user-support__about__text">
-            Регистрация онлайн, без привязки ко времени и месту.
-          </Typography.Text>
-          <br />
-          <Typography.Text className="user-support__about__text">
-            2. Упрощенное управление участниками и данными соревнований.
-          </Typography.Text>
-          <br />
-          <Typography.Text strong className="user-support__about__text">
-            3. Расширение охвата:{" "}
-          </Typography.Text>
-          <Typography.Text className="user-support__about__text">
-            Легкий доступ для участников из разных регионов.
-          </Typography.Text>
-          <br />
-          <Typography.Text strong className="user-support__about__text">
-            4. Гибкость:{" "}
-          </Typography.Text>
-          <Typography.Text className="user-support__about__text">
-            Настройка под нужды соревнований.
-          </Typography.Text>
-          <br />
-          <Typography.Text className="user-support__about__text">
-            5. Автоматическая генерация текущих и итоговых протоколов.
-          </Typography.Text>
+        <Col span={15}>
+          <div className="user-support__about__advantages-container">
+            <Typography.Title
+              className="user-support__about__titles__advantages"
+              level={3}
+            >
+              Преимущества
+            </Typography.Title>
+            <Typography.Text
+              strong
+              className="user-support__about__text__advantages"
+            >
+              1. Удобство:{" "}
+            </Typography.Text>
+            <Typography.Text className="user-support__about__text__advantages">
+              Регистрация онлайн, без привязки ко времени и месту.
+            </Typography.Text>
+            <br />
+            <Typography.Text className="user-support__about__text__advantages">
+              2. Упрощенное управление участниками и данными соревнований.
+            </Typography.Text>
+            <br />
+            <Typography.Text
+              strong
+              className="user-support__about__text__advantages"
+            >
+              3. Расширение охвата:{" "}
+            </Typography.Text>
+            <Typography.Text className="user-support__about__text__advantages">
+              Легкий доступ для участников из разных регионов.
+            </Typography.Text>
+            <br />
+            <Typography.Text
+              strong
+              className="user-support__about__text__advantages"
+            >
+              4. Гибкость:{" "}
+            </Typography.Text>
+            <Typography.Text className="user-support__about__text__advantages">
+              Настройка под нужды соревнований.
+            </Typography.Text>
+            <br />
+            <Typography.Text className="user-support__about__text__advantages">
+              5. Автоматическая генерация текущих и итоговых протоколов.
+            </Typography.Text>
+          </div>
         </Col>
       </Row>
       <Row justify="center" align="middle">
@@ -62,20 +80,20 @@ function AboutProgram() {
       </Row>
       <Row>
         <Col span={8} className="user-support__about__logo-container">
-          <a href={zubronokSite}>
+          <a href={zubronokSite} target="_blank">
             <img src={logo} className="user-support__about__logo" />
           </a>
         </Col>
         <Col span={8} className="user-support__about__logo-container">
-          <a href={fitrSite}>
+          <a href={fitrSite} target="_blank">
             <img src={fitrLogo} className="user-support__about__fitrLogo" />
           </a>
-          <a href={bntuSite}>
+          <a href={bntuSite} target="_blank">
             <img src={bntuLogo} className="user-support__about__bntuLogo" />
           </a>
         </Col>
         <Col span={8} className="user-support__about__logo-container">
-          <a href={gymnSite}>
+          <a href={gymnSite} target="_blank">
             <img src={schoolLogo} className="user-support__about__logo" />
           </a>
         </Col>
@@ -102,7 +120,7 @@ function AboutProgram() {
             Государственное учреждение образования{" "}
           </Typography.Text>
           <Typography.Text strong className="user-support__about__institution">
-            «Гимназия №61 г. Минска»
+            «Гимназия №61 г.Минска»
           </Typography.Text>
         </Col>
       </Row>

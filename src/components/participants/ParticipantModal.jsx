@@ -10,7 +10,9 @@ import ParticipantPatronymicInput from "@modules/participant/ParticipantPatronym
 import ParticipantRegionSelect from "@modules/participant/ParticipantRegionSelect.jsx";
 import { participantApi } from "@api";
 
-function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
+import "./sass/participants.scss";
+
+function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
@@ -62,11 +64,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
 
   return (
     <Modal
-      title={
-        type === ModalType.ADD
-          ? "Добавить участника"
-          : "Редактировать участника"
-      }
+      title={isEdit ? "Редактировать участника" : "Добавить участника"}
       className="participants__modal"
       open={isOpen}
       onOk={onOk}
@@ -119,7 +117,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
             Республики Беларусь.
           </Checkbox>
         </Flex>
-        <Flex gap="middle">
+        <Flex gap="middle" className="participants__modal__buttons">
           <Button
             disabled={!isAgreeChecked}
             type="primary"

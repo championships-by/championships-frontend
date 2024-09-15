@@ -4,7 +4,7 @@ import { MailOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/user.scss";
 
-function UserEmailInput({ name }) {
+function UserEmailInput({ name, disabled }) {
   const handleKeyPress = (event) => {
     if (event.key === " ") {
       event.preventDefault();
@@ -35,6 +35,7 @@ function UserEmailInput({ name }) {
           prefix={<MailOutlined />}
           type="email"
           placeholder="Введите Email"
+          disabled={disabled}
           onKeyPress={handleKeyPress}
         />
       </FormItem>

@@ -65,7 +65,16 @@ function JudgmentEventsTable({ EventsData }) {
     },
   ];
 
-  return <Table locale={Locale} dataSource={EventsData} columns={columns} />;
+  return (
+    <Table
+      locale={Locale}
+      dataSource={EventsData}
+      pagination={{
+        position: ["bottomCenter"],
+      }}
+      columns={columns}
+    />
+  );
 }
 
 export default JudgmentEventsTable;

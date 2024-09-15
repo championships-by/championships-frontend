@@ -14,6 +14,7 @@ import { competenciesApi } from "@api";
 
 function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const [groupCount, setGroupCount] = useState(3);
+  const [isLoading, setIsLoading] = useState(false);
   const { eventID } = useParams();
   const navigate = useNavigate();
 
@@ -21,7 +22,8 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const onChange = (value) => {
     setGroupCount(value);
   };
-  const startCompetition = () => {
+  const startCompetition = async () => {
+    setIsLoading(true);
     const data = {
       nomination_event: {
         event_id: eventId,
@@ -29,27 +31,15 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
       },
       group_count: groupCount,
     };
-    Modal.confirm({
-      title: "Вы уверены",
-      content:
-        "Вы уверены, что хотите начать соревнование? Отменить данное действие будет невозможно!",
-      footer: (_, { OkBtn, CancelBtn }) => (
-        <>
-          <OkBtn />
-          <CancelBtn />
-        </>
-      ),
-      okText: "Да",
-      onOk: async () => {
-        try {
-          await competenciesApi.startGroupStage(data);
-          message.success("Соревнование успешно начато");
-          navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
-        } catch (error) {
-          message.error("Произошла ошибка");
-        }
-      },
-    });
+    try {
+      await competenciesApi.startGroupStage(data);
+      message.success("Соревнование успешно начато");
+      navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+    } catch (error) {
+      message.error("Произошла ошибка");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -84,10 +74,14 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
           onClick={() => {
             startCompetition(eventId, nominationID, groupCount);
           }}
+          loading={isLoading}
         >
           Начать соревнование
         </Button>
-        <Button className="events__competitionModal__play-off__cancelButton">
+        <Button
+          onClick={onCancel}
+          className="events__competitionModal__play-off__cancelButton"
+        >
           Отмена
         </Button>
       </Modal>

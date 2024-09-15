@@ -1,8 +1,10 @@
 import { competenciesApi, timeMatchesApi } from "@api";
-import { RESPONSE_STATUS } from "@constants";
+import { defaultTime, RESPONSE_STATUS } from "@constants";
 import { useTabs } from "@hooks/useTabs";
 import {
   formatTimeToString,
+  getClickHandler,
+  getTextByTabIndex,
   isTimeMatchesFilled,
   transformStageStatus,
   transformTimeMatchesData,
@@ -11,7 +13,7 @@ import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
-import { TimeMatchesTabsEnum } from "./constants";
+import { timeMatchesErrorMessages, TimeMatchesTabsEnum } from "./constants";
 
 export const TimeMatchesTabs = () => {
   const { tabs, updateTabs } = useTabs();
@@ -23,6 +25,15 @@ export const TimeMatchesTabs = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const onChange = (value) => {
+    setActiveTab(value);
+    isStageFinished && activeTab === "1"
+      ? setIsButtonDisabled(false)
+      : setIsButtonDisabled(true);
+  };
 
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
     setTimeMatches((prev) =>
@@ -31,7 +42,7 @@ export const TimeMatchesTabs = () => {
           attempt.id === id
             ? {
                 ...attempt,
-                result: !time ? null : formatTimeToString(time),
+                result: time ? formatTimeToString(time) : null,
                 isDisqualified,
               }
             : attempt
@@ -60,14 +71,18 @@ export const TimeMatchesTabs = () => {
         return;
       }
 
-      timeMatches.forEach((timeMatch) =>
-        timeMatch.attempts.forEach(({ id, result }) =>
-          timeMatchesApi.setTimeMatch({
-            eventId,
-            nominationId,
-            raceRoundId: id,
-            result,
-          })
+      await Promise.allSettled(
+        timeMatches.map((timeMatch) =>
+          timeMatch.attempts.map(({ id, result, isDisqualified }) =>
+            timeMatchesApi
+              .setTimeMatch(
+                eventId,
+                nominationId,
+                id,
+                !result && isDisqualified ? defaultTime : result
+              )
+              .catch((reason) => console.error(reason))
+          )
         )
       );
 
@@ -83,9 +98,13 @@ export const TimeMatchesTabs = () => {
         },
       ]);
     } catch (error) {
-      message.error("Произошла неизвестная ошибка");
+      const statusCode = error.response.status;
+      const errorMessage =
+        timeMatchesErrorMessages[statusCode] ||
+        timeMatchesErrorMessages.default;
+      message.error(errorMessage);
     }
-  }, [eventId, nominationId, timeMatches]);
+  }, [eventId, nominationId, timeMatches, updateTabs]);
 
   const handleDownload = useCallback(() => {
     console.log("download file");
@@ -95,11 +114,8 @@ export const TimeMatchesTabs = () => {
     if (!isDataLoaded) {
       setIsLoading(true);
       Promise.all([
-        competenciesApi.getNominationEventInfo({
-          eventId,
-          nominationId,
-        }),
-        timeMatchesApi.getTimeMatches({ eventId, nominationId }),
+        competenciesApi.getNominationEventInfo(eventId, nominationId),
+        timeMatchesApi.getTimeMatches(eventId, nominationId),
       ])
         .then(([stageStatusResponse, timeMatchesResponse]) => {
           if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
@@ -108,8 +124,9 @@ export const TimeMatchesTabs = () => {
             );
             setStageStatus(transformedStageStatus);
 
-            if (stageStatus.tournamentFinished) {
+            if (transformedStageStatus.tournamentFinished) {
               setIsStageFinished(true);
+              setIsButtonDisabled(true);
             }
           }
 
@@ -120,7 +137,15 @@ export const TimeMatchesTabs = () => {
             setTimeMatches(transformedTimeMatches);
           }
         })
-        .catch(() => setIsErrorOccurred(true))
+        .catch((error) => {
+          if (error.response && error.response.status === 404) {
+            message.error(
+              "Данные не найдены. Проверьте event_id и nomination_id."
+            );
+          } else {
+            setIsErrorOccurred(true);
+          }
+        })
         .finally(() => {
           setIsLoading(false);
           setIsDataLoaded(true);
@@ -130,7 +155,8 @@ export const TimeMatchesTabs = () => {
 
   return (
     <Tabs
-      defaultActiveKey="1"
+      activeKey={activeTab}
+      onChange={onChange}
       items={[
         {
           ...tabs[0],
@@ -167,10 +193,17 @@ export const TimeMatchesTabs = () => {
       tabBarExtraContent={{
         right: (
           <Button
-            onClick={isStageFinished ? handleDownload : handleCompleteStage}
+            disabled={isButtonDisabled}
+            onClick={getClickHandler(
+              () => (!isStageFinished ? 0 : 1),
+              [handleCompleteStage, handleDownload]
+            )}
             type="primary"
           >
-            {isStageFinished ? "Итоговый протокол" : "Завершить этап"}
+            {getTextByTabIndex(activeTab, [
+              "Завершить этап",
+              "Итоговый протокол",
+            ])}
           </Button>
         ),
       }}

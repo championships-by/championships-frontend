@@ -15,19 +15,18 @@ function Feedback() {
         <br />
         <a href={`mailto:${mailZubronok}`}> {mailZubronok}</a>
       </Typography.Text>
-      <br />
-      <br />
-      <Typography.Text className="user-support__feedback__text">
-        <Typography.Text
-          strong
-          type="danger"
-          className="user-support__feedback__text"
-        >
-          Внимание!{" "}
+      <div className="user-support__feedback__warning-container">
+        <Typography.Text className="user-support__feedback__text__white">
+          <Typography.Text
+            strong
+            className="user-support__feedback__text__white"
+          >
+            Внимание!{" "}
+          </Typography.Text>
+          Для связи с организаторами выбранного мероприятия воспользуйтесь email
+          для вопросов участников на странице этого мероприятия.
         </Typography.Text>
-        Для связи с организаторами выбранного мероприятия воспользуйтесь email
-        для вопросов участников на странице этого мероприятия.
-      </Typography.Text>
+      </div>
       <div className="user-support__feedback__img-container">
         <img src={laptop} className="user-support__feedback__laptop-img" />
       </div>

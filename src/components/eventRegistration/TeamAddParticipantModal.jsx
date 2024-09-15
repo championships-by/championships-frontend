@@ -11,15 +11,17 @@ import ParticipantTeacherFirstnameInput from "@modules/participant/ParticipantTe
 import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTeacherLastnameInput.jsx";
 import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
 import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
-import { eventApi, competenciesApi } from "@api";
+import { eventApi, competenciesApi, participantApi } from "@api";
 
 import "./sass/event-registration.scss";
 
-function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
+function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
   const [isLoading, setIsLoading] = useState(false);
   const [nominationsOptions, setNominationOptions] = useState({});
   const [dataNominations, setNomination] = useState({});
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
+  const [nominationId, setNominationId] = useState();
+  const [nominationType, setNominationType] = useState();
   const { eventID } = useParams();
   const [form] = Form.useForm();
 
@@ -47,15 +49,21 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
           )
         );
     }
-  });
+  }, [isOpen, eventID]);
 
   const onNominationChange = (nominationID) => {
+    setNominationId(nominationID);
     const related = false;
     const selectedNomination = dataNominations.find(
       (nom) => nom.id === nominationID
     );
     const nominationsOptions = [];
     const kind = selectedNomination ? selectedNomination.kind : null;
+    setNominationType(kind);
+
+    form.setFieldsValue({
+      participant: undefined,
+    });
     competenciesApi
       .getParticipantsNominationEvent(eventID, nominationID, related, kind)
       .then((response) => {
@@ -69,7 +77,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
 
               nominationsOptions.push({
                 value: participant.participant_data.id,
-                label: `${firstName} ${secondName} ${thirdName}`,
+                label: `${firstName} ${thirdName} ${secondName} `,
               });
             });
           }
@@ -82,9 +90,51 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
       );
   };
 
-  const onFinish = () => {
-    message.success("Всё в порядке!");
-    setIsLoading(false);
+  const onFinish = async () => {
+    try {
+      const body = {
+        nomination_event: {
+          event_id: eventID,
+          nomination_id: nominationId,
+          type: nominationType,
+        },
+        team_id: teamID,
+        team_participants: [
+          {
+            participant_id: form.getFieldValue("participant_id"),
+            softwares: [
+              {
+                name: form.getFieldValue("software"),
+              },
+            ],
+            equipments: [
+              {
+                name: form.getFieldValue("equipment"),
+              },
+            ],
+            educational_institution: form.getFieldValue(
+              "educational_institution"
+            ),
+            additional_educational_institution: form.getFieldValue(
+              "additional_educational_institution"
+            ),
+            supervisor_first_name: form.getFieldValue("supervisor_first_name"),
+            supervisor_second_name: form.getFieldValue(
+              "supervisor_second_name"
+            ),
+            supervisor_third_name: form.getFieldValue("supervisor_third_name"),
+          },
+        ],
+      };
+      await participantApi.addParticipantToNomination(body);
+      message.success("Всё в порядке!");
+      form.resetFields();
+      onOk();
+    } catch (error) {
+      message.error("Произошла ошибка.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onFinishFailed = () => {
@@ -110,54 +160,23 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel }) {
           participants: [{}],
         }}
       >
-        <Form.List name="participants">
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, fieldKey, ...restField }) => (
-                <div key={key}>
-                  <TeamNominationSelect
-                    name="nomination"
-                    options={nominationsOptions}
-                    onChange={onNominationChange}
-                  />
-                  <TeamParticipantsInput
-                    name="participant"
-                    mode="single"
-                    options={dataTeamParticipants}
-                  />
-                  <ParticipantTeacherLastnameInput name="supervisor_second_name" />
-                  <ParticipantTeacherFirstnameInput name="supervisor_first_name" />
-                  <ParticipantTeacherPatronymicInput name="supervisor_third_name" />
-                  <ParticipantOrganizationInput name="educational_institution" />
-                  <ParticipantAdditionalOrganizationInput name="additional_educational_institution" />
-                  <ParticipantSoftwareInput name="software" />
-                  <ParticipantEquipmentInput name="equipment" />
-                  {fields.length > 1 && (
-                    <Button
-                      type="dashed"
-                      block
-                      icon={<MinusCircleOutlined />}
-                      onClick={() => remove(name)}
-                      className="event-registration__add-participant__remove-button"
-                      danger
-                    >
-                      Удалить участника
-                    </Button>
-                  )}
-                </div>
-              ))}
-              <Button
-                type="dashed"
-                className="event-registration__add-participant__add-button"
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}
-              >
-                Добавить участника
-              </Button>
-            </>
-          )}
-        </Form.List>
+        <TeamNominationSelect
+          name="nomination"
+          options={nominationsOptions}
+          onChange={onNominationChange}
+        />
+        <TeamParticipantsInput
+          name="participant_id"
+          mode="single"
+          options={dataTeamParticipants}
+        />
+        <ParticipantTeacherLastnameInput name="supervisor_second_name" />
+        <ParticipantTeacherFirstnameInput name="supervisor_first_name" />
+        <ParticipantTeacherPatronymicInput name="supervisor_third_name" />
+        <ParticipantOrganizationInput name="educational_institution" />
+        <ParticipantAdditionalOrganizationInput name="additional_educational_institution" />
+        <ParticipantSoftwareInput name="software" />
+        <ParticipantEquipmentInput name="equipment" />
         <Flex gap="middle">
           <Button type="primary" htmlType="submit" loading={isLoading}>
             Сохранить

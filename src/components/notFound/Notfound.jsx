@@ -6,11 +6,17 @@ function NotFound() {
   return (
     <Result
       status="404"
-      title="404"
-      subTitle="Извините, страница, которую вы посетили, не существует."
+      title="Ой!"
+      subTitle={
+        <>
+          Похоже, мы не можем найти нужную Вам страницу
+          <br />
+          Код ошибки: 404
+        </>
+      }
       extra={
         <NavLink to={ROUTES.USER_SETTINGS.PATH}>
-          <Button type="primary">Вернуться на главную</Button>
+          <Button type="primary">Настройки пользователя</Button>
         </NavLink>
       }
     />

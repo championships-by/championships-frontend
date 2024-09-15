@@ -1,14 +1,18 @@
 import { CloseCircleOutlined } from "@ant-design/icons";
 import { defaultFormat } from "@constants";
-import { formatTime } from "@utils";
+import { formatTime, isAttemptDisqualified } from "@utils";
 import { Button, TimePicker } from "antd";
 import { useState } from "react";
 import "./CustomTimePicker.scss";
 
-export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
-  const [value, setValue] = useState(null);
+export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
+  const [time, setTime] = useState(
+    !isAttemptDisqualified(value) && value ? formatTime(value) : null
+  );
   const [isOpen, setIsOpen] = useState(false);
-  const [isDisqualified, setIsDisqualified] = useState(false);
+  const [isDisqualified, setIsDisqualified] = useState(
+    isAttemptDisqualified(value)
+  );
 
   const handleOk = () => {
     setIsOpen(false);
@@ -16,7 +20,7 @@ export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
 
   const handleDisqualify = () => {
     setIsDisqualified((disqualified) => !disqualified);
-    onTimeChange(id, value, !isDisqualified);
+    onTimeChange(id, time, !isDisqualified);
   };
 
   const handleInputClick = () => {
@@ -24,18 +28,22 @@ export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
   };
 
   const handleClear = () => {
-    setValue(null);
+    setTime(null);
     onTimeChange(id, null, isDisqualified);
   };
 
-  return !isDisqualified ? (
+  return isDisqualified ? (
+    <Button disabled={disabled} type="text" onClick={handleDisqualify}>
+      Дисквалификация
+    </Button>
+  ) : (
     <TimePicker
       placeholder="Выберите время"
       disabled={disabled}
-      value={value}
-      onChange={(time) => {
-        setValue(time);
-        onTimeChange(id, time, isDisqualified);
+      value={time}
+      onChange={(newTime) => {
+        setTime(newTime);
+        onTimeChange(id, newTime, isDisqualified);
       }}
       variant="borderless"
       open={isOpen}
@@ -60,9 +68,5 @@ export const CustomTimePicker = ({ id, disabled, onTimeChange }) => {
         </div>
       )}
     />
-  ) : (
-    <span className="table-time__disqualification" onClick={handleDisqualify}>
-      Дисквалификация
-    </span>
   );
 };

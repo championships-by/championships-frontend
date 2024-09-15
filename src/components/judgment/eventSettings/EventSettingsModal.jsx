@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Flex, Form, Modal, message } from "antd";
 import ReglamentName from "@modules/judgment/events/ReglamentName";
 import CompetitionJudge from "@modules/judgment/events/CompetitionJudgeName";
@@ -12,7 +12,9 @@ function EventSettingsCompitations({
   onOk,
   onCancel,
   name,
-  mode = "create",
+  mode,
+  onAdd,
+  nominationId,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputName, setInputName] = useState("");
@@ -21,7 +23,25 @@ function EventSettingsCompitations({
   const [groupCount, setGroupCount] = useState();
   const [criteria, setCriteria] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
+  const [refreshKey, setRefreshKey] = useState(0);
   const { eventID } = useParams();
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (isOpen) {
+      competenciesApi
+        .getNominationEventInfo({
+          eventId: eventID,
+          nominationId: nominationId,
+        })
+        .then((response) => {
+          const data = response.data;
+        })
+        .catch((error) => {
+          console.error("Error fetching data: ", error);
+        });
+    }
+  }, [eventID, nominationId, form]);
 
   const eventId = parseInt(eventID, 10);
   const handleInputNameChange = (value) => {
@@ -62,35 +82,40 @@ function EventSettingsCompitations({
         judges_ids: selectedJudges,
       },
     };
-    switch (selectedValue) {
-      case "time":
-        Object.assign(data, { race_round_amount: groupCount });
-        await competenciesApi.addTimeCompetenciesForEvent(data).then(() => {
-          message.success("Компетенция успешно добавлена");
-          setIsLoading(false);
-          onCancel();
-        });
-        break;
+    try {
+      switch (selectedValue) {
+        case "time":
+          Object.assign(data, { race_round_amount: groupCount });
+          await competenciesApi
+            .addTimeCompetenciesForEvent(data)
+            .then(() => {});
+          break;
 
-      case "playoffs":
-        await competenciesApi.addOlympicCompetenciesForEvent(data).then(() => {
-          message.success("Компетенция успешно добавлена");
-          setIsLoading(false);
-          onCancel();
-        });
-        break;
+        case "playoffs":
+          await competenciesApi
+            .addOlympicCompetenciesForEvent(data)
+            .then(() => {});
+          break;
 
-      case "criteria":
-        Object.assign(data, { criterias: criteria });
-        await competenciesApi.addCriteriaCompetenciesForEvent(data).then(() => {
-          message.success("Компетенция успешно добавлена");
-          setIsLoading(false);
-          onCancel();
-        });
-        break;
-      default:
-        break;
+        case "criteria":
+          Object.assign(data, { criterias: criteria });
+          await competenciesApi
+            .addCriteriaCompetenciesForEvent(data)
+            .then(() => {});
+          break;
+        default:
+          break;
+      }
+      message.success("Компетенция успешно добавлена");
+      onOk();
+      onAdd();
+      setInputName("");
+      setInputReglament("");
+      setRefreshKey((prevKey) => prevKey + 1);
+    } catch (error) {
+      message.error("Произошла ошибка.");
     }
+    setIsLoading(false);
   };
 
   return (
@@ -103,6 +128,8 @@ function EventSettingsCompitations({
       width={600}
     >
       <Form
+        key={refreshKey}
+        form={form}
         layout="vertical"
         requiredMark="default"
         onFinish={onFinish}
