@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { ModalType } from "@constants";
 import { Button, Flex, Form, Modal, message, Checkbox } from "antd";
 import ParticipantBirthdayInput from "@modules/participant/ParticipantBirthdayInput.jsx";
 import ParticipantEmailInput from "@modules/participant/ParticipantEmailInput.jsx";
@@ -9,7 +10,7 @@ import ParticipantPatronymicInput from "@modules/participant/ParticipantPatronym
 import ParticipantRegionSelect from "@modules/participant/ParticipantRegionSelect.jsx";
 import { participantApi } from "@api";
 
-function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
+function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit, type }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);

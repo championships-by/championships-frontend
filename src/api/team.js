@@ -1,19 +1,13 @@
-import { instance } from ".";
+import { instance } from "./index";
 
 export const teamApi = {
   getTeam: () =>
-    fetch(`${API_PATH}/team/teams?offset=0&limit=49`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
+    instance.get(`${API_PATH}/team/teams`, {
+      params: {
+        offset: 0,
+        limit: 49,
       },
-      redirect: "follow",
-      credentials: "include",
-    }).then((response) => response.json()),
-  setTeams: (body) => {
-    return instance.post(`${API_PATH}/team/teams`, body);
-  },
-  updateTeam: (data) => {
-    return instance.put(`${API_PATH}/team/teams`, data);
-  },
+    }),
+  setTeams: (body) => instance.post(`${API_PATH}/team/teams`, body, {}),
+  updateTeam: (data) => instance.put(`${API_PATH}/team/teams`, data, {}),
 };

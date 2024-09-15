@@ -33,7 +33,7 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
     userApi
       .changeProfile(data)
       .then((response) => {
-        if (response.ok) {
+        if (response.status === 200) {
           message.success("Пароль успешно изменен");
           form.resetFields();
           onOk();

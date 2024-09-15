@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ROUTER_ROUTES } from "@constants";
-import { store } from "@store"
+import { store } from "@store";
 import AdminPanel from "@components/adminPanel/AdminPanel";
 import Auth from "@components/auth/Auth";
 import EventsRegistration from "@components/eventRegistration/EventRegistration";
@@ -22,7 +22,6 @@ import UsersControl from "@components/usersControl/UsersControl";
 import UserSupport from "@components/userSupport/UserSupport";
 import Feedback from "@components/userSupport/Feedback";
 import AboutProgram from "@components/userSupport/AboutProgram";
-
 
 function App() {
   return (

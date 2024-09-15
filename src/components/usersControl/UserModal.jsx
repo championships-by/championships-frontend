@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { getUsersSelector, setUser, addUser } from '@store/users';
+import { useDispatch, useSelector } from "react-redux";
+import { getUsersSelector, setUser, getUsers } from "@store/users";
 import { ModalType } from "@constants";
 import UserEmailInput from "@modules/user/UserEmailInput";
 import UserFirstnameInput from "@modules/user/UserFirstnameInput";
@@ -11,8 +11,6 @@ import UserPhoneInput from "@modules/user/UserPhoneInput";
 import UserRoleInput from "@modules/user/UserRoleInput";
 import { Button, Form, message, Modal, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
-
-
 
 function UserModal({ isOpen, onOk, onCancel, type }) {
   const users = useSelector(getUsersSelector);
@@ -30,7 +28,7 @@ function UserModal({ isOpen, onOk, onCancel, type }) {
   };
 
   const createUserRequest = async () => {
-    const raw = JSON.stringify ({
+    const raw = {
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
       second_name: form.getFieldValue("second_name"),
@@ -39,10 +37,11 @@ function UserModal({ isOpen, onOk, onCancel, type }) {
       role: form.getFieldValue("role"),
       educational_institution: form.getFieldValue("organization"),
       password: form.getFieldValue("password"),
-    });
+    };
 
     try {
       await dispatch(setUser(raw));
+      dispatch(getUsers());
       onFinish();
     } catch (error) {
       message.error("Ошибка создания пользователя!");

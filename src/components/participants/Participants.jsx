@@ -18,7 +18,7 @@ function Participants() {
   const getParticipant = () => {
     participantApi
       .getParticipant()
-      .then((data) => setParticipants(data))
+      .then((response) => setParticipants(response.data))
       .catch(() =>
         message.error("Невозможно получить данные. Обратитесь к администратору")
       )

@@ -11,23 +11,22 @@ import "./sass/admin-panel.scss";
 function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState("unauthorized");
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoading) {
       userApi
         .getProfile()
-        .then((user) => {
-          setRole(user.role);
+        .then((response) => {
+          setRole(response.data.role);
           setIsLoading(false);
         })
         .catch(() => {
           message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
+            "panel Невозможно получить данные. Обратитесь к администратору"
           );
         });
     }
-  });
+  }, [isLoading, role]);
 
   return (
     <div className="admin-panel">

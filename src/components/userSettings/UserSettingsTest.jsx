@@ -61,7 +61,7 @@ function UsersSettings() {
     userApi
       .changeProfile()
       .then((response) => {
-        if (response.ok) {
+        if (response.status === 200) {
           message.success("Данные успешно сохранены");
         } else {
           message.error(

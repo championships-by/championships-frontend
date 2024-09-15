@@ -37,7 +37,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
       setError(null);
       try {
         const matches = await judgmentApi.getMatches(eventId, nominationId);
-        const transformedMatches = transformMatches(matches);
+        const transformedMatches = transformMatches(matches.data);
         setMatches(transformedMatches);
       } catch (error) {
         setError("Произошла ошибка получения данных");

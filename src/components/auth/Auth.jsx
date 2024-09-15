@@ -23,16 +23,19 @@ function Auth() {
       userApi
         .getProfile()
         .then((response) => {
-          if (response.ok) {
+          if (response.status === 200) {
             navigate("/settings");
-          } else {
-            setIsLoading(false);
           }
         })
-        .catch(() => {
-          message.error(
-            "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
-          );
+        .catch((error) => {
+          if (error.response.status === 401) {
+            setIsLoading(false);
+            message.info("Вы не авторизовались");
+          } else {
+            message.error(
+              "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
+            );
+          }
         });
     }
   }, [isLoading, navigate]);
@@ -49,7 +52,7 @@ function Auth() {
         password: encrypedPassword,
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         navigate(ROUTES.USER_SETTINGS.PATH);
       } else {
         message.error("Ошибка: Неверный email или пароль.");

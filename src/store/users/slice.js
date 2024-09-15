@@ -1,29 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { 
-  getUsers, 
-  setUser, 
-  changeUserProfile, 
-  getUserProfile, 
-  getJudges 
-} from './thunk';
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  getUsers,
+  setUser,
+  changeUserProfile,
+  getUserProfile,
+  getJudges,
+} from "./thunk";
 
 export const usersSlice = createSlice({
-  name: 'users',
+  name: "users",
   initialState: { data: [], isLoading: false, error: null },
-  reducers: {
-    addUser: (state, action) => {
-      state.data.push(action.payload);
-    },
-    deleteUser: (state, action) => {
-      state.data = state.data.filter((user) => user.id !== action.payload);
-    },
-    updateUser: (state, action) => {
-      const index = state.data.findIndex((user) => user.id === action.payload.id);
-      if (index !== -1) {
-        state.data[index] = action.payload;
-      }
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getUsers.pending, (state) => {
@@ -45,7 +32,9 @@ export const usersSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(changeUserProfile.fulfilled, (state, action) => {
-        const index = state.data.findIndex((user) => user.id === action.payload.id);
+        const index = state.data.findIndex(
+          (user) => user.id === action.payload.id
+        );
         if (index !== -1) {
           state.data[index] = action.payload;
         }
@@ -68,4 +57,5 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { setLoading, addUser, deleteUser, updateUser, setError } = usersSlice.actions;
+export const { setLoading, addUser, deleteUser, updateUser, setError } =
+  usersSlice.actions;

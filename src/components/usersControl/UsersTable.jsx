@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import UserModal from "@components/usersControl/UserModal";
 import { Locale, ModalType, ROLE_FILTERS } from "@constants";
 import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
-import { useState} from "react";
+import { useState } from "react";
 
 function UsersTable() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const users = useSelector(getUsersSelector)
+  const users = useSelector(getUsersSelector);
   const usersData = users.data;
 
   const openEditModal = () => {

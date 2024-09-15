@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUsers, getUsersSelector} from '@store/users';
-import AdminPanelControls from '@components/adminPanel/AdminPanelControls';
-import Loader from '@components/loader/Loader';
-import { ModalType } from '@constants';
-import { Button, message, Typography, Row, Col, Divider } from 'antd';
-import UserModal from './UserModal';
-import UsersTable from './UsersTable';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers, getUsersSelector } from "@store/users";
+import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
+import Loader from "@components/loader/Loader";
+import { ModalType } from "@constants";
+import { Button, message, Typography, Row, Col, Divider } from "antd";
+import UserModal from "./UserModal";
+import UsersTable from "./UsersTable";
 
-import './sass/users-control.scss';
+import "./sass/users-control.scss";
 
 function UsersControl() {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const users = useSelector(getUsersSelector)
+  const users = useSelector(getUsersSelector);
   const isLoading = users.isLoading;
 
   useEffect(() => {
-    dispatch(getUsers())}
-  ,[dispatch])
+    dispatch(getUsers());
+  }, [dispatch]);
 
   return (
     <div className="users-control">

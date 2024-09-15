@@ -44,9 +44,9 @@ function TeamCreateModal({ isOpen, onOk, onCancel }) {
     if (isOpen) {
       participantApi
         .getParticipant()
-        .then((data) =>
+        .then((response) =>
           setTeamParticipants(
-            data.map((participant) => ({
+            response.data.map((participant) => ({
               value: participant.id,
               label: `${participant.first_name} ${participant.second_name} ${participant.third_name}`,
             }))

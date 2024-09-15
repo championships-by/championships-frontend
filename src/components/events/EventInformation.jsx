@@ -71,9 +71,9 @@ function EventInformation() {
   useEffect(() => {
     if (eventID) {
       try {
-        eventApi.getEvent(eventID).then((data) => {
-          setEvent(data.event);
-          setNomination(data.nominations);
+        eventApi.getEvent(eventID).then((response) => {
+          setEvent(response.data.event);
+          setNomination(response.data.nominations);
 
           const script = document.createElement("script");
           script.src = yaShareLink;
