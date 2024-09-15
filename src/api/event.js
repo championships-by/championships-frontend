@@ -15,7 +15,10 @@ export const eventApi = {
         limit,
       },
     }),
-  changeEvent: (body) => instance.patch(`${API_PATH}/event/event`, body),
+  changeEvent: (body) => instance.patch(`${API_PATH}/event/event`, body, {
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+  }}),
   changeLogo: (formData) =>
     instance.post(`${API_PATH}/event/event_update_logo`, formData),
   changeRegulation: (formData) =>

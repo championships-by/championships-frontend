@@ -28,14 +28,15 @@ function App() {
   return (
    <Provider store={store}>
       <BrowserRouter>
-        <UserSupport />
-        <Routes>
-          <Route path={ROUTER_ROUTES.NOT_FOUND} element={<NotFound />} />
-          <Route path={ROUTER_ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
-          <Route path={ROUTER_ROUTES.ROOT}>
-            <Route index element={<Auth />} />
-            <Route path={ROUTER_ROUTES.LOGOUT} element={<Logout />} />
-            <Route path={ROUTER_ROUTES.ADMIN_PANEL} element={<AdminPanel />}>
+      <UserSupport />
+      <Routes>
+        <Route path={ROUTER_ROUTES.NOT_FOUND} element={<NotFound />} />
+        <Route path={ROUTER_ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
+        <Route path={ROUTER_ROUTES.FORBIDDEN} element={<Forbidden />} />
+        <Route path={ROUTER_ROUTES.ROOT}>
+          <Route index element={<Auth />} />
+          <Route path={ROUTER_ROUTES.LOGOUT} element={<Logout />} />
+          <Route path={ROUTER_ROUTES.ADMIN_PANEL} element={<AdminPanel />}>
             <Route
               path={ROUTER_ROUTES.PARTICIPANTS}
               element={<Participants />}
@@ -71,64 +72,30 @@ function App() {
             <Route path={ROUTER_ROUTES.JUDGMENT}>
               <Route index element={<Judgment />} />
               <Route
-                path={ROUTER_ROUTES.PARTICIPANTS}
-                element={<Participants />}
+                path={ROUTER_ROUTES.JUDGMENT_CREATE}
+                element={<EventSettings />}
               />
               <Route
-                path={ROUTER_ROUTES.USERS_CONTROL}
-                element={<UsersControl />}
+                path={ROUTER_ROUTES.JUDGMENT_EVENT_SETTINGS}
+                element={<EventSettings />}
               />
               <Route
-                path={ROUTER_ROUTES.USER_SETTINGS}
-                element={<UserSettings />}
+                path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
+                element={<JudgmentGroupStage />}
               />
               <Route
-                path={ROUTER_ROUTES.USER_SETTINGS_TEST}
-                element={<UsersSettingsTest />}
+                path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
+                element={<TimeMatches />}
               />
-              <Route path={ROUTER_ROUTES.FEEDBACK} element={<Feedback />} />
               <Route
-                path={ROUTER_ROUTES.ABOUT_PROGRAM}
-                element={<AboutProgram />}
+                path={ROUTER_ROUTES.JUDGMENT_CRITERIA}
+                element={<Competencies />}
               />
-              <Route path={ROUTER_ROUTES.EVENTS}>
-                <Route index element={<Events />} />
-                <Route
-                  path={ROUTER_ROUTES.EVENTS_DESCRIPTION}
-                  element={<EventInformation />}
-                />
-                <Route
-                  path={ROUTER_ROUTES.EVENTS_REGISTRATION}
-                  element={<EventsRegistration />}
-                />
-              </Route>
-              <Route path={ROUTER_ROUTES.JUDGMENT}>
-                <Route index element={<Judgment />} />
-                <Route
-                  path={ROUTER_ROUTES.JUDGMENT_CREATE}
-                  element={<EventSettings />}
-                />
-                <Route
-                  path={ROUTER_ROUTES.JUDGMENT_EVENT_SETTINGS}
-                  element={<EventSettings />}
-                />
-                <Route
-                  path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
-                  element={<JudgmentGroupStage />}
-                />
-                <Route
-                  path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
-                  element={<TimeMatches />}
-                />
-                <Route
-                  path={ROUTER_ROUTES.JUDGMENT_CRITERIA}
-                  element={<Competencies />}
-                />
-              </Route>
             </Route>
           </Route>
-        </Routes>
-      </BrowserRouter>
+        </Route>
+      </Routes>
+    </BrowserRouter>
     </Provider>
   );
 }
