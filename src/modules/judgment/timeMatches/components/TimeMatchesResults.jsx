@@ -1,30 +1,34 @@
 import { LoadingOutlined } from "@ant-design/icons";
+import { Locale } from "@constants";
 import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
+import { formatTime } from "@utils";
 import { Flex, Table, Tooltip, Typography } from "antd";
-import { Locale } from "@constants";
-import dayjs from "dayjs";
+import "./TimeMatchesResult.scss";
 
 const columns = [
   {
     title: "№",
     key: "medal",
     render: (text, record, index) => (
-      <div>
-        <img
-          src={
-            index + 1 === 1
-              ? GoldMedal
-              : index + 1 === 2
-                ? SilverMedal
-                : index + 1 === 3
-                  ? BronzeMedal
-                  : ""
-          }
-          style={{ width: "50px", height: "50px" }}
-        />
-      </div>
+      <>
+        {index <= 2 && (
+          <div className="medal-column">
+            <img
+              src={
+                index === 0
+                  ? GoldMedal
+                  : index === 1
+                    ? SilverMedal
+                    : index === 2
+                      ? BronzeMedal
+                      : ""
+              }
+            />
+          </div>
+        )}
+      </>
     ),
   },
   {
@@ -35,16 +39,14 @@ const columns = [
   },
   {
     title: <Tooltip title="Участник">Участники</Tooltip>,
-    dataIndex: "participant",
-    key: "participant",
-    render: ({ firstName, secondName, thirdName }) =>
-      `${secondName} ${firstName} ${thirdName}`,
+    dataIndex: "teamName",
+    key: "teamName",
   },
   {
     title: <Tooltip title="Лучшее время">Лучшее время</Tooltip>,
     dataIndex: "bestAttempt",
     key: "bestAttempt",
-    render: (text, record) => record.bestAttempt.result ?? "-",
+    render: (text, record) => record.bestAttempt.result ?? "Дисквалифицирован",
   },
 ];
 
@@ -61,18 +63,15 @@ export const TimeMatchesResults = ({
         <Typography>При попытке получить данных произошла ошибка</Typography>
       ) : (
         <Table
+          className="time-matches-table"
           pagination={false}
           columns={columns}
           locale={Locale}
-          dataSource={timeMatches.sort((a, b) => {
-            if (dayjs(a.bestAttempt.result).isBefore(b.bestAttempt.result)) {
-              return -1;
-            }
-            if (dayjs(a.bestAttempt.result).isAfter(b.bestAttempt.result)) {
-              return 1;
-            }
-            return 0;
-          })}
+          dataSource={timeMatches.sort((a, b) =>
+            formatTime(a.bestAttempt.result).diff(
+              formatTime(b.bestAttempt.result)
+            )
+          )}
         />
       )}
     </Flex>

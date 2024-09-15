@@ -165,6 +165,11 @@ export const Locale = {
     filterReset: "Отменить",
     filterConfirm: "Ок",
   },
+  roles: {
+    admin: "Администратор",
+    judge: "Судья",
+    specialist: "Менеджер",
+  },
   dateFormat: "DD.MM.YYYY",
   dateTimeFormat: "DD.MM.YYYY HH:mm",
   weekFormat: "YYYY-wo",
