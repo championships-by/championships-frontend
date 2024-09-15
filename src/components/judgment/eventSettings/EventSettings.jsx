@@ -337,15 +337,15 @@ function EventSettings() {
 
     participantApi
       .getParticipantsWithInfo(eventId, nominationID, competitionType)
-      .then((response) => {
-        setParticipantsInfo(response.data);
+      .then((data) => {
+        setParticipantsInfo(data);
       });
     setParticipantModal(true);
   };
 
   const getNominations = () => {
-    eventApi.getEvent(eventID).then((response) => {
-      const translatedType = response.data.nominations.map((item) => ({
+    eventApi.getEvent(eventID).then((data) => {
+      const translatedType = data.nominations.map((item) => ({
         ...item,
         kind: translateTypeFromEnglishIntoRussian(item.kind),
       }));
@@ -361,10 +361,10 @@ function EventSettings() {
   useEffect(() => {
     if (eventID) {
       try {
-        eventApi.getEvent(eventID).then((response) => {
-          setEvent(response.data);
+        eventApi.getEvent(eventID).then((data) => {
+          setEvent(data);
 
-          const { event } = response.data;
+          const { event } = data;
 
           const values = {
             name: event.name,

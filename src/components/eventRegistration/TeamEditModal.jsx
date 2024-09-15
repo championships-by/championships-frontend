@@ -51,9 +51,9 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
       form.setFieldsValue({ ["teamName"]: teamName });
       participantApi
         .getParticipant()
-        .then((response) =>
+        .then((data) =>
           setTeamParticipants(
-            response.data.map((participant) => ({
+            data.map((participant) => ({
               value: participant.email,
               label: `${participant.first_name} ${participant.second_name} ${participant.third_name}`,
             }))

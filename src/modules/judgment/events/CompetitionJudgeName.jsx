@@ -27,8 +27,8 @@ function CompetitionType({ onJudgeChange }) {
   useEffect(() => {
     userApi
       .getJudges({ limit: 49 })
-      .then((response) => {
-        const judgeOptions = response.data.map((item) => ({
+      .then((data) => {
+        const judgeOptions = data.map((item) => ({
           value: item.id,
           label: getFullName(item),
         }));

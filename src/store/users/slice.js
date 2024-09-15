@@ -57,5 +57,3 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { setLoading, addUser, deleteUser, updateUser, setError } =
-  usersSlice.actions;

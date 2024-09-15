@@ -89,5 +89,3 @@ export const eventsSlice = createSlice({
   },
 });
 
-export const { setLoading, addEvent, deleteEvent, updateEvent, setError } =
-  eventsSlice.actions;

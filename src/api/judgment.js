@@ -1,4 +1,4 @@
-import { instance } from "./index";
+import { instance } from ".";
 
 export const judgmentApi = {
   getMatches: async (eventId, nominationId) => {
@@ -26,6 +26,6 @@ export const judgmentApi = {
       team2_score: team2Score,
     };
 
-    return instance.post(`${API_PATH}/match/set_group_match_result`, data, {});
+    return instance.post(`${API_PATH}/match/set_group_match_result`, data);
   },
 };

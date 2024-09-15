@@ -29,15 +29,15 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
     if (isOpen) {
       eventApi
         .getEvent(eventID)
-        .then((response) => {
+        .then((data) => {
           setNominationOptions(
-            response.data?.nominations.map((nomination) => ({
+            data?.nominations.map((nomination) => ({
               value: nomination.id,
               label: nomination.name,
             }))
           );
           setNomination(
-            response.data?.nominations.map((nomination) => ({
+            data?.nominations.map((nomination) => ({
               id: nomination.id,
               kind: nomination.kind,
             }))

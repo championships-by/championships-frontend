@@ -2,18 +2,18 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { eventApi } from "@api";
 
 export const getEvent = createAsyncThunk("events/getEvent", async (eventID) => {
-  const response = await eventApi.getEvent(eventID);
-  return response.data;
+  const data = await eventApi.getEvent(eventID);
+  return data;
 });
 
 export const getEventWithNominations = createAsyncThunk(
   "events/getEventWithNominations",
   async ({ limit, published }) => {
-    const response = await eventApi.getEventWithNominations({
+    const data = await eventApi.getEventWithNominations({
       limit,
       published,
     });
-    return response.data;
+    return data;
   }
 );
 

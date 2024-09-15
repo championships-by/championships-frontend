@@ -39,5 +39,3 @@ export const teamsSlice = createSlice({
   },
 });
 
-export const { setLoading, addTeam, deleteTeam, updateTeam, setError } =
-  teamsSlice.actions;

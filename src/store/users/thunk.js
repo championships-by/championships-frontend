@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { userApi } from "@api";
 
 export const getUsers = createAsyncThunk("users/getUsers", async () => {
-  const response = await userApi.getUsers();
-  return response.data;
+  const data = await userApi.getUsers();
+  return data;
 });
 
 export const setUser = createAsyncThunk("users/setUser", async (body) => {
@@ -25,12 +25,12 @@ export const changeUserProfile = createAsyncThunk(
 export const getUserProfile = createAsyncThunk(
   "users/getUserProfile",
   async () => {
-    const response = await userApi.getProfile();
-    return response.data;
+    const data = await userApi.getProfile();
+    return data;
   }
 );
 
 export const getJudges = createAsyncThunk("users/getJudges", async (limit) => {
-  const response = await userApi.getJudges({ limit });
-  return response.data;
+  const data = await userApi.getJudges({ limit });
+  return data;
 });

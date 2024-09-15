@@ -1,16 +1,12 @@
-import { instance } from "./index";
+import { instance } from ".";
 
 export const participantApi = {
-  getParticipant: () => {
-    return instance.get("/participant/participant?offset=0&limit=49");
+  getParticipant: async () => {
+    const response = await instance.get("/participant/participant?offset=0&limit=49");
+    return response.data;
   },
   setHideParticipant: (body) =>
-    instance.post(`${API_PATH}/participant/hide_participant`, body, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    }),
+    instance.post(`${API_PATH}/participant/hide_participant`, body),
   setParticipant: (body) => {
     return instance.post("/participant/participant", body);
   },
@@ -20,8 +16,8 @@ export const participantApi = {
   changeParticipant: (body) => {
     return instance.patch("/participant/participant", body);
   },
-  getParticipantsWithInfo: (eventID, nominationID, competitionType) => {
-    return instance.get(
+  getParticipantsWithInfo: async (eventID, nominationID, competitionType) => {
+    const response = await instance.get(
       `/nomination_event/team_participants_of_nomination_event?related=true`,
       {
         params: {
@@ -31,5 +27,6 @@ export const participantApi = {
         },
       }
     );
+    return response.data;
   },
 };

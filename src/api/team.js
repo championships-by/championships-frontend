@@ -1,4 +1,4 @@
-import { instance } from "./index";
+import { instance } from ".";
 
 export const teamApi = {
   getTeam: () =>
@@ -7,7 +7,7 @@ export const teamApi = {
         offset: 0,
         limit: 49,
       },
-    }),
-  setTeams: (body) => instance.post(`${API_PATH}/team/teams`, body, {}),
-  updateTeam: (data) => instance.put(`${API_PATH}/team/teams`, data, {}),
+    }).then(response => response.data),
+  setTeams: (body) => instance.post(`${API_PATH}/team/teams`, body),
+  updateTeam: (data) => instance.put(`${API_PATH}/team/teams`, data),
 };

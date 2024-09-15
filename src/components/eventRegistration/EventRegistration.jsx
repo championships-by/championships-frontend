@@ -41,7 +41,7 @@ function EventsRegistration() {
   const getTeams = () => {
     teamApi
         .getTeam()
-        .then((response) => setTeams(response.data))
+        .then((data) => setTeams(data))
         .catch(() =>
           message.error(
             "Невозможно получить данные. Обратитесь к администратору"
@@ -54,7 +54,7 @@ function EventsRegistration() {
     if (isLoading) {
       eventApi
         .getEvent(eventID)
-        .then((response) => setEvent(response.data))
+        .then((data) => setEvent(data))
         .catch(() =>
           message.error(
             "Невозможно получить данные. Обратитесь к администратору"

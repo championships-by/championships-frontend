@@ -24,8 +24,8 @@ function UsersSettings() {
     if (isLoading) {
       userApi
         .getProfile()
-        .then((response) => {
-          setUser(response.data);
+        .then((data) => {
+          setUser(data);
           form.setFieldsValue({
             firstname: user.first_name,
             lastname: user.second_name,

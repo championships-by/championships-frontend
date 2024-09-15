@@ -13,7 +13,7 @@ function Events() {
   if (isLoading) {
     eventApi
       .getEventWithNominations({ published: true })
-      .then((response) => setEvents(response.data))
+      .then((data) => setEvents(data))
       .catch(() =>
         message.error("Невозможно получить данные. Обратитесь к администратору")
       )

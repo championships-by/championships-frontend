@@ -1,4 +1,4 @@
-import { instance } from "./index";
+import { instance } from ".";
 
 export const eventApi = {
   getEvent: (eventID) =>
@@ -6,7 +6,7 @@ export const eventApi = {
       params: {
         event_id: eventID,
       },
-    }),
+    }).then(response => response.data),
   getEventWithNominations: ({ limit, published }) =>
     instance.get(`${API_PATH}/event/events_with_nominations`, {
       params: {
@@ -14,7 +14,7 @@ export const eventApi = {
         offset: 0,
         limit,
       },
-    }),
+    }).then(response => response.data),
   changeEvent: (body) => instance.patch(`${API_PATH}/event/event`, body, {
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",

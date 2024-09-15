@@ -38,13 +38,13 @@ function AdminPanel() {
     if (isLoading) {
       userApi
         .getProfile()
-        .then((response) => {
-          setRole(response.data.role);
+        .then((data) => {
+          setRole(data.role);
           setIsLoading(false);
         })
         .catch(() => {
           message.error(
-            "panel Невозможно получить данные. Обратитесь к администратору"
+            "Невозможно получить данные. Обратитесь к администратору"
           );
         });
     }

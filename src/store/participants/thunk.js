@@ -4,8 +4,8 @@ import { participantApi } from "@api";
 export const getParticipant = createAsyncThunk(
   "participants/getParticipant",
   async () => {
-    const response = await participantApi.getParticipant();
-    return response.data;
+    const data = await participantApi.getParticipant();
+    return data;
   }
 );
 
@@ -36,11 +36,11 @@ export const changeParticipant = createAsyncThunk(
 export const getParticipantsWithInfo = createAsyncThunk(
   "participants/getParticipantsWithInfo",
   async (eventID, nominationID, competitionType) => {
-    const response = await participantApi.getParticipantsWithInfo(
+    const data = await participantApi.getParticipantsWithInfo(
       eventID,
       nominationID,
       competitionType
     );
-    return response.data;
+    return data;
   }
 );

@@ -32,8 +32,8 @@ function JudgmentEvents() {
   const getEvents = () => {
     eventApi
         .getEventWithNominations({ limit: 49 })
-        .then((response) => {
-          const formattedDate = response.data.map((user) => ({
+        .then((data) => {
+          const formattedDate = data.map((user) => ({
             ...user,
             date: user.date,
           }));

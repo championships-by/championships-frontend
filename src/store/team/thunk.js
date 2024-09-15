@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { teamApi } from "@api";
 
 export const getTeams = createAsyncThunk("teams/getTeams", async () => {
-  const response = await teamApi.getTeams();
-  return response.data;
+  const data = await teamApi.getTeams();
+  return data;
 });
 
 export const setTeams = createAsyncThunk("teams/setTeams", async (body) => {

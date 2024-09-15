@@ -57,10 +57,3 @@ export const participantsSlice = createSlice({
   },
 });
 
-export const {
-  setLoading,
-  addParticipant,
-  deleteParticipant,
-  updateParticipant,
-  setError,
-} = participantsSlice.actions;
