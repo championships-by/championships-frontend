@@ -8,9 +8,8 @@ export const getEvent = createAsyncThunk("events/getEvent", async (eventID) => {
 
 export const getEventWithNominations = createAsyncThunk(
   "events/getEventWithNominations",
-  async ({ limit, published }) => {
+  async ({ published }) => {
     const data = await eventApi.getEventWithNominations({
-      limit,
       published,
     });
     return data;

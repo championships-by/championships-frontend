@@ -7,14 +7,21 @@ export const eventApi = {
         event_id: eventID,
       },
     }).then(response => response.data),
-  getEventWithNominations: ({ limit, published }) =>
-    instance.get(`${API_PATH}/event/events_with_nominations`, {
+  getEventWithNominations: async ({ published, limit = 49, offset = 0 }) => {
+      const response = await instance.get(`${API_PATH}/event/events_with_nominations`, {
       params: {
         published,
-        offset: 0,
+        offset,
         limit,
       },
-    }).then(response => response.data),
+    });
+    const events = response.data;
+    if (events.length === limit) {
+      return eventApi.getEventWithNominations({ published: published, offset: offset + limit, limit: limit }).then(nextEvents => [...events, ...nextEvents]);
+    } else {
+      return events;
+    }
+  },
   changeEvent: (body) => instance.patch(`${API_PATH}/event/event`, body, {
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",

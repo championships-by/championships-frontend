@@ -5,13 +5,19 @@ export const userApi = {
   changeProfile: (body) => instance.patch(`${API_PATH}/user/profile`, body),
   getUsers: () => instance.get(`${API_PATH}/user/users`).then(response => response.data),
   setUser: (body) => instance.post(`${API_PATH}/user/create_user`, body),
-  getJudges: async ({ limit }) => {
-    const response = await instance.get(`${API_PATH}/user/judges`, {
+  getJudges: (offset = 0, limit = 49) => {
+    return instance.get(`${API_PATH}/user/judges`, {
       params: {
-        offset: 0,
+        offset,
         limit,
       },
-    });
-    return response.data;
-  },
+    }).then(response => {
+      const judges = response.data;
+    if (judges.length === limit) {
+      return userApi.getJudges(offset + limit).then(nextJudges => [...judges, ...nextJudges]);
+    } else {
+      return judges;
+    }
+  });
+},
 };

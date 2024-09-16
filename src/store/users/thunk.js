@@ -30,7 +30,7 @@ export const getUserProfile = createAsyncThunk(
   }
 );
 
-export const getJudges = createAsyncThunk("users/getJudges", async (limit) => {
-  const data = await userApi.getJudges({ limit });
+export const getJudges = createAsyncThunk("users/getJudges", async () => {
+  const data = await userApi.getJudges();
   return data;
 });
