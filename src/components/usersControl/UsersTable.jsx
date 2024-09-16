@@ -58,7 +58,7 @@ function UsersTable() {
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={() => openEditModal()}
+              onClick={openEditModal}
             />
           </Tooltip>
         </Flex>
