@@ -43,7 +43,6 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
 
   useEffect(() => {
     if (data && isOpen) {
-      console.log(data);
       const participants = data
         .map((item) => {
           return (
