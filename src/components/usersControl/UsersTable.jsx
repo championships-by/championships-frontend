@@ -73,7 +73,7 @@ function UsersTable() {
       <UserModal
         type={ModalType.EDIT}
         isOpen={isEditModalOpen}
-        onOk={() => changeUserData()}
+        onOk={changeUserData}
         onCancel={() => setIsEditModalOpen(false)}
       />
     </>

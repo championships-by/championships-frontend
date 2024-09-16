@@ -63,14 +63,14 @@ function UsersSettings() {
 
         userApi
           .changeProfile(data)
-          .then((response) => {
-            if (response.status === 200) {
+          .then(() => {
               message.success("Данные успешно сохранены");
-            } else {
-              message.error(
-                "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору."
-              );
             }
+          )
+          .catch(() => {
+            message.error(
+              "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору."
+            );
           })
           .finally(() => setIsFormLoading(false));
       })

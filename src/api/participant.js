@@ -1,31 +1,20 @@
 import { instance } from ".";
+import { fetchWithPagination } from "@utils";
 
 export const participantApi = {
-  getParticipant: (offset = 0, limit = 49) => {
-      return instance.get("/participant/participant", {
-        params: {
-          offset,
-          limit,
-        },
-      }).then(response => {
-        const participants = response.data;
-      if (participants.length === limit) {
-        return participantApi.getParticipant(offset + limit).then(nextParticipants => [...participants, ...nextParticipants]);
-      } else {
-        return participants;
-      }
-    });
+  getParticipant: () => {
+    return fetchWithPagination(instance, `/participant/participant`);
   },
   setHideParticipant: (body) =>
-    instance.post(`${API_PATH}/participant/hide_participant`, body),
+    instance.post(`/participant/hide_participant`, body),
   setParticipant: (body) => {
-    return instance.post("/participant/participant", body);
+    return instance.post(`/participant/participant`, body);
   },
   addParticipantToNomination: (body) => {
     return instance.post("/team_participant_nomination_event/team_participant", body);
   },
   changeParticipant: (body) => {
-    return instance.patch("/participant/participant", body);
+    return instance.patch(`/participant/participant`, body);
   },
   getParticipantsWithInfo: async (eventID, nominationID, competitionType) => {
     const response = await instance.get(

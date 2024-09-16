@@ -27,7 +27,7 @@ function UserModal({ isOpen, onOk, onCancel, type }) {
     message.error("Проверьте поля для ввода!");
   };
 
-  const createUserRequest = async () => {
+  const onClick = async () => {
     const raw = {
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
@@ -86,7 +86,7 @@ function UserModal({ isOpen, onOk, onCancel, type }) {
               type="primary"
               htmlType="submit"
               loading={isLoading}
-              onClick={createUserRequest}
+              onClick={onClick}
             >
               Сохранить
             </Button>

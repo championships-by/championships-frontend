@@ -8,10 +8,7 @@ export const getTeams = createAsyncThunk("teams/getTeams", async () => {
 
 export const setTeams = createAsyncThunk("teams/setTeams", async (body) => {
   const response = await teamApi.setTeams(body);
-  if (response.status === 200) {
     return response.config.data;
-  }
-  return response.data;
 });
 
 export const updateTeam = createAsyncThunk("teams/updateTeam", async (body) => {

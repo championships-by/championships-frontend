@@ -32,16 +32,10 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
 
     userApi
       .changeProfile(data)
-      .then((response) => {
-        if (response.status === 200) {
+      .then(() => {
           message.success("Пароль успешно изменен");
           form.resetFields();
           onOk();
-        } else {
-          message.error(
-            "Ошибка: Невозможно изменить пароль. Проверьте введенные данные."
-          );
-        }
       })
       .catch(() => {
         message.error(

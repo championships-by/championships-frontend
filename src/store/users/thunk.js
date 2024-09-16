@@ -8,10 +8,7 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
 
 export const setUser = createAsyncThunk("users/setUser", async (body) => {
   const response = await userApi.setUser(body);
-  if (response.status === 200) {
     return response.config.data;
-  }
-  return response.data;
 });
 
 export const changeUserProfile = createAsyncThunk(

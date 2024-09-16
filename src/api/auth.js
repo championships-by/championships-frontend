@@ -1,6 +1,6 @@
 import { instance } from ".";
 
 export const authApi = {
-  setLogin: (body) => instance.post(`${API_PATH}/auth/login`, body),
-  setLogout: () => instance.post(`${API_PATH}/auth/logout`,),
+  setLogin: (body) => instance.post(`/auth/login`, body),
+  setLogout: () => instance.post(`/auth/logout`),
 };
