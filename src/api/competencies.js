@@ -49,10 +49,13 @@ export const competenciesApi = {
       `${API_PATH}/team_nomination_event/team_participant?event_id=${eventID}&nomination_id=${nominationID}&type=${nominationType}`
     );
   },
-  getNominationEventInfo: (eventId, nominationId) =>
-    instance.get(
-      `${API_PATH}/nomination_event/nomination_event_info?event_id=${eventId}&nomination_id=${nominationId}`
-    ),
+  getNominationEventInfo: (params) =>
+    instance.get(`${API_PATH}/nomination_event/nomination_event_info`, {
+      params: {
+        event_id: params.event_id,
+        nomination_id: params.nomination_id,
+      },
+    }),
   startGroupStage: (data) =>
     instance.post(`${API_PATH}/tournaments/start_group_stage`, data),
   startCriteriaStage: async (data) =>

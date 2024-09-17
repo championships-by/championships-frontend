@@ -74,7 +74,7 @@ function CompetitionType({ onJudgeChange }) {
   return (
     <>
       <Typography.Text className="events__competition-judge__text">
-        Судья
+        Судейский состав
       </Typography.Text>
       <div className="events__competition-judge__div">
         <Flex>

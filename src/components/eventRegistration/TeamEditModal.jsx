@@ -55,7 +55,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
           setTeamParticipants(
             data.map((participant) => ({
               value: participant.email,
-              label: `${participant.first_name} ${participant.second_name} ${participant.third_name}`,
+              label: `${participant.first_name} ${participant.third_name} ${participant.second_name}`,
             }))
           )
         )

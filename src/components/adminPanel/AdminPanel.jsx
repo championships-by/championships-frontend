@@ -52,10 +52,12 @@ function AdminPanel() {
 
   return (
     <div className="admin-panel">
-      <div className="admin-panel__menu">
-        <AdminPanelLogo />
-        <AdminPanelNav role={role} />
-      </div>
+      {role && (
+        <div className="admin-panel__menu">
+          <AdminPanelLogo />
+          <AdminPanelNav role={role} />
+        </div>
+      )}
       <div className="admin-panel__content">
         <Outlet />
       </div>
