@@ -1,19 +1,10 @@
 import { instance } from ".";
+import { fetchWithPagination } from "@utils";
 
 export const teamApi = {
-  getTeam: () =>
-    fetch(`${API_PATH}/team/teams?offset=0&limit=49`, {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-      },
-      redirect: "follow",
-      credentials: "include",
-    }).then((response) => response.json()),
-  setTeams: (body) => {
-    return instance.post(`${API_PATH}/team/teams`, body);
+  getTeam: () => {
+    return fetchWithPagination(instance, `/team/teams`);
   },
-  updateTeam: (data) => {
-    return instance.put(`${API_PATH}/team/teams`, data);
-  },
+  setTeams: (body) => instance.post(`/team/teams`, body),
+  updateTeam: (body) => instance.put(`/team/teams`, body),
 };

@@ -12,7 +12,6 @@ function getFullName(item) {
 
 function CompetitionType({ onJudgeChange }) {
   const [options, setOptions] = useState([]);
-  const { limit } = useParams();
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
   const [selectHeight, setSelectHeight] = useState(0);
@@ -26,9 +25,9 @@ function CompetitionType({ onJudgeChange }) {
 
   useEffect(() => {
     userApi
-      .getJudges({ limit: 49 })
-      .then((response) => {
-        const judgeOptions = response.data.map((item) => ({
+      .getJudges()
+      .then((data) => {
+        const judgeOptions = data.map((item) => ({
           value: item.id,
           label: getFullName(item),
         }));
@@ -39,7 +38,7 @@ function CompetitionType({ onJudgeChange }) {
           "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
         );
       });
-  }, [limit]);
+  }, []);
 
   useEffect(() => {
     if (selectRef.current) {

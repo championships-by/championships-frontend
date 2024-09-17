@@ -337,15 +337,15 @@ function EventSettings() {
 
     participantApi
       .getParticipantsWithInfo(eventId, nominationID, competitionType)
-      .then((response) => {
-        setParticipantsInfo(response);
+      .then((data) => {
+        setParticipantsInfo(data);
       });
     setParticipantModal(true);
   };
 
   const getNominations = () => {
-    eventApi.getEvent(eventID).then((response) => {
-      const translatedType = response.nominations.map((item) => ({
+    eventApi.getEvent(eventID).then((data) => {
+      const translatedType = data.nominations.map((item) => ({
         ...item,
         kind: translateTypeFromEnglishIntoRussian(item.kind),
       }));

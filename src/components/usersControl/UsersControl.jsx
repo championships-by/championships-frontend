@@ -1,9 +1,10 @@
-import { userApi } from "@api";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers, getUsersSelector } from "@store/users";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
 import { Button, message, Typography, Row, Col, Divider } from "antd";
-import { useEffect, useState } from "react";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
 
@@ -11,24 +12,13 @@ import "./sass/users-control.scss";
 
 function UsersControl() {
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [dataUsers, setUsers] = useState([]);
+  const dispatch = useDispatch();
+  const users = useSelector(getUsersSelector);
+  const isLoading = users.isLoading;
 
   useEffect(() => {
-    if (isLoading) {
-      getUsers();
-    }
-  });
-
-  const getUsers = () => {
-    userApi
-      .getUsers()
-      .then((data) => setUsers(data))
-      .catch(() =>
-        message.error("Невозможно получить данные. Обратитесь к администратору")
-      )
-      .finally(() => setTimeout(() => setIsLoading(false), 300));
-  };
+    dispatch(getUsers());
+  }, [dispatch]);
 
   return (
     <div className="users-control">
@@ -48,13 +38,12 @@ function UsersControl() {
         </Col>
       </Row>
       <Divider />
-      <UsersTable usersData={dataUsers} />
+      <UsersTable />
       <UserModal
         type={ModalType.ADD}
         isOpen={isAddUserModalOpen}
         onOk={() => setIsAddUserModalOpen(false)}
         onCancel={() => setIsAddUserModalOpen(false)}
-        onAdd={getUsers}
       />
     </div>
   );

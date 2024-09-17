@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { ModalType } from "@constants";
 import { Button, Flex, Form, Modal, message, Checkbox } from "antd";
 import ParticipantBirthdayInput from "@modules/participant/ParticipantBirthdayInput.jsx";
 import ParticipantEmailInput from "@modules/participant/ParticipantEmailInput.jsx";

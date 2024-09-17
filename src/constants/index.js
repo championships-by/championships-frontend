@@ -17,6 +17,21 @@ export const FILE_UPLOADING = {
   },
 };
 
+export const ROLE_FILTERS = [
+  {
+    text: "Администратор",
+    value: "admin",
+  },
+  {
+    text: "Судья",
+    value: "judge",
+  },
+  {
+    text: "Менеджер",
+    value: "specialist",
+  },
+];
+
 export const NOMINATION_TYPES = {
   CRITERIA: "По критериям",
   TIME: "По времени",

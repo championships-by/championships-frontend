@@ -22,17 +22,16 @@ function Auth() {
     if (isLoading) {
       userApi
         .getProfile()
-        .then((response) => {
-          if (response.ok) {
-            navigate("/settings");
-          } else {
+        .then(() => navigate(ROUTES.USER_SETTINGS.PATH))
+        .catch((error) => {
+          if (error.response.status === 401) {
             setIsLoading(false);
+            message.info("Вы не авторизовались");
+          } else {
+            message.error(
+              "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
+            );
           }
-        })
-        .catch(() => {
-          message.error(
-            "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
-          );
         });
     }
   }, [isLoading, navigate]);
@@ -44,20 +43,20 @@ function Auth() {
     const encrypedPassword = getEncryptedPassword(password, PUBLIC_KEY);
 
     try {
-      const response = await authApi.setLogin({
-        email,
-        password: encrypedPassword,
+      await authApi.setLogin({
+      email,
+      password: encrypedPassword,
       });
-
-      if (response.ok) {
-        navigate(ROUTES.USER_SETTINGS.PATH);
-      } else {
-        message.error("Ошибка: Неверный email или пароль.");
-      }
+      navigate(ROUTES.USER_SETTINGS.PATH);
     } catch (error) {
-      message.error(
-        "Ошибка: Невозможно авторизовать пользователя. Попробуйте еще раз..."
-      );
+      if (error.response.status === 404) {
+        setIsLoading(false);
+        message.error("Ошибка: Неверный email или пароль.");
+      } else {
+        message.error(
+          "Ошибка: Невозможно авторизовать пользователя. Попробуйте еще раз..."
+        );
+      }
     }
 
     setIsFormLoading(false);

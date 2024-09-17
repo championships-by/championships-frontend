@@ -60,14 +60,13 @@ function UsersSettings() {
 
     userApi
       .changeProfile()
-      .then((response) => {
-        if (response.ok) {
-          message.success("Данные успешно сохранены");
-        } else {
-          message.error(
-            "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору..."
-          );
-        }
+      .then(() => {
+        message.success("Данные успешно сохранены");
+      })
+      .catch(() =>  {
+        message.error(
+          "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору..."
+        );
       })
       .finally(() => setIsFormLoading(false));
   };

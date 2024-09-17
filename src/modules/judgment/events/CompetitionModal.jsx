@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "@constants";
-import { competenciesApi, eventApi } from "@api";
+import { competenciesApi } from "@api";
 
 function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const [groupCount, setGroupCount] = useState(3);

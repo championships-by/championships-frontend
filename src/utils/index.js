@@ -27,6 +27,25 @@ export const isScoreZero = (score1, score2) => !!(score1 === 0 && score2 === 0);
 
 export const isScoreEqual = (score1, score2) => score1 === score2;
 
+export const fetchWithPagination = async (
+  instance,
+  url,
+  params = {},
+  limit = 49,
+  offset = 0
+) => {
+  const response = await instance.get(url, { params: { ...params, offset, limit } });
+  const data = response.data;
+
+  if (data.length === limit) {
+    return fetchWithPagination(instance, url, params, limit, offset + limit).then(
+      (nextData) => [...data, ...nextData]
+    );
+  } else {
+    return data;
+  }
+};
+
 export const handlePaste = (event) => {
   event.preventDefault();
   const clipboardData = (event.clipboardData || window.clipboardData).getData(

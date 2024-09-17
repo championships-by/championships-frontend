@@ -1,4 +1,5 @@
-import { userApi } from "@api";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsersSelector, setUser, getUsers } from "@store/users";
 import { ModalType } from "@constants";
 import UserEmailInput from "@modules/user/UserEmailInput";
 import UserFirstnameInput from "@modules/user/UserFirstnameInput";
@@ -10,16 +11,24 @@ import UserPhoneInput from "@modules/user/UserPhoneInput";
 import UserRoleInput from "@modules/user/UserRoleInput";
 import { Button, Form, message, Modal, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { useState } from "react";
 
-function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
-  const [isLoading, setIsLoading] = useState(false);
+function UserModal({ isOpen, onOk, onCancel, type }) {
+  const users = useSelector(getUsersSelector);
+  const isLoading = users.isLoading;
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
-  const onFinish = async () => {
-    setIsLoading(true);
+  const onFinish = () => {
+    message.success("Пользователь успешно создан");
+    onOk();
+  };
 
-    const raw = JSON.stringify({
+  const onFinishFailed = () => {
+    message.error("Проверьте поля для ввода!");
+  };
+
+  const onClick = async () => {
+    const raw = {
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
       second_name: form.getFieldValue("second_name"),
@@ -28,22 +37,15 @@ function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
       role: form.getFieldValue("role"),
       educational_institution: form.getFieldValue("organization"),
       password: form.getFieldValue("password"),
-    });
+    };
 
     try {
-      await userApi.setUser(raw);
-      message.success("Пользователь успешно создан");
-      onAdd();
-      onOk();
-    } catch {
-    } finally {
-      setIsLoading(false);
+      await dispatch(setUser(raw));
+      dispatch(getUsers());
+      onFinish();
+    } catch (error) {
+      message.error("Ошибка создания пользователя!");
     }
-  };
-
-  const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
-    setIsLoading(false);
   };
 
   return (
@@ -78,10 +80,14 @@ function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
 
         <UserPhoneInput name="phone" />
         <UserOrganizationInput name="organization" />
-
         <Space>
           <FormItem>
-            <Button type="primary" htmlType="submit" loading={isLoading}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isLoading}
+              onClick={onClick}
+            >
               Сохранить
             </Button>
           </FormItem>

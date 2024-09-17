@@ -24,9 +24,8 @@ function UsersSettings() {
     if (isLoading) {
       userApi
         .getProfile()
-        .then((user) => {
-          setUser(user);
-
+        .then((data) => {
+          setUser(data);
           form.setFieldsValue({
             firstname: user.first_name,
             lastname: user.second_name,
@@ -36,7 +35,6 @@ function UsersSettings() {
             phone: user.phone,
             organization: user.educational_institution,
           });
-
           setTimeout(() => setIsLoading(false), 300);
         })
         .catch(() => {
@@ -45,7 +43,7 @@ function UsersSettings() {
           );
         });
     }
-  }, [isLoading, form]);
+  }, [isLoading, form, user]);
 
   const handleSubmit = () => {
     form
@@ -65,14 +63,14 @@ function UsersSettings() {
 
         userApi
           .changeProfile(data)
-          .then((response) => {
-            if (response.ok) {
+          .then(() => {
               message.success("Данные успешно сохранены");
-            } else {
-              message.error(
-                "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору."
-              );
             }
+          )
+          .catch(() => {
+            message.error(
+              "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору."
+            );
           })
           .finally(() => setIsFormLoading(false));
       })

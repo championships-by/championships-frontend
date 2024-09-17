@@ -1,52 +1,15 @@
 import { EditOutlined } from "@ant-design/icons";
+import { getUsersSelector } from "@store/users";
+import { useSelector } from "react-redux";
 import UserModal from "@components/usersControl/UserModal";
-import { Locale, ModalType } from "@constants";
-import { Button, Flex, Table, Tooltip, Typography } from "antd";
+import { Locale, ModalType, ROLE_FILTERS } from "@constants";
+import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
 import { useState } from "react";
 
-const filters = [
-  {
-    text: Locale.roles.admin,
-    value: "admin",
-  },
-  {
-    text: Locale.roles.judge,
-    value: "judge",
-  },
-  {
-    text: Locale.roles.specialist,
-    value: "specialist",
-  },
-];
-
-function UsersTable({ usersData }) {
+function UsersTable() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  // const delete_user_request = async () => {
-  //     const myHeaders = new Headers();
-  // 	myHeaders.append("accept", "application/json");
-  // 	myHeaders.append("Content-Type", "application/json");
-
-  // 	const raw = JSON.stringify({
-  // 	email: form.getFieldValue('email'),
-  // 	first_name: form.getFieldValue('first_name'),
-  // 	second_name: form.getFieldValue('second_name'),
-  // 	third_name: form.getFieldValue('third_name'),
-  // 	phone: form.getFieldValue('phone'),
-  // 	role: form.getFieldValue('role'),
-  // 	educational_institution: form.getFieldValue('organization'),
-  // 	password: form.getFieldValue('password'),
-  // 	});
-
-  // 	const requestOptions = {
-  // 	method: "POST",
-  // 	headers: myHeaders,
-  // 	body: raw,
-  // 	redirect: "follow",
-  // 	credentials: 'include',
-  // 	};
-  //     await fetch(`${API_PATH}/user/delete`, requestOptions)
-  // }
+  const users = useSelector(getUsersSelector);
+  const usersData = users.data;
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -75,15 +38,15 @@ function UsersTable({ usersData }) {
       key: "role",
       render: (_, { role }) =>
         role === "admin" ? (
-          <Typography.Text>{Locale.roles.admin}</Typography.Text>
+          <Typography.Text>Администратор</Typography.Text>
         ) : role === "judge" ? (
-          <Typography.Text>{Locale.roles.judge}</Typography.Text>
+          <Typography.Text>Судья</Typography.Text>
         ) : role === "specialist" ? (
-          <Typography.Text>{Locale.roles.specialist}</Typography.Text>
+          <Typography.Text>Менеджер</Typography.Text>
         ) : (
           <Typography.Text />
         ),
-      filters: filters,
+      filters: ROLE_FILTERS,
       onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
     {
@@ -105,19 +68,12 @@ function UsersTable({ usersData }) {
 
   return (
     <>
-      <Table
-        dataSource={usersData}
-        pagination={{
-          position: ["bottomCenter"],
-        }}
-        columns={columns}
-        locale={Locale}
-      />
+      <Table dataSource={usersData} columns={columns} locale={Locale} />
 
       <UserModal
         type={ModalType.EDIT}
         isOpen={isEditModalOpen}
-        onOk={() => changeUserData()}
+        onOk={changeUserData}
         onCancel={() => setIsEditModalOpen(false)}
       />
     </>

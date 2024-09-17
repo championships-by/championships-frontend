@@ -1,4 +1,4 @@
-import { instance } from "./index";
+import { instance } from ".";
 
 export const competenciesApi = {
   getCriteria: (eventId, nominationId) =>

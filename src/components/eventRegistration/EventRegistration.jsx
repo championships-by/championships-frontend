@@ -40,12 +40,14 @@ function EventsRegistration() {
 
   const getTeams = () => {
     teamApi
-      .getTeam()
-      .then((data) => setTeams(data))
-      .catch(() =>
-        message.error("Невозможно получить данные. Обратитесь к администратору")
-      )
-      .finally(() => setTimeout(() => setIsLoading(false), 300));
+        .getTeam()
+        .then((data) => setTeams(data))
+        .catch(() =>
+          message.error(
+            "Невозможно получить данные. Обратитесь к администратору"
+          )
+        )
+        .finally(() => setTimeout(() => setIsLoading(false), 300));
   };
 
   useEffect(() => {
@@ -58,7 +60,6 @@ function EventsRegistration() {
             "Невозможно получить данные. Обратитесь к администратору"
           )
         );
-
       getTeams();
     }
   }, [isLoading, eventID]);

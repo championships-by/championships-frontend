@@ -31,19 +31,21 @@ function JudgmentEvents() {
 
   const getEvents = () => {
     eventApi
-      .getEventWithNominations({})
-      .then((response) => {
-        const formattedDate = response.map((user) => ({
-          ...user,
-          date: user.date,
-        }));
-        return formattedDate;
-      })
-      .then((data) => setEvents(data))
-      .catch(() =>
-        message.error("Невозможно получить данные. Обратитесь к администратору")
-      )
-      .finally(() => setIsLoading(false));
+        .getEventWithNominations({})
+        .then((data) => {
+          const formattedDate = data.map((user) => ({
+            ...user,
+            date: user.date,
+          }));
+          return formattedDate;
+        })
+        .then((data) => setEvents(data))
+        .catch(() =>
+          message.error(
+            "Невозможно получить данные. Обратитесь к администратору"
+          )
+        )
+        .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {

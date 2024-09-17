@@ -11,7 +11,6 @@ import "./sass/admin-panel.scss";
 function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState("unauthorized");
-  const navigate = useNavigate();
 
   document.addEventListener("DOMContentLoaded", function () {
     const menuList = document.querySelector(".admin-panel__menu-list");
@@ -39,8 +38,8 @@ function AdminPanel() {
     if (isLoading) {
       userApi
         .getProfile()
-        .then((user) => {
-          setRole(user.role);
+        .then((data) => {
+          setRole(data.role);
           setIsLoading(false);
         })
         .catch(() => {
@@ -49,7 +48,7 @@ function AdminPanel() {
           );
         });
     }
-  });
+  }, [isLoading, role]);
 
   return (
     <div className="admin-panel">
