@@ -16,19 +16,9 @@ function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
-  const onFinish = () => {
-    message.success("Пользователь успешно создан");
-    onAdd();
-    onOk();
-    setIsLoading(false);
-  };
+  const onFinish = async () => {
+    setIsLoading(true);
 
-  const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
-    setIsLoading(false);
-  };
-
-  const create_user_request = async () => {
     const raw = JSON.stringify({
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
@@ -40,7 +30,20 @@ function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
       password: form.getFieldValue("password"),
     });
 
-    await userApi.setUser(raw);
+    try {
+      await userApi.setUser(raw);
+      message.success("Пользователь успешно создан");
+      onAdd();
+      onOk();
+    } catch {
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onFinishFailed = () => {
+    message.error("Проверьте поля для ввода!");
+    setIsLoading(false);
   };
 
   return (
@@ -78,15 +81,7 @@ function UserModal({ isOpen, onOk, onCancel, type, onAdd }) {
 
         <Space>
           <FormItem>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={isLoading}
-              onClick={() => {
-                setIsLoading(true);
-                create_user_request();
-              }}
-            >
+            <Button type="primary" htmlType="submit" loading={isLoading}>
               Сохранить
             </Button>
           </FormItem>

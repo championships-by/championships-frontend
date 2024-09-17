@@ -32,17 +32,7 @@ export const userApi = {
       credentials: "include",
     }).then((response) => response.json()),
   setUser: (body) => {
-    const headers = new Headers();
-    headers.append("accept", "application/json");
-    headers.append("Content-Type", "application/json");
-
-    return fetch(`${API_PATH}/user/create_user`, {
-      method: "POST",
-      headers,
-      body,
-      redirect: "follow",
-      credentials: "include",
-    });
+    return instance.post(`/user/create_user`, body);
   },
   getJudges: ({ limit }) => {
     return instance.get(`/user/judges?offset=0&limit=${limit}`);

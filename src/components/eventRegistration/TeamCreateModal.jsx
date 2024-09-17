@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
 import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
+import dayjs from "dayjs";
+import { changeDateFormat } from "@utils";
 import { participantApi, teamApi } from "@api";
 
 function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
@@ -46,14 +48,16 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
     if (isOpen) {
       participantApi
         .getParticipant()
-        .then((data) =>
+        .then((data) => {
           setTeamParticipants(
             data.map((participant) => ({
               value: participant.id,
-              label: `${participant.first_name} ${participant.second_name} ${participant.third_name}`,
+              label: `${participant.first_name} ${participant.third_name} ${
+                participant.second_name
+              }, ${changeDateFormat(participant.birth_date)}`,
             }))
-          )
-        )
+          );
+        })
         .catch(() =>
           message.error(
             "Невозможно получить данные. Обратитесь к администратору"

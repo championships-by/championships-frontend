@@ -29,13 +29,17 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   const onFinish = async () => {
     try {
       if (isEdit) {
-        if (values.email === data.email) {
-          delete values.email;
-        }
-        const body = JSON.stringify({
+        const body = {
           id: values.id,
-          participant_data: values,
-        });
+          first_name: values.first_name,
+          second_name: values.second_name,
+          third_name: values.third_name,
+          region: values.region,
+          birth_date: values.birth_date,
+        };
+        if (values.email !== data.email) {
+          body.email = values.email;
+        }
         await participantApi.changeParticipant(body);
         message.success("Участник успешно изменён");
       } else {
@@ -43,10 +47,8 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
         await participantApi.setParticipant(body);
         message.success("Участник успешно создан");
       }
-
       onOk();
     } catch {
-      message.error("Произошла ошибка! Попробуйте снова.");
     } finally {
       setIsLoading(false);
     }

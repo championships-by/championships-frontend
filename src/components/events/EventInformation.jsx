@@ -17,42 +17,9 @@ import Loader from "@components/loader/Loader";
 import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import { yaShareLink, ROUTES, url } from "@constants";
 import noLogo from "@assets/img/auth-background.png";
-import { eventApi } from "@api";
+import { eventApi, competenciesApi } from "@api";
 
 import "./sass/events.scss";
-
-const columns = [
-  {
-    title: "Название компетенции",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Количество зарегистрированных участников",
-    dataIndex: "participant_count",
-    key: "participant_count",
-  },
-  {
-    title: "Регламент",
-    key: "reglament",
-    render: (record) => (
-      <Space>
-        <a href={record.reglament} target="_blank" rel="noopener noreferrer">
-          <Button type="text" icon={<LinkOutlined />} />
-        </a>
-      </Space>
-    ),
-  },
-  {
-    title: "Итоги",
-    key: "results",
-    render: () => (
-      <Space>
-        <Button type="text" icon={<InfoCircleOutlined />} />
-      </Space>
-    ),
-  },
-];
 
 function EventInformation() {
   const [isLoading, setIsLoading] = useState(true);
@@ -60,6 +27,44 @@ function EventInformation() {
   const [dataNominations, setNomination] = useState([]);
   const { eventID } = useParams();
   const navigate = useNavigate();
+
+  const columns = [
+    {
+      title: "Название компетенции",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Количество зарегистрированных участников",
+      dataIndex: "participant_count",
+      key: "participant_count",
+    },
+    {
+      title: "Регламент",
+      key: "reglament",
+      render: (record) => (
+        <Space>
+          <a href={record.reglament} target="_blank" rel="noopener noreferrer">
+            <Button type="text" icon={<LinkOutlined />} />
+          </a>
+        </Space>
+      ),
+    },
+    {
+      title: "Итоги",
+      key: "results",
+      render: (record) => (
+        <Space>
+          <Button
+            onClick={() => onResultsClick(record)}
+            type="text"
+            icon={<InfoCircleOutlined />}
+          />
+        </Space>
+      ),
+    },
+  ];
+
   const items = [
     {
       title: "Мероприятия",
@@ -92,6 +97,32 @@ function EventInformation() {
       setTimeout(() => setIsLoading(false), 300);
     }
   }, [eventID]);
+
+  const onResultsClick = (nomination) => {
+    const body = {
+      event_id: eventID,
+      nomination_id: nomination.id,
+    };
+
+    competenciesApi.getNominationEventInfo(body).then((response) => {
+      const data = response.data;
+      if (!data.tournament_started) {
+        message.error("Соревнование ещё не началось");
+      } else if (!data.tournament_finished) {
+        message.error("Соревнование ещё не закончилось");
+      } else {
+        if (nomination.kind == "time") {
+          navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nomination.id));
+        } else if (nomination.kind == "criteria") {
+          navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
+        } else if (nomination.kind == "olympic") {
+          navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
+        } else {
+          message.error("Произошла ошибка");
+        }
+      }
+    });
+  };
 
   const finishDate = new Date(dataEvent.registration_finish_date);
   const now = new Date();

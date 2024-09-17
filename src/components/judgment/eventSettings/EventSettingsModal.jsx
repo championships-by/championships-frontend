@@ -29,11 +29,13 @@ function EventSettingsCompitations({
 
   useEffect(() => {
     if (isOpen) {
+      const body = {
+        event_id: eventID,
+        nomination_id: nominationId,
+      };
+
       competenciesApi
-        .getNominationEventInfo({
-          eventId: eventID,
-          nominationId: nominationId,
-        })
+        .getNominationEventInfo(body)
         .then((response) => {
           const data = response.data;
         })

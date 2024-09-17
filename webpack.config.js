@@ -108,6 +108,7 @@ module.exports = (env) => {
         "@assets": path.resolve(__dirname, "src", "assets"),
         "@components": path.resolve(__dirname, "src", "components"),
         "@constants": path.resolve(__dirname, "src", "constants"),
+        "@errors": path.resolve(__dirname, "src", "errors"),
         "@contexts": path.resolve(__dirname, "src", "contexts"),
         "@hooks": path.resolve(__dirname, "src", "hooks"),
         "@sass": path.resolve(__dirname, "src", "sass"),
