@@ -78,6 +78,7 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
         columns={columns}
         pagination={{
           position: ["bottomCenter"],
+          showSizeChanger: false,
         }}
         locale={Locale}
       />
