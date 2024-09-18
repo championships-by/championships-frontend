@@ -1,0 +1,97 @@
+import { EditOutlined } from "@ant-design/icons";
+import { Locale, ModalType } from "@constants";
+import { getUniqueFilters } from "@utils";
+import { Button, Flex, Table, Tooltip, Typography } from "antd";
+import dayjs from "dayjs";
+import React, { useState } from "react";
+import ParticipantModal from "./ParticipantModal";
+
+function ParticipantsTable({ ParticipantData, getParticipant }) {
+  const columns = [
+    {
+      title: "Фамилия имя отчество",
+      key: "participant_fullname",
+      render: (_, { first_name, second_name, third_name }) => (
+        <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
+      ),
+      sorter: (a, b) => {
+        const firstFullName = `${a.second_name} ${a.first_name} ${a.third_name}`;
+        const secondFullName = `${b.second_name} ${b.first_name} ${b.third_name}`;
+        return firstFullName.localeCompare(secondFullName);
+      },
+    },
+    {
+      title: "Регион",
+      key: "participant_region",
+      dataIndex: "region",
+      filters: getUniqueFilters(ParticipantData, "region"),
+      onFilter: (value, record) => record.region === value,
+      sorter: (a, b) => a.region.localeCompare(b.region),
+    },
+    {
+      title: "Дата рождения",
+      dataIndex: "birth_date",
+      render: (birth_date) => dayjs(birth_date).format(Locale.dateFormat),
+      key: "participant_organization",
+    },
+    {
+      title: "Действия",
+      key: "action",
+      render: (data) => {
+        const { email } = data;
+
+        return (
+          <Flex>
+            <Tooltip title="Редактирование">
+              <Button
+                type="text"
+                icon={<EditOutlined />}
+                onClick={() => openEditModal(data)}
+              />
+            </Tooltip>
+          </Flex>
+        );
+      },
+    },
+  ];
+
+  const [editModalData, setEditModalData] = useState(null);
+
+  const onOk = () => {
+    setEditModalData(null);
+
+    getParticipant();
+  };
+
+  const onCancel = () => {
+    setEditModalData(null);
+  };
+
+  const openEditModal = (data) => {
+    setEditModalData(data);
+  };
+
+  return (
+    <div>
+      <Table
+        dataSource={ParticipantData}
+        columns={columns}
+        pagination={{
+          position: ["bottomCenter"],
+        }}
+        locale={Locale}
+      />
+
+      <ParticipantModal
+        type={ModalType.EDIT}
+        isOpen={Boolean(editModalData)}
+        data={editModalData}
+        onOk={onOk}
+        onCancel={onCancel}
+        isEdit
+      />
+    </div>
+  );
+}
+
+export default ParticipantsTable;

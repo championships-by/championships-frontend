@@ -1,0 +1,14 @@
+.matches-group-stage {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.icon {
+  font-size: 48px;
+}
+
+.error {
+  text-align: center;
+  padding: 20px;
+}

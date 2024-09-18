@@ -1,0 +1,17 @@
+.event-registration {
+  &__participant-nomination-modal {
+    top: 20;
+  }
+  &__team-create-modal {
+    top: 20;
+  }
+  &__team-edit-modal {
+    top: 20;
+  }
+  &__add-participant {
+    &__add-button,
+    &__remove-button {
+      margin-bottom: 16px;
+    }
+  }
+}

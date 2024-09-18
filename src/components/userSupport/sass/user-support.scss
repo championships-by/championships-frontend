@@ -1,0 +1,79 @@
+.user-support {
+  width: calc(100vw - 128px);
+  &__about {
+    &__laptop-img {
+      width: 25vw;
+      margin-top: 16px;
+      margin-left: 100px;
+    }
+    &__logo {
+      width: 7vw;
+    }
+    &__bntuLogo,
+    &__fitrLogo {
+      width: 8vw;
+    }
+    &__logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+    &__titles {
+      margin-top: 16px;
+      text-align: center;
+      padding: 0 2vw 0 2vw;
+
+      &__advantages {
+        color: #fff !important;
+        margin-top: 0;
+      }
+    }
+    &__institution {
+      color: #3679ff;
+    }
+    &__text {
+      font-size: 16px;
+
+      &__blue {
+        font-size: 16px;
+        color: #3679ff;
+      }
+
+      &__advantages {
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+    &__advantages-container {
+      margin-top: 50px;
+      background-color: #7ea7f9;
+      border-radius: 10px;
+      padding: 18px 18px 18px 32px;
+    }
+  }
+  &__feedback {
+    &__laptop-img {
+      width: 45vw;
+    }
+    &__img-container {
+      margin-top: 5vw;
+      width: 100%;
+      text-align: center;
+    }
+    &__text {
+      font-size: 16px;
+
+      &__white {
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+    &__warning-container {
+      background-color: #7ea7f9;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 32px;
+    }
+  }
+}

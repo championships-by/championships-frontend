@@ -1,33 +1,102 @@
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
-import AdminPanel from '@components/admin-panel/admin-panel'
-import EventSettings from '@components/event-settings/event-settings'
-import Events from '@components/events/events'
-import UserSettings from '@components/user-settings/user-settings'
-import UsersControl from '@components/users-control/users-control'
-import Participants from '@components/participants/participants'
-import NotFound from '@components/notfound/notfound'
-import Auth from '@components/auth/auth'
-import Logout from '@components/logout/logout'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
+import { ROUTER_ROUTES } from "@constants";
+import { store } from "@store";
+import AdminPanel from "@components/adminPanel/AdminPanel";
+import Auth from "@components/auth/Auth";
+import EventsRegistration from "@components/eventRegistration/EventRegistration";
+import Events from "@components/events/Events";
+import Competencies from "@components/judgment/competencies/Competencies";
+import EventSettings from "@components/judgment/eventSettings/EventSettings";
+import EventInformation from "@components/events/EventInformation";
+import Judgment from "@components/judgment/events/JudgmentEvents";
+import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
+import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
+import Logout from "@components/logout/Logout";
+import NotFound from "@components/notFound/Notfound";
+import Participants from "@components/participants/Participants";
+import Unauthorized from "@components/unauthorized/Unauthorized";
+import Forbidden from "@components/forbidden/Forbidden";
+import UserSettings from "@components/userSettings/UserSettings";
+import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
+import UsersControl from "@components/usersControl/UsersControl";
+import UserSupport from "@components/userSupport/UserSupport";
+import Feedback from "@components/userSupport/Feedback";
+import AboutProgram from "@components/userSupport/AboutProgram";
 
 function App() {
   return (
-    <BrowserRouter>
+   <Provider store={store}>
+      <BrowserRouter>
+      <UserSupport />
       <Routes>
-        <Route path="/" element={<Navigate to="/admin/auth" replace />} />
-        <Route path="/admin/auth" Component={Auth} />
-        <Route path="/admin/logout" Component={Logout} />
-        <Route path="/admin" Component={AdminPanel}>
-          <Route path="participants" Component={Participants} />
-          <Route path="users" Component={UsersControl} />
-          <Route path="settings" Component={UserSettings} />
-          <Route path="events" Component={Events} />
-          <Route path="events/settings" Component={EventSettings} />
-          <Route path="*" Component={NotFound} />
+        <Route path={ROUTER_ROUTES.NOT_FOUND} element={<NotFound />} />
+        <Route path={ROUTER_ROUTES.UNAUTHORIZED} element={<Unauthorized />} />
+        <Route path={ROUTER_ROUTES.FORBIDDEN} element={<Forbidden />} />
+        <Route path={ROUTER_ROUTES.ROOT}>
+          <Route index element={<Auth />} />
+          <Route path={ROUTER_ROUTES.LOGOUT} element={<Logout />} />
+          <Route path={ROUTER_ROUTES.ADMIN_PANEL} element={<AdminPanel />}>
+            <Route
+              path={ROUTER_ROUTES.PARTICIPANTS}
+              element={<Participants />}
+            />
+            <Route
+              path={ROUTER_ROUTES.USERS_CONTROL}
+              element={<UsersControl />}
+            />
+            <Route
+              path={ROUTER_ROUTES.USER_SETTINGS}
+              element={<UserSettings />}
+            />
+            <Route
+              path={ROUTER_ROUTES.USER_SETTINGS_TEST}
+              element={<UsersSettingsTest />}
+            />
+            <Route path={ROUTER_ROUTES.FEEDBACK} element={<Feedback />} />
+            <Route
+              path={ROUTER_ROUTES.ABOUT_PROGRAM}
+              element={<AboutProgram />}
+            />
+            <Route path={ROUTER_ROUTES.EVENTS}>
+              <Route index element={<Events />} />
+              <Route
+                path={ROUTER_ROUTES.EVENTS_DESCRIPTION}
+                element={<EventInformation />}
+              />
+              <Route
+                path={ROUTER_ROUTES.EVENTS_REGISTRATION}
+                element={<EventsRegistration />}
+              />
+            </Route>
+            <Route path={ROUTER_ROUTES.JUDGMENT}>
+              <Route index element={<Judgment />} />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_CREATE}
+                element={<EventSettings />}
+              />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_EVENT_SETTINGS}
+                element={<EventSettings />}
+              />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
+                element={<JudgmentGroupStage />}
+              />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}
+                element={<TimeMatches />}
+              />
+              <Route
+                path={ROUTER_ROUTES.JUDGMENT_CRITERIA}
+                element={<Competencies />}
+              />
+            </Route>
+          </Route>
         </Route>
-        <Route path="*" Component={NotFound} />
       </Routes>
     </BrowserRouter>
-  )
+    </Provider>
+  );
 }
-
-export default App
+export default App;
