@@ -34,16 +34,22 @@ export const fetchWithPagination = async (
   limit = 49,
   offset = 0
 ) => {
-  const response = await instance.get(url, { params: { ...params, offset, limit } });
+  const response = await instance.get(url, {
+    params: { ...params, offset, limit },
+  });
   const data = response.data;
 
   if (data.length === limit) {
-    return fetchWithPagination(instance, url, params, limit, offset + limit).then(
-      (nextData) => [...data, ...nextData]
-    );
-  } else {
-    return data;
+    return fetchWithPagination(
+      instance,
+      url,
+      params,
+      limit,
+      offset + limit
+    ).then((nextData) => [...data, ...nextData]);
   }
+
+  return data;
 };
 
 export const handlePaste = (event) => {
