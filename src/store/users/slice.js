@@ -9,7 +9,13 @@ import {
 
 export const usersSlice = createSlice({
   name: "users",
-  initialState: { data: [], isLoading: false, error: null },
+  initialState: {
+    allUsers: [],
+    userProfile: [],
+    judges: [],
+    isLoading: false,
+    error: null,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -18,7 +24,7 @@ export const usersSlice = createSlice({
         state.error = null;
       })
       .addCase(getUsers.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.allUsers = action.payload;
         state.isLoading = false;
       })
       .addCase(getUsers.rejected, (state, action) => {
@@ -26,34 +32,33 @@ export const usersSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(setUser.fulfilled, (state, action) => {
-        state.data.push(action.payload);
+        state.allUsers.push(action.payload);
       })
       .addCase(setUser.rejected, (state, action) => {
         state.error = action.error.message;
       })
       .addCase(changeUserProfile.fulfilled, (state, action) => {
-        const index = state.data.findIndex(
+        const index = state.allUsers.findIndex(
           (user) => user.id === action.payload.id
         );
         if (index !== -1) {
-          state.data[index] = action.payload;
+          state.allUsers[index] = action.payload;
         }
       })
       .addCase(changeUserProfile.rejected, (state, action) => {
         state.error = action.error.message;
       })
       .addCase(getUserProfile.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.userProfile = action.payload;
       })
       .addCase(getUserProfile.rejected, (state, action) => {
         state.error = action.error.message;
       })
       .addCase(getJudges.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.judges = action.payload;
       })
       .addCase(getJudges.rejected, (state, action) => {
         state.error = action.error.message;
       });
   },
 });
-
