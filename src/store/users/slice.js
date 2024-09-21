@@ -31,19 +31,11 @@ export const usersSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       })
-      .addCase(setUser.fulfilled, (state, action) => {
-        state.allUsers.push(action.payload);
-      })
       .addCase(setUser.rejected, (state, action) => {
         state.error = action.error.message;
       })
       .addCase(changeUserProfile.fulfilled, (state, action) => {
-        const index = state.allUsers.findIndex(
-          (user) => user.id === action.payload.id
-        );
-        if (index !== -1) {
-          state.allUsers[index] = action.payload;
-        }
+        //там где будет меняться поставить запрос getUserProfile и после удалить этот кейс
       })
       .addCase(changeUserProfile.rejected, (state, action) => {
         state.error = action.error.message;
