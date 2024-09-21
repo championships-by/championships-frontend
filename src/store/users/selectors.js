@@ -8,3 +8,12 @@ export const getUsersSelector = createSelector(
     error: users.error,
   })
 );
+
+export const getUserProfileSelector = createSelector(
+  (state) => state.users,
+  (users) => ({
+    data: users.data,
+    isLoading: users.isLoading,
+    error: users.error,
+  })
+);
