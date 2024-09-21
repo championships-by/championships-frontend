@@ -64,9 +64,8 @@ function UsersSettings() {
         userApi
           .changeProfile(data)
           .then(() => {
-              message.success("Данные успешно сохранены");
-            }
-          )
+            message.success("Данные успешно сохранены");
+          })
           .catch(() => {
             message.error(
               "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору."

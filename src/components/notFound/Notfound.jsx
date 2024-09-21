@@ -15,8 +15,8 @@ function NotFound() {
         </>
       }
       extra={
-        <NavLink to={ROUTES.USER_SETTINGS.PATH}>
-          <Button type="primary">Настройки пользователя</Button>
+        <NavLink to={ROUTES.EVENTS.PATH}>
+          <Button type="primary">Мероприятия</Button>
         </NavLink>
       }
     />

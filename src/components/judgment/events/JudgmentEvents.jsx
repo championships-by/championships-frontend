@@ -8,44 +8,45 @@ import EventTable from "@components/judgment/events/JudgmentEventsTable";
 import { eventApi } from "@api";
 import EventCreateModal from "./EventCreateModal";
 
-function changeDateFormat(date) {
-  const formattedDate = new Date(date);
-
-  const month = formattedDate.getMonth() + 1;
-  const formattedMonth = String(month).padStart(2, "0");
-
-  return (
-    formattedDate.getDate() +
-    "." +
-    formattedMonth +
-    "." +
-    formattedDate.getFullYear()
-  );
-}
-
 function JudgmentEvents() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataEvents, setEvents] = useState([]);
   const [IsEventCreateModalOpen, setIsEventCreateModalOpen] = useState(false);
-  const navigate = useNavigate();
 
-  const getEvents = () => {
-    eventApi
-        .getEventWithNominations({})
-        .then((data) => {
-          const formattedDate = data.map((user) => ({
-            ...user,
-            date: user.date,
-          }));
-          return formattedDate;
-        })
-        .then((data) => setEvents(data))
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        )
-        .finally(() => setIsLoading(false));
+  const getEvents = async () => {
+    let eventsData = [];
+    const levels = ["region", "republic", "district", "town", "other"];
+    const isOwner = true;
+    const params = new URLSearchParams();
+    levels.forEach((level) => params.append("levels", level));
+    params.append("is_owner", isOwner);
+    await eventApi
+      .getEventsWithNominationsByOwner(params.toString())
+      .then((response) => {
+        const formattedDate = response.data.map((user) => ({
+          ...user,
+          date: user.date,
+        }));
+        return formattedDate;
+      })
+      .then((data) => (eventsData = [...eventsData, ...data]));
+
+    params.delete("is_owner");
+
+    await eventApi
+      .getEventsWithNominationsByJudgeInCommand(params.toString())
+      .then((response) => {
+        const formattedDate = response.data.map((user) => ({
+          ...user,
+          date: user.date,
+        }));
+        return formattedDate;
+      })
+      .then((data) => (eventsData = [...eventsData, ...data]));
+
+    setEvents(eventsData);
+
+    setIsLoading(false);
   };
 
   useEffect(() => {

@@ -5,12 +5,15 @@ import { RESPONSE_STATUS } from "@constants";
 import { userApi } from "@api/index.js";
 import AdminPanelNav from "./AdminPanelNav.jsx";
 import AdminPanelLogo from "./AdminPanelLogo.jsx";
+import { useDispatch } from "react-redux";
+import { getUserProfile } from "@store/users";
 
 import "./sass/admin-panel.scss";
 
 function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState("unauthorized");
+  const dispatch = useDispatch();
 
   document.addEventListener("DOMContentLoaded", function () {
     const menuList = document.querySelector(".admin-panel__menu-list");
@@ -33,6 +36,8 @@ function AdminPanel() {
   };
 
   useEffect(() => {
+    dispatch(getUserProfile());
+
     updateMenuListHeight();
 
     if (isLoading) {

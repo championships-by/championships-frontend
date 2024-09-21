@@ -1,4 +1,4 @@
-name: DOCKERBUILD
+name: DOCKERBUILDDEV
 
 on:
   push:

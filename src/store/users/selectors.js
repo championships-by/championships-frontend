@@ -3,7 +3,16 @@ import { createSelector } from "@reduxjs/toolkit";
 export const getUsersSelector = createSelector(
   (state) => state.users,
   (users) => ({
-    data: users.data,
+    data: users.allUsers,
+    isLoading: users.isLoading,
+    error: users.error,
+  })
+);
+
+export const getUserProfileSelector = createSelector(
+  (state) => state.users,
+  (users) => ({
+    data: users.userProfile,
     isLoading: users.isLoading,
     error: users.error,
   })

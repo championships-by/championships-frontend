@@ -77,7 +77,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       notification.info({
         message: "Внимание!",
         description:
-          "Для опубликования мероприятия необходимо добавить хотя бы одну компетенцию!",
+          "Для публикации мероприятия необходимо добавить хотя бы одну компетенцию!",
         duration: 120,
         placement: "bottomRight",
       });
