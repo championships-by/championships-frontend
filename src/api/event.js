@@ -19,6 +19,10 @@ export const eventApi = {
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
   }}),
+  getEventsWithNominationsByOwner: (queryString) =>
+    instance.get(`/event/events_with_nominations_by_owner?${queryString}`),
+  getEventsWithNominationsByJudgeInCommand: (queryString) =>
+    instance.get(`/event/events_with_nominations_by_judge_in_command?${queryString}`),
   changeLogo: (formData) =>
     instance.post(`/event/event_update_logo`, formData),
   changeRegulation: (formData) =>
