@@ -1,5 +1,5 @@
-import { instance } from ".";
 import { fetchWithPagination } from "@utils";
+import { instance } from ".";
 
 export const eventApi = {
   getEvent: (eventID) =>
@@ -10,10 +10,12 @@ export const eventApi = {
         },
       })
       .then((response) => response.data),
-  getEventWithNominations: async ({ published }) => {
-    return fetchWithPagination(instance, `/event/events_with_nominations`, {
-      published,
-    });
+  getEventWithNominations: async (data) => {
+    return fetchWithPagination(
+      instance,
+      "/event/events_with_nominations",
+      data
+    );
   },
   changeEvent: (body) =>
     instance.patch(`/event/event`, body, {

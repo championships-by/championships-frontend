@@ -1,6 +1,7 @@
 import { defaultFormat, defaultTime, url } from "@constants";
 import dayjs from "dayjs";
 import JSEncrypt from "jsencrypt";
+import * as qs from "qs";
 
 export const FILTER_OPTION = (input, option) =>
   (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
@@ -36,8 +37,11 @@ export const fetchWithPagination = async (
 ) => {
   const response = await instance.get(url, {
     params: { ...params, offset, limit },
+    paramsSerializer: (params) =>
+      qs.stringify(params, { arrayFormat: "repeat" }),
   });
-  const data = response.data;
+
+  const { data } = response;
 
   if (data.length === limit) {
     return fetchWithPagination(

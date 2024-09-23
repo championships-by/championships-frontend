@@ -1,31 +1,11 @@
-import { Card, Checkbox, Input, Typography } from "antd";
+import { Button, Card, Checkbox, Flex, Input, Typography } from "antd";
+import { useState } from "react";
+import { defaultEventFilterOptions, eventFilterOptions } from "../../constants";
 
-const { Search } = Input;
+export const FilterSearchPanel = ({ onSubmit }) => {
+  const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState(defaultEventFilterOptions);
 
-const options = [
-  {
-    label: "Республиканский",
-    value: "republic",
-  },
-  {
-    label: "Областной",
-    value: "region",
-  },
-  {
-    label: "Районный",
-    value: "district",
-  },
-  {
-    label: "Городской",
-    value: "town",
-  },
-  {
-    label: "Другое",
-    value: "other",
-  },
-];
-
-export const FilterSearchPanel = ({ onSearch, onFilter }) => {
   return (
     <Card
       style={{
@@ -33,28 +13,43 @@ export const FilterSearchPanel = ({ onSearch, onFilter }) => {
         border: 0,
       }}
     >
-      <Search
-        placeholder="Поиск мероприятия"
-        size="large"
-        onChange={(e) => onSearch?.(e.target.value)}
-        enterButton
-      />
-      <Typography
-        style={{
-          fontWeight: 500,
-          fontSize: 16,
-          lineHeight: "26px",
-          margin: "30px 0 15px 0",
-        }}
-      >
-        Уровень мероприятия
-      </Typography>
-      <Checkbox.Group
-        defaultValue={["other"]}
-        style={{ flexDirection: "column", gap: "8px" }}
-        options={options}
-        onChange={(values) => onFilter?.(values)}
-      />
+      <Flex vertical gap={16}>
+        <Input
+          placeholder="Поиск мероприятия"
+          size="large"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Typography
+          style={{
+            fontWeight: 500,
+            fontSize: 16,
+            lineHeight: "26px",
+          }}
+        >
+          Уровень мероприятия
+        </Typography>
+        <Checkbox.Group
+          style={{ flexDirection: "column", gap: "8px" }}
+          options={eventFilterOptions}
+          defaultValue={defaultEventFilterOptions}
+          value={filters}
+          onChange={(selectedFilters) => setFilters(selectedFilters)}
+        />
+        <Flex gap="small" wrap>
+          <Button size="large" style={{ width: "50%" }}>
+            Очистить
+          </Button>
+          <Button
+            size="large"
+            type="primary"
+            style={{ width: "50%" }}
+            onClick={() => onSubmit?.(search, filters)}
+          >
+            Применить
+          </Button>
+        </Flex>
+      </Flex>
     </Card>
   );
 };
