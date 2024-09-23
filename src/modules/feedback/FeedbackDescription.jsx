@@ -6,7 +6,7 @@ function FeedbackDescription({ name }) {
   const rules = [
     {
       required: true,
-      message: "Пожалуйста, введите описание мероприятия",
+      message: "Пожалуйста, введите сообщение",
     },
     {
       max: 1000,
