@@ -50,5 +50,5 @@ export const deleteEvent = createAsyncThunk(
 
 export const setEvent = createAsyncThunk("events/setEvent", async (body) => {
   const response = await eventApi.setEvent(body);
-    return response.config.data;
+  return response.config.data;
 });

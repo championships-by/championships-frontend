@@ -28,7 +28,7 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
         .getEvent(eventID)
         .then((data) =>
           setNomination(
-          data?.event_data?.nominations.map((nomination) => ({
+            data?.event_data?.nominations.map((nomination) => ({
               value: nomination.name,
               label: nomination.name,
             }))

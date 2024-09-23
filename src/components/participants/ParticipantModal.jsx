@@ -84,15 +84,18 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
         className="participant"
         onValuesChange={onValuesChange}
       >
-        <ParticipantFirstnameInput 
-          name="first_name" 
-          value={values.first_name} />
-        <ParticipantLastnameInput 
-          name="second_name" 
-          value={values.second_name} />
-        <ParticipantPatronymicInput 
-          name="third_name" 
-          value={values.third_name} />
+        <ParticipantFirstnameInput
+          name="first_name"
+          value={values.first_name}
+        />
+        <ParticipantLastnameInput
+          name="second_name"
+          value={values.second_name}
+        />
+        <ParticipantPatronymicInput
+          name="third_name"
+          value={values.third_name}
+        />
         <ParticipantBirthdayInput
           name="birth_date"
           value={values.birth_date}
