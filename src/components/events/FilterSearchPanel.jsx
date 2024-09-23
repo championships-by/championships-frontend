@@ -1,8 +1,8 @@
 import { defaultEventFilterOptions, eventFilterOptions } from "@constants";
+import { setEventFilters, setEventSearchValue } from "@store/events/slice";
 import { Button, Card, Checkbox, Flex, Input, Typography } from "antd";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setEventFilters, setEventSearchValue } from "../../store/events/slice";
 import "./FilterSearchPanel.scss";
 
 export const FilterSearchPanel = ({ onSubmit }) => {
