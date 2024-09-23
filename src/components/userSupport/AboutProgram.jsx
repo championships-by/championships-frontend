@@ -14,7 +14,7 @@ function AboutProgram() {
       <Typography.Title level={2}>О портале</Typography.Title>
       <Typography.Text className="user-support__about__text">
         <Typography.Text className="user-support__about__text__blue">
-          Республиканская единая система управления соревнованиями
+          Республиканская единая система удаленной решистрации соревнований
         </Typography.Text>{" "}
         - это система управления мероприятиями и соревнованиями. Все процессы
         автоматизированы, что позволяет экономить ресурсы и время на организацию
@@ -44,7 +44,10 @@ function AboutProgram() {
             </Typography.Text>
             <br />
             <Typography.Text className="user-support__about__text__advantages">
-              2. Упрощенное управление участниками и данными соревнований.
+              2. Управление:{" "}
+            </Typography.Text>
+            <Typography.Text className="user-support__about__text__advantages">
+              Упрощенное управление участниками и данными соревнований.
             </Typography.Text>
             <br />
             <Typography.Text
@@ -67,8 +70,9 @@ function AboutProgram() {
               Настройка под нужды соревнований.
             </Typography.Text>
             <br />
+            <Typography.Text>5. Отчетность: </Typography.Text>
             <Typography.Text className="user-support__about__text__advantages">
-              5. Автоматическая генерация текущих и итоговых протоколов.
+              Автоматическая генерация текущих и итоговых протоколов.
             </Typography.Text>
           </div>
         </Col>

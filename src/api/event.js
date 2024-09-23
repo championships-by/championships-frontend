@@ -1,5 +1,5 @@
-import { fetchWithPagination } from "@utils";
 import { instance } from ".";
+import { fetchWithPagination } from "@utils";
 
 export const eventApi = {
   getEvent: (eventID) =>
@@ -10,17 +10,10 @@ export const eventApi = {
         },
       })
       .then((response) => response.data),
-  getEventWithNominations: async (data) => {
-    const { levels } = data;
-    delete data.levels;
-
-    let url = "/event/events_with_nominations";
-
-    if (levels) {
-      url += `?${levels.map((level) => `levels=${level}`).join("&")}`;
-    }
-
-    return fetchWithPagination(instance, url, data);
+  getEventWithNominations: async ({ published }) => {
+    return fetchWithPagination(instance, `/event/events_with_nominations`, {
+      published,
+    });
   },
   changeEvent: (body) =>
     instance.patch(`/event/event`, body, {
@@ -28,6 +21,12 @@ export const eventApi = {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     }),
+  getEventsWithNominationsByOwner: (queryString) =>
+    instance.get(`/event/events_with_nominations_by_owner?${queryString}`),
+  getEventsWithNominationsByJudgeInCommand: (queryString) =>
+    instance.get(
+      `/event/events_with_nominations_by_judge_in_command?${queryString}`
+    ),
   changeLogo: (formData) => instance.post(`/event/event_update_logo`, formData),
   changeRegulation: (formData) =>
     instance.post(`/event/event_update_doc`, formData),
