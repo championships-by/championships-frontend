@@ -1,24 +1,32 @@
-import { eventApi } from "@api";
 import EventsList from "@components/events/EventsList";
 import Loader from "@components/loader/Loader";
-import { Card, Flex, Typography, message, Divider } from "antd";
-import { useState } from "react";
+import { getEventsSelector } from "@store/events/selectors";
+import { getEventWithNominations } from "@store/events/thunk";
+import { Card, Divider, Flex, Typography } from "antd";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { CustomCalendar } from "./CustomCalendar";
+import { FilterSearchPanel } from "./FilterSearchPanel";
 import "./sass/events.scss";
 
 function Events() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [events, setEvents] = useState([]);
+  const dispatch = useDispatch();
+  const {
+    data: events,
+    isLoading,
+    search,
+    filters,
+  } = useSelector(getEventsSelector);
 
-  if (isLoading) {
-    eventApi
-      .getEventWithNominations({ published: true })
-      .then((data) => setEvents(data))
-      .catch(() =>
-        message.error("Невозможно получить данные. Обратитесь к администратору")
-      )
-      .finally(() => setTimeout(() => setIsLoading(false), 300));
-  }
+  useEffect(() => {
+    dispatch(
+      getEventWithNominations({
+        published: true,
+        levels: filters,
+        event_name_chars: search,
+      })
+    );
+  }, [dispatch, filters, search]);
 
   return (
     <>
@@ -28,9 +36,12 @@ function Events() {
       <Flex vertical gap={500}>
         <Flex gap="small">
           <EventsList events={events} />
-          <Card className="events__card">
-            <CustomCalendar />
-          </Card>
+          <Flex vertical="vertical" gap={10}>
+            <FilterSearchPanel />
+            <Card className="events__card">
+              <CustomCalendar />
+            </Card>
+          </Flex>
         </Flex>
       </Flex>
     </>

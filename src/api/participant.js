@@ -11,7 +11,10 @@ export const participantApi = {
     return instance.post(`/participant/participant`, body);
   },
   addParticipantToNomination: (body) => {
-    return instance.post("/team_participant_nomination_event/team_participant", body);
+    return instance.post(
+      "/team_participant_nomination_event/team_participant",
+      body
+    );
   },
   changeParticipant: (body) => {
     return instance.patch(`/participant/participant`, body);

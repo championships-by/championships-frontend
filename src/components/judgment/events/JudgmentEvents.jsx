@@ -1,11 +1,10 @@
-import { Button, Typography, message, Row, Col, Divider } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Loader from "@components/loader/Loader";
-import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
-import { ROUTES } from "@constants";
-import EventTable from "@components/judgment/events/JudgmentEventsTable";
 import { eventApi } from "@api";
+import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
+import EventTable from "@components/judgment/events/JudgmentEventsTable";
+import Loader from "@components/loader/Loader";
+import { ROUTES } from "@constants";
+import { Button, Col, Divider, Row, Typography } from "antd";
+import { useEffect, useState } from "react";
 import EventCreateModal from "./EventCreateModal";
 
 function JudgmentEvents() {

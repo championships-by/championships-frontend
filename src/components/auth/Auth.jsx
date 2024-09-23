@@ -44,8 +44,8 @@ function Auth() {
 
     try {
       await authApi.setLogin({
-      email,
-      password: encrypedPassword,
+        email,
+        password: encrypedPassword,
       });
       navigate(ROUTES.USER_SETTINGS.PATH);
     } catch (error) {

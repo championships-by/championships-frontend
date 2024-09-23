@@ -122,6 +122,14 @@ export const ROUTER_ROUTES = {
   JUDGMENT_CRITERIA: ":eventId/:nominationId/criteria",
 };
 
+export const EventFilters = {
+  REPUBLIC: "republic",
+  REGION: "region",
+  DISTRICT: "district",
+  TOWN: "town",
+  OTHER: "other",
+};
+
 export const Locale = {
   lang: {
     locale: "ru_RU",
@@ -185,6 +193,13 @@ export const Locale = {
     judge: "Судья",
     specialist: "Менеджер",
   },
+  eventFilters: {
+    [EventFilters.REPUBLIC]: "Республиканский",
+    [EventFilters.REGION]: "Областной",
+    [EventFilters.DISTRICT]: "Районный",
+    [EventFilters.TOWN]: "Городской",
+    [EventFilters.OTHER]: "Другое",
+  },
   dateFormat: "DD.MM.YYYY",
   dateTimeFormat: "DD.MM.YYYY HH:mm",
   weekFormat: "YYYY-wo",
@@ -222,3 +237,12 @@ export const zubronokSite = "https://zubronok.by";
 export const bntuSite = "https://bntu.by";
 export const fitrSite = "https://bntu.by/faculties/fitr";
 export const gymnSite = "http://gymn61.minsk.edu.by";
+
+export const eventFilterOptions = Object.entries(EventFilters).map(
+  ([key, value]) => ({
+    label: Locale.eventFilters[value],
+    value: EventFilters[key],
+  })
+);
+
+export const defaultEventFilterOptions = Object.values(EventFilters);

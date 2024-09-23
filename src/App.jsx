@@ -1,30 +1,30 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Provider } from "react-redux";
-import { ROUTER_ROUTES, Roles } from "@constants";
-import { store } from "@store";
 import AdminPanel from "@components/adminPanel/AdminPanel";
 import Auth from "@components/auth/Auth";
 import EventsRegistration from "@components/eventRegistration/EventRegistration";
-import Events from "@components/events/Events";
-import Competencies from "@components/judgment/competencies/Competencies";
-import EventSettings from "@components/judgment/eventSettings/EventSettings";
 import EventInformation from "@components/events/EventInformation";
+import Events from "@components/events/Events";
+import Forbidden from "@components/forbidden/Forbidden";
+import Competencies from "@components/judgment/competencies/Competencies";
 import Judgment from "@components/judgment/events/JudgmentEvents";
+import EventSettings from "@components/judgment/eventSettings/EventSettings";
 import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
 import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
 import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
 import Participants from "@components/participants/Participants";
 import Unauthorized from "@components/unauthorized/Unauthorized";
-import Forbidden from "@components/forbidden/Forbidden";
+import UsersControl from "@components/usersControl/UsersControl";
 import UserSettings from "@components/userSettings/UserSettings";
 import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
-import UsersControl from "@components/usersControl/UsersControl";
-import UserSupport from "@components/userSupport/UserSupport";
-import Feedback from "@components/userSupport/Feedback";
 import AboutProgram from "@components/userSupport/AboutProgram";
-import ProtectedRoute from "./ProtectedRoute";
+import Feedback from "@components/userSupport/Feedback";
+import UserSupport from "@components/userSupport/UserSupport";
+import { ROUTER_ROUTES, Roles } from "@constants";
+import { store } from "@store";
+import { Provider } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (

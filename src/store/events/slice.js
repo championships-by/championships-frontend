@@ -1,18 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { defaultEventFilterOptions } from "../../constants";
 import {
-  getEvent,
-  getEventWithNominations,
   changeEvent,
   changeLogo,
   changeRegulation,
   deleteEvent,
+  getEvent,
+  getEventWithNominations,
   setEvent,
 } from "./thunk";
 
 export const eventsSlice = createSlice({
   name: "events",
-  initialState: { data: [], isLoading: false, error: null },
-  reducers: {},
+  initialState: {
+    data: [],
+    isLoading: false,
+    error: null,
+    search: "",
+    filters: defaultEventFilterOptions,
+  },
+  reducers: {
+    setEventSearchValue: (state, action) => {
+      state.search = action.payload;
+    },
+    setEventFilters: (state, action) => {
+      state.filters = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getEvent.pending, (state) => {
@@ -89,3 +103,4 @@ export const eventsSlice = createSlice({
   },
 });
 
+export const { setEventFilters, setEventSearchValue } = eventsSlice.actions;

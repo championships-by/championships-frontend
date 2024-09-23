@@ -70,10 +70,8 @@ function AboutProgram() {
               Настройка под нужды соревнований.
             </Typography.Text>
             <br />
-            <Typography.Text>
-              5. Отчетность:{" "}
-              </Typography.Text>
-              <Typography.Text className="user-support__about__text__advantages">
+            <Typography.Text>5. Отчетность: </Typography.Text>
+            <Typography.Text className="user-support__about__text__advantages">
               Автоматическая генерация текущих и итоговых протоколов.
             </Typography.Text>
           </div>
