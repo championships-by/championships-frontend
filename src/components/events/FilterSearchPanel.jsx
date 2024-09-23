@@ -3,6 +3,7 @@ import { Button, Card, Checkbox, Flex, Input, Typography } from "antd";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setEventFilters, setEventSearchValue } from "../../store/events/slice";
+import "./FilterSearchPanel.scss";
 
 export const FilterSearchPanel = ({ onSubmit }) => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ export const FilterSearchPanel = ({ onSubmit }) => {
   }, []);
 
   return (
-    <Card style={{ backgroundColor: "#7EA7F9", border: 0 }}>
+    <Card className="filter-search-panel">
       <Flex vertical gap={16}>
         <Input
           placeholder="Поиск мероприятия"
@@ -41,17 +42,8 @@ export const FilterSearchPanel = ({ onSubmit }) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Flex vertical>
-          <Typography
-            style={{
-              fontWeight: 500,
-              fontSize: 16,
-              lineHeight: "26px",
-              marginBottom: "4px",
-            }}
-          >
-            Уровень мероприятия
-          </Typography>
+        <Flex className="filter-search-panel__filters" vertical>
+          <Typography>Уровень мероприятия</Typography>
           <Flex vertical gap={8}>
             <Checkbox
               indeterminate={isSomeFiltersSelected}
@@ -61,7 +53,6 @@ export const FilterSearchPanel = ({ onSubmit }) => {
               Все
             </Checkbox>
             <Checkbox.Group
-              style={{ flexDirection: "column", gap: "8px", fontSize: "10px" }}
               options={eventFilterOptions}
               defaultValue={defaultEventFilterOptions}
               value={filters}
@@ -69,16 +60,11 @@ export const FilterSearchPanel = ({ onSubmit }) => {
             />
           </Flex>
         </Flex>
-        <Flex gap="small" wrap>
-          <Button size="large" style={{ width: "50%" }} onClick={handleClear}>
+        <Flex className="filter-search-panel__buttons" gap="small" wrap>
+          <Button size="large" onClick={handleClear}>
             Очистить
           </Button>
-          <Button
-            size="large"
-            type="primary"
-            style={{ width: "50%" }}
-            onClick={handleSubmit}
-          >
+          <Button size="large" type="primary" onClick={handleSubmit}>
             Применить
           </Button>
         </Flex>
