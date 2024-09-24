@@ -1,15 +1,15 @@
+import { competenciesApi } from "@api";
 import { useTabs } from "@hooks/useTabs";
-import { Button, message, Tabs } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { competenciesApi } from "../../../api";
 import {
   generateCompetenciesDataSource,
   isCriteriaFilled,
   transformCriteriaData,
   transformCriteriaResultsData,
   transformStageStatus,
-} from "../../../utils";
+} from "@utils";
+import { Button, message, Tabs } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { CompetenciesResults, CompetenciesTable } from "./components";
 import { CompetenciesTabsEnum } from "./constants";
 
