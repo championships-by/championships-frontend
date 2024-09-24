@@ -3,7 +3,6 @@ import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { competenciesApi } from "../../../api";
-import { RESPONSE_STATUS } from "../../../constants";
 import {
   generateCompetenciesDataSource,
   isCriteriaFilled,
@@ -94,33 +93,27 @@ function CompetenciesTab() {
             criteriaResponse,
             criteriaResultsResponse,
           ]) => {
-            if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
-              const transformedStageStatus = transformStageStatus(
-                stageStatusResponse.data
-              );
-              setStageStatus(transformedStageStatus);
+            const transformedStageStatus = transformStageStatus(
+              stageStatusResponse.data
+            );
+            setStageStatus(transformedStageStatus);
 
-              if (stageStatus.tournamentFinished) {
-                setIsStageFinished(true);
-              }
+            if (stageStatus.tournamentFinished) {
+              setIsStageFinished(true);
             }
 
-            if (criteriaResponse.status === RESPONSE_STATUS.STATUS_OK) {
-              const transformedCriteria = transformCriteriaData(
-                criteriaResponse.data
-              );
-              setCriteria(transformedCriteria);
-            }
+            const transformedCriteria = transformCriteriaData(
+              criteriaResponse.data
+            );
+            setCriteria(transformedCriteria);
 
-            if (criteriaResultsResponse.status === RESPONSE_STATUS.STATUS_OK) {
-              const transformedCriteriaResults = transformCriteriaResultsData(
-                criteriaResultsResponse.data
-              );
-              const generatedDataSource = generateCompetenciesDataSource(
-                transformedCriteriaResults
-              );
-              setDataSource(generatedDataSource);
-            }
+            const transformedCriteriaResults = transformCriteriaResultsData(
+              criteriaResultsResponse.data
+            );
+            const generatedDataSource = generateCompetenciesDataSource(
+              transformedCriteriaResults
+            );
+            setDataSource(generatedDataSource);
           }
         )
         .catch((reason) => {
