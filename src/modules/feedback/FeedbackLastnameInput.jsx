@@ -5,19 +5,19 @@ import FormItem from "antd/es/form/FormItem";
 
 import "./sass/feedback.scss";
 
-function FeedbackLastnameInput({ name }) {
-  const rules = [
-    {
-      required: true,
-      whitespace: true,
-      message: "Пожалуйста, введите фамилию",
-    },
-    {
-      max: 255,
-      message: "Максимальное значение 255",
-    },
-  ];
+const rules = [
+  {
+    required: true,
+    whitespace: true,
+    message: "Пожалуйста, введите фамилию",
+  },
+  {
+    max: 255,
+    message: "Максимальное значение 255",
+  },
+];
 
+function FeedbackLastnameInput({ name }) {
   return (
     <Flex vertical className="user__lastname-input__flex">
       <Typography.Text>Фамилия*</Typography.Text>

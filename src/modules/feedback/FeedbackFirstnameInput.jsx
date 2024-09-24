@@ -5,19 +5,19 @@ import FormItem from "antd/es/form/FormItem";
 
 import "./sass/feedback.scss";
 
-function FeedbackFirstnameInput({ name }) {
-  const rules = [
-    {
-      required: true,
-      whitespace: true,
-      message: "Пожалуйста, введите имя",
-    },
-    {
-      max: 255,
-      message: "Максимальное значение 255",
-    },
-  ];
+const rules = [
+  {
+    required: true,
+    whitespace: true,
+    message: "Пожалуйста, введите имя",
+  },
+  {
+    max: 255,
+    message: "Максимальное значение 255",
+  },
+];
 
+function FeedbackFirstnameInput({ name }) {
   return (
     <Flex vertical className="user__firstname-input__flex">
       <Typography.Text>Имя*</Typography.Text>
