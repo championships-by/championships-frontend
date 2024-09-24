@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomCalendar } from "./CustomCalendar";
 import { FilterSearchPanel } from "./FilterSearchPanel";
+
 import "./sass/events.scss";
 
 function Events() {
