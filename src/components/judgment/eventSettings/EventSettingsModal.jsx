@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Button, Flex, Form, Modal, message } from "antd";
-import ReglamentName from "@modules/judgment/events/ReglamentName";
+import { competenciesApi } from "@api";
 import CompetitionJudge from "@modules/judgment/events/CompetitionJudgeName";
 import CompetitionName from "@modules/judgment/events/CompetitionName";
 import CompetitionType from "@modules/judgment/events/CompetitionType";
-import { competenciesApi } from "@api";
+import ReglamentName from "@modules/judgment/events/ReglamentName";
+import { Button, Flex, Form, Modal, message } from "antd";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function EventSettingsCompitations({
@@ -29,13 +29,8 @@ function EventSettingsCompitations({
 
   useEffect(() => {
     if (isOpen) {
-      const body = {
-        event_id: eventID,
-        nomination_id: nominationId,
-      };
-
       competenciesApi
-        .getNominationEventInfo(body)
+        .getNominationEventInfo(eventID, nominationId)
         .then((response) => {
           const data = response.data;
         })
