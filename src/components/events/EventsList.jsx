@@ -1,21 +1,19 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Card, List, Tooltip, Typography } from "antd";
 import {
   CalendarOutlined,
-  StarOutlined,
   HomeOutlined,
-  CloseCircleOutlined,
-  CheckCircleOutlined,
+  StarOutlined,
 } from "@ant-design/icons";
-import dayjs from "dayjs";
 import noLogo from "@assets/img/auth-background.png";
-import { changeDateFormat, getEventLevel } from "@utils";
 import { ROUTES, url } from "@constants";
+import { changeDateFormat, getEventLevel } from "@utils";
+import { Card, List, Tooltip, Typography } from "antd";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function EventsList({ events }) {
+  const navigate = useNavigate();
+
   const data = events.map(({ event }, index) => {
-    const navigate = useNavigate();
     const finishDate = new Date(event.registration_finish_date);
     const now = new Date();
     return (

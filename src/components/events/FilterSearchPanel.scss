@@ -1,0 +1,25 @@
+.filter-search-panel {
+  background-color: #7ea7f9;
+  border: 0;
+
+  &__filters {
+    & > article {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 26px;
+      margin-bottom: 4px;
+    }
+
+    & > div > div {
+      flex-direction: column;
+      gap: 8px;
+      font-size: 10px;
+    }
+  }
+
+  &__buttons {
+    & > button {
+      width: 50%;
+    }
+  }
+}
