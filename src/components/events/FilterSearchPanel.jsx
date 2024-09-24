@@ -3,6 +3,7 @@ import { setEventFilters, setEventSearchValue } from "@store/events/slice";
 import { Button, Card, Checkbox, Flex, Input, Typography } from "antd";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
+
 import "./FilterSearchPanel.scss";
 
 export const FilterSearchPanel = ({ onSubmit }) => {
@@ -19,13 +20,13 @@ export const FilterSearchPanel = ({ onSubmit }) => {
     setFilters(e.target.checked ? defaultEventFilterOptions : []);
   };
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = () => {
     dispatch(setEventSearchValue(search));
     dispatch(
       setEventFilters(filters.length <= 0 ? defaultEventFilterOptions : filters)
     );
     onSubmit?.(search, filters);
-  }, [dispatch, filters, onSubmit, search]);
+  };
 
   const handleClear = useCallback(() => {
     setSearch("");
@@ -43,7 +44,9 @@ export const FilterSearchPanel = ({ onSubmit }) => {
           onChange={(e) => setSearch(e.target.value)}
         />
         <Flex className="filter-search-panel__filters" vertical>
-          <Typography>Уровень мероприятия</Typography>
+          <Typography className="filter-search-panel__filters__title">
+            Уровень мероприятия
+          </Typography>
           <Flex vertical gap={8}>
             <Checkbox
               indeterminate={isSomeFiltersSelected}
@@ -53,10 +56,11 @@ export const FilterSearchPanel = ({ onSubmit }) => {
               Все
             </Checkbox>
             <Checkbox.Group
+              className="filter-search-panel__filters__checkbox-group"
               options={eventFilterOptions}
               defaultValue={defaultEventFilterOptions}
               value={filters}
-              onChange={(selectedFilters) => setFilters(selectedFilters)}
+              onChange={setFilters}
             />
           </Flex>
         </Flex>

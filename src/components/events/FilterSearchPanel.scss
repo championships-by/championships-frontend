@@ -3,14 +3,14 @@
   border: 0;
 
   &__filters {
-    & > article {
+    &__title {
       font-weight: 500;
       font-size: 16px;
       line-height: 26px;
       margin-bottom: 4px;
     }
 
-    & > div > div {
+    &__checkbox-group {
       flex-direction: column;
       gap: 8px;
       font-size: 10px;
