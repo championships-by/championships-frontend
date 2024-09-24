@@ -12,6 +12,7 @@ export * from "./participant";
 export * from "./team";
 export * from "./timeMatches";
 export * from "./user";
+export * from "./feedback";
 
 export const instance = axios.create({
   baseURL: API_PATH,
