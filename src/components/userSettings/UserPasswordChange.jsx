@@ -33,9 +33,9 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
     userApi
       .changeProfile(data)
       .then(() => {
-          message.success("Пароль успешно изменен");
-          form.resetFields();
-          onOk();
+        message.success("Пароль успешно изменен");
+        form.resetFields();
+        onOk();
       })
       .catch(() => {
         message.error(

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ERRORS } from "@errors";
-import { message} from "antd";
+import { message } from "antd";
 
 // todo перенести все на axios
 export * from "./auth";
@@ -23,7 +23,6 @@ export const instance = axios.create({
   credentials: "include",
 });
 
-
 instance.interceptors.response.use(
   (response) => {
     return response;
@@ -32,8 +31,8 @@ instance.interceptors.response.use(
     if (error.response) {
       const ERROR_TEXT = error?.response?.data?.detail?.error;
       message.error(ERRORS.getError(ERROR_TEXT));
-    } 
-    
+    }
+
     return Promise.reject(error);
   }
 );

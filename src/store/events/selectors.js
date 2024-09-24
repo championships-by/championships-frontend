@@ -6,5 +6,7 @@ export const getEventsSelector = createSelector(
     data: events.data,
     isLoading: events.isLoading,
     error: events.error,
+    search: events.search,
+    filters: events.filters,
   })
 );
