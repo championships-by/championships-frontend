@@ -47,7 +47,7 @@ function CompetenciesTab() {
         });
       });
 
-      await competenciesApi.finishTimeStage({
+      await competenciesApi.finishCriteriaStage({
         event_id: eventId,
         nomination_id: nominationId,
       });
