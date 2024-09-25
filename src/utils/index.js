@@ -262,3 +262,17 @@ export const getTextByTabIndex = (tabIndex, arr) => arr[tabIndex - 1];
 export const getClickHandler = (selector, handlers) => handlers[selector()];
 
 export const isAttemptDisqualified = (value) => value === defaultTime;
+
+export const getContentSectionWidth = () => {
+  const adminPanelWidth = document.querySelector(".admin-panel").offsetWidth;
+  const adminPanelMenuWidth =
+    document.querySelector(".admin-panel__menu").offsetWidth;
+  const adminPanelContent = document.querySelector(".admin-panel__content");
+  const adminPanelContentStyles = getComputedStyle(adminPanelContent);
+  return (
+    adminPanelWidth -
+    adminPanelMenuWidth -
+    parseInt(adminPanelContentStyles.getPropertyValue("padding-left"), 10) -
+    parseInt(adminPanelContentStyles.getPropertyValue("padding-right"), 10)
+  );
+};
