@@ -98,7 +98,7 @@ function CompetenciesTab() {
             );
             setStageStatus(transformedStageStatus);
 
-            if (stageStatus.tournamentFinished) {
+            if (transformedStageStatus.tournamentFinished) {
               setIsStageFinished(true);
             }
 
@@ -149,11 +149,7 @@ function CompetenciesTab() {
         },
         {
           ...tabs[1],
-          disabled: !(
-            stageStatus.registrationFinished &&
-            stageStatus.tournamentStarted &&
-            stageStatus.tournamentFinished
-          ),
+          disabled: !stageStatus.tournamentFinished,
           children: (
             <CompetenciesResults
               dataSource={dataSource}
