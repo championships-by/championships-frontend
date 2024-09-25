@@ -4,24 +4,30 @@ import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Flex, Table, Tooltip, Typography } from "antd";
 
+import "./CompetenciesResults.scss";
+
 const columns = [
   {
+    title: " ",
     key: "medal",
     render: (text, record, index) => (
-      <div>
-        <img
-          src={
-            index + 1 === 1
-              ? GoldMedal
-              : index + 1 === 2
-                ? SilverMedal
-                : index + 1 === 3
-                  ? BronzeMedal
-                  : ""
-          }
-          style={{ width: "50px", height: "50px" }}
-        />
-      </div>
+      <>
+        {index <= 2 && (
+          <div className="medal-column">
+            <img
+              src={
+                index === 0
+                  ? GoldMedal
+                  : index === 1
+                    ? SilverMedal
+                    : index === 2
+                      ? BronzeMedal
+                      : ""
+              }
+            />
+          </div>
+        )}
+      </>
     ),
   },
   {
@@ -54,6 +60,7 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
         <Typography>При попытке получить данных произошла ошибка</Typography>
       ) : (
         <Table
+          className="competencies-result-table"
           locale={{ emptyText: "Нет данных" }}
           pagination={false}
           columns={columns}
