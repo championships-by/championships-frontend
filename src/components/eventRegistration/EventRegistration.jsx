@@ -13,7 +13,7 @@ import TeamCreateModal from "@components/eventRegistration/TeamCreateModal";
 import TeamsTable from "@components/eventRegistration/TeamsTable";
 import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
-import { teamApi, eventApi } from "@api";
+import { eventApi } from "@api";
 import { ROUTES } from "@constants";
 
 import "./sass/event-registration.scss";
@@ -39,25 +39,19 @@ function EventsRegistration() {
   ];
 
   const getTeams = () => {
-    teamApi
-      .getTeam()
-      .then((data) => setTeams(data))
-      .catch(() =>
-        message.error("Невозможно получить данные. Обратитесь к администратору")
-      )
+    const params = new URLSearchParams();
+    params.append("event_id", eventID);
+    eventApi
+      .getEventWithNominationsAndTeamParticipants(params.toString())
+      .then((response) => {
+        setTeams(response.data);
+      })
       .finally(() => setTimeout(() => setIsLoading(false), 300));
   };
 
   useEffect(() => {
     if (isLoading) {
-      eventApi
-        .getEvent(eventID)
-        .then((data) => setEvent(data))
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        );
+      eventApi.getEvent(eventID).then((data) => setEvent(data));
       getTeams();
     }
   }, [isLoading, eventID]);

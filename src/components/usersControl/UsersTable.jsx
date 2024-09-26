@@ -8,10 +8,12 @@ import { useState } from "react";
 
 function UsersTable() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState();
   const users = useSelector(getUsersSelector);
   const usersData = users.data;
 
-  const openEditModal = () => {
+  const openEditModal = (id) => {
+    setSelectedUserId(id);
     setIsEditModalOpen(true);
   };
 
@@ -52,13 +54,13 @@ function UsersTable() {
     {
       title: "Действия",
       key: "action",
-      render: () => (
+      render: (_, record) => (
         <Flex>
           <Tooltip title="Редактирование">
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={openEditModal}
+              onClick={() => openEditModal(record.id)}
             />
           </Tooltip>
         </Flex>
@@ -80,6 +82,7 @@ function UsersTable() {
 
       <UserModal
         type={ModalType.EDIT}
+        userId={selectedUserId}
         isOpen={isEditModalOpen}
         onOk={changeUserData}
         onCancel={() => setIsEditModalOpen(false)}

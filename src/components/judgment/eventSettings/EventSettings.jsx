@@ -37,7 +37,7 @@ import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi } from "@api";
-import { Locale, ROUTES, NOMINATION_TYPES } from "@constants";
+import { Locale, ROUTES, NOMINATION_TYPES, ModalType } from "@constants";
 
 import "./sass/event-settings.scss";
 
@@ -112,7 +112,7 @@ function EventSettings() {
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={() => openEditModal(record)}
+              onClick={() => openEditModal(record.id)}
             />
           </Tooltip>
           <Tooltip title="Начать соревнование">
@@ -606,7 +606,7 @@ function EventSettings() {
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
         onAdd={getNominations}
-        mode="create"
+        mode={ModalType.ADD}
       />
       <CompitationModal
         name="Редактировать компетенцию"
@@ -614,7 +614,7 @@ function EventSettings() {
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}
         onAdd={getNominations}
-        mode="edit"
+        mode={ModalType.EDIT}
         nominationId={selectedNomination}
       />
       <CompetitionModal

@@ -4,7 +4,7 @@ import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/user.scss";
 
-function UserPasswordInput({ name, required }) {
+function UserPasswordInput({ name, required, disabled }) {
   return (
     <Flex vertical className="user__password-input__flex">
       <Typography.Text>Пароль</Typography.Text>
@@ -25,6 +25,7 @@ function UserPasswordInput({ name, required }) {
         className="user__password-input__formitem"
       >
         <Input.Password
+          disabled={disabled}
           prefix={<LockOutlined />}
           placeholder="Введите Пароль"
           iconRender={() => <EyeInvisibleOutlined />}
