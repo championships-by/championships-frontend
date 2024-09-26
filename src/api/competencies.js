@@ -24,9 +24,9 @@ export const competenciesApi = {
       `/nomination_event/nominations_event_participant_count?event_id=${eventID}`
     );
   },
-  getParticipantsNominationEvent: (eventID, nominationID, related, kind) => {
+  getParticipantsNominationEvent: (eventID, nominationID, teamID, related, kind) => {
     return instance.get(
-      `/nomination_event/team_participants_of_nomination_event?related=${related}&event_id=${eventID}&nomination_id=${nominationID}&kind=${kind}`
+      `/nomination_event/team_participants_of_nomination_event?related=${related}&event_id=${eventID}&nomination_id=${nominationID}&team_id=${teamID}&kind=${kind}`
     );
   },
   addOlympicCompetenciesForEvent: async (data) =>

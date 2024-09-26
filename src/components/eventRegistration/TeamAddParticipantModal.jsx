@@ -65,7 +65,13 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
       participant: undefined,
     });
     competenciesApi
-      .getParticipantsNominationEvent(eventID, nominationID, related, kind)
+      .getParticipantsNominationEvent(
+        eventID,
+        nominationID,
+        teamID,
+        related,
+        kind
+      )
       .then((response) => {
         const { data } = response;
         data.forEach(({ team }) => {
