@@ -4,8 +4,9 @@ import { UploadOutlined } from "@ant-design/icons";
 
 import "./sass/feedback.scss";
 
+const MAX_FILE_SIZE = 499 * 1024 * 1024;
+
 function FeedbackFile({ name, onChange: onChangeBase }) {
-  const MAX_FILE_SIZE = 499 * 1024 * 1024;
   const onChange = ({ file }) => {
     onChangeBase({ [name]: file });
   };

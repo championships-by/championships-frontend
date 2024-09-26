@@ -6,7 +6,7 @@ import { userApi } from "@api/index.js";
 import AdminPanelNav from "./AdminPanelNav.jsx";
 import AdminPanelLogo from "./AdminPanelLogo.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserProfile, getUserProfileSelector } from "@store/users";
+import { getUserProfile, getUserSelector } from "@store/users";
 
 import "./sass/admin-panel.scss";
 
@@ -14,7 +14,7 @@ function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const [role, setRole] = useState("unauthorized");
   const dispatch = useDispatch();
-  const user = useSelector(getUserProfileSelector);
+  const user = useSelector(getUserSelector);
 
   document.addEventListener("DOMContentLoaded", function () {
     const menuList = document.querySelector(".admin-panel__menu-list");
