@@ -93,22 +93,19 @@ function CompetenciesTab() {
             criteriaResponse,
             criteriaResultsResponse,
           ]) => {
-            const transformedStageStatus = transformStageStatus(
-              stageStatusResponse.data
-            );
+            const transformedStageStatus =
+              transformStageStatus(stageStatusResponse);
             setStageStatus(transformedStageStatus);
 
             if (transformedStageStatus.tournamentFinished) {
               setIsStageFinished(true);
             }
 
-            const transformedCriteria = transformCriteriaData(
-              criteriaResponse.data
-            );
+            const transformedCriteria = transformCriteriaData(criteriaResponse);
             setCriteria(transformedCriteria);
 
             const transformedCriteriaResults = transformCriteriaResultsData(
-              criteriaResultsResponse.data
+              criteriaResultsResponse
             );
             const generatedDataSource = generateCompetenciesDataSource(
               transformedCriteriaResults

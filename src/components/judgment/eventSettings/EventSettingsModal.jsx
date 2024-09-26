@@ -4,8 +4,7 @@ import CompetitionName from "@modules/judgment/events/CompetitionName";
 import CompetitionType from "@modules/judgment/events/CompetitionType";
 import ReglamentName from "@modules/judgment/events/ReglamentName";
 import { Button, Flex, Form, Modal, message } from "antd";
-import Typography from "antd/es/typography/Typography";
-import { ModalType } from "@constants";
+import { ModalType, NOMINATIONS } from "@constants";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -37,8 +36,7 @@ function EventSettingsCompitations({
       if (isOpen) {
         competenciesApi
           .getNominationEventInfo(params.toString())
-          .then((response) => {
-            const data = response.data;
+          .then((data) => {
             const judgeIds = data.judges.map((judge) => judge.id);
             form.setFieldsValue({
               nomination_name: data.nomination_name,
@@ -94,19 +92,19 @@ function EventSettingsCompitations({
       };
       try {
         switch (selectedValue) {
-          case "time":
+          case NOMINATIONS.TIME:
             Object.assign(data, { race_round_amount: groupCount });
             await competenciesApi
               .addTimeCompetenciesForEvent(data)
               .then(() => {});
             break;
 
-          case "playoffs":
+          case NOMINATIONS.PLAYOFF:
             await competenciesApi
               .addOlympicCompetenciesForEvent(data)
               .then(() => {});
             break;
-          case "criteria":
+          case NOMINATIONS.CRITERIA:
             Object.assign(data, { criterias: criteria });
             await competenciesApi
               .addCriteriaCompetenciesForEvent(data)
@@ -120,6 +118,7 @@ function EventSettingsCompitations({
         onAdd();
         setInputName("");
         setInputReglament("");
+        setSelectedJudges([]);
         form.resetFields();
         setRefreshKey((prevKey) => prevKey + 1);
       } catch {}
@@ -138,6 +137,7 @@ function EventSettingsCompitations({
         onOk();
         setInputName("");
         setInputReglament("");
+        setSelectedJudges([]);
         form.resetFields();
         setRefreshKey((prevKey) => prevKey + 1);
       } catch {}

@@ -100,8 +100,7 @@ function EventInformation() {
   const onResultsClick = (nomination) => {
     competenciesApi
       .getNominationEventInfo(eventID, nomination.id)
-      .then((response) => {
-        const data = response.data;
+      .then((data) => {
         if (!data.tournament_started) {
           message.error("Соревнование ещё не началось");
         } else if (!data.tournament_finished) {

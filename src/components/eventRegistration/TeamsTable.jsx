@@ -1,35 +1,11 @@
-import { Table, Flex, List, Button, Typography, Tooltip } from "antd";
-import { useState } from "react";
+import { Table, Flex, Button, Tooltip } from "antd";
+import { useMemo, useState } from "react";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
 import { Locale } from "@constants";
 
-function TeamsTable({ TeamsData }) {
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
-  const [selectedTeamId, setSelectedTeamId] = useState();
-  const [selectedTeamName, setSelectedTeamName] = useState();
-
-  const openEditModal = (id, name) => {
-    setSelectedTeamId(id);
-    setSelectedTeamName(name);
-    setIsEditModalOpen(true);
-  };
-
-  const changeTeamData = () => {
-    setIsEditModalOpen(false);
-  };
-
-  const openParticipantModal = (teamId) => {
-    setSelectedTeamId(teamId);
-    setIsParticipantModalOpen(true);
-  };
-
-  const changeParticipantData = () => {
-    setIsParticipantModalOpen(false);
-  };
-
+const transformTeamsData = (TeamsData) => {
   const transformedData = [];
 
   TeamsData.forEach((teamData) => {
@@ -56,17 +32,50 @@ function TeamsTable({ TeamsData }) {
     return 0;
   });
 
-  const getRowSpan = (data, index, key) => {
-    let count = 1;
-    for (let i = index + 1; i < data.length; i++) {
-      if (data[i][key] === data[index][key]) {
-        count++;
-      } else {
-        break;
-      }
+  return transformedData;
+};
+
+const getRowSpan = (data, index, key) => {
+  let count = 1;
+  for (let i = index + 1; i < data.length; i++) {
+    if (data[i][key] === data[index][key]) {
+      count++;
+    } else {
+      break;
     }
-    return count;
+  }
+  return count;
+};
+
+function TeamsTable({ TeamsData }) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
+  const [selectedTeamId, setSelectedTeamId] = useState();
+  const [selectedTeamName, setSelectedTeamName] = useState();
+
+  const openEditModal = (id, name) => {
+    setSelectedTeamId(id);
+    setSelectedTeamName(name);
+    setIsEditModalOpen(true);
   };
+
+  const changeTeamData = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const openParticipantModal = (teamId) => {
+    setSelectedTeamId(teamId);
+    setIsParticipantModalOpen(true);
+  };
+
+  const changeParticipantData = () => {
+    setIsParticipantModalOpen(false);
+  };
+
+  const transformedData = useMemo(
+    () => transformTeamsData(TeamsData),
+    [TeamsData]
+  );
 
   const columns = [
     {
@@ -76,10 +85,13 @@ function TeamsTable({ TeamsData }) {
       width: "20%",
       onCell: (record, rowIndex) => {
         const rowSpan = getRowSpan(transformedData, rowIndex, "team_name");
-        return rowIndex === 0 ||
-          transformedData[rowIndex - 1].team_name !== record.team_name
-          ? { rowSpan }
-          : { rowSpan: 0 };
+        return {
+          rowSpan:
+            rowIndex === 0 ||
+            transformedData[rowIndex - 1].team_name !== record.team_name
+              ? rowSpan
+              : 0,
+        };
       },
     },
     {
@@ -100,10 +112,13 @@ function TeamsTable({ TeamsData }) {
       width: "10%",
       onCell: (record, rowIndex) => {
         const rowSpan = getRowSpan(transformedData, rowIndex, "team_name");
-        return rowIndex === 0 ||
-          transformedData[rowIndex - 1].team_name !== record.team_name
-          ? { rowSpan }
-          : { rowSpan: 0 };
+        return {
+          rowSpan:
+            rowIndex === 0 ||
+            transformedData[rowIndex - 1].team_name !== record.team_name
+              ? rowSpan
+              : 0,
+        };
       },
       render: (record) => (
         <Flex>

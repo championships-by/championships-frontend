@@ -43,8 +43,8 @@ function EventsRegistration() {
     params.append("event_id", eventID);
     eventApi
       .getEventWithNominationsAndTeamParticipants(params.toString())
-      .then((response) => {
-        setTeams(response.data);
+      .then((data) => {
+        setTeams(data);
       })
       .finally(() => setTimeout(() => setIsLoading(false), 300));
   };

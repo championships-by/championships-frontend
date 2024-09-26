@@ -51,7 +51,7 @@ export const competenciesApi = {
   },
   getNominationEventInfo: (queryString) =>
     instance.get(`${API_PATH}/nomination_event/nomination_event_info?${queryString}`
-    ),
+    ).then((res) => res.data),
   updateNominationEvent: (queryString, data) =>
     instance.patch(`${API_PATH}/nomination_event/nomination_event_info?${queryString}`, data
     ),
