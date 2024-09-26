@@ -37,7 +37,7 @@ function Feedback() {
     }
 
     try {
-      await feedbackApi.sendFeedback(queryString, formData);
+      await feedbackApi.sendFeedback(queryString, file ? formData : undefined);
       message.success("Сообщение успешно отправлено");
       form.resetFields();
     } catch {}

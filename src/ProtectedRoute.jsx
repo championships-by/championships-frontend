@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { getUserProfileSelector } from "@store/users";
+import { getUserSelector } from "@store/users";
 
 const ProtectedRoute = ({ allowedRoles, children }) => {
-  const user = useSelector(getUserProfileSelector);
+  const user = useSelector(getUserSelector);
 
   if (user.data.length !== 0) {
     if (!user?.data?.role) {
