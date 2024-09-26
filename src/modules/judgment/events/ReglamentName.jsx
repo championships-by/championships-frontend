@@ -3,8 +3,8 @@ import { Typography, Input, Form, Space } from "antd";
 import { LinkOutlined } from "@ant-design/icons";
 const { Text } = Typography;
 
-function ReglamentName({ value, onInputChange }) {
-  const [hasHttp, setHasHttp] = useState(false);
+function ReglamentName({ name, value, onInputChange }) {
+  const [hasHttp, setHasHttp] = useState(true);
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -18,12 +18,13 @@ function ReglamentName({ value, onInputChange }) {
 
   return (
     <Form.Item
-      name="reglament"
+      name={name}
       hasFeedback
       validateFirst
       rules={[
         {
           required: true,
+          whitespace: true,
           message: "Вставьте ссылку на регламент",
         },
         {

@@ -5,14 +5,14 @@ import { FlagOutlined } from "@ant-design/icons";
 
 import "./sass/events.scss";
 
-function CompitationNameInput({ value, onInputChange }) {
+function CompitationNameInput({ name, value, onInputChange }) {
   const handleChange = (event) => {
     onInputChange(event.target.value);
   };
 
   return (
     <Form.Item
-      name="name"
+      name={name}
       hasFeedback
       validateFirst
       rules={[

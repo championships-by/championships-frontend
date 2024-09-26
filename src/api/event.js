@@ -29,6 +29,10 @@ export const eventApi = {
     instance.get(
       `/event/events_with_nominations_by_judge_in_command?${queryString}`
     ),
+  getEventWithNominationsAndTeamParticipants: (queryString) =>
+    instance.get(
+      `/event/get_event_with_nominations_and_team_participants?${queryString}`
+    ).then((res) => res.data),
   changeLogo: (formData) => instance.post(`/event/event_update_logo`, formData),
   changeRegulation: (formData) =>
     instance.post(`/event/event_update_doc`, formData),

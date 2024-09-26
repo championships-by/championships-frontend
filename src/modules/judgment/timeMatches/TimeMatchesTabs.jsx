@@ -119,9 +119,8 @@ export const TimeMatchesTabs = () => {
       ])
         .then(([stageStatusResponse, timeMatchesResponse]) => {
           if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
-            const transformedStageStatus = transformStageStatus(
-              stageStatusResponse.data
-            );
+            const transformedStageStatus =
+              transformStageStatus(stageStatusResponse);
             setStageStatus(transformedStageStatus);
 
             if (transformedStageStatus.tournamentFinished) {
@@ -131,9 +130,8 @@ export const TimeMatchesTabs = () => {
           }
 
           if (timeMatchesResponse.status === RESPONSE_STATUS.STATUS_OK) {
-            const transformedTimeMatches = transformTimeMatchesData(
-              timeMatchesResponse.data
-            );
+            const transformedTimeMatches =
+              transformTimeMatchesData(timeMatchesResponse);
             setTimeMatches(transformedTimeMatches);
           }
         })

@@ -24,9 +24,9 @@ export const competenciesApi = {
       `/nomination_event/nominations_event_participant_count?event_id=${eventID}`
     );
   },
-  getParticipantsNominationEvent: (eventID, nominationID, related, kind) => {
+  getParticipantsNominationEvent: (eventID, nominationID, teamID, related, kind) => {
     return instance.get(
-      `/nomination_event/team_participants_of_nomination_event?related=${related}&event_id=${eventID}&nomination_id=${nominationID}&kind=${kind}`
+      `/nomination_event/team_participants_of_nomination_event?related=${related}&event_id=${eventID}&nomination_id=${nominationID}&team_id=${teamID}&kind=${kind}`
     );
   },
   addOlympicCompetenciesForEvent: async (data) =>
@@ -49,13 +49,12 @@ export const competenciesApi = {
       `${API_PATH}/team_nomination_event/team_participant?event_id=${eventID}&nomination_id=${nominationID}&type=${nominationType}`
     );
   },
-  getNominationEventInfo: (eventId, nominationId) =>
-    instance.get(`${API_PATH}/nomination_event/nomination_event_info`, {
-      params: {
-        event_id: eventId,
-        nomination_id: nominationId,
-      },
-    }),
+  getNominationEventInfo: (queryString) =>
+    instance.get(`${API_PATH}/nomination_event/nomination_event_info?${queryString}`
+    ).then((res) => res.data),
+  updateNominationEvent: (queryString, data) =>
+    instance.patch(`${API_PATH}/nomination_event/nomination_event_info?${queryString}`, data
+    ),
   startGroupStage: (data) =>
     instance.post(`${API_PATH}/tournaments/start_group_stage`, data),
   startCriteriaStage: async (data) =>
