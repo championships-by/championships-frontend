@@ -2,6 +2,7 @@ import EventsList from "@components/events/EventsList";
 import Loader from "@components/loader/Loader";
 import { getEventsSelector } from "@store/events/selectors";
 import { getEventWithNominations } from "@store/events/thunk";
+import YandexMetrika from "@modules/yandexMetrika/YandexMetrika";
 import { Card, Divider, Flex, Typography } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,6 +46,7 @@ function Events() {
           </Flex>
         </Flex>
       </Flex>
+      <YandexMetrika />
     </>
   );
 }
