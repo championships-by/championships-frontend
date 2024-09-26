@@ -27,6 +27,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
 
   useEffect(() => {
     if (isOpen) {
+      form.resetFields();
       eventApi
         .getEvent(eventID)
         .then((data) => {
@@ -49,7 +50,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
           )
         );
     }
-  }, [isOpen, eventID]);
+  }, [isOpen, eventID, teamID]);
 
   const onNominationChange = (nominationID) => {
     setNominationId(nominationID);
