@@ -3,6 +3,8 @@ import { generateCriteriaColumns, getContentSectionWidth } from "@utils";
 import { InputNumber, Spin, Table } from "antd";
 import { useEffect, useMemo, useState } from "react";
 
+import "./CompetenciesTable.scss";
+
 export const CompetenciesTable = ({
   criteria,
   dataSource,
@@ -40,7 +42,7 @@ export const CompetenciesTable = ({
       ...generateCriteriaColumns(criteria, (text, record, index, columnId) => {
         const currentCriteria = record[`criteria${columnId}`];
         return (
-          <>
+          <div className="criteria-table__column">
             <InputNumber
               disabled={!editable}
               placeholder={currentCriteria.maxScore}
@@ -51,8 +53,9 @@ export const CompetenciesTable = ({
                 onChange(value, index, columnId, currentCriteria)
               }
             />
-            {` / ${currentCriteria.maxScore}`}
-          </>
+            <span>/</span>
+            <span>{currentCriteria.maxScore}</span>
+          </div>
         );
       }),
       {
@@ -71,6 +74,7 @@ export const CompetenciesTable = ({
     <h1>Произошла ошибка</h1>
   ) : (
     <Table
+      className="criteria-table"
       style={{ width: tableWidth }}
       locale={{ emptyText: "Нет данных" }}
       columns={columns}
