@@ -24,6 +24,8 @@ function EventsRegistration() {
   const [dataTeams, setTeams] = useState([]);
   const [dataEvent, setEvent] = useState({});
   const { eventID } = useParams();
+  const [isRelated, setIsRelated] = useState(true);
+
   const items = [
     {
       title: "Мероприятия",
@@ -41,6 +43,7 @@ function EventsRegistration() {
   const getTeams = () => {
     const params = new URLSearchParams();
     params.append("event_id", eventID);
+    params.append("related", isRelated)
     eventApi
       .getEventWithNominationsAndTeamParticipants(params.toString())
       .then((data) => {
