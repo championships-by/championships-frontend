@@ -264,10 +264,9 @@ export const getClickHandler = (selector, handlers) => handlers[selector()];
 export const isAttemptDisqualified = (value) => value === defaultTime;
 
 export const getContentSectionWidth = () => {
-  const adminPanelWidth = document.querySelector(".admin-panel").offsetWidth;
-  const adminPanelMenuWidth =
-    document.querySelector(".admin-panel__menu").offsetWidth;
-  const adminPanelContent = document.querySelector(".admin-panel__content");
+  const adminPanelWidth = document.getElementById("admin-panel").offsetWidth;
+  const adminPanelMenuWidth = document.getElementById("sidebar").offsetWidth;
+  const adminPanelContent = document.getElementById("content");
   const adminPanelContentStyles = getComputedStyle(adminPanelContent);
   return (
     adminPanelWidth -

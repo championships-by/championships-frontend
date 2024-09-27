@@ -11,7 +11,7 @@ export const CompetenciesTable = ({
   editable,
   onChange,
 }) => {
-  const [tableWidth, setTableWidth] = useState(getContentSectionWidth());
+  const [tableWidth, setTableWidth] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
