@@ -98,25 +98,27 @@ function EventInformation() {
   }, [eventID]);
 
   const onResultsClick = (nomination) => {
-    competenciesApi
-      .getNominationEventInfo(eventID, nomination.id)
-      .then((data) => {
-        if (!data.tournament_started) {
-          message.error("Соревнование ещё не началось");
-        } else if (!data.tournament_finished) {
-          message.error("Соревнование ещё не закончилось");
+    const params = new URLSearchParams();
+    params.append("event_id", eventID);
+    params.append("nomination_id", nomination.id);
+
+    competenciesApi.getNominationEventInfo(params).then((data) => {
+      if (!data.tournament_started) {
+        message.error("Соревнование ещё не началось");
+      } else if (!data.tournament_finished) {
+        message.error("Соревнование ещё не закончилось");
+      } else {
+        if (nomination.kind == "time") {
+          navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nomination.id));
+        } else if (nomination.kind == "criteria") {
+          navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
+        } else if (nomination.kind == "olympic") {
+          navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
         } else {
-          if (nomination.kind == "time") {
-            navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nomination.id));
-          } else if (nomination.kind == "criteria") {
-            navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
-          } else if (nomination.kind == "olympic") {
-            navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
-          } else {
-            message.error("Произошла ошибка");
-          }
+          message.error("Произошла ошибка");
         }
-      });
+      }
+    });
   };
 
   const finishDate = new Date(dataEvent.registration_finish_date);

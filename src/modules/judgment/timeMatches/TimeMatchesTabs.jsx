@@ -113,8 +113,13 @@ export const TimeMatchesTabs = () => {
   useEffect(() => {
     if (!isDataLoaded) {
       setIsLoading(true);
+
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+
       Promise.all([
-        competenciesApi.getNominationEventInfo(eventId, nominationId),
+        competenciesApi.getNominationEventInfo(params),
         timeMatchesApi.getTimeMatches(eventId, nominationId),
       ])
         .then(([stageStatusResponse, timeMatchesResponse]) => {
