@@ -82,8 +82,13 @@ function CompetenciesTab() {
   useEffect(() => {
     if (!isDataLoaded) {
       setIsLoading(true);
+
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+
       Promise.all([
-        competenciesApi.getNominationEventInfo(eventId, nominationId),
+        competenciesApi.getNominationEventInfo(params),
         competenciesApi.getCriteria(eventId, nominationId),
         competenciesApi.getCriteriaResults(eventId, nominationId),
       ])
@@ -101,11 +106,13 @@ function CompetenciesTab() {
               setIsStageFinished(true);
             }
 
-            const transformedCriteria = transformCriteriaData(criteriaResponse);
+            const transformedCriteria = transformCriteriaData(
+              criteriaResponse.data
+            );
             setCriteria(transformedCriteria);
 
             const transformedCriteriaResults = transformCriteriaResultsData(
-              criteriaResultsResponse
+              criteriaResultsResponse.data
             );
             const generatedDataSource = generateCompetenciesDataSource(
               transformedCriteriaResults
