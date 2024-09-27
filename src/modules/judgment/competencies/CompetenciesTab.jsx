@@ -51,17 +51,10 @@ function CompetenciesTab() {
         event_id: eventId,
         nomination_id: nominationId,
       });
-
-      await updateTabs([
-        {
-          id: CompetenciesTabsEnum.RESULTS,
-          disabled: false,
-        },
-      ]);
     } catch (error) {
       message.error("Произошла неизвестная ошибка");
     }
-  }, [criteria, dataSource, eventId, nominationId, updateTabs]);
+  }, [criteria, dataSource, eventId, nominationId]);
 
   const handleDownload = useCallback(() => {
     console.log("download file");
@@ -130,6 +123,17 @@ function CompetenciesTab() {
         });
     }
   }, [eventId, isDataLoaded, nominationId, stageStatus]);
+
+  useEffect(() => {
+    if (!stageStatus.tournamentFinished) {
+      updateTabs([
+        {
+          id: CompetenciesTabsEnum.RESULTS,
+          disabled: false,
+        },
+      ]);
+    }
+  }, [stageStatus, updateTabs, handleCompleteStage]);
 
   return (
     <Tabs
