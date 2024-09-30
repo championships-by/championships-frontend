@@ -10,8 +10,8 @@ const transformTeamsData = (TeamsData) => {
 
   TeamsData.forEach((teamData) => {
     teamData.team_participants.forEach((participant) => {
-      const teamName = participant.team.name.name;
-      const teamId = participant.team.name.id;
+      const teamName = participant.team.name;
+      const teamId = participant.team.id;
 
       participant.team.participants.forEach((teamParticipant) => {
         transformedData.push({
