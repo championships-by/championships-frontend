@@ -54,7 +54,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
           return (
             item.team.participants?.map((participantItem) => {
               return {
-                team_name: item.team.name.name,
+                team_name: item.team.name,
                 fullName:
                   participantItem.participant_data.first_name +
                   " " +
