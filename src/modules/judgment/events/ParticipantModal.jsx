@@ -48,7 +48,6 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   const [participantsInfo, setParticipantsInfo] = useState([]);
 
   useEffect(() => {
-    console.log(data);
     if (data && isOpen) {
       const participants = data
         .map((item) => {
