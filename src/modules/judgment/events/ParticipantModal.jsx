@@ -6,6 +6,12 @@ import "./sass/events.scss";
 
 const columns = [
   {
+    title: "Команда",
+    dataIndex: "team_name",
+    key: "team_name",
+    sorter: (a, b) => a.team_name.localeCompare(b.team_name),
+  },
+  {
     title: "Участник",
     dataIndex: "fullName",
     key: "fullName",
@@ -42,18 +48,20 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   const [participantsInfo, setParticipantsInfo] = useState([]);
 
   useEffect(() => {
+    console.log(data);
     if (data && isOpen) {
       const participants = data
         .map((item) => {
           return (
             item.team.participants?.map((participantItem) => {
               return {
+                team_name: item.team.name.name,
                 fullName:
                   participantItem.participant_data.first_name +
                   " " +
-                  participantItem.participant_data.second_name +
+                  participantItem.participant_data.third_name +
                   " " +
-                  participantItem.participant_data.third_name,
+                  participantItem.participant_data.second_name,
                 educational_institution:
                   participantItem.participant_additional_data
                     .educational_institution.educational_institution,
@@ -72,10 +80,10 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
                     .supervisor_first_name +
                   " " +
                   participantItem.participant_additional_data.supervisor_data
-                    .supervisor_second_name +
+                    .supervisor_third_name +
                   " " +
                   participantItem.participant_additional_data.supervisor_data
-                    .supervisor_third_name,
+                    .supervisor_second_name,
               };
             }) || []
           );

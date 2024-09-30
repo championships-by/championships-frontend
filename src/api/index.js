@@ -28,9 +28,13 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response) {
-      const ERROR_TEXT = error?.response?.data?.detail?.error;
-      message.error(ERRORS.getError(ERROR_TEXT));
+    const requestUrl = error?.config?.url;
+
+    if (requestUrl && !requestUrl.includes("/user/profile")) {
+      if (error.response) {
+        const ERROR_TEXT = error?.response?.data?.detail?.error;
+        message.error(ERRORS.getError(ERROR_TEXT));
+      }
     }
 
     return Promise.reject(error);

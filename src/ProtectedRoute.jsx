@@ -15,6 +15,8 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
     }
 
     return children;
+  } else {
+    return <Navigate to="/401" />;
   }
 };
 
