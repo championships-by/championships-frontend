@@ -48,11 +48,7 @@ function AdminPanel() {
           setRole(data.role);
           setIsLoading(false);
         })
-        .catch(() => {
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          );
-        });
+        .catch(() => {});
     }
   }, [isLoading, role]);
 

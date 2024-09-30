@@ -107,7 +107,17 @@ function App() {
                   />
                   <Route
                     path={ROUTER_ROUTES.EVENTS_REGISTRATION}
-                    element={<EventsRegistration />}
+                    element={
+                      <ProtectedRoute
+                        allowedRoles={[
+                          Roles.ADMIN,
+                          Roles.JUDGE,
+                          Roles.SPECIALIST,
+                        ]}
+                      >
+                        <EventsRegistration />
+                      </ProtectedRoute>
+                    }
                   />
                 </Route>
                 <Route path={ROUTER_ROUTES.JUDGMENT}>
