@@ -30,9 +30,18 @@ export const eventApi = {
       `/event/events_with_nominations_by_judge_in_command?${queryString}`
     ),
   getEventWithNominationsAndTeamParticipants: (queryString) =>
-    instance.get(
-      `/event/get_event_with_nominations_and_team_participants?${queryString}`
-    ).then((res) => res.data),
+    instance
+      .get(
+        `/event/get_event_with_nominations_and_team_participants?${queryString}`
+      )
+      .then((res) => res.data),
+  getEventTeamsNotRelated: (params) => {
+    return fetchWithPagination(
+      instance,
+      `/event/get_event_teams_not_related`,
+      params
+    );
+  },
   changeLogo: (formData) => instance.post(`/event/event_update_logo`, formData),
   changeRegulation: (formData) =>
     instance.post(`/event/event_update_doc`, formData),

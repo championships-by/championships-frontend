@@ -24,7 +24,13 @@ export const competenciesApi = {
       `/nomination_event/nominations_event_participant_count?event_id=${eventID}`
     );
   },
-  getParticipantsNominationEvent: (eventID, nominationID, teamID, related, kind) => {
+  getParticipantsNominationEvent: (
+    eventID,
+    nominationID,
+    teamID,
+    related,
+    kind
+  ) => {
     return instance.get(
       `/nomination_event/team_participants_of_nomination_event?related=${related}&event_id=${eventID}&nomination_id=${nominationID}&team_id=${teamID}&kind=${kind}`
     );
@@ -50,10 +56,13 @@ export const competenciesApi = {
     );
   },
   getNominationEventInfo: (queryString) =>
-    instance.get(`${API_PATH}/nomination_event/nomination_event_info?${queryString}`
-    ).then((res) => res.data),
+    instance
+      .get(`${API_PATH}/nomination_event/nomination_event_info?${queryString}`)
+      .then((res) => res.data),
   updateNominationEvent: (queryString, data) =>
-    instance.patch(`${API_PATH}/nomination_event/nomination_event_info?${queryString}`, data
+    instance.patch(
+      `${API_PATH}/nomination_event/nomination_event_info?${queryString}`,
+      data
     ),
   startGroupStage: (data) =>
     instance.post(`${API_PATH}/tournaments/start_group_stage`, data),
