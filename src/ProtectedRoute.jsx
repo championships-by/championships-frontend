@@ -15,7 +15,7 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
     }
 
     return children;
-  } else {
+  } else if (!user.isLoading) {
     return <Navigate to="/401" />;
   }
 };
