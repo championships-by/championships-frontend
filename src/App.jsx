@@ -19,6 +19,7 @@ import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
 import AboutProgram from "@components/userSupport/AboutProgram";
 import Feedback from "@components/userSupport/Feedback";
 import UserSupport from "@components/userSupport/UserSupport";
+import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
 import { Provider } from "react-redux";
@@ -106,7 +107,17 @@ function App() {
                   />
                   <Route
                     path={ROUTER_ROUTES.EVENTS_REGISTRATION}
-                    element={<EventsRegistration />}
+                    element={
+                      <ProtectedRoute
+                        allowedRoles={[
+                          Roles.ADMIN,
+                          Roles.JUDGE,
+                          Roles.SPECIALIST,
+                        ]}
+                      >
+                        <EventsRegistration />
+                      </ProtectedRoute>
+                    }
                   />
                 </Route>
                 <Route path={ROUTER_ROUTES.JUDGMENT}>
@@ -152,6 +163,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </Layout>
+      <YandexMetrika />
     </Provider>
   );
 }

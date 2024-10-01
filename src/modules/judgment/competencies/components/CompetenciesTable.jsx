@@ -1,7 +1,7 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { generateCriteriaColumns } from "@utils";
+import { generateCriteriaColumns, getContentSectionWidth } from "@utils";
 import { InputNumber, Spin, Table } from "antd";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export const CompetenciesTable = ({
   criteria,
@@ -11,12 +11,27 @@ export const CompetenciesTable = ({
   editable,
   onChange,
 }) => {
+  const [tableWidth, setTableWidth] = useState(getContentSectionWidth());
+
+  useEffect(() => {
+    const handleResize = () => {
+      setTableWidth(getContentSectionWidth());
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const columns = useMemo(
     () => [
       {
         title: "Участник",
         dataIndex: "participant",
         key: "participant",
+        fixed: "left",
         render: (text, { participant }) => {
           const { firstName, secondName, thirdName } = participant;
           return `${secondName} ${firstName} ${thirdName}`;
@@ -44,6 +59,7 @@ export const CompetenciesTable = ({
         title: "Итоги",
         dataIndex: "totalScore",
         key: "totalScore",
+        fixed: "right",
       },
     ],
     [criteria, editable, onChange]
@@ -55,11 +71,13 @@ export const CompetenciesTable = ({
     <h1>Произошла ошибка</h1>
   ) : (
     <Table
+      style={{ width: tableWidth }}
       locale={{ emptyText: "Нет данных" }}
       columns={columns}
       dataSource={dataSource}
-      pagination={{
-        position: ["bottomCenter"],
+      pagination={false}
+      scroll={{
+        x: true,
       }}
     />
   );

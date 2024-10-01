@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsersSelector, setUser, getUsers } from "@store/users";
 import { ModalType } from "@constants";
@@ -11,41 +12,82 @@ import UserPhoneInput from "@modules/user/UserPhoneInput";
 import UserRoleInput from "@modules/user/UserRoleInput";
 import { Button, Form, message, Modal, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
+import { userApi } from "@api";
 
-function UserModal({ isOpen, onOk, onCancel, type }) {
+function UserModal({ isOpen, onOk, onCancel, type, userId }) {
   const users = useSelector(getUsersSelector);
+  const [oldEmail, setOldEmail] = useState();
   const isLoading = users.isLoading;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
-  const onFinish = () => {
-    message.success("Пользователь успешно создан");
-    onOk();
+  useEffect(() => {
+    if (isOpen && type == ModalType.EDIT) {
+      const params = new URLSearchParams();
+      params.append("user_id", userId);
+      userApi.getUserById(params.toString()).then((response) => {
+        const data = response.data;
+        form.setFieldsValue({
+          first_name: data.first_name,
+          second_name: data.second_name,
+          third_name: data.third_name,
+          email: data.email,
+          phone: data.phone,
+          organization: data.educational_institution,
+          role: data.role,
+        });
+        setOldEmail(data.email);
+      });
+    }
+  }, [userId, form]);
+
+  const onFinish = async () => {
+    if (type == ModalType.ADD) {
+      const raw = {
+        email: form.getFieldValue("email"),
+        first_name: form.getFieldValue("first_name"),
+        second_name: form.getFieldValue("second_name"),
+        third_name: form.getFieldValue("third_name"),
+        phone: form.getFieldValue("phone"),
+        role: form.getFieldValue("role"),
+        educational_institution: form.getFieldValue("organization"),
+        password: form.getFieldValue("password"),
+      };
+
+      try {
+        await dispatch(setUser(raw));
+        dispatch(getUsers());
+        message.success("Пользователь успешно создан");
+        onOk();
+      } catch {}
+    } else if (type == ModalType.EDIT) {
+      const body = {
+        first_name: form.getFieldValue("first_name"),
+        second_name: form.getFieldValue("second_name"),
+        third_name: form.getFieldValue("third_name"),
+        phone: form.getFieldValue("phone"),
+        role: form.getFieldValue("role"),
+        educational_institution: form.getFieldValue("organization"),
+      };
+
+      const newEmail = form.getFieldValue("email");
+
+      if (newEmail !== oldEmail) {
+        body.email = newEmail;
+      }
+
+      try {
+        const params = new URLSearchParams();
+        params.append("user_id", userId);
+        await userApi.changeUserById(params.toString(), body);
+        message.success("Пользователь успешно изменён");
+        onOk();
+      } catch {}
+    }
   };
 
   const onFinishFailed = () => {
     message.error("Проверьте поля для ввода!");
-  };
-
-  const onClick = async () => {
-    const raw = {
-      email: form.getFieldValue("email"),
-      first_name: form.getFieldValue("first_name"),
-      second_name: form.getFieldValue("second_name"),
-      third_name: form.getFieldValue("third_name"),
-      phone: form.getFieldValue("phone"),
-      role: form.getFieldValue("role"),
-      educational_institution: form.getFieldValue("organization"),
-      password: form.getFieldValue("password"),
-    };
-
-    try {
-      await dispatch(setUser(raw));
-      dispatch(getUsers());
-      onFinish();
-    } catch (error) {
-      message.error("Ошибка создания пользователя!");
-    }
   };
 
   return (
@@ -76,18 +118,13 @@ function UserModal({ isOpen, onOk, onCancel, type }) {
         <UserRoleInput name="role" />
 
         <UserEmailInput name="email" />
-        <UserPasswordInput name="password" />
+        <UserPasswordInput name="password" disabled={type == ModalType.EDIT} />
 
         <UserPhoneInput name="phone" />
         <UserOrganizationInput name="organization" />
         <Space>
           <FormItem>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={isLoading}
-              onClick={onClick}
-            >
+            <Button type="primary" htmlType="submit" loading={isLoading}>
               Сохранить
             </Button>
           </FormItem>

@@ -1,16 +1,15 @@
+import { competenciesApi } from "@api";
 import { useTabs } from "@hooks/useTabs";
-import { Button, message, Tabs } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { competenciesApi } from "../../../api";
-import { RESPONSE_STATUS } from "../../../constants";
 import {
   generateCompetenciesDataSource,
   isCriteriaFilled,
   transformCriteriaData,
   transformCriteriaResultsData,
   transformStageStatus,
-} from "../../../utils";
+} from "@utils";
+import { Button, message, Tabs } from "antd";
+import { useCallback, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { CompetenciesResults, CompetenciesTable } from "./components";
 import { CompetenciesTabsEnum } from "./constants";
 
@@ -48,7 +47,7 @@ function CompetenciesTab() {
         });
       });
 
-      await competenciesApi.finishTimeStage({
+      await competenciesApi.finishCriteriaStage({
         event_id: eventId,
         nomination_id: nominationId,
       });
@@ -94,33 +93,24 @@ function CompetenciesTab() {
             criteriaResponse,
             criteriaResultsResponse,
           ]) => {
-            if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
-              const transformedStageStatus = transformStageStatus(
-                stageStatusResponse.data
-              );
-              setStageStatus(transformedStageStatus);
+            const transformedStageStatus =
+              transformStageStatus(stageStatusResponse);
+            setStageStatus(transformedStageStatus);
 
-              if (stageStatus.tournamentFinished) {
-                setIsStageFinished(true);
-              }
+            if (transformedStageStatus.tournamentFinished) {
+              setIsStageFinished(true);
             }
 
-            if (criteriaResponse.status === RESPONSE_STATUS.STATUS_OK) {
-              const transformedCriteria = transformCriteriaData(
-                criteriaResponse.data
-              );
-              setCriteria(transformedCriteria);
-            }
+            const transformedCriteria = transformCriteriaData(criteriaResponse);
+            setCriteria(transformedCriteria);
 
-            if (criteriaResultsResponse.status === RESPONSE_STATUS.STATUS_OK) {
-              const transformedCriteriaResults = transformCriteriaResultsData(
-                criteriaResultsResponse.data
-              );
-              const generatedDataSource = generateCompetenciesDataSource(
-                transformedCriteriaResults
-              );
-              setDataSource(generatedDataSource);
-            }
+            const transformedCriteriaResults = transformCriteriaResultsData(
+              criteriaResultsResponse
+            );
+            const generatedDataSource = generateCompetenciesDataSource(
+              transformedCriteriaResults
+            );
+            setDataSource(generatedDataSource);
           }
         )
         .catch((reason) => {
@@ -156,11 +146,7 @@ function CompetenciesTab() {
         },
         {
           ...tabs[1],
-          disabled: !(
-            stageStatus.registrationFinished &&
-            stageStatus.tournamentStarted &&
-            stageStatus.tournamentFinished
-          ),
+          disabled: !stageStatus.tournamentFinished,
           children: (
             <CompetenciesResults
               dataSource={dataSource}

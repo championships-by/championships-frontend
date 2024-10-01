@@ -1,23 +1,22 @@
+import { InfoCircleOutlined, LinkOutlined } from "@ant-design/icons";
+import { competenciesApi, eventApi } from "@api";
+import noLogo from "@assets/img/auth-background.png";
+import Loader from "@components/loader/Loader";
+import { ROUTES, url, yaShareLink } from "@constants";
+import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import {
-  Button,
-  Typography,
   Breadcrumb,
-  Table,
+  Button,
+  Col,
+  Divider,
   message,
   Row,
-  Col,
   Space,
-  Divider,
+  Table,
+  Typography,
 } from "antd";
-import { LinkOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import Loader from "@components/loader/Loader";
-import { changeDateFormat, getEventLevel, openPdf } from "@utils";
-import { yaShareLink, ROUTES, url } from "@constants";
-import noLogo from "@assets/img/auth-background.png";
-import { eventApi, competenciesApi } from "@api";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./sass/events.scss";
 
@@ -99,29 +98,25 @@ function EventInformation() {
   }, [eventID]);
 
   const onResultsClick = (nomination) => {
-    const body = {
-      event_id: eventID,
-      nomination_id: nomination.id,
-    };
-
-    competenciesApi.getNominationEventInfo(body).then((response) => {
-      const data = response.data;
-      if (!data.tournament_started) {
-        message.error("Соревнование ещё не началось");
-      } else if (!data.tournament_finished) {
-        message.error("Соревнование ещё не закончилось");
-      } else {
-        if (nomination.kind == "time") {
-          navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nomination.id));
-        } else if (nomination.kind == "criteria") {
-          navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
-        } else if (nomination.kind == "olympic") {
-          navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
+    competenciesApi
+      .getNominationEventInfo(eventID, nomination.id)
+      .then((data) => {
+        if (!data.tournament_started) {
+          message.error("Соревнование ещё не началось");
+        } else if (!data.tournament_finished) {
+          message.error("Соревнование ещё не закончилось");
         } else {
-          message.error("Произошла ошибка");
+          if (nomination.kind == "time") {
+            navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nomination.id));
+          } else if (nomination.kind == "criteria") {
+            navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
+          } else if (nomination.kind == "olympic") {
+            navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
+          } else {
+            message.error("Произошла ошибка");
+          }
         }
-      }
-    });
+      });
   };
 
   const finishDate = new Date(dataEvent.registration_finish_date);

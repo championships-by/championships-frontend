@@ -20,7 +20,7 @@ function Logout() {
   notification.info({
     message: "Ваша сессия успешно завершена.",
     description: "Всего доброго!",
-    duration: 30,
+    duration: 5,
     placement: "bottomRight",
   });
 

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Button, Flex, Form, Modal, message } from "antd";
-import ReglamentName from "@modules/judgment/events/ReglamentName";
+import { competenciesApi } from "@api";
 import CompetitionJudge from "@modules/judgment/events/CompetitionJudgeName";
 import CompetitionName from "@modules/judgment/events/CompetitionName";
 import CompetitionType from "@modules/judgment/events/CompetitionType";
-import { competenciesApi } from "@api";
+import ReglamentName from "@modules/judgment/events/ReglamentName";
+import { Button, Flex, Form, Modal, message } from "antd";
+import { ModalType, NOMINATIONS } from "@constants";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function EventSettingsCompitations({
@@ -28,22 +29,26 @@ function EventSettingsCompitations({
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (isOpen) {
-      const body = {
-        event_id: eventID,
-        nomination_id: nominationId,
-      };
-
-      competenciesApi
-        .getNominationEventInfo(body)
-        .then((response) => {
-          const data = response.data;
-        })
-        .catch((error) => {
-          console.error("Error fetching data: ", error);
-        });
+    if (mode === ModalType.EDIT) {
+      const params = new URLSearchParams();
+      params.append("event_id", eventID);
+      params.append("nomination_id", nominationId);
+      if (isOpen) {
+        competenciesApi
+          .getNominationEventInfo(params.toString())
+          .then((data) => {
+            const judgeIds = data.judges.map((judge) => judge.id);
+            form.setFieldsValue({
+              nomination_name: data.nomination_name,
+              reglament: data.reglament,
+            });
+            setInputName(data.nomination_name);
+            setInputReglament(data.reglament);
+            setSelectedJudges(judgeIds);
+          });
+      }
     }
-  }, [eventID, nominationId, form]);
+  }, [eventID, nominationId, form, isOpen]);
 
   const eventId = parseInt(eventID, 10);
   const handleInputNameChange = (value) => {
@@ -76,46 +81,66 @@ function EventSettingsCompitations({
 
   const onFinish = async () => {
     setIsLoading(true);
-    const data = {
-      append_nomination_event_data: {
-        event_id: eventId,
-        nomination_name: inputName,
-        reglament: inputReglament,
-        judges_ids: selectedJudges,
-      },
-    };
-    try {
-      switch (selectedValue) {
-        case "time":
-          Object.assign(data, { race_round_amount: groupCount });
-          await competenciesApi
-            .addTimeCompetenciesForEvent(data)
-            .then(() => {});
-          break;
+    if (mode === ModalType.ADD) {
+      const data = {
+        append_nomination_event_data: {
+          event_id: eventId,
+          nomination_name: inputName,
+          reglament: inputReglament,
+          judges_ids: selectedJudges,
+        },
+      };
+      try {
+        switch (selectedValue) {
+          case NOMINATIONS.TIME:
+            Object.assign(data, { race_round_amount: groupCount });
+            await competenciesApi
+              .addTimeCompetenciesForEvent(data)
+              .then(() => {});
+            break;
 
-        case "playoffs":
-          await competenciesApi
-            .addOlympicCompetenciesForEvent(data)
-            .then(() => {});
-          break;
-
-        case "criteria":
-          Object.assign(data, { criterias: criteria });
-          await competenciesApi
-            .addCriteriaCompetenciesForEvent(data)
-            .then(() => {});
-          break;
-        default:
-          break;
-      }
-      message.success("Компетенция успешно добавлена");
-      onOk();
-      onAdd();
-      setInputName("");
-      setInputReglament("");
-      setRefreshKey((prevKey) => prevKey + 1);
-    } catch (error) {
-      message.error("Произошла ошибка.");
+          case NOMINATIONS.PLAYOFF:
+            await competenciesApi
+              .addOlympicCompetenciesForEvent(data)
+              .then(() => {});
+            break;
+          case NOMINATIONS.CRITERIA:
+            Object.assign(data, { criterias: criteria });
+            await competenciesApi
+              .addCriteriaCompetenciesForEvent(data)
+              .then(() => {});
+            break;
+          default:
+            break;
+        }
+        message.success("Компетенция успешно добавлена");
+        onOk();
+        onAdd();
+        setInputName("");
+        setInputReglament("");
+        setSelectedJudges([]);
+        form.resetFields();
+        setRefreshKey((prevKey) => prevKey + 1);
+      } catch {}
+    } else if (mode === ModalType.EDIT) {
+      try {
+        const data = {
+          nomination_name: inputName,
+          reglament: inputReglament,
+          judges_ids: selectedJudges,
+        };
+        const params = new URLSearchParams();
+        params.append("event_id", eventID);
+        params.append("nomination_id", nominationId);
+        competenciesApi.updateNominationEvent(params.toString(), data);
+        message.success("Компетенция успешно изменена");
+        onOk();
+        setInputName("");
+        setInputReglament("");
+        setSelectedJudges([]);
+        form.resetFields();
+        setRefreshKey((prevKey) => prevKey + 1);
+      } catch {}
     }
     setIsLoading(false);
   };
@@ -140,12 +165,17 @@ function EventSettingsCompitations({
         <CompetitionName
           onInputChange={handleInputNameChange}
           value={inputName}
+          name="nomination_name"
         />
         <ReglamentName
           onInputChange={handleInputReglamentChange}
           value={inputReglament}
+          name="reglament"
         />
-        <CompetitionJudge onJudgeChange={handleChangeJudges} />
+        <CompetitionJudge
+          onJudgeChange={handleChangeJudges}
+          judges={selectedJudges}
+        />
         <CompetitionType
           onChange={(value) => {
             if (mode == "edit") {

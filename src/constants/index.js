@@ -32,6 +32,12 @@ export const ROLE_FILTERS = [
   },
 ];
 
+export const NOMINATIONS = {
+  TIME: "time",
+  PLAYOFF: "playoffs",
+  CRITERIA: "criteria"
+}
+
 export const NOMINATION_TYPES = {
   CRITERIA: "По критериям",
   TIME: "По времени",

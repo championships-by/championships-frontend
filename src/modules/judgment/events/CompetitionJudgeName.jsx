@@ -10,7 +10,7 @@ function getFullName(item) {
   return item.first_name + " " + item.third_name + " " + item.second_name;
 }
 
-function CompetitionType({ onJudgeChange }) {
+function CompetitionType({ onJudgeChange, judges }) {
   const [options, setOptions] = useState([]);
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
@@ -24,21 +24,20 @@ function CompetitionType({ onJudgeChange }) {
   }, [eventID]);
 
   useEffect(() => {
-    userApi
-      .getJudges()
-      .then((data) => {
-        const judgeOptions = data.map((item) => ({
-          value: item.id,
-          label: getFullName(item),
-        }));
-        setOptions(judgeOptions);
-      })
-      .catch(() => {
-        console.error(
-          "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
+    userApi.getJudges().then((data) => {
+      const judgeOptions = data.map((item) => ({
+        value: item.id,
+        label: getFullName(item),
+      }));
+      setOptions(judgeOptions);
+      if (judges && judges.length) {
+        const selectedJudgesData = judgeOptions.filter((option) =>
+          judges.includes(option.value)
         );
-      });
-  }, []);
+        setSelectedJudges(selectedJudgesData);
+      }
+    });
+  }, [judges]);
 
   useEffect(() => {
     if (selectRef.current) {
