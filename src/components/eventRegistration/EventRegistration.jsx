@@ -1,10 +1,4 @@
-import {
-  Button,
-  Typography,
-  Breadcrumb,
-  Divider,
-  Tabs,
-} from "antd";
+import { Button, Typography, Breadcrumb, Divider, Tabs } from "antd";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import TeamCreateModal from "@components/eventRegistration/TeamCreateModal";
@@ -12,7 +6,7 @@ import TeamsTable from "@components/eventRegistration/TeamsTable";
 import AllTeamsTable from "@components/eventRegistration/AllTeamsTable";
 import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
-import { eventApi, teamApi } from "@api";
+import { eventApi } from "@api";
 import { ROUTES } from "@constants";
 
 import "./sass/event-registration.scss";
@@ -42,9 +36,9 @@ function EventsRegistration() {
 
   const tabsitems = [
     {
-      key: '1',
-      label: 'Мои команды',
-      children: 
+      key: "1",
+      label: "Мои команды",
+      children: (
         <>
           <AdminPanelControls>
             <Button type="primary" onClick={() => setIsAddTeamModalOpen(true)}>
@@ -53,13 +47,14 @@ function EventsRegistration() {
           </AdminPanelControls>
           <AllTeamsTable teamsData={dataAllTeams} />
         </>
+      ),
     },
     {
-      key: '2',
-      label: 'Зарегистрированые команды',
+      key: "2",
+      label: "Зарегистрированые команды",
       children: <TeamsTable teamsData={dataTeams} />,
     },
-  ]
+  ];
 
   const getTeams = () => {
     const params = new URLSearchParams();
@@ -69,10 +64,10 @@ function EventsRegistration() {
       .getEventWithNominationsAndTeamParticipants(params.toString())
       .then((data) => {
         setTeams(data);
-      })
+      });
     eventApi
       .getEventTeamsNotRelated({
-        event_id: eventID
+        event_id: eventID,
       })
       .then((data) => {
         setAllTeams(data);
@@ -93,7 +88,7 @@ function EventsRegistration() {
       <Typography.Title level={2}>Регистрация участников</Typography.Title>
       <Divider />
       <Breadcrumb className="event-registration__breadcrumb" items={items} />
-      <Tabs items={tabsitems}/>
+      <Tabs items={tabsitems} />
       <TeamCreateModal
         isOpen={isAddTeamModalOpen}
         onOk={() => setIsAddTeamModalOpen(false)}

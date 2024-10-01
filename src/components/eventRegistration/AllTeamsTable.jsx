@@ -42,8 +42,7 @@ function AllTeamsTable({ teamsData }) {
     setIsParticipantModalOpen(false);
   };
 
-  const columns = 
-  [
+  const columns = [
     {
       title: "Команда",
       key: "team",
@@ -51,15 +50,14 @@ function AllTeamsTable({ teamsData }) {
       dataIndex: "name",
       onCell: (record, rowIndex) => {
         const rowSpan = getRowSpan(teamsData, rowIndex, "name");
-          return {
-            rowSpan:
-              rowIndex === 0 ||
-              teamsData[rowIndex - 1].name !== record.name
-                ? rowSpan
-                : 0,
-          };
+        return {
+          rowSpan:
+            rowIndex === 0 || teamsData[rowIndex - 1].name !== record.name
+              ? rowSpan
+              : 0,
+        };
       },
-      sorter: (a, b) => a.name.localeCompare(b.name)
+      sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
       title: "Участник",
@@ -73,7 +71,8 @@ function AllTeamsTable({ teamsData }) {
           renderItem={(participant) => (
             <List.Item>
               <Typography.Text>
-                {participant.first_name} {participant.second_name} {participant.third_name}
+                {participant.first_name} {participant.second_name}{" "}
+                {participant.third_name}
               </Typography.Text>
             </List.Item>
           )}
@@ -86,13 +85,12 @@ function AllTeamsTable({ teamsData }) {
       width: "10%",
       onCell: (record, rowIndex) => {
         const rowSpan = getRowSpan(teamsData, rowIndex, "name");
-          return {
-            rowSpan:
-              rowIndex === 0 ||
-              teamsData[rowIndex - 1].name !== record.name
-                ? rowSpan
-                : 0,
-          };
+        return {
+          rowSpan:
+            rowIndex === 0 || teamsData[rowIndex - 1].name !== record.name
+              ? rowSpan
+              : 0,
+        };
       },
       render: (record) => (
         <Flex>
@@ -112,7 +110,7 @@ function AllTeamsTable({ teamsData }) {
           </Tooltip>
         </Flex>
       ),
-    }
+    },
   ];
 
   return (
