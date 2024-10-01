@@ -17,7 +17,7 @@ const getRowSpan = (data, index, key) => {
   return count;
 };
 
-function AllTeamsTable({ TeamsData }) {
+function AllTeamsTable({ teamsData }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState();
@@ -50,11 +50,11 @@ function AllTeamsTable({ TeamsData }) {
       width: "20%",
       dataIndex: "name",
       onCell: (record, rowIndex) => {
-        const rowSpan = getRowSpan(TeamsData, rowIndex, "name");
+        const rowSpan = getRowSpan(teamsData, rowIndex, "name");
           return {
             rowSpan:
               rowIndex === 0 ||
-              TeamsData[rowIndex - 1].name !== record.name
+              teamsData[rowIndex - 1].name !== record.name
                 ? rowSpan
                 : 0,
           };
@@ -85,11 +85,11 @@ function AllTeamsTable({ TeamsData }) {
       key: "action",
       width: "10%",
       onCell: (record, rowIndex) => {
-        const rowSpan = getRowSpan(TeamsData, rowIndex, "name");
+        const rowSpan = getRowSpan(teamsData, rowIndex, "name");
           return {
             rowSpan:
               rowIndex === 0 ||
-              TeamsData[rowIndex - 1].name !== record.name
+              teamsData[rowIndex - 1].name !== record.name
                 ? rowSpan
                 : 0,
           };
@@ -118,7 +118,7 @@ function AllTeamsTable({ TeamsData }) {
   return (
     <>
       <Table
-        dataSource={TeamsData}
+        dataSource={teamsData}
         columns={columns}
         bordered
         locale={Locale}

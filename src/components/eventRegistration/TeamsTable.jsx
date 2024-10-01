@@ -5,10 +5,10 @@ import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
 import { Locale } from "@constants";
 
-const transformTeamsData = (TeamsData) => {
+const transformTeamsData = (teamsData) => {
   const transformedData = [];
 
-  TeamsData.forEach((teamData) => {
+  teamsData.forEach((teamData) => {
     teamData.team_participants.forEach((participant) => {
       const teamName = participant.team.name.name;
       const teamId = participant.team.name.id;
@@ -47,7 +47,7 @@ const getRowSpan = (data, index, key) => {
   return count;
 };
 
-function TeamsTable({ TeamsData }) {
+function TeamsTable({ teamsData }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState();
@@ -73,8 +73,8 @@ function TeamsTable({ TeamsData }) {
   };
 
   const transformedData = useMemo(
-    () => transformTeamsData(TeamsData),
-    [TeamsData]
+    () => transformTeamsData(teamsData),
+    [teamsData]
   );
 
   const columns = [

@@ -24,7 +24,7 @@ function EventsRegistration() {
   const [dataTeams, setTeams] = useState([]);
   const [dataEvent, setEvent] = useState({});
   const { eventID } = useParams();
-  const isRelated = useState(true);
+  const isRelated = true;
 
   const items = [
     {
@@ -40,25 +40,7 @@ function EventsRegistration() {
     },
   ];
 
-  const getTeams = () => {
-    const params = new URLSearchParams();
-    params.append("event_id", eventID);
-    params.append("related", isRelated);
-    eventApi
-      .getEventWithNominationsAndTeamParticipants(params.toString())
-      .then((data) => {
-        setTeams(data);
-      })
-      .finally(() => setTimeout(() => setIsLoading(false), 300));
-    eventApi
-      .getEventTeamsNotRelated({event_id : eventID})
-      .then((data) => {
-        setAllTeams(data);
-      })
-      .finally(() => setTimeout(() => setIsLoading(false), 300));
-  };
-
-  const Tabsitems = [
+  const tabsitems = [
     {
       key: '1',
       label: 'Мои команды',
@@ -69,15 +51,34 @@ function EventsRegistration() {
               Добавить команду
             </Button>
           </AdminPanelControls>
-          <AllTeamsTable TeamsData={dataAllTeams} />
+          <AllTeamsTable teamsData={dataAllTeams} />
         </>
     },
     {
       key: '2',
       label: 'Зарегистрированые команды',
-      children: <TeamsTable TeamsData={dataTeams} />,
+      children: <TeamsTable teamsData={dataTeams} />,
     },
   ]
+
+  const getTeams = () => {
+    const params = new URLSearchParams();
+    params.append("event_id", eventID);
+    params.append("related", isRelated);
+    eventApi
+      .getEventWithNominationsAndTeamParticipants(params.toString())
+      .then((data) => {
+        setTeams(data);
+      })
+    eventApi
+      .getEventTeamsNotRelated({
+        event_id: eventID
+      })
+      .then((data) => {
+        setAllTeams(data);
+      })
+      .finally(() => setTimeout(() => setIsLoading(false), 300));
+  };
 
   useEffect(() => {
     if (isLoading) {
@@ -92,7 +93,7 @@ function EventsRegistration() {
       <Typography.Title level={2}>Регистрация участников</Typography.Title>
       <Divider />
       <Breadcrumb className="event-registration__breadcrumb" items={items} />
-      <Tabs items = {Tabsitems}/>
+      <Tabs items={tabsitems}/>
       <TeamCreateModal
         isOpen={isAddTeamModalOpen}
         onOk={() => setIsAddTeamModalOpen(false)}
