@@ -14,6 +14,7 @@ export const usersSlice = createSlice({
     userProfile: [],
     judges: [],
     isLoading: false,
+    isUserProfileLoading: true,
     error: null,
   },
   reducers: {},
@@ -40,10 +41,16 @@ export const usersSlice = createSlice({
       .addCase(changeUserProfile.rejected, (state, action) => {
         state.error = action.error.message;
       })
+      .addCase(getUserProfile.pending, (state) => {
+        state.isUserProfileLoading = true;
+        state.error = null;
+      })
       .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.isUserProfileLoading = false;
         state.userProfile = action.payload;
       })
       .addCase(getUserProfile.rejected, (state, action) => {
+        state.isUserProfileLoading = false;
         state.error = action.error.message;
       })
       .addCase(getJudges.fulfilled, (state, action) => {
