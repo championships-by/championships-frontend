@@ -32,4 +32,7 @@ export const participantApi = {
     );
     return response.data;
   },
+  sendParticipantRegistrationNotice: (queryString) => {
+    return instance.post(`/system_notice/send_participant_registration_notice?${queryString}`);
+  }
 };
