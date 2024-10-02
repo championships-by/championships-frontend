@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
 import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import { participantApi } from "@api";
-import { teamApi } from "../../api";
+import { teamApi } from "@api";
 
 function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,12 +11,27 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
   const { eventID } = useParams();
 
-  const onFinish = () => {
+  const onFinish = async () => {
     if (form.getFieldValue("teamName") === teamName) {
       message.success("Данные сохранены успешно!");
       onOk();
     } else {
-      onSubmit();
+      setIsLoading(true);
+      try {
+        const body = {
+          id: teamID,
+          new_name: form.getFieldValue("teamName"),
+        };
+
+        await teamApi.updateTeam(body);
+
+        message.success("Данные сохранены успешно!");
+        form.resetFields();
+        onOk();
+      } catch {
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -26,55 +40,27 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
     setIsLoading(false);
   };
 
-  const onSubmit = async () => {
-    setIsLoading(true);
-    try {
-      const body = {
-        id: teamID,
-        new_name: form.getFieldValue("teamName"),
-      };
-
-      await teamApi.updateTeam(body);
-
-      message.success("Данные сохранены успешно!");
-      form.resetFields();
-      onOk();
-    } catch (error) {
-      message.error("Произошла ошибка! Попробуйте снова.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (isOpen) {
-      form.setFieldsValue({ ["teamName"]: teamName });
-      participantApi
-        .getParticipant()
-        .then((data) =>
-          setTeamParticipants(
-            data.map((participant) => ({
-              value: participant.email,
-              label: `${participant.first_name} ${participant.third_name} ${participant.second_name}`,
-            }))
-          )
-        )
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        )
+      const params = new URLSearchParams();
+      params.append("team_id", teamID);
+      teamApi
+        .getTeamById(params.toString())
+        .then((data) => {
+          data.map((team) => {
+            const participants = team.participants.map(
+              (participant) =>
+                `${participant.first_name} ${participant.third_name} ${participant.second_name}`
+            );
+            form.setFieldsValue({
+              ["teamName"]: team.name,
+              ["teamParticipants"]: participants,
+            });
+          });
+        })
         .finally(() => setTimeout(() => setIsLoading(false), 300));
     }
   }, [isOpen, eventID]);
-
-  const create_team_request = async () => {
-    const body = JSON.stringify({
-      name: form.getFieldValue("teamName"),
-    });
-
-    teamApi.setTeams(body);
-  };
 
   return (
     <Modal

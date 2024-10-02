@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { ModalType } from "@constants";
+import { useSelector } from "react-redux";
+import { getUserSelector } from "@store/users";
 import { Button, Flex, Form, Modal, message, Checkbox } from "antd";
 import ParticipantBirthdayInput from "@modules/participant/ParticipantBirthdayInput.jsx";
 import ParticipantEmailInput from "@modules/participant/ParticipantEmailInput.jsx";
@@ -17,6 +19,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   const [form] = Form.useForm();
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
   const [values, setValues] = useState(data || {});
+  const user = useSelector(getUserSelector);
 
   useEffect(() => {
     if (data) {
@@ -28,6 +31,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   }, [data, form]);
 
   const onFinish = async () => {
+    setIsLoading(true);
     try {
       if (isEdit) {
         const body = {
@@ -45,7 +49,18 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
         message.success("Участник успешно изменён");
       } else {
         const body = JSON.stringify(values);
+        const params = new URLSearchParams();
+        params.append("participant_email", values.email);
+        params.append(
+          "user_full_name",
+          `${user.data.first_name} ${user.data.third_name} ${user.data.second_name}`
+        );
+
         await participantApi.setParticipant(body);
+
+        await participantApi.sendParticipantRegistrationNotice(
+          params.toString()
+        );
         message.success("Участник успешно создан");
       }
       onOk();
