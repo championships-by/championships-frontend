@@ -52,7 +52,6 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
               (participant) =>
                 `${participant.first_name} ${participant.third_name} ${participant.second_name}`
             );
-            console.log(participants);
             form.setFieldsValue({
               ["teamName"]: team.name,
               ["teamParticipants"]: participants,
