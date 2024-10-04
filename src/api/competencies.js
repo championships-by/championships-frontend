@@ -55,6 +55,11 @@ export const competenciesApi = {
       `${API_PATH}/team_nomination_event/team_participant?event_id=${eventID}&nomination_id=${nominationID}&type=${nominationType}`
     );
   },
+  sendJudgeNotice: (data, body) => {
+    return instance.post(
+      `/system_notice/send_judge_added_notice`, body, { params: data }
+    );
+  },
   getNominationEventInfo: (queryString) =>
     instance
       .get(`${API_PATH}/nomination_event/nomination_event_info?${queryString}`)

@@ -7,6 +7,8 @@ import { Button, Flex, Form, Modal, message } from "antd";
 import { ModalType, NOMINATIONS } from "@constants";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getUserSelector } from "@store/users";
 
 function EventSettingsCompitations({
   isOpen,
@@ -16,6 +18,7 @@ function EventSettingsCompitations({
   mode,
   onAdd,
   nominationId,
+  eventName,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputName, setInputName] = useState("");
@@ -26,6 +29,7 @@ function EventSettingsCompitations({
   const [selectedJudges, setSelectedJudges] = useState([]);
   const [refreshKey, setRefreshKey] = useState(0);
   const { eventID } = useParams();
+  const user = useSelector(getUserSelector);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -113,6 +117,14 @@ function EventSettingsCompitations({
           default:
             break;
         }
+        const params = {
+          user_full_name: `${user.first_name} ${user.third_name} ${user.second_name}`,
+          event_name: eventName,
+          event_id: eventID,
+        };
+        const body = JSON.stringify(selectedJudges);
+        await competenciesApi.sendJudgeNotice(params, body);
+
         message.success("Компетенция успешно добавлена");
         onOk();
         onAdd();
