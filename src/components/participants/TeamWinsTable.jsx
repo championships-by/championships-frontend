@@ -1,12 +1,6 @@
-import { EditOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { Locale, ModalType } from "@constants";
-import { getUniqueFilters } from "@utils";
-import { Button, Flex, Table, Tooltip, Typography } from "antd";
-import dayjs from "dayjs";
-import React, { useState } from "react";
-import ParticipantModal from "./ParticipantModal";
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@constants";
+import { Locale } from "@constants";
+import { Table } from "antd";
+import React from "react";
 
 function TeamWinsTable({ teamWinsData }) {
   const columns = [

@@ -12,7 +12,6 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { getUserSelector } from "@store/users";
 import TeamWinsTable from "./TeamWinsTable";
 import { ROUTES } from "@constants";
