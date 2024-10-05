@@ -46,7 +46,7 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
           setTeamParticipants(
             data.map((participant) => ({
               value: participant.email,
-              label: `${participant.first_name} ${participant.third_name} ${participant.second_name}`,
+              label: `${participant.second_name} ${participant.first_name} ${participant.third_name}`,
             }))
           )
         )

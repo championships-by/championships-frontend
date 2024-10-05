@@ -29,7 +29,12 @@ function TeamWinsTable({ teamWinsData }) {
 
   return (
     <div>
-      <Table dataSource={teamWinsData} columns={columns} locale={Locale} />
+      <Table
+        dataSource={teamWinsData}
+        columns={columns}
+        locale={Locale}
+        pagination={false}
+      />
     </div>
   );
 }

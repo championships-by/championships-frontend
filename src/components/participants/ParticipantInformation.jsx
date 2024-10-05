@@ -15,6 +15,7 @@ import TeamWinsTable from "./TeamWinsTable";
 import { ROUTES } from "@constants";
 import { participantApi } from "@api";
 import { changeDateFormat } from "@utils";
+import participantImg from "@assets/img/participant.jpg";
 
 import "./sass/participants.scss";
 
@@ -55,12 +56,29 @@ function ParticipantInformation() {
       <Typography.Title level={2}>Карточка участника</Typography.Title>
       <Divider />
       <Breadcrumb items={items} />
-      <Typography.Title level={2}>
-        {`${participantData.first_name} ${participantData.third_name} ${participantData.second_name}`}
-      </Typography.Title>
-      <Typography.Text>
-        {changeDateFormat(participantData.birth_date)}
-      </Typography.Text>
+      <Row align="top">
+        <Col>
+          <img
+            src={participantImg}
+            className="participants__information__img"
+          />
+        </Col>
+        <Col>
+          <Typography.Title
+            level={2}
+            className="participants__information__name"
+          >
+            {`${participantData.first_name}`}
+            <br />
+            {`${participantData.third_name}`}
+            <br />
+            {`${participantData.second_name}`}
+          </Typography.Title>
+          <Typography.Text strong>
+            {changeDateFormat(participantData.birth_date)}
+          </Typography.Text>
+        </Col>
+      </Row>
       <TeamWinsTable teamWinsData={teamWinsData} />
     </>
   );
