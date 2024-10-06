@@ -11,6 +11,9 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { getUserSelector } from "@store/users";
 import TeamWinsTable from "./TeamWinsTable";
 import { ROUTES } from "@constants";
 import { participantApi } from "@api";
@@ -20,9 +23,10 @@ import participantImg from "@assets/img/participant.jpg";
 import "./sass/participants.scss";
 
 function ParticipantInformation() {
-  const [isLoading, setIsLoading] = useState(true);
   const [participantData, setParticipantData] = useState([]);
   const [teamWinsData, setTeamWinsData] = useState([]);
+  const user = useSelector(getUserSelector);
+  const isLoading = user.isLoading;
   const { participantID } = useParams();
 
   useEffect(() => {
@@ -31,12 +35,13 @@ function ParticipantInformation() {
     };
     try {
       participantApi.getParticipantStats(body).then((data) => {
-        data.participant.map((participant) => setParticipantData(participant));
+        data.participant.map((participant) => {
+          setParticipantData(participant);
+        });
         setTeamWinsData(data.team_wins);
       });
     } catch {
     } finally {
-      setIsLoading(false);
     }
   }, [participantID, isLoading]);
 
@@ -68,13 +73,17 @@ function ParticipantInformation() {
             level={2}
             className="participants__information__name"
           >
+            {`${participantData.second_name}`}
+            <br />
             {`${participantData.first_name}`}
             <br />
             {`${participantData.third_name}`}
-            <br />
-            {`${participantData.second_name}`}
           </Typography.Title>
-          <Typography.Text strong>
+          <Typography.Text strong>Электронная почта: </Typography.Text>
+          <Typography.Text>{participantData.email}</Typography.Text>
+          <br />
+          <Typography.Text strong>Дата рождения: </Typography.Text>
+          <Typography.Text>
             {changeDateFormat(participantData.birth_date)}
           </Typography.Text>
         </Col>
