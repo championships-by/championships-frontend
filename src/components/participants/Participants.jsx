@@ -18,6 +18,14 @@ function Participants() {
 
   const getParticipant = (value) => {
     if (value) {
+      const params = {
+        name: value,
+      };
+      try {
+        participantApi
+          .getParticipantByName(params)
+          .then((data) => setParticipants(data));
+      } catch {}
     } else {
       try {
         participantApi.getParticipant().then((data) => setParticipants(data));

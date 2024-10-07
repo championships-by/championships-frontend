@@ -14,40 +14,41 @@ function JudgmentEvents() {
   const [IsEventCreateModalOpen, setIsEventCreateModalOpen] = useState(false);
 
   const getEvents = async (value) => {
+    const params = new URLSearchParams();
     if (value) {
-    } else {
-      let eventsData = [];
-      const levels = ["region", "republic", "district", "town", "other"];
-      const isOwner = true;
-      const params = new URLSearchParams();
-      levels.forEach((level) => params.append("levels", level));
-      params.append("is_owner", isOwner);
-      await eventApi
-        .getEventsWithNominationsByOwner(params.toString())
-        .then((response) => {
-          const formattedDate = response.data.map((user) => ({
-            ...user,
-            date: user.date,
-          }));
-          return formattedDate;
-        })
-        .then((data) => (eventsData = [...eventsData, ...data]));
-
-      params.delete("is_owner");
-
-      await eventApi
-        .getEventsWithNominationsByJudgeInCommand(params.toString())
-        .then((response) => {
-          const formattedDate = response.data.map((user) => ({
-            ...user,
-            date: user.date,
-          }));
-          return formattedDate;
-        })
-        .then((data) => (eventsData = [...eventsData, ...data]));
-
-      setEvents(eventsData);
+      params.append("event_name_chars", value);
     }
+    let eventsData = [];
+    const levels = ["region", "republic", "district", "town", "other"];
+    const isOwner = true;
+
+    levels.forEach((level) => params.append("levels", level));
+    params.append("is_owner", isOwner);
+    await eventApi
+      .getEventsWithNominationsByOwner(params.toString())
+      .then((response) => {
+        const formattedDate = response.data.map((user) => ({
+          ...user,
+          date: user.date,
+        }));
+        return formattedDate;
+      })
+      .then((data) => (eventsData = [...eventsData, ...data]));
+
+    params.delete("is_owner");
+
+    await eventApi
+      .getEventsWithNominationsByJudgeInCommand(params.toString())
+      .then((response) => {
+        const formattedDate = response.data.map((user) => ({
+          ...user,
+          date: user.date,
+        }));
+        return formattedDate;
+      })
+      .then((data) => (eventsData = [...eventsData, ...data]));
+
+    setEvents(eventsData);
     setIsLoading(false);
   };
 

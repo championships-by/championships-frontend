@@ -9,7 +9,7 @@ function SearchInput({ onChange: onChangeBase }) {
   const onChange = useCallback(
     debounce((value) => {
       onChangeBase(value);
-    }, 800),
+    }, 300),
     []
   );
 
