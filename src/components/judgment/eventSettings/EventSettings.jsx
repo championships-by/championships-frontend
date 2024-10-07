@@ -607,6 +607,7 @@ function EventSettings() {
         onCancel={() => setIsAddCompitationModalOpen(false)}
         onAdd={getNominations}
         mode={ModalType.ADD}
+        eventName={dataEvent?.event?.name}
       />
       <CompitationModal
         name="Редактировать компетенцию"
@@ -616,6 +617,7 @@ function EventSettings() {
         onAdd={getNominations}
         mode={ModalType.EDIT}
         nominationId={selectedNomination}
+        eventName={dataEvent?.event?.name}
       />
       <CompetitionModal
         isOpen={openTrophyModal}

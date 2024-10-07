@@ -7,6 +7,8 @@ import { Button, Flex, Form, Modal, message } from "antd";
 import { ModalType, NOMINATIONS } from "@constants";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getUserSelector } from "@store/users";
 
 function EventSettingsCompitations({
   isOpen,
@@ -16,6 +18,7 @@ function EventSettingsCompitations({
   mode,
   onAdd,
   nominationId,
+  eventName,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [inputName, setInputName] = useState("");
@@ -24,8 +27,10 @@ function EventSettingsCompitations({
   const [groupCount, setGroupCount] = useState();
   const [criteria, setCriteria] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
+  const [oldJudges, setOldJudges] = useState([]);
   const [refreshKey, setRefreshKey] = useState(0);
   const { eventID } = useParams();
+  const user = useSelector(getUserSelector);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -45,6 +50,7 @@ function EventSettingsCompitations({
             setInputName(data.nomination_name);
             setInputReglament(data.reglament);
             setSelectedJudges(judgeIds);
+            setOldJudges(judgeIds);
           });
       }
     }
@@ -113,6 +119,17 @@ function EventSettingsCompitations({
           default:
             break;
         }
+
+        try {
+          const params = {
+            user_full_name: `${user?.data.second_name} ${user?.data.first_name} ${user?.data.third_name}`,
+            event_name: eventName,
+            event_id: eventID,
+          };
+          const body = JSON.stringify(selectedJudges);
+          await competenciesApi.sendJudgeNotice(params, body);
+        } catch {}
+
         message.success("Компетенция успешно добавлена");
         onOk();
         onAdd();
@@ -132,7 +149,22 @@ function EventSettingsCompitations({
         const params = new URLSearchParams();
         params.append("event_id", eventID);
         params.append("nomination_id", nominationId);
-        competenciesApi.updateNominationEvent(params.toString(), data);
+        await competenciesApi.updateNominationEvent(params.toString(), data);
+
+        try {
+          const params = {
+            user_full_name: `${user.first_name} ${user.third_name} ${user.second_name}`,
+            event_name: eventName,
+            event_id: eventID,
+          };
+          const filteredJudges = selectedJudges.filter(
+            (judge) => !oldJudges.includes(judge)
+          );
+
+          const body = JSON.stringify(filteredJudges);
+          await competenciesApi.sendJudgeNotice(params, body);
+        } catch {}
+
         message.success("Компетенция успешно изменена");
         onOk();
         setInputName("");
