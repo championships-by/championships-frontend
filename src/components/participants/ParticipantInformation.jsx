@@ -10,7 +10,7 @@ import {
   Breadcrumb,
 } from "antd";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { getUserSelector } from "@store/users";
@@ -25,8 +25,10 @@ import "./sass/participants.scss";
 function ParticipantInformation() {
   const [participantData, setParticipantData] = useState([]);
   const [teamWinsData, setTeamWinsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const user = useSelector(getUserSelector);
-  const isLoading = user.isLoading;
+  const profileIsLoading = user.isLoading;
+  const navigate = useNavigate();
   const { participantID } = useParams();
 
   useEffect(() => {
@@ -34,16 +36,20 @@ function ParticipantInformation() {
       participant_id: participantID,
     };
     try {
-      participantApi.getParticipantStats(body).then((data) => {
-        data.participant.map((participant) => {
-          setParticipantData(participant);
-        });
-        setTeamWinsData(data.team_wins);
-      });
-    } catch {
-    } finally {
-    }
-  }, [participantID, isLoading]);
+      participantApi
+        .getParticipantStats(body)
+        .then((data) => {
+          data.participant.map((participant) => {
+            if (!profileIsLoading && participant.creator_id != user?.data.id) {
+              navigate(ROUTES.FORBIDDEN.PATH);
+            }
+            setParticipantData(participant);
+          });
+          setTeamWinsData(data.team_wins);
+        })
+        .finally(() => setTimeout(() => setIsLoading(false), 300));
+    } catch {}
+  }, [participantID, isLoading, profileIsLoading]);
 
   const items = [
     {
@@ -57,7 +63,7 @@ function ParticipantInformation() {
 
   return (
     <>
-      <Loader show={isLoading} />
+      <Loader show={isLoading && profileIsLoading} />
       <Typography.Title level={2}>Карточка участника</Typography.Title>
       <Divider />
       <Breadcrumb items={items} />
