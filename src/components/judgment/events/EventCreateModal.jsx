@@ -16,6 +16,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   const [form] = Form.useForm();
 
   const [values, setValues] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async () => {
     const {
@@ -68,6 +69,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   };
 
   const onFinish = async () => {
+    setIsLoading(true);
     const success = await onSubmit();
     if (success) {
       message.success("Мероприятие успешно создано");
@@ -82,6 +84,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
         placement: "bottomRight",
       });
     }
+    setIsLoading(false);
   };
 
   const onFinishFailed = () => {
@@ -147,7 +150,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           name="participation_needs"
           value={values.participation_needs}
         />
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isLoading}>
           Сохранить
         </Button>
       </Form>

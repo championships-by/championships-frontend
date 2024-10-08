@@ -12,7 +12,7 @@ function ParticipantOrganizationInput({ name, value }) {
       rules={[
         {
           required: true,
-          message: "Пожалуйста, введите учереждение образования",
+          message: "Пожалуйста, введите учреждение образования",
         },
         {
           max: 255,
