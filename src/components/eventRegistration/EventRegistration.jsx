@@ -1,4 +1,4 @@
-import { Button, Typography, Breadcrumb, Divider, Tabs } from "antd";
+import { Button, Typography, Breadcrumb, Divider, Tabs, Row, Col } from "antd";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import TeamCreateModal from "@components/eventRegistration/TeamCreateModal";
@@ -17,6 +17,7 @@ function EventsRegistration() {
   const [dataAllTeams, setAllTeams] = useState([]);
   const [dataTeams, setTeams] = useState([]);
   const [dataEvent, setEvent] = useState({});
+  const [activeTab, setActiveTab] = useState("1");
   const { eventID } = useParams();
   const isRelated = true;
 
@@ -40,11 +41,6 @@ function EventsRegistration() {
       label: "Мои команды",
       children: (
         <>
-          <AdminPanelControls>
-            <Button type="primary" onClick={() => setIsAddTeamModalOpen(true)}>
-              Добавить команду
-            </Button>
-          </AdminPanelControls>
           <AllTeamsTable teamsData={dataAllTeams} />
         </>
       ),
@@ -82,13 +78,33 @@ function EventsRegistration() {
     }
   }, [isLoading, eventID]);
 
+  const onTabChange = (key) => {
+    setActiveTab(key);
+  };
+
   return (
     <>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Регистрация участников</Typography.Title>
+      <Row align="bottom">
+        <Col>
+          <Typography.Title level={2}>Регистрация участников</Typography.Title>
+        </Col>
+        <Col flex="auto">
+          {activeTab === "1" && (
+            <AdminPanelControls>
+              <Button
+                type="primary"
+                onClick={() => setIsAddTeamModalOpen(true)}
+              >
+                Добавить команду
+              </Button>
+            </AdminPanelControls>
+          )}
+        </Col>
+      </Row>
       <Divider />
       <Breadcrumb className="event-registration__breadcrumb" items={items} />
-      <Tabs items={tabsitems} />
+      <Tabs items={tabsitems} onChange={onTabChange} />
       <TeamCreateModal
         isOpen={isAddTeamModalOpen}
         onOk={() => setIsAddTeamModalOpen(false)}

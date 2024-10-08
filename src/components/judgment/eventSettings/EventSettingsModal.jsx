@@ -24,7 +24,7 @@ function EventSettingsCompitations({
   const [inputName, setInputName] = useState("");
   const [inputReglament, setInputReglament] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
-  const [groupCount, setGroupCount] = useState();
+  const [groupCount, setGroupCount] = useState(1);
   const [criteria, setCriteria] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
   const [oldJudges, setOldJudges] = useState([]);
@@ -88,6 +88,14 @@ function EventSettingsCompitations({
   const onFinish = async () => {
     setIsLoading(true);
     if (mode === ModalType.ADD) {
+      if (
+        !selectedValue ||
+        (selectedValue === NOMINATIONS.CRITERIA && criteria.length === 0)
+      ) {
+        message.error("Выберите тип соревнования");
+        setIsLoading(false);
+        return;
+      }
       const data = {
         append_nomination_event_data: {
           event_id: eventId,
@@ -119,16 +127,17 @@ function EventSettingsCompitations({
           default:
             break;
         }
-
-        try {
-          const params = {
-            user_full_name: `${user?.data.second_name} ${user?.data.first_name} ${user?.data.third_name}`,
-            event_name: eventName,
-            event_id: eventID,
-          };
-          const body = JSON.stringify(selectedJudges);
-          await competenciesApi.sendJudgeNotice(params, body);
-        } catch {}
+        if (selectedJudges.length !== 0) {
+          try {
+            const params = {
+              user_full_name: `${user?.data.second_name} ${user?.data.first_name} ${user?.data.third_name}`,
+              event_name: eventName,
+              event_id: eventID,
+            };
+            const body = JSON.stringify(selectedJudges);
+            await competenciesApi.sendJudgeNotice(params, body);
+          } catch {}
+        }
 
         message.success("Компетенция успешно добавлена");
         onOk();
@@ -209,6 +218,7 @@ function EventSettingsCompitations({
           judges={selectedJudges}
         />
         <CompetitionType
+          name="nomination_type"
           onChange={(value) => {
             if (mode == "edit") {
               return;
