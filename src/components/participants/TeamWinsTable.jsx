@@ -12,18 +12,14 @@ function TeamWinsTable({ teamWinsData }) {
   const columns = [
     {
       title: "Мероприятие",
-      key: "events",
-      dataIndex: "event",
+      key: "event",
+      dataIndex: "event_name",
+      width: "50%",
     },
     {
       title: "Компетенции",
       key: "nomination",
-      dataIndex: "nomination",
-    },
-    {
-      title: "Место",
-      key: "place",
-      dataIndex: "place",
+      dataIndex: "nomination_name",
     },
   ];
 

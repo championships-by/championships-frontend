@@ -45,7 +45,7 @@ function ParticipantInformation() {
             }
             setParticipantData(participant);
           });
-          setTeamWinsData(data.team_wins);
+          setTeamWinsData(data.participation);
         })
         .finally(() => setTimeout(() => setIsLoading(false), 300));
     } catch {}
