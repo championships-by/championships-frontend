@@ -5,6 +5,9 @@ export const participantApi = {
   getParticipant: () => {
     return fetchWithPagination(instance, `/participant/participant`);
   },
+  getParticipantByName: (params) => {
+    return fetchWithPagination(instance, `/participant/get_participant_by_name`, params);
+  },
   setHideParticipant: (body) =>
     instance.post(`/participant/hide_participant`, body),
   setParticipant: (body) => {
@@ -32,4 +35,7 @@ export const participantApi = {
     );
     return response.data;
   },
+  sendParticipantRegistrationNotice: (queryString) => {
+    return instance.post(`/system_notice/send_participant_registration_notice?${queryString}`);
+  }
 };

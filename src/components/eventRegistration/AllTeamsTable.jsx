@@ -1,39 +1,9 @@
-import { Table, Flex, Button, Tooltip } from "antd";
-import { useMemo, useState } from "react";
+import { Table, Flex, Button, Tooltip, List, Typography } from "antd";
+import { useState } from "react";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
 import { Locale } from "@constants";
-
-const transformTeamsData = (teamsData) => {
-  const transformedData = [];
-
-  teamsData.forEach((teamData) => {
-    teamData.team_participants.forEach((participant) => {
-      const teamName = participant.team.name;
-      const teamId = participant.team.id;
-
-      participant.team.participants.forEach((teamParticipant) => {
-        transformedData.push({
-          nomination_name: teamData.nomination_name,
-          team_name: teamName,
-          participant_name: `${teamParticipant.participant_data.first_name} ${teamParticipant.participant_data.third_name} ${teamParticipant.participant_data.second_name}`,
-          team_id: teamId,
-        });
-      });
-    });
-  });
-
-  transformedData.sort((a, b) => {
-    if (a.team_name < b.team_name) return -1;
-    if (a.team_name > b.team_name) return 1;
-    if (a.nomination_name < b.nomination_name) return -1;
-    if (a.nomination_name > b.nomination_name) return 1;
-    return 0;
-  });
-
-  return transformedData;
-};
 
 const getRowSpan = (data, index, key) => {
   let count = 1;
@@ -47,7 +17,7 @@ const getRowSpan = (data, index, key) => {
   return count;
 };
 
-function TeamsTable({ teamsData }) {
+function AllTeamsTable({ teamsData }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState();
@@ -72,50 +42,52 @@ function TeamsTable({ teamsData }) {
     setIsParticipantModalOpen(false);
   };
 
-  const transformedData = useMemo(
-    () => transformTeamsData(teamsData),
-    [teamsData]
-  );
-
   const columns = [
     {
       title: "Команда",
       key: "team",
-      dataIndex: "team_name",
       width: "20%",
+      dataIndex: "name",
       onCell: (record, rowIndex) => {
-        const rowSpan = getRowSpan(transformedData, rowIndex, "team_name");
+        const rowSpan = getRowSpan(teamsData, rowIndex, "name");
         return {
           rowSpan:
-            rowIndex === 0 ||
-            transformedData[rowIndex - 1].team_name !== record.team_name
+            rowIndex === 0 || teamsData[rowIndex - 1].name !== record.name
               ? rowSpan
               : 0,
         };
       },
+      sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
       title: "Участник",
       key: "participant_name",
-      dataIndex: "participant_name",
+      dataIndex: "participants",
       width: "20%",
-    },
-    {
-      title: "Компетенция",
-      key: "nomination",
-      dataIndex: "nomination_name",
-      width: "20%",
+      render: (participants) => (
+        <List
+          itemLayout="horizontal"
+          dataSource={participants}
+          renderItem={(participant) => (
+            <List.Item>
+              <Typography.Text>
+                {participant.first_name} {participant.third_name}{" "}
+                {participant.second_name}
+              </Typography.Text>
+            </List.Item>
+          )}
+        />
+      ),
     },
     {
       title: "Действия",
       key: "action",
       width: "10%",
       onCell: (record, rowIndex) => {
-        const rowSpan = getRowSpan(transformedData, rowIndex, "team_name");
+        const rowSpan = getRowSpan(teamsData, rowIndex, "name");
         return {
           rowSpan:
-            rowIndex === 0 ||
-            transformedData[rowIndex - 1].team_name !== record.team_name
+            rowIndex === 0 || teamsData[rowIndex - 1].name !== record.name
               ? rowSpan
               : 0,
         };
@@ -126,14 +98,14 @@ function TeamsTable({ teamsData }) {
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={() => openEditModal(record.team_id, record.team_name)}
+              onClick={() => openEditModal(record.id, record.name)}
             />
           </Tooltip>
           <Tooltip title="Добавить">
             <Button
               type="text"
               icon={<UsergroupAddOutlined />}
-              onClick={() => openParticipantModal(record.team_id)}
+              onClick={() => openParticipantModal(record.id)}
             />
           </Tooltip>
         </Flex>
@@ -144,12 +116,12 @@ function TeamsTable({ teamsData }) {
   return (
     <>
       <Table
-        dataSource={transformedData}
+        dataSource={teamsData}
         columns={columns}
         bordered
         locale={Locale}
         pagination={false}
-        rowKey={(record) => record.participant_name}
+        rowKey={(record) => record.team}
       />
 
       <TeamEditModal
@@ -169,4 +141,4 @@ function TeamsTable({ teamsData }) {
   );
 }
 
-export default TeamsTable;
+export default AllTeamsTable;

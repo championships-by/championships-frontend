@@ -35,8 +35,8 @@ export const ROLE_FILTERS = [
 export const NOMINATIONS = {
   TIME: "time",
   PLAYOFF: "playoffs",
-  CRITERIA: "criteria"
-}
+  CRITERIA: "criteria",
+};
 
 export const NOMINATION_TYPES = {
   CRITERIA: "По критериям",
@@ -205,6 +205,18 @@ export const Locale = {
     [EventFilters.DISTRICT]: "Районный",
     [EventFilters.TOWN]: "Городской",
     [EventFilters.OTHER]: "Другое",
+  },
+  pagination : {
+    items_per_page: "элементов на странице",
+    jump_to: "Перейти",
+    jump_to_confirm: "подтвердить",
+    page: "Страница",
+    prev_page: "Предыдущая страница",
+    next_page: "Следующая страница",
+    prev_5: "Предыдущие 5 страниц",
+    next_5: "Следующие 5 страниц",
+    prev_3: "Предыдущие 3 страницы",
+    next_3: "Следующие 3 страницы",
   },
   dateFormat: "DD.MM.YYYY",
   dateTimeFormat: "DD.MM.YYYY HH:mm",
