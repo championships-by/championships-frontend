@@ -4,7 +4,7 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import noLogo from "@assets/img/auth-background.png";
-import { ROUTES, url } from "@constants";
+import { ROUTES, url, Locale } from "@constants";
 import { changeDateFormat, getEventLevel } from "@utils";
 import { Card, List, Tooltip, Typography } from "antd";
 import React from "react";
@@ -101,6 +101,7 @@ function EventsList({ events }) {
         pageSize: 3,
         position: "bottom",
         align: "center",
+        locale: Locale.pagination,
       }}
       dataSource={data}
       renderItem={(item) => <List.Item>{item}</List.Item>}
