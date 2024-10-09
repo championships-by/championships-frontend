@@ -451,6 +451,9 @@ function EventSettings() {
         const formDataLogo = new FormData();
         formDataLogo.append("logo", event_logo);
         formDataLogo.append("event_id", eventID);
+        formDataLogo.forEach((value, key) => {
+          console.log(key, value);
+        });
         await eventApi.changeLogo(formDataLogo);
       } catch (error) {
         message.error("При изменении логотипа произошла ошибка.");
@@ -607,6 +610,7 @@ function EventSettings() {
         onCancel={() => setIsAddCompitationModalOpen(false)}
         onAdd={getNominations}
         mode={ModalType.ADD}
+        eventName={dataEvent?.event?.name}
       />
       <CompitationModal
         name="Редактировать компетенцию"
@@ -616,6 +620,7 @@ function EventSettings() {
         onAdd={getNominations}
         mode={ModalType.EDIT}
         nominationId={selectedNomination}
+        eventName={dataEvent?.event?.name}
       />
       <CompetitionModal
         isOpen={openTrophyModal}

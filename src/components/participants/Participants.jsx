@@ -6,6 +6,7 @@ import { Button, Flex, Typography, message, Row, Col, Divider } from "antd";
 import { useEffect, useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";
+import SearchInput from "@modules/search/SearchInput";
 
 import "./sass/participants.scss";
 
@@ -15,14 +16,22 @@ function Participants() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataParticipants, setParticipants] = useState([]);
 
-  const getParticipant = () => {
-    participantApi
-      .getParticipant()
-      .then((data) => setParticipants(data))
-      .catch(() =>
-        message.error("Невозможно получить данные. Обратитесь к администратору")
-      )
-      .finally(() => setTimeout(() => setIsLoading(false), 300));
+  const getParticipant = (value) => {
+    if (value) {
+      const params = {
+        name: value,
+      };
+      try {
+        participantApi
+          .getParticipantByName(params)
+          .then((data) => setParticipants(data));
+      } catch {}
+    } else {
+      try {
+        participantApi.getParticipant().then((data) => setParticipants(data));
+      } catch {}
+    }
+    setIsLoading(false);
   };
 
   const onOk = () => {
@@ -45,23 +54,26 @@ function Participants() {
     <>
       <Loader show={isLoading} />
       <Row align="bottom">
-        <Col>
+        <Col span={14}>
           <Typography.Title level={2}>Управление участниками</Typography.Title>
         </Col>
         <Col flex="auto">
-          <AdminPanelControls>
-            <Flex gap="small">
-              {/*<Tooltip title="Сохранить список участников">
+          <Flex justify="flex-end">
+            <SearchInput onChange={getParticipant} />
+            <AdminPanelControls>
+              <Flex gap="small">
+                {/*<Tooltip title="Сохранить список участников">
             <Button type="primary" icon={<DownloadOutlined />} />
           </Tooltip>*/}
-              <Button
-                type="primary"
-                onClick={() => setIsAddParticipantModalOpen(true)}
-              >
-                Добавить участника
-              </Button>
-            </Flex>
-          </AdminPanelControls>
+                <Button
+                  type="primary"
+                  onClick={() => setIsAddParticipantModalOpen(true)}
+                >
+                  Добавить участника
+                </Button>
+              </Flex>
+            </AdminPanelControls>
+          </Flex>
         </Col>
       </Row>
       <Divider />
