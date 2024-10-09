@@ -206,7 +206,7 @@ export const Locale = {
     [EventFilters.TOWN]: "Городской",
     [EventFilters.OTHER]: "Другое",
   },
-  pagination : {
+  pagination: {
     items_per_page: "элементов на странице",
     jump_to: "Перейти",
     jump_to_confirm: "подтвердить",
