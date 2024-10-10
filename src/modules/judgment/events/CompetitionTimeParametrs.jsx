@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Slider, InputNumber, Space } from "antd";
 import "./sass/events.scss";
 
-function TimeParametrs({ onInputChange }) {
+function TimeParametrs({ onInputChange, value: defaultValue }) {
   const [value, setValue] = useState(1);
 
   const onChange = (value) => {
     setValue(value);
     onInputChange(value);
   };
+
+  useEffect(() => {
+    if (defaultValue) {
+      setValue(defaultValue);
+    }
+  }, [defaultValue]);
+
   return (
     <div>
       <div>Укажите количество попыток</div>

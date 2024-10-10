@@ -6,6 +6,7 @@ import FeedbackFirstnameInput from "@modules/feedback/FeedbackFirstnameInput";
 import FeedbackLastnameInput from "@modules/feedback/FeedbackLastnameInput";
 import FeedbackEmailInput from "@modules/feedback/FeedbackEmailInput";
 import FeedbackFile from "@modules/feedback/FeedbackFile";
+import FeedbackCheckbox from "@modules/feedback/FeedbackCheckbox";
 import FeedbackDescription from "@modules/feedback/FeedbackDescription";
 import { feedbackApi } from "@api";
 
@@ -90,6 +91,7 @@ function Feedback() {
             <FeedbackEmailInput name="email" />
             <FeedbackFile name="file" onChange={onChangeFile} />
             <FeedbackDescription name="message" />
+            <FeedbackCheckbox name="checkbox" />
             <Button type="primary" htmlType="submit" loading={isLoading}>
               Отправить
             </Button>
