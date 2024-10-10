@@ -9,6 +9,14 @@ export const getParticipant = createAsyncThunk(
   }
 );
 
+export const getParticipantByName = createAsyncThunk(
+  "participants/getParticipantByName",
+  async (params) => {
+    const data = await participantApi.getParticipantByName(params);
+    return data;
+  }
+);
+
 export const setHideParticipant = createAsyncThunk(
   "participants/setHideParticipant",
   async (body) => {

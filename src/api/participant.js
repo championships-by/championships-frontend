@@ -27,7 +27,9 @@ export const participantApi = {
     return instance.patch(`/participant/participant`, body);
   },
   getParticipantStats: (body) => {
-    return instance.get(`/participant/get_participant_stats`, { params: body }).then((res) => res.data);
+    return instance
+      .get(`/participant/get_participant_stats`, { params: body })
+      .then((res) => res.data);
   },
   getParticipantsWithInfo: async (eventID, nominationID, competitionType) => {
     const response = await instance.get(
