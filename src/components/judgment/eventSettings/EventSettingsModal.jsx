@@ -28,6 +28,9 @@ function EventSettingsCompitations({
   const [criteria, setCriteria] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
   const [oldJudges, setOldJudges] = useState([]);
+  const [selectedType, setSelectedType] = useState();
+  const [selectedCriteria, setSelectedCriteria] = useState([]);
+  const [selectedGroupCount, setSelectedGroupCount] = useState();
   const [refreshKey, setRefreshKey] = useState(0);
   const { eventID } = useParams();
   const user = useSelector(getUserSelector);
@@ -47,6 +50,14 @@ function EventSettingsCompitations({
             setInputName(data.nomination_name);
             setInputReglament(data.reglament);
             setSelectedJudges(judgeIds);
+            setSelectedType(data.type);
+            if (data.type == "criteria") {
+              setCriteria(data.criterias);
+              setSelectedCriteria(data.criterias);
+            } else if (data.type == "time") {
+              setGroupCount(data.race_round_amount);
+              setSelectedGroupCount(data.race_round_amount);
+            }
             setOldJudges(judgeIds);
           });
       }
@@ -167,8 +178,10 @@ function EventSettingsCompitations({
             (judge) => !oldJudges.includes(judge)
           );
 
-          const body = JSON.stringify(filteredJudges);
-          await competenciesApi.sendJudgeNotice(params, body);
+          if (filteredJudges.length !== 0) {
+            const body = JSON.stringify(filteredJudges);
+            await competenciesApi.sendJudgeNotice(params, body);
+          }
         } catch {}
 
         message.success("Компетенция успешно изменена");
@@ -224,8 +237,9 @@ function EventSettingsCompitations({
           }}
           onInputChange={handleGroupCount}
           onCriteriaChange={handleCriteriaChange}
-          disabled={mode === "edit"}
-          mode={mode}
+          value={selectedType}
+          criteriaValue={selectedCriteria}
+          groupCountValue={selectedGroupCount}
         />
         <Flex gap="middle">
           <Button

@@ -83,8 +83,6 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
                   " " +
                   participantItem.participant_additional_data.supervisor_data
                     .supervisor_third_name,
-
-                  
               };
             }) || []
           );

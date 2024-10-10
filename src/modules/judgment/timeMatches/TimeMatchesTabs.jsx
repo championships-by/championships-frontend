@@ -1,10 +1,8 @@
 import { competenciesApi, timeMatchesApi } from "@api";
-import { defaultTime, RESPONSE_STATUS } from "@constants";
+import { defaultTime } from "@constants";
 import { useTabs } from "@hooks/useTabs";
 import {
   formatTimeToString,
-  getClickHandler,
-  getTextByTabIndex,
   isTimeMatchesFilled,
   transformStageStatus,
   transformTimeMatchesData,
@@ -25,15 +23,6 @@ export const TimeMatchesTabs = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
-  const [activeTab, setActiveTab] = useState("1");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
-  const onChange = (value) => {
-    setActiveTab(value);
-    isStageFinished && activeTab === "1"
-      ? setIsButtonDisabled(false)
-      : setIsButtonDisabled(true);
-  };
 
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
     setTimeMatches((prev) =>
@@ -113,27 +102,27 @@ export const TimeMatchesTabs = () => {
   useEffect(() => {
     if (!isDataLoaded) {
       setIsLoading(true);
+
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+
       Promise.all([
-        competenciesApi.getNominationEventInfo(eventId, nominationId),
+        competenciesApi.getNominationEventInfo(params),
         timeMatchesApi.getTimeMatches(eventId, nominationId),
       ])
         .then(([stageStatusResponse, timeMatchesResponse]) => {
-          if (stageStatusResponse.status === RESPONSE_STATUS.STATUS_OK) {
-            const transformedStageStatus =
-              transformStageStatus(stageStatusResponse);
-            setStageStatus(transformedStageStatus);
+          const transformedStageStatus =
+            transformStageStatus(stageStatusResponse);
+          setStageStatus(transformedStageStatus);
 
-            if (transformedStageStatus.tournamentFinished) {
-              setIsStageFinished(true);
-              setIsButtonDisabled(true);
-            }
+          if (transformedStageStatus.tournamentFinished) {
+            setIsStageFinished(true);
           }
 
-          if (timeMatchesResponse.status === RESPONSE_STATUS.STATUS_OK) {
-            const transformedTimeMatches =
-              transformTimeMatchesData(timeMatchesResponse);
-            setTimeMatches(transformedTimeMatches);
-          }
+          const transformedTimeMatches =
+            transformTimeMatchesData(timeMatchesResponse);
+          setTimeMatches(transformedTimeMatches);
         })
         .catch((error) => {
           if (error.response && error.response.status === 404) {
@@ -153,8 +142,6 @@ export const TimeMatchesTabs = () => {
 
   return (
     <Tabs
-      activeKey={activeTab}
-      onChange={onChange}
       items={[
         {
           ...tabs[0],
@@ -191,17 +178,10 @@ export const TimeMatchesTabs = () => {
       tabBarExtraContent={{
         right: (
           <Button
-            disabled={isButtonDisabled}
-            onClick={getClickHandler(
-              () => (!isStageFinished ? 0 : 1),
-              [handleCompleteStage, handleDownload]
-            )}
+            onClick={isStageFinished ? handleDownload : handleCompleteStage}
             type="primary"
           >
-            {getTextByTabIndex(activeTab, [
-              "Завершить этап",
-              "Итоговый протокол",
-            ])}
+            {isStageFinished ? "Итоговый протокол" : "Завершить этап"}
           </Button>
         ),
       }}

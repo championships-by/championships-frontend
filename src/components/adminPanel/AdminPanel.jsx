@@ -53,14 +53,14 @@ function AdminPanel() {
   }, [isLoading, role]);
 
   return (
-    <div className="admin-panel">
+    <div id="admin-panel" className="admin-panel">
       {user.data.role && (
-        <div className="admin-panel__menu">
+        <div id="sidebar" className="admin-panel__menu">
           <AdminPanelLogo />
           <AdminPanelNav role={role} />
         </div>
       )}
-      <div className="admin-panel__content">
+      <div id="content" className="admin-panel__content">
         <Outlet />
       </div>
     </div>

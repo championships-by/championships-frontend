@@ -14,7 +14,7 @@ export * from "./timeMatches";
 export * from "./user";
 export * from "./feedback";
 
-const excludedUrls = ["/user/profile"]; 
+const excludedUrls = ["/user/profile"];
 
 export const instance = axios.create({
   baseURL: API_PATH,
@@ -32,7 +32,7 @@ instance.interceptors.response.use(
   (error) => {
     const requestUrl = error?.config?.url;
 
-    if (requestUrl && !excludedUrls.some(url => requestUrl.includes(url))) {
+    if (requestUrl && !excludedUrls.some((url) => requestUrl.includes(url))) {
       if (error.response) {
         const ERROR_TEXT = error?.response?.data?.detail?.error;
         message.error(ERRORS.getError(ERROR_TEXT));

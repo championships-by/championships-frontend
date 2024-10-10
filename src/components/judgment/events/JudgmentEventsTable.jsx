@@ -1,4 +1,4 @@
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { Locale, ROUTES } from "@constants";
 import { changeDateFormat } from "@utils";
 import { Button, Flex, List, Table, Tooltip, Typography } from "antd";
@@ -60,6 +60,13 @@ function JudgmentEventsTable({ EventsData }) {
               }
             />
           </Tooltip>
+          <Tooltip title={ROUTES.EVENTS_DESCRIPTION.TITLE}>
+            <Button
+              type="text"
+              icon={<InfoCircleOutlined />}
+              onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
+            />
+          </Tooltip>
         </Flex>
       ),
     },
@@ -71,6 +78,7 @@ function JudgmentEventsTable({ EventsData }) {
       dataSource={EventsData}
       pagination={{
         position: ["bottomCenter"],
+        locale: Locale.pagination,
       }}
       columns={columns}
     />
