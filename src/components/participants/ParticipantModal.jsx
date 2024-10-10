@@ -53,7 +53,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
         params.append("participant_email", values.email);
         params.append(
           "user_full_name",
-          `${user.data.first_name} ${user.data.third_name} ${user.data.second_name}`
+          `${user.data.second_name} ${user.data.first_name} ${user.data.third_name}`
         );
 
         await participantApi.setParticipant(body);

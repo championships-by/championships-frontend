@@ -50,7 +50,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
           data.map((team) => {
             const participants = team.participants.map(
               (participant) =>
-                `${participant.first_name} ${participant.third_name} ${participant.second_name}`
+                `${participant.second_name} ${participant.first_name} ${participant.third_name}`
             );
             form.setFieldsValue({
               ["teamName"]: team.name,

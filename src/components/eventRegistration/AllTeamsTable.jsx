@@ -71,8 +71,8 @@ function AllTeamsTable({ teamsData }) {
           renderItem={(participant) => (
             <List.Item>
               <Typography.Text>
-                {participant.first_name} {participant.third_name}{" "}
-                {participant.second_name}
+                {participant.second_name} {participant.first_name}{" "}
+                {participant.third_name}
               </Typography.Text>
             </List.Item>
           )}

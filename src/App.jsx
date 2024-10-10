@@ -12,6 +12,7 @@ import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
 import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
 import Participants from "@components/participants/Participants";
+import ParticipantInformation from "@components/participants/ParticipantInformation";
 import Unauthorized from "@components/unauthorized/Unauthorized";
 import UsersControl from "@components/usersControl/UsersControl";
 import UserSettings from "@components/userSettings/UserSettings";
@@ -44,20 +45,26 @@ function App() {
               <Route index element={<Auth />} />
               <Route path={ROUTER_ROUTES.LOGOUT} element={<Logout />} />
               <Route path={ROUTER_ROUTES.ADMIN_PANEL} element={<AdminPanel />}>
-                <Route
-                  path={ROUTER_ROUTES.PARTICIPANTS}
-                  element={
-                    <ProtectedRoute
-                      allowedRoles={[
-                        Roles.ADMIN,
-                        Roles.JUDGE,
-                        Roles.SPECIALIST,
-                      ]}
-                    >
-                      <Participants />
-                    </ProtectedRoute>
-                  }
-                />
+                <Route path={ROUTER_ROUTES.PARTICIPANTS}>
+                  <Route
+                    index
+                    element={
+                      <ProtectedRoute
+                        allowedRoles={[
+                          Roles.ADMIN,
+                          Roles.JUDGE,
+                          Roles.SPECIALIST,
+                        ]}
+                      >
+                        <Participants />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={ROUTER_ROUTES.PARTICIPANT_INFORMATION}
+                    element={<ParticipantInformation />}
+                  />
+                </Route>
                 <Route
                   path={ROUTER_ROUTES.USERS_CONTROL}
                   element={

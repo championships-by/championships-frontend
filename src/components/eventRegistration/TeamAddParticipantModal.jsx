@@ -84,7 +84,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
 
               nominationsOptions.push({
                 value: participant.participant_data.id,
-                label: `${firstName} ${thirdName} ${secondName} `,
+                label: `${secondName} ${firstName} ${thirdName}`,
               });
             });
           }

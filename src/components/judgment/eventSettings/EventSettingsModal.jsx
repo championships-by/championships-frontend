@@ -35,12 +35,9 @@ function EventSettingsCompitations({
 
   useEffect(() => {
     if (mode === ModalType.EDIT) {
-      const params = new URLSearchParams();
-      params.append("event_id", eventID);
-      params.append("nomination_id", nominationId);
       if (isOpen) {
         competenciesApi
-          .getNominationEventInfo(params.toString())
+          .getNominationEventInfo(eventID, nominationId)
           .then((data) => {
             const judgeIds = data.judges.map((judge) => judge.id);
             form.setFieldsValue({
