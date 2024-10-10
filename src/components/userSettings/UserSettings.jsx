@@ -33,7 +33,6 @@ function UsersSettings() {
       organization: user.data.educational_institution,
     });
   }, [form, user]);
-  
 
   const handleSubmit = () => {
     setIsFormLoading(true);
