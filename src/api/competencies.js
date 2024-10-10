@@ -56,13 +56,15 @@ export const competenciesApi = {
     );
   },
   sendJudgeNotice: (data, body) => {
-    return instance.post(
-      `/system_notice/send_judge_added_notice`, body, { params: data }
-    );
+    return instance.post(`/system_notice/send_judge_added_notice`, body, {
+      params: data,
+    });
   },
   getNominationEventInfo: (eventID, nominationID) =>
     instance
-      .get(`${API_PATH}/nomination_event/nomination_event_info?event_id=${eventID}&nomination_id=${nominationID}`)
+      .get(
+        `${API_PATH}/nomination_event/nomination_event_info?event_id=${eventID}&nomination_id=${nominationID}`
+      )
       .then((res) => res.data),
   updateNominationEvent: (queryString, data) =>
     instance.patch(

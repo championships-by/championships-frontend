@@ -10,7 +10,7 @@ import { Button, Col, Form, Row, Typography, message, Divider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUserProfile, getUserSelector } from "@store/users";
 import FormItem from "antd/es/form/FormItem";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserPasswordModal from "./UserPasswordChange";
 
 import "./sass/user-settings.scss";
@@ -22,15 +22,18 @@ function UsersSettings() {
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [form] = Form.useForm();
 
-  form.setFieldsValue({
-    firstname: user.data.first_name,
-    lastname: user.data.second_name,
-    patronymic: user.data.third_name,
-    role: user.data.role,
-    email: user.data.email,
-    phone: user.data.phone,
-    organization: user.data.educational_institution,
-  });
+  useEffect(() => {
+    form.setFieldsValue({
+      firstname: user.data.first_name,
+      lastname: user.data.second_name,
+      patronymic: user.data.third_name,
+      role: user.data.role,
+      email: user.data.email,
+      phone: user.data.phone,
+      organization: user.data.educational_institution,
+    });
+  }, [form, user]);
+  
 
   const handleSubmit = () => {
     setIsFormLoading(true);

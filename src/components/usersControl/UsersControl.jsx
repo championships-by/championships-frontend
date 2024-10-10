@@ -9,7 +9,6 @@ import SearchInput from "@modules/search/SearchInput";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
 
-
 import "./sass/users-control.scss";
 
 function UsersControl() {
@@ -22,10 +21,10 @@ function UsersControl() {
     dispatch(getUsers());
   }, [dispatch]);
 
-  const findUser = (value) => {
-    if (value) {
+  const findUser = (name) => {
+    if (name) {
       const params = {
-        name: value,
+        name: name,
       };
       dispatch(getUsersByName(params));
     } else {
@@ -43,13 +42,16 @@ function UsersControl() {
           </Typography.Title>
         </Col>
         <Col flex="auto">
-        <Flex justify="flex-end">
-        <SearchInput onChange={findUser} />
-          <AdminPanelControls>
-            <Button type="primary" onClick={() => setIsAddUserModalOpen(true)}>
-              Добавить пользователя
-            </Button>
-          </AdminPanelControls>
+          <Flex justify="flex-end">
+            <SearchInput onChange={findUser} />
+            <AdminPanelControls>
+              <Button
+                type="primary"
+                onClick={() => setIsAddUserModalOpen(true)}
+              >
+                Добавить пользователя
+              </Button>
+            </AdminPanelControls>
           </Flex>
         </Col>
       </Row>

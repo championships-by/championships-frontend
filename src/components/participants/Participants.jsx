@@ -4,7 +4,11 @@ import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
 import { Button, Flex, Typography, message, Row, Col, Divider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getParticipant, getParticipantByName, getParticipantsSelector } from "@store/participants";
+import {
+  getParticipant,
+  getParticipantByName,
+  getParticipantsSelector,
+} from "@store/participants";
 import { useEffect, useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";

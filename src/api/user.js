@@ -8,7 +8,7 @@ export const userApi = {
   getUsers: () => {
     return fetchWithPagination(instance, `/user/users`);
   },
-  getUsersByName:(params) =>{
+  getUsersByName: (params) => {
     return fetchWithPagination(instance, `/user/get_users_by_name`, params);
   },
   setUser: (body) => instance.post(`/user/create_user`, body),
@@ -18,6 +18,8 @@ export const userApi = {
   getJudges: () => {
     return fetchWithPagination(instance, `/user/judges`);
   },
-  sendUserRegistrationNotice: (queryString) => 
-    instance.post(`/system_notice/send_user_registration_notice?${queryString}`),
+  sendUserRegistrationNotice: (queryString) =>
+    instance.post(
+      `/system_notice/send_user_registration_notice?${queryString}`
+    ),
 };

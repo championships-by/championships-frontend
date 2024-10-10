@@ -5,7 +5,7 @@ import {
   setParticipant,
   changeParticipant,
   getParticipantsWithInfo,
-  getParticipantByName
+  getParticipantByName,
 } from "./thunk";
 
 export const participantsSlice = createSlice({
@@ -66,6 +66,6 @@ export const participantsSlice = createSlice({
       .addCase(getParticipantByName.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
-      })
+      });
   },
 });

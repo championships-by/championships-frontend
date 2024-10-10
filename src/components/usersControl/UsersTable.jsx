@@ -12,8 +12,6 @@ function UsersTable() {
   const users = useSelector(getUsersSelector);
   const usersData = users.data;
 
-  console.log(usersData)
-
   const openEditModal = (id) => {
     setSelectedUserId(id);
     setIsEditModalOpen(true);
