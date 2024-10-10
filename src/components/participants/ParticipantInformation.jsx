@@ -21,6 +21,16 @@ import participantImg from "@assets/img/participant.jpg";
 
 import "./sass/participants.scss";
 
+const items = [
+  {
+    title: "Управление участниками",
+    href: ROUTES.PARTICIPANTS.PATH,
+  },
+  {
+    title: "Карточка участника",
+  },
+];
+
 function ParticipantInformation() {
   const [participantData, setParticipantData] = useState([]);
   const [teamWinsData, setTeamWinsData] = useState([]);
@@ -34,6 +44,7 @@ function ParticipantInformation() {
     const body = {
       participant_id: participantID,
     };
+
     try {
       participantApi
         .getParticipantStats(body)
@@ -50,19 +61,9 @@ function ParticipantInformation() {
     } catch {}
   }, [participantID, isLoading, profileIsLoading]);
 
-  const items = [
-    {
-      title: "Управление участниками",
-      href: ROUTES.PARTICIPANTS.PATH,
-    },
-    {
-      title: "Карточка участника",
-    },
-  ];
-
   return (
     <>
-      <Loader show={isLoading && profileIsLoading} />
+      <Loader show={isLoading || profileIsLoading} />
       <Typography.Title level={2}>Карточка участника</Typography.Title>
       <Divider />
       <Breadcrumb items={items} />
