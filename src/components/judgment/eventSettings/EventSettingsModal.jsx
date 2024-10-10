@@ -38,28 +38,29 @@ function EventSettingsCompitations({
 
   useEffect(() => {
     if (mode === ModalType.EDIT) {
+      const params = new URLSearchParams();
+      params.append("event_id", eventID);
+      params.append("nomination_id", nominationId);
       if (isOpen) {
-        competenciesApi
-          .getNominationEventInfo(eventID, nominationId)
-          .then((data) => {
-            const judgeIds = data.judges.map((judge) => judge.id);
-            form.setFieldsValue({
-              nomination_name: data.nomination_name,
-              reglament: data.reglament,
-            });
-            setInputName(data.nomination_name);
-            setInputReglament(data.reglament);
-            setSelectedJudges(judgeIds);
-            setSelectedType(data.type);
-            if (data.type == "criteria") {
-              setCriteria(data.criterias);
-              setSelectedCriteria(data.criterias);
-            } else if (data.type == "time") {
-              setGroupCount(data.race_round_amount);
-              setSelectedGroupCount(data.race_round_amount);
-            }
-            setOldJudges(judgeIds);
+        competenciesApi.getNominationEventInfo(params).then((data) => {
+          const judgeIds = data.judges.map((judge) => judge.id);
+          form.setFieldsValue({
+            nomination_name: data.nomination_name,
+            reglament: data.reglament,
           });
+          setInputName(data.nomination_name);
+          setInputReglament(data.reglament);
+          setSelectedJudges(judgeIds);
+          setSelectedType(data.type);
+          if (data.type == NOMINATIONS.CRITERIA) {
+            setCriteria(data.criterias);
+            setSelectedCriteria(data.criterias);
+          } else if (data.type == NOMINATIONS.TIME) {
+            setGroupCount(data.race_round_amount);
+            setSelectedGroupCount(data.race_round_amount);
+          }
+          setOldJudges(judgeIds);
+        });
       }
     }
   }, [eventID, nominationId, form, isOpen]);
