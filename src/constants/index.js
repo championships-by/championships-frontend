@@ -59,6 +59,10 @@ export const ROUTES = {
   AUTHORIZATION: { TITLE: "Авторизация", PATH: "/" },
   LOGOUT: { TITLE: "Выход", PATH: "/logout" },
   PARTICIPANTS: { TITLE: "Управление участниками", PATH: "/participants" },
+  PARTICIPANT_INFORMATION: {
+    TITLE: "Карточка участника",
+    PATH: (participantID) => `/participants/${participantID}`,
+  },
   USERS_CONTROL: { TITLE: "Управление пользователями", PATH: "/users" },
   USER_SETTINGS: { TITLE: "Настройки пользователя", PATH: "/settings" },
   USER_SETTINGS_TEST: { TITLE: "Тест", PATH: "/settings/test" },
@@ -111,6 +115,7 @@ export const ROUTER_ROUTES = {
   LOGOUT: "logout",
   ADMIN_PANEL: "",
   PARTICIPANTS: "participants",
+  PARTICIPANT_INFORMATION: ":participantID",
   USERS_CONTROL: "users",
   USER_SETTINGS: "settings",
   USER_SETTINGS_TEST: "settings/test",

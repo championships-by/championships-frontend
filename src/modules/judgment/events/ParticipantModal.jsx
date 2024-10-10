@@ -56,11 +56,11 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
               return {
                 team_name: item.team.name,
                 fullName:
+                  participantItem.participant_data.second_name +
+                  " " +
                   participantItem.participant_data.first_name +
                   " " +
-                  participantItem.participant_data.third_name +
-                  " " +
-                  participantItem.participant_data.second_name,
+                  participantItem.participant_data.third_name,
                 educational_institution:
                   participantItem.participant_additional_data
                     .educational_institution.educational_institution,
