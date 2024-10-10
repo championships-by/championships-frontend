@@ -20,12 +20,15 @@
       margin-top: 10px;
       margin-bottom: 10px;
     }
-    &__maxPoints {
-      margin-left: 210px;
+    &__max-points {
+      margin-left: 300px;
+    }
+    &__score-count {
+      margin-left: 420px;
     }
     &__input {
       margin-bottom: 50px;
-      width: 300px;
+      width: 390px;
     }
     &__addButton {
       margin-top: 10px;
@@ -44,7 +47,7 @@
     }
     &__input {
       margin-top: 8px;
-      width: 505px;
+      width: 552px;
     }
   }
   &__competition-judge {
@@ -59,7 +62,7 @@
       width: 500px;
     }
     &__select {
-      width: 465px;
+      width: 513px;
       margin-top: 10px;
     }
   }
@@ -71,7 +74,7 @@
       width: 100%;
     }
     &__name {
-      width: 505px;
+      width: 552px;
       margin-top: 10px;
     }
     &__text {
@@ -91,7 +94,7 @@
       border: none;
     }
     &__input {
-      width: 505px;
+      width: 552px;
       margin-top: 8px;
     }
     &__example {

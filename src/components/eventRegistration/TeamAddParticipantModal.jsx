@@ -98,6 +98,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
   };
 
   const onFinish = async () => {
+    setIsLoading(true);
     try {
       const body = {
         nomination_event: {
