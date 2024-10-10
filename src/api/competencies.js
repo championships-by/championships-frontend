@@ -60,9 +60,9 @@ export const competenciesApi = {
       params: data,
     });
   },
-  getNominationEventInfo: (eventID, nominationID) =>
+  getNominationEventInfo: (params) =>
     instance
-      .get(`${API_PATH}/nomination_event/nomination_event_info?event_id=${eventID}&nomination_id=${nominationID}`)
+      .get(`${API_PATH}/nomination_event/nomination_event_info`, { params: params })
       .then((res) => res.data),
   updateNominationEvent: (queryString, data) =>
     instance.patch(
