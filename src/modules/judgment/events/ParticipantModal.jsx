@@ -76,13 +76,15 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
                   .join("\n"),
                 teacher:
                   participantItem.participant_additional_data.supervisor_data
+                  .supervisor_second_name +
+                  " " +
+                  participantItem.participant_additional_data.supervisor_data
                     .supervisor_first_name +
                   " " +
                   participantItem.participant_additional_data.supervisor_data
-                    .supervisor_third_name +
-                  " " +
-                  participantItem.participant_additional_data.supervisor_data
-                    .supervisor_second_name,
+                    .supervisor_third_name,
+
+                  
               };
             }) || []
           );
