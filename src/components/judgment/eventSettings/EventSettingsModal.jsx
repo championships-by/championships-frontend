@@ -178,8 +178,10 @@ function EventSettingsCompitations({
             (judge) => !oldJudges.includes(judge)
           );
 
-          const body = JSON.stringify(filteredJudges);
-          await competenciesApi.sendJudgeNotice(params, body);
+          if (filteredJudges.length !== 0) {
+            const body = JSON.stringify(filteredJudges);
+            await competenciesApi.sendJudgeNotice(params, body);
+          }
         } catch {}
 
         message.success("Компетенция успешно изменена");

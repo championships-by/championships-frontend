@@ -69,7 +69,7 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
                 <>
                   <Flex align="center">
                     <Typography.Text>Критерии оценки:</Typography.Text>
-                    <Typography.Text className="events__competition-criteria__maxPoints">
+                    <Typography.Text className="events__competition-criteria__max-points">
                       Максимальное
                       <br />
                       количество
