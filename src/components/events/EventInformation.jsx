@@ -2,7 +2,7 @@ import { InfoCircleOutlined, LinkOutlined } from "@ant-design/icons";
 import { competenciesApi, eventApi } from "@api";
 import noLogo from "@assets/img/auth-background.png";
 import Loader from "@components/loader/Loader";
-import { ROUTES, url, yaShareLink } from "@constants";
+import { NOMINATIONS, ROUTES, url, yaShareLink } from "@constants";
 import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import {
   Breadcrumb,
@@ -98,25 +98,32 @@ function EventInformation() {
   }, [eventID]);
 
   const onResultsClick = (nomination) => {
-    competenciesApi
-      .getNominationEventInfo(eventID, nomination.id)
-      .then((data) => {
-        if (!data.tournament_started) {
-          message.error("Соревнование ещё не началось");
-        } else if (!data.tournament_finished) {
-          message.error("Соревнование ещё не закончилось");
-        } else {
-          if (nomination.kind == "time") {
+    const params = new URLSearchParams();
+    params.append("event_id", eventID);
+    params.append("nomination_id", nomination.id);
+
+    competenciesApi.getNominationEventInfo(params).then((data) => {
+      if (!data.tournament_started) {
+        message.error("Соревнование ещё не началось");
+      } else if (!data.tournament_finished) {
+        message.error("Соревнование ещё не закончилось");
+      } else {
+        switch (nomination.kind) {
+          case NOMINATIONS.TIME:
             navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nomination.id));
-          } else if (nomination.kind == "criteria") {
+            break;
+          case NOMINATIONS.CRITERIA:
             navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
-          } else if (nomination.kind == "olympic") {
+            break;
+          case NOMINATIONS.OLYMPIC:
             navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
-          } else {
+            break;
+          default:
             message.error("Произошла ошибка");
-          }
+            break;
         }
-      });
+      }
+    });
   };
 
   const finishDate = new Date(dataEvent.registration_finish_date);

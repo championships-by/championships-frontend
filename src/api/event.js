@@ -42,16 +42,17 @@ export const eventApi = {
       params
     );
   },
-  changeLogo: (formData) => instance.post(`/event/event_update_logo`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  }),
+  changeLogo: (formData) =>
+    instance.post(`/event/event_update_logo`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }),
   changeRegulation: (formData) =>
     instance.post(`/event/event_update_doc`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+        "Content-Type": "multipart/form-data",
+      },
     }),
   deleteEvent: (data) =>
     instance.delete(`/event/event`, {

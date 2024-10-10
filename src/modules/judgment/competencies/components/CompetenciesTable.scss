@@ -1,0 +1,12 @@
+.criteria-table {
+  &__column {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    align-items: center;
+
+    &__input {
+      width: 8ch;
+    }
+  }
+}

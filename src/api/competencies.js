@@ -56,9 +56,9 @@ export const competenciesApi = {
     );
   },
   sendJudgeNotice: (data, body) => {
-    return instance.post(
-      `/system_notice/send_judge_added_notice`, body, { params: data }
-    );
+    return instance.post(`/system_notice/send_judge_added_notice`, body, {
+      params: data,
+    });
   },
   getNominationEventInfo: (eventID, nominationID) =>
     instance

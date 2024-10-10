@@ -15,6 +15,8 @@ export const userApi = {
   getJudges: () => {
     return fetchWithPagination(instance, `/user/judges`);
   },
-  sendUserRegistrationNotice: (queryString) => 
-    instance.post(`/system_notice/send_user_registration_notice?${queryString}`),
+  sendUserRegistrationNotice: (queryString) =>
+    instance.post(
+      `/system_notice/send_user_registration_notice?${queryString}`
+    ),
 };

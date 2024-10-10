@@ -51,17 +51,10 @@ function CompetenciesTab() {
         event_id: eventId,
         nomination_id: nominationId,
       });
-
-      await updateTabs([
-        {
-          id: CompetenciesTabsEnum.RESULTS,
-          disabled: false,
-        },
-      ]);
     } catch (error) {
       message.error("Произошла неизвестная ошибка");
     }
-  }, [criteria, dataSource, eventId, nominationId, updateTabs]);
+  }, [criteria, dataSource, eventId, nominationId]);
 
   const handleDownload = useCallback(() => {
     console.log("download file");
@@ -82,8 +75,13 @@ function CompetenciesTab() {
   useEffect(() => {
     if (!isDataLoaded) {
       setIsLoading(true);
+
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+
       Promise.all([
-        competenciesApi.getNominationEventInfo(eventId, nominationId),
+        competenciesApi.getNominationEventInfo(params),
         competenciesApi.getCriteria(eventId, nominationId),
         competenciesApi.getCriteriaResults(eventId, nominationId),
       ])
@@ -101,11 +99,13 @@ function CompetenciesTab() {
               setIsStageFinished(true);
             }
 
-            const transformedCriteria = transformCriteriaData(criteriaResponse);
+            const transformedCriteria = transformCriteriaData(
+              criteriaResponse.data
+            );
             setCriteria(transformedCriteria);
 
             const transformedCriteriaResults = transformCriteriaResultsData(
-              criteriaResultsResponse
+              criteriaResultsResponse.data
             );
             const generatedDataSource = generateCompetenciesDataSource(
               transformedCriteriaResults
@@ -123,6 +123,17 @@ function CompetenciesTab() {
         });
     }
   }, [eventId, isDataLoaded, nominationId, stageStatus]);
+
+  useEffect(() => {
+    if (!stageStatus.tournamentFinished) {
+      updateTabs([
+        {
+          id: CompetenciesTabsEnum.RESULTS,
+          disabled: false,
+        },
+      ]);
+    }
+  }, [stageStatus, updateTabs, handleCompleteStage]);
 
   return (
     <Tabs
