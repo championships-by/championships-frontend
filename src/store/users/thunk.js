@@ -6,6 +6,13 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
   return data;
 });
 
+export const getUsersByName = createAsyncThunk(
+  "users/getUsersByName",
+  async (params) => {
+    const data = await userApi.getUsersByName(params);
+    return data;
+  }
+);
 export const setUser = createAsyncThunk("users/setUser", async (body) => {
   const response = await userApi.setUser(body);
   return response.config.data;
