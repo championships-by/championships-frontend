@@ -16,6 +16,7 @@ function Feedback() {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState();
   const [form] = Form.useForm();
+  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
 
   const onChangeFile = (fileData) => {
     setFile(fileData.file);
@@ -91,8 +92,8 @@ function Feedback() {
             <FeedbackEmailInput name="email" />
             <FeedbackFile name="file" onChange={onChangeFile} />
             <FeedbackDescription name="message" />
-            <FeedbackCheckbox name="checkbox" />
-            <Button type="primary" htmlType="submit" loading={isLoading}>
+            <FeedbackCheckbox name="checkbox" onChange = {() => setIsAgreeChecked(!isAgreeChecked)}/>
+            <Button type="primary" htmlType="submit" loading={isLoading} disabled = {!isAgreeChecked}>
               Отправить
             </Button>
           </Form>
