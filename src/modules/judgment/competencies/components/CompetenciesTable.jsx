@@ -44,6 +44,7 @@ export const CompetenciesTable = ({
         return (
           <div className="criteria-table__column">
             <InputNumber
+              className="criteria-table__column__input"
               disabled={!editable}
               placeholder={currentCriteria.maxScore}
               defaultValue={currentCriteria.score}

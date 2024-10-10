@@ -2,7 +2,7 @@ import { InfoCircleOutlined, LinkOutlined } from "@ant-design/icons";
 import { competenciesApi, eventApi } from "@api";
 import noLogo from "@assets/img/auth-background.png";
 import Loader from "@components/loader/Loader";
-import { ROUTES, url, yaShareLink } from "@constants";
+import { NOMINATIONS, ROUTES, url, yaShareLink } from "@constants";
 import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import {
   Breadcrumb,
@@ -108,14 +108,19 @@ function EventInformation() {
       } else if (!data.tournament_finished) {
         message.error("Соревнование ещё не закончилось");
       } else {
-        if (nomination.kind == "time") {
-          navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nomination.id));
-        } else if (nomination.kind == "criteria") {
-          navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
-        } else if (nomination.kind == "olympic") {
-          navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
-        } else {
-          message.error("Произошла ошибка");
+        switch (nomination.kind) {
+          case NOMINATIONS.TIME:
+            navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nomination.id));
+            break;
+          case NOMINATIONS.CRITERIA:
+            navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
+            break;
+          case NOMINATIONS.OLYMPIC:
+            navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
+            break;
+          default:
+            message.error("Произошла ошибка");
+            break;
         }
       }
     });
