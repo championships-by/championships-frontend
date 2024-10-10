@@ -3,6 +3,8 @@ import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
 import { Button, Flex, Typography, message, Row, Col, Divider } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { getParticipant, getParticipantByName, getParticipantsSelector } from "@store/participants";
 import { useEffect, useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";
@@ -13,42 +15,34 @@ import "./sass/participants.scss";
 function Participants() {
   const [isAddParticipantModalOpen, setIsAddParticipantModalOpen] =
     useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [dataParticipants, setParticipants] = useState([]);
+  const dispatch = useDispatch();
+  const participants = useSelector(getParticipantsSelector);
+  const { isLoading } = participants;
 
-  const getParticipant = (value) => {
+  useEffect(() => {
+    dispatch(getParticipant());
+  }, [dispatch]);
+
+  const findParticipant = (value) => {
     if (value) {
       const params = {
         name: value,
       };
-      try {
-        participantApi
-          .getParticipantByName(params)
-          .then((data) => setParticipants(data));
-      } catch {}
+      dispatch(getParticipantByName(params));
     } else {
-      try {
-        participantApi.getParticipant().then((data) => setParticipants(data));
-      } catch {}
+      dispatch(getParticipant());
     }
-    setIsLoading(false);
   };
 
   const onOk = () => {
     setIsAddParticipantModalOpen(false);
 
-    getParticipant();
+    findParticipant();
   };
 
   const onCancel = () => {
     setIsAddParticipantModalOpen(false);
   };
-
-  useEffect(() => {
-    if (isLoading) {
-      getParticipant();
-    }
-  }, [isLoading]);
 
   return (
     <>
@@ -59,7 +53,7 @@ function Participants() {
         </Col>
         <Col flex="auto">
           <Flex justify="flex-end">
-            <SearchInput onChange={getParticipant} />
+            <SearchInput onChange={findParticipant} />
             <AdminPanelControls>
               <Flex gap="small">
                 {/*<Tooltip title="Сохранить список участников">
@@ -78,8 +72,8 @@ function Participants() {
       </Row>
       <Divider />
       <ParticipantsTable
-        ParticipantData={dataParticipants}
-        getParticipant={getParticipant}
+        ParticipantData={participants.data}
+        getParticipant={findParticipant}
       />
 
       <ParticipantModal
