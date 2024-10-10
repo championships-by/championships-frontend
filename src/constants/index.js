@@ -36,6 +36,7 @@ export const NOMINATIONS = {
   TIME: "time",
   PLAYOFF: "playoffs",
   CRITERIA: "criteria",
+  OLYMPIC: "olympic",
 };
 
 export const NOMINATION_TYPES = {

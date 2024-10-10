@@ -1,8 +1,20 @@
-import React from "react";
-import { Form, Space, Button, Input, Typography, Tooltip, message } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Space,
+  Button,
+  Input,
+  Typography,
+  Tooltip,
+  message,
+  Flex,
+} from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
-function CriteriaParametrs({ onCriteriaChange }) {
+function CriteriaParametrs({ onCriteriaChange, value }) {
+  const [form] = Form.useForm();
+  const [allScoreCount, setAllScoreCount] = useState(0);
+
   const handleValuesChange = (changedValues, allValues) => {
     const criteria = allValues.criteria || [];
     const newCriteria = criteria.map((item) => {
@@ -12,12 +24,36 @@ function CriteriaParametrs({ onCriteriaChange }) {
       };
     });
 
+    const totalScore = criteria.reduce(
+      (acc, curr) => acc + (parseInt(curr.maxPoints, 10) || 0),
+      0
+    );
+    setAllScoreCount(totalScore);
+
     onCriteriaChange(newCriteria);
   };
+
+  useEffect(() => {
+    if (value && value.length) {
+      form.setFieldsValue({
+        criteria: value.map((item) => ({
+          criterion: item.name,
+          maxPoints: item.max_score,
+        })),
+      });
+
+      const totalScore = value.reduce(
+        (acc, curr) => acc + (curr.max_score || 0),
+        0
+      );
+      setAllScoreCount(totalScore);
+    }
+  }, [value, form]);
 
   return (
     <div className="events__competition-criteria__div">
       <Form
+        form={form}
         name="dynamic_form_nest_item"
         className="events__competition-criteria__form"
         autoComplete="off"
@@ -31,10 +67,16 @@ function CriteriaParametrs({ onCriteriaChange }) {
             <>
               {fields.length > 0 && (
                 <>
-                  <Typography.Text>Критерии оценки:</Typography.Text>
-                  <Typography.Text className="events__competition-criteria__maxPoints">
-                    Максимальное количество баллов
-                  </Typography.Text>
+                  <Flex align="center">
+                    <Typography.Text>Критерии оценки:</Typography.Text>
+                    <Typography.Text className="events__competition-criteria__max-points">
+                      Максимальное
+                      <br />
+                      количество
+                      <br />
+                      баллов:
+                    </Typography.Text>
+                  </Flex>
                   <br />
                 </>
               )}
@@ -82,6 +124,10 @@ function CriteriaParametrs({ onCriteriaChange }) {
                   </Tooltip>
                 </Space>
               ))}
+              <br />
+              <Typography.Text className="events__competition-criteria__score-count">
+                Итого: {allScoreCount}
+              </Typography.Text>
               <Form.Item>
                 <Button
                   className="events__competition-criteria__addButton"
