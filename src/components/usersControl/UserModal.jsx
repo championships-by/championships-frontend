@@ -55,7 +55,17 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
       };
 
       try {
-        await dispatch(setUser(raw));
+        const params = new URLSearchParams();
+        params.append("password", raw.password);
+        params.append("user_email", raw.email);
+        const result = await dispatch(setUser(raw));
+
+        if (setUser.rejected.match(result)) {
+          throw new Error(result.error.message);
+        }
+
+        await userApi.sendUserRegistrationNotice(params.toString());
+
         dispatch(getUsers());
         message.success("Пользователь успешно создан");
         onOk();

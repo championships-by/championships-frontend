@@ -35,8 +35,9 @@ export const ROLE_FILTERS = [
 export const NOMINATIONS = {
   TIME: "time",
   PLAYOFF: "playoffs",
-  CRITERIA: "criteria"
-}
+  CRITERIA: "criteria",
+  OLYMPIC: "olympic",
+};
 
 export const NOMINATION_TYPES = {
   CRITERIA: "По критериям",
@@ -59,6 +60,10 @@ export const ROUTES = {
   AUTHORIZATION: { TITLE: "Авторизация", PATH: "/" },
   LOGOUT: { TITLE: "Выход", PATH: "/logout" },
   PARTICIPANTS: { TITLE: "Управление участниками", PATH: "/participants" },
+  PARTICIPANT_INFORMATION: {
+    TITLE: "Карточка участника",
+    PATH: (participantID) => `/participants/${participantID}`,
+  },
   USERS_CONTROL: { TITLE: "Управление пользователями", PATH: "/users" },
   USER_SETTINGS: { TITLE: "Настройки пользователя", PATH: "/settings" },
   USER_SETTINGS_TEST: { TITLE: "Тест", PATH: "/settings/test" },
@@ -111,6 +116,7 @@ export const ROUTER_ROUTES = {
   LOGOUT: "logout",
   ADMIN_PANEL: "",
   PARTICIPANTS: "participants",
+  PARTICIPANT_INFORMATION: ":participantID",
   USERS_CONTROL: "users",
   USER_SETTINGS: "settings",
   USER_SETTINGS_TEST: "settings/test",
@@ -205,6 +211,18 @@ export const Locale = {
     [EventFilters.DISTRICT]: "Районный",
     [EventFilters.TOWN]: "Городской",
     [EventFilters.OTHER]: "Другое",
+  },
+  pagination: {
+    items_per_page: "элементов на странице",
+    jump_to: "Перейти",
+    jump_to_confirm: "подтвердить",
+    page: "Страница",
+    prev_page: "Предыдущая страница",
+    next_page: "Следующая страница",
+    prev_5: "Предыдущие 5 страниц",
+    next_5: "Следующие 5 страниц",
+    prev_3: "Предыдущие 3 страницы",
+    next_3: "Следующие 3 страницы",
   },
   dateFormat: "DD.MM.YYYY",
   dateTimeFormat: "DD.MM.YYYY HH:mm",

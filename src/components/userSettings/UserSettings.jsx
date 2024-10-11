@@ -7,45 +7,35 @@ import UserPatronymicInput from "@modules/user/UserPatronymicInput";
 import UserPhoneInput from "@modules/user/UserPhoneInput";
 import UserRoleInput from "@modules/user/UserRoleInput";
 import { Button, Col, Form, Row, Typography, message, Divider } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { changeUserProfile, getUserSelector } from "@store/users";
 import FormItem from "antd/es/form/FormItem";
 import React, { useEffect, useState } from "react";
 import UserPasswordModal from "./UserPasswordChange";
 
-import { userApi } from "@api";
 import "./sass/user-settings.scss";
 
 function UsersSettings() {
-  const [user, setUser] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const user = useSelector(getUserSelector);
+  const { isLoading } = user;
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (isLoading) {
-      userApi
-        .getProfile()
-        .then((data) => {
-          setUser(data);
-          form.setFieldsValue({
-            firstname: user.first_name,
-            lastname: user.second_name,
-            patronymic: user.third_name,
-            role: user.role,
-            email: user.email,
-            phone: user.phone,
-            organization: user.educational_institution,
-          });
-          setTimeout(() => setIsLoading(false), 300);
-        })
-        .catch(() => {
-          message.error(
-            "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
-          );
-        });
-    }
-  }, [isLoading, form, user]);
+    form.setFieldsValue({
+      firstname: user.data.first_name,
+      lastname: user.data.second_name,
+      patronymic: user.data.third_name,
+      role: user.data.role,
+      email: user.data.email,
+      phone: user.data.phone,
+      organization: user.data.educational_institution,
+    });
+  }, [form, user]);
 
   const handleSubmit = () => {
+    setIsFormLoading(true);
     form
       .validateFields()
       .then(() => {
@@ -61,17 +51,17 @@ function UsersSettings() {
           data.password = form.getFieldValue("password");
         }
 
-        userApi
-          .changeProfile(data)
+        dispatch(changeUserProfile(data))
           .then(() => {
+            setIsFormLoading(false);
             message.success("Данные успешно сохранены");
           })
           .catch(() => {
+            setIsFormLoading(false);
             message.error(
               "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору."
             );
-          })
-          .finally(() => setIsFormLoading(false));
+          });
       })
       .catch(() => {
         message.error("Проверьте поля для ввода!");

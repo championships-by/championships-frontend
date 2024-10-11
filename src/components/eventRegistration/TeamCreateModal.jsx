@@ -52,8 +52,8 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
           setTeamParticipants(
             data.map((participant) => ({
               value: participant.id,
-              label: `${participant.first_name} ${participant.third_name} ${
-                participant.second_name
+              label: `${participant.second_name} ${participant.first_name} ${
+                participant.third_name
               }, ${changeDateFormat(participant.birth_date)}`,
             }))
           );

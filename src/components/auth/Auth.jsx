@@ -22,7 +22,7 @@ function Auth() {
     if (isLoading) {
       userApi
         .getProfile()
-        .then(() => navigate(ROUTES.USER_SETTINGS.PATH))
+        .then(() => navigate(ROUTES.EVENTS.PATH))
         .catch((error) => {
           if (error.response.status === 401) {
             setIsLoading(false);
@@ -47,7 +47,7 @@ function Auth() {
         email,
         password: encrypedPassword,
       });
-      navigate(ROUTES.USER_SETTINGS.PATH);
+      navigate(ROUTES.EVENTS.PATH);
     } catch (error) {
       if (error.response.status === 404) {
         setIsLoading(false);

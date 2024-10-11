@@ -1,12 +1,14 @@
-import { EditOutlined } from "@ant-design/icons";
-import { Locale, ModalType } from "@constants";
+import { EditOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { Locale, ModalType, ROUTES } from "@constants";
 import { getUniqueFilters } from "@utils";
 import { Button, Flex, Table, Tooltip, Typography } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
+import { useNavigate } from "react-router-dom";
 
 function ParticipantsTable({ ParticipantData, getParticipant }) {
+  const navigate = useNavigate();
   const columns = [
     {
       title: "Фамилия имя отчество",
@@ -38,8 +40,6 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
       title: "Действия",
       key: "action",
       render: (data) => {
-        const { email } = data;
-
         return (
           <Flex>
             <Tooltip title="Редактирование">
@@ -47,6 +47,15 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
                 type="text"
                 icon={<EditOutlined />}
                 onClick={() => openEditModal(data)}
+              />
+            </Tooltip>
+            <Tooltip title="Карточка участника">
+              <Button
+                type="text"
+                icon={<InfoCircleOutlined />}
+                onClick={() =>
+                  navigate(ROUTES.PARTICIPANT_INFORMATION.PATH(data.id))
+                }
               />
             </Tooltip>
           </Flex>
@@ -79,6 +88,7 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
         pagination={{
           position: ["bottomCenter"],
           showSizeChanger: false,
+          locale: Locale.pagination,
         }}
         locale={Locale}
       />

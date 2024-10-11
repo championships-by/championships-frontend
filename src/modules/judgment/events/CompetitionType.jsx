@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Typography, Space, Select, Flex } from "antd";
+import { useEffect, useState } from "react";
+import { Typography, Space, Select } from "antd";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 
@@ -20,7 +20,14 @@ const options = [
   },
 ];
 
-function CompetitionType({ onChange, onInputChange, onCriteriaChange, mode }) {
+function CompetitionType({
+  onChange,
+  onInputChange,
+  onCriteriaChange,
+  value,
+  criteriaValue,
+  groupCountValue,
+}) {
   const [selectedValue, setSelectedValue] = useState("");
   const [groupCount, setGroupCount] = useState();
 
@@ -29,14 +36,28 @@ function CompetitionType({ onChange, onInputChange, onCriteriaChange, mode }) {
     onChange(value);
   };
 
+  useEffect(() => {
+    setSelectedValue(value);
+  }, [value]);
+
   const handleChangeGroupCount = (value) => {
     setGroupCount(value);
     onInputChange(value);
   };
 
   const settingsComponents = {
-    criteria: <CriteriaParametrs onCriteriaChange={onCriteriaChange} />,
-    time: <TimeParametrs onInputChange={handleChangeGroupCount} />,
+    criteria: (
+      <CriteriaParametrs
+        onCriteriaChange={onCriteriaChange}
+        value={criteriaValue}
+      />
+    ),
+    time: (
+      <TimeParametrs
+        onInputChange={handleChangeGroupCount}
+        value={groupCountValue}
+      />
+    ),
     playoffs: null,
   };
   return (
@@ -50,7 +71,7 @@ function CompetitionType({ onChange, onInputChange, onCriteriaChange, mode }) {
           options={options}
           className="events__competition-type__name"
           onChange={handleChange}
-          disabled={mode === "edit"}
+          value={selectedValue}
         />
         {selectedValue && settingsComponents[selectedValue]}
       </Space>

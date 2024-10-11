@@ -5,6 +5,13 @@ export const participantApi = {
   getParticipant: () => {
     return fetchWithPagination(instance, `/participant/participant`);
   },
+  getParticipantByName: (params) => {
+    return fetchWithPagination(
+      instance,
+      `/participant/get_participant_by_name`,
+      params
+    );
+  },
   setHideParticipant: (body) =>
     instance.post(`/participant/hide_participant`, body),
   setParticipant: (body) => {
@@ -19,6 +26,11 @@ export const participantApi = {
   changeParticipant: (body) => {
     return instance.patch(`/participant/participant`, body);
   },
+  getParticipantStats: (body) => {
+    return instance
+      .get(`/participant/get_participant_stats`, { params: body })
+      .then((res) => res.data);
+  },
   getParticipantsWithInfo: async (eventID, nominationID, competitionType) => {
     const response = await instance.get(
       `/nomination_event/team_participants_of_nomination_event?related=true`,
@@ -31,5 +43,10 @@ export const participantApi = {
       }
     );
     return response.data;
+  },
+  sendParticipantRegistrationNotice: (queryString) => {
+    return instance.post(
+      `/system_notice/send_participant_registration_notice?${queryString}`
+    );
   },
 };

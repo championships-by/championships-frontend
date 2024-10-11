@@ -5,6 +5,7 @@ import {
   setParticipant,
   changeParticipant,
   getParticipantsWithInfo,
+  getParticipantByName,
 } from "./thunk";
 
 export const participantsSlice = createSlice({
@@ -52,6 +53,18 @@ export const participantsSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(getParticipantsWithInfo.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+      .addCase(getParticipantByName.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getParticipantByName.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getParticipantByName.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.error.message;
       });
   },

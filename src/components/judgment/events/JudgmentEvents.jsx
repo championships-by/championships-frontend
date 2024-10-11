@@ -2,8 +2,9 @@ import { eventApi } from "@api";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import EventTable from "@components/judgment/events/JudgmentEventsTable";
 import Loader from "@components/loader/Loader";
+import SearchInput from "@modules/search/SearchInput";
 import { ROUTES } from "@constants";
-import { Button, Col, Divider, Row, Typography } from "antd";
+import { Button, Col, Divider, Row, Typography, Flex } from "antd";
 import { useEffect, useState } from "react";
 import EventCreateModal from "./EventCreateModal";
 
@@ -12,11 +13,15 @@ function JudgmentEvents() {
   const [dataEvents, setEvents] = useState([]);
   const [IsEventCreateModalOpen, setIsEventCreateModalOpen] = useState(false);
 
-  const getEvents = async () => {
+  const getEvents = async (value) => {
+    const params = new URLSearchParams();
+    if (value) {
+      params.append("event_name_chars", value);
+    }
     let eventsData = [];
     const levels = ["region", "republic", "district", "town", "other"];
     const isOwner = true;
-    const params = new URLSearchParams();
+
     levels.forEach((level) => params.append("levels", level));
     params.append("is_owner", isOwner);
     await eventApi
@@ -44,7 +49,6 @@ function JudgmentEvents() {
       .then((data) => (eventsData = [...eventsData, ...data]));
 
     setEvents(eventsData);
-
     setIsLoading(false);
   };
 
@@ -57,27 +61,30 @@ function JudgmentEvents() {
     <>
       <Loader show={isLoading} />
       <Row align="bottom">
-        <Col>
+        <Col span={14}>
           <Typography.Title level={2}>
             Управление мероприятиями
           </Typography.Title>
         </Col>
         <Col flex="auto">
-          <AdminPanelControls>
-            <Button
-              type="primary"
-              onClick={() => setIsEventCreateModalOpen(true)}
-            >
-              {ROUTES.JUDGMENT_CREATE.TITLE}
-            </Button>
-            <EventCreateModal
-              name="Добавить мероприятие"
-              isOpen={IsEventCreateModalOpen}
-              onOk={() => setIsEventCreateModalOpen(false)}
-              onCancel={() => setIsEventCreateModalOpen(false)}
-              onAdd={getEvents}
-            />
-          </AdminPanelControls>
+          <Flex justify="flex-end">
+            <SearchInput onChange={getEvents} />
+            <AdminPanelControls>
+              <Button
+                type="primary"
+                onClick={() => setIsEventCreateModalOpen(true)}
+              >
+                {ROUTES.JUDGMENT_CREATE.TITLE}
+              </Button>
+              <EventCreateModal
+                name="Добавить мероприятие"
+                isOpen={IsEventCreateModalOpen}
+                onOk={() => setIsEventCreateModalOpen(false)}
+                onCancel={() => setIsEventCreateModalOpen(false)}
+                onAdd={getEvents}
+              />
+            </AdminPanelControls>
+          </Flex>
         </Col>
       </Row>
       <Divider />

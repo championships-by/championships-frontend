@@ -7,4 +7,8 @@ export const teamApi = {
   },
   setTeams: (body) => instance.post(`/team/teams`, body),
   updateTeam: (body) => instance.put(`/team/teams`, body),
+  getTeamById: (queryString) =>
+    instance
+      .get(`/team/get_team_by_id?${queryString}`)
+      .then((response) => response.data),
 };

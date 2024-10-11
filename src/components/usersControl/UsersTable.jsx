@@ -77,6 +77,7 @@ function UsersTable() {
         pagination={{
           position: ["bottomCenter"],
           showSizeChanger: false,
+          locale: Locale.pagination,
         }}
       />
 

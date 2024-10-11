@@ -6,6 +6,7 @@ import FeedbackFirstnameInput from "@modules/feedback/FeedbackFirstnameInput";
 import FeedbackLastnameInput from "@modules/feedback/FeedbackLastnameInput";
 import FeedbackEmailInput from "@modules/feedback/FeedbackEmailInput";
 import FeedbackFile from "@modules/feedback/FeedbackFile";
+import FeedbackCheckbox from "@modules/feedback/FeedbackCheckbox";
 import FeedbackDescription from "@modules/feedback/FeedbackDescription";
 import { feedbackApi } from "@api";
 
@@ -15,6 +16,7 @@ function Feedback() {
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState();
   const [form] = Form.useForm();
+  const [isAgreeChecked, setIsAgreeChecked] = useState(false);
 
   const onChangeFile = (fileData) => {
     setFile(fileData.file);
@@ -90,7 +92,8 @@ function Feedback() {
             <FeedbackEmailInput name="email" />
             <FeedbackFile name="file" onChange={onChangeFile} />
             <FeedbackDescription name="message" />
-            <Button type="primary" htmlType="submit" loading={isLoading}>
+            <FeedbackCheckbox name="checkbox" onChange = {() => setIsAgreeChecked(!isAgreeChecked)}/>
+            <Button type="primary" htmlType="submit" loading={isLoading} disabled = {!isAgreeChecked}>
               Отправить
             </Button>
           </Form>

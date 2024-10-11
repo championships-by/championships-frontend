@@ -1,5 +1,6 @@
 import { useMatches } from "@hooks";
 import { Checkbox, Table } from "antd";
+import { Locale } from "@constants";
 import "./TableGroupStage.scss";
 
 const columns = [
@@ -46,6 +47,7 @@ export const TableGroupStage = () => {
       columns={columns}
       pagination={{
         position: ["bottomCenter"],
+        locale: Locale.pagination,
       }}
       dataSource={finalParticipants}
     />
