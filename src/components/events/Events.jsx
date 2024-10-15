@@ -39,7 +39,7 @@ function Events() {
     },
     {
       key: "2",
-      label: `Будущие (${events?.future ? events.future.length : 0})`,
+      label: `Предстоящие (${events?.future ? events.future.length : 0})`,
       children: <EventsList events={events?.future} />,
     },
     {
