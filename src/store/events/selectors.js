@@ -8,5 +8,6 @@ export const getEventsSelector = createSelector(
     error: events.error,
     search: events.search,
     filters: events.filters,
+    date: events.date,
   })
 );

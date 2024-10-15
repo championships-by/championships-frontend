@@ -77,7 +77,7 @@ function EventSettings() {
       title: "Название компетенции",
       dataIndex: "name",
       key: "name",
-      sorter: (a, b) => a.nomination_name.localeCompare(b.nomination_name),
+      sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
       title: "Тип соревнований",

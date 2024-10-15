@@ -14,6 +14,14 @@ export const getEventWithNominations = createAsyncThunk(
   }
 );
 
+export const getEventsRelatedToDate = createAsyncThunk(
+  "events/getEventsRelatedToDate",
+  async (data) => {
+    const response = await eventApi.getEventsRelatedToDate(data);
+    return response;
+  }
+);
+
 export const changeEvent = createAsyncThunk(
   "events/changeEvent",
   async (body) => {
