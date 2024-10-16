@@ -1,0 +1,35 @@
+.dark-theme .ant-table-wrapper {
+  .ant-table-thead > tr {
+    & > th {
+      background-color: #3679ff;
+      color: #fff;
+      border: none;
+    }
+  }
+
+  .ant-table-tbody {
+    & > tr {
+      background: #292929;
+      color: #fff;
+
+      .ant-table-cell-row-hover {
+        background: #363636;
+      }
+    }
+  }
+
+  .ant-table-thead {
+    tr {
+      th {
+        &.ant-table-column-sort {
+          background-color: #3679ff;
+        }
+        &.ant-table-column-has-sorters {
+          &:hover {
+            background-color: #7ea7f9;
+          }
+        }
+      }
+    }
+  }
+}

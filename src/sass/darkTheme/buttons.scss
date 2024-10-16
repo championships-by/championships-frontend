@@ -1,0 +1,18 @@
+.ant-btn {
+  &-primary {
+    background: #3679ff;
+
+    &:not(:disabled):not(.ant-btn-disabled):hover {
+      background: #7ea7f9;
+    }
+  }
+}
+
+.dark-theme .ant-float-btn-body {
+  background: #292929;
+}
+
+.dark-theme .ant-float-btn-icon,
+.dark-theme .anticon {
+  color: #fff !important;
+}
