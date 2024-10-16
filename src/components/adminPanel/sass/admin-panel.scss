@@ -210,3 +210,27 @@ $transition: $timing ease all;
     }
   }
 }
+
+.dark-theme .admin-panel__menu-link--event::before {
+  filter: invert(1);
+}
+
+.dark-theme .admin-panel__menu-link--users::before {
+  filter: invert(1);
+}
+
+.dark-theme .admin-panel__menu-link--judgment::before {
+  filter: invert(1);
+}
+
+.dark-theme .admin-panel__menu-link--add-participants::before {
+  filter: invert(1);
+}
+
+.dark-theme .admin-panel__menu-link--settings::before {
+  filter: invert(1);
+}
+
+.dark-theme .admin-panel__menu-link--logout::before {
+  filter: invert(1);
+}

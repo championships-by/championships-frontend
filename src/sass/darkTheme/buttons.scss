@@ -1,6 +1,11 @@
-.ant-btn {
+.dark-theme .ant-btn {
   &-primary {
     background: #3679ff;
+
+    &:disabled {
+      color: #fff;
+      background: transparent;
+    }
 
     &:not(:disabled):not(.ant-btn-disabled):hover {
       background: #7ea7f9;
@@ -14,5 +19,15 @@
 
 .dark-theme .ant-float-btn-icon,
 .dark-theme .anticon {
+  color: #fff !important;
+}
+
+.dark-theme .ant-btn-default {
+  background: #292929;
+  color: #fff;
+}
+
+.dark-theme .ant-btn-dashed {
+  background: #292929 !important;
   color: #fff !important;
 }
