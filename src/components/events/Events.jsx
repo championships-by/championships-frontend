@@ -1,8 +1,8 @@
 import EventsList from "@components/events/EventsList";
 import Loader from "@components/loader/Loader";
 import { getEventsSelector } from "@store/events/selectors";
-import { getEventWithNominations } from "@store/events/thunk";
-import { Card, Divider, Flex, Typography } from "antd";
+import { getEventsRelatedToDate } from "@store/events/thunk";
+import { Card, Divider, Flex, Typography, Tabs } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomCalendar } from "./CustomCalendar";
@@ -17,17 +17,37 @@ function Events() {
     isLoading,
     search,
     filters,
+    date,
   } = useSelector(getEventsSelector);
 
   useEffect(() => {
     dispatch(
-      getEventWithNominations({
+      getEventsRelatedToDate({
         published: true,
         levels: filters,
         event_name_chars: search,
+        date: date,
       })
     );
-  }, [dispatch, filters, search]);
+  }, [dispatch, filters, search, date]);
+
+  const tabsitems = [
+    {
+      key: "1",
+      label: `Прошедшие (${events?.past ? events.past.length : 0})`,
+      children: <EventsList events={events?.past} />,
+    },
+    {
+      key: "2",
+      label: `Предстоящие (${events?.future ? events.future.length : 0})`,
+      children: <EventsList events={events?.future} />,
+    },
+    {
+      key: "3",
+      label: `В этот день (${events?.on_date ? events.on_date.length : 0})`,
+      children: <EventsList events={events?.on_date} />,
+    },
+  ];
 
   return (
     <>
@@ -36,7 +56,7 @@ function Events() {
       <Divider />
       <Flex vertical gap={500}>
         <Flex gap="small">
-          <EventsList events={events} />
+          <Tabs items={tabsitems} className="events__tabs" />
           <Flex vertical="vertical" gap={10}>
             <FilterSearchPanel />
             <Card className="events__card">

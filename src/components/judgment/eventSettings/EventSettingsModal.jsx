@@ -31,6 +31,7 @@ function EventSettingsCompitations({
   const [selectedType, setSelectedType] = useState();
   const [selectedCriteria, setSelectedCriteria] = useState([]);
   const [selectedGroupCount, setSelectedGroupCount] = useState();
+  const [isTournamentStarted, setIsTournamentStarted] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const { eventID } = useParams();
   const user = useSelector(getUserSelector);
@@ -44,14 +45,22 @@ function EventSettingsCompitations({
       if (isOpen) {
         competenciesApi.getNominationEventInfo(params).then((data) => {
           const judgeIds = data.judges.map((judge) => judge.id);
+          setSelectedJudges(judgeIds);
+
           form.setFieldsValue({
             nomination_name: data.nomination_name,
             reglament: data.reglament,
           });
+
+          setIsTournamentStarted(data.tournament_started);
+          if (data.tournament_started) {
+            message.error("Турнир уже начался");
+          }
+
           setInputName(data.nomination_name);
           setInputReglament(data.reglament);
-          setSelectedJudges(judgeIds);
           setSelectedType(data.type);
+
           if (data.type == NOMINATIONS.CRITERIA) {
             setCriteria(data.criterias);
             setSelectedCriteria(data.criterias);
@@ -59,6 +68,7 @@ function EventSettingsCompitations({
             setGroupCount(data.race_round_amount);
             setSelectedGroupCount(data.race_round_amount);
           }
+
           setOldJudges(judgeIds);
         });
       }
@@ -211,6 +221,7 @@ function EventSettingsCompitations({
         form={form}
         layout="vertical"
         requiredMark="default"
+        disabled={isTournamentStarted}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >

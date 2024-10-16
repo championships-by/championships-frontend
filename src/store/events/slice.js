@@ -7,6 +7,7 @@ import {
   deleteEvent,
   getEvent,
   getEventWithNominations,
+  getEventsRelatedToDate,
   setEvent,
 } from "./thunk";
 
@@ -18,6 +19,7 @@ export const eventsSlice = createSlice({
     error: null,
     search: "",
     filters: defaultEventFilterOptions,
+    date: new Date().toISOString(),
   },
   reducers: {
     setEventSearchValue: (state, action) => {
@@ -25,6 +27,9 @@ export const eventsSlice = createSlice({
     },
     setEventFilters: (state, action) => {
       state.filters = action.payload;
+    },
+    setEventDate: (state, action) => {
+      state.date = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -50,6 +55,18 @@ export const eventsSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(getEventWithNominations.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getEventsRelatedToDate.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getEventsRelatedToDate.fulfilled, (state, action) => {
+        state.data = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getEventsRelatedToDate.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       })
@@ -103,4 +120,5 @@ export const eventsSlice = createSlice({
   },
 });
 
-export const { setEventFilters, setEventSearchValue } = eventsSlice.actions;
+export const { setEventFilters, setEventSearchValue, setEventDate } =
+  eventsSlice.actions;

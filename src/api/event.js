@@ -17,6 +17,13 @@ export const eventApi = {
       data
     );
   },
+  getEventsRelatedToDate: async (data) => {
+    return fetchWithPagination(
+      instance,
+      "/event/get_events_related_to_date",
+      data
+    );
+  },
   changeEvent: (body) =>
     instance.patch(`/event/event`, body, {
       headers: {
