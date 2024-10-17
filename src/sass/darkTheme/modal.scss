@@ -1,0 +1,17 @@
+.dark-theme .ant-modal-content {
+  background: $darkest-gray;
+
+  .ant-modal-title {
+    background: $darkest-gray;
+    color: #fff;
+  }
+}
+
+.dark-theme .ant-space-item {
+  color: #fff !important;
+}
+
+.dark-theme .ant-modal-confirm-title,
+.dark-theme .ant-modal-confirm-content {
+  color: #fff !important;
+}

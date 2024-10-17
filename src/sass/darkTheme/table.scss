@@ -1,0 +1,44 @@
+.dark-theme .ant-table-wrapper {
+  .ant-table-thead > tr {
+    & > th {
+      background-color: $dark-blue;
+      color: #fff;
+      border: none;
+    }
+  }
+
+  .ant-table-tbody {
+    & > tr {
+      background: $darkest-gray;
+      color: #fff;
+      transition: all 0.3s ease;
+
+      .ant-table-cell-row-hover {
+        background: #363636;
+      }
+    }
+  }
+
+  .ant-table-thead {
+    tr {
+      th {
+        &.ant-table-column-sort {
+          background-color: $dark-blue;
+        }
+        &.ant-table-column-has-sorters {
+          &:hover {
+            background-color: $light-blue;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ant-tabs-tab-btn {
+  color: #fff;
+}
+
+.ant-table-placeholder .ant-table-cell:hover {
+  background: #363636 !important;
+}

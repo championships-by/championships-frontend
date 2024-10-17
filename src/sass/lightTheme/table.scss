@@ -1,17 +1,17 @@
 .ant-table-wrapper {
   .ant-table-thead > tr > th {
-    background-color: #3679ff;
+    background-color: $dark-blue;
     color: #fff;
   }
   .ant-table-thead {
     tr {
       th {
         &.ant-table-column-sort {
-          background-color: #3679ff;
+          background-color: $dark-blue;
         }
         &.ant-table-column-has-sorters {
           &:hover {
-            background-color: #7ea7f9;
+            background-color: $light-blue;
           }
         }
       }
