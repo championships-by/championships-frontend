@@ -562,7 +562,11 @@ function EventSettings() {
               onChange={onValuesChange}
               disabled={switchDisabled}
             />
-            <EventDescription name="description" value={values.description} />
+            <EventDescription
+              name="description"
+              value={values.description}
+              onChange={onValuesChange}
+            />
             <EventLevel
               name="event_level"
               value={values.event_level}

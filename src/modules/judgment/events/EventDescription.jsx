@@ -1,9 +1,17 @@
 import { Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import TextArea from "antd/es/input/TextArea";
-import "./sass/events.scss";
+import ReactQuill from "react-quill";
 
-function EventDescription({ name, value }) {
+import "react-quill/dist/quill.snow.css";
+import "./sass/events.scss";
+import { useCallback } from "react";
+
+function EventDescription({ name, value, onChange: onDescriptionChange }) {
+  const handleChange = (value) => {
+    console.log(value);
+  };
+
   return (
     <FormItem
       name={name}
@@ -24,19 +32,36 @@ function EventDescription({ name, value }) {
         },
       ]}
     >
-      <Flex vertical>
+      <div className="events__event-description">
         <Typography.Text>Описание мероприятия</Typography.Text>
-        <TextArea
+        <ReactQuill
           value={value}
-          rows={6}
-          allowClear
           placeholder="Введите описание мероприятия"
-          id="event_description_input"
-          maxLength={1000}
-          className="events__event-description__textarea"
+          className="events__event-description__editor"
+          onChange={handleChange}
+          modules={{
+            toolbar: [
+              [{ header: [1, 2, false] }],
+              ["bold", "italic", "underline", "strike"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["link"],
+              ["clean"],
+            ],
+          }}
+          formats={[
+            "header",
+            "bold",
+            "italic",
+            "underline",
+            "strike",
+            "list",
+            "bullet",
+            "link",
+          ]}
         />
-      </Flex>
+      </div>
     </FormItem>
   );
 }
+
 export default EventDescription;
