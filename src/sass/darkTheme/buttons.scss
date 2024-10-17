@@ -1,6 +1,6 @@
 .dark-theme .ant-btn {
   &-primary {
-    background: #3679ff;
+    background: $dark-blue;
 
     &:disabled {
       color: #fff;
@@ -8,13 +8,13 @@
     }
 
     &:not(:disabled):not(.ant-btn-disabled):hover {
-      background: #7ea7f9;
+      background: $light-blue;
     }
   }
 }
 
 .dark-theme .ant-float-btn-body {
-  background: #292929;
+  background: $darkest-gray;
 }
 
 .dark-theme .ant-float-btn-icon,
@@ -23,11 +23,11 @@
 }
 
 .dark-theme .ant-btn-default {
-  background: #292929;
+  background: $darkest-gray;
   color: #fff;
 }
 
 .dark-theme .ant-btn-dashed {
-  background: #292929 !important;
+  background: $darkest-gray !important;
   color: #fff !important;
 }

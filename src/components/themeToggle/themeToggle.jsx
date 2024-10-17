@@ -22,13 +22,11 @@ function ThemeToggle() {
   };
 
   return (
-    <>
-      <FloatButton
-        style={{ insetInlineEnd: 94 }}
-        icon={theme === "light" ? <MoonOutlined /> : <SunOutlined />}
-        onClick={toggleTheme}
-      />
-    </>
+    <FloatButton
+      style={{ insetInlineEnd: 94 }}
+      icon={theme === "light" ? <MoonOutlined /> : <SunOutlined />}
+      onClick={toggleTheme}
+    />
   );
 }
 

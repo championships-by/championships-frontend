@@ -1,5 +1,8 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
 .filter-search-panel {
-  background-color: #7ea7f9;
+  background-color: $light-blue;
   border: 0;
 
   &__filters {
@@ -25,6 +28,6 @@
 }
 
 .dark-theme .filter-search-panel {
-  background-color: #292929 !important;
+  background-color: $darkest-gray !important;
   border: 0.5px solid #fff !important;
 }

@@ -1,6 +1,9 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
 $borderRadius: 10px;
 $spacer: 1rem;
-$primary: #3679ff;
+$primary: $dark-blue;
 $text: #6a778e;
 $linkHeight: $spacer * 3.5;
 $timing: 250ms;
@@ -132,7 +135,7 @@ $transition: $timing ease all;
     transition: $transition;
 
     &.active {
-      background-color: #3679ff;
+      background-color: $dark-blue;
       filter: invert(0);
     }
 
@@ -177,7 +180,7 @@ $transition: $timing ease all;
 
     &--logout {
       &:hover {
-        background-color: #3679ff;
+        background-color: $dark-blue;
         filter: invert(0);
       }
       &:before {
@@ -211,26 +214,11 @@ $transition: $timing ease all;
   }
 }
 
-.dark-theme .admin-panel__menu-link--event::before {
-  filter: invert(1);
-}
-
-.dark-theme .admin-panel__menu-link--users::before {
-  filter: invert(1);
-}
-
-.dark-theme .admin-panel__menu-link--judgment::before {
-  filter: invert(1);
-}
-
-.dark-theme .admin-panel__menu-link--add-participants::before {
-  filter: invert(1);
-}
-
-.dark-theme .admin-panel__menu-link--settings::before {
-  filter: invert(1);
-}
-
+.dark-theme .admin-panel__menu-link--event::before,
+.dark-theme .admin-panel__menu-link--users::before,
+.dark-theme .admin-panel__menu-link--judgment::before,
+.dark-theme .admin-panel__menu-link--add-participants::before,
+.dark-theme .admin-panel__menu-link--settings::before,
 .dark-theme .admin-panel__menu-link--logout::before {
   filter: invert(1);
 }

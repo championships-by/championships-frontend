@@ -1,3 +1,6 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
 .user-support {
   width: calc(100vw - 128px);
   &__about {
@@ -30,14 +33,14 @@
       }
     }
     &__institution {
-      color: #3679ff;
+      color: $dark-blue;
     }
     &__text {
       font-size: 16px;
 
       &__blue {
         font-size: 16px;
-        color: #3679ff;
+        color: $dark-blue;
       }
 
       &__advantages {
@@ -47,7 +50,7 @@
     }
     &__advantages-container {
       margin-top: 50px;
-      background-color: #7ea7f9;
+      background-color: $light-blue;
       border-radius: 10px;
       padding: 18px 18px 18px 32px;
     }
@@ -68,7 +71,7 @@
       }
     }
     &__warning-container {
-      background-color: #7ea7f9;
+      background-color: $light-blue;
       border-radius: 10px;
       padding: 12px;
       margin-top: 32px;

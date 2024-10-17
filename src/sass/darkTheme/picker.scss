@@ -2,12 +2,12 @@
   .ant-picker-cell-in-view {
     &.ant-picker-cell-selected:not(.ant-picker-cell-disabled)
       .ant-picker-cell-inner {
-      background: #3679ff;
+      background: $dark-blue;
       color: white;
     }
 
     &.ant-picker-cell-today .ant-picker-cell-inner::before {
-      border: 1px solid #3679ff;
+      border: 1px solid $dark-blue;
     }
   }
 }

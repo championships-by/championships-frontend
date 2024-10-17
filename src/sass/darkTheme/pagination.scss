@@ -1,7 +1,7 @@
 .ant-pagination {
   .ant-pagination-item-active {
-    background-color: #3679ff;
-    border: 1px solid #3679ff;
+    background-color: $dark-blue;
+    border: 1px solid $dark-blue;
     transition: all 0.3s;
     a {
       color: #fff;
