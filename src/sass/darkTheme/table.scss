@@ -11,7 +11,6 @@
     & > tr {
       background: $darkest-gray;
       color: #fff;
-      transition: all 0.3s ease;
 
       .ant-table-cell-row-hover {
         background: #363636;
@@ -35,10 +34,10 @@
   }
 }
 
-.ant-tabs-tab-btn {
+.dark-theme .ant-tabs-tab-btn {
   color: #fff;
 }
 
-.ant-table-placeholder .ant-table-cell:hover {
+.dark-theme .ant-table-placeholder .ant-table-cell:hover {
   background: #363636 !important;
 }

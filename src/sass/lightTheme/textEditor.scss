@@ -1,0 +1,32 @@
+.ql-toolbar.ql-snow {
+  border: 1px solid #d9d9d9 !important;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.ql-container.ql-snow {
+  border: 1px solid #d9d9d9 !important;
+  border-top: none !important;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.ql-snow .ql-tooltip[data-mode="link"]::before {
+  content: "Введите URL (обязательно с http(s)):" !important;
+}
+
+.ql-snow .ql-tooltip.ql-editing a.ql-action::after {
+  content: "Сохранить" !important;
+}
+
+.ql-snow .ql-tooltip::before {
+  content: "URL:" !important;
+}
+
+.ql-snow .ql-tooltip a.ql-action::after {
+  content: "Изменить" !important;
+}
+
+.ql-snow .ql-tooltip a.ql-remove::before {
+  content: "Удалить" !important;
+}

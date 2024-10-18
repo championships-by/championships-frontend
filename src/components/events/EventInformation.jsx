@@ -212,23 +212,32 @@ function EventInformation() {
             <Col>
               <Typography.Text strong>Что нужно для участия?</Typography.Text>
               <br />
-              <Typography.Text>{dataEvent.participation_needs}</Typography.Text>
+              <Typography.Text>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: dataEvent.participation_needs,
+                  }}
+                />
+              </Typography.Text>
             </Col>
           </Row>
-          <Row
-            align="bottom"
-            className="events__event-information__rows-margin"
-          >
-            <Col>
+          <Row align="top" className="events__event-information__rows-margin">
+            <Col className="events__event-information__finish-date">
               {finishDate > now ? (
-                <Button
-                  onClick={() =>
-                    navigate(ROUTES.EVENTS_REGISTRATION.PATH(dataEvent.id))
-                  }
-                  type="primary"
-                >
-                  Регистрация участников
-                </Button>
+                <>
+                  <Button
+                    onClick={() =>
+                      navigate(ROUTES.EVENTS_REGISTRATION.PATH(dataEvent.id))
+                    }
+                    type="primary"
+                  >
+                    Регистрация участников
+                  </Button>
+                  <br />
+                  <Typography.Text>
+                    Завершается {changeDateFormat(finishDate)}
+                  </Typography.Text>
+                </>
               ) : (
                 <Typography.Text>Регистрация закрыта</Typography.Text>
               )}
@@ -248,8 +257,11 @@ function EventInformation() {
         </Col>
       </Row>
       <Typography.Title level={3}>Описание мероприятия</Typography.Title>
-      <Typography.Text className="events__event-information__text">
-        {dataEvent.description}
+      <Typography.Text>
+        <div
+          className="events__event-information__text"
+          dangerouslySetInnerHTML={{ __html: dataEvent.description }}
+        />
       </Typography.Text>
       <br />
       <Button

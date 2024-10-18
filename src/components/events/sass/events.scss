@@ -102,5 +102,11 @@
     &__regulation {
       margin-top: 24px;
     }
+
+    &__finish-date {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
   }
 }

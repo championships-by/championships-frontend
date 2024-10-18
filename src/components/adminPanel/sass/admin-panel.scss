@@ -198,7 +198,7 @@ $transition: $timing ease all;
   &__content {
     position: relative;
     flex: 1 0 auto;
-
+    width: calc(100vw - 91px);
     padding: 24px;
     overflow: auto;
   }
