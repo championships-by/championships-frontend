@@ -19,7 +19,7 @@ import {
   LinkOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
