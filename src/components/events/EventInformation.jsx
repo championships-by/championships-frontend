@@ -221,10 +221,7 @@ function EventInformation() {
               </Typography.Text>
             </Col>
           </Row>
-          <Row
-            align="bottom"
-            className="events__event-information__rows-margin"
-          >
+          <Row align="top" className="events__event-information__rows-margin">
             <Col className="events__event-information__finish-date">
               {finishDate > now ? (
                 <>
