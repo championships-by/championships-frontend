@@ -19,7 +19,7 @@ import {
   LinkOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
@@ -576,6 +576,7 @@ function EventSettings() {
             <EventRequirements
               name="participation_needs"
               value={values.participation_needs}
+              onChange={onValuesChange}
             />
             <Button type="primary" htmlType="submit" loading={loadings[0]}>
               Сохранить данные
