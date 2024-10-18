@@ -225,16 +225,22 @@ function EventInformation() {
             align="bottom"
             className="events__event-information__rows-margin"
           >
-            <Col>
+            <Col className="events__event-information__finish-date">
               {finishDate > now ? (
-                <Button
-                  onClick={() =>
-                    navigate(ROUTES.EVENTS_REGISTRATION.PATH(dataEvent.id))
-                  }
-                  type="primary"
-                >
-                  Регистрация участников
-                </Button>
+                <>
+                  <Button
+                    onClick={() =>
+                      navigate(ROUTES.EVENTS_REGISTRATION.PATH(dataEvent.id))
+                    }
+                    type="primary"
+                  >
+                    Регистрация участников
+                  </Button>
+                  <br />
+                  <Typography.Text>
+                    Завершается {changeDateFormat(finishDate)}
+                  </Typography.Text>
+                </>
               ) : (
                 <Typography.Text>Регистрация закрыта</Typography.Text>
               )}
