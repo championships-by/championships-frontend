@@ -103,10 +103,11 @@ function CompetenciesTab() {
               criteriaResponse.data
             );
             setCriteria(transformedCriteria);
-
+            console.log(criteriaResultsResponse.data);
             const transformedCriteriaResults = transformCriteriaResultsData(
               criteriaResultsResponse.data
             );
+            console.log(transformedCriteriaResults);
             const generatedDataSource = generateCompetenciesDataSource(
               transformedCriteriaResults
             );

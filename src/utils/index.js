@@ -113,9 +113,9 @@ export const transformCriteriaResultsData = (criteriaResults) =>
       name: team.team_data.team_name,
     },
     participant: {
-      firstName: team.participant_data.first_name,
-      secondName: team.participant_data.second_name,
-      thirdName: team.participant_data.third_name,
+      firstName: team.participants_data.first_name,
+      secondName: team.participants_data.second_name,
+      thirdName: team.participants_data.third_name,
     },
     criteria: team.criterias.map((criterion) => ({
       id: criterion.criteria_id,
