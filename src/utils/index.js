@@ -112,11 +112,12 @@ export const transformCriteriaResultsData = (criteriaResults) =>
       id: team.team_data.team_id,
       name: team.team_data.team_name,
     },
-    participant: {
-      firstName: team.participants_data.first_name,
-      secondName: team.participants_data.second_name,
-      thirdName: team.participants_data.third_name,
-    },
+    participants: team.participants
+      .map(
+        (participant) =>
+          `${participant.second_name} ${participant.first_name} ${participant.third_name}`
+      )
+      .join(", "),
     criteria: team.criterias.map((criterion) => ({
       id: criterion.criteria_id,
       name: criterion.criteria_name,
@@ -131,11 +132,7 @@ export const transformTimeMatchesData = (rounds) =>
   rounds.map((round, index) => ({
     key: `round-${index + 1}`,
     teamName: round.team_name,
-    participant: {
-      firstName: round.participant_data.first_name,
-      secondName: round.participant_data.second_name,
-      thirdName: round.participant_data.third_name,
-    },
+    participants: `${round.participant_data.second_name} ${round.participant_data.first_name} ${round.participant_data.third_name}`,
     attempts: round.attempts.map(({ id, result }) => ({
       id,
       result,
@@ -200,11 +197,7 @@ export const generateCompetenciesDataSource = (criteriaResults) =>
       id: result.team.id,
       name: result.team.name,
     },
-    participant: {
-      firstName: result.participant.firstName,
-      secondName: result.participant.secondName,
-      thirdName: result.participant.thirdName,
-    },
+    participants: result.participants,
     ...Object.keys(result.criteria).reduce(
       (acc, key) => ({
         ...acc,

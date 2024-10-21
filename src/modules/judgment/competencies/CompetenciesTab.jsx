@@ -32,20 +32,26 @@ function CompetenciesTab() {
         return;
       }
 
+      const criteriaPromises = [];
+
       dataSource.forEach((result) => {
         Object.keys(result).forEach((key) => {
           if (key.startsWith("criteria")) {
             const criterion = result[key];
-            competenciesApi.setCriteriaResult({
-              eventId,
-              nominationId,
-              criteriaId: criterion.id,
-              teamId: result.team.id,
-              score: criterion.score,
-            });
+            const promise = competenciesApi
+              .setCriteriaResult({
+                eventId,
+                nominationId,
+                criteriaId: criterion.id,
+                teamId: result.team.id,
+                score: criterion.score,
+              })
+              .catch((reason) => console.error(reason));
+            criteriaPromises.push(promise);
           }
         });
       });
+      await Promise.allSettled(criteriaPromises);
 
       await competenciesApi.finishCriteriaStage({
         event_id: eventId,
@@ -103,11 +109,9 @@ function CompetenciesTab() {
               criteriaResponse.data
             );
             setCriteria(transformedCriteria);
-            console.log(criteriaResultsResponse.data);
             const transformedCriteriaResults = transformCriteriaResultsData(
               criteriaResultsResponse.data
             );
-            console.log(transformedCriteriaResults);
             const generatedDataSource = generateCompetenciesDataSource(
               transformedCriteriaResults
             );

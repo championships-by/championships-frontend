@@ -81,7 +81,7 @@ export const CompetenciesTable = ({
       columns={columns}
       dataSource={dataSource}
       expandable={{
-        expandedRowRender: (record) => <p>{record.description}</p>,
+        expandedRowRender: (record) => <p>{record.participants}</p>,
       }}
       pagination={false}
       scroll={{

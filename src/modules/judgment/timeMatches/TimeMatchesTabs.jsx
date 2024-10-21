@@ -119,7 +119,6 @@ export const TimeMatchesTabs = () => {
           if (transformedStageStatus.tournamentFinished) {
             setIsStageFinished(true);
           }
-
           const transformedTimeMatches = transformTimeMatchesData(
             timeMatchesResponse.data
           );

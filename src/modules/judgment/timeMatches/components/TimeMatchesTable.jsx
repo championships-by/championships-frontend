@@ -75,6 +75,9 @@ export const TimeMatchesTable = ({
           pagination={false}
           columns={columns}
           dataSource={timeMatches}
+          expandable={{
+            expandedRowRender: (record) => <p>{record.participants}</p>,
+          }}
           locale={Locale}
         />
       )}
