@@ -562,11 +562,7 @@ function EventSettings() {
               onChange={onValuesChange}
               disabled={switchDisabled}
             />
-            <EventDescription
-              name="description"
-              value={values.description}
-              onChange={onValuesChange}
-            />
+            <EventDescription name="description" value={values.description} />
             <EventLevel
               name="event_level"
               value={values.event_level}
@@ -576,7 +572,6 @@ function EventSettings() {
             <EventRequirements
               name="participation_needs"
               value={values.participation_needs}
-              onChange={onValuesChange}
             />
             <Button type="primary" htmlType="submit" loading={loadings[0]}>
               Сохранить данные
