@@ -1,50 +1,19 @@
 import { Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import ReactQuill from "react-quill";
-
-import "react-quill/dist/quill.snow.css";
+import TextArea from "antd/es/input/TextArea";
 import "./sass/events.scss";
 
-const modules = {
-  toolbar: [
-    [{ header: [1, 2, false] }],
-    ["bold", "italic", "underline", "strike"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    ["link"],
-  ],
-};
-
-const formats = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "list",
-  "bullet",
-  "link",
-];
-
-function EventDescription({ name, value, onChange: onDescriptionChange }) {
-  const onChange = (value) => {
-    onDescriptionChange({ [name]: value });
-  };
-
-  const isContentEmpty = (content) => {
-    try {
-      const text = content.replace(/<[^>]*>/g, "").trim();
-      return text.length === 0;
-    } catch {
-      return true;
-    }
-  };
-
+function EventDescription({ name, value }) {
   return (
     <FormItem
       name={name}
       hasFeedback
       validateFirst
       rules={[
+        {
+          required: true,
+          message: "Пожалуйста, введите описание мероприятия",
+        },
         {
           max: 1000,
           message: "Максимум 1000 символов",
@@ -53,31 +22,21 @@ function EventDescription({ name, value, onChange: onDescriptionChange }) {
           min: 5,
           message: "Минимум 5 символов",
         },
-        {
-          validator: (_) => {
-            if (isContentEmpty(value)) {
-              return Promise.reject(
-                new Error("Пожайлуста, введите описание мероприятия")
-              );
-            }
-            return Promise.resolve();
-          },
-        },
       ]}
     >
-      <div className="events__event-description">
+      <Flex vertical>
         <Typography.Text>Описание мероприятия</Typography.Text>
-        <ReactQuill
+        <TextArea
           value={value}
+          rows={6}
+          allowClear
           placeholder="Введите описание мероприятия"
-          className="events__event-description__editor"
-          onChange={onChange}
-          modules={modules}
-          formats={formats}
+          id="event_description_input"
+          maxLength={1000}
+          className="events__event-description__textarea"
         />
-      </div>
+      </Flex>
     </FormItem>
   );
 }
-
 export default EventDescription;
