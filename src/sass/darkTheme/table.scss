@@ -35,10 +35,15 @@
   }
 }
 
-.ant-tabs-tab-btn {
+.dark-theme .ant-tabs-tab-btn {
   color: #fff;
 }
 
-.ant-table-placeholder .ant-table-cell:hover {
+.dark-theme .ant-table-placeholder .ant-table-cell:hover {
   background: #363636 !important;
+}
+
+.dark-theme .ant-table-cell-fix-left,
+.dark-theme .ant-table-cell-fix-right {
+  background: $darkest-gray;
 }

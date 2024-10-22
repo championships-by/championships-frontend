@@ -38,10 +38,8 @@ const columns = [
   },
   {
     title: <Tooltip title="Участник">Участники</Tooltip>,
-    dataIndex: "participant",
-    key: "participant",
-    render: ({ firstName, secondName, thirdName }) =>
-      `${secondName} ${firstName} ${thirdName}`,
+    dataIndex: "participants",
+    key: "participants",
   },
   {
     title: <Tooltip title="Итоговый счет">Итоговый счет</Tooltip>,

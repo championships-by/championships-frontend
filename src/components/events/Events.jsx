@@ -34,18 +34,18 @@ function Events() {
   const tabsitems = [
     {
       key: "1",
-      label: `Прошедшие (${events?.past ? events.past.length : 0})`,
-      children: <EventsList events={events?.past} />,
-    },
-    {
-      key: "2",
       label: `Предстоящие (${events?.future ? events.future.length : 0})`,
       children: <EventsList events={events?.future} />,
     },
     {
-      key: "3",
+      key: "2",
       label: `В этот день (${events?.on_date ? events.on_date.length : 0})`,
       children: <EventsList events={events?.on_date} />,
+    },
+    {
+      key: "3",
+      label: `Прошедшие (${events?.past ? events.past.length : 0})`,
+      children: <EventsList events={events?.past} />,
     },
   ];
 
