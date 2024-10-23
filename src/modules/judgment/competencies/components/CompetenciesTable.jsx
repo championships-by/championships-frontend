@@ -60,7 +60,7 @@ export const CompetenciesTable = ({
         );
       }),
       {
-        title: "Итоги",
+        title: "Итого",
         dataIndex: "totalScore",
         key: "totalScore",
         fixed: "right",

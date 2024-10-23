@@ -135,7 +135,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
         ],
       };
       await participantApi.addParticipantToNomination(body);
-      message.success("Всё в порядке!");
+      message.success("Участник успешно добавлен для участия в компетенции");
       form.resetFields();
       onOk();
     } catch (error) {
