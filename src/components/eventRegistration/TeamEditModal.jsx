@@ -13,7 +13,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
 
   const onFinish = async () => {
     if (form.getFieldValue("teamName") === teamName) {
-      message.success("Данные сохранены успешно!");
+      message.success("Название команды успешно изменено");
       onOk();
     } else {
       setIsLoading(true);
@@ -25,7 +25,8 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
 
         await teamApi.updateTeam(body);
 
-        message.success("Данные сохранены успешно!");
+      message.success("Название команды успешно изменено");
+        
         form.resetFields();
         onOk();
       } catch {

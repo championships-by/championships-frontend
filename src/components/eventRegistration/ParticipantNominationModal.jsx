@@ -13,7 +13,7 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
   const { eventID } = useParams();
 
   const onFinish = () => {
-    message.success("Всё в порядке!");
+    message.success("Участник успешно добавлен для участия в компетенции");
     setIsLoading(false);
   };
 
