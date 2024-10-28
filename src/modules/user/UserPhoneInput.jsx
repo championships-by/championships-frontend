@@ -41,6 +41,7 @@ function UserPhoneInput({ name }) {
           prefix={<PhoneOutlined />}
           type="tel"
           allowClear
+          defaultValue={"+375"}
           placeholder="Введите телефон"
           maxLength={19}
         />

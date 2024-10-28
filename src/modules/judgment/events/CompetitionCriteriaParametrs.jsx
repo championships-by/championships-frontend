@@ -99,9 +99,7 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
                   <Form.Item
                     {...field}
                     name={[field.name, "maxPoints"]}
-                    rules={[
-                      { required: true, message: "Не ввели количество баллов" },
-                    ]}
+                    rules={[{ required: true, message: "Неверное значение" }]}
                   >
                     <Input
                       type="number"

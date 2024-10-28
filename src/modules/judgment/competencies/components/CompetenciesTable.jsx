@@ -48,6 +48,7 @@ export const CompetenciesTable = ({
               disabled={!editable}
               placeholder={currentCriteria.maxScore}
               defaultValue={currentCriteria.score}
+              controls={false}
               max={currentCriteria.maxScore}
               min={0}
               onChange={(value) =>

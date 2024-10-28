@@ -56,7 +56,6 @@ export const participantsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(getParticipantByName.pending, (state) => {
-        state.isLoading = true;
         state.error = null;
       })
       .addCase(getParticipantByName.fulfilled, (state, action) => {
