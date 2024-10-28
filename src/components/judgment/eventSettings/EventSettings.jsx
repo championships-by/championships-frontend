@@ -266,36 +266,32 @@ function EventSettings() {
     const nominationID = findNominationId(competitionName, eventInfo);
     setNominationID(nominationID);
 
-    const params = {
-      event_id: eventID,
-      nomination_id: nominationID,
-    };
-
-    let isTournamentStarted = false;
-    let isTournamentFinished = false;
-
     try {
-      await competenciesApi.getNominationEventInfo(params).then((data) => {
-        isTournamentStarted = data.tournament_started;
-        isTournamentFinished = data.tournament_finished;
-      });
-    } catch {}
+      const params = {
+        event_id: eventID,
+        nomination_id: nominationID,
+      };
 
-    if (isTournamentFinished) {
-      message.error("Турнир уже завершился");
-      return;
-    } else if (isTournamentStarted) {
-      switch (competitionType) {
-        case NOMINATION_TYPES.OLYMPIC:
-          navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
-          break;
-        case NOMINATION_TYPES.TIME:
-          navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
-          break;
-        case NOMINATION_TYPES.CRITERIA:
-          navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID));
-          break;
+      const data = await competenciesApi.getNominationEventInfo(params);
+
+      if (data.tournament_finished) {
+        message.error("Турнир уже завершился");
+        return;
+      } else if (data.tournament_started) {
+        switch (competitionType) {
+          case NOMINATION_TYPES.OLYMPIC:
+            navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+            break;
+          case NOMINATION_TYPES.TIME:
+            navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
+            break;
+          case NOMINATION_TYPES.CRITERIA:
+            navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID));
+            break;
+        }
+        return;
       }
+    } catch {
       return;
     }
 
@@ -327,10 +323,7 @@ function EventSettings() {
                         ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
                       );
                       break;
-                    case "failed":
-                      break;
                   }
-
                   break;
                 case NOMINATION_TYPES.CRITERIA:
                   let creteriaResult = await startCriteriaStage(
@@ -344,12 +337,7 @@ function EventSettings() {
                         ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
                       );
                       break;
-                    case "failed":
-                      break;
                   }
-                  break;
-
-                default:
                   break;
               }
             } catch (error) {}
