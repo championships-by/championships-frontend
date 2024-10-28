@@ -260,11 +260,45 @@ function EventSettings() {
       );
     }
   };
-  const openCompetenciesModal = (record) => {
+  const openCompetenciesModal = async (record) => {
     const competitionType = record.kind;
     const competitionName = record.name;
     const nominationID = findNominationId(competitionName, eventInfo);
     setNominationID(nominationID);
+
+    const params = {
+      event_id: eventID,
+      nomination_id: nominationID,
+    };
+
+    let isTournamentStarted = false;
+    let isTournamentFinished = false;
+
+    try {
+      await competenciesApi.getNominationEventInfo(params).then((data) => {
+        isTournamentStarted = data.tournament_started;
+        isTournamentFinished = data.tournament_finished;
+      });
+    } catch {}
+
+    if (isTournamentFinished) {
+      message.error("Турнир уже завершился");
+      return;
+    } else if (isTournamentStarted) {
+      switch (competitionType) {
+        case NOMINATION_TYPES.OLYMPIC:
+          navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+          break;
+        case NOMINATION_TYPES.TIME:
+          navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
+          break;
+        case NOMINATION_TYPES.CRITERIA:
+          navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID));
+          break;
+      }
+      return;
+    }
+
     switch (competitionType) {
       case NOMINATION_TYPES.OLYMPIC:
         setTrophyModal(true);
@@ -294,7 +328,6 @@ function EventSettings() {
                       );
                       break;
                     case "failed":
-                      message.error("Произошла ошибка");
                       break;
                   }
 
@@ -312,7 +345,6 @@ function EventSettings() {
                       );
                       break;
                     case "failed":
-                      message.error("Произошла ошибка");
                       break;
                   }
                   break;
@@ -320,9 +352,7 @@ function EventSettings() {
                 default:
                   break;
               }
-            } catch (error) {
-              message.error("Произошла ошибка");
-            }
+            } catch (error) {}
           },
           cancelText: "Отмена",
         });
