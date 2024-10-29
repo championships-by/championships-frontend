@@ -11,10 +11,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
-const isMobile = useMediaQuery({ maxWidth: 767 });
-const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
-
 function EventsList({ events }) {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
   const navigate = useNavigate();
 
   const data = Array.isArray(events)

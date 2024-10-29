@@ -11,10 +11,9 @@ import { FilterSearchPanel } from "./FilterSearchPanel";
 
 import "./sass/events.scss";
 
-const isMobile = useMediaQuery({ maxWidth: 767 });
-const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
-
 function Events() {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
   const dispatch = useDispatch();
   const {
     data: events,
