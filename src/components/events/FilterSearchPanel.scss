@@ -25,6 +25,10 @@
       width: 50%;
     }
   }
+
+  @media (max-width: 767px) {
+    margin-top: 14px;
+  }
 }
 
 .dark-theme .filter-search-panel {

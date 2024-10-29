@@ -32,3 +32,10 @@ img {
 
   overflow: hidden;
 }
+
+input,
+textarea,
+select,
+button {
+  touch-action: manipulation;
+}

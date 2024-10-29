@@ -9,6 +9,10 @@ import { changeDateFormat, getEventLevel } from "@utils";
 import { Card, List, Tooltip, Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+
+const isMobile = useMediaQuery({ maxWidth: 767 });
+const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
 
 function EventsList({ events }) {
   const navigate = useNavigate();
@@ -97,10 +101,10 @@ function EventsList({ events }) {
 
   return (
     <List
-      grid={{ gutter: 5, column: 3 }}
+      grid={{ gutter: 5, column: isMobile ? 1 : isTablet ? 2 : 3 }}
       pagination={{
         hideOnSinglePage: true,
-        pageSize: 3,
+        pageSize: isMobile ? 1 : isTablet ? 2 : 3,
         position: "bottom",
         align: "center",
         locale: Locale.pagination,
