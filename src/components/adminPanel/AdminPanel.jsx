@@ -4,11 +4,13 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { RESPONSE_STATUS } from "@constants";
 import { userApi } from "@api/index.js";
 import AdminPanelNav from "./AdminPanelNav.jsx";
+import MobileAdminPanelNav from "./MobileAdminPanelNav.jsx";
 import AdminPanelLogo from "./AdminPanelLogo.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserProfile, getUserSelector } from "@store/users";
 
 import "./sass/admin-panel.scss";
+import "./sass/mobile-admin-panel.scss";
 
 function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
@@ -55,10 +57,15 @@ function AdminPanel() {
   return (
     <div id="admin-panel" className="admin-panel">
       {user.data.role && (
-        <div id="sidebar" className="admin-panel__menu">
-          <AdminPanelLogo />
-          <AdminPanelNav role={role} />
-        </div>
+        <>
+          <div id="sidebar" className="admin-panel__menu">
+            <AdminPanelLogo />
+            <AdminPanelNav role={role} />
+          </div>
+          <div id="mobile-menu" className="mobile-admin-panel__menu">
+            <MobileAdminPanelNav role={role} />
+          </div>
+        </>
       )}
       <div id="content" className="admin-panel__content">
         <Outlet />

@@ -42,6 +42,10 @@ $transition: $timing ease all;
     padding: 10px 12px;
     border-right: 1px solid transparent;
 
+    @media (max-width: 768px) {
+      display: none;
+    }
+
     &::before,
     &::after {
       content: "";
@@ -198,9 +202,14 @@ $transition: $timing ease all;
   &__content {
     position: relative;
     flex: 1 0 auto;
-
+    width: calc(100vw - 91px); // 91px - width of desktop sidebar
     padding: 24px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    @media (max-width: 768px) {
+      padding-bottom: 90px; // height of mobile menu
+    }
   }
 
   &__controls {
