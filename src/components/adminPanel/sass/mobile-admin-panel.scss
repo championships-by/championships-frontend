@@ -3,14 +3,14 @@
 
 .mobile-admin-panel {
   &__menu {
-    @media (min-width: 769px) {
+    @media (min-width: 768px) {
       display: none;
     }
   }
 
   &__nav {
     position: fixed;
-    z-index: 9999;
+    z-index: 1000;
     display: flex;
     width: 95%;
     height: 70px;

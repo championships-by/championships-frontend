@@ -3,6 +3,7 @@ import Loader from "@components/loader/Loader";
 import { getEventsSelector } from "@store/events/selectors";
 import { getEventsRelatedToDate } from "@store/events/thunk";
 import { Card, Divider, Flex, Typography, Tabs } from "antd";
+import { useDevice } from "@hooks";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomCalendar } from "./CustomCalendar";
@@ -11,6 +12,7 @@ import { FilterSearchPanel } from "./FilterSearchPanel";
 import "./sass/events.scss";
 
 function Events() {
+  const { isMobile, isTablet } = useDevice();
   const dispatch = useDispatch();
   const {
     data: events,
@@ -55,9 +57,9 @@ function Events() {
       <Typography.Title level={2}>Мероприятия</Typography.Title>
       <Divider />
       <Flex vertical gap={500}>
-        <Flex gap="small">
+        <Flex vertical={isMobile || isTablet} gap="small">
           <Tabs items={tabsitems} className="events__tabs" />
-          <Flex vertical="vertical" gap={10}>
+          <Flex vertical={!isTablet} gap={10}>
             <FilterSearchPanel />
             <Card className="events__card">
               <CustomCalendar />

@@ -9,8 +9,10 @@ import { changeDateFormat, getEventLevel } from "@utils";
 import { Card, List, Tooltip, Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDevice } from "@hooks";
 
 function EventsList({ events }) {
+  const { isMobile, isTablet } = useDevice();
   const navigate = useNavigate();
 
   const data = Array.isArray(events)
@@ -97,10 +99,10 @@ function EventsList({ events }) {
 
   return (
     <List
-      grid={{ gutter: 5, column: 3 }}
+      grid={{ gutter: 5, column: isMobile ? 1 : isTablet ? 2 : 3 }}
       pagination={{
         hideOnSinglePage: true,
-        pageSize: 3,
+        pageSize: isMobile ? 1 : isTablet ? 2 : 3,
         position: "bottom",
         align: "center",
         locale: Locale.pagination,

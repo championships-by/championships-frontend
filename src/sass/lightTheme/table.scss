@@ -1,4 +1,12 @@
 .ant-table-wrapper {
+  .ant-table {
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
   .ant-table-thead > tr > th {
     background-color: $dark-blue;
     color: #fff;
