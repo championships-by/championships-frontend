@@ -9,11 +9,10 @@ import { changeDateFormat, getEventLevel } from "@utils";
 import { Card, List, Tooltip, Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+import { useDevice } from "@hooks";
 
 function EventsList({ events }) {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
+  const { isMobile, isTablet } = useDevice();
   const navigate = useNavigate();
 
   const data = Array.isArray(events)

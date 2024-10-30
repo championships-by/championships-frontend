@@ -3,7 +3,7 @@ import Loader from "@components/loader/Loader";
 import { getEventsSelector } from "@store/events/selectors";
 import { getEventsRelatedToDate } from "@store/events/thunk";
 import { Card, Divider, Flex, Typography, Tabs } from "antd";
-import { useMediaQuery } from "react-responsive";
+import { useDevice } from "@hooks";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomCalendar } from "./CustomCalendar";
@@ -12,8 +12,7 @@ import { FilterSearchPanel } from "./FilterSearchPanel";
 import "./sass/events.scss";
 
 function Events() {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 991 });
+  const { isMobile, isTablet } = useDevice();
   const dispatch = useDispatch();
   const {
     data: events,
