@@ -35,3 +35,7 @@
   background: $darkest-gray !important;
   color: #fff !important;
 }
+
+.dark-theme .ant-btn-link:disabled {
+  color: #b5b5b5;
+}

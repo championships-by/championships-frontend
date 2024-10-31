@@ -57,9 +57,7 @@ function CompetenciesTab() {
         event_id: eventId,
         nomination_id: nominationId,
       });
-    } catch (error) {
-      message.error("Произошла неизвестная ошибка");
-    }
+    } catch {}
   }, [criteria, dataSource, eventId, nominationId]);
 
   const handleDownload = useCallback(() => {
