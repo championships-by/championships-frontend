@@ -34,7 +34,7 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
 
   return isDisqualified ? (
     <Button disabled={disabled} type="text" onClick={handleDisqualify}>
-      Дисквалификация
+      Дискв.
     </Button>
   ) : (
     <TimePicker
