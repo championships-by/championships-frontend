@@ -1,0 +1,12 @@
+.dark-theme .ant-notification {
+  .ant-notification-notice-wrapper {
+    .ant-notification-notice {
+      background-color: $darkest-gray;
+    }
+  }
+
+  .ant-notification-notice-message,
+  .ant-notification-notice-description {
+    color: #fff;
+  }
+}

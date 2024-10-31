@@ -136,7 +136,7 @@ function EventInformation() {
       <Divider />
       <Breadcrumb items={items} />
       <Row className="events__event-information__flex-container">
-        <Col span={10}>
+        <Col xs={24} sm={24} md={24} lg={10}>
           <img
             alt="Logo"
             src={
@@ -151,9 +151,9 @@ function EventInformation() {
             }
           />
         </Col>
-        <Col span={14}>
+        <Col xs={24} sm={24} md={24} lg={14}>
           <Row gutter={14}>
-            <Col>
+            <Col xs={20} sm={20} md={20}>
               <Typography.Title
                 level={2}
                 className="events__event-information__title"
@@ -161,7 +161,7 @@ function EventInformation() {
                 {dataEvent.name}
               </Typography.Title>
             </Col>
-            <Col>
+            <Col xs={4} sm={4} md={4}>
               <div
                 className="ya-share2 events__event-information__ya-share"
                 data-curtain
@@ -171,7 +171,13 @@ function EventInformation() {
                 data-services="vkontakte,odnoklassniki,telegram,twitter,viber,whatsapp"
               />
             </Col>
-            <Col flex="1" className="events__event-information__align-right">
+            <Col
+              xs={24}
+              sm={24}
+              md={24}
+              flex="1"
+              className="events__event-information__align-right"
+            >
               <Typography.Text strong>Дата проведения</Typography.Text>
               <br />
               <Typography.Text>
@@ -185,21 +191,27 @@ function EventInformation() {
             </Col>
           </Row>
           <Row className="events__event-information__rows-margin">
-            <Col>
+            <Col xs={24} sm={24} md={24}>
               <Typography.Text strong>Место проведения</Typography.Text>
               <br />
               <Typography.Text>{dataEvent.event_place}</Typography.Text>
             </Col>
           </Row>
           <Row className="events__event-information__rows-margin">
-            <Col>
+            <Col xs={24} sm={24} md={12}>
               <Typography.Text strong>Организатор</Typography.Text>
               <br />
               <Typography.Text>
                 {dataEvent.educational_institution}
               </Typography.Text>
             </Col>
-            <Col flex="1" className="events__event-information__align-right">
+            <Col
+              xs={24}
+              sm={24}
+              md={12}
+              flex="1"
+              className="events__event-information__align-right"
+            >
               <Typography.Text strong>Уровень мероприятия</Typography.Text>
 
               <br />
@@ -219,7 +231,7 @@ function EventInformation() {
             align="bottom"
             className="events__event-information__rows-margin"
           >
-            <Col>
+            <Col xs={24} sm={24} md={12}>
               {finishDate > now ? (
                 <Button
                   onClick={() =>
@@ -233,7 +245,12 @@ function EventInformation() {
                 <Typography.Text>Регистрация закрыта</Typography.Text>
               )}
             </Col>
-            <Col flex="1" className="events__event-information__align-right">
+            <Col
+              xs={24}
+              sm={24}
+              flex="1"
+              className="events__event-information__align-right"
+            >
               <Typography.Text strong>
                 Email для вопросов участников
               </Typography.Text>

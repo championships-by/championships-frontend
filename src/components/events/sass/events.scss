@@ -1,9 +1,20 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
 .events {
+  &__tabs {
+    width: 100%;
+  }
+
   &__card {
     max-width: 390px;
     width: 690px;
     min-height: 360px;
     height: 360px;
+
+    @media (max-width: 991px) {
+      max-width: 100%;
+    }
 
     &__img {
       padding: 16px 16px 0 16px;
@@ -25,7 +36,7 @@
         text-align: center;
         position: absolute;
         bottom: 16px;
-        color: #3679ff;
+        color: $dark-blue;
         text-decoration: underline;
         text-underline-offset: 3px;
       }
@@ -48,6 +59,10 @@
   &__cards {
     max-width: 20vw;
     min-height: 550px;
+
+    @media (max-width: 991px) {
+      max-width: 100%;
+    }
   }
 
   &__list {
@@ -58,35 +73,49 @@
     &__flex-container {
       margin-top: 16px;
     }
-    &__container {
-      width: 90vw;
-    }
+
     &__rows-margin {
       margin-top: 16px;
     }
+
     &__ya-share {
+      text-align: right;
       margin-top: 5px;
     }
+
     &__align-right {
       text-align: right;
+
+      @media (max-width: 767px) {
+        text-align: left;
+        margin-top: 10px;
+      }
     }
+
     &__text {
       max-width: 100%;
       text-wrap: wrap;
       word-wrap: break-word;
     }
+
     &__img {
       width: 95%;
       aspect-ratio: 3/2;
       object-fit: contain;
       border-radius: 14px;
+
+      @media (max-width: 767px) {
+        width: 100%;
+      }
     }
+
     &__noImg {
       width: 95%;
       aspect-ratio: 3/2;
       object-fit: cover;
       border-radius: 14px;
     }
+
     &__title {
       margin-left: 0;
       margin-top: 0;

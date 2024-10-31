@@ -47,7 +47,7 @@ function EventsRegistration() {
     },
     {
       key: "2",
-      label: "Зарегистрированые команды",
+      label: "Зарегистрированные команды",
       children: <TeamsTable teamsData={dataTeams} />,
     },
   ];

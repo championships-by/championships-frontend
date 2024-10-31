@@ -1,0 +1,34 @@
+.ant-table-wrapper {
+  .ant-table {
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .ant-table-thead > tr > th {
+    background-color: $dark-blue;
+    color: #fff;
+  }
+  .ant-table-thead {
+    tr {
+      th {
+        &.ant-table-column-sort {
+          background-color: $dark-blue;
+        }
+        &.ant-table-column-has-sorters {
+          &:hover {
+            background-color: $light-blue;
+          }
+        }
+      }
+
+      td {
+        &.ant-table-row-expand-icon-cell {
+          background: $dark-blue;
+        }
+      }
+    }
+  }
+}

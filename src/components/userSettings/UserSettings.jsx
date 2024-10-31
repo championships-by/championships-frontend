@@ -84,7 +84,7 @@ function UsersSettings() {
         requiredMark="Default"
       >
         <Row gutter={[32, 0]}>
-          <Col span={8}>
+          <Col xs={24} sm={24} md={8}>
             <UserLastnameInput name="lastname" />
             <UserFirstnameInput name="firstname" />
             <UserPatronymicInput
@@ -92,9 +92,13 @@ function UsersSettings() {
               initialValue={form.getFieldValue("patronymic")}
             />
           </Col>
-          <Col span={8}>
+          <Col xs={24} sm={24} md={8}>
             <UserEmailInput name="email" disabled="true" />
             <UserPhoneInput name="phone" number={user.phone} />
+            <UserOrganizationInput name="organization" />
+          </Col>
+          <Col xs={24} sm={24} md={8}>
+            <UserRoleInput disabled name="role" />
             <Button
               type="primary"
               onClick={() => setIsUserPasswordModalOpen(true)}
@@ -103,24 +107,19 @@ function UsersSettings() {
               Сменить пароль
             </Button>
           </Col>
-          <Col span={8}>
-            <UserOrganizationInput name="organization" />
-            <UserRoleInput disabled name="role" />
-          </Col>
         </Row>
 
-        <Row>
-          <FormItem>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={isFormLoading}
-              onClick={handleSubmit}
-            >
-              Сохранить настройки
-            </Button>
-          </FormItem>
-        </Row>
+        <FormItem>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="save-button"
+            loading={isFormLoading}
+            onClick={handleSubmit}
+          >
+            Сохранить настройки
+          </Button>
+        </FormItem>
       </Form>
       <UserPasswordModal
         isOpen={isUserPasswordModalOpen}

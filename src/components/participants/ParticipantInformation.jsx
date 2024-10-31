@@ -86,7 +86,11 @@ function ParticipantInformation() {
             {`${participantData.third_name}`}
           </Typography.Title>
           <Typography.Text strong>Электронная почта: </Typography.Text>
-          <Typography.Text>{participantData.email}</Typography.Text>
+          <Typography.Text>
+            <a href={`mailto:${participantData.email}`}>
+              {participantData.email}
+            </a>
+          </Typography.Text>
           <br />
           <Typography.Text strong>Дата рождения: </Typography.Text>
           <Typography.Text>

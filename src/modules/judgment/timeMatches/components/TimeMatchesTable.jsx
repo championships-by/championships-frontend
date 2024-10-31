@@ -24,7 +24,7 @@ export const TimeMatchesTable = ({
       {
         key: "teamName",
         dataIndex: "teamName",
-        title: "Участники",
+        title: "Команда",
       },
       ...generateColumns(timeMatches, (text, record, index, columnId) => (
         <CustomTimePicker
@@ -75,6 +75,9 @@ export const TimeMatchesTable = ({
           pagination={false}
           columns={columns}
           dataSource={timeMatches}
+          expandable={{
+            expandedRowRender: (record) => <p>{record.participants}</p>,
+          }}
           locale={Locale}
         />
       )}

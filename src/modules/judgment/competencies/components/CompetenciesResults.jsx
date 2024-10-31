@@ -38,10 +38,8 @@ const columns = [
   },
   {
     title: <Tooltip title="Участник">Участники</Tooltip>,
-    dataIndex: "participant",
-    key: "participant",
-    render: ({ firstName, secondName, thirdName }) =>
-      `${secondName} ${firstName} ${thirdName}`,
+    dataIndex: "participants",
+    key: "participants",
   },
   {
     title: <Tooltip title="Итоговый счет">Итоговый счет</Tooltip>,
@@ -57,7 +55,7 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
   ) : (
     <Flex vertical gap="large">
       {hasError ? (
-        <Typography>При попытке получить данных произошла ошибка</Typography>
+        <Typography>При попытке получить данные произошла ошибка</Typography>
       ) : (
         <Table
           className="competencies-result-table"

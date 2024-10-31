@@ -1,0 +1,17 @@
+.ant-pagination {
+  .ant-pagination-item-active {
+    background-color: $dark-blue;
+    border: 1px solid $dark-blue;
+    transition: all 0.3s;
+    a {
+      color: #fff;
+    }
+  }
+  .ant-pagination-item-active:hover a {
+    color: #fff;
+  }
+}
+
+.dark-theme .ant-pagination-item a {
+  color: #fff;
+}

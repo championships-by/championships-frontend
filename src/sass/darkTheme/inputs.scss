@@ -1,0 +1,119 @@
+.dark-theme .ant-select-selector {
+  background: #363636 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.dark-theme .ant-select-selection-placeholder {
+  color: #b5b5b5 !important;
+}
+
+.dark-theme .ant-select-selection-item {
+  background: #363636 !important;
+  color: #fff !important;
+}
+
+.dark-theme .ant-select-item-empty {
+  color: #fff !important;
+}
+
+.dark-theme .ant-select-dropdown {
+  background: $darkest-gray;
+}
+
+.dark-theme .ant-select-item {
+  color: #fff;
+}
+
+.dark-theme .ant-select-item-option-selected {
+  background-color: $dark-blue !important;
+  color: #fff !important;
+}
+
+.dark-theme .ant-select-arrow,
+.dark-theme .ant-select-selection-item {
+  color: #fff !important;
+}
+
+.dark-theme .ant-radio-button-wrapper {
+  background: #363636;
+  color: #fff;
+}
+
+.dark-theme .ant-input-affix-wrapper {
+  background: #363636 !important;
+  color: #fff;
+  border: none;
+
+  ::placeholder {
+    color: #b5b5b5;
+  }
+}
+
+.dark-theme .ant-input {
+  background: #363636 !important;
+  color: #fff;
+  border: none;
+
+  ::placeholder {
+    color: #b5b5b5;
+  }
+}
+
+.dark-theme .ant-picker,
+.dark-theme .ant-picker-input {
+  background: #363636 !important;
+  color: #fff;
+  border: none;
+
+  ::placeholder {
+    color: #b5b5b5 !important;
+  }
+}
+
+.dark-theme .ant-input-number-input {
+  background: #363636 !important;
+  color: #fff !important;
+  border: none !important;
+
+  ::placeholder {
+    color: #b5b5b5 !important;
+  }
+}
+
+.dark-theme .ant-input-outlined {
+  &::placeholder {
+    color: #b5b5b5;
+  }
+}
+
+.dark-theme .ant-input-number-outlined {
+  border: none !important;
+}
+
+.dark-theme .ant-input-number-handler {
+  background: #363636 !important;
+  border: none;
+}
+
+.dark-theme .ant-picker-datetime-panel,
+.dark-theme .ant-picker-footer,
+.dark-theme .ant-picker-header {
+  background: #363636 !important;
+}
+
+.dark-theme .ant-picker-cell {
+  color: $darkest-gray !important;
+}
+
+.dark-theme .ant-picker-header,
+.dark-theme .ant-picker-header-super-prev-btn,
+.dark-theme .ant-picker-header-prev-btn,
+.dark-theme .ant-picker-header-super-next-btn,
+.dark-theme .ant-picker-header-next-btn,
+.dark-theme .ant-picker-time-panel-cell-inner,
+.dark-theme .ant-picker-cell-in-view,
+.dark-theme .ant-picker-time-panel-cell-selected,
+.dark-theme .ant-picker-time-panel-cell-inner {
+  color: #fff !important;
+}

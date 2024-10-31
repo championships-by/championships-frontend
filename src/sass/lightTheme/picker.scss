@@ -1,0 +1,13 @@
+.ant-picker-calendar {
+  .ant-picker-cell-in-view {
+    &.ant-picker-cell-selected:not(.ant-picker-cell-disabled)
+      .ant-picker-cell-inner {
+      background: $dark-blue;
+      color: white;
+    }
+
+    &.ant-picker-cell-today .ant-picker-cell-inner::before {
+      border: 1px solid $dark-blue;
+    }
+  }
+}

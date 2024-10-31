@@ -61,7 +61,7 @@ function JudgmentEvents() {
     <>
       <Loader show={isLoading} />
       <Row align="bottom">
-        <Col span={14}>
+        <Col xs={24} sm={24} md={14}>
           <Typography.Title level={2}>
             Управление мероприятиями
           </Typography.Title>

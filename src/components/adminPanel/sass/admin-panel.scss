@@ -1,6 +1,9 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
 $borderRadius: 10px;
 $spacer: 1rem;
-$primary: #3679ff;
+$primary: $dark-blue;
 $text: #6a778e;
 $linkHeight: $spacer * 3.5;
 $timing: 250ms;
@@ -23,7 +26,6 @@ $transition: $timing ease all;
 .admin-panel {
   display: flex;
   flex: 1;
-  height: 100%;
 
   &__logo {
     max-width: 100%;
@@ -33,11 +35,17 @@ $transition: $timing ease all;
   &__menu {
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: fixed;
     min-width: 80px;
     width: 80px;
+    height: 100%;
     padding: 10px 12px;
     border-right: 1px solid transparent;
+    z-index: 1000;
+
+    @media (max-width: 767px) {
+      display: none;
+    }
 
     &::before,
     &::after {
@@ -132,7 +140,7 @@ $transition: $timing ease all;
     transition: $transition;
 
     &.active {
-      background-color: #3679ff;
+      background-color: $dark-blue;
       filter: invert(0);
     }
 
@@ -177,7 +185,7 @@ $transition: $timing ease all;
 
     &--logout {
       &:hover {
-        background-color: #3679ff;
+        background-color: $dark-blue;
         filter: invert(0);
       }
       &:before {
@@ -195,9 +203,14 @@ $transition: $timing ease all;
   &__content {
     position: relative;
     flex: 1 0 auto;
-
+    width: calc(100vw - 79px);
+    margin-left: 79px; // 79px - width of desktop sidebar
     padding: 24px;
-    overflow: auto;
+
+    @media (max-width: 767px) {
+      margin-left: 0;
+      padding-bottom: 90px; // height of mobile menu
+    }
   }
 
   &__controls {
@@ -209,4 +222,13 @@ $transition: $timing ease all;
       justify-content: flex-end;
     }
   }
+}
+
+.dark-theme .admin-panel__menu-link--event::before,
+.dark-theme .admin-panel__menu-link--users::before,
+.dark-theme .admin-panel__menu-link--judgment::before,
+.dark-theme .admin-panel__menu-link--add-participants::before,
+.dark-theme .admin-panel__menu-link--settings::before,
+.dark-theme .admin-panel__menu-link--logout::before {
+  filter: invert(1);
 }

@@ -1,8 +1,9 @@
 import EventsList from "@components/events/EventsList";
 import Loader from "@components/loader/Loader";
 import { getEventsSelector } from "@store/events/selectors";
-import { getEventWithNominations } from "@store/events/thunk";
-import { Card, Divider, Flex, Typography } from "antd";
+import { getEventsRelatedToDate } from "@store/events/thunk";
+import { Card, Divider, Flex, Typography, Tabs } from "antd";
+import { useDevice } from "@hooks";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomCalendar } from "./CustomCalendar";
@@ -11,23 +12,44 @@ import { FilterSearchPanel } from "./FilterSearchPanel";
 import "./sass/events.scss";
 
 function Events() {
+  const { isMobile, isTablet } = useDevice();
   const dispatch = useDispatch();
   const {
     data: events,
     isLoading,
     search,
     filters,
+    date,
   } = useSelector(getEventsSelector);
 
   useEffect(() => {
     dispatch(
-      getEventWithNominations({
+      getEventsRelatedToDate({
         published: true,
         levels: filters,
         event_name_chars: search,
+        date: date,
       })
     );
-  }, [dispatch, filters, search]);
+  }, [dispatch, filters, search, date]);
+
+  const tabsitems = [
+    {
+      key: "1",
+      label: `Предстоящие (${events?.future ? events.future.length : 0})`,
+      children: <EventsList events={events?.future} />,
+    },
+    {
+      key: "2",
+      label: `В этот день (${events?.on_date ? events.on_date.length : 0})`,
+      children: <EventsList events={events?.on_date} />,
+    },
+    {
+      key: "3",
+      label: `Прошедшие (${events?.past ? events.past.length : 0})`,
+      children: <EventsList events={events?.past} />,
+    },
+  ];
 
   return (
     <>
@@ -35,9 +57,9 @@ function Events() {
       <Typography.Title level={2}>Мероприятия</Typography.Title>
       <Divider />
       <Flex vertical gap={500}>
-        <Flex gap="small">
-          <EventsList events={events} />
-          <Flex vertical="vertical" gap={10}>
+        <Flex vertical={isMobile || isTablet} gap="small">
+          <Tabs items={tabsitems} className="events__tabs" />
+          <Flex vertical={!isTablet} gap={10}>
             <FilterSearchPanel />
             <Card className="events__card">
               <CustomCalendar />

@@ -1,0 +1,11 @@
+.dark-theme .ant-breadcrumb {
+  margin-bottom: 18px;
+  li:last-child {
+    color: $dark-blue;
+  }
+
+  li a,
+  li {
+    color: #fff;
+  }
+}

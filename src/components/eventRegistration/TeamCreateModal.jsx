@@ -23,7 +23,7 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
 
       await teamApi.setTeams(body);
 
-      message.success("Данные сохранены успешно!");
+      message.success("Новая команда успешно создана");
       form.resetFields();
       onAdd();
       form.resetFields();

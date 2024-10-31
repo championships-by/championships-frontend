@@ -60,20 +60,20 @@ export const TimeMatchesTabs = () => {
         return;
       }
 
-      await Promise.allSettled(
-        timeMatches.map((timeMatch) =>
-          timeMatch.attempts.map(({ id, result, isDisqualified }) =>
-            timeMatchesApi
-              .setTimeMatch(
-                eventId,
-                nominationId,
-                id,
-                !result && isDisqualified ? defaultTime : result
-              )
-              .catch((reason) => console.error(reason))
-          )
+      const timeMatchPromises = timeMatches.flatMap((timeMatch) =>
+        timeMatch.attempts.map(({ id, result, isDisqualified }) =>
+          timeMatchesApi
+            .setTimeMatch(
+              eventId,
+              nominationId,
+              id,
+              !result && isDisqualified ? defaultTime : result
+            )
+            .catch((reason) => console.error(reason))
         )
       );
+
+      await Promise.allSettled(timeMatchPromises);
 
       await competenciesApi.finishTimeStage({
         event_id: eventId,
@@ -119,9 +119,10 @@ export const TimeMatchesTabs = () => {
           if (transformedStageStatus.tournamentFinished) {
             setIsStageFinished(true);
           }
+          const transformedTimeMatches = transformTimeMatchesData(
+            timeMatchesResponse.data
+          );
 
-          const transformedTimeMatches =
-            transformTimeMatchesData(timeMatchesResponse);
           setTimeMatches(transformedTimeMatches);
         })
         .catch((error) => {

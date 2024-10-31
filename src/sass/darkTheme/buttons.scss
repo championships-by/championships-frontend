@@ -1,0 +1,37 @@
+.dark-theme .ant-btn {
+  &-primary {
+    background: $dark-blue;
+
+    &:disabled {
+      color: #fff;
+      background: transparent;
+    }
+
+    &:not(:disabled):not(.ant-btn-disabled):hover {
+      background: $light-blue;
+    }
+  }
+}
+
+.dark-theme .ant-float-btn-body {
+  background: $darkest-gray;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+.dark-theme .ant-float-btn-icon,
+.dark-theme .anticon {
+  color: #fff !important;
+}
+
+.dark-theme .ant-btn-default {
+  background: $darkest-gray;
+  color: #fff;
+}
+
+.dark-theme .ant-btn-dashed {
+  background: $darkest-gray !important;
+  color: #fff !important;
+}

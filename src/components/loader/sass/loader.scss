@@ -1,5 +1,8 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
 .loader {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 999;
@@ -11,7 +14,7 @@
   align-items: center;
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
   transition-duration: 0.2s;
 }
@@ -25,4 +28,18 @@
 
 .loader-gif {
   width: 80px;
+  height: 80px;
+  background: url("@assets/img/loader.gif");
+  background-size: contain;
+}
+
+.dark-theme .loader-gif {
+  width: 80px;
+  height: 80px;
+  background: url("@assets/img/loaderDark.gif");
+  background-size: contain;
+}
+
+.dark-theme .loader {
+  background-color: $darkest-gray;
 }

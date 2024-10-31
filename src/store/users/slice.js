@@ -61,7 +61,6 @@ export const usersSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(getUsersByName.pending, (state) => {
-        state.isLoading = true;
         state.error = null;
       })
       .addCase(getUsersByName.fulfilled, (state, action) => {

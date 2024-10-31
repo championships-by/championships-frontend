@@ -30,13 +30,13 @@ export const CompetenciesTable = ({
   const columns = useMemo(
     () => [
       {
-        title: "Участник",
-        dataIndex: "participant",
-        key: "participant",
+        title: "Команда",
+        dataIndex: "team",
+        key: "team",
         fixed: "left",
-        render: (text, { participant }) => {
-          const { firstName, secondName, thirdName } = participant;
-          return `${secondName} ${firstName} ${thirdName}`;
+        render: (text, { team }) => {
+          const { name } = team;
+          return name;
         },
       },
       ...generateCriteriaColumns(criteria, (text, record, index, columnId) => {
@@ -48,6 +48,7 @@ export const CompetenciesTable = ({
               disabled={!editable}
               placeholder={currentCriteria.maxScore}
               defaultValue={currentCriteria.score}
+              controls={false}
               max={currentCriteria.maxScore}
               min={0}
               onChange={(value) =>
@@ -60,7 +61,7 @@ export const CompetenciesTable = ({
         );
       }),
       {
-        title: "Итоги",
+        title: "Итого",
         dataIndex: "totalScore",
         key: "totalScore",
         fixed: "right",
@@ -80,6 +81,9 @@ export const CompetenciesTable = ({
       locale={{ emptyText: "Нет данных" }}
       columns={columns}
       dataSource={dataSource}
+      expandable={{
+        expandedRowRender: (record) => <p>{record.participants}</p>,
+      }}
       pagination={false}
       scroll={{
         x: true,
