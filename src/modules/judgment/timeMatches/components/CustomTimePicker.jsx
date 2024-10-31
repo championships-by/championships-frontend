@@ -38,7 +38,7 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
     </Button>
   ) : (
     <TimePicker
-      placeholder="Выберите время"
+      placeholder="00:00.000"
       disabled={disabled}
       value={time}
       onChange={(newTime) => {
