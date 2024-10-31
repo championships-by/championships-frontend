@@ -1,4 +1,8 @@
 .dark-theme .ant-table-wrapper {
+  .ant-table {
+    background-color: $darkest-gray;
+  }
+
   .ant-table-thead > tr {
     & > th {
       background-color: $dark-blue;
@@ -32,6 +36,10 @@
       }
     }
   }
+
+  .ant-table-column-sort {
+    background: $dark-gray;
+  }
 }
 
 .dark-theme .ant-tabs-tab-btn {
@@ -45,4 +53,21 @@
 .dark-theme .ant-table-cell-fix-left,
 .dark-theme .ant-table-cell-fix-right {
   background: $darkest-gray;
+}
+
+.dark-theme .ant-table-filter-dropdown {
+  background: $dark-gray;
+
+  .ant-dropdown-menu {
+    background: $dark-gray;
+  }
+
+  .ant-dropdown-menu-item,
+  .ant-checkbox-wrapper + span {
+    color: #fff;
+  }
+
+  .ant-dropdown-menu-item-selected {
+    background: $darkest-gray;
+  }
 }
