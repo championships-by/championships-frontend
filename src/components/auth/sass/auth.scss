@@ -1,3 +1,13 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
+.dark-theme .auth {
+  background-image: url("@assets/img/auth-dark-background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
 .auth {
   display: flex;
 
@@ -52,6 +62,10 @@
     align-items: center;
 
     padding: 50px 0 20px 0;
+  }
+
+  .dark-theme &__body {
+    background: $darkest-gray;
   }
 
   &__button {

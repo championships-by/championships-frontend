@@ -15,6 +15,10 @@
 
 .dark-theme .ant-float-btn-body {
   background: $darkest-gray;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
 }
 
 .dark-theme .ant-float-btn-icon,
