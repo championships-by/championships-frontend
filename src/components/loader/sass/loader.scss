@@ -28,6 +28,16 @@
 
 .loader-gif {
   width: 80px;
+  height: 80px;
+  background: url("@assets/img/loader.gif");
+  background-size: contain;
+}
+
+.dark-theme .loader-gif {
+  width: 80px;
+  height: 80px;
+  background: url("@assets/img/loaderDark.gif");
+  background-size: contain;
 }
 
 .dark-theme .loader {
