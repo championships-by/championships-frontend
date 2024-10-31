@@ -81,6 +81,12 @@
   }
 }
 
+.dark-theme .ant-input-outlined {
+  &::placeholder {
+    color: #b5b5b5;
+  }
+}
+
 .dark-theme .ant-input-number-outlined {
   border: none !important;
 }
