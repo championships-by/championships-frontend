@@ -39,7 +39,11 @@ function ReglamentName({ name, value, onInputChange }) {
         },
       ]}
     >
-      <Space direction="vertical" size={2}>
+      <Space
+        direction="vertical"
+        size={2}
+        className="events__competition-reglament__container"
+      >
         <Typography.Text className="events__competition-reglament__text">
           Регламент
         </Typography.Text>

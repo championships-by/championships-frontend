@@ -77,7 +77,7 @@ function CompetitionType({ onJudgeChange, judges }) {
       </Typography.Text>
       <div className="events__competition-judge__div">
         <Flex>
-          <Space.Compact>
+          <Space.Compact className="events__competition-judge__container">
             <Input
               prefix={<UsergroupAddOutlined />}
               className="events__competition-judge__input"

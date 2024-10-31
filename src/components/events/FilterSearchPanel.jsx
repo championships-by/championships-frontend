@@ -1,7 +1,7 @@
 import { defaultEventFilterOptions, eventFilterOptions } from "@constants";
 import { setEventFilters, setEventSearchValue } from "@store/events/slice";
 import { Button, Card, Checkbox, Flex, Input, Typography } from "antd";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import "./FilterSearchPanel.scss";
@@ -27,12 +27,6 @@ export const FilterSearchPanel = ({ onSubmit }) => {
     );
     onSubmit?.(search, filters);
   };
-
-  const handleClear = useCallback(() => {
-    setSearch("");
-    setFilters(defaultEventFilterOptions);
-    handleSubmit();
-  }, []);
 
   return (
     <Card className="filter-search-panel">
@@ -65,9 +59,6 @@ export const FilterSearchPanel = ({ onSubmit }) => {
           </Flex>
         </Flex>
         <Flex className="filter-search-panel__buttons" gap="small" wrap>
-          <Button size="large" onClick={handleClear}>
-            Очистить
-          </Button>
           <Button size="large" type="primary" onClick={handleSubmit}>
             Применить
           </Button>

@@ -8,6 +8,8 @@ import {
   Tooltip,
   message,
   Flex,
+  Row,
+  Col,
 } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
@@ -67,7 +69,7 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
             <>
               {fields.length > 0 && (
                 <>
-                  <Flex align="center">
+                  <Flex align="center" justify="space-between" offset={1}>
                     <Typography.Text>Критерии оценки:</Typography.Text>
                     <Typography.Text className="events__competition-criteria__max-points">
                       Максимальное
@@ -81,46 +83,51 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
                 </>
               )}
               {fields.map((field) => (
-                <Space
+                <Row
                   key={field.key}
-                  align="baseline"
                   className="events__competition-criteria__space"
                 >
-                  <Form.Item
-                    {...field}
-                    name={[field.name, "criterion"]}
-                    rules={[{ required: true, message: "Не ввели критерий" }]}
-                  >
-                    <Input
-                      placeholder="Введите критерий"
-                      className="events__competition-criteria__input"
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    {...field}
-                    name={[field.name, "maxPoints"]}
-                    rules={[{ required: true, message: "Неверное значение" }]}
-                  >
-                    <Input
-                      type="number"
-                      className="events__competition-criteria__inputPoints"
-                      min={0}
-                    />
-                  </Form.Item>
-                  <Tooltip title="Удалить">
-                    <MinusCircleOutlined
-                      onClick={() => {
-                        if (fields.length > 1) {
-                          remove(field.name);
-                        } else {
-                          message.warning(
-                            "Минимум один критерий оценки должен быть установлен"
-                          );
-                        }
-                      }}
-                    />
-                  </Tooltip>
-                </Space>
+                  <Col span={1}>
+                    <Tooltip title="Удалить">
+                      <MinusCircleOutlined
+                        onClick={() => {
+                          if (fields.length > 1) {
+                            remove(field.name);
+                          } else {
+                            message.warning(
+                              "Должен быть установлен минимум один критерий оценки"
+                            );
+                          }
+                        }}
+                      />
+                    </Tooltip>
+                  </Col>
+                  <Col span={14} offset={1}>
+                    <Form.Item
+                      {...field}
+                      name={[field.name, "criterion"]}
+                      rules={[{ required: true, message: "Не ввели критерий" }]}
+                    >
+                      <Input
+                        placeholder="Введите критерий"
+                        className="events__competition-criteria__input"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={5} offset={3}>
+                    <Form.Item
+                      {...field}
+                      name={[field.name, "maxPoints"]}
+                      rules={[{ required: true, message: "Неверное значение" }]}
+                    >
+                      <Input
+                        type="number"
+                        className="events__competition-criteria__inputPoints"
+                        min={0}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
               ))}
               <br />
               <Typography.Text className="events__competition-criteria__score-count">

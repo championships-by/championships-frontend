@@ -529,7 +529,7 @@ function EventSettings() {
       <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
       <Breadcrumb items={items} />
       <Row gutter={16}>
-        <Col xs={24} md={8}>
+        <Col xs={24} sm={24} md={18} lg={8}>
           <Form
             name="event"
             form={form}
@@ -596,7 +596,7 @@ function EventSettings() {
             </Button>
           </Form>
         </Col>
-        <Col xs={24} md={16}>
+        <Col xs={24} sm={24} md={24} lg={16}>
           <Typography.Title
             level={3}
             className="event-settings__compitation-title"

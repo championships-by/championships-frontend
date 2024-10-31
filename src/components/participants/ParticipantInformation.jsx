@@ -67,7 +67,7 @@ function ParticipantInformation() {
       <Typography.Title level={2}>Карточка участника</Typography.Title>
       <Divider />
       <Breadcrumb items={items} />
-      <Row align="top">
+      <Row align="top" className="participants__information__row">
         <Col>
           <img
             src={participantImg}
