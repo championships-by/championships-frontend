@@ -1,14 +1,13 @@
 import { Typography, Row, Col } from "antd";
-import logo from "@assets/img/logo.png";
-import bntuLogo from "@assets/img/bntu-logo.png";
-import fitrLogo from "@assets/img/fitr-logo.png";
-import schoolLogo from "@assets/img/school-logo.png";
 import laptop from "@assets/img/laptop.png";
-import { bntuSite, zubronokSite, fitrSite, gymnSite } from "@constants";
+import { useDevice } from "@hooks";
+import MobileDevelopers from "./MobileDevelopers";
+import DesktopDevelopers from "./DesktopDevelopers";
 
 import "./sass/user-support.scss";
 
 function AboutProgram() {
+  const { isMobile } = useDevice();
   return (
     <div className="user-support">
       <Typography.Title level={2}>О портале</Typography.Title>
@@ -22,10 +21,10 @@ function AboutProgram() {
         республиканского.
       </Typography.Text>
       <Row align="middle">
-        <Col span={9}>
+        <Col xs={24} sm={24} md={24} lg={9}>
           <img src={laptop} className="user-support__about__laptop-img" />
         </Col>
-        <Col span={15}>
+        <Col xs={24} sm={24} md={24} lg={15}>
           <div className="user-support__about__advantages-container">
             <Typography.Title
               className="user-support__about__titles__advantages"
@@ -90,52 +89,8 @@ function AboutProgram() {
           <Typography.Title level={3}>Разработчики</Typography.Title>
         </Col>
       </Row>
-      <Row>
-        <Col span={8} className="user-support__about__logo-container">
-          <a href={zubronokSite} target="_blank">
-            <img src={logo} className="user-support__about__logo" />
-          </a>
-        </Col>
-        <Col span={8} className="user-support__about__logo-container">
-          <a href={fitrSite} target="_blank">
-            <img src={fitrLogo} className="user-support__about__fitrLogo" />
-          </a>
-          <a href={bntuSite} target="_blank">
-            <img src={bntuLogo} className="user-support__about__bntuLogo" />
-          </a>
-        </Col>
-        <Col span={8} className="user-support__about__logo-container">
-          <a href={gymnSite} target="_blank">
-            <img src={schoolLogo} className="user-support__about__logo" />
-          </a>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={8} className="user-support__about__titles">
-          <Typography.Text strong>Учреждение образования </Typography.Text>
-          <Typography.Text strong className="user-support__about__institution">
-            «Национальной детский образовательно-оздоровительный центр
-            «Зубренок»
-          </Typography.Text>
-        </Col>
-        <Col span={8} className="user-support__about__titles">
-          <Typography.Text strong className="user-support__about__institution">
-            Факультет информационных технологий и робототехники{" "}
-          </Typography.Text>
-          <Typography.Text strong>
-            учреждения образования «Белорусский национальный технический
-            университет»
-          </Typography.Text>
-        </Col>
-        <Col span={8} className="user-support__about__titles">
-          <Typography.Text strong>
-            Государственное учреждение образования{" "}
-          </Typography.Text>
-          <Typography.Text strong className="user-support__about__institution">
-            «Гимназия №61 г.Минска»
-          </Typography.Text>
-        </Col>
-      </Row>
+
+      {isMobile ? <MobileDevelopers /> : <DesktopDevelopers />}
     </div>
   );
 }

@@ -15,6 +15,14 @@ function ParticipantLastnameInput({ name, value }) {
           message: "Пожалуйста, введите фамилию",
         },
         {
+          pattern: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
+          message: "Фамилия может содержать только буквы",
+        },
+        {
+          min: 3,
+          message: "Минимум 3 символа",
+        },
+        {
           max: 255,
           message: "Максимальное значение 255",
         },

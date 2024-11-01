@@ -23,6 +23,10 @@ function ParticipantBirthdayInput({ name, value, onChange: onChangeBase }) {
     });
   };
 
+  const disabledDate = (current) => {
+    return current && current > dayjs().subtract(6, "years").endOf("day");
+  };
+
   return (
     <>
       <Typography.Text>Дата рождения</Typography.Text>
@@ -42,6 +46,7 @@ function ParticipantBirthdayInput({ name, value, onChange: onChangeBase }) {
               locale={Locale}
               value={dayjs(value)}
               onChange={(value) => onChange(value)}
+              disabledDate={disabledDate}
             />
           </FormItem>
         </Space.Compact>

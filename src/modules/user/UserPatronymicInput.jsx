@@ -5,6 +5,21 @@ import FormItem from "antd/es/form/FormItem";
 import "./sass/user.scss";
 import { handlePaste } from "@utils";
 
+const rules = [
+  {
+    pattern: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
+    message: "Отчество может содержать только буквы",
+  },
+  {
+    min: 3,
+    message: "Минимум 3 символа",
+  },
+  {
+    max: 255,
+    message: "Максимальное значение 255",
+  },
+];
+
 function UserPatronymicInput({ name, initialValue }) {
   const [hasFeedback, setHasFeedback] = useState(false);
 
@@ -29,12 +44,7 @@ function UserPatronymicInput({ name, initialValue }) {
         name={name}
         hasFeedback={hasFeedback}
         validateFirst
-        rules={[
-          {
-            max: 255,
-            message: "Максимальное значение 255",
-          },
-        ]}
+        rules={rules}
         className="user__patronymic-input__formitem"
       >
         <Input

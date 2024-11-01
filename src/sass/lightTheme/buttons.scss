@@ -7,3 +7,11 @@
     }
   }
 }
+
+.ant-float-btn-group,
+.ant-float-btn {
+  @media (max-width: 767px) {
+    bottom: calc(100vh - 60px);
+    top: 20px;
+  }
+}

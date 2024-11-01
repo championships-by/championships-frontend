@@ -15,6 +15,14 @@ function ParticipantFirstnameInput({ name, value }) {
           message: "Пожалуйста введите имя",
         },
         {
+          pattern: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
+          message: "Имя может содержать только буквы",
+        },
+        {
+          min: 3,
+          message: "Минимум 3 символа",
+        },
+        {
           max: 255,
           message: "Максимальное значение 255",
         },

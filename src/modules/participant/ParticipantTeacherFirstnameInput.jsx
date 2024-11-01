@@ -3,23 +3,28 @@ import FormItem from "antd/es/form/FormItem";
 import { Flex, Input, Typography } from "antd";
 import { TeamOutlined } from "@ant-design/icons";
 
+const rules = [
+  {
+    required: true,
+    message: "Пожалуйста, введите имя педагога",
+  },
+  {
+    pattern: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
+    message: "Имя может содержать только буквы",
+  },
+  {
+    min: 3,
+    message: "Минимум 3 символа",
+  },
+  {
+    max: 255,
+    message: "Максимальное значение 255",
+  },
+];
+
 function ParticipantTeacherFirstnameInput({ name, value }) {
   return (
-    <FormItem
-      name={name}
-      hasFeedback
-      validateFirst
-      rules={[
-        {
-          required: true,
-          message: "Пожалуйста, введите имя педагога",
-        },
-        {
-          max: 255,
-          message: "Максимальное значение 255",
-        },
-      ]}
-    >
+    <FormItem name={name} hasFeedback validateFirst rules={rules}>
       <Flex vertical>
         <Typography.Text>Имя педагога</Typography.Text>
         <Input
