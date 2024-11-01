@@ -1,4 +1,10 @@
 .ant-table-wrapper {
+  .ant-table-filter-trigger.active,
+  .ant-table-column-sorter-up.active,
+  .ant-table-column-sorter-down.active {
+    color: #fff;
+  }
+
   .ant-table {
     overflow-x: auto;
     scrollbar-width: none;
@@ -7,10 +13,12 @@
       display: none;
     }
   }
+
   .ant-table-thead > tr > th {
     background-color: $dark-blue;
     color: #fff;
   }
+
   .ant-table-thead {
     tr {
       th {

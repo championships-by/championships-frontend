@@ -103,7 +103,11 @@
 }
 
 .dark-theme .ant-picker-cell {
-  color: $darkest-gray !important;
+  color: #909090 !important;
+
+  &.ant-picker-cell-disabled {
+    color: #909090 !important;
+  }
 }
 
 .dark-theme .ant-picker-header,

@@ -3,18 +3,37 @@
 
 .user-support {
   width: calc(100vw - 128px);
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+
   &__about {
     &__laptop-img {
       width: 25vw;
       margin-top: 16px;
       margin-left: 100px;
+
+      @media (max-width: 991px) {
+        width: 50%;
+        margin-left: 25%;
+      }
     }
     &__logo {
       width: 7vw;
+
+      @media (max-width: 767px) {
+        width: 80%;
+      }
     }
     &__bntuLogo,
     &__fitrLogo {
       width: 8vw;
+
+      @media (max-width: 767px) {
+        margin-top: 5px;
+        width: 80%;
+      }
     }
     &__logo-container {
       display: flex;
@@ -58,6 +77,11 @@
   &__feedback {
     &__laptop-img {
       width: 45vw;
+
+      @media (max-width: 991px) {
+        margin-top: 24px;
+        width: 90%;
+      }
     }
     &__img-container {
       text-align: center;

@@ -76,7 +76,7 @@ function Feedback() {
         </Typography.Text>
       </div>
       <Row align="middle">
-        <Col span={8}>
+        <Col xs={24} sm={24} md={24} lg={8}>
           <Form
             name="event"
             form={form}
@@ -92,8 +92,16 @@ function Feedback() {
             <FeedbackEmailInput name="email" />
             <FeedbackFile name="file" onChange={onChangeFile} />
             <FeedbackDescription name="message" />
-            <FeedbackCheckbox name="checkbox" onChange = {() => setIsAgreeChecked(!isAgreeChecked)}/>
-            <Button type="primary" htmlType="submit" loading={isLoading} disabled = {!isAgreeChecked}>
+            <FeedbackCheckbox
+              name="checkbox"
+              onChange={() => setIsAgreeChecked(!isAgreeChecked)}
+            />
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isLoading}
+              disabled={!isAgreeChecked}
+            >
               Отправить
             </Button>
           </Form>
@@ -102,7 +110,7 @@ function Feedback() {
             * - обязательное поле
           </Typography.Text>
         </Col>
-        <Col span={16}>
+        <Col xs={24} sm={24} md={24} lg={16}>
           <div className="user-support__feedback__img-container">
             <img src={laptop} className="user-support__feedback__laptop-img" />
           </div>
