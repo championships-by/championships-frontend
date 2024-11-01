@@ -64,8 +64,9 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
       dispatch(getUsers());
       message.success("Пользователь успешно создан");
       onOk();
+      form.resetFields();
       await userApi.sendUserRegistrationNotice(params.toString()).then(() => {
-        message.info("Уведомление отправлено успешно");
+        message.info("Уведомление пользователю отправлено успешно");
       });
       // TODO
       //  .catch((error) => {

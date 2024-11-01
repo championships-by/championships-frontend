@@ -57,14 +57,14 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
         );
 
         await participantApi.setParticipant(body);
-
+        onOk();
+        form.resetFields();
+        setValues({});
+        message.success("Участник успешно создан");
         await participantApi.sendParticipantRegistrationNotice(
           params.toString()
         );
-        message.success("Участник успешно создан");
       }
-      onOk();
-      form.resetFields();
     } catch {
     } finally {
       setIsLoading(false);
