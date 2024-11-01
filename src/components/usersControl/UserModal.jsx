@@ -17,7 +17,7 @@ import { userApi } from "@api";
 function UserModal({ isOpen, onOk, onCancel, type, userId }) {
   const users = useSelector(getUsersSelector);
   const [oldEmail, setOldEmail] = useState();
-  const isLoading = users.isLoading;
+  const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
       const params = new URLSearchParams();
       params.append("user_id", userId);
       userApi.getUserById(params.toString()).then((response) => {
-        const data = response.data;
+        const { data } = response;
         form.setFieldsValue({
           first_name: data.first_name,
           second_name: data.second_name,
@@ -53,23 +53,28 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         educational_institution: form.getFieldValue("organization"),
         password: form.getFieldValue("password"),
       };
+      const params = new URLSearchParams();
+      params.append("password", raw.password);
+      params.append("user_email", raw.email);
+      setLoading(true);
+      const result = await dispatch(setUser(raw));
 
-      try {
-        const params = new URLSearchParams();
-        params.append("password", raw.password);
-        params.append("user_email", raw.email);
-        const result = await dispatch(setUser(raw));
-
-        if (setUser.rejected.match(result)) {
-          throw new Error(result.error.message);
-        }
-
-        await userApi.sendUserRegistrationNotice(params.toString());
-
-        dispatch(getUsers());
-        message.success("Пользователь успешно создан");
-        onOk();
-      } catch {}
+      if (setUser.rejected.match(result)) {
+        throw new Error(result.error.message);
+      }
+      dispatch(getUsers());
+      message.success("Пользователь успешно создан");
+      await userApi
+        .sendUserRegistrationNotice(params.toString())
+        .then(() => {
+          message.info("Уведомление пользователю отправлено успешно");
+        })
+        .catch(() => {
+          message.error("Уведомление пользователю не отправлено");
+        });
+      setLoading(false);
+      onOk();
+      form.resetFields();
     } else if (type == ModalType.EDIT) {
       const body = {
         first_name: form.getFieldValue("first_name"),
@@ -91,6 +96,7 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         params.append("user_id", userId);
         await userApi.changeUserById(params.toString(), body);
         message.success("Пользователь успешно изменён");
+        dispatch(getUsers());
         onOk();
       } catch {}
     }
