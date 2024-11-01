@@ -17,7 +17,7 @@ import { userApi } from "@api";
 function UserModal({ isOpen, onOk, onCancel, type, userId }) {
   const users = useSelector(getUsersSelector);
   const [oldEmail, setOldEmail] = useState();
-  const { isLoading } = users;
+  const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -56,6 +56,7 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
       const params = new URLSearchParams();
       params.append("password", raw.password);
       params.append("user_email", raw.email);
+      setLoading(true);
       const result = await dispatch(setUser(raw));
 
       if (setUser.rejected.match(result)) {
@@ -63,15 +64,17 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
       }
       dispatch(getUsers());
       message.success("Пользователь успешно создан");
+      await userApi
+        .sendUserRegistrationNotice(params.toString())
+        .then(() => {
+          message.info("Уведомление пользователю отправлено успешно");
+        })
+        .catch(() => {
+          message.error("Уведомление пользователю не отправлено");
+        });
+      setLoading(false);
       onOk();
       form.resetFields();
-      await userApi.sendUserRegistrationNotice(params.toString()).then(() => {
-        message.info("Уведомление пользователю отправлено успешно");
-      });
-      // TODO
-      //  .catch((error) => {
-      //   message.error(`Ошибка отправки уведомления: ${errorMessage}`);
-      // });
     } else if (type == ModalType.EDIT) {
       const body = {
         first_name: form.getFieldValue("first_name"),
