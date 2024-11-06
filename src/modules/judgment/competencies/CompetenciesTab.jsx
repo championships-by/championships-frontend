@@ -1,5 +1,4 @@
 import { competenciesApi } from "@api";
-import { useTabs } from "@hooks/useTabs";
 import {
   generateCompetenciesDataSource,
   isCriteriaFilled,
@@ -8,13 +7,11 @@ import {
   transformStageStatus,
 } from "@utils";
 import { Button, message, Tabs } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CompetenciesResults, CompetenciesTable } from "./components";
-import { CompetenciesTabsEnum } from "./constants";
 
 function CompetenciesTab() {
-  const { tabs, updateTabs } = useTabs();
   const { eventId, nominationId } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -76,6 +73,51 @@ function CompetenciesTab() {
     [dataSource]
   );
 
+  const items = useMemo(
+    () => [
+      {
+        key: "1",
+        label: "Таблица",
+        children: (
+          <CompetenciesTable
+            criteria={criteria}
+            dataSource={dataSource}
+            isLoading={isLoading}
+            hasError={isErrorOccurred}
+            onChange={handleChange}
+            editable={
+              stageStatus.registrationFinished &&
+              stageStatus.tournamentStarted &&
+              !stageStatus.tournamentFinished
+            }
+          />
+        ),
+      },
+      {
+        key: "2",
+        label: "Итоги",
+        disabled: !stageStatus.tournamentFinished,
+        children: (
+          <CompetenciesResults
+            dataSource={dataSource}
+            isLoading={isLoading}
+            hasError={isErrorOccurred}
+          />
+        ),
+      },
+    ],
+    [
+      criteria,
+      dataSource,
+      handleChange,
+      isErrorOccurred,
+      isLoading,
+      stageStatus.registrationFinished,
+      stageStatus.tournamentFinished,
+      stageStatus.tournamentStarted,
+    ]
+  );
+
   useEffect(() => {
     if (!isDataLoaded) {
       setIsLoading(true);
@@ -127,49 +169,9 @@ function CompetenciesTab() {
     }
   }, [eventId, isDataLoaded, nominationId, stageStatus]);
 
-  useEffect(() => {
-    if (!stageStatus.tournamentFinished) {
-      updateTabs([
-        {
-          id: CompetenciesTabsEnum.RESULTS,
-          disabled: false,
-        },
-      ]);
-    }
-  }, [stageStatus, updateTabs, handleCompleteStage]);
-
   return (
     <Tabs
-      items={[
-        {
-          ...tabs[0],
-          children: (
-            <CompetenciesTable
-              criteria={criteria}
-              dataSource={dataSource}
-              isLoading={isLoading}
-              hasError={isErrorOccurred}
-              onChange={handleChange}
-              editable={
-                stageStatus.registrationFinished &&
-                stageStatus.tournamentStarted &&
-                !stageStatus.tournamentFinished
-              }
-            />
-          ),
-        },
-        {
-          ...tabs[1],
-          disabled: !stageStatus.tournamentFinished,
-          children: (
-            <CompetenciesResults
-              dataSource={dataSource}
-              isLoading={isLoading}
-              hasError={isErrorOccurred}
-            />
-          ),
-        },
-      ]}
+      items={items}
       tabBarExtraContent={{
         right: (
           <Button
