@@ -1,6 +1,5 @@
 import { competenciesApi, timeMatchesApi } from "@api";
 import { defaultTime } from "@constants";
-import { useTabs } from "@hooks/useTabs";
 import {
   formatTimeToString,
   isTimeMatchesFilled,
@@ -8,13 +7,12 @@ import {
   transformTimeMatchesData,
 } from "@utils";
 import { Button, message, Tabs } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
-import { timeMatchesErrorMessages, TimeMatchesTabsEnum } from "./constants";
+import { timeMatchesErrorMessages } from "./constants";
 
 export const TimeMatchesTabs = () => {
-  const { tabs, updateTabs } = useTabs();
   const { eventId, nominationId } = useParams();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -79,13 +77,6 @@ export const TimeMatchesTabs = () => {
         event_id: eventId,
         nomination_id: nominationId,
       });
-
-      await updateTabs([
-        {
-          id: TimeMatchesTabsEnum.RESULTS,
-          disabled: false,
-        },
-      ]);
     } catch (error) {
       const statusCode = error.response.status;
       const errorMessage =
@@ -93,11 +84,58 @@ export const TimeMatchesTabs = () => {
         timeMatchesErrorMessages.default;
       message.error(errorMessage);
     }
-  }, [eventId, nominationId, timeMatches, updateTabs]);
+  }, [eventId, nominationId, timeMatches]);
 
   const handleDownload = useCallback(() => {
     console.log("download file");
   }, []);
+
+  const items = useMemo(
+    () => [
+      {
+        key: "1",
+        label: "Таблица",
+        children: (
+          <TimeMatchesTable
+            editable={
+              stageStatus.registrationFinished &&
+              stageStatus.tournamentStarted &&
+              !stageStatus.tournamentFinished
+            }
+            timeMatches={timeMatches}
+            isLoading={isLoading}
+            isErrorOccurred={isErrorOccurred}
+            onTimeChange={handleTimeChange}
+          />
+        ),
+      },
+      {
+        key: "2",
+        label: "Итоги",
+        disabled: !(
+          stageStatus.registrationFinished &&
+          stageStatus.tournamentStarted &&
+          stageStatus.tournamentFinished
+        ),
+        children: (
+          <TimeMatchesResults
+            timeMatches={timeMatches}
+            isLoading={isLoading}
+            isErrorOccurred={isErrorOccurred}
+          />
+        ),
+      },
+    ],
+    [
+      handleTimeChange,
+      isErrorOccurred,
+      isLoading,
+      stageStatus.registrationFinished,
+      stageStatus.tournamentFinished,
+      stageStatus.tournamentStarted,
+      timeMatches,
+    ]
+  );
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -143,39 +181,7 @@ export const TimeMatchesTabs = () => {
 
   return (
     <Tabs
-      items={[
-        {
-          ...tabs[0],
-          children: (
-            <TimeMatchesTable
-              editable={
-                stageStatus.registrationFinished &&
-                stageStatus.tournamentStarted &&
-                !stageStatus.tournamentFinished
-              }
-              timeMatches={timeMatches}
-              isLoading={isLoading}
-              isErrorOccurred={isErrorOccurred}
-              onTimeChange={handleTimeChange}
-            />
-          ),
-        },
-        {
-          ...tabs[1],
-          disabled: !(
-            stageStatus.registrationFinished &&
-            stageStatus.tournamentStarted &&
-            stageStatus.tournamentFinished
-          ),
-          children: (
-            <TimeMatchesResults
-              timeMatches={timeMatches}
-              isLoading={isLoading}
-              isErrorOccurred={isErrorOccurred}
-            />
-          ),
-        },
-      ]}
+      items={items}
       tabBarExtraContent={{
         right: (
           <Button
