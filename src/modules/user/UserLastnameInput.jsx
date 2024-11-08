@@ -1,11 +1,12 @@
-import React, { useCallback } from "react";
 import { Flex, Input, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/user.scss";
+import { useTranslation } from "react-i18next";
 import { handlePaste } from "@utils";
 
 function UserLastnameInput({ name }) {
+  const { t } = useTranslation();
   const handleKeyPress = (event) => {
     if (event.key === " ") {
       event.preventDefault();
@@ -14,7 +15,7 @@ function UserLastnameInput({ name }) {
 
   return (
     <Flex vertical className="user__lastname-input__flex">
-      <Typography.Text>Фамилия</Typography.Text>
+      <Typography.Text>{t("COMMON.LAST_NAME")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
@@ -30,8 +31,8 @@ function UserLastnameInput({ name }) {
             message: "Фамилия может содержать только буквы",
           },
           {
-            min: 3,
-            message: "Минимум 3 символа",
+            min: 2,
+            message: "Минимум 2 символа",
           },
           {
             max: 255,
@@ -59,7 +60,9 @@ function UserLastnameInput({ name }) {
           onPaste={handlePaste}
         />
       </FormItem>
-      <Typography.Text type="secondary">Пример: Иванов</Typography.Text>
+      <Typography.Text type="secondary">
+        {t("COMMON.LAST_NAME_EXAMPLE")}
+      </Typography.Text>
     </Flex>
   );
 }

@@ -1,7 +1,14 @@
-import { Flex, Input, Select, Space, Typography, Tooltip } from "antd";
-import { CrownOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { Flex, Select, Space, Typography, Tooltip } from "antd";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/user.scss";
+
+const rules = [
+  {
+    required: true,
+    message: "Выберите роль пользователя",
+  },
+];
 
 function UserRoleInput({ name, ...props }) {
   const disabled = props.disabled ?? false;
@@ -11,16 +18,16 @@ function UserRoleInput({ name, ...props }) {
       <Typography.Text>Роль пользователя</Typography.Text>
       <Flex>
         <Space.Compact className="user__role-input__space">
-          <Input
-            prefix={<CrownOutlined />}
-            className="user__role-input__input"
-            disabled
-          />
-          <FormItem name={name} className="user__role-input__formitem">
+          <FormItem
+            name={name}
+            className="user__role-input__formitem"
+            rules={rules}
+          >
             <Select
               disabled={disabled}
               name="role_select"
               value="specialist"
+              placeholder="Выберите роль"
               options={[
                 {
                   value: "admin",

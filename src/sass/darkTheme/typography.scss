@@ -18,3 +18,7 @@
 .dark-theme .ant-typography-secondary {
   color: #8f8f8f !important;
 }
+
+.dark-theme .ant-list-empty-text {
+  color: $disabled-color;
+}
