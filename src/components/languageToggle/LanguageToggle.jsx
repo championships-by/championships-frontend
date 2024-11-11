@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FloatButton } from "antd";
-import { GlobalOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentLanguage } from "@store/languages";
+import { changeLanguageAsync } from "@store/languages";
 import { useTranslation } from "react-i18next";
+import { LANGUAGES } from "@constants";
 
 function LanguageToggle() {
-  const { i18n } = useTranslation();
-  const [language, setLanguage] = useState("ru");
-
-  useEffect(() => {
-    const storedLanguage = localStorage.getItem("language");
-    if (storedLanguage) {
-      setLanguage(storedLanguage);
-      i18n.changeLanguage(storedLanguage);
-    }
-  }, [i18n]);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const language = useSelector(selectCurrentLanguage);
 
   const toggleLanguage = () => {
-    const newLanguage = language === "ru" ? "by" : "ru";
-    setLanguage(newLanguage);
-    i18n.changeLanguage(newLanguage);
-    localStorage.setItem("language", newLanguage);
+    const newLanguage = language === LANGUAGES.RU ? LANGUAGES.BY : LANGUAGES.RU;
+    dispatch(changeLanguageAsync(newLanguage));
   };
 
   return (
     <FloatButton
       style={{ insetInlineEnd: 164 }}
-      description={language === "ru" ? "БЕЛ" : "РУС"}
+      description={t("COMMON.LANGUAGE")}
       onClick={toggleLanguage}
     />
   );

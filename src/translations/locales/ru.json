@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "LANGUAGE": "РУС",
     "NAME": "Имя",
     "NAME_EXAMPLE": "Пример: Иван",
     "LAST_NAME": "Фамилия",

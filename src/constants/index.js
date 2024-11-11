@@ -270,3 +270,8 @@ export const eventFilterOptions = Object.entries(EventFilters).map(
 );
 
 export const defaultEventFilterOptions = Object.values(EventFilters);
+
+export const LANGUAGES = {
+  RU: "ru",
+  BY: "by",
+};
