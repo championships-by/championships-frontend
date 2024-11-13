@@ -4,6 +4,7 @@ import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/user.scss";
 import { handlePaste } from "@utils";
+import { useTranslation } from "react-i18next";
 
 const rules = [
   {
@@ -21,6 +22,7 @@ const rules = [
 ];
 
 function UserPatronymicInput({ name, initialValue }) {
+  const { t } = useTranslation();
   const [hasFeedback, setHasFeedback] = useState(false);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ function UserPatronymicInput({ name, initialValue }) {
 
   return (
     <Flex vertical className="user__patronymic-input__flex">
-      <Typography.Text>Отчество (если таковое имеется)</Typography.Text>
+      <Typography.Text>{t("COMMON.THIRD_NAME_IF_EXIST")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback={hasFeedback}
@@ -58,7 +60,9 @@ function UserPatronymicInput({ name, initialValue }) {
           defaultValue={initialValue}
         />
       </FormItem>
-      <Typography.Text type="secondary">Пример: Иванович</Typography.Text>
+      <Typography.Text type="secondary">
+        {t("COMMON.THIRD_NAME_EXAMPLE")}
+      </Typography.Text>
     </Flex>
   );
 }

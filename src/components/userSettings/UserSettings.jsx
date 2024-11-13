@@ -12,13 +12,16 @@ import { changeUserProfile, getUserSelector } from "@store/users";
 import FormItem from "antd/es/form/FormItem";
 import React, { useEffect, useState } from "react";
 import UserPasswordModal from "./UserPasswordChange";
+import { useTranslation } from "react-i18next";
 
 import "./sass/user-settings.scss";
 
 function UsersSettings() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector(getUserSelector);
   const { isLoading } = user;
+  const [isUserPasswordModalOpen, setIsUserPasswordModalOpen] = useState(false);
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [form] = Form.useForm();
 
@@ -54,27 +57,25 @@ function UsersSettings() {
         dispatch(changeUserProfile(data))
           .then(() => {
             setIsFormLoading(false);
-            message.success("Данные успешно сохранены");
+            message.success(t("COMMON.SUCCESS_MESSAGE"));
           })
           .catch(() => {
             setIsFormLoading(false);
-            message.error(
-              "Ошибка: Невозможно обновить данные пользователя. Обратитесь к администратору."
-            );
+            message.error(t("COMMON.ERROR_MESSAGE"));
           });
       })
       .catch(() => {
-        message.error("Проверьте поля для ввода!");
+        message.error(t("COMMON.CHECK_FIELDS"));
         setIsFormLoading(false);
       });
   };
 
-  const [isUserPasswordModalOpen, setIsUserPasswordModalOpen] = useState(false);
-
   return (
     <>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Настройки пользователя</Typography.Title>
+      <Typography.Title level={2}>
+        {t("USER_SETTINGS.USER_SETTINGS")}
+      </Typography.Title>
       <Divider />
 
       <Form
@@ -104,7 +105,7 @@ function UsersSettings() {
               onClick={() => setIsUserPasswordModalOpen(true)}
               className="change-password-button"
             >
-              Сменить пароль
+              {t("USER_SETTINGS.CHANGE_PASSWORD")}
             </Button>
           </Col>
         </Row>
@@ -117,7 +118,7 @@ function UsersSettings() {
             loading={isFormLoading}
             onClick={handleSubmit}
           >
-            Сохранить настройки
+            {t("USER_SETTINGS.SAVE_SETTINGS")}
           </Button>
         </FormItem>
       </Form>

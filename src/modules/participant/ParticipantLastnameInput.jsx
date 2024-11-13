@@ -19,8 +19,8 @@ function ParticipantLastnameInput({ name, value }) {
           message: "Фамилия может содержать только буквы",
         },
         {
-          min: 3,
-          message: "Минимум 3 символа",
+          min: 2,
+          message: "Минимум 2 символа",
         },
         {
           max: 255,

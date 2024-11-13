@@ -3,6 +3,7 @@ import { usersSlice } from "./users";
 import { eventsSlice } from "./events";
 import { participantsSlice } from "./participants";
 import { teamsSlice } from "./team";
+import { languageSlice } from "./languages";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     events: eventsSlice.reducer,
     participants: participantsSlice.reducer,
     teams: teamsSlice.reducer,
+    language: languageSlice.reducer,
   },
 });
