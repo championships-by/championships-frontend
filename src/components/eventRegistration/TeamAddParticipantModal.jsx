@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Form, Modal, message, Flex } from "antd";
-import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import TeamNominationSelect from "@modules/team/TeamNominationSelect";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
 import ParticipantEquipmentInput from "@modules/participant/ParticipantEquipmentInput";
@@ -12,10 +11,12 @@ import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTea
 import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
 import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
 import { eventApi, competenciesApi, participantApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 import "./sass/event-registration.scss";
 
 function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [nominationsOptions, setNominationOptions] = useState({});
   const [dataNominations, setNomination] = useState({});
@@ -44,11 +45,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
             }))
           );
         })
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        );
+        .catch(() => message.error(t("MESSAGES.GET_DATA_ERROR")));
     }
   }, [isOpen, eventID, teamID]);
 
@@ -92,9 +89,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
 
         setTeamParticipants(nominationsOptions);
       })
-      .catch(() =>
-        message.error("Невозможно получить данные. Обратитесь к администратору")
-      );
+      .catch(() => message.error(t("MESSAGES.GET_DATA_ERROR")));
   };
 
   const onFinish = async () => {
@@ -135,24 +130,24 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
         ],
       };
       await participantApi.addParticipantToNomination(body);
-      message.success("Участник успешно добавлен для участия в компетенции");
+      message.success(t("MESSAGES.SUCCESS_PARTICIPANT_ADD"));
       form.resetFields();
       onOk();
     } catch (error) {
-      message.error("Произошла ошибка.");
+      message.error(t("MESSAGES.ERROR"));
     } finally {
       setIsLoading(false);
     }
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
     setIsLoading(false);
   };
 
   return (
     <Modal
-      title="Добавление участников в компетенцию"
+      title={t("EVENTS.ADD_PARTICIPANT_IN_NOMINATION")}
       open={isOpen}
       onOk={onOk}
       onCancel={onCancel}
@@ -187,9 +182,9 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
         <ParticipantEquipmentInput name="equipment" />
         <Flex gap="middle">
           <Button type="primary" htmlType="submit" loading={isLoading}>
-            Сохранить
+            {t("COMMON.SAVE")}
           </Button>
-          <Button onClick={onCancel}>Отмена</Button>
+          <Button onClick={onCancel}>{t("COMMON.CANCEL")}</Button>
         </Flex>
       </Form>
     </Modal>

@@ -17,10 +17,12 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
 function EventInformation() {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [dataEvent, setEvent] = useState({});
   const [dataNominations, setNomination] = useState([]);
@@ -29,17 +31,17 @@ function EventInformation() {
 
   const columns = [
     {
-      title: "Название компетенции",
+      title: t("EVENTS.NOMINATION_NAME"),
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Количество зарегистрированных участников",
+      title: t("EVENTS.COUNT_OF_REGISTERED_PARTICIPANTS"),
       dataIndex: "participant_count",
       key: "participant_count",
     },
     {
-      title: "Регламент",
+      title: t("COMMON.REGLAMENT"),
       key: "reglament",
       render: (record) => (
         <Space>
@@ -50,7 +52,7 @@ function EventInformation() {
       ),
     },
     {
-      title: "Итоги",
+      title: t("COMMON.RESULTS"),
       key: "results",
       render: (record) => (
         <Space>
@@ -66,7 +68,7 @@ function EventInformation() {
 
   const items = [
     {
-      title: "Мероприятия",
+      title: t("EVENTS.EVENTS"),
       href: ROUTES.EVENTS.PATH,
     },
     {
@@ -88,9 +90,7 @@ function EventInformation() {
           setTimeout(() => setIsLoading(false), 300);
         });
       } catch (error) {
-        message.error(
-          "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
-        );
+        message.error(t("MESSAGES.GET_DATA_ERROR"));
       }
     } else {
       setTimeout(() => setIsLoading(false), 300);
@@ -104,9 +104,9 @@ function EventInformation() {
 
     competenciesApi.getNominationEventInfo(params).then((data) => {
       if (!data.tournament_started) {
-        message.error("Соревнование ещё не началось");
+        message.error(t("MESSAGES.TOURNAMENT_NOT_START"));
       } else if (!data.tournament_finished) {
-        message.error("Соревнование ещё не закончилось");
+        message.error(t("MESSAGES.TOURNAMENT_NOT_FINISHED"));
       } else {
         switch (nomination.kind) {
           case NOMINATIONS.TIME:
@@ -119,7 +119,7 @@ function EventInformation() {
             navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
             break;
           default:
-            message.error("Произошла ошибка");
+            message.error(t("MESSAGES.ERROR"));
             break;
         }
       }
@@ -132,7 +132,9 @@ function EventInformation() {
   return (
     <div className="events__event-information__container">
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Информация о мероприятии</Typography.Title>
+      <Typography.Title level={2}>
+        {t("EVENTS.INFO_ABOUT_EVENT")}
+      </Typography.Title>
       <Divider />
       <Breadcrumb items={items} />
       <Row className="events__event-information__flex-container">
@@ -178,7 +180,9 @@ function EventInformation() {
               flex="1"
               className="events__event-information__align-right"
             >
-              <Typography.Text strong>Дата проведения</Typography.Text>
+              <Typography.Text strong>
+                {t("EVENTS.DATE_OF_HOLDING")}
+              </Typography.Text>
               <br />
               <Typography.Text>
                 {changeDateFormat(dataEvent.holding_start_date) !==
@@ -192,14 +196,16 @@ function EventInformation() {
           </Row>
           <Row className="events__event-information__rows-margin">
             <Col xs={24} sm={24} md={24}>
-              <Typography.Text strong>Место проведения</Typography.Text>
+              <Typography.Text strong>
+                {t("EVENTS.PLACE_OF_HOLDING")}
+              </Typography.Text>
               <br />
               <Typography.Text>{dataEvent.event_place}</Typography.Text>
             </Col>
           </Row>
           <Row className="events__event-information__rows-margin">
             <Col xs={24} sm={24} md={12}>
-              <Typography.Text strong>Организатор</Typography.Text>
+              <Typography.Text strong>{t("COMMON.ORGANIZER")}</Typography.Text>
               <br />
               <Typography.Text>
                 {dataEvent.educational_institution}
@@ -212,7 +218,9 @@ function EventInformation() {
               flex="1"
               className="events__event-information__align-right"
             >
-              <Typography.Text strong>Уровень мероприятия</Typography.Text>
+              <Typography.Text strong>
+                {t("COMMON.LEVEL_OF_EVENT")}
+              </Typography.Text>
 
               <br />
               <Typography.Text>
@@ -222,7 +230,9 @@ function EventInformation() {
           </Row>
           <Row className="events__event-information__rows-margin">
             <Col>
-              <Typography.Text strong>Что нужно для участия?</Typography.Text>
+              <Typography.Text strong>
+                {t("COMMON.WHAT_NEED_TO_PARTICIPATE")}
+              </Typography.Text>
               <br />
               <Typography.Text>{dataEvent.participation_needs}</Typography.Text>
             </Col>
@@ -239,10 +249,12 @@ function EventInformation() {
                   }
                   type="primary"
                 >
-                  Регистрация участников
+                  {t("EVENTS.PARTICIPANT_REGISTRATION")}
                 </Button>
               ) : (
-                <Typography.Text>Регистрация закрыта</Typography.Text>
+                <Typography.Text>
+                  {t("EVENTS.REGISTRATION_CLOSED")}
+                </Typography.Text>
               )}
             </Col>
             <Col
@@ -252,7 +264,7 @@ function EventInformation() {
               className="events__event-information__align-right"
             >
               <Typography.Text strong>
-                Email для вопросов участников
+                {t("COMMON.EMAIL_FOR_QUESTIONS")}
               </Typography.Text>
               <br />
               <Typography.Text>
@@ -264,7 +276,9 @@ function EventInformation() {
           </Row>
         </Col>
       </Row>
-      <Typography.Title level={3}>Описание мероприятия</Typography.Title>
+      <Typography.Title level={3}>
+        {t("EVENTS.EVENT_DESCRIPTION")}
+      </Typography.Title>
       <Typography.Text className="events__event-information__text">
         {dataEvent.description}
       </Typography.Text>
@@ -274,17 +288,17 @@ function EventInformation() {
         type="primary"
         onClick={() => openPdf(dataEvent.event_rules)}
       >
-        Положение
+        {t("COMMON.REGULATION")}
       </Button>
       <br />
       <Typography.Title level={3} className="event-settings__compitation-title">
-        Компетенции
+        {t("COMMON.NOMINATIONS")}
       </Typography.Title>
       <Table
         columns={columns}
         dataSource={dataNominations}
         locale={{
-          emptyText: "Компетенции пока отсутствуют",
+          emptyText: t("COMMON.NO_NOMINATIONS"),
         }}
         rowKey="id"
         pagination={false}

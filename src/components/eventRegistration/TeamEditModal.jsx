@@ -4,8 +4,10 @@ import { Button, Flex, Form, Modal, message } from "antd";
 import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
 import { teamApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
@@ -13,7 +15,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
 
   const onFinish = async () => {
     if (form.getFieldValue("teamName") === teamName) {
-      message.success("Название команды успешно изменено");
+      message.success(t("EVENTS.SUCCESS_EDIT_TEAM_NAME"));
       onOk();
     } else {
       setIsLoading(true);
@@ -25,8 +27,8 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
 
         await teamApi.updateTeam(body);
 
-      message.success("Название команды успешно изменено");
-        
+        message.success(t("EVENTS.SUCCESS_EDIT_TEAM_NAME"));
+
         form.resetFields();
         onOk();
       } catch {
@@ -37,7 +39,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
     setIsLoading(false);
   };
 
@@ -65,7 +67,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
 
   return (
     <Modal
-      title="Редактирование команды"
+      title={t("EVENTS.EDIT_TEAM")}
       className="event-registration__team-edit-modal"
       open={isOpen}
       onOk={onOk}
@@ -89,9 +91,9 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
         />
         <Flex gap="middle">
           <Button type="primary" htmlType="submit" loading={isLoading}>
-            Сохранить
+            {t("COMMON.SAVE")}
           </Button>
-          <Button onClick={onCancel}>Отмена</Button>
+          <Button onClick={onCancel}>{t("COMMON.CANCEL")}</Button>
         </Flex>
       </Form>
     </Modal>

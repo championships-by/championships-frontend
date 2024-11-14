@@ -8,10 +8,12 @@ import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import { eventApi } from "@api";
 import { ROUTES } from "@constants";
+import { useTranslation } from "react-i18next";
 
 import "./sass/event-registration.scss";
 
 function EventsRegistration() {
+  const { t } = useTranslation();
   const [isAddTeamModalOpen, setIsAddTeamModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [dataAllTeams, setAllTeams] = useState([]);
@@ -23,7 +25,7 @@ function EventsRegistration() {
 
   const items = [
     {
-      title: "Мероприятия",
+      title: t("EVENTS.EVENTS"),
       href: ROUTES.EVENTS.PATH,
     },
     {
@@ -31,14 +33,14 @@ function EventsRegistration() {
       href: ROUTES.EVENTS_DESCRIPTION.PATH(dataEvent?.event?.id),
     },
     {
-      title: "Регистрация участников",
+      title: t("EVENTS.PARTICIPANT_REGISTRATION"),
     },
   ];
 
   const tabsitems = [
     {
       key: "1",
-      label: "Мои команды",
+      label: t("EVENTS.MY_TEAMS"),
       children: (
         <>
           <AllTeamsTable teamsData={dataAllTeams} />
@@ -47,7 +49,7 @@ function EventsRegistration() {
     },
     {
       key: "2",
-      label: "Зарегистрированные команды",
+      label: t("EVENTS.REGISTERED_TEAMS"),
       children: <TeamsTable teamsData={dataTeams} />,
     },
   ];
@@ -87,7 +89,9 @@ function EventsRegistration() {
       <Loader show={isLoading} />
       <Row align="bottom">
         <Col>
-          <Typography.Title level={2}>Регистрация участников</Typography.Title>
+          <Typography.Title level={2}>
+            {t("EVENTS.PARTICIPANT_REGISTRATION")}
+          </Typography.Title>
         </Col>
         <Col flex="auto">
           {activeTab === "1" && (
@@ -96,7 +100,7 @@ function EventsRegistration() {
                 type="primary"
                 onClick={() => setIsAddTeamModalOpen(true)}
               >
-                Добавить команду
+                {t("EVENTS.ADD_TEAM")}
               </Button>
             </AdminPanelControls>
           )}
