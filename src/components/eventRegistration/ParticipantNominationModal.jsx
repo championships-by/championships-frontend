@@ -4,8 +4,10 @@ import { Button, Flex, Form, Modal, message } from "antd";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
 import TeamNominationInput from "@modules/team/TeamNominationSelect";
 import { eventApi, participantApi, userApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
@@ -13,12 +15,12 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
   const { eventID } = useParams();
 
   const onFinish = () => {
-    message.success("Участник успешно добавлен для участия в компетенции");
+    message.success(t("MESSAGES.SUCCESS_PARTICIPANT_ADD"));
     setIsLoading(false);
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
     setIsLoading(false);
   };
 
@@ -34,11 +36,7 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
             }))
           )
         )
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        );
+        .catch(() => message.error(t("MESSAGES.GET_DATA_ERROR")));
 
       participantApi
         .getParticipant()
@@ -50,11 +48,7 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
             }))
           )
         )
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        )
+        .catch(() => message.error(t("MESSAGES.GET_DATA_ERROR")))
         .finally(() => setTimeout(() => setIsLoading(false), 300));
     }
   }, [isOpen, eventID]);
@@ -69,7 +63,7 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
 
   return (
     <Modal
-      title="Редактирование команды"
+      title={t("EVENTS.EDIT_TEAM")}
       className="event-registration__participant-nomination-modal"
       open={isOpen}
       onOk={onOk}
@@ -102,9 +96,9 @@ function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
               create_team_request();
             }}
           >
-            Сохранить
+            {t("COMMON.SAVE")}
           </Button>
-          <Button onClick={onCancel}>Отмена</Button>
+          <Button onClick={onCancel}>{t("COMMON.CANCEL")}</Button>
         </Flex>
       </Form>
     </Modal>

@@ -8,10 +8,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomCalendar } from "./CustomCalendar";
 import { FilterSearchPanel } from "./FilterSearchPanel";
+import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
 function Events() {
+  const { t } = useTranslation();
   const { isMobile, isTablet } = useDevice();
   const dispatch = useDispatch();
   const {
@@ -36,17 +38,21 @@ function Events() {
   const tabsitems = [
     {
       key: "1",
-      label: `Предстоящие (${events?.future ? events.future.length : 0})`,
+      label: `${t("EVENTS.FUTURE")} (${
+        events?.future ? events.future.length : 0
+      })`,
       children: <EventsList events={events?.future} />,
     },
     {
       key: "2",
-      label: `В этот день (${events?.on_date ? events.on_date.length : 0})`,
+      label: `${t("EVENTS.ON_DAY")} (${
+        events?.on_date ? events.on_date.length : 0
+      })`,
       children: <EventsList events={events?.on_date} />,
     },
     {
       key: "3",
-      label: `Прошедшие (${events?.past ? events.past.length : 0})`,
+      label: `${t("EVENTS.PAST")} (${events?.past ? events.past.length : 0})`,
       children: <EventsList events={events?.past} />,
     },
   ];
@@ -54,7 +60,7 @@ function Events() {
   return (
     <>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Мероприятия</Typography.Title>
+      <Typography.Title level={2}>{t("EVENTS.EVENTS")}</Typography.Title>
       <Divider />
       <Flex vertical gap={500}>
         <Flex vertical={isMobile || isTablet} gap="small">

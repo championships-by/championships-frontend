@@ -4,6 +4,7 @@ import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
 import { Locale } from "@constants";
+import { useTranslation } from "react-i18next";
 
 const getRowSpan = (data, index, key) => {
   let count = 1;
@@ -18,6 +19,7 @@ const getRowSpan = (data, index, key) => {
 };
 
 function AllTeamsTable({ teamsData }) {
+  const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState();
@@ -44,7 +46,7 @@ function AllTeamsTable({ teamsData }) {
 
   const columns = [
     {
-      title: "Команда",
+      title: t("COMMON.TEAM"),
       key: "team",
       width: "20%",
       dataIndex: "name",
@@ -60,7 +62,7 @@ function AllTeamsTable({ teamsData }) {
       sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
-      title: "Участник",
+      title: t("COMMON.PARTICIPANT"),
       key: "participant_name",
       dataIndex: "participants",
       width: "20%",
@@ -80,7 +82,7 @@ function AllTeamsTable({ teamsData }) {
       ),
     },
     {
-      title: "Действия",
+      title: t("COMMON.ACTIONS"),
       key: "action",
       width: "10%",
       onCell: (record, rowIndex) => {
@@ -94,14 +96,14 @@ function AllTeamsTable({ teamsData }) {
       },
       render: (record) => (
         <Flex>
-          <Tooltip title="Редактировать">
+          <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
               icon={<EditOutlined />}
               onClick={() => openEditModal(record.id, record.name)}
             />
           </Tooltip>
-          <Tooltip title="Добавить">
+          <Tooltip title={t("COMMON.ADD")}>
             <Button
               type="text"
               icon={<UsergroupAddOutlined />}

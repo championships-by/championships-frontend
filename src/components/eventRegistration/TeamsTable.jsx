@@ -4,6 +4,7 @@ import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
 import { Locale } from "@constants";
+import { useTranslation } from "react-i18next";
 
 const transformTeamsData = (teamsData) => {
   const transformedData = [];
@@ -48,6 +49,7 @@ const getRowSpan = (data, index, key) => {
 };
 
 function TeamsTable({ teamsData }) {
+  const { t } = useTranslation;
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState();
@@ -79,7 +81,7 @@ function TeamsTable({ teamsData }) {
 
   const columns = [
     {
-      title: "Команда",
+      title: t("COMMON.TEAM"),
       key: "team",
       dataIndex: "team_name",
       width: "20%",
@@ -95,19 +97,19 @@ function TeamsTable({ teamsData }) {
       },
     },
     {
-      title: "Участник",
+      title: t("COMMON.PARTICIPANT"),
       key: "participant_name",
       dataIndex: "participant_name",
       width: "20%",
     },
     {
-      title: "Компетенция",
+      title: t("COMMON.NOMINATION"),
       key: "nomination",
       dataIndex: "nomination_name",
       width: "20%",
     },
     {
-      title: "Действия",
+      title: t("COMMON.ACTIONS"),
       key: "action",
       width: "10%",
       onCell: (record, rowIndex) => {
@@ -122,14 +124,14 @@ function TeamsTable({ teamsData }) {
       },
       render: (record) => (
         <Flex>
-          <Tooltip title="Редактировать">
+          <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
               icon={<EditOutlined />}
               onClick={() => openEditModal(record.team_id, record.team_name)}
             />
           </Tooltip>
-          <Tooltip title="Добавить">
+          <Tooltip title={t("COMMON.ADD")}>
             <Button
               type="text"
               icon={<UsergroupAddOutlined />}

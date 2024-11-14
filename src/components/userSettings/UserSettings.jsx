@@ -57,15 +57,15 @@ function UsersSettings() {
         dispatch(changeUserProfile(data))
           .then(() => {
             setIsFormLoading(false);
-            message.success(t("COMMON.SUCCESS_MESSAGE"));
+            message.success(t("MESSAGES.SUCCESS_MESSAGE"));
           })
           .catch(() => {
             setIsFormLoading(false);
-            message.error(t("COMMON.ERROR_MESSAGE"));
+            message.error(t("MESSAGES.USER_UPDATE_ERROR"));
           });
       })
       .catch(() => {
-        message.error(t("COMMON.CHECK_FIELDS"));
+        message.error(t("MESSAGES.CHECK_FIELDS"));
         setIsFormLoading(false);
       });
   };
