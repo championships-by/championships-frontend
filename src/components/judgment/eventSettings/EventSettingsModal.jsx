@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserSelector } from "@store/users";
+import { useTranslation } from "react-i18next";
 
 function EventSettingsCompitations({
   isOpen,
@@ -20,6 +21,7 @@ function EventSettingsCompitations({
   nominationId,
   eventName,
 }) {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [inputName, setInputName] = useState("");
   const [inputReglament, setInputReglament] = useState("");
@@ -54,7 +56,7 @@ function EventSettingsCompitations({
 
           setIsTournamentStarted(data.tournament_started);
           if (data.tournament_started) {
-            message.error("Турнир уже начался");
+            message.error(t("MESSAGES.TOURNAMENT_ALREADY_START"));
           }
 
           setInputName(data.nomination_name);
@@ -100,7 +102,7 @@ function EventSettingsCompitations({
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
     setIsLoading(false);
   };
 
@@ -111,7 +113,7 @@ function EventSettingsCompitations({
         !selectedValue ||
         (selectedValue === NOMINATIONS.CRITERIA && criteria.length === 0)
       ) {
-        message.error("Выберите тип соревнования");
+        message.error(t("MESSAGES.CHOOSE_TYPE_OF_TOURNAMENT"));
         setIsLoading(false);
         return;
       }
@@ -158,7 +160,7 @@ function EventSettingsCompitations({
           } catch {}
         }
 
-        message.success("Компетенция успешно добавлена");
+        message.success(t("COMMON.SUCCESS_NOMINATION_ADD"));
         onOk();
         onAdd();
         setInputName("");
@@ -195,7 +197,7 @@ function EventSettingsCompitations({
           }
         } catch {}
 
-        message.success("Компетенция успешно изменена");
+        message.success(t("MESSAGES.SUCCESS_NOMINATION_EDIT"));
         onOk();
         setInputName("");
         setInputReglament("");
@@ -260,10 +262,10 @@ function EventSettingsCompitations({
             loading={isLoading}
             htmlType="submit"
           >
-            Сохранить
+            {t("COMMON.SAVE")}
           </Button>
           <Button className="event-settings__cancelButton" onClick={onCancel}>
-            Отмена
+            {t("COMMON.CANCEL")}
           </Button>
         </Flex>
       </Form>

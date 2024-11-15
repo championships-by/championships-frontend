@@ -5,8 +5,10 @@ import UserModal from "@components/usersControl/UserModal";
 import { Locale, ModalType, ROLE_FILTERS } from "@constants";
 import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function UsersTable() {
+  const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState();
   const users = useSelector(getUsersSelector);
@@ -23,7 +25,7 @@ function UsersTable() {
 
   const columns = [
     {
-      title: "Фамилия имя отчество",
+      title: t("COMMON.SURNAME_NAME_THIRD_NAME"),
       key: "fullname",
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
@@ -36,15 +38,15 @@ function UsersTable() {
       },
     },
     {
-      title: "Роль",
+      title: t("COMMON.ROLE"),
       key: "role",
       render: (_, { role }) =>
         role === "admin" ? (
-          <Typography.Text>Администратор</Typography.Text>
+          <Typography.Text>{t("COMMON.ADMIN")}</Typography.Text>
         ) : role === "judge" ? (
-          <Typography.Text>Судья</Typography.Text>
+          <Typography.Text>{t("COMMON.JUDGE")}</Typography.Text>
         ) : role === "specialist" ? (
-          <Typography.Text>Менеджер</Typography.Text>
+          <Typography.Text>{t("COMMON.MANAGER")}</Typography.Text>
         ) : (
           <Typography.Text />
         ),
@@ -52,11 +54,11 @@ function UsersTable() {
       onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
     {
-      title: "Действия",
+      title: t("COMMON.ACTIONS"),
       key: "action",
       render: (_, record) => (
         <Flex>
-          <Tooltip title="Редактирование">
+          <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
               icon={<EditOutlined />}

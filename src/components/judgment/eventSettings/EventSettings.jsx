@@ -38,19 +38,17 @@ import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi } from "@api";
 import { Locale, ROUTES, NOMINATION_TYPES, ModalType } from "@constants";
+import { useTranslation } from "react-i18next";
 
 import "./sass/event-settings.scss";
 
 const eventsBreadcromb = {
-  title: "Управление мероприятиями",
+  title: ROUTES.JUDGMENT.TITLE,
   href: ROUTES.JUDGMENT.PATH,
 };
 
-const editEventBreadcromb = {
-  title: "Редактирование мероприятия",
-};
-
 function EventSettings() {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [loadings, setLoadings] = useState([]);
   const [isAddCompitationModalOpen, setIsAddCompitationModalOpen] =
@@ -72,26 +70,30 @@ function EventSettings() {
   const [dataNominationID, setNominationID] = useState();
   const [participantsInfo, setParticipantsInfo] = useState([]);
 
+  const editEventBreadcromb = {
+    title: t("EVENTS.EVENT_EDIT"),
+  };
+
   const columns = [
     {
-      title: "Название компетенции",
+      title: t("EVENTS.NOMINATION_NAME"),
       dataIndex: "name",
       key: "name",
       sorter: (a, b) => a.name.localeCompare(b.name),
     },
     {
-      title: "Тип соревнований",
+      title: t("EVENTS.TYPE_OF_TOURNAMENTS"),
       dataIndex: "kind",
       key: "kind",
       filters: [
-        { text: "По времени", value: NOMINATION_TYPES.TIME },
-        { text: "По критериям", value: NOMINATION_TYPES.CRITERIA },
-        { text: "Плей-офф", value: NOMINATION_TYPES.OLYMPIC },
+        { text: NOMINATION_TYPES.TIME, value: NOMINATION_TYPES.TIME },
+        { text: NOMINATION_TYPES.CRITERIA, value: NOMINATION_TYPES.CRITERIA },
+        { text: NOMINATION_TYPES.OLYMPIC, value: NOMINATION_TYPES.OLYMPIC },
       ],
       onFilter: (value, record) => record.kind.includes(value),
     },
     {
-      title: "Регламент",
+      title: t("COMMON.REGLAMENT"),
       key: "reglament",
       render: (record) => (
         <Space>
@@ -104,32 +106,32 @@ function EventSettings() {
       ),
     },
     {
-      title: "Действия",
+      title: t("COMMON.ACTIONS"),
       key: "action",
       render: (record) => (
         <Space>
-          <Tooltip title="Редактировать">
+          <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
               icon={<EditOutlined />}
               onClick={() => openEditModal(record.id)}
             />
           </Tooltip>
-          <Tooltip title="Начать соревнование">
+          <Tooltip title={t("EVENTS.START_TOURNAMENT")}>
             <Button
               type="text"
               icon={<TrophyOutlined />}
               onClick={() => openCompetenciesModal(record)}
             />
           </Tooltip>
-          <Tooltip title="Участники">
+          <Tooltip title={t("COMMON.PARTICIPANTS")}>
             <Button
               type="text"
               icon={<TeamOutlined />}
               onClick={() => openParticipantModal(record)}
             />
           </Tooltip>
-          <Tooltip title="Удалить">
+          <Tooltip title={t("COMMON.DELETE")}>
             <Button
               type="text"
               icon={<DeleteOutlined />}
@@ -189,11 +191,11 @@ function EventSettings() {
   const translateTypeFromEnglishIntoRussian = (type) => {
     switch (type) {
       case "time":
-        return "По времени";
+        return NOMINATION_TYPES.TIME;
       case "criteria":
-        return "По критериям";
+        return NOMINATION_TYPES.CRITERIA;
       case "olympic":
-        return "Плей-офф";
+        return NOMINATION_TYPES.OLYMPIC;
       default:
         return type;
     }
@@ -201,11 +203,11 @@ function EventSettings() {
 
   const translateTypeFromRussianIntoEnglish = (type) => {
     switch (type) {
-      case "По критериям":
+      case NOMINATION_TYPES.TIME:
         return "criteria";
-      case "По времени":
+      case NOMINATION_TYPES.CRITERIA:
         return "time";
-      case "Плей-офф":
+      case NOMINATION_TYPES.OLYMPIC:
         return "olympic";
       default:
         return type;
@@ -233,31 +235,29 @@ function EventSettings() {
 
     if (eventInfo.length > 1 || !published) {
       Modal.confirm({
-        title: "Вы уверены?",
-        content: "Вы уверены что хотите удалить эту компетенцию?",
+        title: t("COMMON.ARE_YOU_SURE"),
+        content: t("EVENTS.ARE_YOU_SURE_REMOVE_NOMINATION"),
         footer: (_, { OkBtn, CancelBtn }) => (
           <>
             <OkBtn />
             <CancelBtn />
           </>
         ),
-        okText: "Да",
+        okText: t("COMMON.YES"),
         onOk: () => {
           getNominationInfo()
             .then(() => {
-              message.success("Компетенция успешно удалена");
+              message.success(t("MESSAGES.SUCCESS_DELETE_NOMINATION"));
               getNominations();
             })
             .catch(() => {
-              message.error("При удалении произошла ошибка");
+              message.error(t("MESSAGES.DELETE_ERROR"));
             });
         },
-        cancelText: "Отмена",
+        cancelText: t("COMMON.CANCEL"),
       });
     } else {
-      message.error(
-        "Прежде чем удалить последнюю компетенцию, снимите мероприятие с публикации"
-      );
+      message.error(t("MESSAGES.DISABLE_PUBLISH_FOR_REMOVE_NOMINATION"));
     }
   };
   const openCompetenciesModal = async (record) => {
@@ -275,7 +275,7 @@ function EventSettings() {
       const data = await competenciesApi.getNominationEventInfo(params);
 
       if (data.tournament_finished) {
-        message.error("Турнир уже завершился");
+        message.error(t("MESSAGES.TOURNAMENT_FINISHED"));
         return;
       } else if (data.tournament_started) {
         switch (competitionType) {
@@ -301,16 +301,15 @@ function EventSettings() {
         break;
       default:
         Modal.confirm({
-          title: "Вы уверены?",
-          content:
-            "Вы уверены, что хотите начать соревнование? Отменить данное действие будет невозможно!",
+          title: t("COMMON.ARE_YOU_SURE"),
+          content: t("MESSAGES.ARE_YOU_SURE_TO_START_TOURNAMENT"),
           footer: (_, { OkBtn, CancelBtn }) => (
             <>
               <OkBtn />
               <CancelBtn />
             </>
           ),
-          okText: "Да",
+          okText: t("COMMON.YES"),
           onOk: async () => {
             try {
               switch (competitionType) {
@@ -318,7 +317,7 @@ function EventSettings() {
                   let timeResult = await startTimeStage(eventId, nominationID);
                   switch (timeResult) {
                     case "success":
-                      message.success("Соревнование успешно начато");
+                      message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
                       navigate(
                         ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
                       );
@@ -332,7 +331,7 @@ function EventSettings() {
                   );
                   switch (creteriaResult) {
                     case "success":
-                      message.success("Соревнование успешно начато");
+                      message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
                       navigate(
                         ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
                       );
@@ -342,7 +341,7 @@ function EventSettings() {
               }
             } catch (error) {}
           },
-          cancelText: "Отмена",
+          cancelText: t("COMMON.CANCEL"),
         });
         break;
     }
@@ -409,9 +408,7 @@ function EventSettings() {
           setTimeout(() => setIsLoading(false), 300);
         });
       } catch (error) {
-        message.error(
-          "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
-        );
+        message.error(t("MESSAGES.GET_DATA_ERROR"));
       }
     } else {
       setTimeout(() => setIsLoading(false), 300);
@@ -458,7 +455,7 @@ function EventSettings() {
     try {
       await eventApi.changeEvent(body);
     } catch (error) {
-      message.error("При редактировании мероприятия произошла ошибка.");
+      message.error("MESSAGES.EVENT_EDIT_ERROR");
       eventSuccess = false;
     }
 
@@ -471,7 +468,7 @@ function EventSettings() {
         formDataLogo.append("event_id", eventID);
         await eventApi.changeLogo(formDataLogo);
       } catch (error) {
-        message.error("При изменении логотипа произошла ошибка.");
+        message.error(t("MESSAGES.LOGO_EDIT_ERROR"));
         logoSuccess = false;
       }
     }
@@ -485,7 +482,7 @@ function EventSettings() {
         formDataRegulation.append("event_id", eventID);
         await eventApi.changeRegulation(formDataRegulation);
       } catch (error) {
-        message.error("При изменении положения о проведении произошла ошибка.");
+        message.error(t("MESSAGES.REGULATION_EDIT_ERROR"));
         regulationSuccess = false;
       }
     }
@@ -500,13 +497,13 @@ function EventSettings() {
   const onFinish = async () => {
     const success = await onSubmit();
     if (success) {
-      message.success("Данные успешно сохранены");
+      message.success(t("MESSAGES.SUCCESS_MESSAGE"));
       navigate(ROUTES.JUDGMENT.PATH);
     }
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
   };
 
   const enterLoading = (index) => {
@@ -526,7 +523,7 @@ function EventSettings() {
   return (
     <div>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>Редактирование мероприятия</Typography.Title>
+      <Typography.Title level={2}>{t("EVENTS.EVENT_EDIT")}</Typography.Title>
       <Breadcrumb items={items} />
       <Row gutter={16}>
         <Col xs={24} sm={24} md={18} lg={8}>
@@ -539,7 +536,9 @@ function EventSettings() {
             onFinishFailed={onFinishFailed}
             onValuesChange={onValuesChange}
           >
-            <Typography.Title level={3}>Данные мероприятия</Typography.Title>
+            <Typography.Title level={3}>
+              {t("EVENTS.EVENT_DATA")}
+            </Typography.Title>
             <EventName name="name" value={values.name} />
             <EventLogo
               name="event_logo"
@@ -592,7 +591,7 @@ function EventSettings() {
               value={values.participation_needs}
             />
             <Button type="primary" htmlType="submit" loading={loadings[0]}>
-              Сохранить данные
+              {t("COMMON.SAVE")}
             </Button>
           </Form>
         </Col>
@@ -601,14 +600,14 @@ function EventSettings() {
             level={3}
             className="event-settings__compitation-title"
           >
-            Компетенции
+            {t("COMMON.NOMINATIONS")}
           </Typography.Title>
           <Button
             onClick={() => setIsAddCompitationModalOpen(true)}
             type="primary"
             className="event-settings__add-compitation-btn"
           >
-            Добавить компетенцию
+            {t("EVENTS.ADD_NOMINATION")}
           </Button>
           <Table
             columns={columns}
@@ -619,7 +618,7 @@ function EventSettings() {
         </Col>
       </Row>
       <CompitationModal
-        name="Добавить компетенцию"
+        name={t("EVENTS.ADD_NOMINATION")}
         isOpen={isAddCompitationModalOpen}
         onOk={() => setIsAddCompitationModalOpen(false)}
         onCancel={() => setIsAddCompitationModalOpen(false)}
@@ -628,7 +627,7 @@ function EventSettings() {
         eventName={dataEvent?.event?.name}
       />
       <CompitationModal
-        name="Редактировать компетенцию"
+        name={t("EVENTS.EDIT_NOMINATION")}
         isOpen={isEditModalOpen}
         onOk={() => setIsEditModalOpen(false)}
         onCancel={() => setIsEditModalOpen(false)}
@@ -641,14 +640,14 @@ function EventSettings() {
         isOpen={openTrophyModal}
         onOk={() => setTrophyModal(false)}
         onCancel={() => setTrophyModal(false)}
-        name="Настройки плей-офф"
+        name={t("EVENTS.PLAYOFF_SETTINGS")}
         nominationID={dataNominationID}
       ></CompetitionModal>
       <ParticipantModal
         isOpen={participantModal}
         onOk={() => setParticipantModal(false)}
         onCancel={() => setParticipantModal(false)}
-        name="Участники соревнования"
+        name={t("EVENTS.TOURNAMENT_PARTICIPANTS")}
         data={participantsInfo}
       ></ParticipantModal>
     </div>

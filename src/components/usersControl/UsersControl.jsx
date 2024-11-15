@@ -8,10 +8,12 @@ import { Button, message, Flex, Typography, Row, Col, Divider } from "antd";
 import SearchInput from "@modules/search/SearchInput";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
+import { useTranslation } from "react-i18next";
 
 import "./sass/users-control.scss";
 
 function UsersControl() {
+  const { t } = useTranslation();
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const dispatch = useDispatch();
   const users = useSelector(getUsersSelector);
@@ -38,7 +40,7 @@ function UsersControl() {
       <Row align="bottom">
         <Col xs={24} sm={24} md={14}>
           <Typography.Title level={2}>
-            Управление пользователями
+            {t("COMMON.USER_MANAGEMENT")}
           </Typography.Title>
         </Col>
         <Col flex="auto">
@@ -49,7 +51,7 @@ function UsersControl() {
                 type="primary"
                 onClick={() => setIsAddUserModalOpen(true)}
               >
-                Добавить пользователя
+                {t("COMMON.CREATE_USER")}
               </Button>
             </AdminPanelControls>
           </Flex>

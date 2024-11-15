@@ -16,7 +16,6 @@ import ParticipantInformation from "@components/participants/ParticipantInformat
 import Unauthorized from "@components/unauthorized/Unauthorized";
 import UsersControl from "@components/usersControl/UsersControl";
 import UserSettings from "@components/userSettings/UserSettings";
-import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
 import AboutProgram from "@components/userSupport/AboutProgram";
 import Feedback from "@components/userSupport/Feedback";
 import UserSupport from "@components/userSupport/UserSupport";
@@ -88,20 +87,6 @@ function App() {
                       ]}
                     >
                       <UserSettings />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path={ROUTER_ROUTES.USER_SETTINGS_TEST}
-                  element={
-                    <ProtectedRoute
-                      allowedRoles={[
-                        Roles.ADMIN,
-                        Roles.JUDGE,
-                        Roles.SPECIALIST,
-                      ]}
-                    >
-                      <UsersSettingsTest />
                     </ProtectedRoute>
                   }
                 />

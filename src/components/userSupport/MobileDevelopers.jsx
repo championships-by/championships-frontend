@@ -4,10 +4,12 @@ import bntuLogo from "@assets/img/bntu-logo.png";
 import fitrLogo from "@assets/img/fitr-logo.png";
 import schoolLogo from "@assets/img/school-logo.png";
 import { bntuSite, zubronokSite, fitrSite, gymnSite } from "@constants";
+import { useTranslation } from "react-i18next";
 
 import "./sass/user-support.scss";
 
 function MobileDevelopers() {
+  const { t } = useTranslation();
   return (
     <Row align="middle" gutter={[16, 24]}>
       <Col span={8}>
@@ -16,9 +18,8 @@ function MobileDevelopers() {
         </a>
       </Col>
       <Col span={16}>
-        <Typography.Text strong>Учреждение образования </Typography.Text>
         <Typography.Text strong className="user-support__about__institution">
-          «Национальной детский образовательно-оздоровительный центр «Зубренок»
+          {t("USER_SUPPORT.ZUBRONOK")}
         </Typography.Text>
       </Col>
       <Col span={8}>
@@ -31,11 +32,7 @@ function MobileDevelopers() {
       </Col>
       <Col span={16}>
         <Typography.Text strong className="user-support__about__institution">
-          Факультет информационных технологий и робототехники{" "}
-        </Typography.Text>
-        <Typography.Text strong>
-          учреждения образования «Белорусский национальный технический
-          университет»
+          {t("USER_SUPPORT.BNTU")}
         </Typography.Text>
       </Col>
       <Col span={8}>
@@ -44,11 +41,8 @@ function MobileDevelopers() {
         </a>
       </Col>
       <Col span={16}>
-        <Typography.Text strong>
-          Государственное учреждение образования{" "}
-        </Typography.Text>
         <Typography.Text strong className="user-support__about__institution">
-          «Гимназия №61 г.Минска»
+          {t("USER_SUPPORT.GYMN_61")}
         </Typography.Text>
       </Col>
     </Row>

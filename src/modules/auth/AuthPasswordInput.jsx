@@ -4,8 +4,10 @@ import { EyeInvisibleOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/auth.scss";
 import { mailZubronok } from "@constants";
+import { useTranslation } from "react-i18next";
 
 function AuthPasswordInput({ value, onChange }) {
+  const { t } = useTranslation();
   return (
     <FormItem
       name="Password"
@@ -15,20 +17,20 @@ function AuthPasswordInput({ value, onChange }) {
       rules={[
         {
           required: true,
-          message: "Пожалуйста, введите пароль",
+          message: t("RULES.PLEASE_ENTER_PASSWORD"),
         },
       ]}
     >
       <Flex vertical>
         <Input.Password
-          placeholder="Пароль..."
+          placeholder={`${t("COMMON.PASSWORD")}...`}
           iconRender={() => <EyeInvisibleOutlined />}
           id="user_password_input"
           value={value}
           onChange={(event) => onChange(event.target.value)}
         />
         <Typography.Text type="secondary">
-          По всем возникающим вопросам обращайтесь к администратору портала
+          {t("COMMON.CONTANT_WITH_ADMINISTRATOR")}
         </Typography.Text>
         <a href={`mailto:${mailZubronok}`}>{mailZubronok}</a>
       </Flex>

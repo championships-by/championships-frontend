@@ -7,8 +7,10 @@ import { ROUTES } from "@constants";
 import { Button, Col, Divider, Row, Typography, Flex } from "antd";
 import { useEffect, useState } from "react";
 import EventCreateModal from "./EventCreateModal";
+import { useTranslation } from "react-i18next";
 
 function JudgmentEvents() {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [dataEvents, setEvents] = useState([]);
   const [IsEventCreateModalOpen, setIsEventCreateModalOpen] = useState(false);
@@ -63,7 +65,7 @@ function JudgmentEvents() {
       <Row align="bottom">
         <Col xs={24} sm={24} md={14}>
           <Typography.Title level={2}>
-            Управление мероприятиями
+            {t("EVENTS.EVENTS_CONTOL")}
           </Typography.Title>
         </Col>
         <Col flex="auto">
@@ -77,7 +79,7 @@ function JudgmentEvents() {
                 {ROUTES.JUDGMENT_CREATE.TITLE}
               </Button>
               <EventCreateModal
-                name="Добавить мероприятие"
+                name={t("EVENTS.CREATE_EVENT")}
                 isOpen={IsEventCreateModalOpen}
                 onOk={() => setIsEventCreateModalOpen(false)}
                 onCancel={() => setIsEventCreateModalOpen(false)}

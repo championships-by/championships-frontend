@@ -6,12 +6,14 @@ import dayjs from "dayjs";
 import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function ParticipantsTable({ ParticipantData, getParticipant }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const columns = [
     {
-      title: "Фамилия имя отчество",
+      title: t("COMMON.SURNAME_NAME_THIRD_NAME"),
       key: "participant_fullname",
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
@@ -23,7 +25,7 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
       },
     },
     {
-      title: "Регион",
+      title: t("COMMON.REGION"),
       key: "participant_region",
       dataIndex: "region",
       filters: getUniqueFilters(ParticipantData, "region"),
@@ -31,25 +33,25 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
       sorter: (a, b) => a.region.localeCompare(b.region),
     },
     {
-      title: "Дата рождения",
+      title: t("COMMON.BIRTHDAY"),
       dataIndex: "birth_date",
       render: (birth_date) => dayjs(birth_date).format(Locale.dateFormat),
       key: "participant_organization",
     },
     {
-      title: "Действия",
+      title: t("COMMON.ACTIONS"),
       key: "action",
       render: (data) => {
         return (
           <Flex>
-            <Tooltip title="Редактирование">
+            <Tooltip title={t("COMMON.EDIT")}>
               <Button
                 type="text"
                 icon={<EditOutlined />}
                 onClick={() => openEditModal(data)}
               />
             </Tooltip>
-            <Tooltip title="Карточка участника">
+            <Tooltip title={t("PARTICIPANTS.CARD_OF_PARTICIPANT")}>
               <Button
                 type="text"
                 icon={<InfoCircleOutlined />}
