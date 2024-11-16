@@ -49,7 +49,7 @@ const getRowSpan = (data, index, key) => {
 };
 
 function TeamsTable({ teamsData }) {
-  const { t } = useTranslation;
+  const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState();

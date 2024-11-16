@@ -206,6 +206,7 @@ $transition: $timing ease all;
     width: calc(100vw - 79px);
     margin-left: 79px; // 79px - width of desktop sidebar
     padding: 24px;
+    padding-bottom: 100px; // scroll to normal view content without float buttons
 
     @media (max-width: 767px) {
       margin-left: 0;

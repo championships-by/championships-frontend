@@ -1,22 +1,24 @@
 import { Button, Result } from "antd";
 import { NavLink } from "react-router-dom";
 import { ROUTES } from "@constants";
+import { useTranslation } from "react-i18next";
 
 function NotFound() {
+  const { t } = useTranslation();
   return (
     <Result
       status="404"
-      title="Ой!"
+      title={t("ERROR_PAGES.TITLE")}
       subTitle={
         <>
-          Похоже, мы не можем найти нужную Вам страницу
+          {t("ERROR_PAGES.PAGE_NOT_FOUND")}
           <br />
-          Код ошибки: 404
+          {t("ERROR_PAGES.ERROR_CODE")}: 404
         </>
       }
       extra={
         <NavLink to={ROUTES.EVENTS.PATH}>
-          <Button type="primary">Мероприятия</Button>
+          <Button type="primary">{t("EVENTS.EVENTS")}</Button>
         </NavLink>
       }
     />

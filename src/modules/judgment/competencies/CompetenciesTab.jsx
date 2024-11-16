@@ -10,10 +10,11 @@ import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CompetenciesResults, CompetenciesTable } from "./components";
+import { useTranslation } from "react-i18next";
 
 function CompetenciesTab() {
+  const { t } = useTranslation();
   const { eventId, nominationId } = useParams();
-
   const [isLoading, setIsLoading] = useState(false);
   const [stageStatus, setStageStatus] = useState({});
   const [criteria, setCriteria] = useState([]);
@@ -25,7 +26,7 @@ function CompetenciesTab() {
   const handleCompleteStage = useCallback(async () => {
     try {
       if (!isCriteriaFilled(criteria)) {
-        message.warning("Заполните все поля!");
+        message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
         return;
       }
 
@@ -77,7 +78,7 @@ function CompetenciesTab() {
     () => [
       {
         key: "1",
-        label: "Таблица",
+        label: t("COMMON.TABLE"),
         children: (
           <CompetenciesTable
             criteria={criteria}
@@ -95,7 +96,7 @@ function CompetenciesTab() {
       },
       {
         key: "2",
-        label: "Итоги",
+        label: t("COMMON.RESULTS"),
         disabled: !stageStatus.tournamentFinished,
         children: (
           <CompetenciesResults
@@ -178,7 +179,9 @@ function CompetenciesTab() {
             onClick={isStageFinished ? handleDownload : handleCompleteStage}
             type="primary"
           >
-            {isStageFinished ? "Итоговый протокол" : "Завершить этап"}
+            {isStageFinished
+              ? t("COMMON.FINAL_PROTOCOL")
+              : t("COMMON.COMPLETE_STAGE")}
           </Button>
         ),
       }}

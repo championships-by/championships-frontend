@@ -1,9 +1,12 @@
 import React from "react";
 import { Input } from "antd";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+
 import "./sass/auth.scss";
 
 function AuthEmailInput({ value, onChange }) {
+  const { t } = useTranslation();
   return (
     <FormItem
       name="Email"
@@ -13,11 +16,11 @@ function AuthEmailInput({ value, onChange }) {
       rules={[
         {
           required: true,
-          message: "Пожалуйста, введите Email",
+          message: t("RULES.ENTER_EMAIL"),
         },
         {
           type: "email",
-          message: "Некоректный Email",
+          message: t("RULES.INVALID_EMAIL"),
         },
       ]}
     >

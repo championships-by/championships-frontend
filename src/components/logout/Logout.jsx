@@ -3,8 +3,10 @@ import Loader from "@components/loader/Loader";
 import { message, notification } from "antd";
 import { ROUTES } from "@constants";
 import { authApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 function Logout() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   authApi
@@ -12,14 +14,12 @@ function Logout() {
     .then(() => navigate(ROUTES.AUTHORIZATION.PATH))
     .catch(() => {
       navigate(ROUTES.USER_SETTINGS.PATH);
-      message.error(
-        "Ошибка: Невозможно выйти с аккаунта из-за проблем с сервером"
-      );
+      message.error(t("MESSAGES.LOGOUT_ERROR"));
     });
 
   notification.info({
-    message: "Ваша сессия успешно завершена.",
-    description: "Всего доброго!",
+    message: t("COMMON.SESSION_CLOSED"),
+    description: t("COMMON.GOOD_LUCK"),
     duration: 5,
     placement: "bottomRight",
   });

@@ -13,8 +13,10 @@ import UserRoleInput from "@modules/user/UserRoleInput";
 import { Button, Form, message, Modal, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { userApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 function UserModal({ isOpen, onOk, onCancel, type, userId }) {
+  const { t } = useTranslation();
   const users = useSelector(getUsersSelector);
   const [oldEmail, setOldEmail] = useState();
   const [isLoading, setLoading] = useState(false);

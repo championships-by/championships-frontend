@@ -11,10 +11,12 @@ import ParticipantLastnameInput from "@modules/participant/ParticipantLastnameIn
 import ParticipantPatronymicInput from "@modules/participant/ParticipantPatronymicInput.jsx";
 import ParticipantRegionSelect from "@modules/participant/ParticipantRegionSelect.jsx";
 import { participantApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 import "./sass/participants.scss";
 
 function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
@@ -46,7 +48,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
           body.email = values.email;
         }
         await participantApi.changeParticipant(body);
-        message.success("Участник успешно изменён");
+        message.success(t("MESSAGES.SUCCESS_EDIT_PARTICIPANT"));
       } else {
         const body = JSON.stringify(values);
         const params = new URLSearchParams();
@@ -57,14 +59,14 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
         );
 
         await participantApi.setParticipant(body);
-        message.success("Участник успешно создан");
+        message.success(t("MESSAGES.SUCCESS_CREATE_PARTICIPANT"));
         await participantApi
           .sendParticipantRegistrationNotice(params.toString())
           .then(() => {
-            message.info("Уведомление участнику отправлено успешно");
+            message.info(t("MESSAGES.SUCCESS_SEND_NOTICE"));
           })
           .catch(() => {
-            message.error("Уведомление участнику не отправлено ");
+            message.error(t("MESSAGES.SEND_NOTICE_ERROR"));
           });
       }
       onOk();
@@ -78,7 +80,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
     setIsLoading(false);
   };
 
@@ -88,7 +90,11 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
 
   return (
     <Modal
-      title={isEdit ? "Редактировать участника" : "Добавить участника"}
+      title={
+        isEdit
+          ? t("PARTICIPANTS.EDIT_PARTICIPANT")
+          : t("PARTICIPANTS.CREATE_PARTICIPANT")
+      }
       className="participants__modal"
       open={isOpen}
       onOk={onOk}
@@ -133,12 +139,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
             checked={isAgreeChecked}
             onChange={() => setIsAgreeChecked(!isAgreeChecked)}
           >
-            Даю согласие на обработку и хранение персональных данных, проведение
-            фото и видеосъемок с моим участием, на размещение фото и видео
-            материалов на сайтах и информационных площадках; использовать
-            фотографии и видео на выставках, в презентациях, в докладах и иных
-            материалах, не противоречащих действущему законодательству
-            Республики Беларусь.
+            {t("PARTICIPANTS.PERSONAL_DATA_AGREE")}
           </Checkbox>
         </Flex>
         <Flex gap="middle" className="participants__modal__buttons">
@@ -148,9 +149,9 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
             htmlType="submit"
             loading={isLoading}
           >
-            Сохранить
+            {t("COMMON.SAVE")}
           </Button>
-          <Button onClick={onCancel}>Отмена</Button>
+          <Button onClick={onCancel}>{t("COMMON.SAVE")}</Button>
         </Flex>
       </Form>
     </Modal>

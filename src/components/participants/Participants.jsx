@@ -13,10 +13,12 @@ import { useEffect, useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";
 import SearchInput from "@modules/search/SearchInput";
+import { useTranslation } from "react-i18next";
 
 import "./sass/participants.scss";
 
 function Participants() {
+  const { t } = useTranslation();
   const [isAddParticipantModalOpen, setIsAddParticipantModalOpen] =
     useState(false);
   const dispatch = useDispatch();
@@ -53,7 +55,9 @@ function Participants() {
       <Loader show={isLoading} />
       <Row align="bottom">
         <Col xs={24} sm={24} md={14}>
-          <Typography.Title level={2}>Управление участниками</Typography.Title>
+          <Typography.Title level={2}>
+            {t("COMMON.PARTICIPANT_MANAGEMENT")}
+          </Typography.Title>
         </Col>
         <Col flex="auto">
           <Flex justify="flex-end">
@@ -67,7 +71,7 @@ function Participants() {
                   type="primary"
                   onClick={() => setIsAddParticipantModalOpen(true)}
                 >
-                  Добавить участника
+                  {t("PARTICIPANTS.CREATE_PARTICIPANT")}
                 </Button>
               </Flex>
             </AdminPanelControls>

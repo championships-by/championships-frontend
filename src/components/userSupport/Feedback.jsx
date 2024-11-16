@@ -9,10 +9,12 @@ import FeedbackFile from "@modules/feedback/FeedbackFile";
 import FeedbackCheckbox from "@modules/feedback/FeedbackCheckbox";
 import FeedbackDescription from "@modules/feedback/FeedbackDescription";
 import { feedbackApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 import "./sass/user-support.scss";
 
 function Feedback() {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState();
   const [form] = Form.useForm();
@@ -40,7 +42,7 @@ function Feedback() {
 
     try {
       await feedbackApi.sendFeedback(queryString, file ? formData : undefined);
-      message.success("Сообщение успешно отправлено");
+      message.success(t("USER_SUPPORT.SUCCESS_SEND_MESSAGE"));
       form.resetFields();
     } catch {}
 
@@ -48,17 +50,16 @@ function Feedback() {
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
   };
 
   return (
     <div className="user-support">
-      <Typography.Title level={2}>Обратная связь</Typography.Title>
+      <Typography.Title level={2}>
+        {t("USER_SUPPORT.FEEDBACK")}
+      </Typography.Title>
       <Typography.Text className="user-support__feedback__text">
-        Спасибо, что посетили наш РЕСУРС. Если вы хотите оставить отзыв о
-        Республиканской единой системе удалённой регистрации соревнований, а
-        также по проблемам работы портала, вы можете воспользоваться формой
-        обратной связи или написать нам на почту:
+        {t("USER_SUPPORT.THANKS_FOR_VISITING")}
         <br />
         <br />
         <a href={`mailto:${mailZubronok}`}> {mailZubronok}</a>
@@ -69,10 +70,9 @@ function Feedback() {
             strong
             className="user-support__feedback__text__white"
           >
-            Внимание!{" "}
+            {t("COMMON.ATTENTION")}{" "}
           </Typography.Text>
-          Для связи с организаторами выбранного мероприятия воспользуйтесь email
-          для вопросов участников на странице этого мероприятия.
+          {t("USER_SUPPORT.USE_EMAIL_TO_CONTACT")}
         </Typography.Text>
       </div>
       <Row align="middle">
@@ -85,7 +85,9 @@ function Feedback() {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
           >
-            <Typography.Title level={3}>Отправить сообщение</Typography.Title>
+            <Typography.Title level={3}>
+              {t("USER_SUPPORT.SEND_MESSAGE")}
+            </Typography.Title>
 
             <FeedbackFirstnameInput name="first_name" />
             <FeedbackLastnameInput name="second_name" />
@@ -102,12 +104,12 @@ function Feedback() {
               loading={isLoading}
               disabled={!isAgreeChecked}
             >
-              Отправить
+              {t("COMMON.SEND")}
             </Button>
           </Form>
           <br />
           <Typography.Text type="secondary">
-            * - обязательное поле
+            * - {t("COMMON.REQUIRED_FIELD")}
           </Typography.Text>
         </Col>
         <Col xs={24} sm={24} md={24} lg={16}>

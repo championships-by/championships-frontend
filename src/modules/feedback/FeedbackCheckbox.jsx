@@ -1,24 +1,22 @@
 import { Flex, Checkbox } from "antd";
 import FormItem from "antd/es/form/FormItem";
-
-const rules = [
-  {
-    required: true,
-    message: "Обязательное поле",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 function FeedbackCheckbox({ name, onChange }) {
+  const { t } = useTranslation();
+
+  const rules = [
+    {
+      required: true,
+      message: t("RULES.REQUIRED_FIELD"),
+    },
+  ];
+
   return (
     <FormItem name={name} rules={rules}>
       <Flex gap="middle">
-        <Checkbox
-          onChange = {(e) => onChange(e.target.checked)}
-        >
-          Нажимая кнопку «Отправить», я принимаю условия пользовательского
-          соглашения и даю согласие на обработку моих персональных данных на
-          условиях и для целей, определенных в Согласии на обработку
-          персональных данных.
+        <Checkbox onChange={(e) => onChange(e.target.checked)}>
+          {t("COMMON.I_AGREE_WITH_USER_TERMS")}
         </Checkbox>
       </Flex>
     </FormItem>
