@@ -94,6 +94,7 @@
     "SELECT_REGION": "Выберите регион",
     "AUTH": "Авторизация",
     "CREATE_USER": "Добавить пользователя",
+    "EDIT_USER": "Редактировать пользователя",
     "PASSWORD_CHANGE": "Изменение пароля",
     "SEND": "Отправить",
     "REQUIRED_FIELD": "обязательное поле",
@@ -296,7 +297,11 @@
     "FILE_SIZE_MUST_NOT_EXCEED": "Размер файла не должен превышать",
     "FILL_ALL_FIELDS": "Заполните все поля!",
     "AT_LEAST_ONE_EVALUATION_CRITERIA": "Должен быть установлен минимум один критерий оценки",
-    "DATA_UPLOAD_ERROR": "Ошибка загрузки данных"
+    "DATA_UPLOAD_ERROR": "Ошибка загрузки данных",
+    "SUCCESS_USER_CREATE": "Пользователь успешно создан",
+    "SUCCESS_SEND_USER_NOTICE": "Уведомление пользователю отправлено успешно",
+    "NOT_SEND_USER_NOTICE": "Уведомление пользователю не отправлено",
+    "SUCCESS_EDIT_USER": "Пользователь успешно изменён"
   },
   "RULES": {
     "ENTER_EMAIL": "Пожалуйста, введите Email",
