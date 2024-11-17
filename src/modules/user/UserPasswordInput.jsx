@@ -2,12 +2,16 @@ import React from "react";
 import { Flex, Input, Typography } from "antd";
 import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+
 import "./sass/user.scss";
 
 function UserPasswordInput({ name, required, disabled }) {
+  const { t } = useTranslation();
+
   return (
     <Flex vertical className="user__password-input__flex">
-      <Typography.Text>Пароль</Typography.Text>
+      <Typography.Text>{t("COMMON.PASSWORD")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
@@ -15,11 +19,11 @@ function UserPasswordInput({ name, required, disabled }) {
         rules={[
           {
             required: required ?? false,
-            message: "Пожалуйста, введите пароль",
+            message: t("RULES.PLEASE_ENTER_PASSWORD"),
           },
           {
             min: 8,
-            message: "Минимальная длина пароля - 8 символов",
+            message: t("RULES.MIN_PASSWORD_8"),
           },
         ]}
         className="user__password-input__formitem"
@@ -27,7 +31,7 @@ function UserPasswordInput({ name, required, disabled }) {
         <Input.Password
           disabled={disabled}
           prefix={<LockOutlined />}
-          placeholder="Введите Пароль"
+          placeholder={t("COMMON.ENTER_PASSWORD")}
           iconRender={() => <EyeInvisibleOutlined />}
         />
       </FormItem>

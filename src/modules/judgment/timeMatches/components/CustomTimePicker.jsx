@@ -4,8 +4,10 @@ import { formatTime, isAttemptDisqualified } from "@utils";
 import { Button, TimePicker } from "antd";
 import { useState } from "react";
 import "./CustomTimePicker.scss";
+import { useTranslation } from "react-i18next";
 
 export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
+  const { t } = useTranslation();
   const [time, setTime] = useState(
     !isAttemptDisqualified(value) && value ? formatTime(value) : null
   );
@@ -34,7 +36,7 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
 
   return isDisqualified ? (
     <Button disabled={disabled} type="text" onClick={handleDisqualify}>
-      Дискв.
+      {t("TOURNAMENTS.DISQALIFICATION_CUTTED")}
     </Button>
   ) : (
     <TimePicker
@@ -60,10 +62,10 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
       renderExtraFooter={() => (
         <div className="extra-footer">
           <Button size="middle" type="text" onClick={handleDisqualify}>
-            Дискв.
+            {t("TOURNAMENTS.DISQALIFICATION_CUTTED")}
           </Button>
           <Button size="middle" type="primary" onClick={handleOk}>
-            Ок
+            {t("COMMON.OK")}
           </Button>
         </div>
       )}

@@ -12,8 +12,10 @@ import {
   Col,
 } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 function CriteriaParametrs({ onCriteriaChange, value }) {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const [allScoreCount, setAllScoreCount] = useState(0);
 
@@ -70,13 +72,11 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
               {fields.length > 0 && (
                 <>
                   <Flex align="center" justify="space-between" offset={1}>
-                    <Typography.Text>Критерии оценки:</Typography.Text>
+                    <Typography.Text>
+                      {t("TOURNAMENTS.EVALUATION_CRITERIA")}
+                    </Typography.Text>
                     <Typography.Text className="events__competition-criteria__max-points">
-                      Максимальное
-                      <br />
-                      количество
-                      <br />
-                      баллов:
+                      {t("TOURNAMENTS.EVALUATION_CRITERIA.MAX_COUNT_POINTS")}
                     </Typography.Text>
                   </Flex>
                   <br />
@@ -88,14 +88,16 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
                   className="events__competition-criteria__space"
                 >
                   <Col span={1}>
-                    <Tooltip title="Удалить">
+                    <Tooltip title={t("COMMON.DELETE")}>
                       <MinusCircleOutlined
                         onClick={() => {
                           if (fields.length > 1) {
                             remove(field.name);
                           } else {
                             message.warning(
-                              "Должен быть установлен минимум один критерий оценки"
+                              t(
+                                "MESSAGES.EVALUAAT_LEAST_ONE_EVALUATION_CRITERIATION_CRITERIA"
+                              )
                             );
                           }
                         }}
@@ -106,10 +108,15 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
                     <Form.Item
                       {...field}
                       name={[field.name, "criterion"]}
-                      rules={[{ required: true, message: "Не ввели критерий" }]}
+                      rules={[
+                        {
+                          required: true,
+                          message: t("RULES.DONT_INSERT_CRITERION"),
+                        },
+                      ]}
                     >
                       <Input
-                        placeholder="Введите критерий"
+                        placeholder={t("TOURNAMENTS.INSERT_CRITERION")}
                         className="events__competition-criteria__input"
                       />
                     </Form.Item>
@@ -118,7 +125,9 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
                     <Form.Item
                       {...field}
                       name={[field.name, "maxPoints"]}
-                      rules={[{ required: true, message: "Неверное значение" }]}
+                      rules={[
+                        { required: true, message: t("RULES.INVALID_VALUE") },
+                      ]}
                     >
                       <Input
                         type="number"
@@ -131,7 +140,7 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
               ))}
               <br />
               <Typography.Text className="events__competition-criteria__score-count">
-                Итого: {allScoreCount}
+                {t("COMMON.TOTAL")}: {allScoreCount}
               </Typography.Text>
               <Form.Item>
                 <Button
@@ -141,7 +150,7 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
                   block
                   icon={<PlusOutlined />}
                 >
-                  Добавить критерий
+                  {t("TOURNAMENTS.ADD_CRITERION")}
                 </Button>
               </Form.Item>
             </>

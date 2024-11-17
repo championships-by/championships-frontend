@@ -2,12 +2,16 @@ import React from "react";
 import { Flex, Input, Typography } from "antd";
 import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+
 import "./sass/password-change.scss";
 
 function OldPassword({ name }) {
+  const { t } = useTranslation();
+
   return (
     <Flex vertical className="password-change__old-password__flex">
-      <Typography.Text>Старый пароль</Typography.Text>
+      <Typography.Text>{t("COMMON.OLD_PASSWORD")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
@@ -15,18 +19,18 @@ function OldPassword({ name }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста введите свой пароль",
+            message: t("RULES.PLEASE_ENTER_YOUR_PASSWORD"),
           },
           {
             min: 8,
-            message: "Минимальная длина пароля - 8 символов",
+            message: t("RULES.MIN_PASSWORD_8"),
           },
         ]}
         className="password-change__old-password__formitem"
       >
         <Input.Password
           prefix={<LockOutlined />}
-          placeholder="Введите старый пароль"
+          placeholder={t("COMMON.ENTER_OLD_PASSWORD")}
           iconRender={() => <EyeInvisibleOutlined />}
         />
       </FormItem>

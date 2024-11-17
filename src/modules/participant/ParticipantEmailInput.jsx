@@ -2,12 +2,16 @@ import React from "react";
 import { Flex, Input, Typography } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+
 import "./sass/participant.scss";
 
 function ParticipnatEmailInput({ name, value }) {
+  const { t } = useTranslation();
+
   return (
     <Flex vertical className="participant__email-input__flex">
-      <Typography.Text>Email</Typography.Text>
+      <Typography.Text>{t("COMMON.EMAIL")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
@@ -16,11 +20,11 @@ function ParticipnatEmailInput({ name, value }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите Email",
+            message: t("RULES.ENTER_EMAIL"),
           },
           {
             type: "email",
-            message: "Некоректный Email",
+            message: t("RULES.INVALID_EMAIL"),
           },
         ]}
         className="participant__email-input__formitem"
@@ -29,11 +33,11 @@ function ParticipnatEmailInput({ name, value }) {
           value={value}
           prefix={<MailOutlined />}
           type="email"
-          placeholder="Введите Email"
+          placeholder={t("COMMON.ENTER_EMAIL")}
         />
       </FormItem>
       <Typography.Text type="secondary">
-        Пример: example@example.com
+        {t("COMMON.EMAIL_EXAMPLE")}
       </Typography.Text>
     </Flex>
   );

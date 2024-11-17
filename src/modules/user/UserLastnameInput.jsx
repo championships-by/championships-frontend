@@ -24,19 +24,19 @@ function UserLastnameInput({ name }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите фамилию",
+            message: t("RULES.PLEASE_ENTER_LAST_NAME"),
           },
           {
             pattern: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
-            message: "Фамилия может содержать только буквы",
+            message: t("RULES.LAST_NAME_CAN_CONTAIN_ONLY_LETTERS"),
           },
           {
             min: 2,
-            message: "Минимум 2 символа",
+            message: t("RULES.MIN_2_SYMBOLS"),
           },
           {
             max: 255,
-            message: "Максимальное значение 255",
+            message: t("RULES.MAX_255_SYMBOLS"),
           },
           {
             validator(_, value) {
@@ -44,7 +44,7 @@ function UserLastnameInput({ name }) {
                 return Promise.resolve();
               }
               return Promise.reject(
-                new Error("Пожалуйста, введите корректную фамилию")
+                new Error(t("RULES.PLEASE_ENTER_CORRECT_LAST_NAME"))
               );
             },
           },
@@ -54,7 +54,7 @@ function UserLastnameInput({ name }) {
         <Input
           prefix={<UserOutlined />}
           allowClear
-          placeholder="Введите фамилию"
+          placeholder={t("COMMON.ENTER_LAST_NAME")}
           maxLength={255}
           onKeyPress={handleKeyPress}
           onPaste={handlePaste}

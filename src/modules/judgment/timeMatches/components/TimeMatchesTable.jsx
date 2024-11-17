@@ -5,6 +5,7 @@ import { formatTimeToString, generateColumns } from "@utils";
 import { Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 export const TimeMatchesTable = ({
   editable,
@@ -13,6 +14,7 @@ export const TimeMatchesTable = ({
   isErrorOccurred,
   onTimeChange,
 }) => {
+  const { t } = useTranslation();
   const columns = useMemo(
     () => [
       {
@@ -24,7 +26,7 @@ export const TimeMatchesTable = ({
       {
         key: "teamName",
         dataIndex: "teamName",
-        title: "Команда",
+        title: t("COMMON.TEAM"),
       },
       ...generateColumns(timeMatches, (text, record, index, columnId) => (
         <CustomTimePicker
@@ -37,7 +39,7 @@ export const TimeMatchesTable = ({
       {
         key: "bestTime",
         dataIndex: "bestTime",
-        title: "Лучшее время",
+        title: t("TOURNAMENTS.BEST_TIME"),
         render: (text, record) => {
           const allDisqualified = record.attempts.every(
             (attempt) => attempt.isDisqualified
@@ -69,7 +71,7 @@ export const TimeMatchesTable = ({
   ) : (
     <Flex vertical gap="large">
       {isErrorOccurred ? (
-        <Typography>При попытке получить данные произошла ошибка</Typography>
+        <Typography>{t("COMMON.ERROR_TO_GET_DATA")}</Typography>
       ) : (
         <Table
           pagination={false}

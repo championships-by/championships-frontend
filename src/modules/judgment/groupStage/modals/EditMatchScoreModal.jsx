@@ -2,8 +2,10 @@ import { isScoreEqual } from "@utils";
 import { Button, InputNumber, Modal, Typography } from "antd";
 import { useEffect, useState } from "react";
 import "./EditMatchScoreModal.scss";
+import { useTranslation } from "react-i18next";
 
 export const EditMatchScoreModal = ({ isOpen, match, onSubmit, onClose }) => {
+  const { t } = useTranslation();
   const { team1, team2 } = match;
 
   const [team1Score, setTeam1Score] = useState(team1.score);
@@ -33,19 +35,19 @@ export const EditMatchScoreModal = ({ isOpen, match, onSubmit, onClose }) => {
 
   return (
     <Modal
-      title="Сообщить счёт"
+      title={t("TOURNAMENTS.REPORT_SCORE")}
       open={isOpen}
       onCancel={handleCancel}
       footer={
         <Button type="primary" onClick={handleSendScore}>
-          Отправить оценки
+          {t("TOURNAMENTS.SEND_RATINGS")}
         </Button>
       }
     >
       <div className="edit-match-score-modal">
         <div className="edit-match-score-modal__header-section">
-          <h2>Команда</h2>
-          <h2>Счёт</h2>
+          <h2>{t("COMMON.TEAM")}</h2>
+          <h2>{t("TOURNAMENTS.SCORE")}</h2>
         </div>
         <div className="edit-match-score-modal__input-section">
           <Typography.Title level={5}>{team1.name}</Typography.Title>

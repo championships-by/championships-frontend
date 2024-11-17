@@ -1,9 +1,12 @@
 import { Typography, Switch, Tooltip } from "antd";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
 function EventName({ name, value, onChange: onChangeBase, disabled }) {
+  const { t } = useTranslation();
+
   const onChange = (checked) => {
     onChangeBase({ [name]: checked });
   };
@@ -11,9 +14,9 @@ function EventName({ name, value, onChange: onChangeBase, disabled }) {
   return (
     <FormItem name={name} hasFeedback validateFirst>
       <div className="events__event-registration-switch">
-        <Typography.Text>Опубликовать</Typography.Text>
+        <Typography.Text>{t("EVENTS.PUBLISH")}</Typography.Text>
         {disabled ? (
-          <Tooltip title="Для публикации мероприятия нужно добавить хотя бы одну компетенцию">
+          <Tooltip title={t("EVENTS.AT_LEAST_ONE_NOMINATION_FOR_PUBLISH")}>
             <Switch
               className="events__event-registration-switch__switch"
               checked={value}

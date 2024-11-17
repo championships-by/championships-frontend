@@ -2,12 +2,16 @@ import React from "react";
 import { Flex, Input, Typography } from "antd";
 import { TeamOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+
 import "./sass/team.scss";
 
 function TeamNameInput({ name }) {
+  const { t } = useTranslation();
+
   return (
     <Flex vertical className="team__team-name-input__flex">
-      <Typography.Text>Название команды</Typography.Text>
+      <Typography.Text>{t("EVENTS.TEAM_NAME")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
@@ -15,11 +19,11 @@ function TeamNameInput({ name }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста введите название команды",
+            message: t("RULES.PLEASE_ENTER_TEAM_NAME"),
           },
           {
             max: 255,
-            message: "Максимальное значение 255",
+            message: t("RULES.MAX_255_SYMBOLS"),
           },
         ]}
         className="team__team-name-input__formitem"
@@ -27,11 +31,13 @@ function TeamNameInput({ name }) {
         <Input
           allowClear
           prefix={<TeamOutlined />}
-          placeholder="Введите название команды"
+          placeholder={t("EVENTS.ENTER_TEAM_NAME")}
           maxLength={255}
         />
       </FormItem>
-      <Typography.Text type="secondary">Пример: Эврика</Typography.Text>
+      <Typography.Text type="secondary">
+        {t("EVENTS.TEAM_NAME_EXAMPLE")}
+      </Typography.Text>
     </Flex>
   );
 }

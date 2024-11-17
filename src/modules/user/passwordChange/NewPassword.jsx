@@ -2,12 +2,16 @@ import React from "react";
 import { Flex, Input, Typography } from "antd";
 import { EyeInvisibleOutlined, LockOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+
 import "./sass/password-change.scss";
 
 function NewPassword({ name }) {
+  const { t } = useTranslation();
+
   return (
     <Flex vertical className="password-change__new-password__flex">
-      <Typography.Text>Новый пароль</Typography.Text>
+      <Typography.Text>{t("COMMON.NEW_PASSWORD")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
@@ -15,26 +19,26 @@ function NewPassword({ name }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите пароль",
+            message: t("RULES.PLEASE_ENTER_PASSWORD"),
           },
           {
             min: 8,
-            message: "Минимальная длина пароля - 8 символов",
+            message: t("RULES.MIN_PASSWORD_8"),
           },
           {
             pattern: /[a-zA-Z]/,
-            message: "Пароль должен содержать латинские буквы",
+            message: t("RULES.PASSWORD_CAN_CONTAIN_ONLY_ENGLISH"),
           },
           {
             pattern: /\d/,
-            message: "Пароль должен содержать цифры",
+            message: t("RULES.PASSWORD_SHOULD_CONTAIN_NUMBERS"),
           },
         ]}
         className="password-change__new-password__formitem"
       >
         <Input.Password
           prefix={<LockOutlined />}
-          placeholder="Введите новый пароль"
+          placeholder={t("COMMON.ENTER_NEW_PASSWORD")}
           iconRender={() => <EyeInvisibleOutlined />}
         />
       </FormItem>
