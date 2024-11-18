@@ -2,21 +2,23 @@ import { useEffect, useState } from "react";
 import { Typography, Space, Select } from "antd";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
+import { NOMINATION_TYPES, NOMINATIONS } from "@constants";
+import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
 const options = [
   {
-    value: "time",
-    label: "По времени",
+    value: NOMINATIONS.TIME,
+    label: NOMINATION_TYPES.TIME,
   },
   {
-    value: "criteria",
-    label: "По критериям",
+    value: NOMINATIONS.CRITERIA,
+    label: NOMINATION_TYPES.CRITERIA,
   },
   {
-    value: "playoffs",
-    label: "Плей-офф",
+    value: NOMINATIONS.PLAYOFF,
+    label: NOMINATION_TYPES.OLYMPIC,
   },
 ];
 
@@ -28,6 +30,7 @@ function CompetitionType({
   criteriaValue,
   groupCountValue,
 }) {
+  const { t } = useTranslation();
   const [selectedValue, setSelectedValue] = useState("");
   const [groupCount, setGroupCount] = useState();
 
@@ -63,11 +66,11 @@ function CompetitionType({
   return (
     <div className="events__competition-type__div">
       <Typography.Text className="events__competition-type__text">
-        Тип соревнований
+        {t("EVENTS.TYPE_OF_TOURNAMENTS")}
       </Typography.Text>
       <Space direction="vertical" className="events__competition-type__space">
         <Select
-          placeholder="Выберите тип соревнования"
+          placeholder={t("MESSAGES.CHOOSE_TYPE_OF_TOURNAMENT")}
           options={options}
           className="events__competition-type__name"
           onChange={handleChange}

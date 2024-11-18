@@ -65,14 +65,14 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         throw new Error(result.error.message);
       }
       dispatch(getUsers());
-      message.success("Пользователь успешно создан");
+      message.success(t("MESSAGES.SUCCESS_USER_CREATE"));
       await userApi
         .sendUserRegistrationNotice(params.toString())
         .then(() => {
-          message.info("Уведомление пользователю отправлено успешно");
+          message.info(t("MESSAGES.SUCCESS_SEND_USER_NOTICE"));
         })
         .catch(() => {
-          message.error("Уведомление пользователю не отправлено");
+          message.error(t("MESSAGES.NOT_SEND_USER_NOTICE"));
         });
       setLoading(false);
       onOk();
@@ -97,7 +97,7 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         const params = new URLSearchParams();
         params.append("user_id", userId);
         await userApi.changeUserById(params.toString(), body);
-        message.success("Пользователь успешно изменён");
+        message.success(t("MESSAGES.SUCCESS_EDIT_USER"));
         dispatch(getUsers());
         onOk();
       } catch {}
@@ -105,15 +105,13 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
   };
 
   return (
     <Modal
       title={
-        type === ModalType.ADD
-          ? "Добавить пользователя"
-          : "Редактировать пользователя"
+        type === ModalType.ADD ? t("COMMON.CREATE_USER") : t("COMMON.EDIT_USER")
       }
       className="user-control__modal"
       open={isOpen}
@@ -143,11 +141,11 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         <Space>
           <FormItem>
             <Button type="primary" htmlType="submit" loading={isLoading}>
-              Сохранить
+              {t("COMMON.SAVE")}
             </Button>
           </FormItem>
           <FormItem>
-            <Button onClick={onCancel}>Отмена</Button>
+            <Button onClick={onCancel}>{t("COMMON.CANCEL")}</Button>
           </FormItem>
         </Space>
       </Form>

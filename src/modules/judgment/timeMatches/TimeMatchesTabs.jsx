@@ -11,10 +11,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 import { timeMatchesErrorMessages } from "./constants";
+import { useTranslation } from "react-i18next";
 
 export const TimeMatchesTabs = () => {
+  const { t } = useTranslation();
   const { eventId, nominationId } = useParams();
-
   const [isLoading, setIsLoading] = useState(false);
   const [stageStatus, setStageStatus] = useState({});
   const [timeMatches, setTimeMatches] = useState([]);
@@ -54,7 +55,7 @@ export const TimeMatchesTabs = () => {
   const handleCompleteStage = useCallback(async () => {
     try {
       if (!isTimeMatchesFilled(timeMatches)) {
-        message.warning("Заполните все поля!");
+        message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
         return;
       }
 
@@ -94,7 +95,7 @@ export const TimeMatchesTabs = () => {
     () => [
       {
         key: "1",
-        label: "Таблица",
+        label: t("COMMON.TABLE"),
         children: (
           <TimeMatchesTable
             editable={
@@ -111,7 +112,7 @@ export const TimeMatchesTabs = () => {
       },
       {
         key: "2",
-        label: "Итоги",
+        label: t("COMMON.RESULTS"),
         disabled: !(
           stageStatus.registrationFinished &&
           stageStatus.tournamentStarted &&
@@ -165,9 +166,7 @@ export const TimeMatchesTabs = () => {
         })
         .catch((error) => {
           if (error.response && error.response.status === 404) {
-            message.error(
-              "Данные не найдены. Проверьте event_id и nomination_id."
-            );
+            message.error(t("MESSAGES.ERROR"));
           } else {
             setIsErrorOccurred(true);
           }
@@ -188,7 +187,9 @@ export const TimeMatchesTabs = () => {
             onClick={isStageFinished ? handleDownload : handleCompleteStage}
             type="primary"
           >
-            {isStageFinished ? "Итоговый протокол" : "Завершить этап"}
+            {isStageFinished
+              ? t("COMMON.FINAL_PROTOCOL")
+              : t("COMMON.COMPLETE_STAGE")}
           </Button>
         ),
       }}

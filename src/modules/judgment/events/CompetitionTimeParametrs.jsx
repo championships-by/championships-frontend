@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Slider, InputNumber, Space } from "antd";
+import { useTranslation } from "react-i18next";
+
 import "./sass/events.scss";
 
 function TimeParametrs({ onInputChange, value: defaultValue }) {
+  const { t } = useTranslation();
   const [value, setValue] = useState(1);
 
   const onChange = (value) => {
@@ -18,7 +21,7 @@ function TimeParametrs({ onInputChange, value: defaultValue }) {
 
   return (
     <div>
-      <div>Укажите количество попыток</div>
+      <div>{t("TOURNAMENTS.SET_ATTEMPTS_COUNT")}</div>
       <Space>
         <Slider
           className="events__competition-TimeParametrs"

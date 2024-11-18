@@ -3,21 +3,23 @@ import FormItem from "antd/es/form/FormItem";
 import { Locale } from "@constants";
 import { useEffect } from "react";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
-const rulesFrom = {
-  required: true,
-  message: "Пожалуйста, выберите дату и время начала проведения мероприятия",
-};
-
-const rulesTo = {
-  required: true,
-  message: "Пожалуйста, выберите дату и время окончания проведения мероприятия",
-};
-
 function EventDate({ name, value, onChange: onChangeBase, form, isEdit }) {
+  const { t } = useTranslation();
   const { holding_start_date, holding_finish_date } = value || {};
+
+  const rulesFrom = {
+    required: true,
+    message: t("RULES.CHOOSE_DATE_OF_START_HOLDING_EVENT"),
+  };
+
+  const rulesTo = {
+    required: true,
+    message: t("RULES.CHOOSE_DATE_OF_END_HOLDING_EVENT"),
+  };
 
   useEffect(() => {
     form.setFieldsValue({
@@ -62,7 +64,7 @@ function EventDate({ name, value, onChange: onChangeBase, form, isEdit }) {
     <div>
       {isEdit && !value ? null : (
         <>
-          <Typography.Text>Проведение</Typography.Text>
+          <Typography.Text>{t("EVENTS.HOLDING")}</Typography.Text>
           <FormItem
             name={`${name}_holding_start_date`}
             hasFeedback
@@ -81,7 +83,9 @@ function EventDate({ name, value, onChange: onChangeBase, form, isEdit }) {
                   ) {
                     return Promise.reject(
                       new Error(
-                        "Дата начала проведения не может быть раньше даты конца регистрации!"
+                        t(
+                          "RULES.START_DATE_OF_HOLDING_CANT_BE_EARLIER_THAN_FINISH"
+                        )
                       )
                     );
                   }
@@ -91,13 +95,13 @@ function EventDate({ name, value, onChange: onChangeBase, form, isEdit }) {
             ]}
           >
             <div className="events__event-date__datepickercontainer">
-              <Typography.Text>С</Typography.Text>
+              <Typography.Text>{t("COMMON.FROM_UPPERCASE")}</Typography.Text>
               <DatePicker
                 locale={Locale}
                 id={`${name}_holding_start_date`}
                 format={Locale.dateTimeFormat}
                 showTime={{ format: Locale.timeFormat }}
-                placeholder="Выберите дату и время начала мероприятия"
+                placeholder={t("EVENTS.CHOOSE_DATE_OF_START_EVENT")}
                 className="events__event-date__datepicker"
                 allowClear={false}
                 defaultValue={
@@ -125,7 +129,7 @@ function EventDate({ name, value, onChange: onChangeBase, form, isEdit }) {
                   ) {
                     return Promise.reject(
                       new Error(
-                        "Дата окончания не может быть раньше даты начала!"
+                        t("RULES.DATE_OF_FINISH_CANT_BE_EARLIER_THAN_FINISH")
                       )
                     );
                   }
@@ -135,13 +139,13 @@ function EventDate({ name, value, onChange: onChangeBase, form, isEdit }) {
             ]}
           >
             <div className="events__event-date__datepickercontainer">
-              <Typography.Text>По</Typography.Text>
+              <Typography.Text>{t("COMMON.TO_UPPERCASE")}</Typography.Text>
               <DatePicker
                 locale={Locale}
                 id={`${name}_holding_finish_date`}
                 format={Locale.dateTimeFormat}
                 showTime={{ format: Locale.timeFormat }}
-                placeholder="Выберите дату и время окончания мероприятия"
+                placeholder={t("EVENTS.CHOOSE_DATE_OF_FINISH_EVENT")}
                 className="events__event-date__datepicker"
                 allowClear={false}
                 defaultValue={

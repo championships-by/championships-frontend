@@ -6,24 +6,24 @@ import "./sass/user.scss";
 import { handlePaste } from "@utils";
 import { useTranslation } from "react-i18next";
 
-const rules = [
-  {
-    pattern: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
-    message: "Отчество может содержать только буквы",
-  },
-  {
-    min: 3,
-    message: "Минимум 3 символа",
-  },
-  {
-    max: 255,
-    message: "Максимальное значение 255",
-  },
-];
-
 function UserPatronymicInput({ name, initialValue }) {
   const { t } = useTranslation();
   const [hasFeedback, setHasFeedback] = useState(false);
+
+  const rules = [
+    {
+      pattern: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
+      message: t("RULES.THIRD_NAME_CAN_CONTAIN_ONLY_LETTERS"),
+    },
+    {
+      min: 2,
+      message: t("RULES.MIN_2_SYMBOLS"),
+    },
+    {
+      max: 255,
+      message: t("RULES.MAX_255_SYMBOLS"),
+    },
+  ];
 
   useEffect(() => {
     setHasFeedback(initialValue && initialValue.length > 0);
@@ -52,7 +52,7 @@ function UserPatronymicInput({ name, initialValue }) {
         <Input
           prefix={<UserOutlined />}
           allowClear
-          placeholder="Введите отчество"
+          placeholder={t("COMMON.ENTER_THIRD_NAME")}
           maxLength={255}
           onKeyPress={handleKeyPress}
           onPaste={handlePaste}

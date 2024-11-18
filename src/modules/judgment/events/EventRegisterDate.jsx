@@ -3,20 +3,9 @@ import FormItem from "antd/es/form/FormItem";
 import { Locale } from "@constants";
 import { useEffect } from "react";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
-
-const rulesFrom = [
-  {
-    required: true,
-    message: "Пожалуйста, выберите дату и время начала регистрации",
-  },
-];
-
-const rulesTo = {
-  required: true,
-  message: "Пожалуйста, выберите дату и время окончания регистрации",
-};
 
 function EventRegisterDate({
   name,
@@ -25,7 +14,21 @@ function EventRegisterDate({
   form,
   isEdit,
 }) {
+  const { t } = useTranslation();
+
   const { registration_start_date, registration_finish_date } = value || {};
+
+  const rulesFrom = [
+    {
+      required: true,
+      message: t("RULES.CHOOSE_DATE_OF_START_REGISTER_EVENT"),
+    },
+  ];
+
+  const rulesTo = {
+    required: true,
+    message: t("RULES.CHOOSE_DATE_OF_END_REGISTER_EVENT"),
+  };
 
   useEffect(() => {
     form.setFieldsValue({
@@ -71,7 +74,7 @@ function EventRegisterDate({
     <div>
       {isEdit && !value ? null : (
         <>
-          <Typography.Text>Регистрация</Typography.Text>
+          <Typography.Text>{t("COMMON.REGISTRATION")}</Typography.Text>
           <FormItem
             name={`${name}_registration_start_date`}
             hasFeedback
@@ -79,13 +82,13 @@ function EventRegisterDate({
             rules={rulesFrom}
           >
             <div className="events__event-date__datepickercontainer">
-              <Typography.Text>С</Typography.Text>
+              <Typography.Text>{t("COMMON.FROM_UPPERCASE")}</Typography.Text>
               <DatePicker
                 locale={Locale}
                 id={`${name}_registration_start_date`}
                 format={Locale.dateTimeFormat}
                 showTime={{ format: Locale.timeFormat }}
-                placeholder="Выберите дату и время начала регистрации"
+                placeholder={t("EVENTS.CHOOSE_DATE_OF_START_REGISTRATION")}
                 className="events__event-date__datepicker"
                 allowClear={false}
                 defaultValue={
@@ -117,7 +120,7 @@ function EventRegisterDate({
                   ) {
                     return Promise.reject(
                       new Error(
-                        "Дата окончания не может быть раньше даты начала!"
+                        t("RULES.DATE_OF_FINISH_CANT_BE_EARLIER_THAN_FINISH")
                       )
                     );
                   }
@@ -127,13 +130,13 @@ function EventRegisterDate({
             ]}
           >
             <div className="events__event-date__datepickercontainer">
-              <Typography.Text>По</Typography.Text>
+              <Typography.Text>{t("COMMON.TO_UPPERCASE")}</Typography.Text>
               <DatePicker
                 locale={Locale}
                 id={`${name}_registration_finish_date`}
                 format={Locale.dateTimeFormat}
                 showTime={{ format: Locale.timeFormat }}
-                placeholder="Выберите дату и время окончания регистрации"
+                placeholder={t("EVENTS.CHOOSE_DATE_OF_FINISH_REGISTRATION")}
                 className="events__event-date__datepicker"
                 allowClear={false}
                 defaultValue={

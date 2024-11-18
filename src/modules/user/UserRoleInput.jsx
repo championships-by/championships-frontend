@@ -1,21 +1,26 @@
 import { Flex, Select, Space, Typography, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+import { Roles } from "@constants";
+
 import "./sass/user.scss";
 
-const rules = [
-  {
-    required: true,
-    message: "Выберите роль пользователя",
-  },
-];
-
 function UserRoleInput({ name, ...props }) {
+  const { t } = useTranslation();
+
   const disabled = props.disabled ?? false;
+
+  const rules = [
+    {
+      required: true,
+      message: t("COMMON.CHOOSE_USER_ROLE"),
+    },
+  ];
 
   return (
     <Flex vertical className="user__role-input__flex">
-      <Typography.Text>Роль пользователя</Typography.Text>
+      <Typography.Text>{t("COMMON.ROLE")}</Typography.Text>
       <Flex>
         <Space.Compact className="user__role-input__space">
           <FormItem
@@ -27,19 +32,19 @@ function UserRoleInput({ name, ...props }) {
               disabled={disabled}
               name="role_select"
               value="specialist"
-              placeholder="Выберите роль"
+              placeholder={t("COMMON.CHOOSE_ROLE")}
               options={[
                 {
-                  value: "admin",
-                  label: "Администратор",
+                  value: Roles.ADMIN,
+                  label: t("COMMON.ADMIN"),
                 },
                 {
-                  value: "judge",
-                  label: "Судья",
+                  value: Roles.JUDGE,
+                  label: t("COMMON.JUDGE"),
                 },
                 {
-                  value: "specialist",
-                  label: "Менеджер",
+                  value: Roles.SPECIALIST,
+                  label: t("COMMON.MANAGER"),
                 },
               ]}
             />
@@ -47,29 +52,27 @@ function UserRoleInput({ name, ...props }) {
         </Space.Compact>
       </Flex>
       <Typography.Text type="secondary">
-        Подробнее о ролях{" "}
+        {t("COMMON.MORE_ABOUT_ROLES")}{" "}
         <Tooltip
           placement="rightTop"
           title={
             <Typography.Text className="user__role-input__tooltip">
               <Typography.Text strong className="user__role-input__tooltip">
-                Администратор
+                {t("COMMON.ADMIN")}
               </Typography.Text>{" "}
-              - курирует работу портала.
+              {t("COMMON.ADMIN_DESCRIPTION")}
               <br />
               <br />
               <Typography.Text strong className="user__role-input__tooltip">
-                Менеджер
+                {t("COMMON.MANAGER")}
               </Typography.Text>{" "}
-              - регистрирует участников на мероприятия, при этом не может
-              создавать мероприятия и входить в судейский состав.
+              {t("COMMON.MANAGER_DESCRIPTION")}
               <br />
               <br />
               <Typography.Text strong className="user__role-input__tooltip">
-                Судья
+                {t("COMMON.JUDGE")}
               </Typography.Text>{" "}
-              - создает мероприятия, регистрирует участников на мероприятия,
-              может входить в судейский состав.
+              {t("COMMON.JUDGE_DESCRIPTION")}
             </Typography.Text>
           }
         >

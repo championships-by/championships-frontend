@@ -1,10 +1,13 @@
 import { Typography, Upload, message, Button, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
 function EventRegulation({ name, onChange: onChangeBase, required, form }) {
+  const { t } = useTranslation();
+
   const onChange = ({ file }) => {
     onChangeBase({ [name]: file });
     form.setFieldsValue({ [name]: file });
@@ -18,22 +21,24 @@ function EventRegulation({ name, onChange: onChangeBase, required, form }) {
       rules={[
         {
           required: required,
-          message: "Пожалуйста, загрузите положение о проведении мероприятия",
+          message: t("RULES.PLEASE_UPLOAD_REGULATION"),
         },
       ]}
     >
       <Flex gap="middle">
-        <Typography.Text>Положение о проведении мероприятия: </Typography.Text>
+        <Typography.Text>{t("EVENTS.EVENT_REGULATION")}: </Typography.Text>
         <Upload
           accept=".pdf"
           maxCount={1}
           beforeUpload={() => false}
           onChange={onChange}
         >
-          <Button icon={<UploadOutlined />}>Загрузить</Button>
+          <Button icon={<UploadOutlined />}>{t("COMMON.UPLOAD")}</Button>
         </Upload>
       </Flex>
-      <Typography.Text type="secondary">Расширение: PDF.</Typography.Text>
+      <Typography.Text type="secondary">
+        {t("COMMON.EXTENSION")}: PDF.
+      </Typography.Text>
     </FormItem>
   );
 }

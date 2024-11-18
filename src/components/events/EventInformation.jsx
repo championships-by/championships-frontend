@@ -231,7 +231,7 @@ function EventInformation() {
           <Row className="events__event-information__rows-margin">
             <Col>
               <Typography.Text strong>
-                {t("COMMON.WHAT_NEED_TO_PARTICIPATE")}
+                {t("COMMON.WHAT_NEED_TO_PARTICIPATE")}?
               </Typography.Text>
               <br />
               <Typography.Text>{dataEvent.participation_needs}</Typography.Text>

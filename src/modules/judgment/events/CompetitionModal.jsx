@@ -11,8 +11,10 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "@constants";
 import { competenciesApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
+  const { t } = useTranslation();
   const [groupCount, setGroupCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const { eventID } = useParams();
@@ -33,10 +35,10 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
     };
     try {
       await competenciesApi.startGroupStage(data);
-      message.success("Соревнование успешно начато");
+      message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
       navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
     } catch (error) {
-      message.error("Произошла ошибка");
+      message.error(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
     } finally {
       setIsLoading(false);
     }
@@ -52,7 +54,9 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
         footer={null}
         className="events__competitionModal__play-off__modal"
       >
-        <Typography.Text>Укажите количество групп</Typography.Text>
+        <Typography.Text>
+          {t("TOURNAMENTS.SET_COUNT_OF_GROUPS")}
+        </Typography.Text>
         <Space>
           <Slider
             max={10}
@@ -76,13 +80,13 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
           }}
           loading={isLoading}
         >
-          Начать соревнование
+          {t("EVENTS.START_TOURNAMENT")}
         </Button>
         <Button
           onClick={onCancel}
           className="events__competitionModal__play-off__cancelButton"
         >
-          Отмена
+          {t("COMMON.CANCEL")}
         </Button>
       </Modal>
     </div>

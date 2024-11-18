@@ -1,9 +1,12 @@
 import { Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import TextArea from "antd/es/input/TextArea";
+import { useTranslation } from "react-i18next";
+
 import "./sass/events.scss";
 
 function EventDescription({ name, value }) {
+  const { t } = useTranslation();
   return (
     <FormItem
       name={name}
@@ -12,25 +15,25 @@ function EventDescription({ name, value }) {
       rules={[
         {
           required: true,
-          message: "Пожалуйста, введите описание мероприятия",
+          message: t("RULES.PLEASE_ENTER_EVENT_DESCRIPTION"),
         },
         {
           max: 1000,
-          message: "Максимум 1000 символов",
+          message: t("RULES.MAX_1000_SYMBOLS"),
         },
         {
           min: 5,
-          message: "Минимум 5 символов",
+          message: t("RULES.MIN_5_SYMBOLS"),
         },
       ]}
     >
       <Flex vertical>
-        <Typography.Text>Описание мероприятия</Typography.Text>
+        <Typography.Text>{t("EVENTS.EVENT_DESCRIPTION")}</Typography.Text>
         <TextArea
           value={value}
           rows={6}
           allowClear
-          placeholder="Введите описание мероприятия"
+          placeholder={t("EVENTS.ENTER_EVENT_DESCRIPTION")}
           id="event_description_input"
           maxLength={1000}
           className="events__event-description__textarea"
