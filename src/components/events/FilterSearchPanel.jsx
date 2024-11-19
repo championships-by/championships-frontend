@@ -3,6 +3,7 @@ import { setEventFilters, setEventSearchValue } from "@store/events/slice";
 import { Button, Card, Checkbox, Flex, Input, Typography } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { getEventsFilters } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./FilterSearchPanel.scss";
@@ -53,7 +54,7 @@ export const FilterSearchPanel = ({ onSubmit }) => {
             </Checkbox>
             <Checkbox.Group
               className="filter-search-panel__filters__checkbox-group"
-              options={eventFilterOptions}
+              options={getEventsFilters(eventFilterOptions)}
               defaultValue={defaultEventFilterOptions}
               value={filters}
               onChange={setFilters}

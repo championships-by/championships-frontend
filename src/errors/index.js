@@ -1,75 +1,124 @@
+import { translate } from "@utils";
+
 export const ERRORS = {
-  "email taken": "Введённый Email уже занят",
-  "logged out": "Для доступа к системе необходима авторизация",
-  "team cannot contain email address":
-    "Название команды не может содержать email адрес",
-  "email doesn't exist": "Email не существует",
-  "annotation name taken": "Название аннотации уже занято",
-  "annotation not found": "Аннотация не найдена",
-  "nomination event does not exist": "Компетенция не существует",
-  "nomination event already exist": "Компетенция уже существует",
-  "tournament started": "Турнир уже начался",
-  "tournament not started": "Турнир ещё не начался",
-  "participant not in nomination event": "Участник не зарегистрирован на данную компетенцию",
-  "registration finished": "Регистрация завершена",
-  "participant already in nomination event": "Участник уже зарегистрирован на данную компетенцию",
-  "you are not in judge command": "Вы не входите в судейский состав",
-  "race round length should be at least 1": "Длина раунда должна быть не менее 1",
-  "race tournament finished": "Турнир завершён",
-  "criterias names has duplicates": "Названия критериев содержат дубликаты",
-  "criteria not found": "Критерий не найден",
-  "criteria not in nomination event": "Критерий не относится к событию номинации",
-  "not all criterias set": "Не все критерии установлены",
-  "can not decrypt password": "Невозможно расшифровать пароль",
-  "equipment not found": "Оборудование не найдено",
-  "event name taken": "Название мероприятия уже занято",
-  "event does not exist": "Мероприятие не существует",
-  "this event is not yours": "Это мероприятие вам не принадлежит",
-  "invalid json": "Некорректный JSON",
-  "invalid event id": "Некорректный идентификатор мероприятия",
-  "invalid file extension": "Недопустимое расширение файла",
-  "file is too large": "Файл слишком велик",
-  "match not related to group": "Матч не связан с группой",
-  "match not found": "Матч не найден",
-  "team not related to match": "Команда не связана с матчем",
-  "prev matches not finished": "Предыдущие матчи не завершены",
-  "nomination not found": "Компетенция не найдена",
-  "nomination name taken": "Название компетенции уже занято",
-  "you cannot delete owner": "Вы не можете удалить владельца",
-  "email taken error": "Введённый Email уже занят",
-  "participant does not exist": "Участник не существует",
-  "participant does not belongs to owner": "Участник не принадлежит владельцу",
-  "race round not found": "Раунд гонки не найден",
-  "software not found": "Программное обеспечение не найдено",
-  "team name taken": "Название команды уже занято",
-  "team not found": "Команда не найдена",
-  "this team is not yours": "Эта команда вам не принадлежит",
-  "you cant not name team as default": "Вы не можете назвать команду как 'по умолчанию'",
-  "default team is unchangeable": "Команда по умолчанию не может быть изменена",
-  "team not in event nomination error": "Команда не участвует в компетенции",
-  "participant already in team": "Участник уже состоит в команде",
-  "participant not in team": "Участник не состоит в команде",
-  "participant present more then one time": "Участник присутствует более одного раза",
-  "Token expired, you are currently logged out": "Срок действия токена истёк, вы вышли из системы",
-  "Token signature error, invalid token": "Ошибка подписи токена, недействительный токен",
-  "Token does not exist": "Токен не существует",
-  "Token is invalid": "Токен недействителен",
-  "invalid group count": "Неверное количество групп",
-  "not all matches are finished": "Не все матчи завершены",
-  "group stage is not finished": "Групповой этап не завершён",
-  "group stage is finished": "Групповой этап завершён",
-  "wrong teams provided": "Предоставлены неверные команды",
-  "play off stage already started": "Этап плей-офф уже начался",
-  "play off stage already finished": "Этап плей-офф уже завершён",
-  "play off stage not started": "Этап плей-офф не начался",
-  "not all race_rounds_finished": "Не все раунды турнира по времени завершены",
-  "criteria stage finished": "Этап критериев завершён",
-  "invalid password": "Неверный пароль",
-  "user not found": "Пользователь не найден",
-  "you are not allowed to perform this action": "Вам не разрешено выполнять это действие",
-  "passwords dont match": "Пароли не совпадают",
-  "current password is missed": "Текущий пароль отсутствует",
-  "one or more judges presented in judges_ids not found": "Один или несколько указанных судей не найдены",
+  "email taken": translate("ERRORS.EMAIL_TAKEN"),
+  "logged out": translate("ERRORS.LOGGED_OUT"),
+  "team cannot contain email address": translate(
+    "ERRORS.TEAM_CANNOT_CONTAIN_EMAIL_ADDRESS"
+  ),
+  "email doesn't exist": translate("ERRORS.EMAIL_DOES_NOT_EXIST"),
+  "annotation name taken": translate("ERRORS.ANNOTATION_NAME_TAKEN"),
+  "annotation not found": translate("ERRORS.ANNOTATION_NOT_FOUND"),
+  "nomination event does not exist": translate(
+    "ERRORS.NOMINATION_EVENT_DOES_NOT_EXIST"
+  ),
+  "nomination event already exist": translate(
+    "ERRORS.NOMINATION_EVENT_ALREADY_EXIST"
+  ),
+  "tournament started": translate("ERRORS.TOURNAMENT_STARTED"),
+  "tournament not started": translate("ERRORS.TOURNAMENT_NOT_STARTED"),
+  "participant not in nomination event": translate(
+    "ERRORS.PARTICIPANT_NOT_IN_NOMINATION_EVENT"
+  ),
+  "registration finished": translate("ERRORS.REGISTRATION_FINISHED"),
+  "participant already in nomination event": translate(
+    "ERRORS.PARTICIPANT_ALREADY_IN_NOMINATION_EVENT"
+  ),
+  "you are not in judge command": translate(
+    "ERRORS.YOU_ARE_NOT_IN_JUDGE_COMMAND"
+  ),
+  "race round length should be at least 1": translate(
+    "ERRORS.RACE_ROUND_LENGTH_SHOULD_BE_AT_LEAST_1"
+  ),
+  "race tournament finished": translate("ERRORS.RACE_TOURNAMENT_FINISHED"),
+  "criterias names has duplicates": translate(
+    "ERRORS.CRITERIAS_NAMES_HAS_DUPLICATES"
+  ),
+  "criteria not found": translate("ERRORS.CRITERIA_NOT_FOUND"),
+  "criteria not in nomination event": translate(
+    "ERRORS.CRITERIA_NOT_IN_NOMINATION_EVENT"
+  ),
+  "not all criterias set": translate("ERRORS.NOT_ALL_CRITERIAS_SET"),
+  "can not decrypt password": translate("ERRORS.CAN_NOT_DECRYPT_PASSWORD"),
+  "equipment not found": translate("ERRORS.EQUIPMENT_NOT_FOUND"),
+  "event name taken": translate("ERRORS.EVENT_NAME_TAKEN"),
+  "event does not exist": translate("ERRORS.EVENT_DOES_NOT_EXIST"),
+  "this event is not yours": translate("ERRORS.THIS_EVENT_IS_NOT_YOURS"),
+  "invalid json": translate("ERRORS.INVALID_JSON"),
+  "invalid event id": translate("ERRORS.INVALID_EVENT_ID"),
+  "invalid file extension": translate("ERRORS.INVALID_FILE_EXTENSION"),
+  "file is too large": translate("ERRORS.FILE_IS_TOO_LARGE"),
+  "match not related to group": translate("ERRORS.MATCH_NOT_RELATED_TO_GROUP"),
+  "match not found": translate("ERRORS.MATCH_NOT_FOUND"),
+  "team not related to match": translate("ERRORS.TEAM_NOT_RELATED_TO_MATCH"),
+  "prev matches not finished": translate("ERRORS.PREV_MATCHES_NOT_FINISHED"),
+  "nomination not found": translate("ERRORS.NOMINATION_NOT_FOUND"),
+  "nomination name taken": translate("ERRORS.NOMINATION_NAME_TAKEN"),
+  "you cannot delete owner": translate("ERRORS.YOU_CANNOT_DELETE_OWNER"),
+  "email taken error": translate("ERRORS.EMAIL_TAKEN_ERROR"),
+  "participant does not exist": translate("ERRORS.PARTICIPANT_DOES_NOT_EXIST"),
+  "participant does not belongs to owner": translate(
+    "ERRORS.PARTICIPANT_DOES_NOT_BELONG_TO_OWNER"
+  ),
+  "race round not found": translate("ERRORS.RACE_ROUND_NOT_FOUND"),
+  "software not found": translate("ERRORS.SOFTWARE_NOT_FOUND"),
+  "team name taken": translate("ERRORS.TEAM_NAME_TAKEN"),
+  "team not found": translate("ERRORS.TEAM_NOT_FOUND"),
+  "this team is not yours": translate("ERRORS.THIS_TEAM_IS_NOT_YOURS"),
+  "you cant not name team as default": translate(
+    "ERRORS.YOU_CANT_NOT_NAME_TEAM_AS_DEFAULT"
+  ),
+  "default team is unchangeable": translate(
+    "ERRORS.DEFAULT_TEAM_IS_UNCHANGEABLE"
+  ),
+  "team not in event nomination error": translate(
+    "ERRORS.TEAM_NOT_IN_EVENT_NOMINATION_ERROR"
+  ),
+  "participant already in team": translate(
+    "ERRORS.PARTICIPANT_ALREADY_IN_TEAM"
+  ),
+  "participant not in team": translate("ERRORS.PARTICIPANT_NOT_IN_TEAM"),
+  "participant present more then one time": translate(
+    "ERRORS.PARTICIPANT_PRESENT_MORE_THAN_ONE_TIME"
+  ),
+  "Token expired, you are currently logged out": translate(
+    "ERRORS.TOKEN_EXPIRED"
+  ),
+  "Token signature error, invalid token": translate(
+    "ERRORS.TOKEN_SIGNATURE_ERROR"
+  ),
+  "Token does not exist": translate("ERRORS.TOKEN_DOES_NOT_EXIST"),
+  "Token is invalid": translate("ERRORS.TOKEN_IS_INVALID"),
+  "invalid group count": translate("ERRORS.INVALID_GROUP_COUNT"),
+  "not all matches are finished": translate(
+    "ERRORS.NOT_ALL_MATCHES_ARE_FINISHED"
+  ),
+  "group stage is not finished": translate(
+    "ERRORS.GROUP_STAGE_IS_NOT_FINISHED"
+  ),
+  "group stage is finished": translate("ERRORS.GROUP_STAGE_IS_FINISHED"),
+  "wrong teams provided": translate("ERRORS.WRONG_TEAMS_PROVIDED"),
+  "play off stage already started": translate(
+    "ERRORS.PLAY_OFF_STAGE_ALREADY_STARTED"
+  ),
+  "play off stage already finished": translate(
+    "ERRORS.PLAY_OFF_STAGE_ALREADY_FINISHED"
+  ),
+  "play off stage not started": translate("ERRORS.PLAY_OFF_STAGE_NOT_STARTED"),
+  "not all race_rounds_finished": translate(
+    "ERRORS.NOT_ALL_RACE_ROUNDS_FINISHED"
+  ),
+  "criteria stage finished": translate("ERRORS.CRITERIA_STAGE_FINISHED"),
+  "invalid password": translate("ERRORS.INVALID_PASSWORD"),
+  "user not found": translate("ERRORS.USER_NOT_FOUND"),
+  "you are not allowed to perform this action": translate(
+    "ERRORS.YOU_ARE_NOT_ALLOWED_TO_PERFORM_THIS_ACTION"
+  ),
+  "passwords dont match": translate("ERRORS.PASSWORDS_DONT_MATCH"),
+  "current password is missed": translate("ERRORS.CURRENT_PASSWORD_IS_MISSED"),
+  "one or more judges presented in judges_ids not found": translate(
+    "ERRORS.JUDGES_NOT_FOUND"
+  ),
 
   getError: function (errorKey) {
     return this[errorKey] || "Произошла неизвестная ошибка.";

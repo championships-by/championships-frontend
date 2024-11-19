@@ -38,14 +38,10 @@ import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi } from "@api";
 import { Locale, ROUTES, NOMINATION_TYPES, ModalType } from "@constants";
+import { getTranslate } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./sass/event-settings.scss";
-
-const eventsBreadcromb = {
-  title: ROUTES.JUDGMENT.TITLE,
-  href: ROUTES.JUDGMENT.PATH,
-};
 
 function EventSettings() {
   const { t } = useTranslation();
@@ -70,6 +66,11 @@ function EventSettings() {
   const [dataNominationID, setNominationID] = useState();
   const [participantsInfo, setParticipantsInfo] = useState([]);
 
+  const eventsBreadcromb = {
+    title: getTranslate(ROUTES.JUDGMENT.TITLE),
+    href: ROUTES.JUDGMENT.PATH,
+  };
+
   const editEventBreadcromb = {
     title: t("EVENTS.EVENT_EDIT"),
   };
@@ -86,9 +87,15 @@ function EventSettings() {
       dataIndex: "kind",
       key: "kind",
       filters: [
-        { text: NOMINATION_TYPES.TIME, value: NOMINATION_TYPES.TIME },
-        { text: NOMINATION_TYPES.CRITERIA, value: NOMINATION_TYPES.CRITERIA },
-        { text: NOMINATION_TYPES.OLYMPIC, value: NOMINATION_TYPES.OLYMPIC },
+        { text: getTranslate(NOMINATION_TYPES.TIME), value: "По времени" },
+        {
+          text: getTranslate(NOMINATION_TYPES.CRITERIA),
+          value: "По критериям",
+        },
+        {
+          text: getTranslate(NOMINATION_TYPES.OLYMPIC),
+          value: "Плей-офф",
+        },
       ],
       onFilter: (value, record) => record.kind.includes(value),
     },
@@ -191,11 +198,11 @@ function EventSettings() {
   const translateTypeFromEnglishIntoRussian = (type) => {
     switch (type) {
       case "time":
-        return NOMINATION_TYPES.TIME;
+        return "По времени";
       case "criteria":
-        return NOMINATION_TYPES.CRITERIA;
+        return "По критериям";
       case "olympic":
-        return NOMINATION_TYPES.OLYMPIC;
+        return "Плей-офф";
       default:
         return type;
     }
@@ -203,11 +210,11 @@ function EventSettings() {
 
   const translateTypeFromRussianIntoEnglish = (type) => {
     switch (type) {
-      case NOMINATION_TYPES.TIME:
+      case "По критериям":
         return "criteria";
-      case NOMINATION_TYPES.CRITERIA:
+      case "По времени":
         return "time";
-      case NOMINATION_TYPES.OLYMPIC:
+      case "Плейф-офф":
         return "olympic";
       default:
         return type;
@@ -279,13 +286,13 @@ function EventSettings() {
         return;
       } else if (data.tournament_started) {
         switch (competitionType) {
-          case NOMINATION_TYPES.OLYMPIC:
+          case "Плей-офф":
             navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
             break;
-          case NOMINATION_TYPES.TIME:
+          case "По времени":
             navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
             break;
-          case NOMINATION_TYPES.CRITERIA:
+          case "По критериям":
             navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID));
             break;
         }
@@ -296,7 +303,7 @@ function EventSettings() {
     }
 
     switch (competitionType) {
-      case NOMINATION_TYPES.OLYMPIC:
+      case "Плей-офф":
         setTrophyModal(true);
         break;
       default:
@@ -313,7 +320,7 @@ function EventSettings() {
           onOk: async () => {
             try {
               switch (competitionType) {
-                case NOMINATION_TYPES.TIME:
+                case "По времени":
                   let timeResult = await startTimeStage(eventId, nominationID);
                   switch (timeResult) {
                     case "success":
@@ -324,7 +331,7 @@ function EventSettings() {
                       break;
                   }
                   break;
-                case NOMINATION_TYPES.CRITERIA:
+                case "По критериям":
                   let creteriaResult = await startCriteriaStage(
                     eventId,
                     nominationID

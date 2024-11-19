@@ -6,6 +6,7 @@ import { Locale, ModalType, ROLE_FILTERS } from "@constants";
 import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getRoleFilters } from "@utils";
 
 function UsersTable() {
   const { t } = useTranslation();
@@ -50,7 +51,7 @@ function UsersTable() {
         ) : (
           <Typography.Text />
         ),
-      filters: ROLE_FILTERS,
+      filters: getRoleFilters(ROLE_FILTERS),
       onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
     {

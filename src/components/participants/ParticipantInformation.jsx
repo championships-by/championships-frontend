@@ -22,11 +22,6 @@ import { useTranslation } from "react-i18next";
 
 import "./sass/participants.scss";
 
-const participantsBreadcrumb = {
-  title: ROUTES.PARTICIPANTS.TITLE,
-  href: ROUTES.PARTICIPANTS.PATH,
-};
-
 function ParticipantInformation() {
   const { t } = useTranslation();
   const [participantData, setParticipantData] = useState([]);
@@ -36,6 +31,11 @@ function ParticipantInformation() {
   const profileIsLoading = user.isLoading;
   const navigate = useNavigate();
   const { participantID } = useParams();
+
+  const participantsBreadcrumb = {
+    title: t("COMMON.PARTICIPANT_MANAGEMENT"),
+    href: ROUTES.PARTICIPANTS.PATH,
+  };
 
   const items = [
     participantsBreadcrumb,

@@ -59,7 +59,7 @@ function JudgmentEventsTable({ EventsData }) {
       key: "action",
       render: ({ event }) => (
         <Flex>
-          <Tooltip title={ROUTES.JUDGMENT_EVENT_SETTINGS.TITLE}>
+          <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
               icon={<EditOutlined />}
@@ -68,14 +68,14 @@ function JudgmentEventsTable({ EventsData }) {
               }
             />
           </Tooltip>
-          <Tooltip title={ROUTES.EVENTS_DESCRIPTION.TITLE}>
+          <Tooltip title={t("EVENTS.EVENT_DESCRIPTION")}>
             <Button
               type="text"
               icon={<InfoCircleOutlined />}
               onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
             />
           </Tooltip>
-          <Tooltip title={ROUTES.EVENTS_REGISTRATION.TITLE}>
+          <Tooltip title={t("EVENTS.PARTICIPANT_REGISTRATION")}>
             <Button
               type="text"
               icon={<UsergroupAddOutlined />}

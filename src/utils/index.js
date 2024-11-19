@@ -1,4 +1,6 @@
 import { defaultFormat, defaultTime, url } from "@constants";
+import i18n from "@src/translations/translations";
+import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import JSEncrypt from "jsencrypt";
 import * as qs from "qs";
@@ -90,7 +92,7 @@ export const generateColumns = (data, render) => {
     return data[0].attempts.map((attempt, i) => ({
       key: `attempt-${i}`,
       dataIndex: `attempt-${i}`,
-      title: `Попытка №${i + 1}`,
+      title: `${translate("COMMON.ATTEMPT")} №${i + 1}`,
       render: (text, record, index) => render(text, record, index, i),
     }));
   }
@@ -147,23 +149,6 @@ export const transformTimeMatchesData = (rounds) =>
 export const changeDateFormat = (date) => {
   const formattedDate = dayjs(date);
   return formattedDate.format("DD.MM.YYYY");
-};
-
-export const getEventLevel = (eventLevel) => {
-  switch (eventLevel) {
-    case "republic":
-      return "Республиканский";
-    case "region":
-      return "Областной";
-    case "district":
-      return "Районный";
-    case "town":
-      return "Городской";
-    case "other":
-      return "Другое";
-    default:
-      return "Неизвестно";
-  }
 };
 
 export const getEncryptedPassword = (toEncrypt, publicKey) => {
@@ -267,4 +252,54 @@ export const getContentSectionWidth = () => {
     parseInt(adminPanelContentStyles.getPropertyValue("padding-left"), 10) -
     parseInt(adminPanelContentStyles.getPropertyValue("padding-right"), 10)
   );
+};
+
+export function translate(key) {
+  if (i18n.isInitialized) {
+    return i18n.t(key);
+  } else {
+    i18n.on("initialized", () => {
+      return i18n.t(key);
+    });
+  }
+}
+
+export const getEventLevel = (eventLevel) => {
+  switch (eventLevel) {
+    case "republic":
+      return translate("EVENT_LEVELS.REPUBLIC");
+    case "region":
+      return translate("EVENT_LEVELS.REGION");
+    case "district":
+      return translate("EVENT_LEVELS.DISTRICT");
+    case "town":
+      return translate("EVENT_LEVELS.TOWN");
+    case "other":
+      return translate("EVENT_LEVELS.OTHER");
+    default:
+      return "Неизвестно";
+  }
+};
+
+export const getRoleFilters = (roleFilters) => {
+  const { t } = useTranslation();
+
+  return roleFilters.map((filter) => ({
+    text: t(filter.text),
+    value: filter.value,
+  }));
+};
+
+export const getEventsFilters = (eventFilters) => {
+  const { t } = useTranslation();
+
+  return eventFilters.map((filter) => ({
+    label: t(filter.label),
+    value: filter.value,
+  }));
+};
+
+export const getTranslate = (text) => {
+  const { t } = useTranslation();
+  return t(text);
 };

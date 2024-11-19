@@ -1,35 +1,35 @@
-import { Typography, Select, Input } from "antd";
+import { Typography, Select } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { Locale, EventFilters } from "@constants";
+import { EventFilters } from "@constants";
 import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
-const options = [
-  {
-    value: EventFilters.REPUBLIC,
-    label: <span>{Locale.eventFilters[EventFilters.REPUBLIC]}</span>,
-  },
-  {
-    value: EventFilters.REGION,
-    label: <span>{Locale.eventFilters[EventFilters.REGION]}</span>,
-  },
-  {
-    value: EventFilters.DISTRICT,
-    label: <span>{Locale.eventFilters[EventFilters.DISTRICT]}</span>,
-  },
-  {
-    value: EventFilters.TOWN,
-    label: <span>{Locale.eventFilters[EventFilters.TOWN]}</span>,
-  },
-  {
-    value: EventFilters.OTHER,
-    label: <span>{Locale.eventFilters[EventFilters.OTHER]}</span>,
-  },
-];
-
 function EventLevel({ name, value, onChange: onChangeBase, form }) {
   const { t } = useTranslation();
+
+  const options = [
+    {
+      value: EventFilters.REPUBLIC,
+      label: <span>{t("EVENT_LEVELS.REPUBLIC")}</span>,
+    },
+    {
+      value: EventFilters.REGION,
+      label: <span>{t("EVENT_LEVELS.REGION")}</span>,
+    },
+    {
+      value: EventFilters.DISTRICT,
+      label: <span>{t("EVENT_LEVELS.DISTRICT")}</span>,
+    },
+    {
+      value: EventFilters.TOWN,
+      label: <span>{t("EVENT_LEVELS.TOWN")}</span>,
+    },
+    {
+      value: EventFilters.OTHER,
+      label: <span>{t("EVENT_LEVELS.OTHER")}</span>,
+    },
+  ];
 
   const rules = [
     {

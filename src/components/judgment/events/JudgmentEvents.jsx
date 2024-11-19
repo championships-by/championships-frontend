@@ -7,6 +7,7 @@ import { ROUTES } from "@constants";
 import { Button, Col, Divider, Row, Typography, Flex } from "antd";
 import { useEffect, useState } from "react";
 import EventCreateModal from "./EventCreateModal";
+import { getTranslate } from "@utils";
 import { useTranslation } from "react-i18next";
 
 function JudgmentEvents() {
@@ -76,7 +77,7 @@ function JudgmentEvents() {
                 type="primary"
                 onClick={() => setIsEventCreateModalOpen(true)}
               >
-                {ROUTES.JUDGMENT_CREATE.TITLE}
+                {t("EVENTS.CREATE_EVENT")}
               </Button>
               <EventCreateModal
                 name={t("EVENTS.CREATE_EVENT")}

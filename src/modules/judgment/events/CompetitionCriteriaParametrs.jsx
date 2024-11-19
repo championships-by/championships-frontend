@@ -76,7 +76,7 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
                       {t("TOURNAMENTS.EVALUATION_CRITERIA")}
                     </Typography.Text>
                     <Typography.Text className="events__competition-criteria__max-points">
-                      {t("TOURNAMENTS.EVALUATION_CRITERIA.MAX_COUNT_POINTS")}
+                      {t("TOURNAMENTS.MAX_COUNT_POINTS")}
                     </Typography.Text>
                   </Flex>
                   <br />
