@@ -75,7 +75,7 @@ function EventsList({ events }) {
             </Typography.Text>
             <br />
             <Typography.Text type="secondary">
-              <StarOutlined /> {getEventLevel(event.event_level)}
+              <StarOutlined /> {t(getEventLevel(event.event_level))}
             </Typography.Text>
             <br />
             <Tooltip title={event.event_place} placement="bottomLeft">

@@ -267,39 +267,16 @@ export function translate(key) {
 export const getEventLevel = (eventLevel) => {
   switch (eventLevel) {
     case "republic":
-      return translate("EVENT_LEVELS.REPUBLIC");
+      return "EVENT_LEVELS.REPUBLIC";
     case "region":
-      return translate("EVENT_LEVELS.REGION");
+      return "EVENT_LEVELS.REGION";
     case "district":
-      return translate("EVENT_LEVELS.DISTRICT");
+      return "EVENT_LEVELS.DISTRICT";
     case "town":
-      return translate("EVENT_LEVELS.TOWN");
+      return "EVENT_LEVELS.TOWN";
     case "other":
-      return translate("EVENT_LEVELS.OTHER");
+      return "EVENT_LEVELS.OTHER";
     default:
       return "Неизвестно";
   }
-};
-
-export const getRoleFilters = (roleFilters) => {
-  const { t } = useTranslation();
-
-  return roleFilters.map((filter) => ({
-    text: t(filter.text),
-    value: filter.value,
-  }));
-};
-
-export const getEventsFilters = (eventFilters) => {
-  const { t } = useTranslation();
-
-  return eventFilters.map((filter) => ({
-    label: t(filter.label),
-    value: filter.value,
-  }));
-};
-
-export const getTranslate = (text) => {
-  const { t } = useTranslation();
-  return t(text);
 };

@@ -1,16 +1,18 @@
 import { NavLink } from "react-router-dom";
 import { Tooltip } from "antd";
 import { ROUTES, Roles } from "@constants";
-import { getTranslate } from "@utils";
+import { useTranslation } from "react-i18next";
 
 function AdminPanelNav({ role }) {
+  const { t } = useTranslation();
+
   return (
     <nav className="admin-panel__nav">
       <ul className="admin-panel__menu-list">
         {(role === Roles.ADMIN ||
           role === Roles.JUDGE ||
           role === Roles.SPECIALIST) && (
-          <Tooltip placement="right" title={getTranslate(ROUTES.EVENTS.TITLE)}>
+          <Tooltip placement="right" title={t(ROUTES.EVENTS.TITLE)}>
             <li className="admin-panel__item">
               <NavLink
                 to={ROUTES.EVENTS.PATH}
@@ -20,10 +22,7 @@ function AdminPanelNav({ role }) {
           </Tooltip>
         )}
         {(role === Roles.ADMIN || role === Roles.JUDGE) && (
-          <Tooltip
-            placement="right"
-            title={getTranslate(ROUTES.JUDGMENT.TITLE)}
-          >
+          <Tooltip placement="right" title={t(ROUTES.JUDGMENT.TITLE)}>
             <li className="admin-panel__item">
               <NavLink
                 to={ROUTES.JUDGMENT.PATH}
@@ -36,10 +35,7 @@ function AdminPanelNav({ role }) {
           role === Roles.SPECIALIST ||
           role === Roles.JUDGE) && (
           <li className="admin-panel__item">
-            <Tooltip
-              placement="right"
-              title={getTranslate(ROUTES.PARTICIPANTS.TITLE)}
-            >
+            <Tooltip placement="right" title={t(ROUTES.PARTICIPANTS.TITLE)}>
               <NavLink
                 to={ROUTES.PARTICIPANTS.PATH}
                 className="admin-panel__menu-link admin-panel__menu-link--add-participants"
@@ -49,10 +45,7 @@ function AdminPanelNav({ role }) {
         )}
         {role === Roles.ADMIN && (
           <li className="admin-panel__item">
-            <Tooltip
-              placement="right"
-              title={getTranslate(ROUTES.USERS_CONTROL.TITLE)}
-            >
+            <Tooltip placement="right" title={t(ROUTES.USERS_CONTROL.TITLE)}>
               <NavLink
                 to={ROUTES.USERS_CONTROL.PATH}
                 className="admin-panel__menu-link admin-panel__menu-link--users"
@@ -64,10 +57,7 @@ function AdminPanelNav({ role }) {
           role === Roles.JUDGE ||
           role === Roles.SPECIALIST) && (
           <li className="admin-panel__item">
-            <Tooltip
-              placement="right"
-              title={getTranslate(ROUTES.USER_SETTINGS.TITLE)}
-            >
+            <Tooltip placement="right" title={t(ROUTES.USER_SETTINGS.TITLE)}>
               <NavLink
                 to={ROUTES.USER_SETTINGS.PATH}
                 className="admin-panel__menu-link admin-panel__menu-link--settings"
@@ -81,10 +71,7 @@ function AdminPanelNav({ role }) {
           role === Roles.JUDGE ||
           role === Roles.SPECIALIST) && (
           <li>
-            <Tooltip
-              placement="right"
-              title={getTranslate(ROUTES.LOGOUT.TITLE)}
-            >
+            <Tooltip placement="right" title={t(ROUTES.LOGOUT.TITLE)}>
               <NavLink
                 to={ROUTES.LOGOUT.PATH}
                 className="admin-panel__menu-link admin-panel__menu-link--logout"

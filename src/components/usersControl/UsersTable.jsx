@@ -6,7 +6,6 @@ import { Locale, ModalType, ROLE_FILTERS } from "@constants";
 import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getRoleFilters } from "@utils";
 
 function UsersTable() {
   const { t } = useTranslation();
@@ -14,6 +13,13 @@ function UsersTable() {
   const [selectedUserId, setSelectedUserId] = useState();
   const users = useSelector(getUsersSelector);
   const usersData = users.data;
+
+  const getRoleFilters = (roleFilters) => {
+    return roleFilters.map((filter) => ({
+      text: t(filter.text),
+      value: filter.value,
+    }));
+  };
 
   const openEditModal = (id) => {
     setSelectedUserId(id);

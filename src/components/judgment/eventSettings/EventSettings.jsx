@@ -37,8 +37,13 @@ import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi } from "@api";
-import { Locale, ROUTES, NOMINATION_TYPES, ModalType } from "@constants";
-import { getTranslate } from "@utils";
+import {
+  Locale,
+  ROUTES,
+  NOMINATION_TYPES,
+  ModalType,
+  NOMINATIONS,
+} from "@constants";
 import { useTranslation } from "react-i18next";
 
 import "./sass/event-settings.scss";
@@ -67,7 +72,7 @@ function EventSettings() {
   const [participantsInfo, setParticipantsInfo] = useState([]);
 
   const eventsBreadcromb = {
-    title: getTranslate(ROUTES.JUDGMENT.TITLE),
+    title: t(ROUTES.JUDGMENT.TITLE),
     href: ROUTES.JUDGMENT.PATH,
   };
 
@@ -86,15 +91,27 @@ function EventSettings() {
       title: t("EVENTS.TYPE_OF_TOURNAMENTS"),
       dataIndex: "kind",
       key: "kind",
+      render: (record) => {
+        switch (record) {
+          case NOMINATIONS.TIME:
+            return t(NOMINATION_TYPES.TIME);
+          case NOMINATIONS.CRITERIA:
+            return t(NOMINATION_TYPES.CRITERIA);
+          case NOMINATIONS.OLYMPIC:
+            return t(NOMINATION_TYPES.OLYMPIC);
+          default:
+            return record;
+        }
+      },
       filters: [
-        { text: getTranslate(NOMINATION_TYPES.TIME), value: "По времени" },
+        { text: t(NOMINATION_TYPES.TIME), value: NOMINATIONS.TIME },
         {
-          text: getTranslate(NOMINATION_TYPES.CRITERIA),
-          value: "По критериям",
+          text: t(NOMINATION_TYPES.CRITERIA),
+          value: NOMINATIONS.CRITERIA,
         },
         {
-          text: getTranslate(NOMINATION_TYPES.OLYMPIC),
-          value: "Плей-офф",
+          text: t(NOMINATION_TYPES.OLYMPIC),
+          value: NOMINATIONS.OLYMPIC,
         },
       ],
       onFilter: (value, record) => record.kind.includes(value),
@@ -195,32 +212,6 @@ function EventSettings() {
     window.open(record.reglament);
   };
 
-  const translateTypeFromEnglishIntoRussian = (type) => {
-    switch (type) {
-      case "time":
-        return "По времени";
-      case "criteria":
-        return "По критериям";
-      case "olympic":
-        return "Плей-офф";
-      default:
-        return type;
-    }
-  };
-
-  const translateTypeFromRussianIntoEnglish = (type) => {
-    switch (type) {
-      case "По критериям":
-        return "criteria";
-      case "По времени":
-        return "time";
-      case "Плейф-офф":
-        return "olympic";
-      default:
-        return type;
-    }
-  };
-
   const findNominationId = (name, response) => {
     const nomination = response.find((item) => item.name === name);
     return nomination ? nomination.id : null;
@@ -229,7 +220,7 @@ function EventSettings() {
   const deleteNominations = (record) => {
     const getNominationInfo = () => {
       const eventId = parseInt(eventID, 10);
-      const nominationType = translateTypeFromRussianIntoEnglish(record.kind);
+      const nominationType = record.kind;
       const nominationName = record.name;
       const nominationID = findNominationId(nominationName, eventInfo);
       const data = {
@@ -286,13 +277,13 @@ function EventSettings() {
         return;
       } else if (data.tournament_started) {
         switch (competitionType) {
-          case "Плей-офф":
+          case NOMINATIONS.OLYMPIC:
             navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
             break;
-          case "По времени":
+          case NOMINATIONS.TIME:
             navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
             break;
-          case "По критериям":
+          case NOMINATIONS.CRITERIA:
             navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID));
             break;
         }
@@ -303,7 +294,7 @@ function EventSettings() {
     }
 
     switch (competitionType) {
-      case "Плей-офф":
+      case NOMINATIONS.OLYMPIC:
         setTrophyModal(true);
         break;
       default:
@@ -320,7 +311,7 @@ function EventSettings() {
           onOk: async () => {
             try {
               switch (competitionType) {
-                case "По времени":
+                case NOMINATIONS.TIME:
                   let timeResult = await startTimeStage(eventId, nominationID);
                   switch (timeResult) {
                     case "success":
@@ -331,7 +322,7 @@ function EventSettings() {
                       break;
                   }
                   break;
-                case "По критериям":
+                case NOMINATIONS.CRITERIA:
                   let creteriaResult = await startCriteriaStage(
                     eventId,
                     nominationID
@@ -355,7 +346,7 @@ function EventSettings() {
   };
 
   const openParticipantModal = (record) => {
-    const competitionType = translateTypeFromRussianIntoEnglish(record.kind);
+    const competitionType = record.kind;
     const competitionName = record.name;
     const nominationID = findNominationId(competitionName, eventInfo);
 
@@ -369,12 +360,8 @@ function EventSettings() {
 
   const getNominations = () => {
     eventApi.getEvent(eventID).then((data) => {
-      const translatedType = data.nominations.map((item) => ({
-        ...item,
-        kind: translateTypeFromEnglishIntoRussian(item.kind),
-      }));
-      setEventInfo(translatedType);
-      if (translatedType.length > 0) {
+      setEventInfo(data.nominations);
+      if (data.nominations.length > 0) {
         setSwitchDisabled(false);
       } else {
         setSwitchDisabled(true);
