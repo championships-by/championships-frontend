@@ -1,5 +1,4 @@
 import { EventEmitter } from "events";
-import { translate } from "@utils";
 
 export const ZUBRONOK = "https://zubronok.by/";
 
@@ -153,26 +152,84 @@ export const EventFilters = {
   OTHER: "other",
 };
 
+export const tableLocale = {
+  triggerDesc: "TABLE_LOCALE.TRIGGERDESC",
+  triggerAsc: "TABLE_LOCALE.TRIGGERASC",
+  cancelSort: "TABLE_LOCALE.CANCELSORT",
+  filterReset: "TABLE_LOCALE.FILTERRESET",
+  filterConfirm: "TABLE_LOCALE.FILTERCONFIRM",
+};
+
+export const paginationLocale = {
+  items_per_page: "PAGINATION.ITEMS_PER_PAGE",
+  jump_to: "PAGINATION.JUMP_TO",
+  jump_to_confirm: "PAGINATION.JUMP_TO_CONFIRM",
+  page: "PAGINATION.PAGE",
+  prev_page: "PAGINATION.PREV_PAGE",
+  next_page: "PAGINATION.NEXT_PAGE",
+  prev_5: "PAGINATION.PREV_5",
+  next_5: "PAGINATION.NEXT_5",
+  prev_3: "PAGINATION.PREV_3",
+  next_3: "PAGINATION.NEXT_3",
+};
+
+export const calendarLocale = {
+  lang: {
+    locale: "ru_RU",
+    placeholder: "DATE_TIME.PLACEHOLDER",
+    rangePlaceholder: ["DATE_TIME.BEGIN", "DATE_TIME.END"],
+    today: "DATE_TIME.TODAY",
+    now: "DATE_TIME.NOW",
+    backToToday: "DATE_TIME.BACKTOTODAY",
+    ok: "DATE_TIME.OK",
+    clear: "DATE_TIME.CLEAR",
+    month: "DATE_TIME.MONTH",
+    year: "DATE_TIME.YEAR",
+    timeSelect: "DATE_TIME.TIMESELECT",
+    dateSelect: "DATE_TIME.DATESELECT",
+    monthSelect: "DATE_TIME.MONTHSELECT",
+    yearSelect: "DATE_TIME.YEARSELECT",
+    decadeSelect: "DATE_TIME.DECADESELECT",
+    previousMonth: "DATE_TIME.PREVIOUSMONTH",
+    nextMonth: "DATE_TIME.NEXTMONTH",
+    previousYear: "DATE_TIME.PREVIOUSYEAR",
+    nextYear: "DATE_TIME.NEXTYEAR",
+    previousDecade: "DATE_TIME.PREVIOUSDECADE",
+    nextDecade: "DATE_TIME.NEXTDECADE",
+    previousCentury: "DATE_TIME.PREVIOUSCENTURY",
+    nextCentury: "DATE_TIME.NEXTCENTURY",
+    shortWeekDays: [
+      "SHORT_WEEK_DAYS.SUN",
+      "SHORT_WEEK_DAYS.MON",
+      "SHORT_WEEK_DAYS.TUE",
+      "SHORT_WEEK_DAYS.WED",
+      "SHORT_WEEK_DAYS.THU",
+      "SHORT_WEEK_DAYS.FRI",
+      "SHORT_WEEK_DAYS.SAT",
+    ],
+    shortMonths: [
+      "MONTHS.JANUARY",
+      "MONTHS.FEBRUARY",
+      "MONTHS.MARCH",
+      "MONTHS.APRIL",
+      "MONTHS.MAY",
+      "MONTHS.JUNE",
+      "MONTHS.JULY",
+      "MONTHS.AUGUST",
+      "MONTHS.SEPTEMBER",
+      "MONTHS.OCTOBER",
+      "MONTHS.NOVEMBER",
+      "MONTHS.DECEMBER",
+    ],
+  },
+  timePickerLocale: {
+    placeholder: "DATE_TIME.CHOOSE_TIME",
+  },
+};
+
 export const Locale = {
   lang: {
     locale: "ru_RU",
-    placeholder: translate("DATE_TIME.PLACEHOLDER"),
-    rangePlaceholder: [
-      translate("DATE_TIME.BEGIN"),
-      translate("DATE_TIME.END"),
-    ],
-    today: translate("DATE_TIME.TODAY"),
-    now: translate("DATE_TIME.NOW"),
-    backToToday: translate("DATE_TIME.BACKTOTODAY"),
-    ok: translate("DATE_TIME.OK"),
-    clear: translate("DATE_TIME.CLEAR"),
-    month: translate("DATE_TIME.MONTH"),
-    year: translate("DATE_TIME.YEAR"),
-    timeSelect: translate("DATE_TIME.TIMESELECT"),
-    dateSelect: translate("DATE_TIME.DATESELECT"),
-    monthSelect: translate("DATE_TIME.MONTHSELECT"),
-    yearSelect: translate("DATE_TIME.YEARSELECT"),
-    decadeSelect: translate("DATE_TIME.DECADESELECT"),
     yearFormat: "YYYY",
     dateFormat: "M/D/YYYY",
     dayFormat: "D",
@@ -180,52 +237,11 @@ export const Locale = {
     timeFormat: "HH:mm",
     monthFormat: "MMMM",
     monthBeforeYear: true,
-    previousMonth: translate("DATE_TIME.PREVIOUSMONTH"),
-    nextMonth: translate("DATE_TIME.NEXTMONTH"),
-    previousYear: translate("DATE_TIME.PREVIOUSYEAR"),
-    nextYear: translate("DATE_TIME.NEXTYEAR"),
-    previousDecade: translate("DATE_TIME.PREVIOUSDECADE"),
-    nextDecade: translate("DATE_TIME.NEXTDECADE"),
-    previousCentury: translate("DATE_TIME.PREVIOUSCENTURY"),
-    nextCentury: translate("DATE_TIME.NEXTCENTURY"),
-    shortWeekDays: [
-      translate("SHORT_WEEK_DAYS.SUN"),
-      translate("SHORT_WEEK_DAYS.MON"),
-      translate("SHORT_WEEK_DAYS.TUE"),
-      translate("SHORT_WEEK_DAYS.WED"),
-      translate("SHORT_WEEK_DAYS.THU"),
-      translate("SHORT_WEEK_DAYS.FRI"),
-      translate("SHORT_WEEK_DAYS.SAT"),
-    ],
-    shortMonths: [
-      translate("MONTHS.JANUARY"),
-      translate("MONTHS.FEBRUARY"),
-      translate("MONTHS.MARCH"),
-      translate("MONTHS.APRIL"),
-      translate("MONTHS.MAY"),
-      translate("MONTHS.JUNE"),
-      translate("MONTHS.JULY"),
-      translate("MONTHS.AUGUST"),
-      translate("MONTHS.SEPTEMBER"),
-      translate("MONTHS.OCTOBER"),
-      translate("MONTHS.NOVEMBER"),
-      translate("MONTHS.DECEMBER"),
-    ],
-  },
-  timePickerLocale: {
-    placeholder: translate("DATE_TIME.CHOOSE_TIME"),
-  },
-  tableLocale: {
-    triggerDesc: translate("TABLE_LOCALE.TRIGGERDESC"),
-    triggerAsc: translate("TABLE_LOCALE.TRIGGERDESC"),
-    cancelSort: translate("TABLE_LOCALE.TRIGGERDESC"),
-    filterReset: translate("TABLE_LOCALE.TRIGGERDESC"),
-    filterConfirm: translate("TABLE_LOCALE.TRIGGERDESC"),
   },
   roles: {
-    admin: translate("COMMON.ADMIN"),
-    judge: translate("COMMON.JUDGE"),
-    specialist: translate("COMMON.MANAGER"),
+    admin: "COMMON.ADMIN",
+    judge: "COMMON.JUDGE",
+    specialist: "COMMON.MANAGER",
   },
   eventFilters: {
     [EventFilters.REPUBLIC]: "EVENT_LEVELS.REPUBLIC",
@@ -234,30 +250,12 @@ export const Locale = {
     [EventFilters.TOWN]: "EVENT_LEVELS.TOWN",
     [EventFilters.OTHER]: "EVENT_LEVELS.OTHER",
   },
-  pagination: {
-    items_per_page: translate("PAGINATION.ITEMS_PER_PAGE"),
-    jump_to: translate("PAGINATION.JUMP_TO"),
-    jump_to_confirm: translate("PAGINATION.JUMP_TO_CONFIRM"),
-    page: translate("PAGINATION.PAGE"),
-    prev_page: translate("PAGINATION.PREV_PAGE"),
-    next_page: translate("PAGINATION.NEXT_PAGE"),
-    prev_5: translate("PAGINATION.PREV_5"),
-    next_5: translate("PAGINATION.NEXT_5"),
-    prev_3: translate("PAGINATION.PREV_3"),
-    next_3: translate("PAGINATION.NEXT_3"),
-  },
   dateFormat: "DD.MM.YYYY",
   dateTimeFormat: "DD.MM.YYYY HH:mm",
   weekFormat: "YYYY-wo",
   monthFormat: "YYYY-MM",
-  triggerDesc: translate("SORT.TRIGGERDESC"),
-  triggerAsc: translate("SORT.TRIGGERASC"),
-  cancelSort: translate("SORT.CANCELSORT"),
-  emptyText: translate("SORT.EMPTYTEXT"),
-  filterConfirm: translate("SORT.FILTERCONFIRM"),
-  filterReset: translate("SORT.FILTERRESET"),
-  filterEmptyText: translate("SORT.FILTEREMPTYTEXT"),
 };
+
 export const yaShareLink = "https://yastatic.net/share2/share.js";
 export const defaultTime = "00:00.000";
 

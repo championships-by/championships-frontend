@@ -1,9 +1,10 @@
 import { DatePicker, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { Locale } from "@constants";
+import { Locale, calendarLocale } from "@constants";
 import { useEffect } from "react";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
+import { getTranslation } from "@utils";
 
 import "./sass/events.scss";
 
@@ -97,7 +98,7 @@ function EventDate({ name, value, onChange: onChangeBase, form, isEdit }) {
             <div className="events__event-date__datepickercontainer">
               <Typography.Text>{t("COMMON.FROM_UPPERCASE")}</Typography.Text>
               <DatePicker
-                locale={Locale}
+                locale={getTranslation(calendarLocale, t)}
                 id={`${name}_holding_start_date`}
                 format={Locale.dateTimeFormat}
                 showTime={{ format: Locale.timeFormat }}
@@ -141,7 +142,7 @@ function EventDate({ name, value, onChange: onChangeBase, form, isEdit }) {
             <div className="events__event-date__datepickercontainer">
               <Typography.Text>{t("COMMON.TO_UPPERCASE")}</Typography.Text>
               <DatePicker
-                locale={Locale}
+                locale={getTranslation(calendarLocale, t)}
                 id={`${name}_holding_finish_date`}
                 format={Locale.dateTimeFormat}
                 showTime={{ format: Locale.timeFormat }}

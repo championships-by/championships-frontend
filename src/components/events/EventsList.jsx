@@ -4,13 +4,14 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import noLogo from "@assets/img/auth-background.png";
-import { ROUTES, url, Locale } from "@constants";
+import { ROUTES, url, paginationLocale } from "@constants";
 import { changeDateFormat, getEventLevel } from "@utils";
 import { Card, List, Tooltip, Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDevice } from "@hooks";
 import { useTranslation } from "react-i18next";
+import { getTranslation } from "@utils";
 
 function EventsList({ events }) {
   const { t } = useTranslation();
@@ -107,7 +108,7 @@ function EventsList({ events }) {
         pageSize: isMobile ? 1 : isTablet ? 2 : 3,
         position: "bottom",
         align: "center",
-        locale: Locale.pagination,
+        locale: getTranslation(paginationLocale, t),
       }}
       dataSource={data}
       renderItem={(item) => <List.Item>{item}</List.Item>}

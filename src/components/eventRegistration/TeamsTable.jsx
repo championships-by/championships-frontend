@@ -3,7 +3,8 @@ import { useMemo, useState } from "react";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
-import { Locale } from "@constants";
+import { tableLocale } from "@constants";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 const transformTeamsData = (teamsData) => {
@@ -149,7 +150,7 @@ function TeamsTable({ teamsData }) {
         dataSource={transformedData}
         columns={columns}
         bordered
-        locale={Locale}
+        locale={getTranslation(tableLocale, t)}
         pagination={false}
         rowKey={(record) => record.participant_name}
       />

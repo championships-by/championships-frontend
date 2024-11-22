@@ -1,10 +1,11 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { Locale } from "@constants";
+import { tableLocale } from "@constants";
 import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
 import { formatTime } from "@utils";
 import { Flex, Table, Tooltip, Typography } from "antd";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./TimeMatchesResult.scss";
@@ -79,7 +80,7 @@ export const TimeMatchesResults = ({
           className="time-matches-table"
           pagination={false}
           columns={columns}
-          locale={Locale}
+          locale={getTranslation(tableLocale, t)}
           dataSource={timeMatches.sort((a, b) =>
             formatTime(a.bestAttempt.result).diff(
               formatTime(b.bestAttempt.result)

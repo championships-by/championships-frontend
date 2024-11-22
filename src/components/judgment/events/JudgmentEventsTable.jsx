@@ -3,10 +3,11 @@ import {
   InfoCircleOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
-import { Locale, ROUTES } from "@constants";
+import { paginationLocale, tableLocale, ROUTES } from "@constants";
 import { changeDateFormat } from "@utils";
 import { Button, Flex, List, Table, Tooltip, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 function JudgmentEventsTable({ EventsData }) {
@@ -91,11 +92,11 @@ function JudgmentEventsTable({ EventsData }) {
 
   return (
     <Table
-      locale={Locale}
+      locale={getTranslation(tableLocale, t)}
       dataSource={EventsData}
       pagination={{
         position: ["bottomCenter"],
-        locale: Locale.pagination,
+        locale: getTranslation(paginationLocale, t),
       }}
       columns={columns}
     />

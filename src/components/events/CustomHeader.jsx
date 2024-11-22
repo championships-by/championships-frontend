@@ -1,8 +1,9 @@
-import { Locale } from "@constants";
+import { calendarLocale } from "@constants";
 import { Radio, Select } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useTranslation } from "react-i18next";
+import { getTranslation } from "@utils";
 
 import "./sass/custom-calendar.scss";
 
@@ -25,11 +26,13 @@ export const CustomHeader = ({ value, type, onChange, onTypeChange }) => {
           onChange(now);
         }}
       >
-        {Locale.lang.shortMonths.map((month, index) => (
-          <option key={index} value={index}>
-            {month}
-          </option>
-        ))}
+        {getTranslation(calendarLocale.lang.shortMonths, t).map(
+          (month, index) => (
+            <option key={index} value={index}>
+              {month}
+            </option>
+          )
+        )}
       </Select>
       <Select
         size="small"

@@ -2,8 +2,9 @@ import React from "react";
 import { DatePicker, Flex, Input, Space, Typography } from "antd";
 import dayjs from "dayjs";
 import FormItem from "antd/es/form/FormItem";
-import { Locale } from "@constants";
+import { Locale, calendarLocale } from "@constants";
 import { useTranslation } from "react-i18next";
+import { getTranslation } from "../../utils";
 
 import "./sass/participant.scss";
 
@@ -46,7 +47,7 @@ function ParticipantBirthdayInput({ name, value, onChange: onChangeBase }) {
               format={Locale.dateFormat}
               className="participant__birthday-input__datepicker"
               placeholder={t("COMMON.CHOOSE_BIRTHDAY")}
-              locale={Locale}
+              locale={getTranslation(calendarLocale, t)}
               value={dayjs(value)}
               onChange={(value) => onChange(value)}
               disabledDate={disabledDate}

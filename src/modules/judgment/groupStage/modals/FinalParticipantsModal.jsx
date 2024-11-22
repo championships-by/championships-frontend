@@ -1,7 +1,8 @@
 import { useMatches } from "@hooks";
 import { Button, Checkbox, Modal, Table } from "antd";
 import { useCallback, useEffect, useState } from "react";
-import { Locale } from "@constants";
+import { tableLocale } from "@constants";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 const regex = /^[^@]+/;
@@ -165,7 +166,7 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
         columns={finalParticipantsTableColumns}
         dataSource={tableData}
         pagination={false}
-        locale={Locale}
+        locale={getTranslation(tableLocale, t)}
       />
     </Modal>
   );

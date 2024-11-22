@@ -280,3 +280,22 @@ export const getEventLevel = (eventLevel) => {
       return "Неизвестно";
   }
 };
+
+export const getTranslation = (locale, t) => {
+  const translateValue = (value) => {
+    if (typeof value === "string") {
+      return t(value);
+    } else if (Array.isArray(value)) {
+      return value.map((item) => translateValue(item));
+    } else if (typeof value === "object" && value !== null) {
+      return Object.entries(value).reduce((translated, [key, val]) => {
+        translated[key] = translateValue(val);
+        return translated;
+      }, {});
+    }
+
+    return value;
+  };
+
+  return translateValue(locale);
+};

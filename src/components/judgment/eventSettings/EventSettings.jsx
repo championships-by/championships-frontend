@@ -38,12 +38,13 @@ import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi } from "@api";
 import {
-  Locale,
+  tableLocale,
   ROUTES,
   NOMINATION_TYPES,
   ModalType,
   NOMINATIONS,
 } from "@constants";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./sass/event-settings.scss";
@@ -606,7 +607,7 @@ function EventSettings() {
           <Table
             columns={columns}
             dataSource={eventInfo}
-            locale={Locale}
+            locale={getTranslation(tableLocale, t)}
             pagination={false}
           />
         </Col>

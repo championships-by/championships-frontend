@@ -2,9 +2,15 @@ import { EditOutlined } from "@ant-design/icons";
 import { getUsersSelector } from "@store/users";
 import { useSelector } from "react-redux";
 import UserModal from "@components/usersControl/UserModal";
-import { Locale, ModalType, ROLE_FILTERS } from "@constants";
+import {
+  paginationLocale,
+  tableLocale,
+  ModalType,
+  ROLE_FILTERS,
+} from "@constants";
 import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
 import { useState } from "react";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 function UsersTable() {
@@ -82,11 +88,11 @@ function UsersTable() {
       <Table
         dataSource={usersData}
         columns={columns}
-        locale={Locale}
+        locale={getTranslation(tableLocale, t)}
         pagination={{
           position: ["bottomCenter"],
           showSizeChanger: false,
-          locale: Locale.pagination,
+          locale: getTranslation(paginationLocale, t),
         }}
       />
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Table, Button } from "antd";
-import { Locale } from "@constants";
+import { tableLocale } from "@constants";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
@@ -110,7 +111,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
           columns={columns}
           dataSource={participantsInfo}
           pagination={false}
-          locale={Locale}
+          locale={getTranslation(tableLocale, t)}
         />
       </Modal>
     </div>
