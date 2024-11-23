@@ -1,6 +1,5 @@
 import { defaultFormat, defaultTime, url } from "@constants";
 import i18n from "@src/translations/translations";
-import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import JSEncrypt from "jsencrypt";
 import * as qs from "qs";
@@ -92,7 +91,7 @@ export const generateColumns = (data, render) => {
     return data[0].attempts.map((attempt, i) => ({
       key: `attempt-${i}`,
       dataIndex: `attempt-${i}`,
-      title: `${translate("COMMON.ATTEMPT")} №${i + 1}`,
+      title: `${getTranslation("COMMON.ATTEMPT")} №${i + 1}`,
       render: (text, record, index) => render(text, record, index, i),
     }));
   }
@@ -253,16 +252,6 @@ export const getContentSectionWidth = () => {
     parseInt(adminPanelContentStyles.getPropertyValue("padding-right"), 10)
   );
 };
-
-export function translate(key) {
-  if (i18n.isInitialized) {
-    return i18n.t(key);
-  } else {
-    i18n.on("initialized", () => {
-      return i18n.t(key);
-    });
-  }
-}
 
 export const getEventLevel = (eventLevel) => {
   switch (eventLevel) {
