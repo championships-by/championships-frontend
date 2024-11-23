@@ -91,7 +91,7 @@ export const generateColumns = (data, render) => {
     return data[0].attempts.map((attempt, i) => ({
       key: `attempt-${i}`,
       dataIndex: `attempt-${i}`,
-      title: `${getTranslation("COMMON.ATTEMPT")} №${i + 1}`,
+      title: `${i18n.t("COMMON.ATTEMPT")} №${i + 1}`,
       render: (text, record, index) => render(text, record, index, i),
     }));
   }

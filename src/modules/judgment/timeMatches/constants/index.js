@@ -1,5 +1,5 @@
 import { RESPONSE_STATUS } from "@constants";
-import { getTranslation } from "@utils";
+import i18n from "@src/translations/translations";
 
 export const TimeMatchesTabsEnum = {
   TABLE: "table",
@@ -9,16 +9,16 @@ export const TimeMatchesTabsEnum = {
 export const timeMatchesTabs = {
   [TimeMatchesTabsEnum.TABLE]: {
     key: "1",
-    label: getTranslation("COMMON.TABLE"),
+    label: i18n.t("COMMON.TABLE"),
   },
   [TimeMatchesTabsEnum.RESULTS]: {
     key: "2",
-    label: getTranslation("COMMON.RESULTS"),
+    label: i18n.t("COMMON.RESULTS"),
     disabled: true,
   },
 };
 
 export const timeMatchesErrorMessages = {
-  [RESPONSE_STATUS.STATUS_CONFLICT]: getTranslation("MESSAGES.YOU_NOT_JUDGE"),
-  default: getTranslation("MESSAGES.ERROR"),
+  [RESPONSE_STATUS.STATUS_CONFLICT]: i18n.t("MESSAGES.YOU_NOT_JUDGE"),
+  default: i18n.t("MESSAGES.ERROR"),
 };
