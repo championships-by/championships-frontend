@@ -8,7 +8,7 @@ import { changeLanguageAsync } from "@store/languages";
 
 import { useTranslation } from "react-i18next";
 
-function UserSupport() {
+function SettingsButton() {
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const [theme, setTheme] = useState("light");
@@ -80,4 +80,4 @@ function UserSupport() {
   );
 }
 
-export default UserSupport;
+export default SettingsButton;
