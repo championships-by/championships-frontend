@@ -7,21 +7,6 @@ import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
-const options = [
-  {
-    value: NOMINATIONS.TIME,
-    label: NOMINATION_TYPES.TIME,
-  },
-  {
-    value: NOMINATIONS.CRITERIA,
-    label: NOMINATION_TYPES.CRITERIA,
-  },
-  {
-    value: NOMINATIONS.PLAYOFF,
-    label: NOMINATION_TYPES.OLYMPIC,
-  },
-];
-
 function CompetitionType({
   onChange,
   onInputChange,
@@ -33,6 +18,21 @@ function CompetitionType({
   const { t } = useTranslation();
   const [selectedValue, setSelectedValue] = useState("");
   const [groupCount, setGroupCount] = useState();
+
+  const options = [
+    {
+      value: NOMINATIONS.TIME,
+      label: t("NOMINATION_TYPES.TIME"),
+    },
+    {
+      value: NOMINATIONS.CRITERIA,
+      label: t("NOMINATION_TYPES.CRITERIA"),
+    },
+    {
+      value: NOMINATIONS.PLAYOFF,
+      label: t("NOMINATION_TYPES.PLAYOFF"),
+    },
+  ];
 
   const handleChange = (value) => {
     setSelectedValue(value);

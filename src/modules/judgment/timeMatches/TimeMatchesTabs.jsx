@@ -167,7 +167,6 @@ export const TimeMatchesTabs = () => {
         .catch((error) => {
           if (error.response && error.response.status === 404) {
             message.error(t("MESSAGES.ERROR"));
-          } else {
             setIsErrorOccurred(true);
           }
         })

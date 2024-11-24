@@ -22,6 +22,13 @@ export const FilterSearchPanel = ({ onSubmit }) => {
     setFilters(e.target.checked ? defaultEventFilterOptions : []);
   };
 
+  const getEventsFilters = (eventFilters) => {
+    return eventFilters.map((filter) => ({
+      label: t(filter.label),
+      value: filter.value,
+    }));
+  };
+
   const handleSubmit = () => {
     dispatch(setEventSearchValue(search));
     dispatch(
@@ -53,7 +60,7 @@ export const FilterSearchPanel = ({ onSubmit }) => {
             </Checkbox>
             <Checkbox.Group
               className="filter-search-panel__filters__checkbox-group"
-              options={eventFilterOptions}
+              options={getEventsFilters(eventFilterOptions)}
               defaultValue={defaultEventFilterOptions}
               value={filters}
               onChange={setFilters}

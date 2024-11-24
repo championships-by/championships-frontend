@@ -4,15 +4,16 @@ import { Flex, Input, Typography } from "antd";
 import { CodeOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
-const rules = [
-  {
-    required: true,
-    message: "Пожалуйста, введите оборудование",
-  },
-];
-
 function ParticipantSoftwareInput({ name }) {
   const { t } = useTranslation();
+
+  const rules = [
+    {
+      required: true,
+      message: t("RULES.PLEASE_ENTER_SOFTWARE"),
+    },
+  ];
+
   return (
     <FormItem name={name} rules={rules}>
       <Flex vertical>

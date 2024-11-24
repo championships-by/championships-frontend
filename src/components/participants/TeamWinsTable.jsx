@@ -1,6 +1,7 @@
-import { Locale } from "@constants";
+import { tableLocale } from "@constants";
 import { Table } from "antd";
 import React from "react";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 function TeamWinsTable({ teamWinsData }) {
@@ -25,7 +26,7 @@ function TeamWinsTable({ teamWinsData }) {
       <Table
         dataSource={teamWinsData}
         columns={columns}
-        locale={Locale}
+        locale={getTranslation(tableLocale, t)}
         pagination={false}
       />
     </div>

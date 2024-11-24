@@ -160,7 +160,7 @@ function EventSettingsCompitations({
           } catch {}
         }
 
-        message.success(t("COMMON.SUCCESS_NOMINATION_ADD"));
+        message.success(t("MESSAGES.SUCCESS_NOMINATION_ADD"));
         onOk();
         onAdd();
         setInputName("");

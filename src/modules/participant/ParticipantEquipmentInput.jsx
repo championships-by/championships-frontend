@@ -8,7 +8,7 @@ function ParticipantEquipmentInput({ name }) {
   const { t } = useTranslation();
 
   return (
-    <FormItem name={name} rules={rules}>
+    <FormItem name={name}>
       <Flex vertical>
         <Typography.Text>
           {t("TOURNAMENTS.PARTICIPANT_EQUIPMENT")}

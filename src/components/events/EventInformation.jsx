@@ -224,7 +224,7 @@ function EventInformation() {
 
               <br />
               <Typography.Text>
-                {getEventLevel(dataEvent.event_level)}
+                {t(getEventLevel(dataEvent.event_level))}
               </Typography.Text>
             </Col>
           </Row>

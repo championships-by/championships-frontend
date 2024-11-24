@@ -48,14 +48,7 @@ function Auth() {
         password: encrypedPassword,
       });
       navigate(ROUTES.EVENTS.PATH);
-    } catch (error) {
-      if (error.response.status === 404) {
-        setIsLoading(false);
-        message.error(t("MESSAGES.INVALID_EMAIL_OR_PASSWORD"));
-      } else {
-        message.error(t("MESSAGES.USER_UPDATE_ERROR"));
-      }
-    }
+    } catch {}
 
     setIsFormLoading(false);
   };

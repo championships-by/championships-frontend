@@ -1,11 +1,18 @@
 import { EditOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { Locale, ModalType, ROUTES } from "@constants";
+import {
+  Locale,
+  paginationLocale,
+  tableLocale,
+  ModalType,
+  ROUTES,
+} from "@constants";
 import { getUniqueFilters } from "@utils";
 import { Button, Flex, Table, Tooltip, Typography } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import { useNavigate } from "react-router-dom";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 function ParticipantsTable({ ParticipantData, getParticipant }) {
@@ -90,9 +97,9 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
         pagination={{
           position: ["bottomCenter"],
           showSizeChanger: false,
-          locale: Locale.pagination,
+          locale: getTranslation(paginationLocale, t),
         }}
-        locale={Locale}
+        locale={getTranslation(tableLocale, t)}
       />
 
       <ParticipantModal

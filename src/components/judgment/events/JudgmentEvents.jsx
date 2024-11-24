@@ -76,7 +76,7 @@ function JudgmentEvents() {
                 type="primary"
                 onClick={() => setIsEventCreateModalOpen(true)}
               >
-                {ROUTES.JUDGMENT_CREATE.TITLE}
+                {t("EVENTS.CREATE_EVENT")}
               </Button>
               <EventCreateModal
                 name={t("EVENTS.CREATE_EVENT")}

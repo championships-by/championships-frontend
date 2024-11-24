@@ -1,10 +1,11 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { defaultFormat, Locale } from "@constants";
+import { defaultFormat, tableLocale } from "@constants";
 import { CustomTimePicker } from "@modules/judgment/timeMatches/components";
 import { formatTimeToString, generateColumns } from "@utils";
 import { Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import { useMemo } from "react";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 export const TimeMatchesTable = ({
@@ -80,7 +81,7 @@ export const TimeMatchesTable = ({
           expandable={{
             expandedRowRender: (record) => <p>{record.participants}</p>,
           }}
-          locale={Locale}
+          locale={getTranslation(tableLocale, t)}
         />
       )}
     </Flex>

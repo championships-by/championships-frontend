@@ -19,8 +19,7 @@ import UserSettings from "@components/userSettings/UserSettings";
 import AboutProgram from "@components/userSupport/AboutProgram";
 import Feedback from "@components/userSupport/Feedback";
 import UserSupport from "@components/userSupport/UserSupport";
-import ThemeToggle from "@components/themeToggle/ThemeToggle";
-import LanguageToggle from "@components/languageToggle/LanguageToggle";
+import SettingsButton from "@components/settingsButton/SettingsButton";
 import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
@@ -35,8 +34,7 @@ function App() {
       <Layout>
         <BrowserRouter>
           <UserSupport />
-          <ThemeToggle />
-          <LanguageToggle />
+          <SettingsButton />
           <Routes>
             <Route path={ROUTER_ROUTES.NOT_FOUND} element={<NotFound />} />
             <Route

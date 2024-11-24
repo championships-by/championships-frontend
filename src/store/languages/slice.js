@@ -3,7 +3,7 @@ import { changeLanguageAsync } from "./thunk";
 import i18n from "i18next";
 
 const initialState = {
-  currentLanguage: "ru",
+  currentLanguage: localStorage.getItem("language") || "ru",
 };
 
 export const languageSlice = createSlice({
@@ -13,6 +13,7 @@ export const languageSlice = createSlice({
     setLanguage: (state, action) => {
       state.currentLanguage = action.payload;
       i18n.changeLanguage(action.payload);
+      localStorage.setItem("language", action.payload);
     },
   },
   extraReducers: (builder) => {

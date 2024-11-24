@@ -1,8 +1,9 @@
 import { useMatches } from "@hooks";
 import { Checkbox, Table } from "antd";
-import { Locale } from "@constants";
+import { paginationLocale } from "@constants";
 import "./TableGroupStage.scss";
 import { useTranslation } from "react-i18next";
+import { getTranslation } from "@utils";
 
 export const TableGroupStage = () => {
   const { t } = useTranslation();
@@ -49,7 +50,7 @@ export const TableGroupStage = () => {
       columns={columns}
       pagination={{
         position: ["bottomCenter"],
-        locale: Locale.pagination,
+        locale: getTranslation(paginationLocale, t),
       }}
       dataSource={finalParticipants}
     />
