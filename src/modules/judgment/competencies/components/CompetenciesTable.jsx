@@ -2,6 +2,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { generateCriteriaColumns, getContentSectionWidth } from "@utils";
 import { InputNumber, Spin, Table } from "antd";
 import { useEffect, useMemo, useState } from "react";
+import { tableLocale } from "@constants";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./CompetenciesTable.scss";
@@ -80,7 +82,7 @@ export const CompetenciesTable = ({
     <Table
       className="criteria-table"
       style={{ width: tableWidth }}
-      locale={{ emptyText: t("COMMON.NO_DATA") }}
+      locale={getTranslation(tableLocale, t)}
       columns={columns}
       dataSource={dataSource}
       expandable={{

@@ -151,7 +151,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
           >
             {t("COMMON.SAVE")}
           </Button>
-          <Button onClick={onCancel}>{t("COMMON.SAVE")}</Button>
+          <Button onClick={onCancel}>{t("COMMON.CANCEL")}</Button>
         </Flex>
       </Form>
     </Modal>

@@ -1,4 +1,4 @@
-import { defaultFormat, defaultTime, url } from "@constants";
+import { EventFilters, defaultFormat, defaultTime, url } from "@constants";
 import i18n from "@src/translations/translations";
 import dayjs from "dayjs";
 import JSEncrypt from "jsencrypt";
@@ -255,18 +255,18 @@ export const getContentSectionWidth = () => {
 
 export const getEventLevel = (eventLevel) => {
   switch (eventLevel) {
-    case "republic":
+    case EventFilters.REPUBLIC:
       return "EVENT_LEVELS.REPUBLIC";
-    case "region":
+    case EventFilters.REGION:
       return "EVENT_LEVELS.REGION";
-    case "district":
+    case EventFilters.DISTRICT:
       return "EVENT_LEVELS.DISTRICT";
-    case "town":
+    case EventFilters.TOWN:
       return "EVENT_LEVELS.TOWN";
-    case "other":
+    case EventFilters.OTHER:
       return "EVENT_LEVELS.OTHER";
     default:
-      return "Неизвестно";
+      return "COMMON.UNKNOWN";
   }
 };
 
