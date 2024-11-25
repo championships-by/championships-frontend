@@ -1,43 +1,46 @@
 import { useMatches } from "@hooks";
 import { Button, Checkbox, Modal, Table } from "antd";
 import { useCallback, useEffect, useState } from "react";
-import { Locale } from "@constants";
+import { tableLocale } from "@constants";
+import { getTranslation } from "@utils";
+import { useTranslation } from "react-i18next";
 
 const regex = /^[^@]+/;
 const replaceRegex = /[^a-zA-Z0-9]+/g;
 
 export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
+  const { t } = useTranslation();
   const [tableData, setTableData] = useState([]);
 
   const { matches } = useMatches();
 
   const finalParticipantsTableColumns = [
     {
-      title: "Участники",
+      title: t("COMMON.PARTICIPANTS"),
       dataIndex: "participant",
       key: "participant",
       sorter: (a, b) => a.participant.localeCompare(b.participant),
     },
     {
-      title: "Баллы",
+      title: t("TOURNAMENTS.SCORES"),
       dataIndex: "score",
       key: "score",
       sorter: (a, b) => a.score - b.score,
     },
     {
-      title: "Очки",
+      title: t("TOURNAMENTS.POINTS"),
       dataIndex: "points",
       key: "points",
       sorter: (a, b) => a.points - b.points,
     },
     {
-      title: "Финальный этап",
+      title: t("TOURNAMENTS.FINAL_STAGE"),
       dataIndex: "isPassed",
       key: "isPassed",
-      filterReset: "Сбросить",
+      filterReset: t("COMMON.RESET"),
       filters: [
-        { text: "Отмеченные", value: true },
-        { text: "Неотмеченные", value: false },
+        { text: t("TOURNAMENTS.MARKED"), value: true },
+        { text: t("TOURNAMENTS.NOT_MARKED"), value: false },
       ],
       onFilter: (value, record) => record.isPassed === value,
       sorter: (a, b) => (a.isPassed === b.isPassed ? 0 : a.isPassed ? -1 : 1),
@@ -149,13 +152,13 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
 
   return (
     <Modal
-      title="Финальные участники"
+      title={t("TOURNAMENTS.FINAL_PARTICIPANTS")}
       open={isOpen}
       onCancel={onCancel}
       width={1080}
       footer={
         <Button onClick={handleOnSubmit} type="primary">
-          Подтвердить
+          {t("COMMON.CONFIRM")}
         </Button>
       }
     >
@@ -163,7 +166,7 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
         columns={finalParticipantsTableColumns}
         dataSource={tableData}
         pagination={false}
-        locale={Locale}
+        locale={getTranslation(tableLocale, t)}
       />
     </Modal>
   );

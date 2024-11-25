@@ -13,11 +13,13 @@ import UserRoleInput from "@modules/user/UserRoleInput";
 import { Button, Form, message, Modal, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { userApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 function UserModal({ isOpen, onOk, onCancel, type, userId }) {
+  const { t } = useTranslation();
   const users = useSelector(getUsersSelector);
   const [oldEmail, setOldEmail] = useState();
-  const isLoading = users.isLoading;
+  const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -26,7 +28,7 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
       const params = new URLSearchParams();
       params.append("user_id", userId);
       userApi.getUserById(params.toString()).then((response) => {
-        const data = response.data;
+        const { data } = response;
         form.setFieldsValue({
           first_name: data.first_name,
           second_name: data.second_name,
@@ -53,23 +55,28 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         educational_institution: form.getFieldValue("organization"),
         password: form.getFieldValue("password"),
       };
+      const params = new URLSearchParams();
+      params.append("password", raw.password);
+      params.append("user_email", raw.email);
+      setLoading(true);
+      const result = await dispatch(setUser(raw));
 
-      try {
-        const params = new URLSearchParams();
-        params.append("password", raw.password);
-        params.append("user_email", raw.email);
-        const result = await dispatch(setUser(raw));
-
-        if (setUser.rejected.match(result)) {
-          throw new Error(result.error.message);
-        }
-
-        await userApi.sendUserRegistrationNotice(params.toString());
-
-        dispatch(getUsers());
-        message.success("Пользователь успешно создан");
-        onOk();
-      } catch {}
+      if (setUser.rejected.match(result)) {
+        throw new Error(result.error.message);
+      }
+      dispatch(getUsers());
+      message.success(t("MESSAGES.SUCCESS_USER_CREATE"));
+      await userApi
+        .sendUserRegistrationNotice(params.toString())
+        .then(() => {
+          message.info(t("MESSAGES.SUCCESS_SEND_USER_NOTICE"));
+        })
+        .catch(() => {
+          message.error(t("MESSAGES.NOT_SEND_USER_NOTICE"));
+        });
+      setLoading(false);
+      onOk();
+      form.resetFields();
     } else if (type == ModalType.EDIT) {
       const body = {
         first_name: form.getFieldValue("first_name"),
@@ -90,22 +97,21 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         const params = new URLSearchParams();
         params.append("user_id", userId);
         await userApi.changeUserById(params.toString(), body);
-        message.success("Пользователь успешно изменён");
+        message.success(t("MESSAGES.SUCCESS_EDIT_USER"));
+        dispatch(getUsers());
         onOk();
       } catch {}
     }
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
   };
 
   return (
     <Modal
       title={
-        type === ModalType.ADD
-          ? "Добавить пользователя"
-          : "Редактировать пользователя"
+        type === ModalType.ADD ? t("COMMON.CREATE_USER") : t("COMMON.EDIT_USER")
       }
       className="user-control__modal"
       open={isOpen}
@@ -135,11 +141,11 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         <Space>
           <FormItem>
             <Button type="primary" htmlType="submit" loading={isLoading}>
-              Сохранить
+              {t("COMMON.SAVE")}
             </Button>
           </FormItem>
           <FormItem>
-            <Button onClick={onCancel}>Отмена</Button>
+            <Button onClick={onCancel}>{t("COMMON.CANCEL")}</Button>
           </FormItem>
         </Space>
       </Form>

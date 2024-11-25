@@ -1,12 +1,15 @@
 import { PhoneOutlined } from "@ant-design/icons";
 import { Flex, Input, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+
 import "./sass/user.scss";
 
 function UserPhoneInput({ name }) {
+  const { t } = useTranslation();
   return (
     <Flex vertical className="user__phone-input__flex">
-      <Typography.Text>Телефон</Typography.Text>
+      <Typography.Text>{t("COMMON.PHONE")}</Typography.Text>
       <FormItem
         name={name}
         normalize={(value) => {
@@ -27,12 +30,11 @@ function UserPhoneInput({ name }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите номер телефона",
+            message: t("RULES.PLEASE_ENTER_PHONE"),
           },
           {
             pattern: /\+\d{3}\(\d{2}\)\d{3}-\d{2}-\d{2}/,
-            message:
-              "Пожалуйста, введите номер телефона в соответствии с примером",
+            message: t("RULES.PLEASE_ENTER_PHONE_WITH_EXAMPLE"),
           },
         ]}
         className="user__phone-input__formitem"
@@ -42,12 +44,12 @@ function UserPhoneInput({ name }) {
           type="tel"
           allowClear
           defaultValue={"+375"}
-          placeholder="Введите телефон"
+          placeholder={t("COMMON.ENTER_PHONE")}
           maxLength={19}
         />
       </FormItem>
       <Typography.Text type="secondary">
-        Пример: +375(25)123-45-67
+        {t("COMMON.EXAMPLE")}: +375(25)123-45-67
       </Typography.Text>
     </Flex>
   );

@@ -3,7 +3,7 @@
     width: 250px;
   }
   &__competition-TimeParametrs {
-    width: 250px;
+    width: 215px;
   }
   &__competition-criteria {
     &__row {
@@ -21,33 +21,44 @@
       margin-bottom: 10px;
     }
     &__max-points {
-      margin-left: 300px;
+      margin-right: 0;
+      text-align: right;
     }
     &__score-count {
-      margin-left: 420px;
+      width: 100%;
+      text-align: right;
+      display: block;
     }
     &__input {
-      margin-bottom: 50px;
-      width: 390px;
+      width: 100%;
     }
     &__addButton {
       margin-top: 10px;
     }
     &__space {
+      width: 100%;
       margin-bottom: 30px;
+
+      @media (max-width: 575px) {
+        margin-bottom: 0;
+      }
     }
     &__inputPoints {
-      width: 100px;
-      margin-left: 20px;
+      width: 100%;
     }
   }
   &__competition-reglament {
     &__text {
       font-size: 16px;
     }
+
+    &__container {
+      width: 100%;
+    }
+
     &__input {
       margin-top: 8px;
-      width: 552px;
+      width: 100%;
     }
   }
   &__competition-judge {
@@ -59,10 +70,15 @@
       margin-top: 10px;
     }
     &__name {
-      width: 500px;
+      width: 100%;
     }
+
+    &__container {
+      width: 100%;
+    }
+
     &__select {
-      width: 513px;
+      width: 100%;
       margin-top: 10px;
     }
   }
@@ -74,7 +90,7 @@
       width: 100%;
     }
     &__name {
-      width: 552px;
+      width: 100%;
       margin-top: 10px;
     }
     &__text {
@@ -94,7 +110,7 @@
       border: none;
     }
     &__input {
-      width: 552px;
+      width: 100%;
       margin-top: 8px;
     }
     &__example {

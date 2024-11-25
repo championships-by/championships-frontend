@@ -22,7 +22,8 @@
 }
 
 .dark-theme .ant-float-btn-icon,
-.dark-theme .anticon {
+.dark-theme .anticon,
+.dark-theme .ant-float-btn-description {
   color: #fff !important;
 }
 
@@ -34,4 +35,8 @@
 .dark-theme .ant-btn-dashed {
   background: $darkest-gray !important;
   color: #fff !important;
+}
+
+.dark-theme .ant-btn-link:disabled {
+  color: #b5b5b5;
 }

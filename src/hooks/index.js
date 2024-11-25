@@ -1,3 +1,2 @@
-export * from "./useMatches";
-export * from "./useTabs";
 export * from "./useDevice";
+export * from "./useMatches";

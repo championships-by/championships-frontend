@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
 import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import dayjs from "dayjs";
 import { changeDateFormat } from "@utils";
 import { participantApi, teamApi } from "@api";
+import { useTranslation } from "react-i18next";
 
 function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
@@ -23,13 +24,13 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
 
       await teamApi.setTeams(body);
 
-      message.success("Новая команда успешно создана");
+      message.success(t("MESSAGES.SUCCESS_NEW_TEAM_ADD"));
       form.resetFields();
       onAdd();
       form.resetFields();
       onOk();
     } catch (error) {
-      message.error("Произошла ошибка! Попробуйте снова.");
+      message.error(t("MESSAGES.ERROR"));
     } finally {
       setIsLoading(false);
     }
@@ -40,7 +41,7 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
     setIsLoading(false);
   };
 
@@ -58,18 +59,14 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
             }))
           );
         })
-        .catch(() =>
-          message.error(
-            "Невозможно получить данные. Обратитесь к администратору"
-          )
-        )
+        .catch(() => message.error(t("MESSAGES.GET_DATA_ERROR")))
         .finally(() => setTimeout(() => setIsLoading(false), 300));
     }
   }, [isOpen, eventID]);
 
   return (
     <Modal
-      title="Создание команды"
+      title={t("EVENTS.ADD_TEAM")}
       className="event-registration__team-create-modal"
       open={isOpen}
       onOk={onOk}
@@ -92,9 +89,9 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
         />
         <Flex gap="middle">
           <Button type="primary" htmlType="submit" loading={isLoading}>
-            Сохранить
+            {t("COMMON.SAVE")}
           </Button>
-          <Button onClick={onCancel}>Отмена</Button>
+          <Button onClick={onCancel}>{t("COMMON.CANCEL")}</Button>
         </Flex>
       </Form>
     </Modal>

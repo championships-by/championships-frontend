@@ -18,20 +18,12 @@ import { ROUTES } from "@constants";
 import { participantApi } from "@api";
 import { changeDateFormat } from "@utils";
 import participantImg from "@assets/img/participant.jpg";
+import { useTranslation } from "react-i18next";
 
 import "./sass/participants.scss";
 
-const items = [
-  {
-    title: "Управление участниками",
-    href: ROUTES.PARTICIPANTS.PATH,
-  },
-  {
-    title: "Карточка участника",
-  },
-];
-
 function ParticipantInformation() {
+  const { t } = useTranslation();
   const [participantData, setParticipantData] = useState([]);
   const [teamWinsData, setTeamWinsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,6 +31,18 @@ function ParticipantInformation() {
   const profileIsLoading = user.isLoading;
   const navigate = useNavigate();
   const { participantID } = useParams();
+
+  const participantsBreadcrumb = {
+    title: t("COMMON.PARTICIPANT_MANAGEMENT"),
+    href: ROUTES.PARTICIPANTS.PATH,
+  };
+
+  const items = [
+    participantsBreadcrumb,
+    {
+      title: t("PARTICIPANTS.CARD_OF_PARTICIPANT"),
+    },
+  ];
 
   useEffect(() => {
     const body = {
@@ -64,10 +68,12 @@ function ParticipantInformation() {
   return (
     <>
       <Loader show={isLoading || profileIsLoading} />
-      <Typography.Title level={2}>Карточка участника</Typography.Title>
+      <Typography.Title level={2}>
+        {t("PARTICIPANTS.CARD_OF_PARTICIPANT")}
+      </Typography.Title>
       <Divider />
       <Breadcrumb items={items} />
-      <Row align="top">
+      <Row align="top" className="participants__information__row">
         <Col>
           <img
             src={participantImg}
@@ -85,14 +91,14 @@ function ParticipantInformation() {
             <br />
             {`${participantData.third_name}`}
           </Typography.Title>
-          <Typography.Text strong>Электронная почта: </Typography.Text>
+          <Typography.Text strong>{t("COMMON.EMAIL")}: </Typography.Text>
           <Typography.Text>
             <a href={`mailto:${participantData.email}`}>
               {participantData.email}
             </a>
           </Typography.Text>
           <br />
-          <Typography.Text strong>Дата рождения: </Typography.Text>
+          <Typography.Text strong>{t("COMMON.BIRTHDAY")}: </Typography.Text>
           <Typography.Text>
             {changeDateFormat(participantData.birth_date)}
           </Typography.Text>

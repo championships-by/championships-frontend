@@ -3,28 +3,31 @@ import {
   InfoCircleOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
-import { Locale, ROUTES } from "@constants";
+import { paginationLocale, tableLocale, ROUTES } from "@constants";
 import { changeDateFormat } from "@utils";
 import { Button, Flex, List, Table, Tooltip, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
+import { getTranslation } from "@utils";
+import { useTranslation } from "react-i18next";
 
 function JudgmentEventsTable({ EventsData }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const columns = [
     {
-      title: "Название мероприятия",
+      title: t("EVENTS.NAME_OF_EVENT"),
       key: "nameEvent",
       render: (data) => data.event?.name,
       sorter: (a, b) => a.event.name.localeCompare(b.event.name),
     },
     {
-      title: "Компетенции",
+      title: t("COMMON.NOMINATIONS"),
       key: "nominations",
       render: (_, { nominations }) => (
         <List
           locale={{
-            emptyText: "Компетенции пока отсутствуют",
+            emptyText: t("COMMON.NO_NOMINATIONS"),
           }}
           split={false}
           dataSource={nominations}
@@ -37,25 +40,27 @@ function JudgmentEventsTable({ EventsData }) {
       ),
     },
     {
-      title: "Дата мероприятия",
+      title: t("EVENTS.DATE_OF_EVENT"),
       key: "dateEvent",
       render: (data) =>
         changeDateFormat(data.event?.holding_start_date) !==
         changeDateFormat(data.event?.holding_finish_date)
-          ? `с ${changeDateFormat(
+          ? `${t("COMMON.FROM")} ${changeDateFormat(
               data.event?.holding_start_date
-            )} по ${changeDateFormat(data.event?.holding_finish_date)}`
+            )} ${t("COMMON.TO")} ${changeDateFormat(
+              data.event?.holding_finish_date
+            )}`
           : changeDateFormat(data.event?.holding_start_date),
       sorter: (a, b) =>
         new Date(a.event.holding_start_date) -
         new Date(b.event.holding_start_date),
     },
     {
-      title: "Действия",
+      title: t("COMMON.ACTIONS"),
       key: "action",
       render: ({ event }) => (
         <Flex>
-          <Tooltip title={ROUTES.JUDGMENT_EVENT_SETTINGS.TITLE}>
+          <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
               icon={<EditOutlined />}
@@ -64,14 +69,14 @@ function JudgmentEventsTable({ EventsData }) {
               }
             />
           </Tooltip>
-          <Tooltip title={ROUTES.EVENTS_DESCRIPTION.TITLE}>
+          <Tooltip title={t("EVENTS.EVENT_DESCRIPTION")}>
             <Button
               type="text"
               icon={<InfoCircleOutlined />}
               onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
             />
           </Tooltip>
-          <Tooltip title={ROUTES.EVENTS_REGISTRATION.TITLE}>
+          <Tooltip title={t("EVENTS.PARTICIPANT_REGISTRATION")}>
             <Button
               type="text"
               icon={<UsergroupAddOutlined />}
@@ -87,11 +92,11 @@ function JudgmentEventsTable({ EventsData }) {
 
   return (
     <Table
-      locale={Locale}
+      locale={getTranslation(tableLocale, t)}
       dataSource={EventsData}
       pagination={{
         position: ["bottomCenter"],
-        locale: Locale.pagination,
+        locale: getTranslation(paginationLocale, t),
       }}
       columns={columns}
     />

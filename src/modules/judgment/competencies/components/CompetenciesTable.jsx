@@ -2,6 +2,9 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { generateCriteriaColumns, getContentSectionWidth } from "@utils";
 import { InputNumber, Spin, Table } from "antd";
 import { useEffect, useMemo, useState } from "react";
+import { tableLocale } from "@constants";
+import { getTranslation } from "@utils";
+import { useTranslation } from "react-i18next";
 
 import "./CompetenciesTable.scss";
 
@@ -13,6 +16,7 @@ export const CompetenciesTable = ({
   editable,
   onChange,
 }) => {
+  const { t } = useTranslation();
   const [tableWidth, setTableWidth] = useState(null);
 
   useEffect(() => {
@@ -30,7 +34,7 @@ export const CompetenciesTable = ({
   const columns = useMemo(
     () => [
       {
-        title: "Команда",
+        title: t("COMMON.TEAM"),
         dataIndex: "team",
         key: "team",
         fixed: "left",
@@ -61,7 +65,7 @@ export const CompetenciesTable = ({
         );
       }),
       {
-        title: "Итого",
+        title: t("COMMON.TOTAL"),
         dataIndex: "totalScore",
         key: "totalScore",
         fixed: "right",
@@ -73,12 +77,12 @@ export const CompetenciesTable = ({
   return isLoading ? (
     <Spin indicator={<LoadingOutlined className="icon" spin />} />
   ) : hasError ? (
-    <h1>Произошла ошибка</h1>
+    <h1>{t("MESSAGES.ERROR")}</h1>
   ) : (
     <Table
       className="criteria-table"
       style={{ width: tableWidth }}
-      locale={{ emptyText: "Нет данных" }}
+      locale={getTranslation(tableLocale, t)}
       columns={columns}
       dataSource={dataSource}
       expandable={{

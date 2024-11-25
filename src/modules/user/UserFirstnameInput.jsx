@@ -2,10 +2,14 @@ import React, { useCallback } from "react";
 import { Flex, Input, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
-import "./sass/user.scss";
 import { handlePaste } from "@utils";
+import { useTranslation } from "react-i18next";
+
+import "./sass/user.scss";
 
 function UserFirstnameInput({ name }) {
+  const { t } = useTranslation();
+
   const handleKeyPress = (event) => {
     if (event.key === " ") {
       event.preventDefault();
@@ -14,7 +18,7 @@ function UserFirstnameInput({ name }) {
 
   return (
     <Flex vertical className="user__firstname-input__flex">
-      <Typography.Text>Имя</Typography.Text>
+      <Typography.Text>{t("COMMON.NAME")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
@@ -22,11 +26,19 @@ function UserFirstnameInput({ name }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите имя",
+            message: t("RULES.PLEASE_ENTER_NAME"),
+          },
+          {
+            pattern: /^[a-zA-Zа-яА-ЯёЁ-]+$/,
+            message: t("RULES.NAME_CAN_CONTAIN_ONLY_LETTERS"),
+          },
+          {
+            min: 2,
+            message: t("RULES.MIN_2_SYMBOLS"),
           },
           {
             max: 255,
-            message: "Максимальное значение 255",
+            message: t("RULES.MAX_255_SYMBOLS"),
           },
           {
             validator(_, value) {
@@ -34,7 +46,7 @@ function UserFirstnameInput({ name }) {
                 return Promise.resolve();
               }
               return Promise.reject(
-                new Error("Пожалуйста, введите корректное имя")
+                new Error(t("RULES.PLEASE_ENTER_CORRECT_NAME"))
               );
             },
           },
@@ -44,13 +56,15 @@ function UserFirstnameInput({ name }) {
         <Input
           allowClear
           prefix={<UserOutlined />}
-          placeholder="Введите имя"
+          placeholder={t("COMMON.ENTER_NAME")}
           maxLength={255}
           onKeyPress={handleKeyPress}
           onPaste={handlePaste}
         />
       </FormItem>
-      <Typography.Text type="secondary">Пример: Иван</Typography.Text>
+      <Typography.Text type="secondary">
+        {t("COMMON.NAME_EXAMPLE")}
+      </Typography.Text>
     </Flex>
   );
 }

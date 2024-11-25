@@ -2,9 +2,13 @@ import React, { useCallback } from "react";
 import { Flex, Input, Typography } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+
 import "./sass/user.scss";
 
 function UserEmailInput({ name, disabled }) {
+  const { t } = useTranslation();
+
   const handleKeyPress = (event) => {
     if (event.key === " ") {
       event.preventDefault();
@@ -13,7 +17,7 @@ function UserEmailInput({ name, disabled }) {
 
   return (
     <Flex vertical className="user__email-input__flex">
-      <Typography.Text>Email</Typography.Text>
+      <Typography.Text>{t("COMMON.EMAIL")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
@@ -22,11 +26,11 @@ function UserEmailInput({ name, disabled }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите Email",
+            message: t("RULES.ENTER_EMAIL"),
           },
           {
             type: "email",
-            message: "Некоректный Email",
+            message: t("RULES.INVALID_EMAIL"),
           },
         ]}
         className="user__email-input__formitem"
@@ -34,13 +38,13 @@ function UserEmailInput({ name, disabled }) {
         <Input
           prefix={<MailOutlined />}
           type="email"
-          placeholder="Введите Email"
+          placeholder={t("COMMON.ENTER_EMAIL")}
           disabled={disabled}
           onKeyPress={handleKeyPress}
         />
       </FormItem>
       <Typography.Text type="secondary">
-        Пример: example@example.com
+        {t("COMMON.EMAIL_EXAMPLE")}
       </Typography.Text>
     </Flex>
   );

@@ -5,8 +5,10 @@ import NewPassword from "@modules/user/passwordChange/NewPassword";
 import SecondNewPassword from "@modules/user/passwordChange/SecondNewPassword";
 import { userApi } from "@api";
 import { getEncryptedPassword } from "@utils";
+import { useTranslation } from "react-i18next";
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
 
@@ -33,14 +35,12 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
     userApi
       .changeProfile(data)
       .then(() => {
-        message.success("Пароль успешно изменен");
+        message.success(t("MESSAGES.SUCCESS_CHANGE_PASSWORD"));
         form.resetFields();
         onOk();
       })
       .catch(() => {
-        message.error(
-          "Ошибка: Невозможно изменить пароль. Обратитесь к администратору."
-        );
+        message.error(t("MESSAGES.PASSWORD_CHANGE_ERROR"));
       })
       .finally(() => {
         setIsLoading(false);
@@ -48,13 +48,13 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
     setIsLoading(false);
   };
 
   return (
     <Modal
-      title="Изменение пароля"
+      title={t("COMMON.PASSWORD_CHANGE")}
       className="user-settings__password-change-modal"
       open={isOpen}
       onOk={onOk}
@@ -75,9 +75,9 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
 
         <Flex gap="middle">
           <Button type="primary" htmlType="submit" loading={isLoading}>
-            Сохранить данные
+            {t("COMMON.SAVE")}
           </Button>
-          <Button onClick={onCancel}>Отмена</Button>
+          <Button onClick={onCancel}>{t("COMMON.CANCEL")}</Button>
         </Flex>
       </Form>
     </Modal>

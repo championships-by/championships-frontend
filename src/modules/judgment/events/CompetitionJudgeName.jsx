@@ -4,6 +4,8 @@ import { UsergroupAddOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import { userApi } from "@api";
 import { competenciesApi } from "@api";
+import { useTranslation } from "react-i18next";
+
 import "./sass/events.scss";
 
 function getFullName(item) {
@@ -11,6 +13,7 @@ function getFullName(item) {
 }
 
 function CompetitionType({ onJudgeChange, judges }) {
+  const { t } = useTranslation();
   const [options, setOptions] = useState([]);
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
@@ -73,11 +76,11 @@ function CompetitionType({ onJudgeChange, judges }) {
   return (
     <>
       <Typography.Text className="events__competition-judge__text">
-        Судейский состав
+        {t("EVENTS.JUDGES_STRUCTURE")}
       </Typography.Text>
       <div className="events__competition-judge__div">
         <Flex>
-          <Space.Compact>
+          <Space.Compact className="events__competition-judge__container">
             <Input
               prefix={<UsergroupAddOutlined />}
               className="events__competition-judge__input"
@@ -88,14 +91,14 @@ function CompetitionType({ onJudgeChange, judges }) {
               ref={selectRef}
               className="events__competition-judge__select"
               mode="multiple"
-              placeholder="Начните вводить"
+              placeholder={t("COMMON.START_TYPING")}
               maxTagCount={10}
               options={searchInput ? filteredOptions : []}
               onChange={handleChange}
               onSearch={handleSearch}
               value={selectedJudges}
               onDropdownVisibleChange={handleDropdownVisibleChange}
-              notFoundContent={"Не удалось найти"}
+              notFoundContent={t("COMMON.COULD_NOT_FOUND")}
               filterOption={false}
             />
           </Space.Compact>

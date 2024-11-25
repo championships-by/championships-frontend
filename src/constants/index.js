@@ -19,15 +19,15 @@ export const FILE_UPLOADING = {
 
 export const ROLE_FILTERS = [
   {
-    text: "Администратор",
+    text: "COMMON.ADMIN",
     value: "admin",
   },
   {
-    text: "Судья",
+    text: "COMMON.JUDGE",
     value: "judge",
   },
   {
-    text: "Менеджер",
+    text: "COMMON.MANAGER",
     value: "specialist",
   },
 ];
@@ -40,9 +40,9 @@ export const NOMINATIONS = {
 };
 
 export const NOMINATION_TYPES = {
-  CRITERIA: "По критериям",
-  TIME: "По времени",
-  OLYMPIC: "Плей-офф",
+  CRITERIA: "NOMINATION_TYPES.CRITERIA",
+  TIME: "NOMINATION_TYPES.TIME",
+  OLYMPIC: "NOMINATION_TYPES.PLAYOFF",
 };
 
 export const RESPONSE_STATUS = {
@@ -57,52 +57,63 @@ export const ROUTES = {
   NOT_FOUND: { TITLE: "404", PATH: "*" },
   UNAUTHORIZED: { TITLE: "401", PATH: "/401" },
   FORBIDDEN: { TITLE: "403", PATH: "/403" },
-  AUTHORIZATION: { TITLE: "Авторизация", PATH: "/" },
-  LOGOUT: { TITLE: "Выход", PATH: "/logout" },
-  PARTICIPANTS: { TITLE: "Управление участниками", PATH: "/participants" },
+  AUTHORIZATION: { TITLE: "COMMON.AUTH", PATH: "/" },
+  LOGOUT: { TITLE: "COMMON.LOGOUT", PATH: "/logout" },
+  PARTICIPANTS: {
+    TITLE: "COMMON.PARTICIPANT_MANAGEMENT",
+    PATH: "/participants",
+  },
   PARTICIPANT_INFORMATION: {
-    TITLE: "Карточка участника",
+    TITLE: "PARTICIPANTS.CARD_OF_PARTICIPANT",
     PATH: (participantID) => `/participants/${participantID}`,
   },
-  USERS_CONTROL: { TITLE: "Управление пользователями", PATH: "/users" },
-  USER_SETTINGS: { TITLE: "Настройки пользователя", PATH: "/settings" },
-  USER_SETTINGS_TEST: { TITLE: "Тест", PATH: "/settings/test" },
-  ABOUT_PROGRAM: { TITLE: "О портале", PATH: "/about" },
-  FEEDBACK: { TITLE: "Обратная связь", PATH: "/feedback" },
-  EVENTS: { TITLE: "Мероприятия", PATH: "/events" },
+  USERS_CONTROL: { TITLE: "COMMON.USER_MANAGEMENT", PATH: "/users" },
+  USER_SETTINGS: {
+    TITLE: "USER_SETTINGS.USER_SETTINGS",
+    PATH: "/settings",
+  },
+  ABOUT_PROGRAM: {
+    TITLE: "USER_SUPPORT.ABOUT_SITE",
+    PATH: "/about",
+  },
+  FEEDBACK: { TITLE: "USER_SUPPORT.FEEDBACK", PATH: "/feedback" },
+  EVENTS: { TITLE: "EVENTS.EVENTS", PATH: "/events" },
   EVENTS_DESCRIPTION: {
-    TITLE: "Описание мероприятия",
+    TITLE: "EVENTS.EVENT_DESCRIPTION",
     PATH: (eventID) => `/events/${eventID}`,
   },
   EVENTS_REGISTRATION: {
-    TITLE: "Регистрация участников",
+    TITLE: "EVENTS.PARTICIPANT_REGISTRATION",
     PATH: (eventID) => `/events/${eventID}/registration`,
   },
-  JUDGMENT: { TITLE: "Управление мероприятиями", PATH: "/judgment/events" },
+  JUDGMENT: {
+    TITLE: "COMMON.EVENT_MANAGEMENT",
+    PATH: "/judgment/events",
+  },
   JUDGMENT_CREATE: {
-    TITLE: "Создать мероприятие",
+    TITLE: "EVENTS.CREATE_EVENT",
     PATH: "/judgment/events/create",
   },
   JUDGMENT_CREATE_TEST: {
-    TITLE: "Создать мероприятие",
+    TITLE: "EVENTS.CREATE_EVENT",
     PATH: "/judgment/events/create/test",
   },
   JUDGMENT_EVENT_SETTINGS: {
-    TITLE: "Редактирование",
+    TITLE: "COMMON.EDIT",
     PATH: (eventID) => `/judgment/events/${eventID}/settings`,
   },
   JUDGMENT_GROUP_STAGE: {
-    TITLE: "Групповой этап",
+    TITLE: "NOMINATION_TYPES.PLAYOFF",
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/group-stage`,
   },
   JUDGMENT_TIME_MATCHES: {
-    TITLE: "Матчи на время",
+    TITLE: "NOMINATION_TYPES.TIME",
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/time-matches`,
   },
   JUDGMENT_CRITERIA: {
-    TITLE: "Компетенции по критериям",
+    TITLE: "NOMINATION_TYPES.CRITERIA",
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/criteria`,
   },
@@ -119,7 +130,6 @@ export const ROUTER_ROUTES = {
   PARTICIPANT_INFORMATION: ":participantID",
   USERS_CONTROL: "users",
   USER_SETTINGS: "settings",
-  USER_SETTINGS_TEST: "settings/test",
   ABOUT_PROGRAM: "about",
   FEEDBACK: "feedback",
   EVENTS: "events",
@@ -142,23 +152,85 @@ export const EventFilters = {
   OTHER: "other",
 };
 
+export const tableLocale = {
+  triggerDesc: "TABLE_LOCALE.TRIGGERDESC",
+  triggerAsc: "TABLE_LOCALE.TRIGGERASC",
+  cancelSort: "TABLE_LOCALE.CANCELSORT",
+  filterReset: "TABLE_LOCALE.FILTERRESET",
+  filterConfirm: "TABLE_LOCALE.FILTERCONFIRM",
+  emptyText: "COMMON.NO_DATA",
+};
+
+export const paginationLocale = {
+  items_per_page: "PAGINATION.ITEMS_PER_PAGE",
+  jump_to: "PAGINATION.JUMP_TO",
+  jump_to_confirm: "PAGINATION.JUMP_TO_CONFIRM",
+  page: "PAGINATION.PAGE",
+  prev_page: "PAGINATION.PREV_PAGE",
+  next_page: "PAGINATION.NEXT_PAGE",
+  prev_5: "PAGINATION.PREV_5",
+  next_5: "PAGINATION.NEXT_5",
+  prev_3: "PAGINATION.PREV_3",
+  next_3: "PAGINATION.NEXT_3",
+};
+
+export const calendarLocale = {
+  lang: {
+    locale: "ru_RU",
+    placeholder: "DATE_TIME.PLACEHOLDER",
+    rangePlaceholder: ["DATE_TIME.BEGIN", "DATE_TIME.END"],
+    today: "DATE_TIME.TODAY",
+    now: "DATE_TIME.NOW",
+    backToToday: "DATE_TIME.BACKTOTODAY",
+    ok: "DATE_TIME.OK",
+    clear: "DATE_TIME.CLEAR",
+    month: "DATE_TIME.MONTH",
+    year: "DATE_TIME.YEAR",
+    timeSelect: "DATE_TIME.TIMESELECT",
+    dateSelect: "DATE_TIME.DATESELECT",
+    monthSelect: "DATE_TIME.MONTHSELECT",
+    yearSelect: "DATE_TIME.YEARSELECT",
+    decadeSelect: "DATE_TIME.DECADESELECT",
+    previousMonth: "DATE_TIME.PREVIOUSMONTH",
+    nextMonth: "DATE_TIME.NEXTMONTH",
+    previousYear: "DATE_TIME.PREVIOUSYEAR",
+    nextYear: "DATE_TIME.NEXTYEAR",
+    previousDecade: "DATE_TIME.PREVIOUSDECADE",
+    nextDecade: "DATE_TIME.NEXTDECADE",
+    previousCentury: "DATE_TIME.PREVIOUSCENTURY",
+    nextCentury: "DATE_TIME.NEXTCENTURY",
+    shortWeekDays: [
+      "SHORT_WEEK_DAYS.SUN",
+      "SHORT_WEEK_DAYS.MON",
+      "SHORT_WEEK_DAYS.TUE",
+      "SHORT_WEEK_DAYS.WED",
+      "SHORT_WEEK_DAYS.THU",
+      "SHORT_WEEK_DAYS.FRI",
+      "SHORT_WEEK_DAYS.SAT",
+    ],
+    shortMonths: [
+      "MONTHS.JANUARY",
+      "MONTHS.FEBRUARY",
+      "MONTHS.MARCH",
+      "MONTHS.APRIL",
+      "MONTHS.MAY",
+      "MONTHS.JUNE",
+      "MONTHS.JULY",
+      "MONTHS.AUGUST",
+      "MONTHS.SEPTEMBER",
+      "MONTHS.OCTOBER",
+      "MONTHS.NOVEMBER",
+      "MONTHS.DECEMBER",
+    ],
+  },
+  timePickerLocale: {
+    placeholder: "DATE_TIME.CHOOSE_TIME",
+  },
+};
+
 export const Locale = {
   lang: {
     locale: "ru_RU",
-    placeholder: "Выберите дату",
-    rangePlaceholder: ["Начало", "Конец"],
-    today: "Сегодня",
-    now: "Сейчас",
-    backToToday: "Вернуться к сегодняшнему дню",
-    ok: "OK",
-    clear: "Очистить",
-    month: "Месяц",
-    year: "Год",
-    timeSelect: "Выберите время",
-    dateSelect: "Выберите дату",
-    monthSelect: "Выберите месяц",
-    yearSelect: "Выберите год",
-    decadeSelect: "Выберите квартал",
     yearFormat: "YYYY",
     dateFormat: "M/D/YYYY",
     dayFormat: "D",
@@ -166,76 +238,25 @@ export const Locale = {
     timeFormat: "HH:mm",
     monthFormat: "MMMM",
     monthBeforeYear: true,
-    previousMonth: "Предыдущий месяц (PageUp)",
-    nextMonth: "Следующий месяц (PageDown)",
-    previousYear: "Предыдущий год (Control + left)",
-    nextYear: "Следующий год (Control + right)",
-    previousDecade: "Предыдущий квартал",
-    nextDecade: "Следующий квартал",
-    previousCentury: "Предыдущий век",
-    nextCentury: "Следующий век",
-    shortWeekDays: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
-    shortMonths: [
-      "Январь",
-      "Февраль",
-      "Март",
-      "Апрель",
-      "Май",
-      "Июнь",
-      "Июль",
-      "Август",
-      "Сентябрь",
-      "Октябрь",
-      "Ноябрь",
-      "Декабрь",
-    ],
-  },
-  timePickerLocale: {
-    placeholder: "Выберите время",
-  },
-  tableLocale: {
-    triggerDesc: "Нажмите, чтобы сортировать по убыванию",
-    triggerAsc: "Нажмите, чтобы сортировать по возрастанию",
-    cancelSort: "Нажмите, чтобы отменить сортировку",
-    filterReset: "Отменить",
-    filterConfirm: "Ок",
   },
   roles: {
-    admin: "Администратор",
-    judge: "Судья",
-    specialist: "Менеджер",
+    admin: "COMMON.ADMIN",
+    judge: "COMMON.JUDGE",
+    specialist: "COMMON.MANAGER",
   },
   eventFilters: {
-    [EventFilters.REPUBLIC]: "Республиканский",
-    [EventFilters.REGION]: "Областной",
-    [EventFilters.DISTRICT]: "Районный",
-    [EventFilters.TOWN]: "Городской",
-    [EventFilters.OTHER]: "Другое",
-  },
-  pagination: {
-    items_per_page: "элементов на странице",
-    jump_to: "Перейти",
-    jump_to_confirm: "подтвердить",
-    page: "Страница",
-    prev_page: "Предыдущая страница",
-    next_page: "Следующая страница",
-    prev_5: "Предыдущие 5 страниц",
-    next_5: "Следующие 5 страниц",
-    prev_3: "Предыдущие 3 страницы",
-    next_3: "Следующие 3 страницы",
+    [EventFilters.REPUBLIC]: "EVENT_LEVELS.REPUBLIC",
+    [EventFilters.REGION]: "EVENT_LEVELS.REGION",
+    [EventFilters.DISTRICT]: "EVENT_LEVELS.DISTRICT",
+    [EventFilters.TOWN]: "EVENT_LEVELS.TOWN",
+    [EventFilters.OTHER]: "EVENT_LEVELS.OTHER",
   },
   dateFormat: "DD.MM.YYYY",
   dateTimeFormat: "DD.MM.YYYY HH:mm",
   weekFormat: "YYYY-wo",
   monthFormat: "YYYY-MM",
-  triggerDesc: "Нажмите для сортировки по убыванию",
-  triggerAsc: "Нажмите для сортировки по возрастанию",
-  cancelSort: "Нажмите для отмены сортировки",
-  emptyText: "Нет данных",
-  filterConfirm: "Ок",
-  filterReset: "Сбросить",
-  filterEmptyText: "Нет фильтров",
 };
+
 export const yaShareLink = "https://yastatic.net/share2/share.js";
 export const defaultTime = "00:00.000";
 
@@ -270,3 +291,8 @@ export const eventFilterOptions = Object.entries(EventFilters).map(
 );
 
 export const defaultEventFilterOptions = Object.values(EventFilters);
+
+export const LANGUAGES = {
+  RU: "ru",
+  BY: "by",
+};

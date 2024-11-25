@@ -2,26 +2,24 @@ import React from "react";
 import FormItem from "antd/es/form/FormItem";
 import { Flex, Input, Typography } from "antd";
 import { LaptopOutlined } from "@ant-design/icons";
-
-const rules = [
-  {
-    required: true,
-    message: "Пожалуйста, введите оборудование",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 function ParticipantEquipmentInput({ name }) {
+  const { t } = useTranslation();
+
   return (
-    <FormItem name={name} rules={rules}>
+    <FormItem name={name}>
       <Flex vertical>
-        <Typography.Text>Оборудование участника</Typography.Text>
+        <Typography.Text>
+          {t("TOURNAMENTS.PARTICIPANT_EQUIPMENT")}
+        </Typography.Text>
         <Input
           prefix={<LaptopOutlined />}
-          placeholder="Введите привозимое оборудование участника"
+          placeholder={t("TOURNAMENTS.ENTER_PARTICIPANT_EQUIPMENT")}
           id="participant_equipment_input"
         />
         <Typography.Text type="secondary">
-          Пример: Набор лего для робототехники;
+          {t("TOURNAMENTS.PARTICIPANT_EQUIPMENT_EXAMPLE")}
         </Typography.Text>
       </Flex>
     </FormItem>

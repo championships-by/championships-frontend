@@ -8,10 +8,14 @@ import {
   Tooltip,
   message,
   Flex,
+  Row,
+  Col,
 } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 function CriteriaParametrs({ onCriteriaChange, value }) {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const [allScoreCount, setAllScoreCount] = useState(0);
 
@@ -67,64 +71,76 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
             <>
               {fields.length > 0 && (
                 <>
-                  <Flex align="center">
-                    <Typography.Text>Критерии оценки:</Typography.Text>
+                  <Flex align="center" justify="space-between" offset={1}>
+                    <Typography.Text>
+                      {t("TOURNAMENTS.EVALUATION_CRITERIA")}
+                    </Typography.Text>
                     <Typography.Text className="events__competition-criteria__max-points">
-                      Максимальное
-                      <br />
-                      количество
-                      <br />
-                      баллов:
+                      {t("TOURNAMENTS.MAX_COUNT_POINTS")}
                     </Typography.Text>
                   </Flex>
                   <br />
                 </>
               )}
               {fields.map((field) => (
-                <Space
+                <Row
                   key={field.key}
-                  align="baseline"
                   className="events__competition-criteria__space"
                 >
-                  <Form.Item
-                    {...field}
-                    name={[field.name, "criterion"]}
-                    rules={[{ required: true, message: "Не ввели критерий" }]}
-                  >
-                    <Input
-                      placeholder="Введите критерий"
-                      className="events__competition-criteria__input"
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    {...field}
-                    name={[field.name, "maxPoints"]}
-                    rules={[{ required: true, message: "Неверное значение" }]}
-                  >
-                    <Input
-                      type="number"
-                      className="events__competition-criteria__inputPoints"
-                      min={0}
-                    />
-                  </Form.Item>
-                  <Tooltip title="Удалить">
-                    <MinusCircleOutlined
-                      onClick={() => {
-                        if (fields.length > 1) {
-                          remove(field.name);
-                        } else {
-                          message.warning(
-                            "Минимум один критерий оценки должен быть установлен"
-                          );
-                        }
-                      }}
-                    />
-                  </Tooltip>
-                </Space>
+                  <Col span={1}>
+                    <Tooltip title={t("COMMON.DELETE")}>
+                      <MinusCircleOutlined
+                        onClick={() => {
+                          if (fields.length > 1) {
+                            remove(field.name);
+                          } else {
+                            message.warning(
+                              t(
+                                "MESSAGES.EVALUAAT_LEAST_ONE_EVALUATION_CRITERIATION_CRITERIA"
+                              )
+                            );
+                          }
+                        }}
+                      />
+                    </Tooltip>
+                  </Col>
+                  <Col span={14} offset={1}>
+                    <Form.Item
+                      {...field}
+                      name={[field.name, "criterion"]}
+                      rules={[
+                        {
+                          required: true,
+                          message: t("RULES.DONT_INSERT_CRITERION"),
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder={t("TOURNAMENTS.INSERT_CRITERION")}
+                        className="events__competition-criteria__input"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={5} offset={3}>
+                    <Form.Item
+                      {...field}
+                      name={[field.name, "maxPoints"]}
+                      rules={[
+                        { required: true, message: t("RULES.INVALID_VALUE") },
+                      ]}
+                    >
+                      <Input
+                        type="number"
+                        className="events__competition-criteria__inputPoints"
+                        min={0}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
               ))}
               <br />
               <Typography.Text className="events__competition-criteria__score-count">
-                Итого: {allScoreCount}
+                {t("COMMON.TOTAL")}: {allScoreCount}
               </Typography.Text>
               <Form.Item>
                 <Button
@@ -134,7 +150,7 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
                   block
                   icon={<PlusOutlined />}
                 >
-                  Добавить критерий
+                  {t("TOURNAMENTS.ADD_CRITERION")}
                 </Button>
               </Form.Item>
             </>

@@ -7,8 +7,10 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@constants";
+import { useTranslation } from "react-i18next";
 
 function UserSupport() {
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
   const navigate = useNavigate();
   const floatButtonGroupRef = useRef(null);
@@ -53,10 +55,10 @@ function UserSupport() {
           onClick={onClick}
           icon={<QuestionCircleOutlined />}
         >
-          <Tooltip placement="left" title="О портале">
+          <Tooltip placement="left" title={t("USER_SUPPORT.ABOUT_SITE")}>
             <FloatButton icon={<FileTextOutlined />} onClick={openAbout} />
           </Tooltip>
-          <Tooltip placement="left" title="Обратная связь">
+          <Tooltip placement="left" title={t("USER_SUPPORT.FEEDBACK")}>
             <FloatButton icon={<CommentOutlined />} onClick={openFeedback} />
           </Tooltip>
         </FloatButton.Group>

@@ -10,8 +10,10 @@ import Loader from "@components/loader/Loader";
 import { ROUTES } from "@constants";
 import { userApi, authApi } from "@api";
 import { getEncryptedPassword } from "@utils";
+import { useTranslation } from "react-i18next";
 
 function Auth() {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -26,11 +28,9 @@ function Auth() {
         .catch((error) => {
           if (error.response.status === 401) {
             setIsLoading(false);
-            message.info("Вы не авторизовались");
+            message.info(t("MESSAGES.NOT_AUTHORIZED"));
           } else {
-            message.error(
-              "Ошибка: Невозможно получить данные. Обратитесь к администратору..."
-            );
+            message.error(t("MESSAGES.USER_UPDATE_ERROR"));
           }
         });
     }
@@ -48,16 +48,7 @@ function Auth() {
         password: encrypedPassword,
       });
       navigate(ROUTES.EVENTS.PATH);
-    } catch (error) {
-      if (error.response.status === 404) {
-        setIsLoading(false);
-        message.error("Ошибка: Неверный email или пароль.");
-      } else {
-        message.error(
-          "Ошибка: Невозможно авторизовать пользователя. Попробуйте еще раз..."
-        );
-      }
-    }
+    } catch {}
 
     setIsFormLoading(false);
   };
@@ -67,7 +58,7 @@ function Auth() {
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
 
     setIsFormLoading(false);
   };
@@ -102,7 +93,7 @@ function Auth() {
                   onClick={(e) => handleSubmit(e)}
                   className="auth__button"
                 >
-                  Войти
+                  {t("COMMON.LOGIN")}
                 </Button>
               </FormItem>
             </Form>

@@ -16,11 +16,10 @@ import ParticipantInformation from "@components/participants/ParticipantInformat
 import Unauthorized from "@components/unauthorized/Unauthorized";
 import UsersControl from "@components/usersControl/UsersControl";
 import UserSettings from "@components/userSettings/UserSettings";
-import UsersSettingsTest from "@components/userSettings/UserSettingsTest";
 import AboutProgram from "@components/userSupport/AboutProgram";
 import Feedback from "@components/userSupport/Feedback";
 import UserSupport from "@components/userSupport/UserSupport";
-import ThemeToggle from "@components/themeToggle/ThemeToggle";
+import SettingsButton from "@components/settingsButton/SettingsButton";
 import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
@@ -35,7 +34,7 @@ function App() {
       <Layout>
         <BrowserRouter>
           <UserSupport />
-          <ThemeToggle />
+          <SettingsButton />
           <Routes>
             <Route path={ROUTER_ROUTES.NOT_FOUND} element={<NotFound />} />
             <Route
@@ -86,20 +85,6 @@ function App() {
                       ]}
                     >
                       <UserSettings />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path={ROUTER_ROUTES.USER_SETTINGS_TEST}
-                  element={
-                    <ProtectedRoute
-                      allowedRoles={[
-                        Roles.ADMIN,
-                        Roles.JUDGE,
-                        Roles.SPECIALIST,
-                      ]}
-                    >
-                      <UsersSettingsTest />
                     </ProtectedRoute>
                   }
                 />

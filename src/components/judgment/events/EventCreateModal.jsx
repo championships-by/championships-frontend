@@ -11,9 +11,11 @@ import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventRequirements from "@modules/judgment/events/EventRequirements";
 import { Button, Form, message, Modal, notification } from "antd";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   const [values, setValues] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +61,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       await eventApi.setEvent(formData);
       return true;
     } catch (error) {
-      message.error("При создании мероприятия произошла ошибка.");
+      message.error(t("MESSAGES.EVENT_CREATE_ERROR"));
       return false;
     }
   };
@@ -72,14 +74,13 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
     setIsLoading(true);
     const success = await onSubmit();
     if (success) {
-      message.success("Мероприятие успешно создано");
+      message.success(t("MESSAGES.EVENT_CREATE_SUCCESS"));
       onAdd();
       form.resetFields();
       onOk();
       notification.info({
-        message: "Внимание!",
-        description:
-          "Для публикации мероприятия необходимо добавить хотя бы одну компетенцию!",
+        message: t("COMMON.ATTENTION"),
+        description: t("EVENTS.AT_LEAST_ONE_NOMINATION_FOR_CREATE_EVENT"),
         duration: 120,
         placement: "bottomRight",
       });
@@ -88,12 +89,12 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   };
 
   const onFinishFailed = () => {
-    message.error("Проверьте поля для ввода!");
+    message.error(t("MESSAGES.CHECK_FIELDS"));
   };
 
   return (
     <Modal
-      title="Создать мероприятие"
+      title={t("EVENTS.CREATE_EVENT")}
       open={isOpen}
       onCancel={onCancel}
       footer={null}
@@ -151,7 +152,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           value={values.participation_needs}
         />
         <Button type="primary" htmlType="submit" loading={isLoading}>
-          Сохранить
+          {t("COMMON.SAVE")}
         </Button>
       </Form>
     </Modal>

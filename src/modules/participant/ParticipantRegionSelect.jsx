@@ -2,48 +2,51 @@ import React from "react";
 import FormItem from "antd/es/form/FormItem";
 import { Select, Flex, Input, Space, Typography } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 import "./sass/participant.scss";
 
-const options = [
-  {
-    value: "г.Минск",
-    label: "г.Минск",
-  },
-  {
-    value: "Минская область",
-    label: "Минская область",
-  },
-  {
-    value: "Могилевская область",
-    label: "Могилевская область",
-  },
-  {
-    value: "Гродненская область",
-    label: "Гродненская область",
-  },
-  {
-    value: "Гомельская область",
-    label: "Гомельская область",
-  },
-  {
-    value: "Брестская область",
-    label: "Брестская область",
-  },
-  {
-    value: "Витебская область",
-    label: "Витебская область",
-  },
-];
-
 function ParticipantRegionSelect({ name, value, onChange: onChangeBase }) {
+  const { t } = useTranslation();
+
+  const options = [
+    {
+      value: "г. Минск",
+      label: t("COMMON.MINSK"),
+    },
+    {
+      value: "Брестская область",
+      label: t("COMMON.BREST_REGION"),
+    },
+    {
+      value: "Витебская область",
+      label: t("COMMON.VITEBSK_REGION"),
+    },
+    {
+      value: "Гомельская область",
+      label: t("COMMON.GOMEL_REGION"),
+    },
+    {
+      value: "Гродненская область",
+      label: t("COMMON.GROGNO_REGION"),
+    },
+    {
+      value: "Минская область",
+      label: t("COMMON.MINSK_REGION"),
+    },
+    {
+      value: "Могилевская область",
+      label: t("COMMON.MOGILEV_REGION"),
+    },
+  ];
+
   const onChange = (value) => {
     onChangeBase({ [name]: value });
   };
 
   return (
     <div className="participant__region-select__div">
-      <Typography.Text>Регион</Typography.Text>
+      <Typography.Text>{t("COMMON.REGION")}</Typography.Text>
       <Flex>
         <Space.Compact className="participant__region-select__space">
           <Input
@@ -59,7 +62,7 @@ function ParticipantRegionSelect({ name, value, onChange: onChangeBase }) {
             rules={[
               {
                 required: true,
-                message: "Пожалуйста, выбирите регион",
+                message: t("RULES.PLEASE_ENTER_REGION"),
               },
             ]}
           >
@@ -67,7 +70,7 @@ function ParticipantRegionSelect({ name, value, onChange: onChangeBase }) {
               // disabled={disabled}
               value={value}
               id="participant_region_select"
-              placeholder="Выберите регион"
+              placeholder={t("COMMON.SELECT_REGION")}
               options={options}
               onChange={onChange}
             />

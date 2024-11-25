@@ -2,12 +2,16 @@ import React from "react";
 import { Flex, Input, Typography } from "antd";
 import { BankOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
+
 import "./sass/user.scss";
 
 function UserOrganizationInput({ name }) {
+  const { t } = useTranslation();
+
   return (
     <Flex vertical className="user__organization-input__flex">
-      <Typography.Text>Учреждение образования</Typography.Text>
+      <Typography.Text>{t("COMMON.EDUCATIONAL_INSTITUTION")}</Typography.Text>
       <FormItem
         name={name}
         hasFeedback
@@ -16,7 +20,7 @@ function UserOrganizationInput({ name }) {
         rules={[
           {
             required: true,
-            message: "Пожалуйста, введите учреждение образования",
+            message: t("RULES.PLESE_ENTER_EDUCATIONAL_INSTITUTION"),
           },
           {
             validator(_, value) {
@@ -25,7 +29,7 @@ function UserOrganizationInput({ name }) {
               }
               return Promise.reject(
                 new Error(
-                  "Пожалуйста, введите корректное учреждение образования"
+                  t("RULES.PLESE_ENTER_CORRECT_EDUCATIONAL_INSTITUTION")
                 )
               );
             },
@@ -34,11 +38,11 @@ function UserOrganizationInput({ name }) {
       >
         <Input
           prefix={<BankOutlined />}
-          placeholder="Введите учреждение образования"
+          placeholder={t("COMMON.ENTER_EDUCATIONAL_INSTITUTION")}
         />
       </FormItem>
       <Typography.Text type="secondary">
-        Пример: ГУО "Гимназия-колледж искусств"
+        {t("COMMON.EDUCATIONAL_INSTITUTION_EXAMPLE")}
       </Typography.Text>
     </Flex>
   );

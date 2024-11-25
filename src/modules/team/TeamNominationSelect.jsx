@@ -1,10 +1,13 @@
 import { Flex, Select, Space, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { FILTER_OPTION } from "@utils";
+import { useTranslation } from "react-i18next";
 
 import "./sass/team.scss";
 
 function TeamNominationInput({ name, options, onChange: onChangeBase }) {
+  const { t } = useTranslation();
+
   const onChange = (value) => {
     onChangeBase(value);
   };
@@ -12,13 +15,13 @@ function TeamNominationInput({ name, options, onChange: onChangeBase }) {
   const rules = [
     {
       required: true,
-      message: "Пожалуйста, выберите компетенцию",
+      message: t("RULES.PLEASE_CHOOSE_NOMINATION"),
     },
   ];
 
   return (
     <Flex vertical className="team__team-nomination-select__flex">
-      <Typography.Text>Компетенция</Typography.Text>
+      <Typography.Text>{t("COMMON.NOMINATION")}</Typography.Text>
       <Flex>
         <Space.Compact className="team__team-nomination-select__space">
           <FormItem
@@ -29,10 +32,10 @@ function TeamNominationInput({ name, options, onChange: onChangeBase }) {
             <Select
               name="team_nomination_select"
               showSearch
-              placeholder="Выберите компетенцию"
+              placeholder={t("COMMON.CHOOSE_NOMINATION")}
               filterOption={FILTER_OPTION}
               options={options}
-              notFoundContent="Нет данных"
+              notFoundContent={t("COMMON.NO_DATA")}
               onChange={(value) => onChange(value)}
             />
           </FormItem>

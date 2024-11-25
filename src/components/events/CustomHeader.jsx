@@ -1,13 +1,16 @@
-import { Locale } from "@constants";
+import { calendarLocale } from "@constants";
 import { Radio, Select } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
-import React from "react";
+import { useTranslation } from "react-i18next";
+import { getTranslation } from "@utils";
+
 import "./sass/custom-calendar.scss";
 
 dayjs.locale("ru");
 
 export const CustomHeader = ({ value, type, onChange, onTypeChange }) => {
+  const { t } = useTranslation();
   const year = value.year();
   const month = value.month();
 
@@ -23,11 +26,13 @@ export const CustomHeader = ({ value, type, onChange, onTypeChange }) => {
           onChange(now);
         }}
       >
-        {Locale.lang.shortMonths.map((month, index) => (
-          <option key={index} value={index}>
-            {month}
-          </option>
-        ))}
+        {getTranslation(calendarLocale.lang.shortMonths, t).map(
+          (month, index) => (
+            <option key={index} value={index}>
+              {month}
+            </option>
+          )
+        )}
       </Select>
       <Select
         size="small"
@@ -48,8 +53,8 @@ export const CustomHeader = ({ value, type, onChange, onTypeChange }) => {
         onChange={(e) => onTypeChange(e.target.value)}
         value={type}
       >
-        <Radio.Button value="month">Месяц</Radio.Button>
-        <Radio.Button value="year">Год</Radio.Button>
+        <Radio.Button value="month">{t("COMMON.MONTH")}</Radio.Button>
+        <Radio.Button value="year">{t("COMMON.YEAR")}</Radio.Button>
       </Radio.Group>
     </div>
   );

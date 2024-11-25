@@ -2,15 +2,30 @@ import { EditOutlined } from "@ant-design/icons";
 import { getUsersSelector } from "@store/users";
 import { useSelector } from "react-redux";
 import UserModal from "@components/usersControl/UserModal";
-import { Locale, ModalType, ROLE_FILTERS } from "@constants";
+import {
+  paginationLocale,
+  tableLocale,
+  ModalType,
+  ROLE_FILTERS,
+} from "@constants";
 import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
 import { useState } from "react";
+import { getTranslation } from "@utils";
+import { useTranslation } from "react-i18next";
 
 function UsersTable() {
+  const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState();
   const users = useSelector(getUsersSelector);
   const usersData = users.data;
+
+  const getRoleFilters = (roleFilters) => {
+    return roleFilters.map((filter) => ({
+      text: t(filter.text),
+      value: filter.value,
+    }));
+  };
 
   const openEditModal = (id) => {
     setSelectedUserId(id);
@@ -23,7 +38,7 @@ function UsersTable() {
 
   const columns = [
     {
-      title: "Фамилия имя отчество",
+      title: t("COMMON.SURNAME_NAME_THIRD_NAME"),
       key: "fullname",
       render: (_, { first_name, second_name, third_name }) => (
         <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
@@ -36,27 +51,27 @@ function UsersTable() {
       },
     },
     {
-      title: "Роль",
+      title: t("COMMON.ROLE"),
       key: "role",
       render: (_, { role }) =>
         role === "admin" ? (
-          <Typography.Text>Администратор</Typography.Text>
+          <Typography.Text>{t("COMMON.ADMIN")}</Typography.Text>
         ) : role === "judge" ? (
-          <Typography.Text>Судья</Typography.Text>
+          <Typography.Text>{t("COMMON.JUDGE")}</Typography.Text>
         ) : role === "specialist" ? (
-          <Typography.Text>Менеджер</Typography.Text>
+          <Typography.Text>{t("COMMON.MANAGER")}</Typography.Text>
         ) : (
           <Typography.Text />
         ),
-      filters: ROLE_FILTERS,
+      filters: getRoleFilters(ROLE_FILTERS),
       onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
     {
-      title: "Действия",
+      title: t("COMMON.ACTIONS"),
       key: "action",
       render: (_, record) => (
         <Flex>
-          <Tooltip title="Редактирование">
+          <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
               icon={<EditOutlined />}
@@ -73,11 +88,11 @@ function UsersTable() {
       <Table
         dataSource={usersData}
         columns={columns}
-        locale={Locale}
+        locale={getTranslation(tableLocale, t)}
         pagination={{
           position: ["bottomCenter"],
           showSizeChanger: false,
-          locale: Locale.pagination,
+          locale: getTranslation(paginationLocale, t),
         }}
       />
 

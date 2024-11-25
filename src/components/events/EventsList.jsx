@@ -4,14 +4,17 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import noLogo from "@assets/img/auth-background.png";
-import { ROUTES, url, Locale } from "@constants";
+import { ROUTES, url, paginationLocale } from "@constants";
 import { changeDateFormat, getEventLevel } from "@utils";
 import { Card, List, Tooltip, Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDevice } from "@hooks";
+import { useTranslation } from "react-i18next";
+import { getTranslation } from "@utils";
 
 function EventsList({ events }) {
+  const { t } = useTranslation();
   const { isMobile, isTablet } = useDevice();
   const navigate = useNavigate();
 
@@ -55,11 +58,11 @@ function EventsList({ events }) {
               changeDateFormat(event.holding_finish_date) ? (
                 <>
                   {" "}
-                  c{" "}
+                  {t("COMMON.FROM")}{" "}
                   <Typography.Text strong>
                     {changeDateFormat(event.holding_start_date)}
                   </Typography.Text>{" "}
-                  по{" "}
+                  {t("COMMON.TO")}{" "}
                   <Typography.Text strong>
                     {changeDateFormat(event.holding_finish_date)}
                   </Typography.Text>
@@ -73,7 +76,7 @@ function EventsList({ events }) {
             </Typography.Text>
             <br />
             <Typography.Text type="secondary">
-              <StarOutlined /> {getEventLevel(event.event_level)}
+              <StarOutlined /> {t(getEventLevel(event.event_level))}
             </Typography.Text>
             <br />
             <Tooltip title={event.event_place} placement="bottomLeft">
@@ -84,11 +87,11 @@ function EventsList({ events }) {
             <Typography.Title level={5}>
               {finishDate <= now ? (
                 <div className="events__card__registration__closed">
-                  Регистрация закрыта
+                  {t("EVENTS.REGISTRATION_CLOSED")}
                 </div>
               ) : (
                 <div className="events__card__registration__open">
-                  Регистрация открыта
+                  {t("EVENTS.REGISTRATION_OPEN")}
                 </div>
               )}
             </Typography.Title>
@@ -105,12 +108,12 @@ function EventsList({ events }) {
         pageSize: isMobile ? 1 : isTablet ? 2 : 3,
         position: "bottom",
         align: "center",
-        locale: Locale.pagination,
+        locale: getTranslation(paginationLocale, t),
       }}
       dataSource={data}
       renderItem={(item) => <List.Item>{item}</List.Item>}
       locale={{
-        emptyText: "Мероприятия отсутствуют",
+        emptyText: t("EVENTS.NO_EVENTS"),
       }}
       className="events__list"
     />

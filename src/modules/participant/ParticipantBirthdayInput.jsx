@@ -2,19 +2,23 @@ import React from "react";
 import { DatePicker, Flex, Input, Space, Typography } from "antd";
 import dayjs from "dayjs";
 import FormItem from "antd/es/form/FormItem";
-import { Locale } from "@constants";
+import { Locale, calendarLocale } from "@constants";
+import { useTranslation } from "react-i18next";
+import { getTranslation } from "../../utils";
 
 import "./sass/participant.scss";
 
-const rules = [
-  {
-    type: "object",
-    required: true,
-    message: "Пожалуйста, выберите дату рождения",
-  },
-];
-
 function ParticipantBirthdayInput({ name, value, onChange: onChangeBase }) {
+  const { t } = useTranslation();
+
+  const rules = [
+    {
+      type: "object",
+      required: true,
+      message: t("RULES.PLEASE_ENTER_BIRTHDAY"),
+    },
+  ];
+
   const onChange = (val) => {
     const date = dayjs(val).toISOString();
 
@@ -23,9 +27,13 @@ function ParticipantBirthdayInput({ name, value, onChange: onChangeBase }) {
     });
   };
 
+  const disabledDate = (current) => {
+    return current && current > dayjs().subtract(6, "years").endOf("day");
+  };
+
   return (
     <>
-      <Typography.Text>Дата рождения</Typography.Text>
+      <Typography.Text>{t("COMMON.BIRTHDAY")}</Typography.Text>
       <Flex>
         <Space.Compact className="participant__birthday-input__space">
           <FormItem
@@ -38,10 +46,11 @@ function ParticipantBirthdayInput({ name, value, onChange: onChangeBase }) {
             <DatePicker
               format={Locale.dateFormat}
               className="participant__birthday-input__datepicker"
-              placeholder="Выберите дату рождения"
-              locale={Locale}
+              placeholder={t("COMMON.CHOOSE_BIRTHDAY")}
+              locale={getTranslation(calendarLocale, t)}
               value={dayjs(value)}
               onChange={(value) => onChange(value)}
+              disabledDate={disabledDate}
             />
           </FormItem>
         </Space.Compact>

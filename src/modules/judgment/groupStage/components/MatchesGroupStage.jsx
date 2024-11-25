@@ -4,8 +4,11 @@ import { Spin } from "antd";
 import { EditMatchScoreModal } from "../modals";
 import { MatchCard } from "./MatchCard";
 import "./MatchesGroupStage.scss";
+import { useTranslation } from "react-i18next";
 
 export const MatchesGroupStage = () => {
+  const { t } = useTranslation();
+
   const {
     eventId,
     nominationId,
@@ -23,7 +26,7 @@ export const MatchesGroupStage = () => {
     <Spin indicator={<LoadingOutlined className="icon" spin />} />
   ) : error ? (
     <div className="error">
-      <h2>Ошибка загрузки данных</h2>
+      <h2>{t("MESSAGES.DATA_UPLOAD_ERROR")}</h2>
       <p>{error}</p>
     </div>
   ) : (

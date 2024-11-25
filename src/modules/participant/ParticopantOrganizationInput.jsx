@@ -2,8 +2,11 @@ import React from "react";
 import { Flex, Input, Typography } from "antd";
 import { BankOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
+import { useTranslation } from "react-i18next";
 
 function ParticipantOrganizationInput({ name, value }) {
+  const { t } = useTranslation();
+
   return (
     <FormItem
       name={name}
@@ -12,23 +15,23 @@ function ParticipantOrganizationInput({ name, value }) {
       rules={[
         {
           required: true,
-          message: "Пожалуйста, введите учреждение образования",
+          message: t("RULES.PLESE_ENTER_EDUCATIONAL_INSTITUTION"),
         },
         {
           max: 255,
-          message: "Максимальное значение 255",
+          message: t("RULES.MAX_255_SYMBOLS"),
         },
       ]}
     >
       <Flex vertical>
-        <Typography.Text>Учреждение образования</Typography.Text>
+        <Typography.Text>{t("COMMON.EDUCATIONAL_INSTITUTION")}</Typography.Text>
         <Input
           prefix={<BankOutlined />}
-          placeholder="Введите учреждение образования"
+          placeholder={t("COMMON.ENTER_EDUCATIONAL_INSTITUTION")}
           value={value}
         />
         <Typography.Text type="secondary">
-          Пример: ГУО "Гимназия-колледж искусств"
+          {t("COMMON.EDUCATIONAL_INSTITUTION_EXAMPLE")}
         </Typography.Text>
       </Flex>
     </FormItem>

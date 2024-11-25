@@ -1,5 +1,4 @@
 import { competenciesApi } from "@api";
-import { useTabs } from "@hooks/useTabs";
 import {
   generateCompetenciesDataSource,
   isCriteriaFilled,
@@ -8,15 +7,14 @@ import {
   transformStageStatus,
 } from "@utils";
 import { Button, message, Tabs } from "antd";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CompetenciesResults, CompetenciesTable } from "./components";
-import { CompetenciesTabsEnum } from "./constants";
+import { useTranslation } from "react-i18next";
 
 function CompetenciesTab() {
-  const { tabs, updateTabs } = useTabs();
+  const { t } = useTranslation();
   const { eventId, nominationId } = useParams();
-
   const [isLoading, setIsLoading] = useState(false);
   const [stageStatus, setStageStatus] = useState({});
   const [criteria, setCriteria] = useState([]);
@@ -28,7 +26,7 @@ function CompetenciesTab() {
   const handleCompleteStage = useCallback(async () => {
     try {
       if (!isCriteriaFilled(criteria)) {
-        message.warning("Заполните все поля!");
+        message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
         return;
       }
 
@@ -57,9 +55,7 @@ function CompetenciesTab() {
         event_id: eventId,
         nomination_id: nominationId,
       });
-    } catch (error) {
-      message.error("Произошла неизвестная ошибка");
-    }
+    } catch {}
   }, [criteria, dataSource, eventId, nominationId]);
 
   const handleDownload = useCallback(() => {
@@ -76,6 +72,51 @@ function CompetenciesTab() {
       setDataSource(newDataSource);
     },
     [dataSource]
+  );
+
+  const items = useMemo(
+    () => [
+      {
+        key: "1",
+        label: t("COMMON.TABLE"),
+        children: (
+          <CompetenciesTable
+            criteria={criteria}
+            dataSource={dataSource}
+            isLoading={isLoading}
+            hasError={isErrorOccurred}
+            onChange={handleChange}
+            editable={
+              stageStatus.registrationFinished &&
+              stageStatus.tournamentStarted &&
+              !stageStatus.tournamentFinished
+            }
+          />
+        ),
+      },
+      {
+        key: "2",
+        label: t("COMMON.RESULTS"),
+        disabled: !stageStatus.tournamentFinished,
+        children: (
+          <CompetenciesResults
+            dataSource={dataSource}
+            isLoading={isLoading}
+            hasError={isErrorOccurred}
+          />
+        ),
+      },
+    ],
+    [
+      criteria,
+      dataSource,
+      handleChange,
+      isErrorOccurred,
+      isLoading,
+      stageStatus.registrationFinished,
+      stageStatus.tournamentFinished,
+      stageStatus.tournamentStarted,
+    ]
   );
 
   useEffect(() => {
@@ -129,56 +170,18 @@ function CompetenciesTab() {
     }
   }, [eventId, isDataLoaded, nominationId, stageStatus]);
 
-  useEffect(() => {
-    if (!stageStatus.tournamentFinished) {
-      updateTabs([
-        {
-          id: CompetenciesTabsEnum.RESULTS,
-          disabled: false,
-        },
-      ]);
-    }
-  }, [stageStatus, updateTabs, handleCompleteStage]);
-
   return (
     <Tabs
-      items={[
-        {
-          ...tabs[0],
-          children: (
-            <CompetenciesTable
-              criteria={criteria}
-              dataSource={dataSource}
-              isLoading={isLoading}
-              hasError={isErrorOccurred}
-              onChange={handleChange}
-              editable={
-                stageStatus.registrationFinished &&
-                stageStatus.tournamentStarted &&
-                !stageStatus.tournamentFinished
-              }
-            />
-          ),
-        },
-        {
-          ...tabs[1],
-          disabled: !stageStatus.tournamentFinished,
-          children: (
-            <CompetenciesResults
-              dataSource={dataSource}
-              isLoading={isLoading}
-              hasError={isErrorOccurred}
-            />
-          ),
-        },
-      ]}
+      items={items}
       tabBarExtraContent={{
         right: (
           <Button
             onClick={isStageFinished ? handleDownload : handleCompleteStage}
             type="primary"
           >
-            {isStageFinished ? "Итоговый протокол" : "Завершить этап"}
+            {isStageFinished
+              ? t("COMMON.FINAL_PROTOCOL")
+              : t("COMMON.COMPLETE_STAGE")}
           </Button>
         ),
       }}

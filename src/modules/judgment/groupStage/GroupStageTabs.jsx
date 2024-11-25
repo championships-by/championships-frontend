@@ -1,14 +1,16 @@
-import { useMatches, useTabs } from "@hooks";
+import { useMatches } from "@hooks";
 import { isScoreZero } from "@utils";
 import { Button, message, Tabs } from "antd";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { MatchesGroupStage, TableGroupStage } from "./components";
 import { FinalParticipantsModal } from "./modals";
+import { useTranslation } from "react-i18next";
 
 export const GroupStageTabs = () => {
+  const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { tabs } = useTabs();
   const { matches, setFinalParticipants } = useMatches();
 
   const handleClick = (e) => {
@@ -24,19 +26,49 @@ export const GroupStageTabs = () => {
       return;
     }
 
-    messageApi.error("Не все матчи заполнены!");
+    messageApi.error(t("TOURNAMENTS.NOT_ALL_MATCHES_FILLED"));
   };
+
+  const items = useMemo(
+    () => [
+      {
+        key: "1",
+        label: t("COMMON.TABLE"),
+        children: <TableGroupStage />,
+        disabled: false,
+      },
+      {
+        key: "2",
+        label: t("TOURNAMENTS.MATCHES"),
+        children: <MatchesGroupStage />,
+        disabled: false,
+      },
+      {
+        key: "3",
+        label: t("TOURNAMENTS.FINAL_STAGE"),
+        children: "Content Tab3",
+        disabled: true,
+      },
+      {
+        key: "4",
+        label: t("COMMON.RESULTS"),
+        children: "Content Tab4",
+        disabled: true,
+      },
+    ],
+    []
+  );
 
   return (
     <>
       {contextHolder}
       <Tabs
         defaultActiveKey="1"
-        items={tabs}
+        items={items}
         tabBarExtraContent={{
           right: (
             <Button onClick={handleClick} type="primary">
-              Завершить этап
+              {t("COMMON.COMPLETE_STAGE")}
             </Button>
           ),
         }}

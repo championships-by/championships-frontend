@@ -1,31 +1,34 @@
 import { Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import TextArea from "antd/es/input/TextArea";
-
-const rules = [
-  {
-    required: true,
-    message: "Пожалуйста, введите сообщение",
-  },
-  {
-    max: 1000,
-    message: "Максимум 1000 символов",
-  },
-  {
-    min: 5,
-    message: "Минимум 5 символов",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 function FeedbackDescription({ name }) {
+  const { t } = useTranslation();
+
+  const rules = [
+    {
+      required: true,
+      message: t("RULES.PLEASE_ENTER_MESSAGE"),
+    },
+    {
+      max: 1000,
+      message: t("RULES.MAX_1000_SYMBOLS"),
+    },
+    {
+      min: 5,
+      message: t("RULES.MIN_5_SYMBOLS"),
+    },
+  ];
+
   return (
     <FormItem name={name} hasFeedback validateFirst rules={rules}>
       <Flex vertical>
-        <Typography.Text>Сообщение*</Typography.Text>
+        <Typography.Text>{t("COMMON.MESSAGE")}*</Typography.Text>
         <TextArea
           rows={6}
           allowClear
-          placeholder="Введите сообщение"
+          placeholder={t("COMMON.ENTER_MESSAGE")}
           id="event_description_input"
           maxLength={1000}
         />

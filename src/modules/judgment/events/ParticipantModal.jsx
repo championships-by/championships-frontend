@@ -1,50 +1,54 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Table, Button } from "antd";
-import { Locale } from "@constants";
+import { tableLocale } from "@constants";
+import { getTranslation } from "@utils";
+import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
-const columns = [
-  {
-    title: "Команда",
-    dataIndex: "team_name",
-    key: "team_name",
-    sorter: (a, b) => a.team_name.localeCompare(b.team_name),
-  },
-  {
-    title: "Участник",
-    dataIndex: "fullName",
-    key: "fullName",
-    sorter: (a, b) => a.fullName.localeCompare(b.fullName),
-  },
-  {
-    title: "Учреждение образования",
-    dataIndex: "educational_institution",
-    key: "educational_institution",
-  },
-  {
-    title: "Учреждение дополнительного образования",
-    dataIndex: "additional_educational_institution",
-    key: "additional_educational_institution",
-  },
-  {
-    title: "Оборудование",
-    dataIndex: "equipments",
-    key: "equipments",
-  },
-  {
-    title: "Программное обеспечение",
-    dataIndex: "softwares",
-    key: "softwares",
-  },
-  {
-    title: "ФИО педагога",
-    dataIndex: "teacher",
-    key: "teacher",
-  },
-];
-
 function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
+  const { t } = useTranslation();
+
+  const columns = [
+    {
+      title: t("COMMON.TEAM"),
+      dataIndex: "team_name",
+      key: "team_name",
+      sorter: (a, b) => a.team_name.localeCompare(b.team_name),
+    },
+    {
+      title: t("COMMON.PARTICIPANT"),
+      dataIndex: "fullName",
+      key: "fullName",
+      sorter: (a, b) => a.fullName.localeCompare(b.fullName),
+    },
+    {
+      title: t("COMMON.EDUCATIONAL_INSTITUTION"),
+      dataIndex: "educational_institution",
+      key: "educational_institution",
+    },
+    {
+      title: t("COMMON.ADDITIONAL_EDUCATIONAL_INSTITUTION"),
+      dataIndex: "additional_educational_institution",
+      key: "additional_educational_institution",
+    },
+    {
+      title: t("TOURNAMENTS.EQUIPMENT"),
+      dataIndex: "equipments",
+      key: "equipments",
+    },
+    {
+      title: t("TOURNAMENTS.SOFTWARE"),
+      dataIndex: "softwares",
+      key: "softwares",
+    },
+    {
+      title: t("COMMON.FULL_NAME_OF_TEACHER"),
+      dataIndex: "teacher",
+      key: "teacher",
+    },
+  ];
+
   const [participantsInfo, setParticipantsInfo] = useState([]);
 
   useEffect(() => {
@@ -107,7 +111,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
           columns={columns}
           dataSource={participantsInfo}
           pagination={false}
-          locale={Locale}
+          locale={getTranslation(tableLocale, t)}
         />
       </Modal>
     </div>

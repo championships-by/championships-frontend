@@ -2,10 +2,12 @@ import React from "react";
 import { Form, FormItem } from "antd";
 import { Flex, Input, Space, Typography } from "antd";
 import { FlagOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
 function CompitationNameInput({ name, value, onInputChange }) {
+  const { t } = useTranslation();
   const handleChange = (event) => {
     onInputChange(event.target.value);
   };
@@ -18,28 +20,29 @@ function CompitationNameInput({ name, value, onInputChange }) {
       rules={[
         {
           min: 5,
-          message: "Минимальное значение 5",
+          message: t("RULES.MIN_5_SYMBOLS"),
         },
         {
           required: true,
-          message: "Введите название компетенции",
-          whitespace: true,
+          message: t("RULES.ENTER_NAME_NOMINATION"),
         },
       ]}
     >
       <Flex vertical>
         <Typography.Text className="events__compitation-name__text">
-          Название компетенции
+          {t("EVENTS.NOMINATION_NAME")}
         </Typography.Text>
         <Input
           className="events__compitation-name__input"
-          placeholder="Введите название"
+          placeholder={t("RULES.ENTER_NAME_NOMINATION")}
           maxLength={30}
           prefix={<FlagOutlined />}
           value={value}
           onChange={handleChange}
         ></Input>
-        <Typography.Text type="secondary">Пример: Робофутбол</Typography.Text>
+        <Typography.Text type="secondary">
+          {t("EVENTS.NAME_NOMINATION_EXAMPLE")}
+        </Typography.Text>
       </Flex>
     </Form.Item>
   );

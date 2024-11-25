@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Typography, Input, Form, Space } from "antd";
 import { LinkOutlined } from "@ant-design/icons";
-const { Text } = Typography;
+import { useTranslation } from "react-i18next";
 
 function ReglamentName({ name, value, onInputChange }) {
+  const { t } = useTranslation();
+
   const [hasHttp, setHasHttp] = useState(true);
 
   const handleChange = (e) => {
@@ -25,13 +27,13 @@ function ReglamentName({ name, value, onInputChange }) {
         {
           required: true,
           whitespace: true,
-          message: "Вставьте ссылку на регламент",
+          message: t("RULES.ENTER_REGLAMENT_LINK"),
         },
         {
           validator: (_, value) => {
             if (!hasHttp) {
               return Promise.reject(
-                new Error("Ссылка должна начинаться с 'http://' или 'https://'")
+                new Error(t("RULES.LINK_SHOULD_START_WITH_HTTP"))
               );
             }
             return Promise.resolve();
@@ -39,21 +41,27 @@ function ReglamentName({ name, value, onInputChange }) {
         },
       ]}
     >
-      <Space direction="vertical" size={2}>
+      <Space
+        direction="vertical"
+        size={2}
+        className="events__competition-reglament__container"
+      >
         <Typography.Text className="events__competition-reglament__text">
-          Регламент
+          {t("COMMON.REGLAMENT")}
         </Typography.Text>
         <Input
           prefix={<LinkOutlined />}
-          placeholder="Вставьте ссылку на регламент"
+          placeholder={t("RULES.ENTER_REGLAMENT_LINK")}
           value={value}
           onChange={handleChange}
           className="events__competition-reglament__input"
         />
         <Typography.Text type="secondary">
-          Пример: http://google.com или https://google.com
+          {t("COMMON.LINK_EXAMPLE")}
         </Typography.Text>
-        <Text type="danger">ВНИМАНИЕ! Проверьте права доступа к файлу</Text>
+        <Typography.Text type="danger">
+          {t("COMMON.CHECK_FILE_ACCESS")}
+        </Typography.Text>
       </Space>
     </Form.Item>
   );
