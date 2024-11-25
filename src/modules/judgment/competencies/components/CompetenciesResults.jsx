@@ -3,6 +3,8 @@ import BronzeMedal from "@src/assets/img/bronze-medal.png";
 import GoldMedal from "@src/assets/img/gold-medal.png";
 import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Flex, Table, Tooltip, Typography } from "antd";
+import { tableLocale } from "@constants";
+import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./CompetenciesResults.scss";
@@ -70,7 +72,7 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
       ) : (
         <Table
           className="competencies-result-table"
-          locale={{ emptyText: t("COMMON.NO_DATA") }}
+          locale={getTranslation(tableLocale, t)}
           pagination={false}
           columns={columns}
           dataSource={dataSource.sort((a, b) => b.totalScore - a.totalScore)}

@@ -158,6 +158,7 @@ export const tableLocale = {
   cancelSort: "TABLE_LOCALE.CANCELSORT",
   filterReset: "TABLE_LOCALE.FILTERRESET",
   filterConfirm: "TABLE_LOCALE.FILTERCONFIRM",
+  emptyText: "COMMON.NO_DATA",
 };
 
 export const paginationLocale = {
