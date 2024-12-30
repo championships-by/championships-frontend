@@ -9,16 +9,8 @@ export const competenciesApi = {
     instance.get(
       `/criteria/get_criteria_results?event_id=${eventId}&nomination_id=${nominationId}`
     ),
-  setCriteriaResult: ({ eventId, nominationId, criteriaId, teamId, score }) =>
-    instance.post(`/criteria/set_criteria_result`, {
-      nomination_event: {
-        event_id: eventId,
-        nomination_id: nominationId,
-      },
-      criteria_id: criteriaId,
-      team_id: teamId,
-      score,
-    }),
+  setCriteriaResults: (body) =>
+    instance.post("/criteria/set_criteria_result_in_bulk", body),
   getCompetenciesEventData: (eventID) => {
     return instance.get(
       `/nomination_event/nominations_event_participant_count?event_id=${eventID}`
