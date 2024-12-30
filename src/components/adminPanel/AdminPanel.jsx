@@ -56,7 +56,7 @@ function AdminPanel() {
 
   return (
     <div id="admin-panel" className="admin-panel">
-      {user.data.role && (
+      {role != "unauthorized" && (
         <>
           <div id="sidebar" className="admin-panel__menu">
             <AdminPanelLogo />
@@ -67,7 +67,12 @@ function AdminPanel() {
           </div>
         </>
       )}
-      <div id="content" className="admin-panel__content">
+      <div
+        id="content"
+        className={`admin-panel__content${
+          role == "unauthorized" ? `__guest` : ``
+        }`}
+      >
         <Outlet />
       </div>
     </div>

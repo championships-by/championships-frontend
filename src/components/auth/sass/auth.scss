@@ -26,14 +26,18 @@
     width: 400px;
     background-color: #fff;
 
-    border-radius: 10px;
+    border-radius: 20px;
 
     box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   }
 
+  .dark-theme &__container {
+    background: $darkest-gray;
+  }
+
   &__header {
     background-color: #0075f4;
-    border-radius: 10px 10px 0 0;
+    border-radius: 20px 20px 0 0;
 
     display: flex;
     justify-content: center;
@@ -64,12 +68,12 @@
     padding: 50px 0 20px 0;
   }
 
-  .dark-theme &__body {
-    background: $darkest-gray;
-  }
-
   &__button {
     width: 100%;
-    margin-top: 15px;
+  }
+
+  &__guest-button {
+    width: 100%;
+    margin-top: 14px;
   }
 }

@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import EventsList from "@components/events/EventsList";
 import Loader from "@components/loader/Loader";
 import { getEventsSelector } from "@store/events/selectors";
+import { getUserSelector } from "@store/users";
 import { getEventsRelatedToDate } from "@store/events/thunk";
-import { Card, Divider, Flex, Typography, Tabs } from "antd";
+import { Card, Flex, Typography, Tabs, Row, Col, Button } from "antd";
 import { useDevice } from "@hooks";
+import { ROUTES } from "@constants";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CustomCalendar } from "./CustomCalendar";
@@ -14,6 +17,7 @@ import "./sass/events.scss";
 
 function Events() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { isMobile, isTablet } = useDevice();
   const dispatch = useDispatch();
   const {
@@ -23,6 +27,7 @@ function Events() {
     filters,
     date,
   } = useSelector(getEventsSelector);
+  const user = useSelector(getUserSelector);
 
   useEffect(() => {
     dispatch(
@@ -60,10 +65,25 @@ function Events() {
   return (
     <>
       <Loader show={isLoading} />
-      <Typography.Title level={2}>{t("EVENTS.EVENTS")}</Typography.Title>
-      <Divider />
+      <Row align="middle">
+        <Col xs={24} sm={24} md={14}>
+          <Typography.Title level={2}>{t("EVENTS.EVENTS")}</Typography.Title>
+        </Col>
+        {user.data.length === 0 && (
+          <Col flex="auto">
+            <Flex justify="flex-end">
+              <Button
+                type="primary"
+                onClick={() => navigate(ROUTES.AUTHORIZATION.PATH)}
+              >
+                {t("COMMON.LOGIN")}
+              </Button>
+            </Flex>
+          </Col>
+        )}
+      </Row>
       <Flex vertical gap={500}>
-        <Flex vertical={isMobile || isTablet} gap="small">
+        <Flex vertical={isMobile || isTablet} gap="large">
           <Tabs items={tabsitems} className="events__tabs" />
           <Flex vertical={!isTablet} gap={10}>
             <FilterSearchPanel />
