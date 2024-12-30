@@ -237,7 +237,8 @@
     "DISQALIFICATED": "Дисквалифицирован",
     "PARTICIPANT_EQUIPMENT": "Оборудование участника",
     "ENTER_PARTICIPANT_EQUIPMENT": "Введите привозимое оборудование участника",
-    "PARTICIPANT_EQUIPMENT_EXAMPLE": "Пример: Набор лего для робототехники"
+    "PARTICIPANT_EQUIPMENT_EXAMPLE": "Пример: Набор лего для робототехники",
+    "COULDNT_DOWNLOAD_FILE": "Не удалось скачать файл"
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "О портале",

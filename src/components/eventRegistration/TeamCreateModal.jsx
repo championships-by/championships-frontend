@@ -29,8 +29,7 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
       onAdd();
       form.resetFields();
       onOk();
-    } catch (error) {
-      message.error(t("MESSAGES.ERROR"));
+    } catch {
     } finally {
       setIsLoading(false);
     }

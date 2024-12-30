@@ -133,8 +133,7 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
       message.success(t("MESSAGES.SUCCESS_PARTICIPANT_ADD"));
       form.resetFields();
       onOk();
-    } catch (error) {
-      message.error(t("MESSAGES.ERROR"));
+    } catch {
     } finally {
       setIsLoading(false);
     }

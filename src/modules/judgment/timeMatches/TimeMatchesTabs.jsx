@@ -22,6 +22,7 @@ export const TimeMatchesTabs = () => {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
+  const [activeTabKey, setActiveTabKey] = useState("1");
 
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
     setTimeMatches((prev) =>
@@ -59,25 +60,26 @@ export const TimeMatchesTabs = () => {
         return;
       }
 
-      const timeMatchPromises = timeMatches.flatMap((timeMatch) =>
-        timeMatch.attempts.map(({ id, result, isDisqualified }) =>
-          timeMatchesApi
-            .setTimeMatch(
-              eventId,
-              nominationId,
-              id,
-              !result && isDisqualified ? defaultTime : result
-            )
-            .catch((reason) => console.error(reason))
-        )
+      const timeMatchData = timeMatches.flatMap((timeMatch) =>
+        timeMatch.attempts.map(({ id, result, isDisqualified }) => ({
+          nomination_event: {
+            event_id: eventId,
+            nomination_id: nominationId,
+          },
+          race_round_id: id,
+          result: !result && isDisqualified ? defaultTime : result,
+        }))
       );
 
-      await Promise.allSettled(timeMatchPromises);
+      await timeMatchesApi.setTimeMatch(timeMatchData);
 
       await competenciesApi.finishTimeStage({
         event_id: eventId,
         nomination_id: nominationId,
       });
+
+      setIsStageFinished(true);
+      setActiveTabKey("2");
     } catch (error) {
       const statusCode = error.response.status;
       const errorMessage =
@@ -87,9 +89,38 @@ export const TimeMatchesTabs = () => {
     }
   }, [eventId, nominationId, timeMatches]);
 
-  const handleDownload = useCallback(() => {
-    console.log("download file");
-  }, []);
+  const handleDownload = async () => {
+    try {
+      const params = {
+        event_id: eventId,
+        nomination_id: nominationId,
+      };
+
+      const response = await competenciesApi.getNominationEventProtocol(params);
+
+      const blob = new Blob([response.data], { type: "application/pdf" });
+
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+
+      const contentDisposition = response.headers["content-disposition"];
+      const fileNameMatch = contentDisposition?.match(/filename\*=utf-8''(.+)/);
+      const fileName = fileNameMatch
+        ? decodeURIComponent(fileNameMatch[1])
+        : "Финальный протокол.pdf";
+
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch {
+      message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
+    }
+  };
 
   const items = useMemo(
     () => [
@@ -101,7 +132,8 @@ export const TimeMatchesTabs = () => {
             editable={
               stageStatus.registrationFinished &&
               stageStatus.tournamentStarted &&
-              !stageStatus.tournamentFinished
+              !stageStatus.tournamentFinished &&
+              !isStageFinished
             }
             timeMatches={timeMatches}
             isLoading={isLoading}
@@ -113,11 +145,12 @@ export const TimeMatchesTabs = () => {
       {
         key: "2",
         label: t("COMMON.RESULTS"),
-        disabled: !(
-          stageStatus.registrationFinished &&
-          stageStatus.tournamentStarted &&
-          stageStatus.tournamentFinished
-        ),
+        disabled:
+          !(
+            stageStatus.registrationFinished &&
+            stageStatus.tournamentStarted &&
+            stageStatus.tournamentFinished
+          ) && !isStageFinished,
         children: (
           <TimeMatchesResults
             timeMatches={timeMatches}
@@ -135,6 +168,7 @@ export const TimeMatchesTabs = () => {
       stageStatus.tournamentFinished,
       stageStatus.tournamentStarted,
       timeMatches,
+      isStageFinished,
     ]
   );
 
@@ -175,10 +209,12 @@ export const TimeMatchesTabs = () => {
           setIsDataLoaded(true);
         });
     }
-  }, [eventId, nominationId, isDataLoaded]);
+  }, [eventId, nominationId, isDataLoaded, isStageFinished]);
 
   return (
     <Tabs
+      activeKey={activeTabKey}
+      onChange={setActiveTabKey}
       items={items}
       tabBarExtraContent={{
         right: (

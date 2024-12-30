@@ -237,7 +237,8 @@
     "DISQALIFICATED": "Дыскваліфікаваны",
     "PARTICIPANT_EQUIPMENT": "Абсталяванне ўдзельніка",
     "ENTER_PARTICIPANT_EQUIPMENT": "Увядзіце прывезенае абсталяванне ўдзельніка",
-    "PARTICIPANT_EQUIPMENT_EXAMPLE": "Прыклад: Набор LEGO для робататэхнікі"
+    "PARTICIPANT_EQUIPMENT_EXAMPLE": "Прыклад: Набор LEGO для робататэхнікі",
+    "COULDNT_DOWNLOAD_FILE": "Немагчыма загрузіць файл"
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "Пра партал",

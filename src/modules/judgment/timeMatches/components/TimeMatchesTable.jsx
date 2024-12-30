@@ -19,12 +19,6 @@ export const TimeMatchesTable = ({
   const columns = useMemo(
     () => [
       {
-        key: "place",
-        dataIndex: "place",
-        title: "№ п/п",
-        render: (text, record, index) => index + 1,
-      },
-      {
         key: "teamName",
         dataIndex: "teamName",
         title: t("COMMON.TEAM"),

@@ -19,7 +19,7 @@ export const TimeMatchesResults = ({
 
   const columns = [
     {
-      title: "№",
+      title: " ",
       key: "medal",
       render: (text, record, index) => (
         <>
@@ -80,6 +80,9 @@ export const TimeMatchesResults = ({
           className="time-matches-table"
           pagination={false}
           columns={columns}
+          expandable={{
+            expandedRowRender: (record) => <p>{record.participants}</p>,
+          }}
           locale={getTranslation(tableLocale, t)}
           dataSource={timeMatches.sort((a, b) =>
             formatTime(a.bestAttempt.result).diff(

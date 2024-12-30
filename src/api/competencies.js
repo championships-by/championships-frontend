@@ -62,7 +62,9 @@ export const competenciesApi = {
   },
   getNominationEventInfo: (params) =>
     instance
-      .get(`${API_PATH}/nomination_event/nomination_event_info`, { params: params })
+      .get(`${API_PATH}/nomination_event/nomination_event_info`, {
+        params: params,
+      })
       .then((res) => res.data),
   updateNominationEvent: (queryString, data) =>
     instance.patch(
@@ -86,4 +88,9 @@ export const competenciesApi = {
         data,
       }
     ),
+  getNominationEventProtocol: (params) =>
+    instance.get(`${API_PATH}/nomination_event/get_nomination_event_protocol`, {
+      params,
+      responseType: "blob",
+    }),
 };
