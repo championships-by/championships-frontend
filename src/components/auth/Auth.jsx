@@ -95,6 +95,14 @@ function Auth() {
                 >
                   {t("COMMON.LOGIN")}
                 </Button>
+
+                <Button
+                  type="default"
+                  onClick={() => navigate(ROUTES.EVENTS.PATH)}
+                  className="auth__guest-button"
+                >
+                  {t("COMMON.LOGIN_AS_GUEST")}
+                </Button>
               </FormItem>
             </Form>
           </div>

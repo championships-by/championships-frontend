@@ -4,13 +4,15 @@
 .events {
   &__tabs {
     width: 100%;
+
+    &.ant-tabs-top > .ant-tabs-nav::before {
+      border-bottom: 1px solid #b8babe;
+    }
   }
 
   &__card {
     max-width: 390px;
     width: 690px;
-    min-height: 360px;
-    height: 360px;
 
     @media (max-width: 991px) {
       max-width: 100%;

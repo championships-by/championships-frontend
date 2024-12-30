@@ -6,6 +6,15 @@
   border: 0;
 
   &__filters {
+    &__columns {
+      display: flex;
+      justify-content: space-between;
+
+      > div {
+        flex: 1;
+      }
+    }
+
     &__title {
       font-weight: 500;
       font-size: 16px;
@@ -16,7 +25,10 @@
     &__checkbox-group {
       flex-direction: column;
       gap: 8px;
-      font-size: 10px;
+    }
+
+    &__checkbox-all {
+      margin-bottom: 8px;
     }
   }
 
