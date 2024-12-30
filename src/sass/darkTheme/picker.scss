@@ -1,4 +1,4 @@
-.ant-picker-calendar {
+.dark-theme .ant-picker-calendar {
   .ant-picker-cell-in-view {
     &.ant-picker-cell-selected:not(.ant-picker-cell-disabled)
       .ant-picker-cell-inner {
@@ -10,4 +10,20 @@
       border: 1px solid $dark-blue;
     }
   }
+}
+
+.dark-theme .ant-picker-panel-container {
+  background: $dark-gray;
+}
+
+.dark-theme
+  .ant-picker-dropdown
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell-selected
+  .ant-picker-time-panel-cell-inner {
+  background: $dark-blue;
+}
+
+.dark-theme .ant-picker .ant-picker-input > input[disabled] {
+  color: rgb(255, 255, 255, 0.75);
 }
