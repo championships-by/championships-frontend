@@ -29,7 +29,10 @@ function AuthPasswordInput({ value, onChange }) {
           value={value}
           onChange={(event) => onChange(event.target.value)}
         />
-        <Typography.Text type="secondary">
+        <Typography.Text
+          type="secondary"
+          className="auth-password-input__secondary-text"
+        >
           {t("COMMON.CONTANT_WITH_ADMINISTRATOR")}
         </Typography.Text>
         <a href={`mailto:${mailZubronok}`}>{mailZubronok}</a>

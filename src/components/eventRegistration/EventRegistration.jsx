@@ -43,14 +43,19 @@ function EventsRegistration() {
       label: t("EVENTS.MY_TEAMS"),
       children: (
         <>
-          <AllTeamsTable teamsData={dataAllTeams} />
+          <AllTeamsTable
+            teamsData={dataAllTeams}
+            onTeamsChange={() => getTeams()}
+          />
         </>
       ),
     },
     {
       key: "2",
       label: t("EVENTS.REGISTERED_TEAMS"),
-      children: <TeamsTable teamsData={dataTeams} />,
+      children: (
+        <TeamsTable teamsData={dataTeams} onTeamsChange={() => getTeams()} />
+      ),
     },
   ];
 

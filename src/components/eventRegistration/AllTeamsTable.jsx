@@ -19,7 +19,7 @@ const getRowSpan = (data, index, key) => {
   return count;
 };
 
-function AllTeamsTable({ teamsData }) {
+function AllTeamsTable({ teamsData, onTeamsChange }) {
   const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
@@ -34,6 +34,7 @@ function AllTeamsTable({ teamsData }) {
 
   const changeTeamData = () => {
     setIsEditModalOpen(false);
+    onTeamsChange();
   };
 
   const openParticipantModal = (teamId) => {
@@ -43,6 +44,7 @@ function AllTeamsTable({ teamsData }) {
 
   const changeParticipantData = () => {
     setIsParticipantModalOpen(false);
+    onTeamsChange();
   };
 
   const columns = [
