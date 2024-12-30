@@ -48,11 +48,7 @@ export const TimeMatchesResults = ({
       render: (text, record, index) => index + 1,
     },
     {
-      title: (
-        <Tooltip title={t("COMMON.PARTICIPANTS")}>
-          {t("COMMON.PARTICIPANTS")}
-        </Tooltip>
-      ),
+      title: <Tooltip title={t("COMMON.TEAM")}>{t("COMMON.TEAM")}</Tooltip>,
       dataIndex: "teamName",
       key: "teamName",
     },
