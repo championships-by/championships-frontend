@@ -43,13 +43,10 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
       render: (text, record, index) => index + 1,
     },
     {
-      title: (
-        <Tooltip title={t("COMMON.PARTICIPANTS")}>
-          {t("COMMON.PARTICIPANTS")}
-        </Tooltip>
-      ),
-      dataIndex: "participants",
-      key: "participants",
+      title: <Tooltip title={t("COMMON.TEAM")}>{t("COMMON.TEAM")}</Tooltip>,
+      dataIndex: "team",
+      key: "team",
+      render: (record) => record.name,
     },
     {
       title: (
@@ -73,6 +70,9 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
         <Table
           className="competencies-result-table"
           locale={getTranslation(tableLocale, t)}
+          expandable={{
+            expandedRowRender: (record) => <p>{record.participants}</p>,
+          }}
           pagination={false}
           columns={columns}
           dataSource={dataSource.sort((a, b) => b.totalScore - a.totalScore)}
