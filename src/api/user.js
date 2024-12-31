@@ -22,4 +22,8 @@ export const userApi = {
     instance.post(
       `/system_notice/send_user_registration_notice?${queryString}`
     ),
+  sendPasswordChangeNotice: (params) =>
+    instance.post(`/system_notice/send_reset_password_link`, null, {
+      params,
+    }),
 };
