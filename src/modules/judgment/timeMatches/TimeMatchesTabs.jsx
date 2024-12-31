@@ -5,6 +5,7 @@ import {
   isTimeMatchesFilled,
   transformStageStatus,
   transformTimeMatchesData,
+  downloadProtocol,
 } from "@utils";
 import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -80,43 +81,12 @@ export const TimeMatchesTabs = () => {
 
       setIsStageFinished(true);
       setActiveTabKey("2");
-    } catch (error) {
-      const statusCode = error.response.status;
-      const errorMessage =
-        timeMatchesErrorMessages[statusCode] ||
-        timeMatchesErrorMessages.default;
-      message.error(errorMessage);
-    }
+    } catch (error) {}
   }, [eventId, nominationId, timeMatches]);
 
   const handleDownload = async () => {
     try {
-      const params = {
-        event_id: eventId,
-        nomination_id: nominationId,
-      };
-
-      const response = await competenciesApi.getNominationEventProtocol(params);
-
-      const blob = new Blob([response.data], { type: "application/pdf" });
-
-      const url = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = url;
-
-      const contentDisposition = response.headers["content-disposition"];
-      const fileNameMatch = contentDisposition?.match(/filename\*=utf-8''(.+)/);
-      const fileName = fileNameMatch
-        ? decodeURIComponent(fileNameMatch[1])
-        : "Финальный протокол.pdf";
-
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
+      downloadProtocol(eventId, nominationId);
     } catch {
       message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
     }
