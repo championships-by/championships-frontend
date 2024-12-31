@@ -1,5 +1,5 @@
 import "./sass/auth.scss";
-import { Form, message, Button } from "antd";
+import { Form, message, Button, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useEffect, useState } from "react";
 import logo from "@assets/img/logo.png";
@@ -11,6 +11,7 @@ import { ROUTES } from "@constants";
 import { userApi, authApi } from "@api";
 import { getEncryptedPassword } from "@utils";
 import { useTranslation } from "react-i18next";
+import ForgotPasswordModal from "@components/auth/ForgotPasswordModal";
 
 function Auth() {
   const { t } = useTranslation();
@@ -18,6 +19,8 @@ function Auth() {
   const [isFormLoading, setIsFormLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
+    useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -85,7 +88,7 @@ function Auth() {
               <AuthEmailInput value={email} onChange={setEmail} />
               <AuthPasswordInput value={password} onChange={setPassword} />
 
-              <FormItem>
+              <FormItem className="auth__body__form-item">
                 <Button
                   type="primary"
                   htmlType="submit"
@@ -105,9 +108,20 @@ function Auth() {
                 </Button>
               </FormItem>
             </Form>
+            <Typography.Text
+              className="auth__body__forgot-password"
+              onClick={() => setIsForgotPasswordModalOpen(true)}
+            >
+              {t("COMMON.FORGOT_PASSWORD")}
+            </Typography.Text>
           </div>
         </div>
       </div>
+      <ForgotPasswordModal
+        isOpen={isForgotPasswordModalOpen}
+        onOk={() => setIsForgotPasswordModalOpen(false)}
+        onCancel={() => setIsForgotPasswordModalOpen(false)}
+      />
     </>
   );
 }
