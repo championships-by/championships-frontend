@@ -58,6 +58,10 @@ export const ROUTES = {
   UNAUTHORIZED: { TITLE: "401", PATH: "/401" },
   FORBIDDEN: { TITLE: "403", PATH: "/403" },
   AUTHORIZATION: { TITLE: "COMMON.AUTH", PATH: "/" },
+  RESET_PASSWORD: {
+    TITLE: "COMMON.PASSWORD_RECOVERY",
+    PATH: "/reset_password",
+  },
   LOGOUT: { TITLE: "COMMON.LOGOUT", PATH: "/logout" },
   PARTICIPANTS: {
     TITLE: "COMMON.PARTICIPANT_MANAGEMENT",
@@ -123,6 +127,7 @@ export const ROUTER_ROUTES = {
   NOT_FOUND: "*",
   UNAUTHORIZED: "/401",
   FORBIDDEN: "/403",
+  RESET_PASSWORD: "/reset_password",
   ROOT: "/",
   LOGOUT: "logout",
   ADMIN_PANEL: "",
