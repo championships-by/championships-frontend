@@ -9,16 +9,8 @@ export const competenciesApi = {
     instance.get(
       `/criteria/get_criteria_results?event_id=${eventId}&nomination_id=${nominationId}`
     ),
-  setCriteriaResult: ({ eventId, nominationId, criteriaId, teamId, score }) =>
-    instance.post(`/criteria/set_criteria_result`, {
-      nomination_event: {
-        event_id: eventId,
-        nomination_id: nominationId,
-      },
-      criteria_id: criteriaId,
-      team_id: teamId,
-      score,
-    }),
+  setCriteriaResults: (body) =>
+    instance.post("/criteria/set_criteria_result_in_bulk", body),
   getCompetenciesEventData: (eventID) => {
     return instance.get(
       `/nomination_event/nominations_event_participant_count?event_id=${eventID}`
@@ -62,7 +54,9 @@ export const competenciesApi = {
   },
   getNominationEventInfo: (params) =>
     instance
-      .get(`${API_PATH}/nomination_event/nomination_event_info`, { params: params })
+      .get(`${API_PATH}/nomination_event/nomination_event_info`, {
+        params: params,
+      })
       .then((res) => res.data),
   updateNominationEvent: (queryString, data) =>
     instance.patch(
@@ -86,4 +80,9 @@ export const competenciesApi = {
         data,
       }
     ),
+  getNominationEventProtocol: (params) =>
+    instance.get(`${API_PATH}/nomination_event/get_nomination_event_protocol`, {
+      params,
+      responseType: "blob",
+    }),
 };

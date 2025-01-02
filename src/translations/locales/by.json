@@ -140,7 +140,10 @@
     "EXAMPLE": "Прыклад",
     "LOGOUT": "Выхад",
     "ATTEMPT": "Спроба",
-    "UNKNOWN": "Невядома"
+    "UNKNOWN": "Невядома",
+    "PASSWORD_RECOVERY": "Аднаўленне пароля",
+    "WE_SEND_EMAIL_TO_RECOVERY_PASSWORD": "Мы адправім спасылку для скіду пароля на вашу электронную пошту.",
+    "FORGOT_PASSWORD": "Забыліся пароль?"
   },
   "EVENTS": {
     "EVENT": "Мерапрыемства",
@@ -237,7 +240,8 @@
     "DISQALIFICATED": "Дыскваліфікаваны",
     "PARTICIPANT_EQUIPMENT": "Абсталяванне ўдзельніка",
     "ENTER_PARTICIPANT_EQUIPMENT": "Увядзіце прывезенае абсталяванне ўдзельніка",
-    "PARTICIPANT_EQUIPMENT_EXAMPLE": "Прыклад: Набор LEGO для робататэхнікі"
+    "PARTICIPANT_EQUIPMENT_EXAMPLE": "Прыклад: Набор LEGO для робататэхнікі",
+    "COULDNT_DOWNLOAD_FILE": "Немагчыма загрузіць файл"
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "Пра партал",
@@ -306,7 +310,8 @@
     "SUCCESS_SEND_USER_NOTICE": "Паведамленне карыстальніку адпраўлена паспяхова",
     "NOT_SEND_USER_NOTICE": "Паведамленне карыстальніку не адпраўлена",
     "SUCCESS_EDIT_USER": "Карыстальнік паспяхова зменены",
-    "YOU_NOT_JUDGE": "Вы не можаце завяршыць стадыю, паколькі не з'яўляецеся суддзёй"
+    "YOU_NOT_JUDGE": "Вы не можаце завяршыць стадыю, паколькі не з'яўляецеся суддзёй",
+    "NOTICE_SUCCESS_SEND": "Ліст паспяхова адпраўлены"
   },
   "RULES": {
     "ENTER_EMAIL": "Калі ласка, увядзіце Email",

@@ -5,6 +5,7 @@ import {
   transformCriteriaData,
   transformCriteriaResultsData,
   transformStageStatus,
+  downloadProtocol,
 } from "@utils";
 import { Button, message, Tabs } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -22,6 +23,7 @@ function CompetenciesTab() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
+  const [activeTabKey, setActiveTabKey] = useState("1");
 
   const handleCompleteStage = useCallback(async () => {
     try {
@@ -30,37 +32,44 @@ function CompetenciesTab() {
         return;
       }
 
-      const criteriaPromises = [];
+      const criteriaResults = [];
 
       dataSource.forEach((result) => {
         Object.keys(result).forEach((key) => {
           if (key.startsWith("criteria")) {
             const criterion = result[key];
-            const promise = competenciesApi
-              .setCriteriaResult({
-                eventId,
-                nominationId,
-                criteriaId: criterion.id,
-                teamId: result.team.id,
-                score: criterion.score,
-              })
-              .catch((reason) => console.error(reason));
-            criteriaPromises.push(promise);
+            criteriaResults.push({
+              nomination_event: {
+                event_id: eventId,
+                nomination_id: nominationId,
+              },
+              criteria_id: criterion.id,
+              team_id: result.team.id,
+              score: criterion.score,
+            });
           }
         });
       });
-      await Promise.allSettled(criteriaPromises);
+
+      await competenciesApi.setCriteriaResults(criteriaResults);
 
       await competenciesApi.finishCriteriaStage({
         event_id: eventId,
         nomination_id: nominationId,
       });
+
+      setIsStageFinished(true);
+      setActiveTabKey("2");
     } catch {}
   }, [criteria, dataSource, eventId, nominationId]);
 
-  const handleDownload = useCallback(() => {
-    console.log("download file");
-  }, []);
+  const handleDownload = async () => {
+    try {
+      downloadProtocol(eventId, nominationId);
+    } catch {
+      message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
+    }
+  };
 
   const handleChange = useCallback(
     (value, index, columnId) => {
@@ -89,7 +98,8 @@ function CompetenciesTab() {
             editable={
               stageStatus.registrationFinished &&
               stageStatus.tournamentStarted &&
-              !stageStatus.tournamentFinished
+              !stageStatus.tournamentFinished &&
+              !isStageFinished
             }
           />
         ),
@@ -97,7 +107,7 @@ function CompetenciesTab() {
       {
         key: "2",
         label: t("COMMON.RESULTS"),
-        disabled: !stageStatus.tournamentFinished,
+        disabled: !stageStatus.tournamentFinished && !isStageFinished,
         children: (
           <CompetenciesResults
             dataSource={dataSource}
@@ -116,6 +126,7 @@ function CompetenciesTab() {
       stageStatus.registrationFinished,
       stageStatus.tournamentFinished,
       stageStatus.tournamentStarted,
+      isStageFinished,
     ]
   );
 
@@ -168,10 +179,12 @@ function CompetenciesTab() {
           setIsDataLoaded(true);
         });
     }
-  }, [eventId, isDataLoaded, nominationId, stageStatus]);
+  }, [eventId, isDataLoaded, nominationId, stageStatus, isStageFinished]);
 
   return (
     <Tabs
+      activeKey={activeTabKey}
+      onChange={setActiveTabKey}
       items={items}
       tabBarExtraContent={{
         right: (

@@ -1,4 +1,5 @@
 import { EventFilters, defaultFormat, defaultTime, url } from "@constants";
+import { competenciesApi } from "@api";
 import i18n from "@src/translations/translations";
 import dayjs from "dayjs";
 import JSEncrypt from "jsencrypt";
@@ -132,8 +133,13 @@ export const transformCriteriaResultsData = (criteriaResults) =>
 export const transformTimeMatchesData = (rounds) =>
   rounds.map((round, index) => ({
     key: `round-${index + 1}`,
-    teamName: round.team_name,
-    participants: `${round.participant_data.second_name} ${round.participant_data.first_name} ${round.participant_data.third_name}`,
+    teamName: round.team_data.team_name,
+    participants: round.participants
+      .map(
+        ({ second_name, first_name, third_name }) =>
+          `${second_name} ${first_name} ${third_name}`
+      )
+      .join(", "),
     attempts: round.attempts.map(({ id, result }) => ({
       id,
       result,
@@ -287,4 +293,33 @@ export const getTranslation = (locale, t) => {
   };
 
   return translateValue(locale);
+};
+
+export const downloadProtocol = async (eventId, nominationId) => {
+  const params = {
+    event_id: eventId,
+    nomination_id: nominationId,
+  };
+
+  const response = await competenciesApi.getNominationEventProtocol(params);
+
+  const blob = new Blob([response.data], { type: "application/pdf" });
+
+  const url = window.URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+
+  const contentDisposition = response.headers["content-disposition"];
+  const fileNameMatch = contentDisposition?.match(/filename\*=utf-8''(.+)/);
+  const fileName = fileNameMatch
+    ? decodeURIComponent(fileNameMatch[1])
+    : "Финальный протокол.pdf";
+
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
 };

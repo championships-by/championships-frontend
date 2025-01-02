@@ -2,13 +2,15 @@ import {
   EditOutlined,
   InfoCircleOutlined,
   UsergroupAddOutlined,
+  DeleteOutlined,
 } from "@ant-design/icons";
 import { paginationLocale, tableLocale, ROUTES } from "@constants";
 import { changeDateFormat } from "@utils";
-import { Button, Flex, List, Table, Tooltip, Typography } from "antd";
+import { Button, Flex, List, Table, Tooltip, Typography, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
 
 function JudgmentEventsTable({ EventsData }) {
   const { t } = useTranslation();
@@ -76,19 +78,46 @@ function JudgmentEventsTable({ EventsData }) {
               onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
             />
           </Tooltip>
-          <Tooltip title={t("EVENTS.PARTICIPANT_REGISTRATION")}>
+          {dayjs(event.registration_finish_date) >= dayjs() && (
+            <Tooltip title={t("EVENTS.PARTICIPANT_REGISTRATION")}>
+              <Button
+                type="text"
+                icon={<UsergroupAddOutlined />}
+                onClick={() =>
+                  navigate(ROUTES.EVENTS_REGISTRATION.PATH(event.id))
+                }
+              />
+            </Tooltip>
+          )}
+          <Tooltip title={t("COMMON.DELETE")}>
             <Button
               type="text"
-              icon={<UsergroupAddOutlined />}
-              onClick={() =>
-                navigate(ROUTES.EVENTS_REGISTRATION.PATH(event.id))
-              }
+              icon={<DeleteOutlined />}
+              onClick={() => deleteEvent(event.id)}
             />
           </Tooltip>
         </Flex>
       ),
     },
   ];
+
+  const deleteEvent = (eventID) => {
+    Modal.confirm({
+      title: t("COMMON.ARE_YOU_SURE"),
+      content: t("EVENTS.ARE_YOU_SURE_REMOVE_NOMINATION"),
+      footer: (_, { OkBtn, CancelBtn }) => (
+        <>
+          <OkBtn />
+          <CancelBtn />
+        </>
+      ),
+      okText: t("COMMON.YES"),
+      onOk: async () => {
+        // Тут будет запрос на удаление
+      },
+      cancelText: t("COMMON.CANCEL"),
+    });
+  };
 
   return (
     <Table

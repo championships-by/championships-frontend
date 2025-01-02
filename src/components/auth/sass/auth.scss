@@ -66,6 +66,15 @@
     align-items: center;
 
     padding: 50px 0 20px 0;
+
+    &__form-item {
+      margin-bottom: 16px;
+    }
+
+    &__forgot-password {
+      color: $dark-blue !important;
+      cursor: pointer;
+    }
   }
 
   &__button {
