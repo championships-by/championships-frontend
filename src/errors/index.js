@@ -59,13 +59,9 @@ export const ERRORS = {
   "participant not in team": "ERRORS.PARTICIPANT_NOT_IN_TEAM",
   "participant present more then one time":
     "ERRORS.PARTICIPANT_PRESENT_MORE_THAN_ONE_TIME",
-  "Token expired, you are currently logged out": "ERRORS.TOKEN_EXPIRED",
   "token expired, you are currently logged out": "ERRORS.TOKEN_EXPIRED",
-  "Token signature error, invalid token": "ERRORS.TOKEN_SIGNATURE_ERROR",
   "token signature error, invalid token": "ERRORS.TOKEN_SIGNATURE_ERROR",
-  "Token does not exist": "ERRORS.TOKEN_DOES_NOT_EXIST",
   "token does not exist": "ERRORS.TOKEN_DOES_NOT_EXIST",
-  "Token is invalid": "ERRORS.TOKEN_IS_INVALID",
   "token is invalid": "ERRORS.TOKEN_IS_INVALID",
   "invalid group count": "ERRORS.INVALID_GROUP_COUNT",
   "not all matches are finished": "ERRORS.NOT_ALL_MATCHES_ARE_FINISHED",
