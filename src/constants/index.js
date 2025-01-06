@@ -282,7 +282,7 @@ export const tabsButtonEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";
 
-export const url = "https://robin-zubronok.site";
+export const url = "https://robin-zubronok.by";
 export const zubronokSite = "https://zubronok.by";
 export const bntuSite = "https://bntu.by";
 export const fitrSite = "https://bntu.by/faculties/fitr";
