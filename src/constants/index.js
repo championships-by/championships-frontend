@@ -58,6 +58,7 @@ export const ROUTES = {
   UNAUTHORIZED: { TITLE: "401", PATH: "/401" },
   FORBIDDEN: { TITLE: "403", PATH: "/403" },
   AUTHORIZATION: { TITLE: "COMMON.AUTH", PATH: "/" },
+  FIRST_AUTHORIZATION: { TITLE: "COMMON.AUTH", PATH: "/auth/first_login" },
   RESET_PASSWORD: {
     TITLE: "COMMON.PASSWORD_RECOVERY",
     PATH: "/reset_password",
@@ -127,6 +128,7 @@ export const ROUTER_ROUTES = {
   NOT_FOUND: "*",
   UNAUTHORIZED: "/401",
   FORBIDDEN: "/403",
+  FIRST_AUTHORIZATION: "/auth/first_login",
   RESET_PASSWORD: "/reset_password",
   ROOT: "/",
   LOGOUT: "logout",
@@ -282,7 +284,7 @@ export const tabsButtonEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";
 
-export const url = "https://robin-zubronok.by";
+export const url = API_HOST;
 export const zubronokSite = "https://zubronok.by";
 export const bntuSite = "https://bntu.by";
 export const fitrSite = "https://bntu.by/faculties/fitr";

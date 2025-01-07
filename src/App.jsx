@@ -1,5 +1,6 @@
 import AdminPanel from "@components/adminPanel/AdminPanel";
 import Auth from "@components/auth/Auth";
+import FirstAuth from "@components/auth/FirstAuth";
 import EventsRegistration from "@components/eventRegistration/EventRegistration";
 import EventInformation from "@components/events/EventInformation";
 import Events from "@components/events/Events";
@@ -46,6 +47,10 @@ function App() {
             <Route
               path={ROUTER_ROUTES.RESET_PASSWORD}
               element={<PasswordReset />}
+            />
+            <Route
+              path={ROUTER_ROUTES.FIRST_AUTHORIZATION}
+              element={<FirstAuth />}
             />
             <Route path={ROUTER_ROUTES.ROOT}>
               <Route index element={<Auth />} />

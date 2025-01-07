@@ -39,6 +39,7 @@ module.exports = (env) => {
       }),
       new webpack.DefinePlugin({
         API_PATH: JSON.stringify(IS_DEV ? DEV_API_PATH : PROD_API_PATH),
+        API_HOST: JSON.stringify(process.env.API_HOST),
         PUBLIC_KEY: process.env.PUBLIC_KEY,
       }),
     ],
