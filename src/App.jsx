@@ -1,5 +1,6 @@
 import AdminPanel from "@components/adminPanel/AdminPanel";
 import Auth from "@components/auth/Auth";
+import FirstAuth from "@components/auth/FirstAuth";
 import EventsRegistration from "@components/eventRegistration/EventRegistration";
 import EventInformation from "@components/events/EventInformation";
 import Events from "@components/events/Events";
@@ -20,6 +21,7 @@ import AboutProgram from "@components/userSupport/AboutProgram";
 import Feedback from "@components/userSupport/Feedback";
 import UserSupport from "@components/userSupport/UserSupport";
 import SettingsButton from "@components/settingsButton/SettingsButton";
+import PasswordReset from "@components/passwordReset/PasswordReset";
 import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
@@ -42,6 +44,14 @@ function App() {
               element={<Unauthorized />}
             />
             <Route path={ROUTER_ROUTES.FORBIDDEN} element={<Forbidden />} />
+            <Route
+              path={ROUTER_ROUTES.RESET_PASSWORD}
+              element={<PasswordReset />}
+            />
+            <Route
+              path={ROUTER_ROUTES.FIRST_AUTHORIZATION}
+              element={<FirstAuth />}
+            />
             <Route path={ROUTER_ROUTES.ROOT}>
               <Route index element={<Auth />} />
               <Route path={ROUTER_ROUTES.LOGOUT} element={<Logout />} />
