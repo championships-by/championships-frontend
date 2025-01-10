@@ -34,6 +34,15 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
     onTimeChange(id, null, isDisqualified);
   };
 
+  const handleTimeChange = (newTime) => {
+    if (newTime && formatTime(newTime).format(defaultFormat) === "00:00.000") {
+      return;
+    }
+
+    setTime(newTime);
+    onTimeChange(id, newTime, isDisqualified);
+  };
+
   return isDisqualified ? (
     <Button disabled={disabled} type="text" onClick={handleDisqualify}>
       {t("TOURNAMENTS.DISQALIFICATION_CUTTED")}
@@ -43,10 +52,7 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
       placeholder="00:00.000"
       disabled={disabled}
       value={time}
-      onChange={(newTime) => {
-        setTime(newTime);
-        onTimeChange(id, newTime, isDisqualified);
-      }}
+      onChange={handleTimeChange}
       variant="borderless"
       open={isOpen}
       onClick={handleInputClick}
