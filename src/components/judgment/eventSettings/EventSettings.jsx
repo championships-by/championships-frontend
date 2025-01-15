@@ -360,7 +360,7 @@ function EventSettings() {
   };
 
   const getNominations = () => {
-    eventApi.getEvent(eventID).then((data) => {
+    eventApi.getEventByJudge(eventID).then((data) => {
       setEventInfo(data.nominations);
       if (data.nominations.length > 0) {
         setSwitchDisabled(false);
@@ -373,7 +373,7 @@ function EventSettings() {
   useEffect(() => {
     if (eventID) {
       try {
-        eventApi.getEvent(eventID).then((data) => {
+        eventApi.getEventByJudge(eventID).then((data) => {
           setEvent(data);
 
           const { event } = data;

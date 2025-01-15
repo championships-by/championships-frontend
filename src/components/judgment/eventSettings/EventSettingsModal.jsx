@@ -199,6 +199,7 @@ function EventSettingsCompitations({
 
         message.success(t("MESSAGES.SUCCESS_NOMINATION_EDIT"));
         onOk();
+        onAdd();
         setInputName("");
         setInputReglament("");
         setSelectedJudges([]);
