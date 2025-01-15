@@ -29,35 +29,32 @@ export const GroupStageTabs = () => {
     messageApi.error(t("TOURNAMENTS.NOT_ALL_MATCHES_FILLED"));
   };
 
-  const items = useMemo(
-    () => [
-      {
-        key: "1",
-        label: t("COMMON.TABLE"),
-        children: <TableGroupStage />,
-        disabled: false,
-      },
-      {
-        key: "2",
-        label: t("TOURNAMENTS.MATCHES"),
-        children: <MatchesGroupStage />,
-        disabled: false,
-      },
-      {
-        key: "3",
-        label: t("TOURNAMENTS.FINAL_STAGE"),
-        children: "Content Tab3",
-        disabled: true,
-      },
-      {
-        key: "4",
-        label: t("COMMON.RESULTS"),
-        children: "Content Tab4",
-        disabled: true,
-      },
-    ],
-    []
-  );
+  const items = [
+    {
+      key: "1",
+      label: t("COMMON.TABLE"),
+      children: <TableGroupStage />,
+      disabled: false,
+    },
+    {
+      key: "2",
+      label: t("TOURNAMENTS.MATCHES"),
+      children: <MatchesGroupStage />,
+      disabled: false,
+    },
+    {
+      key: "3",
+      label: t("TOURNAMENTS.FINAL_STAGE"),
+      children: "Content Tab3",
+      disabled: true,
+    },
+    {
+      key: "4",
+      label: t("COMMON.RESULTS"),
+      children: "Content Tab4",
+      disabled: true,
+    },
+  ];
 
   return (
     <>

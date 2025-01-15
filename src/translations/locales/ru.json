@@ -537,6 +537,7 @@
     "YOU_ARE_NOT_ALLOWED_TO_PERFORM_THIS_ACTION": "Вам не разрешено выполнять это действие",
     "PASSWORDS_DONT_MATCH": "Пароли не совпадают",
     "CURRENT_PASSWORD_IS_MISSED": "Текущий пароль отсутствует",
-    "ONE_OR_MORE_JUDGES_NOT_FOUND": "Один или несколько указанных судей не найдены"
+    "ONE_OR_MORE_JUDGES_NOT_FOUND": "Один или несколько указанных судей не найдены",
+    "AT_LEAST_THREE_TEAMS": "Количество команд должно быть не меньше трёх"
   }
 }
