@@ -180,6 +180,7 @@
     "TYPE_OF_TOURNAMENTS": "Тип соревнований",
     "START_TOURNAMENT": "Начать соревнование",
     "ARE_YOU_SURE_REMOVE_NOMINATION": "Вы уверены что хотите удалить эту компетенцию?",
+    "ARE_YOU_SURE_REMOVE_EVENT": "Вы уверены что хотите удалить это мероприятие?",
     "EVENT_EDIT": "Редактирование мероприятия",
     "EVENT_DATA": "Данные мероприятия",
     "ADD_NOMINATION": "Добавить компетенцию",

@@ -29,7 +29,7 @@ function CompetitionType({
       label: t("NOMINATION_TYPES.CRITERIA"),
     },
     {
-      value: NOMINATIONS.PLAYOFF,
+      value: NOMINATIONS.OLYMPIC,
       label: t("NOMINATION_TYPES.PLAYOFF"),
     },
   ];

@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { paginationLocale, tableLocale, ROUTES } from "@constants";
 import { changeDateFormat } from "@utils";
+import { eventApi } from "@api";
 import { Button, Flex, List, Table, Tooltip, Typography, Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 import { getTranslation } from "@utils";
@@ -104,7 +105,7 @@ function JudgmentEventsTable({ EventsData }) {
   const deleteEvent = (eventID) => {
     Modal.confirm({
       title: t("COMMON.ARE_YOU_SURE"),
-      content: t("EVENTS.ARE_YOU_SURE_REMOVE_NOMINATION"),
+      content: t("EVENTS.ARE_YOU_SURE_REMOVE_EVENT"),
       footer: (_, { OkBtn, CancelBtn }) => (
         <>
           <OkBtn />
@@ -113,7 +114,13 @@ function JudgmentEventsTable({ EventsData }) {
       ),
       okText: t("COMMON.YES"),
       onOk: async () => {
-        // Тут будет запрос на удаление
+        const params = {
+          event_id: eventID,
+        };
+
+        try {
+          eventApi.deleteEvent(params);
+        } catch {}
       },
       cancelText: t("COMMON.CANCEL"),
     });
