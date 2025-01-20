@@ -36,7 +36,13 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
       const teamStats = {};
 
       group.matches.forEach((match) => {
-        const { team1, team2, team1_score, team2_score } = match;
+        const {
+          team1,
+          team2,
+          team1_score,
+          team2_score,
+          last_result_creator_email,
+        } = match;
 
         if (!teamStats[team1.name]) {
           teamStats[team1.name] = {
@@ -67,7 +73,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
           teamStats[team2.name].wins += 1;
           teamStats[team2.name].points += 3;
           teamStats[team1.name].losses += 1;
-        } else {
+        } else if (last_result_creator_email !== null) {
           teamStats[team1.name].draws += 1;
           teamStats[team1.name].points += 1;
           teamStats[team2.name].draws += 1;
@@ -78,7 +84,6 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
         teamStats[team2.name].scores += team2_score;
       });
 
-      // Преобразуем teamStats в массив
       const teams = Object.values(teamStats);
 
       return {
@@ -97,7 +102,6 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
         const transformedMatches = transformMatches(matches.data);
         setMatches(transformedMatches);
         const transformedData = transformData(matches.data);
-        console.log(transformData);
         setFinalParticipants(transformedData);
       } catch (error) {
         setError("Произошла ошибка получения данных");
@@ -127,9 +131,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
         if (response.ok) {
           fetchData(eventId, nominationId);
         }
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     },
     [fetchData]
   );

@@ -87,11 +87,9 @@ export const TimeMatchesResults = ({
             const aResult = a.best_attempt?.result;
             const bResult = b.best_attempt?.result;
 
-            // Перемещаем записи с null или "00:00.000" в конец
             if (!aResult || aResult === "00:00.000") return 1;
             if (!bResult || bResult === "00:00.000") return -1;
 
-            // Сравниваем по времени
             return formatTime(aResult).diff(formatTime(bResult));
           })}
         />

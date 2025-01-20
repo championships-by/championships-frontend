@@ -44,7 +44,7 @@ export const GroupStageTabs = () => {
     },
     {
       key: "3",
-      label: t("TOURNAMENTS.FINAL_STAGE"),
+      label: t("NOMINATION_TYPES.PLAYOFF"),
       children: "Content Tab3",
       disabled: true,
     },

@@ -10,8 +10,6 @@ export const TableGroupStage = () => {
   const { t } = useTranslation();
   const { finalParticipants } = useMatches();
 
-  console.log(finalParticipants);
-
   const columns = [
     {
       title: "№",
@@ -20,22 +18,22 @@ export const TableGroupStage = () => {
       render: (text, record, index) => <p>{index + 1}</p>,
     },
     {
-      title: t("COMMON.PARTICIPANTS"),
+      title: "Команды",
       key: "name",
       dataIndex: "name",
     },
     {
-      title: "В",
+      title: "Выигрыши",
       key: "wins",
       dataIndex: "wins",
     },
     {
-      title: "П",
+      title: "Проигрыши",
       key: "losses",
       dataIndex: "losses",
     },
     {
-      title: "Н",
+      title: "Ничьи",
       key: "draws",
       dataIndex: "draws",
     },

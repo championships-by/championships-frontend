@@ -34,7 +34,7 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
       sorter: (a, b) => a.points - b.points,
     },
     {
-      title: t("TOURNAMENTS.FINAL_STAGE"),
+      title: t("NOMINATION_TYPES.PLAYOFF"),
       dataIndex: "isPassed",
       key: "isPassed",
       filterReset: t("COMMON.RESET"),
