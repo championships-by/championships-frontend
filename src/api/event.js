@@ -10,6 +10,14 @@ export const eventApi = {
         },
       })
       .then((response) => response.data),
+  getEventByJudge: (eventID) =>
+    instance
+      .get(`/event/get_all_events_judged_nominations`, {
+        params: {
+          event_id: eventID,
+        },
+      })
+      .then((response) => response.data),
   getEventWithNominations: async (data) => {
     return fetchWithPagination(
       instance,
@@ -61,9 +69,9 @@ export const eventApi = {
         "Content-Type": "multipart/form-data",
       },
     }),
-  deleteEvent: (data) =>
-    instance.delete(`/event/event`, {
-      data: data,
+  deleteEvent: (params) =>
+    instance.delete(`/event/delete_event`, {
+      params,
     }),
   setEvent: (body) =>
     instance.post(`/event/event`, body, {
