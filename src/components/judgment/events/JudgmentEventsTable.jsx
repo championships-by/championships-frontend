@@ -13,7 +13,7 @@ import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 
-function JudgmentEventsTable({ EventsData }) {
+function JudgmentEventsTable({ EventsData, onDelete }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -121,6 +121,8 @@ function JudgmentEventsTable({ EventsData }) {
         try {
           eventApi.deleteEvent(params);
         } catch {}
+
+        onDelete();
       },
       cancelText: t("COMMON.CANCEL"),
     });

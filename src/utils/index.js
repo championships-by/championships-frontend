@@ -130,8 +130,8 @@ export const transformCriteriaResultsData = (criteriaResults) =>
     totalScore: team.criterias.reduce((acc, obj) => (acc += obj.score), 0),
   }));
 
-export const transformTimeMatchesData = (rounds) =>
-  rounds.map((round, index) => ({
+export const transformTimeMatchesData = (rounds) => {
+  return rounds.map((round, index) => ({
     key: `round-${index + 1}`,
     teamName: round.team_data.team_name,
     participants: round.participants
@@ -145,11 +145,14 @@ export const transformTimeMatchesData = (rounds) =>
       result,
       isDisqualified: false,
     })),
-    bestAttempt: {
-      id: round.best_attempt.id,
-      result: round.best_attempt.result,
-    },
+    bestAttempt: round.best_attempt
+      ? {
+          id: round.best_attempt.id,
+          result: round.best_attempt.result,
+        }
+      : null,
   }));
+};
 
 export const changeDateFormat = (date) => {
   const formattedDate = dayjs(date);

@@ -68,7 +68,7 @@ export const TimeMatchesTabs = () => {
             nomination_id: nominationId,
           },
           race_round_id: id,
-          result: !result && isDisqualified ? defaultTime : result,
+          result: !result && isDisqualified ? "00:00.000" : result,
         }))
       );
 
