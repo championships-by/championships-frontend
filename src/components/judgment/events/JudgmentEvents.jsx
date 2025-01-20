@@ -91,7 +91,7 @@ function JudgmentEvents() {
       </Row>
       <Divider />
 
-      <EventTable EventsData={dataEvents} />
+      <EventTable EventsData={dataEvents} onDelete={getEvents} />
     </>
   );
 }

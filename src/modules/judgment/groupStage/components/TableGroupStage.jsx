@@ -18,32 +18,32 @@ export const TableGroupStage = () => {
       render: (text, record, index) => <p>{index + 1}</p>,
     },
     {
-      title: "Команды",
+      title: t("COMMON.TEAMS"),
       key: "name",
       dataIndex: "name",
     },
     {
-      title: "Выигрыши",
+      title: t("TOURNAMENTS.WINS"),
       key: "wins",
       dataIndex: "wins",
     },
     {
-      title: "Проигрыши",
+      title: t("TOURNAMENTS.LOSSES"),
       key: "losses",
       dataIndex: "losses",
     },
     {
-      title: "Ничьи",
+      title: t("TOURNAMENTS.DRAWS"),
       key: "draws",
       dataIndex: "draws",
     },
     {
-      title: "Баллы",
+      title: t("TOURNAMENTS.SCORES"),
       key: "points",
       dataIndex: "points",
     },
     {
-      title: "Очки",
+      title: t("TOURNAMENTS.POINTS"),
       key: "scores",
       dataIndex: "scores",
     },
@@ -53,7 +53,9 @@ export const TableGroupStage = () => {
     <>
       {finalParticipants.map((element, index) => (
         <div key={index}>
-          <Typography.Title level={3}>{`Группа ${index + 1}`}</Typography.Title>
+          <Typography.Title level={3}>{`${t("COMMON.GROUP")} ${
+            index + 1
+          }`}</Typography.Title>
           <Table
             columns={columns}
             pagination={false}

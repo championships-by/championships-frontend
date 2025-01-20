@@ -51,6 +51,7 @@
     "LOGIN": "Аўтарызавацца",
     "LOGIN_AS_GUEST": "Увайсці як госць",
     "TEAM": "Каманда",
+    "TEAMS": "Каманды",
     "PARTICIPANT": "Удзельнік",
     "CHOOSE_PARTICIPANT": "Абярыце ўдзельніка",
     "CHOOSE_PARTICIPANTS": "Абярыце ўдзельнікаў",
@@ -144,7 +145,8 @@
     "PASSWORD_RECOVERY": "Аднаўленне пароля",
     "WE_SEND_EMAIL_TO_RECOVERY_PASSWORD": "Мы адправім спасылку для скіду пароля на вашу электронную пошту.",
     "FORGOT_PASSWORD": "Забыліся пароль?",
-    "TOKEN_EXPIRED_NEW_NOTICE_SEND": "Тэрмін дзеяння спасылкі скончыўся. Новая спасылка была адпраўлена вам на пошту."
+    "TOKEN_EXPIRED_NEW_NOTICE_SEND": "Тэрмін дзеяння спасылкі скончыўся. Новая спасылка была адпраўлена вам на пошту.",
+    "GROUP": "Група"
   },
   "EVENTS": {
     "EVENT": "Мерапрыемства",
@@ -243,7 +245,10 @@
     "PARTICIPANT_EQUIPMENT": "Абсталяванне ўдзельніка",
     "ENTER_PARTICIPANT_EQUIPMENT": "Увядзіце прывезенае абсталяванне ўдзельніка",
     "PARTICIPANT_EQUIPMENT_EXAMPLE": "Прыклад: Набор LEGO для робататэхнікі",
-    "COULDNT_DOWNLOAD_FILE": "Немагчыма загрузіць файл"
+    "COULDNT_DOWNLOAD_FILE": "Немагчыма загрузіць файл",
+    "WINS": "Выйгрышы",
+    "LOSSES": "Пройгрышы",
+    "DRAWS": "Нічыя"
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "Пра партал",
