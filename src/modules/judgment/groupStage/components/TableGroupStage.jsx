@@ -1,9 +1,10 @@
 import { useMatches } from "@hooks";
-import { Checkbox, Table } from "antd";
-import { paginationLocale } from "@constants";
-import "./TableGroupStage.scss";
+import { Checkbox, Table, Typography } from "antd";
+import { paginationLocale, tableLocale } from "@constants";
 import { useTranslation } from "react-i18next";
 import { getTranslation } from "@utils";
+
+import "./TableGroupStage.scss";
 
 export const TableGroupStage = () => {
   const { t } = useTranslation();
@@ -17,42 +18,52 @@ export const TableGroupStage = () => {
       render: (text, record, index) => <p>{index + 1}</p>,
     },
     {
-      title: t("COMMON.PARTICIPANTS"),
-      key: "participant",
-      dataIndex: "participant",
+      title: t("COMMON.TEAMS"),
+      key: "name",
+      dataIndex: "name",
     },
     {
-      title: t("TOURNAMENTS.POINTS"),
+      title: t("TOURNAMENTS.WINS"),
+      key: "wins",
+      dataIndex: "wins",
+    },
+    {
+      title: t("TOURNAMENTS.LOSSES"),
+      key: "losses",
+      dataIndex: "losses",
+    },
+    {
+      title: t("TOURNAMENTS.DRAWS"),
+      key: "draws",
+      dataIndex: "draws",
+    },
+    {
+      title: t("TOURNAMENTS.SCORES"),
       key: "points",
       dataIndex: "points",
     },
     {
-      title: t("TOURNAMENTS.SCORE"),
-      key: "score",
-      dataIndex: "score",
-    },
-    {
-      title: t("COMMON.PARTICIPANTS"),
-      key: "isPassed",
-      dataIndex: "isPassed",
-      render: (text, record) => (
-        <Checkbox defaultChecked={record.isPassed} disabled />
-      ),
+      title: t("TOURNAMENTS.POINTS"),
+      key: "scores",
+      dataIndex: "scores",
     },
   ];
 
-  return !finalParticipants || finalParticipants.length === 0 ? (
-    <div className="no-data">
-      <h2>{t("TOURNAMENTS.NO_DATA_ABOUT_MATCHES")}</h2>
-    </div>
-  ) : (
-    <Table
-      columns={columns}
-      pagination={{
-        position: ["bottomCenter"],
-        locale: getTranslation(paginationLocale, t),
-      }}
-      dataSource={finalParticipants}
-    />
-  );
+  return finalParticipants && finalParticipants.length > 0 ? (
+    <>
+      {finalParticipants.map((element, index) => (
+        <div key={index}>
+          <Typography.Title level={3}>{`${t("COMMON.GROUP")} ${
+            index + 1
+          }`}</Typography.Title>
+          <Table
+            columns={columns}
+            pagination={false}
+            dataSource={element.teams}
+            locale={getTranslation(tableLocale, t)}
+          />
+        </div>
+      ))}
+    </>
+  ) : null;
 };

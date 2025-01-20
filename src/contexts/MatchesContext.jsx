@@ -31,6 +31,68 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
       .sort((a, b) => a.id - b.id);
   }, []);
 
+  const transformData = (data) => {
+    return data.map((group) => {
+      const teamStats = {};
+
+      group.matches.forEach((match) => {
+        const {
+          team1,
+          team2,
+          team1_score,
+          team2_score,
+          last_result_creator_email,
+        } = match;
+
+        if (!teamStats[team1.name]) {
+          teamStats[team1.name] = {
+            name: team1.name,
+            wins: 0,
+            losses: 0,
+            draws: 0,
+            points: 0,
+            scores: 0,
+          };
+        }
+        if (!teamStats[team2.name]) {
+          teamStats[team2.name] = {
+            name: team2.name,
+            wins: 0,
+            losses: 0,
+            draws: 0,
+            points: 0,
+            scores: 0,
+          };
+        }
+
+        if (team1_score > team2_score) {
+          teamStats[team1.name].wins += 1;
+          teamStats[team1.name].points += 3;
+          teamStats[team2.name].losses += 1;
+        } else if (team1_score < team2_score) {
+          teamStats[team2.name].wins += 1;
+          teamStats[team2.name].points += 3;
+          teamStats[team1.name].losses += 1;
+        } else if (last_result_creator_email !== null) {
+          teamStats[team1.name].draws += 1;
+          teamStats[team1.name].points += 1;
+          teamStats[team2.name].draws += 1;
+          teamStats[team2.name].points += 1;
+        }
+
+        teamStats[team1.name].scores += team1_score;
+        teamStats[team2.name].scores += team2_score;
+      });
+
+      const teams = Object.values(teamStats);
+
+      return {
+        group_id: group.group_id,
+        teams,
+      };
+    });
+  };
+
   const fetchData = useCallback(
     async (eventId, nominationId) => {
       setIsLoading(true);
@@ -39,6 +101,8 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
         const matches = await judgmentApi.getMatches(eventId, nominationId);
         const transformedMatches = transformMatches(matches.data);
         setMatches(transformedMatches);
+        const transformedData = transformData(matches.data);
+        setFinalParticipants(transformedData);
       } catch (error) {
         setError("Произошла ошибка получения данных");
       } finally {
@@ -67,9 +131,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
         if (response.ok) {
           fetchData(eventId, nominationId);
         }
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     },
     [fetchData]
   );

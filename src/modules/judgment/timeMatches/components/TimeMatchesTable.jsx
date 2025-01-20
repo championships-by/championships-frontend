@@ -45,16 +45,15 @@ export const TimeMatchesTable = ({
           }
 
           const bestTime = record.attempts.reduce((min, current) => {
-            if (current.result === null || current.isDisqualified) return min;
+            if (current.result === null || current.result === "00:00.000")
+              return min;
             const currentTime = dayjs(current.result, defaultFormat);
             return min === null || currentTime.isBefore(min)
               ? currentTime
               : min;
           }, null);
 
-          return bestTime
-            ? bestTime.format(defaultFormat)
-            : formatTimeToString();
+          return bestTime ? bestTime.format(defaultFormat) : "-";
         },
       },
     ],

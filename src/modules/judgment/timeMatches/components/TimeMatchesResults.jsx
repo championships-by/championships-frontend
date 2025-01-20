@@ -61,7 +61,10 @@ export const TimeMatchesResults = ({
       dataIndex: "bestAttempt",
       key: "bestAttempt",
       render: (text, record) =>
-        record.bestAttempt.result ?? t("TOURNAMENTS.DISQALIFICATED"),
+        record.bestAttempt.result === null ||
+        record.bestAttempt.result === "00:00.000"
+          ? t("TOURNAMENTS.DISQALIFICATED")
+          : record.bestAttempt.result,
     },
   ];
 
@@ -80,11 +83,15 @@ export const TimeMatchesResults = ({
             expandedRowRender: (record) => <p>{record.participants}</p>,
           }}
           locale={getTranslation(tableLocale, t)}
-          dataSource={timeMatches.sort((a, b) =>
-            formatTime(a.bestAttempt.result).diff(
-              formatTime(b.bestAttempt.result)
-            )
-          )}
+          dataSource={timeMatches.sort((a, b) => {
+            const aResult = a.best_attempt?.result;
+            const bResult = b.best_attempt?.result;
+
+            if (!aResult || aResult === "00:00.000") return 1;
+            if (!bResult || bResult === "00:00.000") return -1;
+
+            return formatTime(aResult).diff(formatTime(bResult));
+          })}
         />
       )}
     </Flex>

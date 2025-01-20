@@ -51,6 +51,7 @@
     "LOGIN": "Авторизоваться",
     "LOGIN_AS_GUEST": "Войти как гость",
     "TEAM": "Команда",
+    "TEAMS": "Команды",
     "PARTICIPANT": "Участник",
     "CHOOSE_PARTICIPANT": "Выберите участника",
     "CHOOSE_PARTICIPANTS": "Выберите участников",
@@ -144,7 +145,8 @@
     "PASSWORD_RECOVERY": "Восстановление пароля",
     "WE_SEND_EMAIL_TO_RECOVERY_PASSWORD": "Мы отправим ссылку для сброса пароля на вашу электронную почту.",
     "FORGOT_PASSWORD": "Забыли пароль?",
-    "TOKEN_EXPIRED_NEW_NOTICE_SEND": "Срок действия ссылки истёк. Новая ссылка была отправлена Вам на почту."
+    "TOKEN_EXPIRED_NEW_NOTICE_SEND": "Срок действия ссылки истёк. Новая ссылка была отправлена Вам на почту.",
+    "GROUP": "Группа"
   },
   "EVENTS": {
     "EVENT": "Мероприятие",
@@ -243,7 +245,10 @@
     "PARTICIPANT_EQUIPMENT": "Оборудование участника",
     "ENTER_PARTICIPANT_EQUIPMENT": "Введите привозимое оборудование участника",
     "PARTICIPANT_EQUIPMENT_EXAMPLE": "Пример: Набор лего для робототехники",
-    "COULDNT_DOWNLOAD_FILE": "Не удалось скачать файл"
+    "COULDNT_DOWNLOAD_FILE": "Не удалось скачать файл",
+    "WINS": "Выигрыши",
+    "LOSSES": "Проигрыши",
+    "DRAWS": "Ничьи"
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "О портале",
@@ -538,6 +543,7 @@
     "YOU_ARE_NOT_ALLOWED_TO_PERFORM_THIS_ACTION": "Вам не разрешено выполнять это действие",
     "PASSWORDS_DONT_MATCH": "Пароли не совпадают",
     "CURRENT_PASSWORD_IS_MISSED": "Текущий пароль отсутствует",
-    "ONE_OR_MORE_JUDGES_NOT_FOUND": "Один или несколько указанных судей не найдены"
+    "ONE_OR_MORE_JUDGES_NOT_FOUND": "Один или несколько указанных судей не найдены",
+    "AT_LEAST_THREE_TEAMS": "Количество команд должно быть не меньше трёх"
   }
 }

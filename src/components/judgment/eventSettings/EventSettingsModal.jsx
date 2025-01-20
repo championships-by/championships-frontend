@@ -134,7 +134,7 @@ function EventSettingsCompitations({
               .then(() => {});
             break;
 
-          case NOMINATIONS.PLAYOFF:
+          case NOMINATIONS.OLYMPIC:
             await competenciesApi
               .addOlympicCompetenciesForEvent(data)
               .then(() => {});
