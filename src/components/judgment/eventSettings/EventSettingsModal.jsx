@@ -208,6 +208,26 @@ function EventSettingsCompitations({
             try {
               await competenciesApi.editNumberRaceRounds(params);
             } catch {}
+
+            break;
+          }
+          case NOMINATIONS.CRITERIA: {
+            const params = {
+              nomination_id: nominationId,
+              event_id: eventID,
+            };
+
+            const filteredCriteria = criteria.filter(
+              (item) => item.name !== "" && item.max_score !== 0
+            );
+
+            if (selectedCriteria !== criteria) {
+              try {
+                await competenciesApi.updateCriteria(filteredCriteria, params);
+              } catch {}
+            }
+
+            break;
           }
         }
 
