@@ -16,9 +16,8 @@ export const GroupStageTabs = () => {
   const handleClick = (e) => {
     e.preventDefault();
 
-    // true - if all matches have a score
-    const completed = !matches.some(({ team1, team2 }) =>
-      isScoreZero(team1.score, team2.score)
+    const completed = matches.every(
+      ({ lastResultCreatorEmail }) => lastResultCreatorEmail !== null
     );
 
     if (completed) {

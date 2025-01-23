@@ -35,7 +35,7 @@ function CompitationNameInput({ name, value, onInputChange }) {
         <Input
           className="events__compitation-name__input"
           placeholder={t("RULES.ENTER_NAME_NOMINATION")}
-          maxLength={30}
+          maxLength={100}
           prefix={<FlagOutlined />}
           value={value}
           onChange={handleChange}

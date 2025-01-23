@@ -31,12 +31,14 @@ export const MatchesGroupStage = () => {
     </div>
   ) : (
     <div className="matches-group-stage">
-      {matches.map((match) => (
+      {matches.map((match, index) => (
         <MatchCard
           key={match.id}
           id={match.id}
+          matchIndex={index + 1}
           team1={match.team1}
           team2={match.team2}
+          lastCreatorEmail={match.lastResultCreatorEmail}
           onEditScore={() => handleEditScore(match)}
         />
       ))}

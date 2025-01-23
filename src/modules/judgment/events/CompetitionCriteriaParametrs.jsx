@@ -23,6 +23,7 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
     const criteria = allValues.criteria || [];
     const newCriteria = criteria.map((item) => {
       return {
+        id: item.id || undefined,
         name: item.criterion || "",
         max_score: parseInt(item.maxPoints, 10) || 0,
       };
@@ -41,6 +42,7 @@ function CriteriaParametrs({ onCriteriaChange, value }) {
     if (value && value.length) {
       form.setFieldsValue({
         criteria: value.map((item) => ({
+          id: item.id,
           criterion: item.name,
           maxPoints: item.max_score,
         })),
