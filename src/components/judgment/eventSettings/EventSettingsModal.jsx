@@ -221,7 +221,7 @@ function EventSettingsCompitations({
               (item) => item.name !== "" && item.max_score !== 0
             );
 
-            if (selectedCriteria != criteria) {
+            if (selectedCriteria !== criteria) {
               try {
                 await competenciesApi.updateCriteria(filteredCriteria, params);
               } catch {}

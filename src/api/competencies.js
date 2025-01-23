@@ -29,22 +29,19 @@ export const competenciesApi = {
   },
   addOlympicCompetenciesForEvent: async (data) =>
     instance.post(
-      `${API_PATH}/nomination_event/append_nomination_for_event_olympic`,
+      `/nomination_event/append_nomination_for_event_olympic`,
       data
     ),
   addCriteriaCompetenciesForEvent: async (data) =>
     instance.post(
-      `${API_PATH}/nomination_event/append_nomination_for_event_criteria`,
+      `/nomination_event/append_nomination_for_event_criteria`,
       data
     ),
   addTimeCompetenciesForEvent: async (data) =>
-    instance.post(
-      `${API_PATH}/nomination_event/append_nomination_for_event_time`,
-      data
-    ),
+    instance.post(`/nomination_event/append_nomination_for_event_time`, data),
   getTeamsForCriteriaNomination: (eventID, nominationID, nominationType) => {
     return instance.get(
-      `${API_PATH}/team_nomination_event/team_participant?event_id=${eventID}&nomination_id=${nominationID}&type=${nominationType}`
+      `/team_nomination_event/team_participant?event_id=${eventID}&nomination_id=${nominationID}&type=${nominationType}`
     );
   },
   sendJudgeNotice: (data, body) => {
@@ -54,45 +51,40 @@ export const competenciesApi = {
   },
   getNominationEventInfo: (params) =>
     instance
-      .get(`${API_PATH}/nomination_event/nomination_event_info`, {
+      .get(`/nomination_event/nomination_event_info`, {
         params: params,
       })
       .then((res) => res.data),
   updateNominationEvent: (queryString, data) =>
     instance.patch(
-      `${API_PATH}/nomination_event/nomination_event_info?${queryString}`,
+      `/nomination_event/nomination_event_info?${queryString}`,
       data
     ),
   startGroupStage: (data) =>
-    instance.post(`${API_PATH}/tournaments/start_group_stage`, data),
+    instance.post(`/tournaments/start_group_stage`, data),
   startCriteriaStage: async (data) =>
-    instance.post(`${API_PATH}/tournaments/start_criteria_stage`, data),
+    instance.post(`/tournaments/start_criteria_stage`, data),
   startTimeStage: async (data) =>
-    instance.post(`${API_PATH}/tournaments/start_time_stage`, data),
+    instance.post(`/tournaments/start_time_stage`, data),
   finishTimeStage: (data) =>
-    instance.post(`${API_PATH}/tournaments/finish_time_stage`, data),
+    instance.post(`/tournaments/finish_time_stage`, data),
   finishCriteriaStage: (data) =>
-    instance.post(`${API_PATH}/tournaments/finish_criteria_state`, data),
+    instance.post(`/tournaments/finish_criteria_state`, data),
   deleteNomination: (data) =>
-    instance.delete(
-      `${API_PATH}/nomination_event/delete_nomination_from_event`,
-      {
-        data,
-      }
-    ),
+    instance.delete(`/nomination_event/delete_nomination_from_event`, {
+      data,
+    }),
   getNominationEventProtocol: (params) =>
-    instance.get(`${API_PATH}/nomination_event/get_nomination_event_protocol`, {
+    instance.get(`/nomination_event/get_nomination_event_protocol`, {
       params,
       responseType: "blob",
     }),
   editNumberRaceRounds: (params) =>
-    instance.patch(
-      `${API_PATH}/nomination_event/edit_number_of_race_rounds`,
-      null,
-      { params }
-    ),
+    instance.patch(`/nomination_event/edit_number_of_race_rounds`, null, {
+      params,
+    }),
   updateCriteria: (body, params) =>
-    instance.patch(`${API_PATH}/nomination_event/update_criteria`, body, {
+    instance.patch(`/nomination_event/update_criteria`, body, {
       params,
     }),
 };
