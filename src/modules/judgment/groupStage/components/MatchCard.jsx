@@ -3,7 +3,14 @@ import { determinateTheWinner, isScoreZero, MatchResult } from "@utils";
 import clsx from "clsx";
 import "./MatchCard.scss";
 
-export const MatchCard = ({ id, team1, team2, onEditScore }) => {
+export const MatchCard = ({
+  id,
+  matchIndex,
+  team1,
+  team2,
+  onEditScore,
+  lastCreatorEmail,
+}) => {
   const handleClick = (e) => {
     e.preventDefault();
     onEditScore();
@@ -12,7 +19,7 @@ export const MatchCard = ({ id, team1, team2, onEditScore }) => {
   return (
     <div className="match-card">
       <div className="match-card__match-section">
-        <p>{id}</p>
+        <p>{matchIndex}</p>
       </div>
       <div className="match-card__team-section">
         <div
@@ -23,7 +30,7 @@ export const MatchCard = ({ id, team1, team2, onEditScore }) => {
           })}
         >
           <p>{team1.name}</p>
-          <p>{!isScoreZero(team1.score, team2.score) ? team1.score : "–"}</p>
+          <p>{lastCreatorEmail ? team1.score : "–"}</p>
         </div>
         <div
           className={clsx("match-card__team", {
@@ -33,7 +40,7 @@ export const MatchCard = ({ id, team1, team2, onEditScore }) => {
           })}
         >
           <p>{team2.name}</p>
-          <p>{!isScoreZero(team1.score, team2.score) ? team2.score : "–"}</p>
+          <p>{lastCreatorEmail ? team2.score : "–"}</p>
         </div>
       </div>
       <div className="match-card__icon-section" onClick={handleClick}>

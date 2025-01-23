@@ -16,22 +16,22 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
 
   const finalParticipantsTableColumns = [
     {
-      title: t("COMMON.PARTICIPANTS"),
+      title: t("COMMON.TEAMS"),
       dataIndex: "participant",
       key: "participant",
       sorter: (a, b) => a.participant.localeCompare(b.participant),
     },
     {
       title: t("TOURNAMENTS.SCORES"),
-      dataIndex: "score",
-      key: "score",
-      sorter: (a, b) => a.score - b.score,
-    },
-    {
-      title: t("TOURNAMENTS.POINTS"),
       dataIndex: "points",
       key: "points",
       sorter: (a, b) => a.points - b.points,
+    },
+    {
+      title: t("TOURNAMENTS.POINTS"),
+      dataIndex: "score",
+      key: "score",
+      sorter: (a, b) => a.score - b.score,
     },
     {
       title: t("NOMINATION_TYPES.PLAYOFF"),
@@ -43,7 +43,6 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
         { text: t("TOURNAMENTS.NOT_MARKED"), value: false },
       ],
       onFilter: (value, record) => record.isPassed === value,
-      sorter: (a, b) => (a.isPassed === b.isPassed ? 0 : a.isPassed ? -1 : 1),
       render: (value, record, index) => (
         <Checkbox
           checked={value}
