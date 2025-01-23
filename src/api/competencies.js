@@ -85,7 +85,6 @@ export const competenciesApi = {
       params,
       responseType: "blob",
     }),
-
   editNumberRaceRounds: (params) =>
     instance.patch(
       `${API_PATH}/nomination_event/edit_number_of_race_rounds`,
