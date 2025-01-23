@@ -1,3 +1,6 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
 .match-card {
   background-color: #f6f5f5;
   display: flex;
@@ -47,4 +50,9 @@
       font-size: 24px;
     }
   }
+}
+
+.dark-theme .match-card {
+  background-color: $dark-gray;
+  color: #fff;
 }

@@ -197,6 +197,20 @@ function EventSettingsCompitations({
           }
         } catch {}
 
+        switch (selectedType) {
+          case NOMINATIONS.TIME: {
+            const params = {
+              nomination_id: nominationId,
+              event_id: eventID,
+              race_rounds_num: groupCount,
+            };
+
+            try {
+              await competenciesApi.editNumberRaceRounds(params);
+            } catch {}
+          }
+        }
+
         message.success(t("MESSAGES.SUCCESS_NOMINATION_EDIT"));
         onOk();
         onAdd();

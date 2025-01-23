@@ -28,7 +28,11 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
           matchQueueNumber: match.match_queue_number,
         }))
       )
-      .sort((a, b) => a.id - b.id);
+      .sort((a, b) => a.id - b.id)
+      .map((match, index) => ({
+        ...match,
+        viewed_id: index + 1,
+      }));
   }, []);
 
   const transformData = (data) => {
@@ -120,7 +124,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
   const handleSubmitScore = useCallback(
     async ({ id, eventId, nominationId, team1, team2 }) => {
       try {
-        const response = await judgmentApi.setMatches(
+        await judgmentApi.setMatches(
           eventId,
           nominationId,
           id,
@@ -128,9 +132,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
           team2.score
         );
 
-        if (response.ok) {
-          fetchData(eventId, nominationId);
-        }
+        fetchData(eventId, nominationId);
       } catch (error) {}
     },
     [fetchData]

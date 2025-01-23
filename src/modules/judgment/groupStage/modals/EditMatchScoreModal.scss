@@ -1,3 +1,6 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
 .edit-match-score-modal {
   display: grid;
   grid-template-rows: auto auto;
@@ -16,6 +19,11 @@
       font-weight: 600;
       margin: 0px;
     }
+  }
+
+  .dark-theme &__header-section {
+    background-color: $dark-gray;
+    color: $white;
   }
 
   &__input-section {
