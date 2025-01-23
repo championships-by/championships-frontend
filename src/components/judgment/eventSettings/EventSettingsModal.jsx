@@ -208,6 +208,8 @@ function EventSettingsCompitations({
             try {
               await competenciesApi.editNumberRaceRounds(params);
             } catch {}
+
+            break;
           }
           case NOMINATIONS.CRITERIA: {
             const params = {
@@ -224,6 +226,8 @@ function EventSettingsCompitations({
                 await competenciesApi.updateCriteria(filteredCriteria, params);
               } catch {}
             }
+
+            break;
           }
         }
 
