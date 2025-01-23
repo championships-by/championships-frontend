@@ -91,4 +91,8 @@ export const competenciesApi = {
       null,
       { params }
     ),
+  updateCriteria: (body, params) =>
+    instance.patch(`${API_PATH}//nomination_event/update_criteria`, body, {
+      params,
+    }),
 };
