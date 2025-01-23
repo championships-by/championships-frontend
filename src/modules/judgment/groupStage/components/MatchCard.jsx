@@ -5,7 +5,7 @@ import "./MatchCard.scss";
 
 export const MatchCard = ({
   id,
-  viewed_id,
+  matchIndex,
   team1,
   team2,
   onEditScore,
@@ -19,7 +19,7 @@ export const MatchCard = ({
   return (
     <div className="match-card">
       <div className="match-card__match-section">
-        <p>{viewed_id}</p>
+        <p>{matchIndex}</p>
       </div>
       <div className="match-card__team-section">
         <div

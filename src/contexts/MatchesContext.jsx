@@ -28,11 +28,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
           matchQueueNumber: match.match_queue_number,
         }))
       )
-      .sort((a, b) => a.id - b.id)
-      .map((match, index) => ({
-        ...match,
-        viewed_id: index + 1,
-      }));
+      .sort((a, b) => a.id - b.id);
   }, []);
 
   const transformData = (data) => {
