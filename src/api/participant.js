@@ -15,7 +15,11 @@ export const participantApi = {
   setHideParticipant: (body) =>
     instance.post(`/participant/hide_participant`, body),
   setParticipant: (body) => {
-    return instance.post(`/participant/participant`, body);
+    return instance.post(`/participant/participant`, body, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
   addParticipantToNomination: (body) => {
     return instance.post(
