@@ -50,7 +50,17 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
         await participantApi.changeParticipant(body);
         message.success(t("MESSAGES.SUCCESS_EDIT_PARTICIPANT"));
       } else {
-        const body = JSON.stringify(values);
+        const body = {
+          participant: JSON.stringify({
+            email: values.email,
+            first_name: values.first_name,
+            second_name: values.second_name,
+            third_name: values.third_name,
+            region: values.region,
+            birth_date: values.birth_date,
+          }),
+        };
+
         const params = new URLSearchParams();
         params.append("participant_email", values.email);
         params.append(
