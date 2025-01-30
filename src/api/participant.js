@@ -5,6 +5,11 @@ export const participantApi = {
   getParticipant: () => {
     return fetchWithPagination(instance, `/participant/participant`);
   },
+  getParticipantsInSystem: (params) => {
+    return instance
+      .get(`/participant/get_participants_in_system`, { params })
+      .then((res) => res.data);
+  },
   getParticipantByName: (params) => {
     return fetchWithPagination(
       instance,
