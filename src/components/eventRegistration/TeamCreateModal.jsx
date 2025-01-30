@@ -11,7 +11,6 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
-  const [dataTeamParticipants, setTeamParticipants] = useState([]);
   const { eventID } = useParams();
 
   const onSubmit = async () => {
@@ -44,25 +43,6 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      participantApi
-        .getParticipant()
-        .then((data) => {
-          setTeamParticipants(
-            data.map((participant) => ({
-              value: participant.id,
-              label: `${participant.second_name} ${participant.first_name} ${
-                participant.third_name
-              }, ${changeDateFormat(participant.birth_date)}`,
-            }))
-          );
-        })
-        .catch(() => message.error(t("MESSAGES.GET_DATA_ERROR")))
-        .finally(() => setTimeout(() => setIsLoading(false), 300));
-    }
-  }, [isOpen, eventID]);
-
   return (
     <Modal
       title={t("EVENTS.ADD_TEAM")}
@@ -81,11 +61,7 @@ function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {
         onFinishFailed={onFinishFailed}
       >
         <TeamNameInput name="teamName" />
-        <TeamParticipantsInput
-          name="teamParticipants"
-          options={dataTeamParticipants}
-          mode="multiple"
-        />
+        <TeamParticipantsInput name="teamParticipants" mode="multiple" />
         <Flex gap="middle">
           <Button type="primary" htmlType="submit" loading={isLoading}>
             {t("COMMON.SAVE")}

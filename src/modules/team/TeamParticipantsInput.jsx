@@ -1,12 +1,17 @@
-import { Flex, Input, Select, Space, Typography } from "antd";
+import { useEffect, useState, useCallback } from "react";
+import { Flex, Select, Space, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { FILTER_OPTION } from "@utils";
+import { participantApi } from "@api";
+import { FILTER_OPTION, changeDateFormat } from "@utils";
 import { useTranslation } from "react-i18next";
+import debounce from "lodash.debounce";
 
 import "./sass/team.scss";
 
-function TeamParticipantsInput({ name, options, mode, disabled }) {
+function TeamParticipantsInput({ name, mode, disabled }) {
   const { t } = useTranslation();
+  const [participantName, setParticipantName] = useState("");
+  const [options, setOptions] = useState([]);
 
   const rules = [
     {
@@ -17,6 +22,37 @@ function TeamParticipantsInput({ name, options, mode, disabled }) {
           : t("RULES.PLEASE_CHOOSE_PARTICIPANT"),
     },
   ];
+
+  const transformData = (data) => {
+    return data?.map((item) => {
+      const fullName = `${item.second_name} ${item.first_name} ${item.third_name}`;
+      const birthDate = item.birth_date;
+      return {
+        value: item.id,
+        label: `${fullName}, ${changeDateFormat(birthDate)}`,
+      };
+    });
+  };
+
+  const fetchParticipants = useCallback(
+    debounce((searchValue) => {
+      if (!searchValue.trim()) {
+        setOptions([]);
+        return;
+      }
+      try {
+        participantApi
+          .getParticipantsInSystem({ name: searchValue })
+          .then((data) => setOptions(transformData(data)));
+      } catch {}
+    }, 300),
+    []
+  );
+
+  const onSearch = (value) => {
+    setParticipantName(value);
+    fetchParticipants(value);
+  };
 
   return (
     <Flex vertical className="team__team-participants-input__flex">
@@ -41,7 +77,8 @@ function TeamParticipantsInput({ name, options, mode, disabled }) {
                   : t("COMMON.CHOOSE_PARTICIPANTS")
               }
               name="team_participants_select"
-              value=""
+              value={participantName}
+              onSearch={onSearch}
               filterOption={FILTER_OPTION}
               options={options}
               notFoundContent={t("COMMON.NO_DATA")}
