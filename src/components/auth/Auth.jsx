@@ -23,21 +23,22 @@ function Auth() {
     useState(false);
 
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (isLoading) {
-      userApi
-        .getProfile()
-        .then(() => navigate(ROUTES.EVENTS.PATH))
-        .catch((error) => {
-          if (error.response.status === 401) {
-            setIsLoading(false);
-            message.info(t("MESSAGES.NOT_AUTHORIZED"));
-          } else {
-            message.error(t("MESSAGES.USER_UPDATE_ERROR"));
-          }
-        });
-    }
+    getUserProfile();
   }, [isLoading, navigate]);
+
+  const getUserProfile = async () => {
+    if (isLoading) {
+      try {
+        await userApi.getProfile();
+        navigate(ROUTES.EVENTS.PATH);
+      } catch {
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
