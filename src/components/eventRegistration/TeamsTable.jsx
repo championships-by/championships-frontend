@@ -17,32 +17,31 @@ import { useParams } from "react-router-dom";
 import TeamEditParticipantModal from "./TeamEditParticipantModal";
 
 const transformTeamsData = (teamsData) => {
-    const transformedData = [];
+  const transformedData = [];
 
-    teamsData.forEach((teamData) => {
-      teamData.team_participants.forEach((participant) => {
-        const teamName = participant.team.name;
-        const teamId = participant.team.id;
+  teamsData.forEach((teamData) => {
+    teamData.team_participants.forEach((participant) => {
+      const teamName = participant.team.name;
+      const teamId = participant.team.id;
 
-        participant.team.participants.forEach((teamParticipant) => {
-          const additionalData = teamParticipant.participant_additional_data;
-          const supervisorData = additionalData.supervisor_data;
+      participant.team.participants.forEach((teamParticipant) => {
+        const additionalData = teamParticipant.participant_additional_data;
+        const supervisorData = additionalData.supervisor_data;
 
-          transformedData.push({
-            nomination_name: teamData.nomination_name,
-            team_name: teamName,
-            participant_name: `${teamParticipant.participant_data.second_name} ${teamParticipant.participant_data.first_name} ${teamParticipant.participant_data.third_name}`,
-            team_id: teamId,
-            nomination_id: teamParticipant.participant_data.nomination_id,
-            participant_id: teamParticipant.participant_data.id,
+        transformedData.push({
+          nomination_name: teamData.nomination_name,
+          team_name: teamName,
+          participant_name: `${teamParticipant.participant_data.second_name} ${teamParticipant.participant_data.first_name} ${teamParticipant.participant_data.third_name}`,
+          team_id: teamId,
+          nomination_id: teamParticipant.participant_data.nomination_id,
+          participant_id: teamParticipant.participant_data.id,
 
-            supervisor_data: supervisorData,
-            additional_data: additionalData,
-          });
+          supervisor_data: supervisorData,
+          additional_data: additionalData,
         });
       });
     });
-
+  });
 
   transformedData.sort((a, b) => {
     if (a.team_name < b.team_name) return -1;
@@ -89,13 +88,17 @@ function TeamsTable({ teamsData, onTeamsChange }) {
       let nomination_type = res.type;
 
       participantApi
-        .deleteTeamParticipant(
-          record.team_id,
-          record.participant_id,
-          eventID,
-          record.nomination_id,
-          nomination_type
-        )
+        .deleteTeamParticipant({
+          team_participant: {
+            team_id: record.team_id,
+            participant_id: record.participant_id,
+          },
+          nomination_event: {
+            event_id: eventID,
+            nomination_id: record.nomination_id,
+            type: nomination_type,
+          },
+        })
         .then(() => {
           message.success(t("MESSAGES.DELETE_SUCCESS"));
           onTeamsChange();
@@ -125,7 +128,7 @@ function TeamsTable({ teamsData, onTeamsChange }) {
 
   const openEditModal = (record) => {
     setSelectedRecord(record);
-    setSelectedTeamId(record.team_id)
+    setSelectedTeamId(record.team_id);
     setIsEditModalOpen(true);
   };
 
@@ -216,7 +219,10 @@ function TeamsTable({ teamsData, onTeamsChange }) {
         bordered
         locale={getTranslation(tableLocale, t)}
         pagination={false}
-        rowKey={(record) => `${record.team_id}-${record.participant_id}-${record.nomination_id}`}/>
+        rowKey={(record) =>
+          `${record.team_id}-${record.participant_id}-${record.nomination_id}`
+        }
+      />
 
       <TeamEditParticipantModal
         isOpen={isEditModalOpen}
