@@ -7,15 +7,8 @@ import { useTranslation } from "react-i18next";
 function ParticipantSoftwareInput({ name }) {
   const { t } = useTranslation();
 
-  const rules = [
-    {
-      required: true,
-      message: t("RULES.PLEASE_ENTER_SOFTWARE"),
-    },
-  ];
-
   return (
-    <FormItem name={name} rules={rules}>
+    <FormItem name={name}>
       <Flex vertical>
         <Typography.Text>{t("TOURNAMENTS.SOFTWARE")}</Typography.Text>
         <Input

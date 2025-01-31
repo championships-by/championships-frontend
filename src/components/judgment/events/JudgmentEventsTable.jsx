@@ -79,17 +79,18 @@ function JudgmentEventsTable({ EventsData, onDelete }) {
               onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
             />
           </Tooltip>
-          {dayjs(event.registration_finish_date) >= dayjs() && (
-            <Tooltip title={t("EVENTS.PARTICIPANT_REGISTRATION")}>
-              <Button
-                type="text"
-                icon={<UsergroupAddOutlined />}
-                onClick={() =>
-                  navigate(ROUTES.EVENTS_REGISTRATION.PATH(event.id))
-                }
-              />
-            </Tooltip>
-          )}
+          {(dayjs(event.registration_finish_date) >= dayjs() &&
+            dayjs(event.registration_start_date) <= dayjs()) && (
+              <Tooltip title={t("EVENTS.PARTICIPANT_REGISTRATION")}>
+                <Button
+                  type="text"
+                  icon={<UsergroupAddOutlined />}
+                  onClick={() =>
+                    navigate(ROUTES.EVENTS_REGISTRATION.PATH(event.id))
+                  }
+                />
+              </Tooltip>
+            )}
           <Tooltip title={t("COMMON.DELETE")}>
             <Button
               type="text"

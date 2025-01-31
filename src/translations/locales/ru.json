@@ -203,7 +203,9 @@
     "EVENT_REGULATION": "Положение о проведении мероприятия",
     "TEAM_NAME": "Название команды",
     "ENTER_TEAM_NAME": "Введите название команды",
-    "TEAM_NAME_EXAMPLE": "Пример: Эврика"
+    "TEAM_NAME_EXAMPLE": "Пример: Эврика",
+    "ARE_YOU_SURE_REMOVE_PARTICIPANT": "Вы уверены что хотите удалить этого участника из номинации?",
+    "REGISTRATION_NOT_STARTED": "Регистрация ещё не началась"
   },
   "PARTICIPANTS": {
     "CARD_OF_PARTICIPANT": "Карточка участника",
@@ -318,7 +320,9 @@
     "NOT_SEND_USER_NOTICE": "Уведомление пользователю не отправлено",
     "SUCCESS_EDIT_USER": "Пользователь успешно изменён",
     "YOU_NOT_JUDGE": "Вы не можете завершить стадию, так как не являетесь судьей",
-    "NOTICE_SUCCESS_SEND": "Письмо успешно отправлено"
+    "NOTICE_SUCCESS_SEND": "Письмо успешно отправлено",
+    "TEAM_PARTICIPANT_DELETE_ERROR": "Ошибка при удалении участника из команды",
+    "DELETE_SUCCESS": "Удаление прошло успешно"
   },
   "RULES": {
     "ENTER_EMAIL": "Пожалуйста, введите Email",

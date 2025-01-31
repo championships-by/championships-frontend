@@ -19,7 +19,7 @@ const getRowSpan = (data, index, key) => {
   return count;
 };
 
-function AllTeamsTable({ teamsData, onTeamsChange }) {
+function AllTeamsTable({ teamsData, onTeamsChange}) {
   const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);

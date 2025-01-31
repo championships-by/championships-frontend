@@ -58,4 +58,22 @@ export const participantApi = {
       `/system_notice/send_participant_registration_notice?${queryString}`
     );
   },
+  deleteTeamParticipant: (teamId, participantId, event_id, nomination_id, type) => {
+    return instance.delete(
+      `/team_participant_nomination_event/team_participant`, 
+      {
+        data: {
+          "team_participant": {
+            "team_id": teamId,
+            "participant_id": participantId,
+          },
+          "nomination_event": {
+            "event_id": event_id,
+            "nomination_id": nomination_id,
+            "type": type,
+          }
+        }
+      }
+    );
+  }
 };

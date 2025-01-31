@@ -1,11 +1,20 @@
-import { Table, Flex, Button, Tooltip } from "antd";
+import { Table, Flex, Button, Tooltip, message } from "antd";
 import { useMemo, useState } from "react";
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import {
+  DeleteColumnOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  UsergroupAddOutlined,
+} from "@ant-design/icons";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
+import TeamDeleteParticipantModal from "./TeamDeleteParticipantModal";
+import { participantApi } from "../../api";
+import { set } from "lodash";
+import { useParams } from "react-router-dom";
 
 const transformTeamsData = (teamsData) => {
   const transformedData = [];
@@ -21,6 +30,8 @@ const transformTeamsData = (teamsData) => {
           team_name: teamName,
           participant_name: `${teamParticipant.participant_data.first_name} ${teamParticipant.participant_data.third_name} ${teamParticipant.participant_data.second_name}`,
           team_id: teamId,
+          nomination_id: teamsData[0].nomination_id,
+          participant_id: teamParticipant.participant_data.id,
         });
       });
     });
@@ -33,7 +44,6 @@ const transformTeamsData = (teamsData) => {
     if (a.nomination_name > b.nomination_name) return 1;
     return 0;
   });
-
   return transformedData;
 };
 
@@ -49,12 +59,44 @@ const getRowSpan = (data, index, key) => {
   return count;
 };
 
-function TeamsTable({ teamsData, onTeamsChange }) {
+function TeamsTable({ teamsData, onTeamsChange}) {
   const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState();
   const [selectedTeamName, setSelectedTeamName] = useState();
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [recordToDelete, setRecordToDelete] = useState();
+  const {eventID} = useParams()
+
+  const deleteParticipant = (record) => {
+    participantApi
+      .deleteTeamParticipant(record.team_id, record.participant_id, eventID, record.nomination_id, "time")
+      .then(() => {
+        message.success(t("MESSAGES.DELETE_SUCCESS"));
+        onTeamsChange();
+      })
+      .catch((error) => {
+        message.error(t("MESSAGES.DELETE_ERROR"));
+      })
+      .finally(() => {
+        setRecordToDelete(null)});
+  };
+
+  const openDeleteModal = (record) => {
+    setRecordToDelete(record);
+    setIsDeleteModalOpen(true);
+  };
+
+  const onDeleteModalNo = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const onDeleteModalYes = () => {
+    deleteParticipant(recordToDelete);
+    setIsDeleteModalOpen(false);
+  };
 
   const openEditModal = (id, name) => {
     setSelectedTeamId(id);
@@ -65,11 +107,6 @@ function TeamsTable({ teamsData, onTeamsChange }) {
   const changeTeamData = () => {
     setIsEditModalOpen(false);
     onTeamsChange();
-  };
-
-  const openParticipantModal = (teamId) => {
-    setSelectedTeamId(teamId);
-    setIsParticipantModalOpen(true);
   };
 
   const changeParticipantData = () => {
@@ -127,18 +164,20 @@ function TeamsTable({ teamsData, onTeamsChange }) {
       },
       render: (record) => (
         <Flex>
-          <Tooltip title={t("COMMON.EDIT")}>
+          {/* <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
               icon={<EditOutlined />}
               onClick={() => openEditModal(record.team_id, record.team_name)}
             />
-          </Tooltip>
-          <Tooltip title={t("COMMON.ADD")}>
+          </Tooltip> */}
+          <Tooltip title={t("COMMON.DELETE")}>
             <Button
               type="text"
-              icon={<UsergroupAddOutlined />}
-              onClick={() => openParticipantModal(record.team_id)}
+              icon={<DeleteOutlined />}
+              onClick={() =>
+                openDeleteModal(record)
+              }
             />
           </Tooltip>
         </Flex>
@@ -170,6 +209,11 @@ function TeamsTable({ teamsData, onTeamsChange }) {
         onCancel={() => setIsParticipantModalOpen(false)}
         teamID={selectedTeamId}
       />
+      <TeamDeleteParticipantModal
+        isOpen={isDeleteModalOpen}
+        onOk={() => onDeleteModalYes()}
+        onCancel={() => onDeleteModalNo()}
+      ></TeamDeleteParticipantModal>
     </>
   );
 }
