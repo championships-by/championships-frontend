@@ -3,9 +3,7 @@ import { Modal, Table, Button, Flex, Tooltip, message } from "antd";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
-import {
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 import { participantApi } from "../../../api";
 
 import "./sass/events.scss";
@@ -28,9 +26,13 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
       .then(() => {
         message.success(t("MESSAGES.DELETE_SUCCESS"));
         // Update the local state to remove the deleted participant
-        setParticipantsInfo(prevInfo => prevInfo.filter(
-          participant => participant.participant_id !== selectedRecord.deletion_info.participant_id
-        ));
+        setParticipantsInfo((prevInfo) =>
+          prevInfo.filter(
+            (participant) =>
+              participant.participant_id !==
+              selectedRecord.deletion_info.participant_id
+          )
+        );
       })
       .catch((error) => {
         message.error(t("MESSAGES.DELETE_ERROR"));

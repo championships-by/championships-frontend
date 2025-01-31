@@ -5,7 +5,12 @@ import { useTranslation } from "react-i18next";
 
 import "./sass/team.scss";
 
-function TeamNominationInput({ name, options, onChange: onChangeBase, disabled }) {
+function TeamNominationInput({
+  name,
+  options,
+  onChange: onChangeBase,
+  disabled,
+}) {
   const { t } = useTranslation();
 
   const onChange = (value) => {

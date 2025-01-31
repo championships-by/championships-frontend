@@ -4,7 +4,7 @@ import { Flex, Input, Typography } from "antd";
 import { LaptopOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
-function ParticipantEquipmentInput({ name, value, }) {
+function ParticipantEquipmentInput({ name, value }) {
   const { t } = useTranslation();
 
   return (

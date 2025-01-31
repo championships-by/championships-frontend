@@ -1,7 +1,7 @@
 import { Table, Flex, Button, Tooltip, List, Typography } from "antd";
 import { useState } from "react";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import TeamEditModal from "./TeamEditModal"
+import TeamEditModal from "./TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
@@ -19,7 +19,7 @@ const getRowSpan = (data, index, key) => {
   return count;
 };
 
-function AllTeamsTable({ teamsData, onTeamsChange}) {
+function AllTeamsTable({ teamsData, onTeamsChange }) {
   const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);

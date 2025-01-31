@@ -350,7 +350,7 @@ function EventSettings() {
     const competitionType = record.kind;
     const competitionName = record.name;
     const nominationID = findNominationId(competitionName, eventInfo);
-  
+
     participantApi
       .getParticipantsWithInfo(eventId, nominationID, competitionType)
       .then((data) => {

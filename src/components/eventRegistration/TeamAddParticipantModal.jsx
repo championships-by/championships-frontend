@@ -118,14 +118,14 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
             educational_institution: form.getFieldValue(
               "educational_institution"
             ),
-            additional_educational_institution: form.getFieldValue(
-              "additional_educational_institution"
-            ) || null,
+            additional_educational_institution:
+              form.getFieldValue("additional_educational_institution") || null,
             supervisor_first_name: form.getFieldValue("supervisor_first_name"),
             supervisor_second_name: form.getFieldValue(
               "supervisor_second_name"
             ),
-            supervisor_third_name: form.getFieldValue("supervisor_third_name") || "",
+            supervisor_third_name:
+              form.getFieldValue("supervisor_third_name") || "",
           },
         ],
       };
