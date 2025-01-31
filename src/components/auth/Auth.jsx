@@ -31,7 +31,8 @@ function Auth() {
   const getUserProfile = async () => {
     if (isLoading) {
       try {
-        await userApi.getProfile().then(() => navigate(ROUTES.EVENTS.PATH));
+        await userApi.getProfile();
+        navigate(ROUTES.EVENTS.PATH);
       } catch {
       } finally {
         setIsLoading(false);
