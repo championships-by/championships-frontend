@@ -6,36 +6,43 @@ import {
   EditOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
-import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import TeamDeleteParticipantModal from "./TeamDeleteParticipantModal";
-import { participantApi } from "../../api";
+import { competenciesApi, participantApi } from "../../api";
 import { set } from "lodash";
 import { useParams } from "react-router-dom";
+import TeamEditParticipantModal from "./TeamEditParticipantModal";
 
 const transformTeamsData = (teamsData) => {
-  const transformedData = [];
+    const transformedData = [];
 
-  teamsData.forEach((teamData) => {
-    teamData.team_participants.forEach((participant) => {
-      const teamName = participant.team.name;
-      const teamId = participant.team.id;
+    teamsData.forEach((teamData) => {
+      teamData.team_participants.forEach((participant) => {
+        const teamName = participant.team.name;
+        const teamId = participant.team.id;
 
-      participant.team.participants.forEach((teamParticipant) => {
-        transformedData.push({
-          nomination_name: teamData.nomination_name,
-          team_name: teamName,
-          participant_name: `${teamParticipant.participant_data.first_name} ${teamParticipant.participant_data.third_name} ${teamParticipant.participant_data.second_name}`,
-          team_id: teamId,
-          nomination_id: teamsData[0].nomination_id,
-          participant_id: teamParticipant.participant_data.id,
+        participant.team.participants.forEach((teamParticipant) => {
+          const additionalData = teamParticipant.participant_additional_data;
+          const supervisorData = additionalData.supervisor_data;
+
+          transformedData.push({
+            nomination_name: teamData.nomination_name,
+            team_name: teamName,
+            participant_name: `${teamParticipant.participant_data.second_name} ${teamParticipant.participant_data.first_name} ${teamParticipant.participant_data.third_name}`,
+            team_id: teamId,
+            nomination_id: teamParticipant.participant_data.nomination_id,
+            participant_id: teamParticipant.participant_data.id,
+
+            supervisor_data: supervisorData,
+            additional_data: additionalData,
+          });
         });
       });
     });
-  });
+
 
   transformedData.sort((a, b) => {
     if (a.team_name < b.team_name) return -1;
@@ -59,7 +66,7 @@ const getRowSpan = (data, index, key) => {
   return count;
 };
 
-function TeamsTable({ teamsData, onTeamsChange}) {
+function TeamsTable({ teamsData, onTeamsChange }) {
   const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
@@ -67,25 +74,43 @@ function TeamsTable({ teamsData, onTeamsChange}) {
   const [selectedTeamName, setSelectedTeamName] = useState();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [recordToDelete, setRecordToDelete] = useState();
-  const {eventID} = useParams()
+  const [selectedRecord, setSelectedRecord] = useState();
+  const { eventID } = useParams();
+
+  const [editData, setEditData] = useState();
 
   const deleteParticipant = (record) => {
-    participantApi
-      .deleteTeamParticipant(record.team_id, record.participant_id, eventID, record.nomination_id, "time")
-      .then(() => {
-        message.success(t("MESSAGES.DELETE_SUCCESS"));
-        onTeamsChange();
-      })
-      .catch((error) => {
-        message.error(t("MESSAGES.DELETE_ERROR"));
-      })
-      .finally(() => {
-        setRecordToDelete(null)});
+    const params = {
+      event_id: eventID,
+      nomination_id: record.nomination_id,
+    };
+
+    competenciesApi.getNominationEventInfo(params).then((res) => {
+      let nomination_type = res.type;
+
+      participantApi
+        .deleteTeamParticipant(
+          record.team_id,
+          record.participant_id,
+          eventID,
+          record.nomination_id,
+          nomination_type
+        )
+        .then(() => {
+          message.success(t("MESSAGES.DELETE_SUCCESS"));
+          onTeamsChange();
+        })
+        .catch((error) => {
+          message.error(t("MESSAGES.DELETE_ERROR"));
+        })
+        .finally(() => {
+          setSelectedRecord(null);
+        });
+    });
   };
 
   const openDeleteModal = (record) => {
-    setRecordToDelete(record);
+    setSelectedRecord(record);
     setIsDeleteModalOpen(true);
   };
 
@@ -94,13 +119,13 @@ function TeamsTable({ teamsData, onTeamsChange}) {
   };
 
   const onDeleteModalYes = () => {
-    deleteParticipant(recordToDelete);
+    deleteParticipant(selectedRecord);
     setIsDeleteModalOpen(false);
   };
 
-  const openEditModal = (id, name) => {
-    setSelectedTeamId(id);
-    setSelectedTeamName(name);
+  const openEditModal = (record) => {
+    setSelectedRecord(record);
+    setSelectedTeamId(record.team_id)
     setIsEditModalOpen(true);
   };
 
@@ -164,20 +189,18 @@ function TeamsTable({ teamsData, onTeamsChange}) {
       },
       render: (record) => (
         <Flex>
-          {/* <Tooltip title={t("COMMON.EDIT")}>
+          <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
               icon={<EditOutlined />}
-              onClick={() => openEditModal(record.team_id, record.team_name)}
+              onClick={() => openEditModal(record)}
             />
-          </Tooltip> */}
+          </Tooltip>
           <Tooltip title={t("COMMON.DELETE")}>
             <Button
               type="text"
               icon={<DeleteOutlined />}
-              onClick={() =>
-                openDeleteModal(record)
-              }
+              onClick={() => openDeleteModal(record)}
             />
           </Tooltip>
         </Flex>
@@ -193,16 +216,16 @@ function TeamsTable({ teamsData, onTeamsChange}) {
         bordered
         locale={getTranslation(tableLocale, t)}
         pagination={false}
-        rowKey={(record) => record.participant_name}
-      />
+        rowKey={(record) => `${record.team_id}-${record.participant_id}-${record.nomination_id}`}/>
 
-      <TeamEditModal
+      <TeamEditParticipantModal
         isOpen={isEditModalOpen}
-        onOk={() => changeTeamData()}
+        onOk={() => openEditModal()}
         onCancel={() => setIsEditModalOpen(false)}
+        record={selectedRecord}
         teamID={selectedTeamId}
-        teamName={selectedTeamName}
-      />
+      ></TeamEditParticipantModal>
+
       <TeamAddParticipantModal
         isOpen={isParticipantModalOpen}
         onOk={() => changeParticipantData()}
@@ -211,8 +234,8 @@ function TeamsTable({ teamsData, onTeamsChange}) {
       />
       <TeamDeleteParticipantModal
         isOpen={isDeleteModalOpen}
-        onOk={() => onDeleteModalYes()}
-        onCancel={() => onDeleteModalNo()}
+        onOk={onDeleteModalYes}
+        onCancel={onDeleteModalNo}
       ></TeamDeleteParticipantModal>
     </>
   );

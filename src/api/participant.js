@@ -26,8 +26,19 @@ export const participantApi = {
       },
     });
   },
+  getParticipantNominationExistingInfo: (params) => {
+    return instance.get(
+      `/team_participant_nomination_event/team_participant?event_id=${params.event_id}&nomination_id=${params.nomination_id}&team_id=${params.team_id}&related=false`
+    ).then((res) => res.data);
+  },
   addParticipantToNomination: (body) => {
     return instance.post(
+      "/team_participant_nomination_event/team_participant",
+      body
+    );
+  },
+  updateParticipantInNomination: (body) => {
+    return instance.patch(
       "/team_participant_nomination_event/team_participant",
       body
     );
@@ -58,22 +69,28 @@ export const participantApi = {
       `/system_notice/send_participant_registration_notice?${queryString}`
     );
   },
-  deleteTeamParticipant: (teamId, participantId, event_id, nomination_id, type) => {
+  deleteTeamParticipant: (
+    teamId,
+    participantId,
+    event_id,
+    nomination_id,
+    type
+  ) => {
     return instance.delete(
-      `/team_participant_nomination_event/team_participant`, 
+      `/team_participant_nomination_event/team_participant`,
       {
         data: {
-          "team_participant": {
-            "team_id": teamId,
-            "participant_id": participantId,
+          team_participant: {
+            team_id: teamId,
+            participant_id: participantId,
           },
-          "nomination_event": {
-            "event_id": event_id,
-            "nomination_id": nomination_id,
-            "type": type,
-          }
-        }
+          nomination_event: {
+            event_id: event_id,
+            nomination_id: nomination_id,
+            type: type,
+          },
+        },
       }
     );
-  }
+  },
 };

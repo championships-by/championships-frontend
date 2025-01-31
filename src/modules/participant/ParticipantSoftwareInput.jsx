@@ -4,7 +4,7 @@ import { Flex, Input, Typography } from "antd";
 import { CodeOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
-function ParticipantSoftwareInput({ name }) {
+function ParticipantSoftwareInput({ name, value }) {
   const { t } = useTranslation();
 
   return (
@@ -15,6 +15,7 @@ function ParticipantSoftwareInput({ name }) {
           prefix={<CodeOutlined />}
           placeholder={t("TOURNAMENTS.ENTER_SOFTWARE")}
           id="participant_software_input"
+          value={value}
         />
         <Typography.Text type="secondary">
           {t("TOURNAMENTS.SOFTWARE_EXAMPLE")}

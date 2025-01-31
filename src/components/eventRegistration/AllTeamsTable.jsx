@@ -1,7 +1,7 @@
 import { Table, Flex, Button, Tooltip, List, Typography } from "antd";
 import { useState } from "react";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import TeamEditModal from "@components/eventRegistration/TeamEditModal";
+import TeamEditModal from "./TeamEditModal"
 import TeamAddParticipantModal from "./TeamAddParticipantModal";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";

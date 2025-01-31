@@ -350,12 +350,20 @@ function EventSettings() {
     const competitionType = record.kind;
     const competitionName = record.name;
     const nominationID = findNominationId(competitionName, eventInfo);
-
+  
     participantApi
       .getParticipantsWithInfo(eventId, nominationID, competitionType)
       .then((data) => {
-        setParticipantsInfo(data);
+        const updatedData = data.map((entry) => ({
+          ...entry,
+          event_id: eventId,
+          nomination_id: nominationID,
+          competition_type: competitionType,
+        }));
+
+        setParticipantsInfo(updatedData);
       });
+
     setParticipantModal(true);
   };
 

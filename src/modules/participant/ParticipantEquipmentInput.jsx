@@ -4,7 +4,7 @@ import { Flex, Input, Typography } from "antd";
 import { LaptopOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
-function ParticipantEquipmentInput({ name }) {
+function ParticipantEquipmentInput({ name, value, }) {
   const { t } = useTranslation();
 
   return (
@@ -17,6 +17,7 @@ function ParticipantEquipmentInput({ name }) {
           prefix={<LaptopOutlined />}
           placeholder={t("TOURNAMENTS.ENTER_PARTICIPANT_EQUIPMENT")}
           id="participant_equipment_input"
+          value={value}
         />
         <Typography.Text type="secondary">
           {t("TOURNAMENTS.PARTICIPANT_EQUIPMENT_EXAMPLE")}
