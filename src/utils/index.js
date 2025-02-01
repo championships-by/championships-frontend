@@ -108,7 +108,7 @@ export const transformCriteriaData = (criteria) =>
   }));
 
 export const transformCriteriaResultsData = (criteriaResults) => {
-  return criteriaResults.map((team, index) => ({
+  return criteriaResults.team_data.map((team, index) => ({
     id: index + 1,
     team: {
       id: team.team_data.team_id,
