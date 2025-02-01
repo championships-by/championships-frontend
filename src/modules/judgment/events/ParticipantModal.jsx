@@ -4,17 +4,17 @@ import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { DeleteOutlined } from "@ant-design/icons";
-import { participantApi } from "../../../api";
+import TeamDeleteParticipantModal from "@components/eventRegistration/TeamDeleteParticipantModal";
+import { participantApi } from "@api";
 
 import "./sass/events.scss";
-import TeamDeleteParticipantModal from "../../../components/eventRegistration/TeamDeleteParticipantModal";
 
 function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const { t } = useTranslation();
 
-  function deleteParticipant() {
+  const deleteParticipant = () => {
     participantApi
       .deleteTeamParticipant(
         selectedRecord.deletion_info.team_id,
@@ -25,7 +25,6 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
       )
       .then(() => {
         message.success(t("MESSAGES.DELETE_SUCCESS"));
-        // Update the local state to remove the deleted participant
         setParticipantsInfo((prevInfo) =>
           prevInfo.filter(
             (participant) =>
@@ -38,16 +37,16 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
         message.error(t("MESSAGES.DELETE_ERROR"));
       });
     setSelectedRecord(null);
-  }
+  };
 
-  function openDeleteModal(record) {
+  const openDeleteModal = (record) => {
     setIsDeleteModalOpen(true);
     setSelectedRecord(record);
-  }
+  };
 
-  function onDeleteModalYes() {
+  const onDeleteModalYes = () => {
     deleteParticipant();
-  }
+  };
 
   const columns = [
     {

@@ -11,48 +11,10 @@ import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTea
 import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
 import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
 import { eventApi, competenciesApi, participantApi } from "@api";
+import { remakeSoftware, remakeEquipment } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./sass/event-registration.scss";
-import { forInRight } from "lodash";
-
-function remakeSoftware(dataList, inputString) {
-  const substrings = inputString.split(",");
-  let substringIndex = 0;
-  const result = dataList.map((item) => {
-    if (substringIndex < substrings.length) {
-      item.software = substrings[substringIndex].trim();
-      substringIndex++;
-    } else {
-      item.software = "";
-    }
-    return item;
-  });
-  if (substringIndex < substrings.length) {
-    const remainingSubstrings = substrings.slice(substringIndex).join(",");
-    result[result.length - 1].software += `,${remainingSubstrings}`;
-  }
-  return result;
-}
-
-function remakeEquipment(dataList, inputString) {
-  const substrings = inputString.split(",");
-  let substringIndex = 0;
-  const result = dataList.map((item) => {
-    if (substringIndex < substrings.length) {
-      item.equipment = substrings[substringIndex].trim();
-      substringIndex++;
-    } else {
-      item.equipment = "";
-    }
-    return item;
-  });
-  if (substringIndex < substrings.length) {
-    const remainingSubstrings = substrings.slice(substringIndex).join(",");
-    result[result.length - 1].equipment += `,${remainingSubstrings}`;
-  }
-  return result;
-}
 
 function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
   const { t } = useTranslation();
@@ -73,7 +35,6 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
 
       if (record) {
         setNominationId(record.nomination_id);
-        console.log(record);
 
         const softwareValues = record.additional_data.softwares
           .map((item) => item.software)
@@ -126,7 +87,6 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
             );
           });
         })
-
         .catch(() => message.error(t("MESSAGES.GET_DATA_ERROR")));
     }
   }, [isOpen, eventID, teamID]);
@@ -138,17 +98,11 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
       const newSoftware = form.getFieldValue("software");
       const newEquipment = form.getFieldValue("equipment");
 
-      console.log(newSoftware);
-      console.log(newEquipment);
-      console.log(softwareOriginal);
-      console.log(equipmentsOriginal);
-
       if (newSoftware != softwareOriginal) {
         const newSoftwareList = remakeSoftware(
           record.additional_data.softwares,
           newSoftware
         );
-        console.log(newSoftwareList);
 
         for (const software of newSoftwareList) {
           competenciesApi.updateSoftware({
@@ -156,7 +110,6 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
             id: software.id,
           });
         }
-        console.log("a");
       }
 
       if (newEquipment != equipmentsOriginal) {
@@ -164,7 +117,6 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
           record.additional_data.equipments,
           newEquipment
         );
-        console.log(newEquipmentList);
 
         for (const equipment of newEquipmentList) {
           competenciesApi.updateEquipment({
@@ -172,7 +124,6 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
             id: equipment.id,
           });
         }
-        console.log("b");
       }
     } catch {}
 
@@ -191,7 +142,6 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
         additional_educational_institution:
           form.getFieldValue("additional_educational_institution") || "",
       };
-      console.log(body);
       await participantApi.updateParticipantInNomination(body);
       message.success(t("MESSAGES.SUCCESS_PARTICIPANT_ADD"));
 

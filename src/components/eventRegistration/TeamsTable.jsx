@@ -11,7 +11,7 @@ import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import TeamDeleteParticipantModal from "./TeamDeleteParticipantModal";
-import { competenciesApi, participantApi } from "../../api";
+import { competenciesApi, participantApi } from "@api";
 import { set } from "lodash";
 import { useParams } from "react-router-dom";
 import TeamEditParticipantModal from "./TeamEditParticipantModal";
@@ -85,7 +85,7 @@ function TeamsTable({ teamsData, onTeamsChange }) {
     };
 
     competenciesApi.getNominationEventInfo(params).then((res) => {
-      let nomination_type = res.type;
+      let nominationType = res.type;
 
       participantApi
         .deleteTeamParticipant({
@@ -96,7 +96,7 @@ function TeamsTable({ teamsData, onTeamsChange }) {
           nomination_event: {
             event_id: eventID,
             nomination_id: record.nomination_id,
-            type: nomination_type,
+            type: nominationType,
           },
         })
         .then(() => {
@@ -230,7 +230,7 @@ function TeamsTable({ teamsData, onTeamsChange }) {
         onCancel={() => setIsEditModalOpen(false)}
         record={selectedRecord}
         teamID={selectedTeamId}
-      ></TeamEditParticipantModal>
+      />
 
       <TeamAddParticipantModal
         isOpen={isParticipantModalOpen}
@@ -242,7 +242,7 @@ function TeamsTable({ teamsData, onTeamsChange }) {
         isOpen={isDeleteModalOpen}
         onOk={onDeleteModalYes}
         onCancel={onDeleteModalNo}
-      ></TeamDeleteParticipantModal>
+      />
     </>
   );
 }
