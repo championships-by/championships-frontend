@@ -1,13 +1,52 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Table, Button } from "antd";
+import { Modal, Table, Button, Flex, Tooltip, message } from "antd";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
+import { DeleteOutlined } from "@ant-design/icons";
+import TeamDeleteParticipantModal from "@components/eventRegistration/TeamDeleteParticipantModal";
+import { participantApi } from "@api";
 
 import "./sass/events.scss";
 
 function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
   const { t } = useTranslation();
+
+  const deleteParticipant = () => {
+    participantApi
+      .deleteTeamParticipant(
+        selectedRecord.deletion_info.team_id,
+        selectedRecord.deletion_info.participant_id,
+        selectedRecord.deletion_info.event_id,
+        selectedRecord.deletion_info.nomination_id,
+        selectedRecord.deletion_info.nomination_type
+      )
+      .then(() => {
+        message.success(t("MESSAGES.DELETE_SUCCESS"));
+        setParticipantsInfo((prevInfo) =>
+          prevInfo.filter(
+            (participant) =>
+              participant.participant_id !==
+              selectedRecord.deletion_info.participant_id
+          )
+        );
+      })
+      .catch((error) => {
+        message.error(t("MESSAGES.DELETE_ERROR"));
+      });
+    setSelectedRecord(null);
+  };
+
+  const openDeleteModal = (record) => {
+    setIsDeleteModalOpen(true);
+    setSelectedRecord(record);
+  };
+
+  const onDeleteModalYes = () => {
+    deleteParticipant();
+  };
 
   const columns = [
     {
@@ -47,6 +86,22 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
       dataIndex: "teacher",
       key: "teacher",
     },
+    {
+      title: t("COMMON.ACTIONS"),
+      key: "action",
+      width: "10%",
+      render: (record) => (
+        <Flex>
+          <Tooltip title={t("COMMON.DELETE")}>
+            <Button
+              type="text"
+              icon={<DeleteOutlined />}
+              onClick={() => openDeleteModal(record)}
+            />
+          </Tooltip>
+        </Flex>
+      ),
+    },
   ];
 
   const [participantsInfo, setParticipantsInfo] = useState([]);
@@ -58,6 +113,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
           return (
             item.team.participants?.map((participantItem) => {
               return {
+                participant_id: participantItem.participant_data.id,
                 team_name: item.team.name,
                 fullName:
                   participantItem.participant_data.second_name +
@@ -87,6 +143,13 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
                   " " +
                   participantItem.participant_additional_data.supervisor_data
                     .supervisor_third_name,
+                deletion_info: {
+                  team_id: item.team.id,
+                  participant_id: participantItem.participant_data.id,
+                  event_id: item.event_id,
+                  nomination_id: item.nomination_id,
+                  nomination_type: item.competition_type,
+                },
               };
             }) || []
           );
@@ -96,6 +159,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
       setParticipantsInfo(participants);
     }
   }, [data]);
+
   return (
     <div>
       <Modal
@@ -114,6 +178,11 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
           locale={getTranslation(tableLocale, t)}
         />
       </Modal>
+      <TeamDeleteParticipantModal
+        isOpen={isDeleteModalOpen}
+        onOk={onDeleteModalYes}
+        onCancel={() => setIsDeleteModalOpen(false)}
+      ></TeamDeleteParticipantModal>
     </div>
   );
 }

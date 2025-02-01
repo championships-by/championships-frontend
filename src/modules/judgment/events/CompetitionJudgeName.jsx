@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import "./sass/events.scss";
 
 function getFullName(item) {
-  return item.first_name + " " + item.third_name + " " + item.second_name;
+  return item.second_name + " " + item.first_name + " " + item.third_name;
 }
 
 function CompetitionType({ onJudgeChange, judges }) {

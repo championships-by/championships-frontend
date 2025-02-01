@@ -107,25 +107,25 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
             participant_id: form.getFieldValue("participant_id"),
             softwares: [
               {
-                name: form.getFieldValue("software"),
+                name: form.getFieldValue("software") || "",
               },
             ],
             equipments: [
               {
-                name: form.getFieldValue("equipment"),
+                name: form.getFieldValue("equipment") || "",
               },
             ],
             educational_institution: form.getFieldValue(
               "educational_institution"
             ),
-            additional_educational_institution: form.getFieldValue(
-              "additional_educational_institution"
-            ),
+            additional_educational_institution:
+              form.getFieldValue("additional_educational_institution") || null,
             supervisor_first_name: form.getFieldValue("supervisor_first_name"),
             supervisor_second_name: form.getFieldValue(
               "supervisor_second_name"
             ),
-            supervisor_third_name: form.getFieldValue("supervisor_third_name"),
+            supervisor_third_name:
+              form.getFieldValue("supervisor_third_name") || "",
           },
         ],
       };

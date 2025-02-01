@@ -5,12 +5,8 @@ import { useTranslation } from "react-i18next";
 
 import "./sass/team.scss";
 
-function TeamNominationInput({ name, options, onChange: onChangeBase }) {
+function TeamNominationInput({ name, options, onChange, disabled }) {
   const { t } = useTranslation();
-
-  const onChange = (value) => {
-    onChangeBase(value);
-  };
 
   const rules = [
     {
@@ -37,6 +33,7 @@ function TeamNominationInput({ name, options, onChange: onChangeBase }) {
               options={options}
               notFoundContent={t("COMMON.NO_DATA")}
               onChange={(value) => onChange(value)}
+              disabled={disabled}
             />
           </FormItem>
         </Space.Compact>

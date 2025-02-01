@@ -26,8 +26,19 @@ export const participantApi = {
       },
     });
   },
+  getParticipantNominationExistingInfo: (params) => {
+    return instance
+      .get(`/team_participant_nomination_event/team_participant`, { params })
+      .then((res) => res.data);
+  },
   addParticipantToNomination: (body) => {
     return instance.post(
+      "/team_participant_nomination_event/team_participant",
+      body
+    );
+  },
+  updateParticipantInNomination: (body) => {
+    return instance.patch(
       "/team_participant_nomination_event/team_participant",
       body
     );
@@ -56,6 +67,12 @@ export const participantApi = {
   sendParticipantRegistrationNotice: (queryString) => {
     return instance.post(
       `/system_notice/send_participant_registration_notice?${queryString}`
+    );
+  },
+  deleteTeamParticipant: (body) => {
+    return instance.delete(
+      `/team_participant_nomination_event/team_participant`,
+      body
     );
   },
 };

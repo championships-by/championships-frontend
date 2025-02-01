@@ -1,6 +1,6 @@
 import { Button, Typography, Breadcrumb, Divider, Tabs, Row, Col } from "antd";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import TeamCreateModal from "@components/eventRegistration/TeamCreateModal";
 import TeamsTable from "@components/eventRegistration/TeamsTable";
 import AllTeamsTable from "@components/eventRegistration/AllTeamsTable";
@@ -66,6 +66,15 @@ function EventsRegistration() {
     eventApi
       .getEventWithNominationsAndTeamParticipants(params.toString())
       .then((data) => {
+        data.forEach((nomination) => {
+          nomination.team_participants.forEach((teamParticipant) => {
+            teamParticipant.team.participants.forEach((participant) => {
+              participant.participant_data.nomination_id =
+                nomination.nomination_id;
+            });
+          });
+        });
+
         setTeams(data);
       });
     eventApi

@@ -326,3 +326,41 @@ export const downloadProtocol = async (eventId, nominationId) => {
   document.body.removeChild(link);
   window.URL.revokeObjectURL(url);
 };
+
+export const remakeSoftware = (dataList, inputString) => {
+  const substrings = inputString.split(",");
+  let substringIndex = 0;
+  const result = dataList.map((item) => {
+    if (substringIndex < substrings.length) {
+      item.software = substrings[substringIndex].trim();
+      substringIndex++;
+    } else {
+      item.software = "";
+    }
+    return item;
+  });
+  if (substringIndex < substrings.length) {
+    const remainingSubstrings = substrings.slice(substringIndex).join(",");
+    result[result.length - 1].software += `,${remainingSubstrings}`;
+  }
+  return result;
+};
+
+export const remakeEquipment = (dataList, inputString) => {
+  const substrings = inputString.split(",");
+  let substringIndex = 0;
+  const result = dataList.map((item) => {
+    if (substringIndex < substrings.length) {
+      item.equipment = substrings[substringIndex].trim();
+      substringIndex++;
+    } else {
+      item.equipment = "";
+    }
+    return item;
+  });
+  if (substringIndex < substrings.length) {
+    const remainingSubstrings = substrings.slice(substringIndex).join(",");
+    result[result.length - 1].equipment += `,${remainingSubstrings}`;
+  }
+  return result;
+};
