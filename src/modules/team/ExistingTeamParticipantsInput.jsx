@@ -8,7 +8,13 @@ import debounce from "lodash.debounce";
 
 import "./sass/team.scss";
 
-function TeamParticipantsInput({ name, mode, disabled }) {
+const ExistingTeamParticipantsInput = ({
+  isVisible,
+  name,
+  mode,
+  teamID,
+  disabled,
+}) => {
   const { t } = useTranslation();
   const [participantName, setParticipantName] = useState("");
   const [options, setOptions] = useState([]);
@@ -36,23 +42,27 @@ function TeamParticipantsInput({ name, mode, disabled }) {
 
   const fetchParticipants = useCallback(
     debounce((searchValue) => {
-      if (!searchValue.trim()) {
-        setOptions([]);
-        return;
-      }
       try {
-        participantApi
-          .getParticipantsInSystem({ name: searchValue })
-          .then((data) => setOptions(transformData(data)));
+        if (teamID) {
+          participantApi
+            .getParticipantsInTeam({ name: searchValue, team_id: teamID })
+            .then((data) => {
+              setOptions(transformData(data));
+            });
+        }
       } catch {}
     }, 300),
-    []
+    [teamID]
   );
 
   const onSearch = (value) => {
     setParticipantName(value);
     fetchParticipants(value);
   };
+
+  useEffect(() => {
+    onSearch(null);
+  }, [isVisible, teamID]);
 
   return (
     <Flex vertical className="team__team-participants-input__flex">
@@ -88,6 +98,6 @@ function TeamParticipantsInput({ name, mode, disabled }) {
       </Flex>
     </Flex>
   );
-}
+};
 
-export default TeamParticipantsInput;
+export default ExistingTeamParticipantsInput;

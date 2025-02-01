@@ -168,6 +168,7 @@
     "ADD_TEAM": "Дадаць каманду",
     "EDIT_TEAM": "Рэдагаванне каманды",
     "ADD_PARTICIPANT_IN_NOMINATION": "Дадаць удзельнікаў у кампетэнцыю",
+    "EDIT_PARTICIPANT_IN_NOMINATION": "Рэдагаванне ўдзельніка кампетэнцыі",
     "ARE_YOU_SURE_REMOVE_TEAM": "Вы ўпэўнены, што жадаеце выдаліць гэтую каманду?",
     "SUCCESS_EDIT_TEAM_NAME": "Назва каманды паспяхова зменена",
     "COUNT_OF_REGISTERED_PARTICIPANTS": "Колькасць зарэгістраваных удзельнікаў",
@@ -203,7 +204,9 @@
     "EVENT_REGULATION": "Палажэнне пра правядзенне мерапрыемства",
     "TEAM_NAME": "Назва каманды",
     "ENTER_TEAM_NAME": "Увядзіце назву каманды",
-    "TEAM_NAME_EXAMPLE": "Прыклад: Эўрыка"
+    "TEAM_NAME_EXAMPLE": "Прыклад: Эўрыка",
+    "ARE_YOU_SURE_REMOVE_PARTICIPANT": "Вы ўпэўнены, што жадаеце выдаліць гэтага ўдзельніка з кампетэнцыі?",
+    "REGISTRATION_NOT_STARTED": "Рэгістрацыя яшчэ не пачалася"
   },
   "PARTICIPANTS": {
     "CARD_OF_PARTICIPANT": "Картка ўдзельніка",
@@ -282,6 +285,7 @@
     "SUCCESS_MESSAGE": "Дадзеныя паспяхова захаваны",
     "INVALID_EMAIL_OR_PASSWORD": "Невярны email ці пароль",
     "SUCCESS_PARTICIPANT_ADD": "Удзельнік паспяхова дададзены для ўдзелу ў кампетэнцыі",
+    "SUCCESS_PARTICIPANT_EDIT": "Даныя ўдзельніка кампетэнцыі паспяхова абноўлены",
     "GET_DATA_ERROR": "Немагчыма атрымаць дадзеныя. Звярніцеся да адміністратара",
     "ERROR": "Адбылася памылка",
     "SUCCESS_NEW_TEAM_ADD": "Новая каманда паспяхова створана",

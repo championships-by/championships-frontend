@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Form, Modal, message, Flex } from "antd";
 import TeamNominationSelect from "@modules/team/TeamNominationSelect";
-import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
+import ExistingTeamParticipantsInput from "@modules/team/ExistingTeamParticipantsInput";
 import ParticipantEquipmentInput from "@modules/participant/ParticipantEquipmentInput";
 import ParticipantSoftwareInput from "@modules/participant/ParticipantSoftwareInput";
 import ParticipantAdditionalOrganizationInput from "@modules/participant/ParticipantAdditionalOrganizationInput.jsx";
@@ -107,25 +107,25 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
             participant_id: form.getFieldValue("participant_id"),
             softwares: [
               {
-                name: form.getFieldValue("software"),
+                name: form.getFieldValue("software") || "",
               },
             ],
             equipments: [
               {
-                name: form.getFieldValue("equipment"),
+                name: form.getFieldValue("equipment") || "",
               },
             ],
             educational_institution: form.getFieldValue(
               "educational_institution"
             ),
-            additional_educational_institution: form.getFieldValue(
-              "additional_educational_institution"
-            ),
+            additional_educational_institution:
+              form.getFieldValue("additional_educational_institution") || null,
             supervisor_first_name: form.getFieldValue("supervisor_first_name"),
             supervisor_second_name: form.getFieldValue(
               "supervisor_second_name"
             ),
-            supervisor_third_name: form.getFieldValue("supervisor_third_name"),
+            supervisor_third_name:
+              form.getFieldValue("supervisor_third_name") || "",
           },
         ],
       };
@@ -167,10 +167,12 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
           options={nominationsOptions}
           onChange={onNominationChange}
         />
-        <TeamParticipantsInput
+        <ExistingTeamParticipantsInput
+          isVisile={isOpen}
           name="participant_id"
           mode="single"
           options={dataTeamParticipants}
+          teamID={teamID}
         />
         <ParticipantTeacherLastnameInput name="supervisor_second_name" />
         <ParticipantTeacherFirstnameInput name="supervisor_first_name" />

@@ -1,8 +1,8 @@
 import { Table, Flex, Button, Tooltip, List, Typography } from "antd";
 import { useState } from "react";
 import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import TeamEditModal from "@components/eventRegistration/TeamEditModal";
-import TeamAddParticipantModal from "./TeamAddParticipantModal";
+import TeamEditModal from "./TeamEditModal";
+import TeamAddParticipantModal from "@components/eventRegistration/TeamAddParticipantModal";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
@@ -37,8 +37,9 @@ function AllTeamsTable({ teamsData, onTeamsChange }) {
     onTeamsChange();
   };
 
-  const openParticipantModal = (teamId) => {
-    setSelectedTeamId(teamId);
+  const openParticipantModal = (record) => {
+    setSelectedTeamId(record.id);
+    setSelectedTeamName(record.name);
     setIsParticipantModalOpen(true);
   };
 
@@ -110,7 +111,7 @@ function AllTeamsTable({ teamsData, onTeamsChange }) {
             <Button
               type="text"
               icon={<UsergroupAddOutlined />}
-              onClick={() => openParticipantModal(record.id)}
+              onClick={() => openParticipantModal(record)}
             />
           </Tooltip>
         </Flex>

@@ -61,44 +61,52 @@ function JudgmentEventsTable({ EventsData, onDelete }) {
     {
       title: t("COMMON.ACTIONS"),
       key: "action",
-      render: ({ event }) => (
-        <Flex>
-          <Tooltip title={t("COMMON.EDIT")}>
-            <Button
-              type="text"
-              icon={<EditOutlined />}
-              onClick={() =>
-                navigate(ROUTES.JUDGMENT_EVENT_SETTINGS.PATH(event.id))
-              }
-            />
-          </Tooltip>
-          <Tooltip title={t("EVENTS.EVENT_DESCRIPTION")}>
-            <Button
-              type="text"
-              icon={<InfoCircleOutlined />}
-              onClick={() => navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))}
-            />
-          </Tooltip>
-          {dayjs(event.registration_finish_date) >= dayjs() && (
-            <Tooltip title={t("EVENTS.PARTICIPANT_REGISTRATION")}>
+      render: ({ event }) => {
+        const startDate = dayjs(event.registration_start_date);
+        const finishDate = dayjs(event.registration_finish_date);
+        const currentDate = dayjs();
+
+        return (
+          <Flex>
+            <Tooltip title={t("COMMON.EDIT")}>
               <Button
                 type="text"
-                icon={<UsergroupAddOutlined />}
+                icon={<EditOutlined />}
                 onClick={() =>
-                  navigate(ROUTES.EVENTS_REGISTRATION.PATH(event.id))
+                  navigate(ROUTES.JUDGMENT_EVENT_SETTINGS.PATH(event.id))
                 }
               />
             </Tooltip>
-          )}
-          <Tooltip title={t("COMMON.DELETE")}>
-            <Button
-              type="text"
-              icon={<DeleteOutlined />}
-              onClick={() => deleteEvent(event.id)}
-            />
-          </Tooltip>
-        </Flex>
-      ),
+            <Tooltip title={t("EVENTS.EVENT_DESCRIPTION")}>
+              <Button
+                type="text"
+                icon={<InfoCircleOutlined />}
+                onClick={() =>
+                  navigate(ROUTES.EVENTS_DESCRIPTION.PATH(event.id))
+                }
+              />
+            </Tooltip>
+            {finishDate >= currentDate && startDate <= currentDate && (
+              <Tooltip title={t("EVENTS.PARTICIPANT_REGISTRATION")}>
+                <Button
+                  type="text"
+                  icon={<UsergroupAddOutlined />}
+                  onClick={() =>
+                    navigate(ROUTES.EVENTS_REGISTRATION.PATH(event.id))
+                  }
+                />
+              </Tooltip>
+            )}
+            <Tooltip title={t("COMMON.DELETE")}>
+              <Button
+                type="text"
+                icon={<DeleteOutlined />}
+                onClick={() => deleteEvent(event.id)}
+              />
+            </Tooltip>
+          </Flex>
+        );
+      },
     },
   ];
 

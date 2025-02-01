@@ -168,6 +168,7 @@
     "ADD_TEAM": "Добавить команду",
     "EDIT_TEAM": "Редактирование команды",
     "ADD_PARTICIPANT_IN_NOMINATION": "Добавление участников в компетенцию",
+    "EDIT_PARTICIPANT_IN_NOMINATION": "Редактирование участника компетенции",
     "ARE_YOU_SURE_REMOVE_TEAM": "Вы уверены, что хотите удалить эту команду?",
     "SUCCESS_EDIT_TEAM_NAME": "Название команды успешно изменено",
     "COUNT_OF_REGISTERED_PARTICIPANTS": "Количество зарегистрированных участников",
@@ -203,7 +204,9 @@
     "EVENT_REGULATION": "Положение о проведении мероприятия",
     "TEAM_NAME": "Название команды",
     "ENTER_TEAM_NAME": "Введите название команды",
-    "TEAM_NAME_EXAMPLE": "Пример: Эврика"
+    "TEAM_NAME_EXAMPLE": "Пример: Эврика",
+    "ARE_YOU_SURE_REMOVE_PARTICIPANT": "Вы уверены что хотите удалить этого участника из компетенции?",
+    "REGISTRATION_NOT_STARTED": "Регистрация ещё не началась"
   },
   "PARTICIPANTS": {
     "CARD_OF_PARTICIPANT": "Карточка участника",
@@ -282,6 +285,7 @@
     "SUCCESS_MESSAGE": "Данные успешно сохранены",
     "INVALID_EMAIL_OR_PASSWORD": "Неверный email или пароль",
     "SUCCESS_PARTICIPANT_ADD": "Участник успешно добавлен для участия в компетенции",
+    "SUCCESS_PARTICIPANT_EDIT": "Данные об участнике компетенции успешно обновлены",
     "GET_DATA_ERROR": "Невозможно получить данные. Обратитесь к администратору",
     "ERROR": "Произошла ошибка",
     "SUCCESS_NEW_TEAM_ADD": "Новая команда успешно создана",
@@ -318,7 +322,9 @@
     "NOT_SEND_USER_NOTICE": "Уведомление пользователю не отправлено",
     "SUCCESS_EDIT_USER": "Пользователь успешно изменён",
     "YOU_NOT_JUDGE": "Вы не можете завершить стадию, так как не являетесь судьей",
-    "NOTICE_SUCCESS_SEND": "Письмо успешно отправлено"
+    "NOTICE_SUCCESS_SEND": "Письмо успешно отправлено",
+    "TEAM_PARTICIPANT_DELETE_ERROR": "Ошибка при удалении участника из команды",
+    "DELETE_SUCCESS": "Удаление прошло успешно"
   },
   "RULES": {
     "ENTER_EMAIL": "Пожалуйста, введите Email",

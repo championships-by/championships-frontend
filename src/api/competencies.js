@@ -51,9 +51,7 @@ export const competenciesApi = {
   },
   getNominationEventInfo: (params) =>
     instance
-      .get(`/nomination_event/nomination_event_info`, {
-        params: params,
-      })
+      .get(`/nomination_event/nomination_event_info`, { params })
       .then((res) => res.data),
   updateNominationEvent: (queryString, data) =>
     instance.patch(
@@ -87,4 +85,10 @@ export const competenciesApi = {
     instance.patch(`/nomination_event/update_criteria`, body, {
       params,
     }),
+  updateEquipment: (body) => {
+    return instance.patch(`/equipment/equipment`, body);
+  },
+  updateSoftware: (body) => {
+    return instance.patch(`/software/update`, body);
+  },
 };

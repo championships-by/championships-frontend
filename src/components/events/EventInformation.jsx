@@ -127,6 +127,7 @@ function EventInformation() {
   };
 
   const finishDate = new Date(dataEvent.registration_finish_date);
+  const startDate = new Date(dataEvent.registration_start_date);
   const now = new Date();
 
   return (
@@ -242,7 +243,7 @@ function EventInformation() {
             className="events__event-information__rows-margin"
           >
             <Col xs={24} sm={24} md={12}>
-              {finishDate > now ? (
+              {finishDate > now && startDate < now ? (
                 <Button
                   onClick={() =>
                     navigate(ROUTES.EVENTS_REGISTRATION.PATH(dataEvent.id))
@@ -251,6 +252,10 @@ function EventInformation() {
                 >
                   {t("EVENTS.PARTICIPANT_REGISTRATION")}
                 </Button>
+              ) : finishDate > now ? (
+                <Typography.Text>
+                  {t("EVENTS.REGISTRATION_NOT_STARTED")}
+                </Typography.Text>
               ) : (
                 <Typography.Text>
                   {t("EVENTS.REGISTRATION_CLOSED")}
