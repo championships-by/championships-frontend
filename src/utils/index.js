@@ -107,14 +107,14 @@ export const transformCriteriaData = (criteria) =>
     maxScore: criterion.max_score,
   }));
 
-export const transformCriteriaResultsData = (criteriaResults) =>
-  criteriaResults.team_data.map((team, index) => ({
+export const transformCriteriaResultsData = (criteriaResults) => {
+  return criteriaResults.team_data.map((team, index) => ({
     id: index + 1,
     team: {
       id: team.team_data.team_id,
       name: team.team_data.team_name,
     },
-    participants: team.participants
+    participants: team.participants_data
       .map(
         (participant) =>
           `${participant.second_name} ${participant.first_name} ${participant.third_name}`
@@ -129,6 +129,7 @@ export const transformCriteriaResultsData = (criteriaResults) =>
     })),
     totalScore: team.criterias.reduce((acc, obj) => (acc += obj.score), 0),
   }));
+};
 
 export const transformTimeMatchesData = (rounds) => {
   return rounds.map((round, index) => ({
