@@ -10,6 +10,11 @@ export const participantApi = {
       .get(`/participant/get_participants_in_system`, { params })
       .then((res) => res.data);
   },
+  getParticipantsInTeam: (params) => {
+    return instance
+      .get(`/participant/get_participants_in_team`, { params })
+      .then((res) => res.data);
+  },
   getParticipantByName: (params) => {
     return fetchWithPagination(
       instance,
@@ -72,7 +77,7 @@ export const participantApi = {
   deleteTeamParticipant: (body) => {
     return instance.delete(
       `/team_participant_nomination_event/team_participant`,
-      body
+      { data: body }
     );
   },
 };

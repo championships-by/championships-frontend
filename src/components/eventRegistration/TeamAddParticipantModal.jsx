@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Form, Modal, message, Flex } from "antd";
 import TeamNominationSelect from "@modules/team/TeamNominationSelect";
-import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
+import ExistingTeamParticipantsInput from "@modules/team/ExistingTeamParticipantsInput";
 import ParticipantEquipmentInput from "@modules/participant/ParticipantEquipmentInput";
 import ParticipantSoftwareInput from "@modules/participant/ParticipantSoftwareInput";
 import ParticipantAdditionalOrganizationInput from "@modules/participant/ParticipantAdditionalOrganizationInput.jsx";
@@ -167,10 +167,12 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
           options={nominationsOptions}
           onChange={onNominationChange}
         />
-        <TeamParticipantsInput
+        <ExistingTeamParticipantsInput
+          isVisile={isOpen}
           name="participant_id"
           mode="single"
           options={dataTeamParticipants}
+          teamID={teamID}
         />
         <ParticipantTeacherLastnameInput name="supervisor_second_name" />
         <ParticipantTeacherFirstnameInput name="supervisor_first_name" />

@@ -1,20 +1,14 @@
 import { Table, Flex, Button, Tooltip, message } from "antd";
 import { useMemo, useState } from "react";
-import {
-  DeleteColumnOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  UsergroupAddOutlined,
-} from "@ant-design/icons";
-import TeamAddParticipantModal from "./TeamAddParticipantModal";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import TeamAddParticipantModal from "@components/eventRegistration/TeamAddParticipantModal";
+import TeamEditParticipantModal from "@components/eventRegistration/TeamEditParticipantModal";
+import TeamDeleteParticipantModal from "@components/eventRegistration/TeamDeleteParticipantModal";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
-import TeamDeleteParticipantModal from "./TeamDeleteParticipantModal";
 import { competenciesApi, participantApi } from "@api";
-import { set } from "lodash";
 import { useParams } from "react-router-dom";
-import TeamEditParticipantModal from "./TeamEditParticipantModal";
 
 const transformTeamsData = (teamsData) => {
   const transformedData = [];
@@ -86,19 +80,19 @@ function TeamsTable({ teamsData, onTeamsChange }) {
 
     competenciesApi.getNominationEventInfo(params).then((res) => {
       let nominationType = res.type;
-
+      const body = {
+        team_participant: {
+          team_id: record.team_id,
+          participant_id: record.participant_id,
+        },
+        nomination_event: {
+          event_id: eventID,
+          nomination_id: record.nomination_id,
+          type: nominationType,
+        },
+      };
       participantApi
-        .deleteTeamParticipant({
-          team_participant: {
-            team_id: record.team_id,
-            participant_id: record.participant_id,
-          },
-          nomination_event: {
-            event_id: eventID,
-            nomination_id: record.nomination_id,
-            type: nominationType,
-          },
-        })
+        .deleteTeamParticipant(body)
         .then(() => {
           message.success(t("MESSAGES.DELETE_SUCCESS"));
           onTeamsChange();
@@ -132,8 +126,9 @@ function TeamsTable({ teamsData, onTeamsChange }) {
     setIsEditModalOpen(true);
   };
 
-  const changeTeamData = () => {
+  const onEditModalSuccess = () => {
     setIsEditModalOpen(false);
+    setSelectedRecord(null);
     onTeamsChange();
   };
 
@@ -226,7 +221,7 @@ function TeamsTable({ teamsData, onTeamsChange }) {
 
       <TeamEditParticipantModal
         isOpen={isEditModalOpen}
-        onOk={() => openEditModal()}
+        onOk={onEditModalSuccess}
         onCancel={() => setIsEditModalOpen(false)}
         record={selectedRecord}
         teamID={selectedTeamId}

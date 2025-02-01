@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Form, Modal, message, Flex } from "antd";
 import TeamNominationSelect from "@modules/team/TeamNominationSelect";
-import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
+import ExistingTeamParticipantsInput from "@modules/team/ExistingTeamParticipantsInput";
 import ParticipantEquipmentInput from "@modules/participant/ParticipantEquipmentInput";
 import ParticipantSoftwareInput from "@modules/participant/ParticipantSoftwareInput";
 import ParticipantAdditionalOrganizationInput from "@modules/participant/ParticipantAdditionalOrganizationInput.jsx";
@@ -143,7 +143,7 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
           form.getFieldValue("additional_educational_institution") || "",
       };
       await participantApi.updateParticipantInNomination(body);
-      message.success(t("MESSAGES.SUCCESS_PARTICIPANT_ADD"));
+      message.success(t("MESSAGES.SUCCESS_PARTICIPANT_EDIT"));
 
       form.resetFields();
       onOk();
@@ -184,11 +184,12 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
             />
           </Form.Item>
           <Form.Item name="participant_id">
-            <TeamParticipantsInput
+            <ExistingTeamParticipantsInput
               name="participant_id"
               mode="single"
               options={dataTeamParticipants}
               disabled={true}
+              teamID={teamID}
             />
           </Form.Item>
           <Form.Item name="supervisor_first_name">

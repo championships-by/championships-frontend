@@ -15,14 +15,19 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   const { t } = useTranslation();
 
   const deleteParticipant = () => {
+    const body = {
+      team_participant: {
+        team_id: selectedRecord.deletion_info.team_id,
+        participant_id: selectedRecord.deletion_info.participant_id,
+      },
+      nomination_event: {
+        event_id: selectedRecord.deletion_info.event_id,
+        nomination_id: selectedRecord.deletion_info.nomination_id,
+        type: selectedRecord.deletion_info.nomination_type,
+      },
+    };
     participantApi
-      .deleteTeamParticipant(
-        selectedRecord.deletion_info.team_id,
-        selectedRecord.deletion_info.participant_id,
-        selectedRecord.deletion_info.event_id,
-        selectedRecord.deletion_info.nomination_id,
-        selectedRecord.deletion_info.nomination_type
-      )
+      .deleteTeamParticipant(body)
       .then(() => {
         message.success(t("MESSAGES.DELETE_SUCCESS"));
         setParticipantsInfo((prevInfo) =>
@@ -46,6 +51,8 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
 
   const onDeleteModalYes = () => {
     deleteParticipant();
+    setSelectedRecord(false);
+    setIsDeleteModalOpen(false);
   };
 
   const columns = [
