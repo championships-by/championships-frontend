@@ -463,7 +463,7 @@ function EventSettings() {
     try {
       await eventApi.changeEvent(body);
     } catch (error) {
-      message.error("MESSAGES.EVENT_EDIT_ERROR");
+      message.error(t("MESSAGES.EVENT_EDIT_ERROR"));
       eventSuccess = false;
     }
 
