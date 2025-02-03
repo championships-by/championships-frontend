@@ -231,18 +231,6 @@ export const isTimeMatchesFilled = (timeMatches) =>
     )
   );
 
-export const isCriteriaFilled = (criteria) =>
-  criteria.every((result) =>
-    Object.keys(result).reduce((acc, key) => {
-      if (key.startsWith("criteria")) {
-        return (
-          acc && result[key].score !== null && result[key].score !== undefined
-        );
-      }
-      return acc;
-    }, true)
-  );
-
 export const getTextByTabIndex = (tabIndex, arr) => arr[tabIndex - 1];
 
 export const getClickHandler = (selector, handlers) => handlers[selector()];
