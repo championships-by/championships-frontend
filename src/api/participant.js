@@ -49,7 +49,11 @@ export const participantApi = {
     );
   },
   changeParticipant: (body) => {
-    return instance.patch(`/participant/participant`, body);
+    return instance.patch(`/participant/participant`, body, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
   getParticipantStats: (body) => {
     return instance
