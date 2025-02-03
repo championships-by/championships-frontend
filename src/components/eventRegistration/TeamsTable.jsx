@@ -92,7 +92,7 @@ function TeamsTable({ teamsData, onTeamsChange }) {
         },
       };
       participantApi
-        .deleteTeamParticipant(body)
+        .deleteTeamParticipantFromNominationEvent(body)
         .then(() => {
           message.success(t("MESSAGES.DELETE_SUCCESS"));
           onTeamsChange();
