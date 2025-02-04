@@ -315,6 +315,43 @@ export const downloadProtocol = async (eventId, nominationId) => {
   window.URL.revokeObjectURL(url);
 };
 
+export const downloadCompetenceParticipantsExcel = async (
+  eventId,
+  nominationId,
+  nominationType
+) => {
+  const params = {
+    event_id: eventId,
+    nomination_id: nominationId,
+    kind: nominationType,
+  };
+
+  const response =
+    await competenciesApi.getNominationEventParticipantsExcel(params);
+
+  const blob = new Blob([response.data], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+
+  const url = window.URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+
+  const contentDisposition = response.headers["content-disposition"];
+  const fileNameMatch = contentDisposition?.match(/filename\*=utf-8''(.+)/);
+  const fileName = fileNameMatch
+    ? decodeURIComponent(fileNameMatch[1])
+    : "Участники компетенции.xlsx";
+
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+};
+
 export const remakeSoftware = (dataList, inputString) => {
   const substrings = inputString.split(",");
   let substringIndex = 0;

@@ -77,6 +77,14 @@ export const competenciesApi = {
       params,
       responseType: "blob",
     }),
+  getNominationEventParticipantsExcel: (params) =>
+    instance.get(
+      `/nomination_event/get_teams_participants_excel_by_nomination_event_id`,
+      {
+        params,
+        responseType: "blob",
+      }
+    ),
   editNumberRaceRounds: (params) =>
     instance.patch(`/nomination_event/edit_number_of_race_rounds`, null, {
       params,

@@ -16,9 +16,9 @@ import { useTranslation } from "react-i18next";
 import { DeleteOutlined } from "@ant-design/icons";
 import TeamDeleteParticipantModal from "@components/eventRegistration/TeamDeleteParticipantModal";
 import { participantApi } from "@api";
+import { downloadCompetenceParticipantsExcel } from "@utils";
 
 import "./sass/events.scss";
-import { use } from "react";
 
 function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -65,6 +65,16 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
     deleteParticipant();
     setSelectedRecord(false);
     setIsDeleteModalOpen(false);
+  };
+
+  const handleDownload = async () => {
+    try {
+      await downloadCompetenceParticipantsExcel(
+        data[0].event_id,
+        data[0].nomination_id,
+        data[0].competition_type
+      );
+    } catch {}
   };
 
   const columns = [
@@ -187,7 +197,11 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
             <Flex align="center" justify="space-between">
               {name}
 
-              <Button icon={<DownloadOutlined />} disabled={data?.length == 0}>
+              <Button
+                icon={<DownloadOutlined />}
+                onClick={handleDownload}
+                disabled={data?.length == 0}
+              >
                 {t("EVENTS.DOWNLOAD_EXCEL")}
               </Button>
             </Flex>
