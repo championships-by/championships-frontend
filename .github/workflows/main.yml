@@ -18,7 +18,7 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
       - name: docker build
         run: |
-          docker build . -t cultdog/tournament_frontend_prod
+          docker build . -t ncczubronok/championship_prod_front
       - name: docker push
         run: |
-          docker push cultdog/tournament_frontend_prod
+          docker push ncczubronok/championship_prod_front
