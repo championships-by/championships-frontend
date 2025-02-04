@@ -23,6 +23,7 @@ function EventsList({ events }) {
         const finishDate = new Date(event.registration_finish_date);
         const startDate = new Date(event.registration_start_date);
         const now = new Date();
+
         return (
           <Card
             key={index}
