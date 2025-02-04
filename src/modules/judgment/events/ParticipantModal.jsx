@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Table, Button, Flex, Tooltip, message } from "antd";
+import {
+  Modal,
+  Table,
+  Button,
+  Flex,
+  Tooltip,
+  message,
+  Typography,
+  Download,
+} from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
@@ -170,7 +180,17 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   return (
     <div>
       <Modal
-        title={name}
+        title={
+          <Typography.Title level={3}>
+            <Flex align="center" justify="space-between">
+              {name}
+
+              <Button icon={<DownloadOutlined />}>
+                {t("EVENTS.DOWNLOAD_EXCEL")}
+              </Button>
+            </Flex>
+          </Typography.Title>
+        }
         open={isOpen}
         onOk={onOk}
         onCancel={onCancel}
