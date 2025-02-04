@@ -21,7 +21,9 @@ function EventsList({ events }) {
   const data = Array.isArray(events)
     ? events.map(({ event }, index) => {
         const finishDate = new Date(event.registration_finish_date);
+        const startDate = new Date(event.registration_start_date);
         const now = new Date();
+
         return (
           <Card
             key={index}
@@ -85,13 +87,17 @@ function EventsList({ events }) {
               </Typography.Text>
             </Tooltip>
             <Typography.Title level={5}>
-              {finishDate <= now ? (
-                <div className="events__card__registration__closed">
-                  {t("EVENTS.REGISTRATION_CLOSED")}
+              {startDate <= now && now <= finishDate ? (
+                <div className="events__card__registration__open">
+                  {t("EVENTS.REGISTRATION_OPEN")}
+                </div>
+              ) : startDate > now ? (
+                <div className="events__card__registration__open">
+                  {t("EVENTS.REGISTRATION_NOT_STARTED")}
                 </div>
               ) : (
                 <div className="events__card__registration__open">
-                  {t("EVENTS.REGISTRATION_OPEN")}
+                  {t("EVENTS.REGISTRATION_CLOSED")}
                 </div>
               )}
             </Typography.Title>

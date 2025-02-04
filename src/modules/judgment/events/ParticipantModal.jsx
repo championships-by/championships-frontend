@@ -27,7 +27,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
       },
     };
     participantApi
-      .deleteTeamParticipant(body)
+      .deleteTeamParticipantFromNominationEvent(body)
       .then(() => {
         message.success(t("MESSAGES.DELETE_SUCCESS"));
         setParticipantsInfo((prevInfo) =>
