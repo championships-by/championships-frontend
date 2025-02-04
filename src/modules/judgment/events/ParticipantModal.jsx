@@ -18,10 +18,12 @@ import TeamDeleteParticipantModal from "@components/eventRegistration/TeamDelete
 import { participantApi } from "@api";
 
 import "./sass/events.scss";
+import { use } from "react";
 
 function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [isDownloadButtonEnabled, setIsDownloadButtonEnabled] = useState(false);
   const { t } = useTranslation();
 
   const deleteParticipant = () => {
@@ -185,7 +187,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
             <Flex align="center" justify="space-between">
               {name}
 
-              <Button icon={<DownloadOutlined />}>
+              <Button icon={<DownloadOutlined />} disabled={data?.length == 0}>
                 {t("EVENTS.DOWNLOAD_EXCEL")}
               </Button>
             </Flex>
