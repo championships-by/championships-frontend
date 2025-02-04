@@ -3,3 +3,5 @@ build/
 .idea/
 .env
 **/.DS_Store
+.vscode/
+jsconfig.json

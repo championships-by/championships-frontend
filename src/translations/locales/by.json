@@ -206,7 +206,8 @@
     "ENTER_TEAM_NAME": "Увядзіце назву каманды",
     "TEAM_NAME_EXAMPLE": "Прыклад: Эўрыка",
     "ARE_YOU_SURE_REMOVE_PARTICIPANT": "Вы ўпэўнены, што жадаеце выдаліць гэтага ўдзельніка з кампетэнцыі?",
-    "REGISTRATION_NOT_STARTED": "Рэгістрацыя яшчэ не пачалася"
+    "REGISTRATION_NOT_STARTED": "Рэгістрацыя яшчэ не пачалася",
+    "NUMBER_OF_PARTICIPANTS": "Колькасць удзельнікаў"
   },
   "PARTICIPANTS": {
     "CARD_OF_PARTICIPANT": "Картка ўдзельніка",
@@ -322,7 +323,8 @@
     "NOT_SEND_USER_NOTICE": "Паведамленне карыстальніку не адпраўлена",
     "SUCCESS_EDIT_USER": "Карыстальнік паспяхова зменены",
     "YOU_NOT_JUDGE": "Вы не можаце завяршыць стадыю, паколькі не з'яўляецеся суддзёй",
-    "NOTICE_SUCCESS_SEND": "Ліст паспяхова адпраўлены"
+    "NOTICE_SUCCESS_SEND": "Ліст паспяхова адпраўлены",
+    "SUCCESS_EDIT_TEAM_PARTICIPANTS": "Удзельнікі каманды паспяхова зменены"
   },
   "RULES": {
     "ENTER_EMAIL": "Калі ласка, увядзіце Email",
@@ -548,6 +550,8 @@
     "PASSWORDS_DONT_MATCH": "Паролі не супадаюць",
     "CURRENT_PASSWORD_IS_MISSED": "Поточны пароль адсутнічае",
     "ONE_OR_MORE_JUDGES_NOT_FOUND": "Адзін або некалькі паказаных суддзяў не знойдзены",
-    "AT_LEAST_THREE_TEAMS": "Колькасць каманд павінна быць не менш за тры"
+    "AT_LEAST_THREE_TEAMS": "Колькасць каманд павінна быць не менш за тры",
+    "ERROR_EDIT_TEAM_NAME": "Не атрымалася змяніць назву каманды",
+    "ERROR_EDIT_TEAM_PARTICIPANTS": "Не атрымалася змяніць удзельнікаў каманды"
   }
 }

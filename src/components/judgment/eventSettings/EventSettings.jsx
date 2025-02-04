@@ -118,6 +118,11 @@ function EventSettings() {
       onFilter: (value, record) => record.kind.includes(value),
     },
     {
+      title: t("EVENTS.NUMBER_OF_PARTICIPANTS"),
+      dataIndex: "participant_count",
+      key: "participant_count",
+    },
+    {
       title: t("COMMON.REGLAMENT"),
       key: "reglament",
       render: (record) => (
@@ -458,7 +463,7 @@ function EventSettings() {
     try {
       await eventApi.changeEvent(body);
     } catch (error) {
-      message.error("MESSAGES.EVENT_EDIT_ERROR");
+      message.error(t("MESSAGES.EVENT_EDIT_ERROR"));
       eventSuccess = false;
     }
 

@@ -14,7 +14,8 @@ import { eventApi, competenciesApi, participantApi } from "@api";
 import { remakeSoftware, remakeEquipment } from "@utils";
 import { useTranslation } from "react-i18next";
 
-import "./sass/event-registration.scss";
+import "@components/eventRegistration/sass/event-registration.scss";
+import "@components/eventRegistration/sass/team-edit-participant-modal.scss";
 
 function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
   const [form] = Form.useForm();
   const [equipmentsOriginal, setEquipmentsOriginal] = useState();
   const [softwareOriginal, setSoftwareOriginal] = useState();
+  const [nominationIdOriginal, setNominationIdOriginal] = useState();
 
   useEffect(() => {
     if (isOpen) {
@@ -35,6 +37,7 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
 
       if (record) {
         setNominationId(record.nomination_id);
+        setNominationIdOriginal(record.nomination_id);
 
         const softwareValues = record.additional_data.softwares
           .map((item) => item.software)
@@ -127,10 +130,14 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
       }
     } catch {}
 
+    const nominationIdNew = parseInt(form.getFieldValue("nomination"));
+
     try {
       const body = {
         event_id: parseInt(eventID),
-        nomination_id: nominationId,
+        nomination_id: nominationIdOriginal,
+        new_nomination_id:
+          nominationIdNew !== nominationIdOriginal ? nominationIdNew : null,
         team_id: teamID,
         participant_id: record.participant_id,
         supervisor_first_name: form.getFieldValue("supervisor_first_name"),
@@ -175,12 +182,11 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
           participants: [{}],
         }}
       >
-        <Flex vertical gap="">
+        <Flex vertical className="no-margins">
           <Form.Item name="nomination">
             <TeamNominationSelect
               name="nomination"
               options={nominationsOptions}
-              disabled={true}
             />
           </Form.Item>
           <Form.Item name="participant_id">
@@ -188,15 +194,15 @@ function TeamEditParticipantModal({ isOpen, onOk, onCancel, teamID, record }) {
               name="participant_id"
               mode="single"
               options={dataTeamParticipants}
-              disabled={true}
+              disabled
               teamID={teamID}
             />
           </Form.Item>
-          <Form.Item name="supervisor_first_name">
-            <ParticipantTeacherFirstnameInput name="supervisor_first_name" />
-          </Form.Item>
           <Form.Item name="supervisor_second_name">
             <ParticipantTeacherLastnameInput name="supervisor_second_name" />
+          </Form.Item>
+          <Form.Item name="supervisor_first_name">
+            <ParticipantTeacherFirstnameInput name="supervisor_first_name" />
           </Form.Item>
           <Form.Item name="supervisor_third_name">
             <ParticipantTeacherPatronymicInput name="supervisor_third_name" />

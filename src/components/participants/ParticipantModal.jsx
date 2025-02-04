@@ -37,16 +37,16 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
     try {
       if (isEdit) {
         const body = {
-          id: values.id,
-          first_name: values.first_name,
-          second_name: values.second_name,
-          third_name: values.third_name,
-          region: values.region,
-          birth_date: values.birth_date,
+          participant_data: JSON.stringify({
+            id: values.id,
+            first_name: values.first_name,
+            second_name: values.second_name,
+            third_name: values.third_name,
+            region: values.region,
+            birth_date: values.birth_date,
+            email: values.email !== data.email ? values.email : null,
+          }),
         };
-        if (values.email !== data.email) {
-          body.email = values.email;
-        }
         await participantApi.changeParticipant(body);
         message.success(t("MESSAGES.SUCCESS_EDIT_PARTICIPANT"));
       } else {

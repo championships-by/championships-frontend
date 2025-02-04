@@ -1,5 +1,6 @@
 import { instance } from ".";
 import { fetchWithPagination } from "@utils";
+import qs from "qs";
 
 export const participantApi = {
   getParticipant: () => {
@@ -49,7 +50,11 @@ export const participantApi = {
     );
   },
   changeParticipant: (body) => {
-    return instance.patch(`/participant/participant`, body);
+    return instance.patch(`/participant/participant`, body, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
   },
   getParticipantStats: (body) => {
     return instance
@@ -74,10 +79,16 @@ export const participantApi = {
       `/system_notice/send_participant_registration_notice?${queryString}`
     );
   },
-  deleteTeamParticipant: (body) => {
+  deleteTeamParticipantFromNominationEvent: (body) => {
     return instance.delete(
       `/team_participant_nomination_event/team_participant`,
       { data: body }
     );
+  },
+  deleteTeamParticipant: (params) => {
+    return instance.delete("/team_participant/delete_team_participant", {
+      params,
+      paramsSerializer: (params) => qs.stringify(params, { indices: false }),
+    });
   },
 };

@@ -152,6 +152,7 @@ function EventSettingsCompitations({
           try {
             const params = {
               user_full_name: `${user?.data.second_name} ${user?.data.first_name} ${user?.data.third_name}`,
+              nomination_name: inputName,
               event_name: eventName,
               event_id: eventID,
             };
@@ -183,7 +184,8 @@ function EventSettingsCompitations({
 
         try {
           const params = {
-            user_full_name: `${user.first_name} ${user.third_name} ${user.second_name}`,
+            user_full_name: `${user?.data.second_name} ${user?.data.first_name} ${user?.data.third_name}`,
+            event_name: eventName,
             event_name: eventName,
             event_id: eventID,
           };

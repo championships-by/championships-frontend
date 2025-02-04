@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
 import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import { teamApi } from "@api";
+import { participantApi, teamApi } from "@api";
 import { useTranslation } from "react-i18next";
 
 function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
@@ -12,30 +12,49 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
   const [form] = Form.useForm();
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
   const { eventID } = useParams();
+  const [initialParticipants, setInitialParticipants] = useState([]);
 
   const onFinish = async () => {
-    if (form.getFieldValue("teamName") === teamName) {
-      message.success(t("EVENTS.SUCCESS_EDIT_TEAM_NAME"));
-      onOk();
-    } else {
-      setIsLoading(true);
-      try {
-        const body = {
-          id: teamID,
-          new_name: form.getFieldValue("teamName"),
-        };
+    setIsLoading(true);
 
-        await teamApi.updateTeam(body);
+    const participantsNames = form.getFieldValue("teamParticipants");
+    const newTeamName = form.getFieldValue("teamName");
 
-        message.success(t("EVENTS.SUCCESS_EDIT_TEAM_NAME"));
+    const idsToDelete = initialParticipants
+      .filter((participant) => !participantsNames.includes(participant.label))
+      .map((participant) => participant.value);
 
-        form.resetFields();
-        onOk();
-      } catch {
-      } finally {
-        setIsLoading(false);
-      }
+    if (newTeamName !== teamName) {
+      const body = {
+        id: teamID,
+        new_name: newTeamName,
+      };
+      teamApi
+        .updateTeam(body)
+        .then(() => {
+          message.success(t("EVENTS.SUCCESS_EDIT_TEAM_NAME"));
+        })
+        .catch(() => {
+          message.error(t("ERRORS.ERROR_EDIT_TEAM_NAME"));
+        });
     }
+
+    if (idsToDelete.length > 0) {
+      const body = {
+        team_id: teamID,
+        participants_ids: idsToDelete,
+      };
+      participantApi
+        .deleteTeamParticipant(body)
+        .then(() => {
+          message.success(t("MESSAGES.SUCCESS_EDIT_TEAM_PARTICIPANTS"));
+        })
+        .catch(() => {
+          message.error(t("ERRORS.ERROR_EDIT_TEAM_PARTICIPANTS"));
+        });
+    }
+    setIsLoading(false);
+    onOk();
   };
 
   const onFinishFailed = () => {
@@ -51,6 +70,14 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
         .getTeamById(params.toString())
         .then((data) => {
           data.map((team) => {
+            const initialParticipants = team.participants.map(
+              (participant) => ({
+                value: participant.id,
+                label: `${participant.second_name} ${participant.first_name} ${participant.third_name}`,
+              })
+            );
+            setInitialParticipants(initialParticipants);
+
             const participants = team.participants.map(
               (participant) =>
                 `${participant.second_name} ${participant.first_name} ${participant.third_name}`
@@ -87,7 +114,6 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
           name="teamParticipants"
           options={dataTeamParticipants}
           mode="multiple"
-          disabled={true}
         />
         <Flex gap="middle">
           <Button type="primary" htmlType="submit" loading={isLoading}>

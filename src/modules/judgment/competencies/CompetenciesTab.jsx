@@ -1,7 +1,6 @@
 import { competenciesApi } from "@api";
 import {
   generateCompetenciesDataSource,
-  isCriteriaFilled,
   transformCriteriaData,
   transformCriteriaResultsData,
   transformStageStatus,
@@ -27,22 +26,24 @@ function CompetenciesTab() {
 
   const handleCompleteStage = useCallback(async () => {
     try {
-      if (!isCriteriaFilled(criteria)) {
-        message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
-        return;
-      }
-
       const criteriaResults = [];
+      let fullFilled = true;
 
       dataSource.forEach((result) => {
         Object.keys(result).forEach((key) => {
           if (key.startsWith("criteria")) {
             const criterion = result[key];
+
+            if (!criterion.score) {
+              fullFilled = false;
+            }
+
             criteriaResults.push({
               nomination_event: {
                 event_id: eventId,
                 nomination_id: nominationId,
               },
+
               criteria_id: criterion.id,
               team_id: result.team.id,
               score: criterion.score,
@@ -50,6 +51,12 @@ function CompetenciesTab() {
           }
         });
       });
+
+      if (!fullFilled) {
+        message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
+
+        return;
+      }
 
       await competenciesApi.setCriteriaResults(criteriaResults);
 
