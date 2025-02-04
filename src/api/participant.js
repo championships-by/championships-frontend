@@ -1,5 +1,6 @@
 import { instance } from ".";
 import { fetchWithPagination } from "@utils";
+import qs from "qs";
 
 export const participantApi = {
   getParticipant: () => {
@@ -84,12 +85,10 @@ export const participantApi = {
       { data: body }
     );
   },
-  deleteTeamParticipant: (body) => {
-    let queryString = `/team_participant/delete_team_participant?team_id=${body.team_id}`;
-    body.participants_ids.forEach((participant_id) => {
-      queryString += `&participants_ids=${participant_id}`;
+  deleteTeamParticipant: (params) => {
+    return instance.delete("/team_participant/delete_team_participant", {
+      params,
+      paramsSerializer: (params) => qs.stringify(params, { indices: false }),
     });
-
-    return instance.delete(queryString);
   },
 };
