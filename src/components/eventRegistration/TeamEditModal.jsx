@@ -16,6 +16,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
 
   const onFinish = async () => {
     setIsLoading(true);
+
     const participantsNames = form.getFieldValue("teamParticipants");
     const newTeamName = form.getFieldValue("teamName");
 
@@ -50,17 +51,6 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
         })
         .catch(() => {
           message.error(t("ERRORS.ERROR_EDIT_TEAM_PARTICIPANTS"));
-
-          if (newTeamName !== teamName) {
-            const body = {
-              id: teamID,
-              new_name: teamName,
-            };
-            teamApi
-              .updateTeam(body)
-              .then(() => {})
-              .catch(() => {});
-          }
         });
     }
     setIsLoading(false);

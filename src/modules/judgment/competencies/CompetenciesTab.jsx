@@ -33,14 +33,17 @@ function CompetenciesTab() {
         Object.keys(result).forEach((key) => {
           if (key.startsWith("criteria")) {
             const criterion = result[key];
+
             if (!criterion.score) {
               fullFilled = false;
             }
+
             criteriaResults.push({
               nomination_event: {
                 event_id: eventId,
                 nomination_id: nominationId,
               },
+
               criteria_id: criterion.id,
               team_id: result.team.id,
               score: criterion.score,
@@ -51,6 +54,7 @@ function CompetenciesTab() {
 
       if (!fullFilled) {
         message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
+
         return;
       }
 
