@@ -23,6 +23,7 @@ import UserSupport from "@components/userSupport/UserSupport";
 import SettingsButton from "@components/settingsButton/SettingsButton";
 import PasswordReset from "@components/passwordReset/PasswordReset";
 import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
+import PageTitle from "@components/titles/PageTitle";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
 import { Provider } from "react-redux";
@@ -35,6 +36,7 @@ function App() {
     <Provider store={store}>
       <Layout>
         <BrowserRouter>
+          <PageTitle />
           <UserSupport />
           <SettingsButton />
           <Routes>
