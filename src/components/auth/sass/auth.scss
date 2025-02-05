@@ -71,6 +71,11 @@
       margin-bottom: 16px;
     }
 
+    &__register {
+      color: $dark-blue !important;
+      cursor: pointer;
+    }
+
     &__forgot-password {
       color: $dark-blue !important;
       cursor: pointer;

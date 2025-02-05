@@ -1,5 +1,5 @@
 import "./sass/auth.scss";
-import { Form, message, Button, Typography } from "antd";
+import { Form, message, Button, Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useEffect, useState } from "react";
 import logo from "@assets/img/logo.png";
@@ -108,13 +108,22 @@ function Auth() {
                   {t("COMMON.LOGIN_AS_GUEST")}
                 </Button>
               </FormItem>
+
+              <FormItem className="auth__body__form-item">
+                <Flex justify="space-around">
+                  <Typography.Text className="auth__body__register">
+                    {t("COMMON.REGISTRATION")}
+                  </Typography.Text>
+
+                  <Typography.Text
+                    className="auth__body__forgot-password"
+                    onClick={() => setIsForgotPasswordModalOpen(true)}
+                  >
+                    {t("COMMON.FORGOT_PASSWORD")}
+                  </Typography.Text>
+                </Flex>
+              </FormItem>
             </Form>
-            <Typography.Text
-              className="auth__body__forgot-password"
-              onClick={() => setIsForgotPasswordModalOpen(true)}
-            >
-              {t("COMMON.FORGOT_PASSWORD")}
-            </Typography.Text>
           </div>
         </div>
       </div>
