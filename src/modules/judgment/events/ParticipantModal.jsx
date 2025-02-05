@@ -196,11 +196,10 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
           <Typography.Title level={3}>
             <Flex align="center" justify="space-between">
               {name}
-
               <Button
                 icon={<DownloadOutlined />}
                 onClick={handleDownload}
-                disabled={data?.length == 0}
+                disabled={data?.length === 0}
               >
                 {t("EVENTS.DOWNLOAD_EXCEL")}
               </Button>
