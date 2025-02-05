@@ -1,5 +1,6 @@
 import { EventFilters, defaultFormat, defaultTime, url } from "@constants";
 import { competenciesApi } from "@api";
+import { ROUTES } from "@constants";
 import i18n from "@src/translations/translations";
 import dayjs from "dayjs";
 import JSEncrypt from "jsencrypt";
@@ -147,9 +148,9 @@ export const transformTimeMatchesData = (rounds) => {
     })),
     bestAttempt: round.best_attempt
       ? {
-          id: round.best_attempt.id,
-          result: round.best_attempt.result,
-        }
+        id: round.best_attempt.id,
+        result: round.best_attempt.result,
+      }
       : null,
   }));
 };
@@ -388,4 +389,21 @@ export const remakeEquipment = (dataList, inputString) => {
     result[result.length - 1].equipment += `,${remainingSubstrings}`;
   }
   return result;
+};
+
+export const findRouteTitle = (path) => {
+  const routesArray = Object.values(ROUTES);
+
+  const directMatch = routesArray.find(
+    (route) => typeof route.PATH === "string" && route.PATH === path
+  );
+  if (directMatch) return directMatch.TITLE;
+
+  const functionMatch = routesArray.find(
+    (route) =>
+      typeof route.PATH === "function" &&
+      path.startsWith(route.PATH("").replace(/\/$/, ""))
+  );
+
+  return functionMatch ? functionMatch.TITLE : null;
 };
