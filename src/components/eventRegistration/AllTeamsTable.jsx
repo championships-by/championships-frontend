@@ -1,7 +1,12 @@
 import { Table, Flex, Button, Tooltip, List, Typography } from "antd";
 import { useState } from "react";
-import { EditOutlined, UsergroupAddOutlined } from "@ant-design/icons";
-import TeamEditModal from "./TeamEditModal";
+import {
+  EditOutlined,
+  UsergroupAddOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import TeamDeleteModal from "@components/eventRegistration/TeamDeleteModal";
+import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "@components/eventRegistration/TeamAddParticipantModal";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
@@ -23,6 +28,7 @@ function AllTeamsTable({ teamsData, onTeamsChange }) {
   const { t } = useTranslation();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isParticipantModalOpen, setIsParticipantModalOpen] = useState(false);
+  const [isDeletionModalOpen, setIsDeletionModalOpen] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState();
   const [selectedTeamName, setSelectedTeamName] = useState();
 
@@ -43,9 +49,18 @@ function AllTeamsTable({ teamsData, onTeamsChange }) {
     setIsParticipantModalOpen(true);
   };
 
+  const openDeleteModal = (record) => {
+    setSelectedTeamId(record.id);
+    setSelectedTeamName(record.name);
+    setIsDeletionModalOpen(true);
+  };
+
   const changeParticipantData = () => {
     setIsParticipantModalOpen(false);
     onTeamsChange();
+  };
+
+  const deleteTeam = () => {
   };
 
   const columns = [
@@ -100,6 +115,13 @@ function AllTeamsTable({ teamsData, onTeamsChange }) {
       },
       render: (record) => (
         <Flex>
+          <Tooltip title={t("COMMON.ADD")}>
+            <Button
+              type="text"
+              icon={<UsergroupAddOutlined />}
+              onClick={() => openParticipantModal(record)}
+            />
+          </Tooltip>
           <Tooltip title={t("COMMON.EDIT")}>
             <Button
               type="text"
@@ -107,11 +129,11 @@ function AllTeamsTable({ teamsData, onTeamsChange }) {
               onClick={() => openEditModal(record.id, record.name)}
             />
           </Tooltip>
-          <Tooltip title={t("COMMON.ADD")}>
+          <Tooltip title={t("COMMON.DELETE")}>
             <Button
               type="text"
-              icon={<UsergroupAddOutlined />}
-              onClick={() => openParticipantModal(record)}
+              icon={<DeleteOutlined />}
+              onClick={() => openDeleteModal(record)}
             />
           </Tooltip>
         </Flex>
@@ -132,15 +154,21 @@ function AllTeamsTable({ teamsData, onTeamsChange }) {
 
       <TeamEditModal
         isOpen={isEditModalOpen}
-        onOk={() => changeTeamData()}
+        onOk={changeTeamData}
         onCancel={() => setIsEditModalOpen(false)}
         teamID={selectedTeamId}
         teamName={selectedTeamName}
       />
       <TeamAddParticipantModal
         isOpen={isParticipantModalOpen}
-        onOk={() => changeParticipantData()}
+        onOk={changeParticipantData}
         onCancel={() => setIsParticipantModalOpen(false)}
+        teamID={selectedTeamId}
+      />
+      <TeamDeleteModal
+        isOpen={isDeletionModalOpen}
+        onOk={deleteTeam}
+        onCancel={() => setIsDeletionModalOpen(false)}
         teamID={selectedTeamId}
       />
     </>
