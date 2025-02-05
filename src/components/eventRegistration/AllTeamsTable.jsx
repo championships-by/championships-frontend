@@ -1,4 +1,4 @@
-import { Table, Flex, Button, Tooltip, List, Typography } from "antd";
+import { Table, Flex, Button, Tooltip, List, Typography, message } from "antd";
 import { useState } from "react";
 import {
   EditOutlined,
@@ -11,6 +11,7 @@ import TeamAddParticipantModal from "@components/eventRegistration/TeamAddPartic
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
+import { teamApi } from "@api";
 
 const getRowSpan = (data, index, key) => {
   let count = 1;
@@ -61,6 +62,24 @@ function AllTeamsTable({ teamsData, onTeamsChange }) {
   };
 
   const deleteTeam = () => {
+    const params = {
+      team_id: selectedTeamId,
+    };
+
+    try {
+      teamApi.deleteTeam(params).then((responce) => {
+        if (responce.data.message !== "team cannot be deleted") {
+          message.success(t("MESSAGES.SUCCESS_DELETE_TEAM"));
+        } else {
+          message.warning(t("ERRORS.TEAM_CANNOT_BE_DELETED"));
+        }
+      });
+    } catch { } finally {
+      setTimeout(() => {
+        setIsDeletionModalOpen(false);
+        onTeamsChange();
+      }, 300);
+    }
   };
 
   const columns = [
