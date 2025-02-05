@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Table, Button, Flex, Tooltip, message } from "antd";
+import {
+  Modal,
+  Table,
+  Button,
+  Flex,
+  Tooltip,
+  message,
+  Typography,
+  Download,
+} from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { DeleteOutlined } from "@ant-design/icons";
 import TeamDeleteParticipantModal from "@components/eventRegistration/TeamDeleteParticipantModal";
 import { participantApi } from "@api";
+import { downloadCompetenceParticipantsExcel } from "@utils";
 
 import "./sass/events.scss";
 
 function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [isDownloadButtonEnabled, setIsDownloadButtonEnabled] = useState(false);
   const { t } = useTranslation();
 
   const deleteParticipant = () => {
@@ -53,6 +65,16 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
     deleteParticipant();
     setSelectedRecord(false);
     setIsDeleteModalOpen(false);
+  };
+
+  const handleDownload = async () => {
+    try {
+      await downloadCompetenceParticipantsExcel(
+        data[0].event_id,
+        data[0].nomination_id,
+        data[0].competition_type
+      );
+    } catch {}
   };
 
   const columns = [
@@ -170,7 +192,20 @@ function ParticipantModal({ isOpen, onOk, onCancel, name, data }) {
   return (
     <div>
       <Modal
-        title={name}
+        title={
+          <Typography.Title level={3}>
+            <Flex align="center" justify="space-between">
+              {name}
+              <Button
+                icon={<DownloadOutlined />}
+                onClick={handleDownload}
+                disabled={data?.length === 0}
+              >
+                {t("EVENTS.DOWNLOAD_EXCEL")}
+              </Button>
+            </Flex>
+          </Typography.Title>
+        }
         open={isOpen}
         onOk={onOk}
         onCancel={onCancel}
