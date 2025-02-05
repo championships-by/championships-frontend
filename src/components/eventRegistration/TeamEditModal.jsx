@@ -58,7 +58,8 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
 
   const onFinish = async () => {
     setIsLoading(true);
-    await Promise.all([updateParticipants(), updateName()]);
+    await updateParticipants();
+    await updateName();
     setIsLoading(false);
     onOk();
   };
