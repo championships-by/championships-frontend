@@ -10,10 +10,15 @@ function TitleAndMeta() {
   const [title, setTitle] = useState("");
 
   useLayoutEffect(() => {
-    const titleKey = findRouteTitle(route.pathname);
-    if (titleKey) {
-      setTitle(t(titleKey));
-    }
+    const updateTitle = async () => {
+      const titleKey = await findRouteTitle(route.pathname);
+
+      if (titleKey) {
+        setTitle(t(titleKey));
+      }
+    };
+
+    updateTitle();
   }, [route]);
 
   return (
