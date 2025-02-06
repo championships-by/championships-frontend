@@ -34,7 +34,7 @@ function CompetenciesTab() {
           if (key.startsWith("criteria")) {
             const criterion = result[key];
 
-            if (!criterion.score) {
+            if (criterion.score == null) {
               fullFilled = false;
             }
 
