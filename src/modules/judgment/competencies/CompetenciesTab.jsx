@@ -53,8 +53,7 @@ function CompetenciesTab() {
       });
 
       if (!fullFilled) {
-        message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
-
+        message.error(t("MESSAGES.FILL_ALL_FIELDS"));
         return;
       }
 
@@ -108,7 +107,7 @@ function CompetenciesTab() {
               !stageStatus.tournamentFinished &&
               !isStageFinished
             }
-          />
+э          />
         ),
       },
       {

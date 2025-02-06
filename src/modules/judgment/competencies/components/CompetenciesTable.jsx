@@ -45,12 +45,15 @@ export const CompetenciesTable = ({
       },
       ...generateCriteriaColumns(criteria, (text, record, index, columnId) => {
         const currentCriteria = record[`criteria${columnId}`];
+        const status = currentCriteria.score == null ? "error" : null;
+
         return (
           <div className="criteria-table__column">
             <InputNumber
+              status={status}
               className="criteria-table__column__input"
               disabled={!editable}
-              placeholder={currentCriteria.maxScore}
+              placeholder="–"
               defaultValue={currentCriteria.score}
               controls={false}
               max={currentCriteria.maxScore}
