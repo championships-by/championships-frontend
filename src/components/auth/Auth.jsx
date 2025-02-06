@@ -12,6 +12,7 @@ import { userApi, authApi } from "@api";
 import { getEncryptedPassword } from "@utils";
 import { useTranslation } from "react-i18next";
 import ForgotPasswordModal from "@components/auth/ForgotPasswordModal";
+import RegistrationModal from "@components/auth/RegistrationModal";
 
 function Auth() {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ function Auth() {
   const [password, setPassword] = useState("");
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
     useState(false);
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -52,7 +54,7 @@ function Auth() {
         password: encrypedPassword,
       });
       navigate(ROUTES.EVENTS.PATH);
-    } catch {}
+    } catch { }
 
     setIsFormLoading(false);
   };
@@ -111,7 +113,7 @@ function Auth() {
 
               <FormItem className="auth__body__form-item">
                 <Flex justify="space-around">
-                  <Typography.Text className="auth__body__register">
+                  <Typography.Text className="auth__body__register" onClick={() => setIsRegistrationModalOpen(true)}>
                     {t("COMMON.REGISTRATION")}
                   </Typography.Text>
 
@@ -131,6 +133,10 @@ function Auth() {
         isOpen={isForgotPasswordModalOpen}
         onOk={() => setIsForgotPasswordModalOpen(false)}
         onCancel={() => setIsForgotPasswordModalOpen(false)}
+      />
+      <RegistrationModal
+        isOpen={isRegistrationModalOpen}
+        onCancel={() => setIsRegistrationModalOpen(false)}
       />
     </>
   );

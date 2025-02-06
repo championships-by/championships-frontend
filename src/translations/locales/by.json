@@ -38,6 +38,9 @@
     "MANAGER": "Менеджар",
     "MANAGER_DESCRIPTION": "- рэгіструе ўдзельнікаў на мерапрыемствы, але не можа ствараць мерапрыемствы і ўваходзіць у склад суддзяў.",
     "PASSWORD": "Пароль",
+    "PASSWORD_CONFIRMATION": "Пацвердзіце пароль",
+    "REQUEST_FOR_REGISTRATION": "Падаць заяўку на рэгістрацыю",
+    "REQUEST_FOR_REGISTRATION_INFO": "Вы не зможаце ўвайсці і скарыстацца сваім уліковым запісам, пакуль ён не будзе ўхвалены адміністрацыяй рэсурсу.",
     "NEW_PASSWORD": "Новы пароль",
     "OLD_PASSWORD": "Стары пароль",
     "ENTER_OLD_PASSWORD": "Увядзіце стары пароль",
@@ -380,6 +383,7 @@
     "PASSWORD_SHOULD_CONTAIN_NUMBERS": "Пароль павінен утрымліваць лічбы",
     "PLEASE_ENTER_YOUR_PASSWORD": "Калі ласка, увядзіце свой пароль",
     "PASSWORDS_DONT_MATCH": "Паролі не супадаюць",
+    "PLEASE_CONFIRM_PASSWORD": "Калі ласка, пацвердзіце пароль",
     "PLEASE_ENTER_PHONE": "Калі ласка, увядзіце нумар тэлефона",
     "PLEASE_ENTER_PHONE_WITH_EXAMPLE": "Калі ласка, увядзіце нумар тэлефона ў адпаведнасці з прыкладам",
     "PLEASE_ENTER_SOFTWARE": "Калі ласка, увядзіце абсталяванне"
