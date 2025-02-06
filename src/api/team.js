@@ -11,4 +11,7 @@ export const teamApi = {
     instance
       .get(`/team/get_team_by_id?${queryString}`)
       .then((response) => response.data),
+  deleteTeam: (params) => {
+    return instance.delete("/team/delete_event_team_not_related", { params })
+  }
 };
