@@ -61,24 +61,17 @@ function AllTeamsTable({ teamsData, onTeamsChange }) {
     onTeamsChange();
   };
 
-  const deleteTeam = () => {
-    const params = {
-      team_id: selectedTeamId,
-    };
-
+  const deleteTeam = async () => {
     try {
-      teamApi.deleteTeam(params).then((responce) => {
-        if (responce.data.message !== "team cannot be deleted") {
-          message.success(t("MESSAGES.SUCCESS_DELETE_TEAM"));
-        } else {
-          message.warning(t("ERRORS.TEAM_CANNOT_BE_DELETED"));
-        }
-      });
-    } catch { } finally {
-      setTimeout(() => {
-        setIsDeletionModalOpen(false);
-        onTeamsChange();
-      }, 300);
+      const params = {
+        team_id: selectedTeamId,
+      };
+      await teamApi.deleteTeam(params);
+      message.success(t("MESSAGES.SUCCESS_DELETE_TEAM"));
+    } catch {
+    } finally {
+      setIsDeletionModalOpen(false);
+      onTeamsChange();
     }
   };
 
