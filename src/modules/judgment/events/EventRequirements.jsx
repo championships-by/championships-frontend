@@ -1,42 +1,98 @@
+import { useEffect } from "react";
 import { Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import TextArea from "antd/es/input/TextArea";
 import { useTranslation } from "react-i18next";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import "./sass/events.scss";
 
-function EventRequirements({ name, value }) {
+function EventRequirements({ name, value, form, onChange: onChangeBase }) {
   const { t } = useTranslation();
 
-  const rules = [
-    {
-      required: true,
-      message: t("RULES.PLEASE_ENTER_REQUIREMENTS"),
-    },
-    {
-      max: 1000,
-      message: t("RULES.MAX_1000_SYMBOLS"),
-    },
-    {
-      min: 5,
-      message: t("RULES.MIN_5_SYMBOLS"),
-    },
-  ];
+  const removeHtmlTags = (html) => {
+    return html ? html.replace(/<\/?[^>]+(>|$)/g, "") : "";
+  };
+
+  const validateDescription = (_, value) => {
+    const cleanedValue = removeHtmlTags(value);
+
+    if (!cleanedValue || cleanedValue.length < 5) {
+      return Promise.reject(new Error(t("RULES.MIN_5_SYMBOLS")));
+    }
+    if (cleanedValue.length > 1000) {
+      return Promise.reject(new Error(t("RULES.MAX_1000_SYMBOLS")));
+    }
+    return Promise.resolve();
+  };
+
+  const onChange = (newValue) => {
+    onChangeBase({
+      [name]: newValue,
+    });
+
+    form.setFieldsValue({ [name]: newValue });
+  };
+
+  useEffect(() => {
+    const styleSheet = document.styleSheets[0];
+
+    if (styleSheet) {
+      styleSheet.insertRule(
+        `.events__event-description__quill .ql-snow .ql-tooltip.ql-editing a.ql-action::after { content: "${t(
+          "COMMON.SAVE"
+        )}"; }`,
+        styleSheet.cssRules.length
+      );
+
+      styleSheet.insertRule(
+        `.events__event-description__quill .ql-snow .ql-tooltip a.ql-action::after { content: "${t(
+          "COMMON.EDIT"
+        )}"; }`,
+        styleSheet.cssRules.length
+      );
+
+      styleSheet.insertRule(
+        `.events__event-description__quill .ql-snow .ql-tooltip a.ql-remove::before { content: "${t(
+          "COMMON.DELETE"
+        )}"; }`,
+        styleSheet.cssRules.length
+      );
+    }
+  }, [t]);
 
   return (
-    <FormItem name={name} hasFeedback validateFirst rules={rules}>
+    <FormItem
+      name={name}
+      hasFeedback
+      validateFirst
+      rules={[
+        {
+          required: true,
+          message: t("RULES.PLEASE_ENTER_REQUIREMENTS"),
+        },
+        {
+          validator: validateDescription,
+        },
+      ]}
+    >
       <Flex vertical>
         <Typography.Text>
           {t("COMMON.WHAT_NEED_TO_PARTICIPATE")}
         </Typography.Text>
-        <TextArea
+        <ReactQuill
           value={value}
-          rows={3}
-          allowClear
+          onChange={onChange}
           placeholder={t("COMMON.ENTER_REQUIREMENTS")}
-          id="event_requirements_input"
-          maxLength={1000}
-          className="events__event-description__textarea"
+          className="events__event-description__quill"
+          modules={{
+            toolbar: [
+              ["bold", "italic", "underline"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["link"],
+            ],
+          }}
         />
       </Flex>
     </FormItem>

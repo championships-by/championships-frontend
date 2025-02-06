@@ -46,6 +46,11 @@ module.exports = (env) => {
     module: {
       rules: [
         {
+          test: /\.css$/,
+          use: [MiniCssExtractPlugin.loader, "css-loader"],
+          include: /node_modules/,
+        },
+        {
           test: /\.s[ac]ss$/i,
           use: [
             MiniCssExtractPlugin.loader,

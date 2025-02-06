@@ -1,12 +1,66 @@
+import { useEffect } from "react";
 import { Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import TextArea from "antd/es/input/TextArea";
+import ReactQuill from "react-quill";
 import { useTranslation } from "react-i18next";
+import "react-quill/dist/quill.snow.css";
 
 import "./sass/events.scss";
 
-function EventDescription({ name, value }) {
+function EventDescription({ name, value, form, onChange: onChangeBase }) {
   const { t } = useTranslation();
+
+  const removeHtmlTags = (html) => {
+    return html ? html.replace(/<\/?[^>]+(>|$)/g, "") : "";
+  };
+
+  const validateDescription = (_, value) => {
+    const cleanedValue = removeHtmlTags(value);
+
+    if (!cleanedValue || cleanedValue.length < 5) {
+      return Promise.reject(new Error(t("RULES.MIN_5_SYMBOLS")));
+    }
+    if (cleanedValue.length > 1000) {
+      return Promise.reject(new Error(t("RULES.MAX_1000_SYMBOLS")));
+    }
+    return Promise.resolve();
+  };
+
+  const onChange = (newValue) => {
+    onChangeBase({
+      [name]: newValue,
+    });
+
+    form.setFieldsValue({ [name]: newValue });
+  };
+
+  useEffect(() => {
+    const styleSheet = document.styleSheets[0];
+
+    if (styleSheet) {
+      styleSheet.insertRule(
+        `.events__event-description__quill .ql-snow .ql-tooltip.ql-editing a.ql-action::after { content: "${t(
+          "COMMON.SAVE"
+        )}"; }`,
+        styleSheet.cssRules.length
+      );
+
+      styleSheet.insertRule(
+        `.events__event-description__quill .ql-snow .ql-tooltip a.ql-action::after { content: "${t(
+          "COMMON.EDIT"
+        )}"; }`,
+        styleSheet.cssRules.length
+      );
+
+      styleSheet.insertRule(
+        `.events__event-description__quill .ql-snow .ql-tooltip a.ql-remove::before { content: "${t(
+          "COMMON.DELETE"
+        )}"; }`,
+        styleSheet.cssRules.length
+      );
+    }
+  }, [t]);
+
   return (
     <FormItem
       name={name}
@@ -18,28 +72,28 @@ function EventDescription({ name, value }) {
           message: t("RULES.PLEASE_ENTER_EVENT_DESCRIPTION"),
         },
         {
-          max: 1000,
-          message: t("RULES.MAX_1000_SYMBOLS"),
-        },
-        {
-          min: 5,
-          message: t("RULES.MIN_5_SYMBOLS"),
+          validator: validateDescription,
         },
       ]}
     >
       <Flex vertical>
         <Typography.Text>{t("EVENTS.EVENT_DESCRIPTION")}</Typography.Text>
-        <TextArea
+        <ReactQuill
           value={value}
-          rows={6}
-          allowClear
+          onChange={onChange}
           placeholder={t("EVENTS.ENTER_EVENT_DESCRIPTION")}
-          id="event_description_input"
-          maxLength={1000}
-          className="events__event-description__textarea"
+          className="events__event-description__quill"
+          modules={{
+            toolbar: [
+              ["bold", "italic", "underline"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              ["link"],
+            ],
+          }}
         />
       </Flex>
     </FormItem>
   );
 }
+
 export default EventDescription;
