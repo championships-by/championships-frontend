@@ -2,20 +2,21 @@ import React from "react";
 import { Modal } from "antd";
 import { useTranslation } from "react-i18next";
 
-function TeamDeleteModal() {
+function TeamDeleteParticipantModal({ isOpen, onOk, onCancel }) {
   const { t } = useTranslation();
 
-  return Modal.confirm({
-    title: t("COMMON.ARE_YOU_SURE"),
-    content: t("EVENTS.ARE_YOU_SURE_REMOVE_TEAM"),
-    footer: (_, { OkBtn, CancelBtn }) => (
-      <>
-        <OkBtn />
-        <CancelBtn />
-      </>
-    ),
-    okText: t("COMMON.YES"),
-    cancelText: t("COMMON.CANCEL"),
-  });
+  return (
+    <Modal
+      title={t("COMMON.ARE_YOU_SURE")}
+      open={isOpen}
+      onOk={onOk}
+      onCancel={onCancel}
+      okText={t("COMMON.YES")}
+      cancelText={t("COMMON.CANCEL")}
+    >
+      {t("EVENTS.ARE_YOU_SURE_REMOVE_TEAM")}
+    </Modal>
+  );
 }
-export default TeamDeleteModal;
+
+export default TeamDeleteParticipantModal;
