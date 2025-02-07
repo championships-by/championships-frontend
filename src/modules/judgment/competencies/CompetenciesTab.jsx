@@ -34,7 +34,7 @@ function CompetenciesTab() {
           if (key.startsWith("criteria")) {
             const criterion = result[key];
 
-            if (!criterion.score) {
+            if (criterion.score === null) {
               fullFilled = false;
             }
 
@@ -53,8 +53,7 @@ function CompetenciesTab() {
       });
 
       if (!fullFilled) {
-        message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
-
+        message.error(t("MESSAGES.FILL_ALL_FIELDS"));
         return;
       }
 

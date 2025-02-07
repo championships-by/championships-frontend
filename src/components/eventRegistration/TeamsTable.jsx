@@ -175,16 +175,6 @@ function TeamsTable({ teamsData, onTeamsChange }) {
       title: t("COMMON.ACTIONS"),
       key: "action",
       width: "10%",
-      onCell: (record, rowIndex) => {
-        const rowSpan = getRowSpan(transformedData, rowIndex, "team_name");
-        return {
-          rowSpan:
-            rowIndex === 0 ||
-            transformedData[rowIndex - 1].team_name !== record.team_name
-              ? rowSpan
-              : 0,
-        };
-      },
       render: (record) => (
         <Flex>
           <Tooltip title={t("COMMON.EDIT")}>
