@@ -7,9 +7,18 @@ function CookiesNotification() {
   const { t } = useTranslation();
 
   useEffect(() => {
+    const hasAcceptedCookies = localStorage.getItem("cookiesAccepted");
+
+    if (hasAcceptedCookies) return;
+
+    const handleAccept = () => {
+      localStorage.setItem("cookiesAccepted", "true");
+      api.destroy();
+    };
+
     const btn = (
       <Space>
-        <Button type="primary" size="small" onClick={() => api.destroy()}>
+        <Button type="primary" size="small" onClick={handleAccept}>
           {t("COMMON.OK")}
         </Button>
       </Space>
@@ -20,6 +29,7 @@ function CookiesNotification() {
       description: t("COMMON.COOKIES_MESSAGE"),
       btn,
       placement: "bottomRight",
+      closeIcon: null,
     });
   }, [api, t]);
 
