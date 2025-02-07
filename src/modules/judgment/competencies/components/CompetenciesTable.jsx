@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
+import { ANTD_INPUT_FIELD_STATUSES } from "@constants";
 
 import "./CompetenciesTable.scss";
 
@@ -45,7 +46,7 @@ export const CompetenciesTable = ({
       },
       ...generateCriteriaColumns(criteria, (text, record, index, columnId) => {
         const currentCriteria = record[`criteria${columnId}`];
-        const status = currentCriteria.score == null ? "error" : null;
+        const status = currentCriteria.score === null ? ANTD_INPUT_FIELD_STATUSES.ERROR : null;
 
         return (
           <div className="criteria-table__column">

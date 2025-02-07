@@ -34,7 +34,7 @@ function CompetenciesTab() {
           if (key.startsWith("criteria")) {
             const criterion = result[key];
 
-            if (criterion.score == null) {
+            if (criterion.score === null) {
               fullFilled = false;
             }
 
@@ -107,7 +107,7 @@ function CompetenciesTab() {
               !stageStatus.tournamentFinished &&
               !isStageFinished
             }
-э          />
+          />
         ),
       },
       {
