@@ -82,6 +82,7 @@ export const ERRORS = {
   "one or more judges presented in judges_ids not found":
     "ERRORS.JUDGES_NOT_FOUND",
   "amount of teams should be at least 3": "ERRORS.AT_LEAST_THREE_TEAMS",
+  "team cannot be deleted": "ERRORS.TEAM_CANNOT_BE_DELETED",
 
   getError: function (errorKey) {
     return i18n.t(this[errorKey]) || i18n.t("MESSAGES.ERROR");

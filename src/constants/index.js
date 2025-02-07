@@ -304,3 +304,9 @@ export const LANGUAGES = {
   RU: "ru",
   BY: "by",
 };
+
+export const ANTD_INPUT_FIELD_STATUSES = {
+  DEFAULT: null,
+  ERROR: "error",
+  WARNING: "warning",
+};

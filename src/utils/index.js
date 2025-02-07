@@ -1,5 +1,5 @@
 import { EventFilters, defaultFormat, defaultTime, url } from "@constants";
-import { competenciesApi } from "@api";
+import { competenciesApi, eventApi } from "@api";
 import { ROUTES } from "@constants";
 import i18n from "@src/translations/translations";
 import dayjs from "dayjs";
@@ -391,7 +391,7 @@ export const remakeEquipment = (dataList, inputString) => {
   return result;
 };
 
-export const findRouteTitle = (path) => {
+export const findRouteTitle = async (path) => {
   const routesArray = Object.values(ROUTES);
 
   const directMatch = routesArray.find(
@@ -405,5 +405,23 @@ export const findRouteTitle = (path) => {
       path.startsWith(route.PATH("").replace(/\/$/, ""))
   );
 
-  return functionMatch ? functionMatch.TITLE : null;
+  if (functionMatch) {
+    if (functionMatch.TITLE === ROUTES.EVENTS_DESCRIPTION.TITLE) {
+      const match = path.match(/\/events\/(\d+)/);
+
+      if (match) {
+        const eventID = match[1];
+
+        let eventName = functionMatch.TITLE;
+
+        await eventApi.getEvent(eventID).then((result) => {
+          eventName = result.event.name;
+        });
+
+        return eventName;
+      }
+      return functionMatch.TITLE;
+    }
+  }
+  return null;
 };

@@ -14,22 +14,15 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
   const { eventID } = useParams();
   const [initialParticipants, setInitialParticipants] = useState([]);
 
-  const onFinish = async () => {
-    setIsLoading(true);
-
-    const participantsNames = form.getFieldValue("teamParticipants");
+  const updateName = async () => {
     const newTeamName = form.getFieldValue("teamName");
-
-    const idsToDelete = initialParticipants
-      .filter((participant) => !participantsNames.includes(participant.label))
-      .map((participant) => participant.value);
 
     if (newTeamName !== teamName) {
       const body = {
         id: teamID,
         new_name: newTeamName,
       };
-      teamApi
+      await teamApi
         .updateTeam(body)
         .then(() => {
           message.success(t("EVENTS.SUCCESS_EDIT_TEAM_NAME"));
@@ -38,13 +31,21 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
           message.error(t("ERRORS.ERROR_EDIT_TEAM_NAME"));
         });
     }
+  };
+
+  const updateParticipants = async () => {
+    const participantsNames = form.getFieldValue("teamParticipants");
+
+    const idsToDelete = initialParticipants
+      .filter((participant) => !participantsNames.includes(participant.label))
+      .map((participant) => participant.value);
 
     if (idsToDelete.length > 0) {
       const body = {
         team_id: teamID,
         participants_ids: idsToDelete,
       };
-      participantApi
+      await participantApi
         .deleteTeamParticipant(body)
         .then(() => {
           message.success(t("MESSAGES.SUCCESS_EDIT_TEAM_PARTICIPANTS"));
@@ -53,6 +54,12 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
           message.error(t("ERRORS.ERROR_EDIT_TEAM_PARTICIPANTS"));
         });
     }
+  };
+
+  const onFinish = async () => {
+    setIsLoading(true);
+    await updateParticipants();
+    await updateName();
     setIsLoading(false);
     onOk();
   };

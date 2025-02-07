@@ -221,7 +221,7 @@
     "TEAM_NAME": "Название команды",
     "ENTER_TEAM_NAME": "Введите название команды",
     "TEAM_NAME_EXAMPLE": "Пример: Эврика",
-    "ARE_YOU_SURE_REMOVE_PARTICIPANT": "Вы уверены что хотите удалить этого участника из компетенции?",
+    "ARE_YOU_SURE_REMOVE_PARTICIPANT": "Вы уверены, что хотите удалить этого участника из компетенции?",
     "REGISTRATION_NOT_STARTED": "Регистрация ещё не началась",
     "NUMBER_OF_PARTICIPANTS": "Количество участников",
     "DOWNLOAD_EXCEL": "Скачать таблицу в формате Excel"
@@ -312,6 +312,7 @@
     "EVENT_CREATE_ERROR": "При создании мероприятия произошла ошибка",
     "EVENT_CREATE_SUCCESS": "Мероприятие успешно создано",
     "SUCCESS_DELETE_NOMINATION": "Компетенция успешно удалена",
+    "SUCCESS_DELETE_TEAM": "Команда успешно удалена",
     "DELETE_ERROR": "При удалении произошла ошибка",
     "DISABLE_PUBLISH_FOR_REMOVE_NOMINATION": "Прежде чем удалить последнюю компетенцию, снимите мероприятие с публикации",
     "TOURNAMENT_FINISHED": "Турнир уже завершился",
@@ -575,6 +576,7 @@
     "ERROR_EDIT_TEAM_PARTICIPANTS": "Не удалось изменить участников команды",
     "USER_ACCOUNT_NOT_VERIFIED": "Ваша учётная запись пока не прошла подтверждение. Пожалуйста, подождите или обратитесь к администратору",
     "USER_ACCOUNT_VERIFICATION_DECLINED": "Вам было отклонено в подтверждении учётной записи.",
-    "FILL_CAPTCHA": "Заполните Captcha!"
+    "FILL_CAPTCHA": "Заполните Captcha!",
+    "TEAM_CANNOT_BE_DELETED": "Нельзя удалить команду, поскольку её участники уже зарегистрированы в номинациях"
   }
 }
