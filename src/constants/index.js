@@ -304,3 +304,5 @@ export const LANGUAGES = {
   RU: "ru",
   BY: "by",
 };
+
+export const MAX_TEXTAREA_LENGTH = 1000;

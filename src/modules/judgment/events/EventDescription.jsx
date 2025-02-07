@@ -1,30 +1,15 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Typography, Flex } from "antd";
+import { validateDescription } from "@utils";
 import FormItem from "antd/es/form/FormItem";
 import ReactQuill from "react-quill";
 import { useTranslation } from "react-i18next";
-import "react-quill/dist/quill.snow.css";
 
+import "react-quill/dist/quill.snow.css";
 import "./sass/events.scss";
 
 function EventDescription({ name, value, form, onChange: onChangeBase }) {
   const { t } = useTranslation();
-
-  const removeHtmlTags = (html) => {
-    return html ? html.replace(/<\/?[^>]+(>|$)/g, "") : "";
-  };
-
-  const validateDescription = (_, value) => {
-    const cleanedValue = removeHtmlTags(value);
-
-    if (!cleanedValue || cleanedValue.length < 5) {
-      return Promise.reject(new Error(t("RULES.MIN_5_SYMBOLS")));
-    }
-    if (cleanedValue.length > 1000) {
-      return Promise.reject(new Error(t("RULES.MAX_1000_SYMBOLS")));
-    }
-    return Promise.resolve();
-  };
 
   const onChange = (newValue) => {
     onChangeBase({
@@ -34,7 +19,7 @@ function EventDescription({ name, value, form, onChange: onChangeBase }) {
     form.setFieldsValue({ [name]: newValue });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const styleSheet = document.styleSheets[0];
 
     if (styleSheet) {
@@ -72,7 +57,7 @@ function EventDescription({ name, value, form, onChange: onChangeBase }) {
           message: t("RULES.PLEASE_ENTER_EVENT_DESCRIPTION"),
         },
         {
-          validator: validateDescription,
+          validator: (_, value) => validateDescription(value, t),
         },
       ]}
     >

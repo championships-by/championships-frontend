@@ -156,7 +156,8 @@
         display: none;
       }
 
-      & .ql-snow .ql-tooltip.ql-flip {
+      & .ql-snow .ql-tooltip.ql-flip,
+      & .ql-snow .ql-tooltip.ql-editing {
         transform: translate(150px, -16px);
       }
 

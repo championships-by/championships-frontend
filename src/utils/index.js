@@ -1,6 +1,6 @@
 import { EventFilters, defaultFormat, defaultTime, url } from "@constants";
 import { competenciesApi, eventApi } from "@api";
-import { ROUTES } from "@constants";
+import { ROUTES, MAX_TEXTAREA_LENGTH } from "@constants";
 import i18n from "@src/translations/translations";
 import dayjs from "dayjs";
 import JSEncrypt from "jsencrypt";
@@ -148,9 +148,9 @@ export const transformTimeMatchesData = (rounds) => {
     })),
     bestAttempt: round.best_attempt
       ? {
-        id: round.best_attempt.id,
-        result: round.best_attempt.result,
-      }
+          id: round.best_attempt.id,
+          result: round.best_attempt.result,
+        }
       : null,
   }));
 };
@@ -424,4 +424,20 @@ export const findRouteTitle = async (path) => {
     }
   }
   return null;
+};
+
+export const removeHtmlTags = (html) => {
+  return html ? html.replace(/<\/?[^>]+(>|$)/g, "") : "";
+};
+
+export const validateDescription = (value, t) => {
+  const cleanedValue = removeHtmlTags(value);
+
+  if (!cleanedValue || cleanedValue.length < 5) {
+    return Promise.reject(new Error(t("RULES.MIN_5_SYMBOLS")));
+  }
+  if (cleanedValue.length > MAX_TEXTAREA_LENGTH) {
+    return Promise.reject(new Error(t("RULES.MAX_1000_SYMBOLS")));
+  }
+  return Promise.resolve();
 };
