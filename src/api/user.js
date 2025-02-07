@@ -8,6 +8,9 @@ export const userApi = {
   getUsers: () => {
     return fetchWithPagination(instance, `/user/users`);
   },
+  getUsersApplications: () => {
+    return fetchWithPagination(instance, `/user/users`)
+  },
   getUsersByName: (params) => {
     return fetchWithPagination(instance, `/user/get_users_by_name`, params);
   },

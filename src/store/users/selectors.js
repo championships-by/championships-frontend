@@ -9,6 +9,15 @@ export const getUsersSelector = createSelector(
   })
 );
 
+export const getUsersApplicationsSelector = createSelector(
+  (state) => state.users,
+  (users) => ({
+    data: users.usersApplications,
+    isLoading: users.isLoadingUsersApplications,
+    error: users.error,
+  })
+);
+
 export const getUserSelector = createSelector(
   (state) => state.users,
   (users) => ({

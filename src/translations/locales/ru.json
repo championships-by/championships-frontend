@@ -149,7 +149,13 @@
     "WE_SEND_EMAIL_TO_RECOVERY_PASSWORD": "Мы отправим ссылку для сброса пароля на вашу электронную почту.",
     "FORGOT_PASSWORD": "Забыли пароль?",
     "TOKEN_EXPIRED_NEW_NOTICE_SEND": "Срок действия ссылки истёк. Новая ссылка была отправлена Вам на почту.",
-    "GROUP": "Группа"
+    "GROUP": "Группа",
+    "USER_APPLICATIONS": "Заявки на регистрацию",
+    "STATUS": "Состояние",
+    "ACCEPT": "Одобрить",
+    "DECLINE": "Отклонить",
+    "ACCEPTED": "Одобрено",
+    "DECLINED": "Отклонено"
   },
   "EVENTS": {
     "EVENT": "Мероприятие",

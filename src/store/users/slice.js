@@ -6,16 +6,19 @@ import {
   getUserProfile,
   getJudges,
   getUsersByName,
+  getUsersApplications,
 } from "./thunk";
 
 export const usersSlice = createSlice({
   name: "users",
   initialState: {
     allUsers: [],
+    usersApplications: [],
     userProfile: [],
     judges: [],
     isLoading: false,
     isUserProfileLoading: true,
+    isLoadingUsersApplications: false,
     error: null,
   },
   reducers: {},
@@ -70,6 +73,15 @@ export const usersSlice = createSlice({
       .addCase(getUsersByName.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
-      });
+      })
+      .addCase(getUsersApplications.fulfilled, (state, action) => {
+        state.usersApplications = action.payload;
+        state.isLoadingUsersApplications = false;
+      })
+      .addCase(getUsersApplications.rejected, (state, action) => {
+        state.isLoadingUsersApplications = false;
+        state.error = action.error.message;
+      })
+      ;
   },
 });
