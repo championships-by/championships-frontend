@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, getUnverifiedUsers, getUsersByName, getUsersSelector, getUnverifiedUsersSelector } from "@store/users";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
-import UserApplicationsModal from "@components/usersControl/UsersVerificationModal";
+import UsersVerificationModal from "@components/usersControl/UsersVerificationModal";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
-import { Button, message, Flex, Typography, Row, Col, Divider } from "antd";
+import { Button, message, Flex, Typography, Row, Col, Divider, Tabs } from "antd";
 import SearchInput from "@modules/search/SearchInput";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
@@ -22,6 +22,12 @@ function UsersControl() {
   const unverifiedUsers = useSelector(getUnverifiedUsersSelector);
   const [unverifiedUsersCount, setUnverifiedUsersCount] = useState(0);
   const isLoading = users.isLoading;
+
+  const [activeTab, setActiveTab] = useState("1");
+
+  const onChange = (key) => {
+    setActiveTab(key);
+  };
 
   useEffect(() => {
     dispatch(getUnverifiedUsers());
@@ -43,6 +49,21 @@ function UsersControl() {
     }
   };
 
+  const tabs = [
+    {
+      key: "1", label: t("COMMON.USERS"),
+      children: <UsersTable></UsersTable>
+    },
+    {
+      key: "2",
+      label: t("COMMON.USER_APPLICATIONS") + ` (${unverifiedUsersCount})`,
+      children: <UsersVerificationModal
+        isOpen={isUserApprovalModalOpen}
+        onCancel={() => setIsUserApprovalModalOpen(false)}
+        />
+    }
+  ]
+
   return (
     <div className="users-control">
       <Loader show={isLoading} />
@@ -59,15 +80,6 @@ function UsersControl() {
               <Flex gap="middle">
                 <Button
                   type="primary"
-                  disabled={!unverifiedUsersCount}
-                  onClick={() => setIsUserApprovalModalOpen(true)}
-                >
-                  {t("COMMON.USER_APPLICATIONS")}
-                  {unverifiedUsersCount && ` (${unverifiedUsersCount})`}
-                </Button>
-
-                <Button
-                  type="primary"
                   onClick={() => setIsAddUserModalOpen(true)}
                 >
                   {t("COMMON.CREATE_USER")}
@@ -77,17 +89,12 @@ function UsersControl() {
           </Flex>
         </Col>
       </Row>
-      <Divider />
-      <UsersTable />
+      <Tabs items={tabs} onChange={onChange}></Tabs>
       <UserModal
         type={ModalType.ADD}
         isOpen={isAddUserModalOpen}
         onOk={() => setIsAddUserModalOpen(false)}
         onCancel={() => setIsAddUserModalOpen(false)}
-      />
-      <UserApplicationsModal
-        isOpen={isUserApprovalModalOpen}
-        onCancel={() => setIsUserApprovalModalOpen(false)}
       />
     </div>
   );

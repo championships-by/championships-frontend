@@ -12,7 +12,7 @@ import UserAcceptOrDeclineModal from "./UserAcceptOrDeclineModal";
 
 import "@components/usersControl/sass/users-approval-modal.scss";
 
-function UsersVerificationModal({ isOpen, onCancel }) {
+function UsersVerificationTable() {
   const { t } = useTranslation();
   const users = useSelector(getUnverifiedUsersSelector);
   const usersData = users.data;
@@ -32,7 +32,7 @@ function UsersVerificationModal({ isOpen, onCancel }) {
   }
 
   const acceptUser = async () => {
-  
+
   }
 
   const declineUser = async () => {
@@ -91,13 +91,7 @@ function UsersVerificationModal({ isOpen, onCancel }) {
   ];
 
   return (
-    <Modal
-      width={1000}
-      title={t("COMMON.USER_APPLICATIONS")}
-      open={isOpen}
-      onCancel={onCancel}
-      footer={null}
-    >
+    <>
       <Table
         dataSource={usersData}
         columns={columns}
@@ -114,9 +108,9 @@ function UsersVerificationModal({ isOpen, onCancel }) {
         isAccepted={isAccepted}
         onYes={onConfirmed}
         onNo={() => setIsConfirmationModalOpen(false)}
-       />
-    </Modal>
+      />
+    </>
   );
 }
 
-export default UsersVerificationModal;
+export default UsersVerificationTable;

@@ -14,16 +14,24 @@ import { Button, Form, message, Modal, Space, Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { userApi } from "@api";
 import { useTranslation } from "react-i18next";
+import Captcha from "@components/auth/Captcha";
 
 function RegistrationModal({ isOpen, onOk, onCancel }) {
   const { t } = useTranslation();
   const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const [passwordToConfirm, setPasswordToConfirm] = useState();
+  const [isCaptchaSuccess, setIsCaptchaSuccess] = useState(false);
   const dispatch = useDispatch();
 
   const onFinish = async () => {
     setLoading(true);
+    if (!isCaptchaSuccess) {
+      message.error(t("ERRORS.FILL_CAPTCHA"));
+      setLoading(false);
+      return;
+    }
+
     const body = {
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
@@ -84,6 +92,11 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
         <Space>
           <FormItem>
             <Flex vertical gap="middle">
+              <Captcha
+                onSuccess={() => {
+                  setIsCaptchaSuccess(true);
+                }}
+              />
               <Button type="primary" htmlType="submit" loading={isLoading}>
                 {t("COMMON.REQUEST_FOR_REGISTRATION")}
               </Button>

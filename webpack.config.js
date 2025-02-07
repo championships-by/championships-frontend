@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 require("dotenv").config();
+const Dotenv = require("dotenv-webpack");
 
 module.exports = (env) => {
   const DEV_SERVER_HOST = "127.0.0.1";
@@ -42,6 +43,7 @@ module.exports = (env) => {
         API_HOST: JSON.stringify(process.env.API_HOST),
         PUBLIC_KEY: process.env.PUBLIC_KEY,
       }),
+      new Dotenv(),
     ],
     module: {
       rules: [
