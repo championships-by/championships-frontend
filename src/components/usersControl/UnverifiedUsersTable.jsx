@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { Modal, Table, Typography, Flex, Tooltip, Button } from "antd";
+import { Modal, Table, Typography, Flex, Tooltip, Button, message } from "antd";
 import { useSelector } from "react-redux";
-// import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { getUnverifiedUsersSelector, getUnverifiedUsers } from "@store/users";
 import { paginationLocale, tableLocale } from "@constants";
 import { useTranslation } from "react-i18next";
 import { getTranslation } from "@utils";
-import { userApi } from "@api"
+import { userApi } from "@api";
 import UserAcceptOrDeclineModal from "./UserAcceptOrDeclineModal";
 
 import "@components/usersControl/sass/users-approval-modal.scss";
 
-function UsersVerificationTable() {
+function UnverifiedUsersTable({ dispatch }) {
   const { t } = useTranslation();
   const users = useSelector(getUnverifiedUsersSelector);
   const usersData = users.data;
@@ -24,20 +23,40 @@ function UsersVerificationTable() {
     setIsAccepted(mode);
     setSelectedUnverifiedUser(unverifiedUser);
     setIsConfirmationModalOpen(true);
-  }
-
-  const onConfirmed = async () => {
-    setIsConfirmationModalOpen(false);
-    isAccepted ? await acceptUser() : await cancelUser()
-  }
+  };
 
   const acceptUser = async () => {
+    try {
+      const body = {
+        user_id: selectedUnverifiedUser.id,
+      };
+      await userApi.acceptUser(body);
+      message.success(t("COMMON.USER_APPROVED"));
 
-  }
+      await userApi.sendUserRegistrationNotice(selectedUnverifiedUser.email);
+      message.info(t("MESSAGES.SUCCESS_SEND_USER_NOTICE"));
+    } catch { }
+  };
 
   const declineUser = async () => {
+    try {
+      const params = new URLSearchParams();
+      params.append("user_id", selectedUnverifiedUser.id);
+      await userApi.declineUser(params);
+      message.success(t("COMMON.USER_DECLINED"))
+    } catch { }
+  };
 
-  }
+  const onConfirmed = async () => {
+    if (isAccepted) {
+      await acceptUser();
+    } else {
+      await declineUser();
+    }
+    setIsConfirmationModalOpen(false);
+    setSelectedUnverifiedUser(null);
+    dispatch();
+  };
 
   const columns = [
     {
@@ -68,7 +87,7 @@ function UsersVerificationTable() {
       title: t("COMMON.ACTIONS"),
       key: "status",
       width: "20%",
-      render: (unverifiedUser) =>
+      render: (unverifiedUser) => (
         <Flex>
           <Tooltip title={t("COMMON.ACCEPT")}>
             <Button
@@ -87,6 +106,7 @@ function UsersVerificationTable() {
             />
           </Tooltip>
         </Flex>
+      ),
     },
   ];
 
@@ -113,4 +133,4 @@ function UsersVerificationTable() {
   );
 }
 
-export default UsersVerificationTable;
+export default UnverifiedUsersTable;

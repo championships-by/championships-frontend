@@ -40,10 +40,12 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
       phone: form.getFieldValue("phone"),
       educational_institution: form.getFieldValue("organization"),
       password: form.getFieldValue("password"),
-      password_confirmation: form.getFieldValue("password_confirmation"),
     };
 
-    message.success(t("COMMON.REGISTRATION_APPLICATION_SENT"));
+    try {
+      await userApi.registerUser(body);
+      message.success(t("COMMON.REGISTRATION_APPLICATION_SENT"));
+    } catch {}
 
     setLoading(false);
     onOk();
