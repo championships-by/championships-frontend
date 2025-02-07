@@ -23,7 +23,8 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
   const dispatch = useDispatch();
 
   const onFinish = async () => {
-    const raw = {
+    setLoading(true);
+    const body = {
       email: form.getFieldValue("email"),
       first_name: form.getFieldValue("first_name"),
       second_name: form.getFieldValue("second_name"),
@@ -31,27 +32,11 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
       phone: form.getFieldValue("phone"),
       educational_institution: form.getFieldValue("organization"),
       password: form.getFieldValue("password"),
-      passowrd_confirmation: form.getFieldValue("password_confirmation"),
+      password_confirmation: form.getFieldValue("password_confirmation"),
     };
-    const params = new URLSearchParams();
-    params.append("password", raw.password);
-    params.append("user_email", raw.email);
-    setLoading(true);
-    const result = await dispatch(setUser(raw));
 
-    if (setUser.rejected.match(result)) {
-      throw new Error(result.error.message);
-    }
-    dispatch(getUsers());
-    message.success(t("MESSAGES.SUCCESS_USER_CREATE"));
-    await userApi
-      .sendUserRegistrationNotice(params.toString())
-      .then(() => {
-        message.info(t("MESSAGES.SUCCESS_SEND_USER_NOTICE"));
-      })
-      .catch(() => {
-        message.error(t("MESSAGES.NOT_SEND_USER_NOTICE"));
-      });
+    message.success(t("COMMON.REGISTRATION_APPLICATION_SENT"));
+
     setLoading(false);
     onOk();
     form.resetFields();
@@ -61,7 +46,7 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
     message.error(t("MESSAGES.CHECK_FIELDS"));
   };
 
-  const onValuesChange = debounce((changedValues, allValues) => {
+  const onValuesChange = debounce(() => {
     setPasswordToConfirm(form.getFieldValue("password"));
   }, 300);
 

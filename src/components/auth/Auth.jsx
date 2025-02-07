@@ -137,6 +137,7 @@ function Auth() {
       <RegistrationModal
         isOpen={isRegistrationModalOpen}
         onCancel={() => setIsRegistrationModalOpen(false)}
+        onOk={() => setIsRegistrationModalOpen(false)}
       />
     </>
   );

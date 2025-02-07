@@ -9,11 +9,11 @@ export const getUsersSelector = createSelector(
   })
 );
 
-export const getUsersApplicationsSelector = createSelector(
+export const getUnverifiedUsersSelector = createSelector(
   (state) => state.users,
   (users) => ({
-    data: users.usersApplications,
-    isLoading: users.isLoadingUsersApplications,
+    data: users.unverifiedUsers,
+    isLoading: users.isLoadingUnverifiedUsers,
     error: users.error,
   })
 );

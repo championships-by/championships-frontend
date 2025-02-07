@@ -8,7 +8,7 @@ export const userApi = {
   getUsers: () => {
     return fetchWithPagination(instance, `/user/users`);
   },
-  getUsersApplications: () => {
+  getUnverifiedUsers: () => {
     return fetchWithPagination(instance, `/user/users`)
   },
   getUsersByName: (params) => {
@@ -29,4 +29,10 @@ export const userApi = {
     instance.post(`/system_notice/send_reset_password_link`, null, {
       params,
     }),
+  acceptUserVerification: async (body) => {
+    
+  },
+  declineUserVerification: async (body) => {
+    
+  }
 };

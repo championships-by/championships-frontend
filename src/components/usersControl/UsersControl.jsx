@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers, getUsersApplications, getUsersByName, getUsersSelector } from "@store/users";
+import { getUsers, getUnverifiedUsers, getUsersByName, getUsersSelector, getUnverifiedUsersSelector } from "@store/users";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
-import UsersApplicationsModal from "@components/usersControl/UsersApplicationsModal";
+import UserApplicationsModal from "@components/usersControl/UsersVerificationModal";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
 import { Button, message, Flex, Typography, Row, Col, Divider } from "antd";
@@ -19,12 +19,18 @@ function UsersControl() {
   const [isUserApprovalModalOpen, setIsUserApprovalModalOpen] = useState(false);
   const dispatch = useDispatch();
   const users = useSelector(getUsersSelector);
+  const unverifiedUsers = useSelector(getUnverifiedUsersSelector);
+  const [unverifiedUsersCount, setUnverifiedUsersCount] = useState(0);
   const isLoading = users.isLoading;
 
   useEffect(() => {
-    dispatch(getUsersApplications());
+    dispatch(getUnverifiedUsers());
     dispatch(getUsers());
   }, [dispatch]);
+
+  useEffect(() => {
+    setUnverifiedUsersCount(unverifiedUsers ? unverifiedUsers.data.length : 0);
+  }, [unverifiedUsers]);
 
   const findUser = (name) => {
     if (name) {
@@ -53,9 +59,11 @@ function UsersControl() {
               <Flex gap="middle">
                 <Button
                   type="primary"
+                  disabled={!unverifiedUsersCount}
                   onClick={() => setIsUserApprovalModalOpen(true)}
                 >
                   {t("COMMON.USER_APPLICATIONS")}
+                  {unverifiedUsersCount && ` (${unverifiedUsersCount})`}
                 </Button>
 
                 <Button
@@ -77,7 +85,7 @@ function UsersControl() {
         onOk={() => setIsAddUserModalOpen(false)}
         onCancel={() => setIsAddUserModalOpen(false)}
       />
-      <UsersApplicationsModal
+      <UserApplicationsModal
         isOpen={isUserApprovalModalOpen}
         onCancel={() => setIsUserApprovalModalOpen(false)}
       />

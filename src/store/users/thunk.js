@@ -6,10 +6,10 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
   return data;
 });
 
-export const getUsersApplications = createAsyncThunk(
-  "users/getUsersApplications",
+export const getUnverifiedUsers = createAsyncThunk(
+  "users/getUnverifiedUsers",
   async () => {
-    const data = await userApi.getUsersApplications();
+    const data = await userApi.getUnverifiedUsers();
     return data;
   }
 );
