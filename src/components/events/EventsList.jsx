@@ -92,11 +92,11 @@ function EventsList({ events }) {
                   {t("EVENTS.REGISTRATION_OPEN")}
                 </div>
               ) : startDate > now ? (
-                <div className="events__card__registration__open">
+                <div className="events__card__registration__not_started">
                   {t("EVENTS.REGISTRATION_NOT_STARTED")}
                 </div>
               ) : (
-                <div className="events__card__registration__open">
+                <div className="events__card__registration__closed">
                   {t("EVENTS.REGISTRATION_CLOSED")}
                 </div>
               )}
