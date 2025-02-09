@@ -149,30 +149,6 @@
     &__textarea {
       width: 100%;
     }
-
-    &__quill {
-      & .ql-snow .ql-tooltip::before,
-      & .ql-snow .ql-tooltip[data-mode="link"]::before {
-        display: none;
-      }
-
-      & .ql-snow .ql-tooltip.ql-flip,
-      & .ql-snow .ql-tooltip.ql-editing {
-        transform: translate(150px, -16px);
-      }
-
-      & .ql-toolbar.ql-snow {
-        border: 1px solid $light-gray;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-      }
-
-      & .ql-container.ql-snow {
-        border: 1px solid $light-gray;
-        border-bottom-left-radius: 6px;
-        border-bottom-right-radius: 6px;
-      }
-    }
   }
   &__event-email {
     &__input {
@@ -224,29 +200,5 @@
   }
   &__competitionModal__play-off__OkButton {
     margin-top: 20px;
-  }
-}
-
-.dark-theme .events {
-  &__event-description {
-    &__quill {
-      & .ql-container.ql-snow,
-      & .ql-toolbar.ql-snow {
-        border: none;
-        background-color: $dark-gray;
-      }
-
-      & .ql-snow .ql-stroke {
-        stroke: $light-gray;
-      }
-
-      & .ql-editor p {
-        color: $white;
-      }
-
-      & .ql-editor.ql-blank::before {
-        color: $disabled-color;
-      }
-    }
   }
 }
