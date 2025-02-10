@@ -1,5 +1,5 @@
 import "./sass/auth.scss";
-import { Form, message, Button, Typography } from "antd";
+import { Form, message, Button, Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useEffect, useState } from "react";
 import logo from "@assets/img/logo.png";
@@ -12,6 +12,7 @@ import { userApi, authApi } from "@api";
 import { getEncryptedPassword } from "@utils";
 import { useTranslation } from "react-i18next";
 import ForgotPasswordModal from "@components/auth/ForgotPasswordModal";
+import RegistrationModal from "@components/auth/RegistrationModal";
 
 function Auth() {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ function Auth() {
   const [password, setPassword] = useState("");
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
     useState(false);
+  const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -67,6 +69,22 @@ function Auth() {
     setIsFormLoading(false);
   };
 
+  const onClickRegistrationModal = () => {
+    setIsRegistrationModalOpen(true);
+  };
+
+  const onCancelRegistrationModal = () => {
+    setIsRegistrationModalOpen(false);
+  };
+
+  const onClickForgotPasswordModal = () => {
+    setIsForgotPasswordModalOpen(true);
+  };
+
+  const onCancelForgotPasswordModal = () => {
+    setIsForgotPasswordModalOpen(false);
+  };
+
   return (
     <>
       <Loader show={isLoading} />
@@ -88,7 +106,6 @@ function Auth() {
             >
               <AuthEmailInput value={email} onChange={setEmail} />
               <AuthPasswordInput value={password} onChange={setPassword} />
-
               <FormItem className="auth__body__form-item">
                 <Button
                   type="primary"
@@ -99,7 +116,6 @@ function Auth() {
                 >
                   {t("COMMON.LOGIN")}
                 </Button>
-
                 <Button
                   type="default"
                   onClick={() => navigate(ROUTES.EVENTS.PATH)}
@@ -108,20 +124,35 @@ function Auth() {
                   {t("COMMON.LOGIN_AS_GUEST")}
                 </Button>
               </FormItem>
+              <FormItem className="auth__body__form-item">
+                <Flex justify="space-around">
+                  <Typography.Text
+                    className="auth__body__register"
+                    onClick={onClickRegistrationModal}
+                  >
+                    {t("COMMON.REGISTRATION")}
+                  </Typography.Text>
+                  <Typography.Text
+                    className="auth__body__forgot-password"
+                    onClick={onClickForgotPasswordModal}
+                  >
+                    {t("COMMON.FORGOT_PASSWORD")}
+                  </Typography.Text>
+                </Flex>
+              </FormItem>
             </Form>
-            <Typography.Text
-              className="auth__body__forgot-password"
-              onClick={() => setIsForgotPasswordModalOpen(true)}
-            >
-              {t("COMMON.FORGOT_PASSWORD")}
-            </Typography.Text>
           </div>
         </div>
       </div>
       <ForgotPasswordModal
         isOpen={isForgotPasswordModalOpen}
-        onOk={() => setIsForgotPasswordModalOpen(false)}
-        onCancel={() => setIsForgotPasswordModalOpen(false)}
+        onOk={onCancelForgotPasswordModal}
+        onCancel={onCancelForgotPasswordModal}
+      />
+      <RegistrationModal
+        isOpen={isRegistrationModalOpen}
+        onCancel={onCancelRegistrationModal}
+        onOk={onCancelRegistrationModal}
       />
     </>
   );

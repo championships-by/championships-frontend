@@ -1,12 +1,22 @@
 import { Typography, Flex } from "antd";
+import { validateDescription } from "@utils";
 import FormItem from "antd/es/form/FormItem";
-import TextArea from "antd/es/input/TextArea";
 import { useTranslation } from "react-i18next";
+import TextEditor from "@modules/textEditor/TextEditor";
 
 import "./sass/events.scss";
 
-function EventDescription({ name, value }) {
+function EventDescription({ name, value, form, onChange: onChangeBase }) {
   const { t } = useTranslation();
+
+  const onChange = (newValue) => {
+    onChangeBase({
+      [name]: newValue,
+    });
+
+    form.setFieldsValue({ [name]: newValue });
+  };
+
   return (
     <FormItem
       name={name}
@@ -18,28 +28,16 @@ function EventDescription({ name, value }) {
           message: t("RULES.PLEASE_ENTER_EVENT_DESCRIPTION"),
         },
         {
-          max: 1000,
-          message: t("RULES.MAX_1000_SYMBOLS"),
-        },
-        {
-          min: 5,
-          message: t("RULES.MIN_5_SYMBOLS"),
+          validator: (_, value) => validateDescription(value, t),
         },
       ]}
     >
       <Flex vertical>
         <Typography.Text>{t("EVENTS.EVENT_DESCRIPTION")}</Typography.Text>
-        <TextArea
-          value={value}
-          rows={6}
-          allowClear
-          placeholder={t("EVENTS.ENTER_EVENT_DESCRIPTION")}
-          id="event_description_input"
-          maxLength={1000}
-          className="events__event-description__textarea"
-        />
+        <TextEditor value={value} onChange={onChange} />
       </Flex>
     </FormItem>
   );
 }
+
 export default EventDescription;

@@ -9,6 +9,15 @@ export const getUsersSelector = createSelector(
   })
 );
 
+export const getUnverifiedUsersSelector = createSelector(
+  (state) => state.users,
+  (users) => ({
+    data: users.unverifiedUsers,
+    isLoading: users.isLoadingUnverifiedUsers,
+    error: users.error,
+  })
+);
+
 export const getUserSelector = createSelector(
   (state) => state.users,
   (users) => ({

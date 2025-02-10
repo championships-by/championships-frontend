@@ -1,0 +1,10 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
+.accept-button {
+  color: $green;
+}
+
+.decline-button {
+  color: $red;
+}

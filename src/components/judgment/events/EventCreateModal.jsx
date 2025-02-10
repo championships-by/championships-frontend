@@ -140,7 +140,12 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           form={form}
           onChange={onValuesChange}
         />
-        <EventDescription name="description" value={values.description} />
+        <EventDescription
+          name="description"
+          value={values.description}
+          form={form}
+          onChange={onValuesChange}
+        />
         <EventLevel
           name="event_level"
           value={values.event_level}
@@ -150,6 +155,8 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
         <EventRequirements
           name="participation_needs"
           value={values.participation_needs}
+          form={form}
+          onChange={onValuesChange}
         />
         <Button type="primary" htmlType="submit" loading={isLoading}>
           {t("COMMON.SAVE")}

@@ -310,3 +310,5 @@ export const ANTD_INPUT_FIELD_STATUSES = {
   ERROR: "error",
   WARNING: "warning",
 };
+
+export const MAX_TEXTAREA_LENGTH = 1000;

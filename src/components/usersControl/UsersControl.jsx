@@ -1,10 +1,26 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers, getUsersByName, getUsersSelector } from "@store/users";
+import {
+  getUsers,
+  getUnverifiedUsers,
+  getUsersByName,
+  getUsersSelector,
+  getUnverifiedUsersSelector,
+} from "@store/users";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
+import UsersVerificationModal from "@components/usersControl/UnverifiedUsersTable";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
-import { Button, message, Flex, Typography, Row, Col, Divider } from "antd";
+import {
+  Button,
+  message,
+  Flex,
+  Typography,
+  Row,
+  Col,
+  Divider,
+  Tabs,
+} from "antd";
 import SearchInput from "@modules/search/SearchInput";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
@@ -15,13 +31,31 @@ import "./sass/users-control.scss";
 function UsersControl() {
   const { t } = useTranslation();
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+  const [isUserApprovalModalOpen, setIsUserApprovalModalOpen] = useState(false);
   const dispatch = useDispatch();
   const users = useSelector(getUsersSelector);
+  const unverifiedUsers = useSelector(getUnverifiedUsersSelector);
+  const [unverifiedUsersCount, setUnverifiedUsersCount] = useState(0);
   const isLoading = users.isLoading;
 
-  useEffect(() => {
+  const [activeTab, setActiveTab] = useState("1");
+
+  const onChange = (key) => {
+    setActiveTab(key);
+  };
+
+  const updateUsersData = () => {
+    dispatch(getUnverifiedUsers());
     dispatch(getUsers());
+  };
+
+  useEffect(() => {
+    updateUsersData();
   }, [dispatch]);
+
+  useEffect(() => {
+    setUnverifiedUsersCount(unverifiedUsers ? unverifiedUsers.data.length : 0);
+  }, [unverifiedUsers]);
 
   const findUser = (name) => {
     if (name) {
@@ -34,6 +68,42 @@ function UsersControl() {
     }
   };
 
+  const tabs = [
+    {
+      key: "1",
+      label: t("COMMON.USERS"),
+      children: (
+        <>
+          <Flex justify="flex-end">
+            <SearchInput onChange={findUser} />
+            <AdminPanelControls>
+              <Flex gap="middle">
+                <Button
+                  type="primary"
+                  onClick={() => setIsAddUserModalOpen(true)}
+                >
+                  {t("COMMON.CREATE_USER")}
+                </Button>
+              </Flex>
+            </AdminPanelControls>
+          </Flex>
+          <UsersTable />,
+        </>
+      ),
+    },
+    {
+      key: "2",
+      label: t("COMMON.USER_APPLICATIONS") + ` (${unverifiedUsersCount})`,
+      children: (
+        <UsersVerificationModal
+          dispatch={updateUsersData}
+          isOpen={isUserApprovalModalOpen}
+          onCancel={() => setIsUserApprovalModalOpen(false)}
+        />
+      ),
+    },
+  ];
+
   return (
     <div className="users-control">
       <Loader show={isLoading} />
@@ -43,22 +113,9 @@ function UsersControl() {
             {t("COMMON.USER_MANAGEMENT")}
           </Typography.Title>
         </Col>
-        <Col flex="auto">
-          <Flex justify="flex-end">
-            <SearchInput onChange={findUser} />
-            <AdminPanelControls>
-              <Button
-                type="primary"
-                onClick={() => setIsAddUserModalOpen(true)}
-              >
-                {t("COMMON.CREATE_USER")}
-              </Button>
-            </AdminPanelControls>
-          </Flex>
-        </Col>
+        <Col flex="auto" />
       </Row>
-      <Divider />
-      <UsersTable />
+      <Tabs items={tabs} onChange={onChange} />
       <UserModal
         type={ModalType.ADD}
         isOpen={isAddUserModalOpen}

@@ -41,10 +41,16 @@ module.exports = (env) => {
         API_PATH: JSON.stringify(IS_DEV ? DEV_API_PATH : PROD_API_PATH),
         API_HOST: JSON.stringify(process.env.API_HOST),
         PUBLIC_KEY: process.env.PUBLIC_KEY,
+        CAPTCHA_TOKEN: process.env.CAPTCHA_TOKEN,
       }),
     ],
     module: {
       rules: [
+        {
+          test: /\.css$/,
+          use: [MiniCssExtractPlugin.loader, "css-loader"],
+          include: /node_modules/,
+        },
         {
           test: /\.s[ac]ss$/i,
           use: [

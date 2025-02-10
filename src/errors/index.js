@@ -83,6 +83,7 @@ export const ERRORS = {
     "ERRORS.JUDGES_NOT_FOUND",
   "amount of teams should be at least 3": "ERRORS.AT_LEAST_THREE_TEAMS",
   "team cannot be deleted": "ERRORS.TEAM_CANNOT_BE_DELETED",
+  "your account is not confirmed": "ERRORS.USER_ACCOUNT_NOT_VERIFIED",
 
   getError: function (errorKey) {
     return i18n.t(this[errorKey]) || i18n.t("MESSAGES.ERROR");

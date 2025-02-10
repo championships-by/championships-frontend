@@ -1,43 +1,43 @@
 import { Typography, Flex } from "antd";
+import { validateDescription } from "@utils";
 import FormItem from "antd/es/form/FormItem";
-import TextArea from "antd/es/input/TextArea";
 import { useTranslation } from "react-i18next";
+import TextEditor from "@modules/textEditor/TextEditor";
 
+import "react-quill/dist/quill.snow.css";
 import "./sass/events.scss";
 
-function EventRequirements({ name, value }) {
+function EventRequirements({ name, value, form, onChange: onChangeBase }) {
   const { t } = useTranslation();
 
-  const rules = [
-    {
-      required: true,
-      message: t("RULES.PLEASE_ENTER_REQUIREMENTS"),
-    },
-    {
-      max: 1000,
-      message: t("RULES.MAX_1000_SYMBOLS"),
-    },
-    {
-      min: 5,
-      message: t("RULES.MIN_5_SYMBOLS"),
-    },
-  ];
+  const onChange = (newValue) => {
+    onChangeBase({
+      [name]: newValue,
+    });
+
+    form.setFieldsValue({ [name]: newValue });
+  };
 
   return (
-    <FormItem name={name} hasFeedback validateFirst rules={rules}>
+    <FormItem
+      name={name}
+      hasFeedback
+      validateFirst
+      rules={[
+        {
+          required: true,
+          message: t("RULES.PLEASE_ENTER_REQUIREMENTS"),
+        },
+        {
+          validator: (_, value) => validateDescription(value, t),
+        },
+      ]}
+    >
       <Flex vertical>
         <Typography.Text>
           {t("COMMON.WHAT_NEED_TO_PARTICIPATE")}
         </Typography.Text>
-        <TextArea
-          value={value}
-          rows={3}
-          allowClear
-          placeholder={t("COMMON.ENTER_REQUIREMENTS")}
-          id="event_requirements_input"
-          maxLength={1000}
-          className="events__event-description__textarea"
-        />
+        <TextEditor value={value} onChange={onChange} />
       </Flex>
     </FormItem>
   );
