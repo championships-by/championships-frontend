@@ -18,11 +18,23 @@ function UnverifiedUsersTable({ dispatch }) {
   const [isAccepted, setIsAccepted] = useState(false);
   const [selectedUnverifiedUser, setSelectedUnverifiedUser] = useState();
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const askForConfirmation = (mode, unverifiedUser) => {
     setIsAccepted(mode);
     setSelectedUnverifiedUser(unverifiedUser);
     setIsConfirmationModalOpen(true);
+  };
+
+  const closeConfirmationModal = () => {
+    setIsConfirmationModalOpen(false);
+  };
+
+  const sendNotice = async (params) => {
+    try {
+      await userApi.sendUserRegistrationNotice(params);
+      message.info(t("MESSAGES.SUCCESS_SEND_USER_NOTICE"));
+    } catch {}
   };
 
   const acceptUser = async () => {
@@ -35,9 +47,7 @@ function UnverifiedUsersTable({ dispatch }) {
 
       const noticeParams = new URLSearchParams();
       noticeParams.append("user_email", selectedUnverifiedUser.email);
-
-      await userApi.sendUserRegistrationNotice(noticeParams);
-      message.info(t("MESSAGES.SUCCESS_SEND_USER_NOTICE"));
+      sendNotice(params);
     } catch {}
   };
 
@@ -51,12 +61,17 @@ function UnverifiedUsersTable({ dispatch }) {
   };
 
   const onConfirmed = async () => {
+    setIsLoading(true);
+
     if (isAccepted) {
       await acceptUser();
     } else {
       await declineUser();
     }
+
+    setIsLoading(false);
     setIsConfirmationModalOpen(false);
+
     setSelectedUnverifiedUser(null);
     dispatch();
   };
@@ -134,7 +149,8 @@ function UnverifiedUsersTable({ dispatch }) {
         isOpen={isConfirmationModalOpen}
         isAccepted={isAccepted}
         onYes={onConfirmed}
-        onNo={() => setIsConfirmationModalOpen(false)}
+        onNo={closeConfirmationModal}
+        isLoading={isLoading}
       />
     </>
   );

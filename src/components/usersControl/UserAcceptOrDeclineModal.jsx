@@ -8,6 +8,7 @@ function UserAcceptOrDeclineModal({
   unverifiedUser,
   onYes,
   onNo,
+  isLoading,
 }) {
   const { t } = useTranslation();
 
@@ -18,8 +19,8 @@ function UserAcceptOrDeclineModal({
       title={`${unverifiedUser?.second_name} ${unverifiedUser?.first_name} ${unverifiedUser?.third_name} (${unverifiedUser?.email})`}
       footer={
         <Flex justify="right" gap="small">
-          <Button onClick={onNo}>{t("COMMON.NO")}</Button>
-          <Button onClick={onYes} type="primary">
+          <Button onClick={onNo} disabled={isLoading}>{t("COMMON.NO")}</Button>
+          <Button onClick={onYes} loading={isLoading} type="primary">
             {t("COMMON.YES")}
           </Button>
         </Flex>
