@@ -94,7 +94,6 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
         />
         <UserPhoneInput name="phone" />
         <UserOrganizationInput name="organization" />
-
         <Space>
           <FormItem>
             <Flex vertical gap="middle">

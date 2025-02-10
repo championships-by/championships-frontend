@@ -33,7 +33,7 @@ function CookiesNotification() {
     });
   }, [api, t]);
 
-  return <>{contextHolder}</>;
+  return <></>;
 }
 
 export default CookiesNotification;
