@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import "./sass/events.scss";
+import "./sass/event-information.scss";
 
 function EventInformation() {
   const { t } = useTranslation();
@@ -235,7 +235,13 @@ function EventInformation() {
                 {t("COMMON.WHAT_NEED_TO_PARTICIPATE")}?
               </Typography.Text>
               <br />
-              <Typography.Text>{dataEvent.participation_needs}</Typography.Text>
+              <Typography.Text>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: dataEvent.participation_needs,
+                  }}
+                />
+              </Typography.Text>
             </Col>
           </Row>
           <Row
@@ -285,7 +291,7 @@ function EventInformation() {
         {t("EVENTS.EVENT_DESCRIPTION")}
       </Typography.Title>
       <Typography.Text className="events__event-information__text">
-        {dataEvent.description}
+        <span dangerouslySetInnerHTML={{ __html: dataEvent.description }} />
       </Typography.Text>
       <br />
       <Button
