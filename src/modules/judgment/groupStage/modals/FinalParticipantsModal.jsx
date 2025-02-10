@@ -57,27 +57,10 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
     },
   ];
 
-  /**
-   * Function to generate a unique key for a participant based on their name.
-   * The key is derived from the part of the name before the '@' character,
-   * and all non-alphanumeric characters are replaced with a hyphen.
-   * The final key is converted to lowercase.
-   *
-   * @param {string} participant - The name of the participant.
-   * @returns {string} A unique key for the participant.
-   */
   const getParticipantKey = useCallback((participant) => {
     return participant.match(regex)[0].replace(replaceRegex, "-").toLowerCase();
   }, []);
 
-  /**
-   * Function to calculate points based on the scores of two teams.
-   * Returns an array with the points for each team.
-   *
-   * @param {number} score1 - The score of the first team.
-   * @param {number} score2 - The score of the second team.
-   * @returns {Array<number>} An array with the points for each team.
-   */
   const calculatePoints = useCallback((score1, score2) => {
     // If team 1 wins, return [3, 0]
     if (score1 > score2) return [3, 0];
@@ -87,11 +70,14 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
     return [1, 1];
   }, []);
 
-  /**
-   * Function to get participants from matches
-   * @param {Array} matches - Array of matches
-   * @returns {Array} - Array of participants
-   */
+  const getNextStageCount = (count) => {
+    let n = 1;
+    while (2 ** n <= count) {
+      n++;
+    }
+    return 2 ** (n - 1);
+  };
+
   const getParticipants = useCallback(
     (matches) => {
       // Initialize an empty array to store participants
@@ -127,8 +113,10 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
         return acc;
       }, []);
 
-      participants.sort((a, b) => b.score - a.score || b.points - a.points);
-      participants.slice(0, 3).forEach((participant) => {
+      participants.sort((a, b) => b.points - a.points || b.score - a.score);
+      const advancingCount = getNextStageCount(participants.length);
+      participants.sort((a, b) => b.points - a.points || b.score - a.score);
+      participants.slice(0, advancingCount).forEach((participant) => {
         participant.isPassed = true;
       });
 
