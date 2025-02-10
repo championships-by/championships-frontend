@@ -6,7 +6,12 @@ import { useTranslation } from "react-i18next";
 
 import "./sass/user.scss";
 
-function UserPasswordConfirmationInput({ name, required, disabled, compareTo }) {
+function UserPasswordConfirmationInput({
+  name,
+  required,
+  disabled,
+  compareTo,
+}) {
   const { t } = useTranslation();
 
   return (
@@ -28,7 +33,7 @@ function UserPasswordConfirmationInput({ name, required, disabled, compareTo }) 
               }
               return Promise.reject(new Error(t("RULES.PASSWORDS_DONT_MATCH")));
             },
-          }
+          },
         ]}
         className="user__password-input__formitem"
       >
