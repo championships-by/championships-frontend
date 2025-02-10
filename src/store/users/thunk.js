@@ -6,6 +6,14 @@ export const getUsers = createAsyncThunk("users/getUsers", async () => {
   return data;
 });
 
+export const getUnverifiedUsers = createAsyncThunk(
+  "users/getUnverifiedUsers",
+  async () => {
+    const data = await userApi.getUnverifiedUsers();
+    return data;
+  }
+);
+
 export const getUsersByName = createAsyncThunk(
   "users/getUsersByName",
   async (params) => {
@@ -13,6 +21,7 @@ export const getUsersByName = createAsyncThunk(
     return data;
   }
 );
+
 export const setUser = createAsyncThunk("users/setUser", async (body) => {
   const response = await userApi.setUser(body);
   return response.config.data;

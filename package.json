@@ -59,6 +59,7 @@
   "dependencies": {
     "@ant-design/icons": "5.3.1",
     "@reduxjs/toolkit": "2.2.7",
+    "@yandex/smart-captcha": "2.6.3",
     "antd": "5.14.2",
     "axios": "1.7.3",
     "babel-eslint": "10.1.0",

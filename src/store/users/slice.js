@@ -6,16 +6,19 @@ import {
   getUserProfile,
   getJudges,
   getUsersByName,
+  getUnverifiedUsers,
 } from "./thunk";
 
 export const usersSlice = createSlice({
   name: "users",
   initialState: {
     allUsers: [],
+    unverifiedUsers: [],
     userProfile: [],
     judges: [],
     isLoading: false,
     isUserProfileLoading: true,
+    isLoadingUnverifiedUsers: false,
     error: null,
   },
   reducers: {},
@@ -70,6 +73,19 @@ export const usersSlice = createSlice({
       .addCase(getUsersByName.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
-      });
+      })
+      .addCase(getUnverifiedUsers.pending, (state, action) => {
+        state.isLoadingUnverifiedUsers = true;
+        state.error = null;
+      })
+      .addCase(getUnverifiedUsers.fulfilled, (state, action) => {
+        state.unverifiedUsers = action.payload;
+        state.isLoadingUnverifiedUsers = false;
+      })
+      .addCase(getUnverifiedUsers.rejected, (state, action) => {
+        state.isLoadingUnverifiedUsers = false;
+        state.error = action.error.message;
+      })
+      ;
   },
 });
