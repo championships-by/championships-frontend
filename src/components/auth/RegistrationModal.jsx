@@ -21,16 +21,10 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const [passwordToConfirm, setPasswordToConfirm] = useState();
-  const [isCaptchaSuccess, setIsCaptchaSuccess] = useState(false);
   const dispatch = useDispatch();
 
   const onFinish = async () => {
     setLoading(true);
-    if (!isCaptchaSuccess) {
-      message.error(t("ERRORS.FILL_CAPTCHA"));
-      setLoading(false);
-      return;
-    }
 
     const body = {
       email: form.getFieldValue("email"),
@@ -45,7 +39,7 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
     try {
       await userApi.registerUser(body);
       message.success(t("COMMON.REGISTRATION_APPLICATION_SENT"));
-    } catch { }
+    } catch {}
 
     setLoading(false);
     onOk();
@@ -59,10 +53,6 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
   const onValuesChange = debounce(() => {
     setPasswordToConfirm(form.getFieldValue("password"));
   }, 300);
-
-  const onCaptchaSuccess = () => {
-    setIsCaptchaSuccess(true);
-  };
 
   return (
     <Modal
@@ -97,7 +87,6 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
         <Space>
           <FormItem>
             <Flex vertical gap="middle">
-              <Captcha onSuccess={onCaptchaSuccess} />
               <Button type="primary" htmlType="submit" loading={isLoading}>
                 {t("COMMON.REQUEST_FOR_REGISTRATION")}
               </Button>
