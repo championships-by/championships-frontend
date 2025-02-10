@@ -88,7 +88,8 @@ function UsersControl() {
             </AdminPanelControls>
           </Flex>
           <UsersTable />,
-        </>)
+        </>
+      ),
     },
     {
       key: "2",

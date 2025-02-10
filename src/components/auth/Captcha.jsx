@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import { SmartCaptcha } from "@yandex/smart-captcha";
 
-function Captcha({ onSuccess }) {
-  const [token, setToken] = useState('');
+function Captcha({ onSuccess: onSuccessBase }) {
+  const [token, setToken] = useState("");
 
-  const onSuccessWrapper = (value) => {
+  const onSuccess = (value) => {
     setToken(value);
-    onSuccess();
+    onSuccessBase();
   };
 
   return (
-    <SmartCaptcha
-      sitekey={CAPTCHA_TOKEN}
-      onSuccess={(value) => onSuccessWrapper(value)}
-      token={token}
-    />
+    <SmartCaptcha sitekey={CAPTCHA_TOKEN} onSuccess={onSuccess} token={token} />
   );
 }
 

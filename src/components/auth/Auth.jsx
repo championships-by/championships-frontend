@@ -54,7 +54,7 @@ function Auth() {
         password: encrypedPassword,
       });
       navigate(ROUTES.EVENTS.PATH);
-    } catch { }
+    } catch {}
 
     setIsFormLoading(false);
   };
@@ -69,19 +69,19 @@ function Auth() {
     setIsFormLoading(false);
   };
 
-  const openRegistrationModal = () => {
+  const onClickRegistrationModal = () => {
     setIsRegistrationModalOpen(true);
   };
 
-  const closeRegistrationModal = () => {
+  const onCancelRegistrationModal = () => {
     setIsRegistrationModalOpen(false);
   };
 
-  const openForgotPasswordModal = () => {
+  const onClickForgotPasswordModal = () => {
     setIsForgotPasswordModalOpen(true);
   };
 
-  const closeForgotPasswordModal = () => {
+  const onCancelForgotPasswordModal = () => {
     setIsForgotPasswordModalOpen(false);
   };
 
@@ -126,12 +126,15 @@ function Auth() {
               </FormItem>
               <FormItem className="auth__body__form-item">
                 <Flex justify="space-around">
-                  <Typography.Text className="auth__body__register" onClick={openRegistrationModal}>
+                  <Typography.Text
+                    className="auth__body__register"
+                    onClick={onClickRegistrationModal}
+                  >
                     {t("COMMON.REGISTRATION")}
                   </Typography.Text>
                   <Typography.Text
                     className="auth__body__forgot-password"
-                    onClick={openForgotPasswordModal}
+                    onClick={onClickForgotPasswordModal}
                   >
                     {t("COMMON.FORGOT_PASSWORD")}
                   </Typography.Text>
@@ -143,13 +146,13 @@ function Auth() {
       </div>
       <ForgotPasswordModal
         isOpen={isForgotPasswordModalOpen}
-        onOk={closeForgotPasswordModal}
-        onCancel={closeForgotPasswordModal}
+        onOk={onCancelForgotPasswordModal}
+        onCancel={onCancelForgotPasswordModal}
       />
       <RegistrationModal
         isOpen={isRegistrationModalOpen}
-        onCancel={closeRegistrationModal}
-        onOk={closeRegistrationModal}
+        onCancel={onCancelRegistrationModal}
+        onOk={onCancelRegistrationModal}
       />
     </>
   );
