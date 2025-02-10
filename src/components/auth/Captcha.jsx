@@ -11,7 +11,7 @@ function Captcha({ onSuccess }) {
 
   return (
     <SmartCaptcha
-      sitekey={process.env.CAPTCHA_TOKEN}
+      sitekey={CAPTCHA_TOKEN}
       onSuccess={(value) => onSuccessWrapper(value)}
       token={token}
     />
