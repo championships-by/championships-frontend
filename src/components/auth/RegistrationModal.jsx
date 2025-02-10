@@ -60,6 +60,10 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
     setPasswordToConfirm(form.getFieldValue("password"));
   }, 300);
 
+  const onCaptchaSuccess = () => {
+    setIsCaptchaSuccess(true);
+  };
+
   return (
     <Modal
       title={t("COMMON.REGISTRATION")}
@@ -94,11 +98,7 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
         <Space>
           <FormItem>
             <Flex vertical gap="middle">
-              <Captcha
-                onSuccess={() => {
-                  setIsCaptchaSuccess(true);
-                }}
-              />
+              <Captcha onSuccess={onCaptchaSuccess} />
               <Button type="primary" htmlType="submit" loading={isLoading}>
                 {t("COMMON.REQUEST_FOR_REGISTRATION")}
               </Button>

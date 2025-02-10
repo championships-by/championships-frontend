@@ -21,16 +21,16 @@ export const userApi = {
   getJudges: () => {
     return fetchWithPagination(instance, `/user/judges`);
   },
-  sendUserRegistrationNotice: (queryString) =>
+  sendUserRegistrationNotice: (params) =>
     instance.post(
-      `/system_notice/send_user_registration_notice?user_email=${queryString}`
+      `/system_notice/send_user_registration_notice`, null, {params}
     ),
   sendPasswordChangeNotice: (params) =>
     instance.post(`/system_notice/send_reset_password_link`, null, {
       params,
     }),
-  acceptUser: async (body) => {
-    await instance.patch("/user/user_approve", body)
+  acceptUser: async (params) => {
+    await instance.patch("/user/user_approve", null, { params })
   },
   declineUser: async (params) => {
     await instance.delete("/user/delete_user_not_approved", { params })

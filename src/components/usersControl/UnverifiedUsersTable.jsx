@@ -14,12 +14,12 @@ import "@components/usersControl/sass/users-approval-modal.scss";
 function UnverifiedUsersTable({ dispatch }) {
   const { t } = useTranslation();
   const users = useSelector(getUnverifiedUsersSelector);
-  const usersData = users.data;
+  const { data } = users;
   const [isAccepted, setIsAccepted] = useState(false);
   const [selectedUnverifiedUser, setSelectedUnverifiedUser] = useState();
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
-  const askForConfirmation = async (mode, unverifiedUser) => {
+  const askForConfirmation = (mode, unverifiedUser) => {
     setIsAccepted(mode);
     setSelectedUnverifiedUser(unverifiedUser);
     setIsConfirmationModalOpen(true);
@@ -27,15 +27,18 @@ function UnverifiedUsersTable({ dispatch }) {
 
   const acceptUser = async () => {
     try {
-      const body = {
-        user_id: selectedUnverifiedUser.id,
-      };
-      await userApi.acceptUser(body);
+      const params = new URLSearchParams();
+      params.append("user_id", selectedUnverifiedUser.id);
+
+      await userApi.acceptUser(params);
       message.success(t("COMMON.USER_APPROVED"));
 
-      await userApi.sendUserRegistrationNotice(selectedUnverifiedUser.email);
+      const noticeParams = new URLSearchParams();
+      noticeParams.append("user_email", selectedUnverifiedUser.email);
+
+      await userApi.sendUserRegistrationNotice(noticeParams);
       message.info(t("MESSAGES.SUCCESS_SEND_USER_NOTICE"));
-    } catch { }
+    } catch {}
   };
 
   const declineUser = async () => {
@@ -43,8 +46,8 @@ function UnverifiedUsersTable({ dispatch }) {
       const params = new URLSearchParams();
       params.append("user_id", selectedUnverifiedUser.id);
       await userApi.declineUser(params);
-      message.success(t("COMMON.USER_DECLINED"))
-    } catch { }
+      message.success(t("COMMON.USER_DECLINED"));
+    } catch {}
   };
 
   const onConfirmed = async () => {
@@ -63,9 +66,13 @@ function UnverifiedUsersTable({ dispatch }) {
       title: t("COMMON.SURNAME_NAME_THIRD_NAME"),
       key: "fullname",
       width: "30%",
-      render: (unverifiedUser) => (
-        <Typography.Text>{`${unverifiedUser.second_name} ${unverifiedUser.first_name} ${unverifiedUser.third_name}`}</Typography.Text>
-      ),
+      render: (unverifiedUser) => {
+        const { first_name, second_name, third_name } = unverifiedUser;
+
+        return (
+          <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
+        );
+      },
       sorter: (a, b) => {
         const firstFullName = `${a.second_name} ${a.first_name} ${a.third_name}`;
         const secondFullName = `${b.second_name} ${b.first_name} ${b.third_name}`;
@@ -77,11 +84,11 @@ function UnverifiedUsersTable({ dispatch }) {
       title: t("COMMON.EDUCATIONAL_INSTITUTION"),
       key: "educational_institution",
       width: "50%",
-      render: (unverifiedUser) => (
-        <Typography.Text>
-          {unverifiedUser.educational_institution}
-        </Typography.Text>
-      ),
+      render: (unverifiedUser) => {
+        const { educational_institution } = unverifiedUser;
+
+        return <Typography.Text>{educational_institution}</Typography.Text>;
+      },
     },
     {
       title: t("COMMON.ACTIONS"),
@@ -113,7 +120,7 @@ function UnverifiedUsersTable({ dispatch }) {
   return (
     <>
       <Table
-        dataSource={usersData}
+        dataSource={data}
         columns={columns}
         locale={getTranslation(tableLocale, t)}
         pagination={{

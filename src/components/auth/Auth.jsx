@@ -54,7 +54,7 @@ function Auth() {
         password: encrypedPassword,
       });
       navigate(ROUTES.EVENTS.PATH);
-    } catch { }
+    } catch {}
 
     setIsFormLoading(false);
   };
@@ -67,6 +67,22 @@ function Auth() {
     message.error(t("MESSAGES.CHECK_FIELDS"));
 
     setIsFormLoading(false);
+  };
+
+  const openRegistrationModal = () => {
+    setIsRegistrationModalOpen(true);
+  };
+
+  const closeRegistrationModal = () => {
+    setIsRegistrationModalOpen(false);
+  };
+
+  const openForgotPasswordModal = () => {
+    setIsForgotPasswordModalOpen(true);
+  };
+
+  const closeForgotPasswordModal = () => {
+    setIsForgotPasswordModalOpen(false);
   };
 
   return (
@@ -90,7 +106,6 @@ function Auth() {
             >
               <AuthEmailInput value={email} onChange={setEmail} />
               <AuthPasswordInput value={password} onChange={setPassword} />
-
               <FormItem className="auth__body__form-item">
                 <Button
                   type="primary"
@@ -101,7 +116,6 @@ function Auth() {
                 >
                   {t("COMMON.LOGIN")}
                 </Button>
-
                 <Button
                   type="default"
                   onClick={() => navigate(ROUTES.EVENTS.PATH)}
@@ -110,16 +124,14 @@ function Auth() {
                   {t("COMMON.LOGIN_AS_GUEST")}
                 </Button>
               </FormItem>
-
               <FormItem className="auth__body__form-item">
                 <Flex justify="space-around">
-                  <Typography.Text className="auth__body__register" onClick={() => setIsRegistrationModalOpen(true)}>
+                  <Typography.Text className="auth__body__register" onClick={openRegistrationModal}>
                     {t("COMMON.REGISTRATION")}
                   </Typography.Text>
-
                   <Typography.Text
                     className="auth__body__forgot-password"
-                    onClick={() => setIsForgotPasswordModalOpen(true)}
+                    onClick={openForgotPasswordModal}
                   >
                     {t("COMMON.FORGOT_PASSWORD")}
                   </Typography.Text>
@@ -131,13 +143,13 @@ function Auth() {
       </div>
       <ForgotPasswordModal
         isOpen={isForgotPasswordModalOpen}
-        onOk={() => setIsForgotPasswordModalOpen(false)}
-        onCancel={() => setIsForgotPasswordModalOpen(false)}
+        onOk={closeForgotPasswordModal}
+        onCancel={closeForgotPasswordModal}
       />
       <RegistrationModal
         isOpen={isRegistrationModalOpen}
-        onCancel={() => setIsRegistrationModalOpen(false)}
-        onOk={() => setIsRegistrationModalOpen(false)}
+        onCancel={closeRegistrationModal}
+        onOk={closeRegistrationModal}
       />
     </>
   );

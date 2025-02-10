@@ -56,7 +56,6 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         password: form.getFieldValue("password"),
       };
       const params = new URLSearchParams();
-      params.append("password", raw.password);
       params.append("user_email", raw.email);
       setLoading(true);
       const result = await dispatch(setUser(raw));
@@ -67,7 +66,7 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
       dispatch(getUsers());
       message.success(t("MESSAGES.SUCCESS_USER_CREATE"));
       await userApi
-        .sendUserRegistrationNotice(params.toString())
+        .sendUserRegistrationNotice(params)
         .then(() => {
           message.info(t("MESSAGES.SUCCESS_SEND_USER_NOTICE"));
         })
