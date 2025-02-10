@@ -34,7 +34,7 @@ function UnverifiedUsersTable({ dispatch }) {
     try {
       await userApi.sendUserRegistrationNotice(params);
       message.info(t("MESSAGES.SUCCESS_SEND_USER_NOTICE"));
-    } catch {}
+    } catch { }
   };
 
   const acceptUser = async () => {
@@ -48,7 +48,7 @@ function UnverifiedUsersTable({ dispatch }) {
       const noticeParams = new URLSearchParams();
       noticeParams.append("user_email", selectedUnverifiedUser.email);
       sendNotice(params);
-    } catch {}
+    } catch { }
   };
 
   const declineUser = async () => {
@@ -57,7 +57,7 @@ function UnverifiedUsersTable({ dispatch }) {
       params.append("user_id", selectedUnverifiedUser.id);
       await userApi.declineUser(params);
       message.success(t("COMMON.USER_DECLINED"));
-    } catch {}
+    } catch { }
   };
 
   const onConfirmed = async () => {

@@ -47,7 +47,7 @@ function UsersControl() {
   const updateUsersData = () => {
     dispatch(getUnverifiedUsers());
     dispatch(getUsers());
-  }
+  };
 
   useEffect(() => {
     updateUsersData();

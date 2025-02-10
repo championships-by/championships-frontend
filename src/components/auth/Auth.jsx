@@ -54,7 +54,7 @@ function Auth() {
         password: encrypedPassword,
       });
       navigate(ROUTES.EVENTS.PATH);
-    } catch {}
+    } catch { }
 
     setIsFormLoading(false);
   };

@@ -99,7 +99,7 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         message.success(t("MESSAGES.SUCCESS_EDIT_USER"));
         dispatch(getUsers());
         onOk();
-      } catch {}
+      } catch { }
     }
   };
 

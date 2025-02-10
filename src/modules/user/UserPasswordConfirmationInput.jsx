@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import "./sass/user.scss";
 
-function UserPasswordConfirmationInput({ name, required, disabled, compareTo}) {
+function UserPasswordConfirmationInput({ name, required, disabled, compareTo }) {
   const { t } = useTranslation();
 
   return (

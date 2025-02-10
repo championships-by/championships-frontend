@@ -45,7 +45,7 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
     try {
       await userApi.registerUser(body);
       message.success(t("COMMON.REGISTRATION_APPLICATION_SENT"));
-    } catch {}
+    } catch { }
 
     setLoading(false);
     onOk();
