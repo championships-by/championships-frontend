@@ -22,6 +22,15 @@ export const MatchesGroupStage = () => {
     handleCloseModal,
   } = useMatches();
 
+  const groupedMatches = matches.reduce((groups, match) => {
+    const group = match.group || "Ungrouped";
+    if (!groups[group]) {
+      groups[group] = [];
+    }
+    groups[group].push(match);
+    return groups;
+  }, {});
+
   return isLoading ? (
     <Spin indicator={<LoadingOutlined className="icon" spin />} />
   ) : error ? (
@@ -30,17 +39,24 @@ export const MatchesGroupStage = () => {
       <p>{error}</p>
     </div>
   ) : (
-    <div className="matches-group-stage">
-      {matches.map((match, index) => (
-        <MatchCard
-          key={match.id}
-          id={match.id}
-          matchIndex={index + 1}
-          team1={match.team1}
-          team2={match.team2}
-          lastCreatorEmail={match.lastResultCreatorEmail}
-          onEditScore={() => handleEditScore(match)}
-        />
+    <div>
+      {Object.keys(groupedMatches).map((group, index) => (
+        <div key={index} className="group">
+          <h3 className="matches-group-number">{`Группа ${index + 1}`}</h3>
+          <div className="matches-group-grid">
+            {groupedMatches[group].map((match, matchIndex) => (
+              <MatchCard
+                key={match.id}
+                id={match.id}
+                matchIndex={matchIndex + 1}
+                team1={match.team1}
+                team2={match.team2}
+                lastCreatorEmail={match.lastResultCreatorEmail}
+                onEditScore={() => handleEditScore(match)}
+              />
+            ))}
+          </div>
+        </div>
       ))}
       {selectedMatch && (
         <EditMatchScoreModal
