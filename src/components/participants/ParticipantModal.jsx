@@ -10,6 +10,7 @@ import ParticipantFirstnameInput from "@modules/participant/ParticipantFirstname
 import ParticipantLastnameInput from "@modules/participant/ParticipantLastnameInput.jsx";
 import ParticipantPatronymicInput from "@modules/participant/ParticipantPatronymicInput.jsx";
 import ParticipantRegionSelect from "@modules/participant/ParticipantRegionSelect.jsx";
+import ParticipantPhotoUpload from "@modules/participant/ParticipantPhotoUpload";
 import { participantApi } from "@api";
 import { useTranslation } from "react-i18next";
 
@@ -46,7 +47,9 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
             birth_date: values.birth_date,
             email: values.email !== data.email ? values.email : null,
           }),
+          photo: values.photo ?? null,
         };
+
         await participantApi.changeParticipant(body);
         message.success(t("MESSAGES.SUCCESS_EDIT_PARTICIPANT"));
       } else {
@@ -59,6 +62,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
             region: values.region,
             birth_date: values.birth_date,
           }),
+          photo: values.photo ?? null,
         };
 
         const params = new URLSearchParams();
@@ -143,6 +147,11 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
           name="region"
           value={values.region}
           onChange={onValuesChange}
+        />
+        <ParticipantPhotoUpload
+          name="photo"
+          onChange={onValuesChange}
+          form={form}
         />
         <Flex vertical gap="large">
           <Checkbox
