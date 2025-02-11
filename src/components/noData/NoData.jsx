@@ -18,5 +18,3 @@ function NoData({ customText }) {
 }
 
 export default NoData;
-
-export const NO_DATA_COMPONENT = <NoData />;

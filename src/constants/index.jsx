@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import { NO_DATA_COMPONENT } from "@components/noData/NoData";
+import NoData from "@components/noData/NoData";
 
 export const ZUBRONOK = "https://zubronok.by/";
 
@@ -166,7 +166,7 @@ export const tableLocale = {
   cancelSort: "TABLE_LOCALE.CANCELSORT",
   filterReset: "TABLE_LOCALE.FILTERRESET",
   filterConfirm: "TABLE_LOCALE.FILTERCONFIRM",
-  emptyText: NO_DATA_COMPONENT,
+  emptyText: <NoData />,
 };
 
 export const paginationLocale = {
