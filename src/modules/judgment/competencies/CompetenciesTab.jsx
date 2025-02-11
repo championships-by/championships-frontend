@@ -6,11 +6,14 @@ import {
   transformStageStatus,
   downloadProtocol,
 } from "@utils";
-import { Button, message, Tabs } from "antd";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Button, message, Tabs, Flex } from "antd";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { CompetenciesResults, CompetenciesTable } from "./components";
+import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
 import { useTranslation } from "react-i18next";
+import { CompetenciesResults, CompetenciesTable } from "./components";
+
+import "@modules/judgment/competencies/sass/competencies-criteria.scss";
 
 function CompetenciesTab() {
   const { t } = useTranslation();
@@ -188,23 +191,28 @@ function CompetenciesTab() {
   }, [eventId, isDataLoaded, nominationId, stageStatus, isStageFinished]);
 
   return (
-    <Tabs
-      activeKey={activeTabKey}
-      onChange={setActiveTabKey}
-      items={items}
-      tabBarExtraContent={{
-        right: (
-          <Button
-            onClick={isStageFinished ? handleDownload : handleCompleteStage}
-            type="primary"
-          >
-            {isStageFinished
-              ? t("COMMON.FINAL_PROTOCOL")
-              : t("COMMON.COMPLETE_STAGE")}
-          </Button>
-        ),
-      }}
-    />
+    <Flex vertical gap="middle">
+      <Flex vertical className={isStageFinished && "scroll-container"}>
+        <Tabs
+          activeKey={activeTabKey}
+          onChange={setActiveTabKey}
+          items={items}
+          tabBarExtraContent={{
+            right: (
+              <Button
+                onClick={isStageFinished ? handleDownload : handleCompleteStage}
+                type="primary"
+              >
+                {isStageFinished
+                  ? t("COMMON.FINAL_PROTOCOL")
+                  : t("COMMON.COMPLETE_STAGE")}
+              </Button>
+            ),
+          }}
+        />
+      </Flex>
+      {isStageFinished && <ReturnButton />}
+    </Flex>
   );
 }
 
