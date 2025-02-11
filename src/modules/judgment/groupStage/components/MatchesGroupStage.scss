@@ -1,3 +1,5 @@
+@import "@src/sass/lightTheme/variables.scss";
+
 .matches-group-stage {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -35,8 +37,10 @@
 }
 
 .matches-group-number {
-  color: #ffffff;
-  font-weight: 500;
+  color: $white;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  line-height: 1.3333333333333333;
   font-size: 24px;
 }
 .matches-group-grid {

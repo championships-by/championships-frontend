@@ -22,8 +22,10 @@ export const MatchesGroupStage = () => {
     handleCloseModal,
   } = useMatches();
 
+  const UNGROUPED = "Ungrouped";
+
   const groupedMatches = matches.reduce((groups, match) => {
-    const group = match.group || "Ungrouped";
+    const group = match.group || UNGROUPED;
     if (!groups[group]) {
       groups[group] = [];
     }
