@@ -24,3 +24,8 @@
     justify-content: flex-end;
   }
 }
+
+.scroll-container {
+  height: 85vh;
+  overflow-y: auto;
+}
