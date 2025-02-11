@@ -9,9 +9,13 @@
 
   &__information {
     &__img {
-      width: 15vw;
+      width: 20vw;
       margin-right: 24px;
       margin-bottom: 24px;
+
+      @media (max-width: 767px) {
+        width: 50vw;
+      }
     }
 
     &__name {
