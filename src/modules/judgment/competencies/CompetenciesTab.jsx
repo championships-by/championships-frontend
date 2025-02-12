@@ -76,7 +76,7 @@ function CompetenciesTab() {
 
   const handleDownloadProtocol = async () => {
     try {
-      downloadProtocol(eventId, nominationId);
+      await downloadProtocol(eventId, nominationId);
     } catch {
       message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
     }
@@ -84,7 +84,7 @@ function CompetenciesTab() {
 
   const handleDownloadExcel = async () => {
     try {
-      downloadCriteriaExcel(eventId, nominationId);
+      await downloadCriteriaExcel(eventId, nominationId);
     } catch {
       message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
     }
