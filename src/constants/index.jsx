@@ -292,6 +292,9 @@ export const bntuSite = "https://bntu.by";
 export const fitrSite = "https://bntu.by/faculties/fitr";
 export const gymnSite = "http://gymn61.minsk.edu.by";
 
+export const userGuide =
+  "https://championships.by/static/files/Руководство%20пользователя.pdf";
+
 export const eventFilterOptions = Object.entries(EventFilters).map(
   ([key, value]) => ({
     label: Locale.eventFilters[value],
