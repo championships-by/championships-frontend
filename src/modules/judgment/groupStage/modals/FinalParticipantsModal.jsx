@@ -62,11 +62,8 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
   }, []);
 
   const calculatePoints = useCallback((score1, score2) => {
-    // If team 1 wins, return [3, 0]
     if (score1 > score2) return [3, 0];
-    // If team 2 wins, return [0, 3]
     if (score1 < score2) return [0, 3];
-    // If it's a draw, return [1, 1]
     return [1, 1];
   }, []);
 
@@ -80,23 +77,16 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
 
   const getParticipants = useCallback(
     (matches) => {
-      // Initialize an empty array to store participants
       const participants = matches.reduce((acc, match) => {
-        // Extract team names and scores from the match
         const { team1, team2 } = match;
-        // Calculate points for each team
         const [points1, points2] = calculatePoints(team1.score, team2.score);
 
-        // Function to update a participant's score and points
         const updateParticipant = (name, score, points) => {
-          // Find the participant in the array, or create a new one if not found
           const existingParticipant = acc.find((p) => p.participant === name);
           if (existingParticipant) {
-            // Update the participant's score and points
             existingParticipant.score += score;
             existingParticipant.points += points;
           } else {
-            // Create a new participant with the given name, score, points, and pass status
             acc.push({
               key: getParticipantKey(name),
               participant: name,

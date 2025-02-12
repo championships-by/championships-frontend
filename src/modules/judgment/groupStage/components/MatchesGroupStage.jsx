@@ -1,6 +1,6 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
-import { Spin } from "antd";
+import { Typography, Spin } from "antd";
 import { EditMatchScoreModal } from "../modals";
 import { MatchCard } from "./MatchCard";
 import "./MatchesGroupStage.scss";
@@ -22,6 +22,15 @@ export const MatchesGroupStage = () => {
     handleCloseModal,
   } = useMatches();
 
+  const groupedMatches = matches.reduce((groups, match) => {
+    const group = match.group;
+    if (!groups[group]) {
+      groups[group] = [];
+    }
+    groups[group].push(match);
+    return groups;
+  }, {});
+
   return isLoading ? (
     <Spin indicator={<LoadingOutlined className="icon" spin />} />
   ) : error ? (
@@ -30,17 +39,26 @@ export const MatchesGroupStage = () => {
       <p>{error}</p>
     </div>
   ) : (
-    <div className="matches-group-stage">
-      {matches.map((match, index) => (
-        <MatchCard
-          key={match.id}
-          id={match.id}
-          matchIndex={index + 1}
-          team1={match.team1}
-          team2={match.team2}
-          lastCreatorEmail={match.lastResultCreatorEmail}
-          onEditScore={() => handleEditScore(match)}
-        />
+    <div>
+      {Object.keys(groupedMatches).map((group, index) => (
+        <div key={index} className="group">
+          <Typography.Title level={3}>{`${t("COMMON.GROUP")} ${
+            index + 1
+          }`}</Typography.Title>
+          <div className="matches-group-grid">
+            {groupedMatches[group].map((match, matchIndex) => (
+              <MatchCard
+                key={match.id}
+                id={match.id}
+                matchIndex={matchIndex + 1}
+                team1={match.team1}
+                team2={match.team2}
+                lastCreatorEmail={match.lastResultCreatorEmail}
+                onEditScore={() => handleEditScore(match)}
+              />
+            ))}
+          </div>
+        </div>
       ))}
       {selectedMatch && (
         <EditMatchScoreModal
