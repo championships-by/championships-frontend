@@ -13,15 +13,21 @@ function ParticipantPhotoUpload({ name, onChange: onChangeBase, form }) {
 
   return (
     <FormItem name={name}>
-      <Flex gap="middle">
-        <Typography.Text>{t("COMMON.PHOTO")}: </Typography.Text>
+      <Flex vertical>
+        <Typography.Text>{t("COMMON.PHOTO_OPTIONAL")}</Typography.Text>
         <Upload
           accept="image/jpg, image/jpeg, image/png"
           maxCount={1}
           beforeUpload={() => false}
           onChange={onChange}
+          listType="picture-card"
         >
-          <Button icon={<UploadOutlined />}>{t("COMMON.UPLOAD")}</Button>
+          <Typography.Text type="secondary">
+            <Flex vertical align="center">
+              <UploadOutlined />
+              {t("COMMON.UPLOAD")}
+            </Flex>
+          </Typography.Text>
         </Upload>
       </Flex>
       <Typography.Text type="secondary">
