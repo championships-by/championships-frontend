@@ -85,6 +85,11 @@ export const competenciesApi = {
         responseType: "blob",
       }
     ),
+  getNominationEventCriteriaExcel: (params) =>
+    instance.get(`/nomination_event/get_nomination_event_excel_protocol`, {
+      params,
+      responseType: "blob",
+    }),
   editNumberRaceRounds: (params) =>
     instance.patch(`/nomination_event/edit_number_of_race_rounds`, null, {
       params,
