@@ -5,6 +5,7 @@ import {
   transformCriteriaResultsData,
   transformStageStatus,
   downloadProtocol,
+  downloadCriteriaExcel,
 } from "@utils";
 import { Button, message, Tabs, Flex } from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -76,6 +77,14 @@ function CompetenciesTab() {
   const handleDownloadProtocol = async () => {
     try {
       downloadProtocol(eventId, nominationId);
+    } catch {
+      message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
+    }
+  };
+
+  const handleDownloadExcel = async () => {
+    try {
+      downloadCriteriaExcel(eventId, nominationId);
     } catch {
       message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
     }
