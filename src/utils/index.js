@@ -441,3 +441,11 @@ export const validateDescription = (value, t) => {
   }
   return Promise.resolve();
 };
+
+export const splitByCookies = (str) => {
+  const match = str.match(/(.*?)(Cookies)(.*)/);
+  if (match) {
+    return [match[1], match[2], match[3]];
+  }
+  return ["", str, ""];
+};
