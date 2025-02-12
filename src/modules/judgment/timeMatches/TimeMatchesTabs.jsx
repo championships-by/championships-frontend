@@ -186,25 +186,23 @@ export const TimeMatchesTabs = () => {
 
   return (
     <Flex vertical gap="middle">
-      <Flex vertical className={isStageFinished && "scroll-container"}>
-        <Tabs
-          activeKey={activeTabKey}
-          onChange={setActiveTabKey}
-          items={items}
-          tabBarExtraContent={{
-            right: (
-              <Button
-                onClick={isStageFinished ? handleDownload : handleCompleteStage}
-                type="primary"
-              >
-                {isStageFinished
-                  ? t("COMMON.FINAL_PROTOCOL")
-                  : t("COMMON.COMPLETE_STAGE")}
-              </Button>
-            ),
-          }}
-        />
-      </Flex>
+      <Tabs
+        activeKey={activeTabKey}
+        onChange={setActiveTabKey}
+        items={items}
+        tabBarExtraContent={{
+          right: (
+            <Button
+              onClick={isStageFinished ? handleDownload : handleCompleteStage}
+              type="primary"
+            >
+              {isStageFinished
+                ? t("COMMON.FINAL_PROTOCOL")
+                : t("COMMON.COMPLETE_STAGE")}
+            </Button>
+          ),
+        }}
+      />
       {isStageFinished && <ReturnButton />}
     </Flex>
   );
