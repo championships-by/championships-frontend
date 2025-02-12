@@ -73,7 +73,7 @@ function CompetenciesTab() {
     } catch {}
   }, [criteria, dataSource, eventId, nominationId]);
 
-  const handleDownload = async () => {
+  const handleDownloadProtocol = async () => {
     try {
       downloadProtocol(eventId, nominationId);
     } catch {
@@ -193,7 +193,7 @@ function CompetenciesTab() {
 
   const buttonsForUnfinishedStage = (
     <Flex gap="middle">
-      <Button>
+      <Button onClick={handleDownloadExcel}>
         <Flex gap="small">
           <DownloadOutlined />
           {t("EVENTS.DOWNLOAD_EXCEL")}
@@ -206,7 +206,9 @@ function CompetenciesTab() {
   );
 
   const buttonsForFinishedStage = (
-    <Button type="primary">{t("COMMON.FINAL_PROTOCOL")}</Button>
+    <Button type="primary" onClick={handleDownloadProtocol}>
+      {t("COMMON.FINAL_PROTOCOL")}
+    </Button>
   );
 
   return (
