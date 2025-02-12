@@ -1,6 +1,6 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
-import { Spin } from "antd";
+import { Typography, Spin } from "antd";
 import { EditMatchScoreModal } from "../modals";
 import { MatchCard } from "./MatchCard";
 import "./MatchesGroupStage.scss";
@@ -22,10 +22,8 @@ export const MatchesGroupStage = () => {
     handleCloseModal,
   } = useMatches();
 
-  const UNGROUPED = "Ungrouped";
-
   const groupedMatches = matches.reduce((groups, match) => {
-    const group = match.group || UNGROUPED;
+    const group = match.group;
     if (!groups[group]) {
       groups[group] = [];
     }
@@ -44,7 +42,9 @@ export const MatchesGroupStage = () => {
     <div>
       {Object.keys(groupedMatches).map((group, index) => (
         <div key={index} className="group">
-          <h3 className="matches-group-number">{`Группа ${index + 1}`}</h3>
+          <Typography.Title level={3}>{`${t("COMMON.GROUP")} ${
+            index + 1
+          }`}</Typography.Title>
           <div className="matches-group-grid">
             {groupedMatches[group].map((match, matchIndex) => (
               <MatchCard
