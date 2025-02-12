@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { notification, Space, Button, Typography, Flex } from "antd";
 import { useTranslation } from "react-i18next";
 import { splitByCookies } from "@utils";
+import { cookiesPolicy } from "@constants";
 
 function CookiesNotification() {
   const [api, contextHolder] = notification.useNotification();
@@ -29,11 +30,13 @@ function CookiesNotification() {
         <Typography.Text strong>{t("COMMON.ATTENTION")}</Typography.Text>
       ),
       description: (
-        <Typography>
+        <>
           <Typography.Text>{cookiesMessageParts[0]}</Typography.Text>
-          <Typography.Link>{cookiesMessageParts[1]}</Typography.Link>
+          <Typography.Link target="_blank" href={cookiesPolicy}>
+            {cookiesMessageParts[1]}
+          </Typography.Link>
           <Typography.Text>{cookiesMessageParts[2]}</Typography.Text>
-        </Typography>
+        </>
       ),
       btn,
       placement: "bottomRight",

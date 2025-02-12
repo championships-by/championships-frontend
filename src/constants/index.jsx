@@ -294,6 +294,8 @@ export const gymnSite = "http://gymn61.minsk.edu.by";
 
 export const userGuide =
   "https://championships.by/static/files/Руководство%20пользователя.pdf";
+export const cookiesPolicy =
+  "https://championships.by/static/files/Политика%20в%20отношении%20обработки%20Cookies.pdf";
 
 export const eventFilterOptions = Object.entries(EventFilters).map(
   ([key, value]) => ({
