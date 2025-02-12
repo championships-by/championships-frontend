@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
 import { useTranslation } from "react-i18next";
 import { CompetenciesResults, CompetenciesTable } from "./components";
+import { DownloadOutlined } from "@ant-design/icons";
 
 import "@modules/judgment/competencies/sass/competencies-criteria.scss";
 
@@ -190,6 +191,24 @@ function CompetenciesTab() {
     }
   }, [eventId, isDataLoaded, nominationId, stageStatus, isStageFinished]);
 
+  const buttonsForUnfinishedStage = (
+    <Flex gap="middle">
+      <Button>
+        <Flex gap="small">
+          <DownloadOutlined />
+          {t("EVENTS.DOWNLOAD_EXCEL")}
+        </Flex>
+      </Button>
+      <Button type="primary" onClick={handleCompleteStage}>
+        {t("COMMON.COMPLETE_STAGE")}
+      </Button>
+    </Flex>
+  );
+
+  const buttonsForFinishedStage = (
+    <Button type="primary">{t("COMMON.FINAL_PROTOCOL")}</Button>
+  );
+
   return (
     <Flex vertical gap="middle">
       <Tabs
@@ -197,16 +216,9 @@ function CompetenciesTab() {
         onChange={setActiveTabKey}
         items={items}
         tabBarExtraContent={{
-          right: (
-            <Button
-              onClick={isStageFinished ? handleDownload : handleCompleteStage}
-              type="primary"
-            >
-              {isStageFinished
-                ? t("COMMON.FINAL_PROTOCOL")
-                : t("COMMON.COMPLETE_STAGE")}
-            </Button>
-          ),
+          right: isStageFinished
+            ? buttonsForFinishedStage
+            : buttonsForUnfinishedStage,
         }}
       />
       {isStageFinished && <ReturnButton />}
