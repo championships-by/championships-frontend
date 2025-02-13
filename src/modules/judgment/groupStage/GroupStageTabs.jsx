@@ -26,21 +26,21 @@ export function GroupStageTabs() {
 
   const handleClickFinalStage = (e) => {
     e.preventDefault();
-
+    console.log(matches);
     const completed = matches.every(
       ({ lastResultCreatorEmail }) => lastResultCreatorEmail !== null
     );
 
-    if (completed) {
-      setIsModalOpen(true);
+    if (!completed) {
+      messageApi.error(t("TOURNAMENTS.NOT_ALL_MATCHES_FILLED"));
       return;
     }
-
-    messageApi.error(t("TOURNAMENTS.NOT_ALL_MATCHES_FILLED"));
+    setIsModalOpen(true);
   };
 
-  const onSubmitFinalParticipants = (data) => {
-    handleStartPlayoffStage(data);
+  const onSubmitFinalParticipants = async (data) => {
+    await handleFinishGroupStage(data);
+    await handleStartPlayoffStage(data);
     setIsModalOpen(false);
   };
 
@@ -80,11 +80,8 @@ export function GroupStageTabs() {
         tabBarExtraContent={{
           right: (
             <Flex gap="small">
-              <Button onClick={handleFinishGroupStage} type="primary">
-                {t("COMMON.COMPLETE_STAGE")}
-              </Button>
               <Button onClick={handleClickFinalStage} type="primary">
-                {t("TOURNAMENTS.FINAL_STAGE")}
+                {t("COMMON.COMPLETE_STAGE")}
               </Button>
             </Flex>
           ),
