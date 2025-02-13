@@ -28,4 +28,12 @@ export const judgmentApi = {
 
     return instance.post(`${API_PATH}/match/set_group_match_result`, data);
   },
+  getPlayoffMatches: async (eventId, nominationId) => {
+    return instance.get(`${API_PATH}/match/get_bracket_matches`, {
+      params: {
+        event_id: eventId,
+        nomination_id: nominationId,
+      },
+    });
+  },
 };

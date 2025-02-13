@@ -6,6 +6,7 @@ export const MatchesContext = createContext();
 
 export function MatchesProvider({ eventId, nominationId, children }) {
   const [matches, setMatches] = useState([]);
+  const [playoffMatches, setPlayoffMatches] = useState([]);
   const [finalParticipants, setFinalParticipants] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -97,7 +98,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     });
   };
 
-  const fetchData = useCallback(
+  const fetchGroupStageData = useCallback(
     async (eventId, nominationId) => {
       setIsLoading(true);
       setError(null);
@@ -116,6 +117,19 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     [transformMatches]
   );
 
+  const fetchPlayoffStageData = useCallback(async (eventId, nominationId) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const responce = await judgmentApi.getPlayoffMatches(
+        eventId,
+        nominationId
+      );
+      setPlayoffMatches(responce.data.matches);
+    } catch {}
+    setIsLoading(false);
+  }, []);
+
   const handleEditScore = useCallback((match) => {
     setSelectedMatch(match);
     setIsModalOpen(true);
@@ -132,10 +146,10 @@ export function MatchesProvider({ eventId, nominationId, children }) {
           team2.score
         );
 
-        fetchData(eventId, nominationId);
+        fetchGroupStageData(eventId, nominationId);
       } catch (error) {}
     },
-    [fetchData]
+    [fetchGroupStageData]
   );
 
   const handleCloseModal = useCallback(() => {
@@ -147,7 +161,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishGroupStage(body);
       message.info("group stage finished");
-      fetchData(eventId, nominationId);
+      fetchGroupStageData(eventId, nominationId);
     } catch {}
   }, []);
 
@@ -164,25 +178,28 @@ export function MatchesProvider({ eventId, nominationId, children }) {
         teams: passedTeamsIds,
       };
       await competenciesApi.startPlayoffStage(body);
-      fetchData(eventId, nominationId);
+      fetchGroupStageData(eventId, nominationId);
     } catch {}
   }, []);
 
   useEffect(() => {
-    fetchData(eventId, nominationId);
-  }, [fetchData, eventId, nominationId]);
+    fetchGroupStageData(eventId, nominationId);
+    fetchPlayoffStageData(eventId, nominationId);
+  }, [fetchGroupStageData, fetchPlayoffStageData, eventId, nominationId]);
 
   const context = {
     eventId,
     nominationId,
     matches,
+    playoffMatches,
     finalParticipants,
     setFinalParticipants,
     selectedMatch,
     isModalOpen,
     isLoading,
     error,
-    fetchData,
+    fetchGroupStageData,
+    fetchPlayoffStageData,
     handleEditScore,
     handleSubmitScore,
     handleCloseModal,

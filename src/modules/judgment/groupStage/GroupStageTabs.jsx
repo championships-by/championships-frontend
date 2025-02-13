@@ -4,7 +4,11 @@ import { useMatches } from "@hooks";
 import { isScoreZero } from "@utils";
 import { Button, message, Tabs, Flex } from "antd";
 import { useMemo, useState } from "react";
-import { MatchesGroupStage, TableGroupStage } from "./components";
+import {
+  MatchesGroupStage,
+  TableGroupStage,
+  MatchesPlayoffStage,
+} from "./components";
 import { FinalParticipantsModal } from "./modals";
 import { useTranslation } from "react-i18next";
 
@@ -56,8 +60,8 @@ export function GroupStageTabs() {
     {
       key: "3",
       label: t("NOMINATION_TYPES.PLAYOFF"),
-      children: "Content Tab3",
-      disabled: true,
+      children: <MatchesPlayoffStage />,
+      disabled: false,
     },
     {
       key: "4",
