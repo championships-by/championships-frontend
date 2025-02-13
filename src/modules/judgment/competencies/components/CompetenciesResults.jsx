@@ -9,8 +9,23 @@ import { useTranslation } from "react-i18next";
 
 import "./CompetenciesResults.scss";
 
-export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
+const medals = [GoldMedal, SilverMedal, BronzeMedal];
+
+export const CompetenciesResults = ({
+  dataSource,
+  isLoading,
+  hasError,
+  maxPlace,
+}) => {
   const { t } = useTranslation();
+
+  const getMedal = (place) => {
+    return medals[place];
+  };
+
+  const getPlace = (index) => {
+    return index + (maxPlace ? maxPlace - 1 : 0);
+  };
 
   const columns = [
     {
@@ -18,19 +33,9 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
       key: "medal",
       render: (text, record, index) => (
         <>
-          {index <= 2 && (
+          {getPlace(index) <= 2 && (
             <div className="medal-column">
-              <img
-                src={
-                  index === 0
-                    ? GoldMedal
-                    : index === 1
-                      ? SilverMedal
-                      : index === 2
-                        ? BronzeMedal
-                        : ""
-                }
-              />
+              <img src={getMedal(getPlace(index))} />
             </div>
           )}
         </>
@@ -40,7 +45,7 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
       title: <Tooltip title={t("COMMON.PLACE")}>{t("COMMON.PLACE")}</Tooltip>,
       dataIndex: "place",
       key: "place",
-      render: (text, record, index) => index + 1,
+      render: (text, record, index) => getPlace(index) + 1,
     },
     {
       title: <Tooltip title={t("COMMON.TEAM")}>{t("COMMON.TEAM")}</Tooltip>,
