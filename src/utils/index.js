@@ -1,6 +1,6 @@
 import { EventFilters, defaultFormat, defaultTime, url } from "@constants";
 import { competenciesApi, eventApi } from "@api";
-import { ROUTES, MAX_TEXTAREA_LENGTH } from "@constants";
+import { ROUTES, MAX_TEXTAREA_LENGTH, medals } from "@constants";
 import i18n from "@src/translations/translations";
 import dayjs from "dayjs";
 import JSEncrypt from "jsencrypt";
@@ -480,4 +480,12 @@ export const splitByCookies = (str) => {
     return [match[1], match[2], match[3]];
   }
   return ["", str, ""];
+};
+
+export const getMedal = (place) => {
+  return medals[place];
+};
+
+export const getPlace = (index, maxPlace) => {
+  return index + (maxPlace ? maxPlace - 1 : 0);
 };

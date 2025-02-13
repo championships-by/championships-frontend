@@ -1,5 +1,8 @@
 import { EventEmitter } from "events";
 import NoData from "@components/noData/NoData";
+import BronzeMedal from "@src/assets/img/bronze-medal.png";
+import GoldMedal from "@src/assets/img/gold-medal.png";
+import SilverMedal from "@src/assets/img/silver-medal.png";
 
 export const ZUBRONOK = "https://zubronok.by/";
 
@@ -318,3 +321,5 @@ export const ANTD_INPUT_FIELD_STATUSES = {
 };
 
 export const MAX_TEXTAREA_LENGTH = 1000;
+
+export const medals = [GoldMedal, SilverMedal, BronzeMedal];

@@ -28,6 +28,7 @@ function CompetenciesTab() {
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("1");
+  const [maxPlace, setMaxPlace] = useState();
 
   const handleCompleteStage = useCallback(async () => {
     try {
@@ -132,6 +133,7 @@ function CompetenciesTab() {
             dataSource={dataSource}
             isLoading={isLoading}
             hasError={isErrorOccurred}
+            maxPlace={maxPlace}
           />
         ),
       },
@@ -180,6 +182,7 @@ function CompetenciesTab() {
               criteriaResponse.data
             );
             setCriteria(transformedCriteria);
+            setMaxPlace(criteriaResultsResponse.data.max_place);
             const transformedCriteriaResults = transformCriteriaResultsData(
               criteriaResultsResponse.data
             );
