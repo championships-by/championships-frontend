@@ -25,7 +25,18 @@ module.exports = (env) => {
     },
     plugins: [
       new CopyWebpackPlugin({
-        patterns: [{ from: "src/favicon.ico", to: "favicon.ico" }],
+        patterns: [
+          { from: "src/favicon.ico", to: "favicon.ico" },
+          { from: "src/manifest.json", to: "manifest.json" },
+          {
+            from: "src/assets/img/icon512_maskable.png",
+            to: "icon512_maskable.png",
+          },
+          {
+            from: "src/assets/img/icon512_rounded.png",
+            to: "icon512_rounded.png",
+          },
+        ],
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "src", "index.html"),
