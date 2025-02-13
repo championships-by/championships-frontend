@@ -26,7 +26,7 @@ export function MatchesGroupStage() {
   } = useMatches();
 
   const groupedMatches = matches.reduce((groups, match) => {
-    const group = match.group;
+    const group = match.group_id;
     if (!groups[group]) {
       groups[group] = [];
     }
@@ -45,9 +45,11 @@ export function MatchesGroupStage() {
     <div>
       {Object.keys(groupedMatches).map((group, index) => (
         <div key={index} className="group">
-          <Typography.Title level={3}>{`${t("COMMON.GROUP")} ${
-            index + 1
-          }`}</Typography.Title>
+          {Object.keys(groupedMatches).length > 1 && (
+            <Typography.Title level={3}>
+              {`${t("COMMON.GROUP")} ${index + 1}`}
+            </Typography.Title>
+          )}
           <div className="matches-group-grid">
             {groupedMatches[group].map((match, matchIndex) => (
               <MatchCard

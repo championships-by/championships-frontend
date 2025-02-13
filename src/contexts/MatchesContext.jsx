@@ -17,6 +17,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     return data
       .flatMap((group) =>
         group.matches.map((match) => ({
+          group_id: group.group_id,
           id: match.match_id,
           team1: {
             id: match.team1.id,
@@ -166,7 +167,6 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   }, []);
 
   const handleStartPlayoffStage = useCallback(async (data) => {
-    console.log(data);
     const passedTeamsData = data.filter((team) => team.isPassed);
     const passedTeamsIds = passedTeamsData.map((team) => ({
       id: team.id.toString(),
