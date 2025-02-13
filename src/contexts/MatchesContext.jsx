@@ -2,11 +2,14 @@ import { judgmentApi } from "@api/judgment";
 import { createContext, useCallback, useEffect, useState } from "react";
 import { competenciesApi } from "@api";
 import { message } from "antd";
+import { getPlayOffLevels } from "@utils";
+
 export const MatchesContext = createContext();
 
 export function MatchesProvider({ eventId, nominationId, children }) {
   const [matches, setMatches] = useState([]);
   const [playoffMatches, setPlayoffMatches] = useState([]);
+  const [leveledPlayoffMatches, setLeveledPlayoffMatches] = useState([]);
   const [finalParticipants, setFinalParticipants] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -126,8 +129,15 @@ export function MatchesProvider({ eventId, nominationId, children }) {
         eventId,
         nominationId
       );
-      setPlayoffMatches(responce.data.matches);
-    } catch {}
+
+      const matches = responce.data.matches;
+      const leveledMatches = getPlayOffLevels(responce.data.matches);
+
+      setPlayoffMatches(matches);
+      setLeveledPlayoffMatches(leveledMatches);
+    } catch (e) {
+      console.log(e);
+    }
     setIsLoading(false);
   }, []);
 
@@ -192,6 +202,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     nominationId,
     matches,
     playoffMatches,
+    leveledPlayoffMatches,
     finalParticipants,
     setFinalParticipants,
     selectedMatch,

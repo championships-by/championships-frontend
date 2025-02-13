@@ -4,7 +4,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
 import { Typography, Spin } from "antd";
 import { EditMatchScoreModal } from "../modals";
-import { PlayoffMatchCard } from "./PlayoffMatchCard";
+import { MatchCard } from "./MatchCard";
 import "./MatchesGroupStage.scss";
 import { useTranslation } from "react-i18next";
 import React from "react";
@@ -15,7 +15,7 @@ export function MatchesPlayoffStage() {
   const {
     eventId,
     nominationId,
-    playoffMatches,
+    leveledPlayoffMatches,
     selectedMatch,
     isModalOpen,
     isLoading,
@@ -34,19 +34,24 @@ export function MatchesPlayoffStage() {
     </div>
   ) : (
     <div>
-      <div className="matches-group-grid">
-        {playoffMatches.map((match, matchIndex) => (
-          <PlayoffMatchCard
-            key={match.id}
-            id={match.id}
-            matchIndex={matchIndex + 1}
-            team1={match.team1}
-            team2={match.team2}
-            lastCreatorEmail={match.lastResultCreatorEmail}
-            onEditScore={() => handleEditScore(match)}
-          />
-        ))}
-      </div>
+      {Object.keys(leveledPlayoffMatches).map((level, index) => (
+        <div key={index} className="group">
+          <div className="matches-group-grid">
+            {leveledPlayoffMatches[level].map((match, matchIndex) => (
+              // <MatchCard
+              //   key={match.id}
+              //   id={match.id}
+              //   matchIndex={matchIndex + 1}
+              //   team1={match.team1}
+              //   team2={match.team2}
+              //   lastCreatorEmail={match.lastResultCreatorEmail}
+              //   onEditScore={() => handleEditScore(match)}
+              // />
+              <>{match.id}</>
+            ))}
+          </div>
+        </div>
+      ))}
       {selectedMatch && (
         <EditMatchScoreModal
           isOpen={isModalOpen}

@@ -481,3 +481,35 @@ export const splitByCookies = (str) => {
   }
   return ["", str, ""];
 };
+
+export const getPlayOffLevels = (objects) => {
+  const map = new Map();
+  const levels = [];
+  const rootNodes = [];
+
+  objects.forEach((obj) => {
+    map.set(obj.match_id, { ...obj, children: [] });
+    if (obj.next_match_id === null) {
+      rootNodes.push(obj.match_id);
+    }
+  });
+
+  objects.forEach((obj) => {
+    if (obj.next_match_id !== null) {
+      const parent = map.get(obj.next_match_id);
+      parent.children.push(obj.match_id);
+    }
+  });
+
+  function traverse(nodeId, level) {
+    if (!levels[level]) levels[level] = [];
+    levels[level].push(map.get(nodeId));
+
+    const node = map.get(nodeId);
+    node.children.forEach((childId) => traverse(childId, level + 1));
+  }
+
+  rootNodes.forEach((rootId) => traverse(rootId, 0));
+
+  return levels;
+};
