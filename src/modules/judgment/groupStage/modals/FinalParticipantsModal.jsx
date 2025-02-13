@@ -81,13 +81,14 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
         const { team1, team2 } = match;
         const [points1, points2] = calculatePoints(team1.score, team2.score);
 
-        const updateParticipant = (name, score, points) => {
+        const updateParticipant = (id, name, score, points) => {
           const existingParticipant = acc.find((p) => p.participant === name);
           if (existingParticipant) {
             existingParticipant.score += score;
             existingParticipant.points += points;
           } else {
             acc.push({
+              id,
               key: getParticipantKey(name),
               participant: name,
               score,
@@ -97,8 +98,8 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
           }
         };
 
-        updateParticipant(team1.name, team1.score, points1);
-        updateParticipant(team2.name, team2.score, points2);
+        updateParticipant(team1.id, team1.name, team1.score, points1);
+        updateParticipant(team2.id, team2.name, team2.score, points2);
 
         return acc;
       }, []);

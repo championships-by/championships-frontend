@@ -1,9 +1,10 @@
 import { judgmentApi } from "@api/judgment";
 import { createContext, useCallback, useEffect, useState } from "react";
-
+import { competenciesApi } from "@api";
+import { message } from "antd";
 export const MatchesContext = createContext();
 
-export const MatchesProvider = ({ eventId, nominationId, children }) => {
+export function MatchesProvider({ eventId, nominationId, children }) {
   const [matches, setMatches] = useState([]);
   const [finalParticipants, setFinalParticipants] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState(null);
@@ -17,10 +18,12 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
         group.matches.map((match) => ({
           id: match.match_id,
           team1: {
+            id: match.team1.id,
             name: match.team1.name,
             score: match.team1_score,
           },
           team2: {
+            id: match.team2.id,
             name: match.team2.name,
             score: match.team2_score,
           },
@@ -46,6 +49,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
 
         if (!teamStats[team1.name]) {
           teamStats[team1.name] = {
+            id: team1.id,
             name: team1.name,
             wins: 0,
             losses: 0,
@@ -56,6 +60,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
         }
         if (!teamStats[team2.name]) {
           teamStats[team2.name] = {
+            id: team2.id,
             name: team2.name,
             wins: 0,
             losses: 0,
@@ -85,7 +90,6 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
       });
 
       const teams = Object.values(teamStats);
-
       return {
         group_id: group.group_id,
         teams,
@@ -138,6 +142,32 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
     setIsModalOpen(false);
   }, []);
 
+  const handleFinishGroupStage = useCallback(async () => {
+    try {
+      const body = { event_id: eventId, nomination_id: nominationId };
+      await competenciesApi.finishGroupStage(body);
+      message.info("group stage finished");
+      fetchData(eventId, nominationId);
+    } catch {}
+  }, []);
+
+  const handleStartPlayoffStage = useCallback(async (data) => {
+    console.log(data);
+    const passedTeamsData = data.filter((team) => team.isPassed);
+    const passedTeamsIds = passedTeamsData.map((team) => ({
+      id: team.id.toString(),
+    }));
+
+    try {
+      const body = {
+        nomination_event: { event_id: eventId, nomination_id: nominationId },
+        teams: passedTeamsIds,
+      };
+      await competenciesApi.startPlayoffStage(body);
+      fetchData(eventId, nominationId);
+    } catch {}
+  }, []);
+
   useEffect(() => {
     fetchData(eventId, nominationId);
   }, [fetchData, eventId, nominationId]);
@@ -156,6 +186,8 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
     handleEditScore,
     handleSubmitScore,
     handleCloseModal,
+    handleFinishGroupStage,
+    handleStartPlayoffStage,
   };
 
   return (
@@ -163,4 +195,4 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
       {children}
     </MatchesContext.Provider>
   );
-};
+}

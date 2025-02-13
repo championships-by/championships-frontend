@@ -1,19 +1,26 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable import/prefer-default-export */
 import { useMatches } from "@hooks";
 import { isScoreZero } from "@utils";
-import { Button, message, Tabs } from "antd";
+import { Button, message, Tabs, Flex } from "antd";
 import { useMemo, useState } from "react";
 import { MatchesGroupStage, TableGroupStage } from "./components";
 import { FinalParticipantsModal } from "./modals";
 import { useTranslation } from "react-i18next";
 
-export const GroupStageTabs = () => {
+export function GroupStageTabs() {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { matches, setFinalParticipants } = useMatches();
+  const {
+    matches,
+    setFinalParticipants,
+    handleFinishGroupStage,
+    handleStartPlayoffStage,
+  } = useMatches();
 
-  const handleClick = (e) => {
+  const handleClickFinalStage = (e) => {
     e.preventDefault();
 
     const completed = matches.every(
@@ -26,6 +33,11 @@ export const GroupStageTabs = () => {
     }
 
     messageApi.error(t("TOURNAMENTS.NOT_ALL_MATCHES_FILLED"));
+  };
+
+  const onSubmitFinalParticipants = (data) => {
+    handleStartPlayoffStage(data);
+    setIsModalOpen(false);
   };
 
   const items = [
@@ -63,20 +75,22 @@ export const GroupStageTabs = () => {
         items={items}
         tabBarExtraContent={{
           right: (
-            <Button onClick={handleClick} type="primary">
-              {t("COMMON.COMPLETE_STAGE")}
-            </Button>
+            <Flex gap="small">
+              <Button onClick={handleFinishGroupStage} type="primary">
+                {t("COMMON.COMPLETE_STAGE")}
+              </Button>
+              <Button onClick={handleClickFinalStage} type="primary">
+                {t("TOURNAMENTS.FINAL_STAGE")}
+              </Button>
+            </Flex>
           ),
         }}
       />
       <FinalParticipantsModal
         isOpen={isModalOpen}
-        onSubmit={(data) => {
-          setFinalParticipants(data);
-          setIsModalOpen(false);
-        }}
+        onSubmit={onSubmitFinalParticipants}
         onCancel={() => setIsModalOpen(false)}
       />
     </>
   );
-};
+}
