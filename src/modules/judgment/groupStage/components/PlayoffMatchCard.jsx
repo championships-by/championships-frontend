@@ -1,5 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable import/prefer-default-export */
+import React from "react";
 import { EditOutlined } from "@ant-design/icons";
 import { determinateTheWinner, isScoreZero, MatchResult } from "@utils";
 import { Handle, Position } from "reactflow";
@@ -48,7 +47,7 @@ export function PlayoffMatchCard({ data }) {
         </div>
       </div>
       {isPlayoffStageFinished ? (
-        <div className="match-card__icon-section"></div>
+        <div className="match-card__icon-section" />
       ) : (
         <div className="match-card__icon-section" onClick={handleClick}>
           <EditOutlined className="match-card__icon-section--edit-icon" />
@@ -58,9 +57,13 @@ export function PlayoffMatchCard({ data }) {
         <Handle
           type="target"
           position={Position.Right}
-          style={{ opacity: 0 }}
+          className="opaque-handle"
         />
-        <Handle type="source" position={Position.Left} style={{ opacity: 0 }} />
+        <Handle
+          type="source"
+          position={Position.Left}
+          className="opaque-handle"
+        />
       </div>
     </div>
   );

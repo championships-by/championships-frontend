@@ -1,14 +1,12 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable import/prefer-default-export */
+import React from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
 import { Typography, Spin, Flex } from "antd";
 import { EditMatchScoreModal } from "../modals";
-import { PlayoffMatchCard } from "./PlayoffMatchCard";
-import "./MatchesGroupStage.scss";
-import { useTranslation } from "react-i18next";
 import PlayoffTree from "./PlayoffTree";
-import React from "react";
+import { useTranslation } from "react-i18next";
+
+import "./MatchesGroupStage.scss";
 
 export function MatchesPlayoffStage() {
   const { t } = useTranslation();
@@ -16,12 +14,10 @@ export function MatchesPlayoffStage() {
   const {
     eventId,
     nominationId,
-    leveledPlayoffMatches,
     selectedMatch,
     isModalOpen,
     isLoading,
     error,
-    handleEditScore,
     handleSubmitScore,
     handleCloseModal,
   } = useMatches();
