@@ -22,7 +22,6 @@ function PlayoffTree() {
         nodes={nodes}
         edges={edges}
         nodeTypes={{ customNode: PlayoffMatchCard }}
-        fitView
       />
     </div>
   );

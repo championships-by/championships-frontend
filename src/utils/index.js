@@ -522,6 +522,11 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
   const nodes = [];
   const edges = [];
   const coeffY = 150;
+  const coeffX = 350;
+  const levels = leveledMatches.length;
+  const maxNodes = Math.max(...leveledMatches.map((level) => level.length));
+  const startX = (levels - 1) * coeffX;
+  const startY = levels > 2 ? (maxNodes - 1.5) * coeffY : coeffY;
 
   const nodesCount = leveledMatches.reduce(
     (accumulator, level) => accumulator + level.length,
@@ -531,7 +536,6 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
   let overallIndex = 0;
   leveledMatches.forEach((level, levelIndex) => {
     level.forEach((match, index) => {
-      const levels = leveledMatches.length;
       const deltaY = (levels / 2 ** levelIndex) * coeffY;
 
       nodes.push({
@@ -546,8 +550,8 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
         },
         type: "customNode",
         position: {
-          x: -levelIndex * 400,
-          y: -index * deltaY,
+          x: startX - levelIndex * coeffX,
+          y: startY - index * deltaY,
         },
       });
 
