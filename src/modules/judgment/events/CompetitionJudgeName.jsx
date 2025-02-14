@@ -17,6 +17,7 @@ function CompetitionType({ onJudgeChange, judges }) {
   const [options, setOptions] = useState([]);
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
+  const [hiddenJudges, setHiddenJudges] = useState([]);
   const [selectHeight, setSelectHeight] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const selectRef = useRef(null);
@@ -37,6 +38,15 @@ function CompetitionType({ onJudgeChange, judges }) {
         const selectedJudgesData = judgeOptions.filter((option) =>
           judges.includes(option.value)
         );
+
+        setHiddenJudges(
+          judges
+            .filter(
+              (judge) => !judgeOptions.some((option) => option.value === judge)
+            )
+            .map((judge) => judge)
+        );
+
         setSelectedJudges(selectedJudgesData);
       }
     });
@@ -70,7 +80,7 @@ function CompetitionType({ onJudgeChange, judges }) {
 
   const handleChange = (value) => {
     setSelectedJudges(value);
-    onJudgeChange(value);
+    onJudgeChange([...value, ...hiddenJudges]);
   };
 
   return (
