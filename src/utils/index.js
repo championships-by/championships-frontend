@@ -514,7 +514,6 @@ export const getPlayOffLevels = (objects) => {
   }
 
   rootNodes.forEach((rootId) => traverse(rootId, 0));
-  // levels.reverse();
 
   return levels;
 };
@@ -565,4 +564,16 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
   });
 
   return { nodes, edges };
+};
+
+export const validatePlayoffResults = (leveledMatches) => {
+  return !leveledMatches.some((level) =>
+    level.some(
+      (match) =>
+        !match.team1 ||
+        !match.team2 ||
+        match.team1.score == null ||
+        match.team2.score == null
+    )
+  );
 };

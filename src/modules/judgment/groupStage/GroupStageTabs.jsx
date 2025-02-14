@@ -10,13 +10,16 @@ import {
   MatchesPlayoffStage,
   PlayoffTree,
 } from "./components";
-import { FinalParticipantsModal } from "./modals";
+import { FinalParticipantsModal, FinishPlayoffModal } from "./modals";
 import { useTranslation } from "react-i18next";
 import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
+import { validatePlayoffResults } from "@utils";
 
 export function GroupStageTabs() {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFinishPlayoffModalOpen, setIsFinishPlayoffModalOpen] =
+    useState(false);
   const [messageApi, contextHolder] = message.useMessage();
 
   const {
@@ -26,6 +29,7 @@ export function GroupStageTabs() {
     handleStartPlayoffStage,
     isPlayoffStageFinished,
     isGroupStageFinished,
+    leveledPlayoffMatches,
   } = useMatches();
 
   const handleClickFinishGroupStage = (e) => {
@@ -42,7 +46,21 @@ export function GroupStageTabs() {
     setIsModalOpen(true);
   };
 
-  const handleClickFinishPlayoffStage = (e) => {};
+  const handleClickFinishPlayoffStage = (e) => {
+    setIsFinishPlayoffModalOpen(true);
+  };
+
+  const onOkFinishPlayoffModal = () => {
+    setIsFinishPlayoffModalOpen(false);
+    if (!validatePlayoffResults(leveledPlayoffMatches)) {
+      messageApi.error(t("TOURNAMENTS.NOT_ALL_MATCHES_FILLED"));
+      return;
+    }
+  };
+
+  const onCancelFinishPlayoffModal = () => {
+    setIsFinishPlayoffModalOpen(false);
+  };
 
   const onSubmitFinalParticipants = async (data) => {
     await handleFinishGroupStage(data);
@@ -115,6 +133,11 @@ export function GroupStageTabs() {
         onSubmit={onSubmitFinalParticipants}
         onCancel={() => setIsModalOpen(false)}
       />
+      <FinishPlayoffModal
+        isOpen={isFinishPlayoffModalOpen}
+        onOk={onOkFinishPlayoffModal}
+        onCancel={onCancelFinishPlayoffModal}
+      ></FinishPlayoffModal>
     </Flex>
   );
 }

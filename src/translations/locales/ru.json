@@ -277,7 +277,8 @@
     "COULDNT_DOWNLOAD_FILE": "Не удалось скачать файл",
     "WINS": "Выигрыши",
     "LOSSES": "Проигрыши",
-    "DRAWS": "Ничьи"
+    "DRAWS": "Ничьи",
+    "ARE_YOU_SURE_FINISH_PLAYOFF": "Вы уверены, что хотите завершить плей-офф?"
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "О портале",

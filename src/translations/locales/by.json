@@ -277,7 +277,8 @@
     "COULDNT_DOWNLOAD_FILE": "Немагчыма загрузіць файл",
     "WINS": "Выйгрышы",
     "LOSSES": "Пройгрышы",
-    "DRAWS": "Нічыя"
+    "DRAWS": "Нічыя",
+    "ARE_YOU_SURE_FINISH_PLAYOFF": "Вы ўпэўненыя, што хочаце завяршыць плэй-оф"
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "Пра партал",
