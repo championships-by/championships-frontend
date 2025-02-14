@@ -278,7 +278,9 @@
     "WINS": "Выигрыши",
     "LOSSES": "Проигрыши",
     "DRAWS": "Ничьи",
-    "ARE_YOU_SURE_FINISH_PLAYOFF": "Вы уверены, что хотите завершить плей-офф?"
+    "ARE_YOU_SURE_FINISH_PLAYOFF": "Вы уверены, что хотите завершить плей-офф?",
+    "GROUP_STAGE_FINISHED": "Групповой этап успешно завершён",
+    "PLAYOFF_STAGE_FINISHED": "Плей-офф успешно завершён."
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "О портале",

@@ -58,6 +58,8 @@ export const competenciesApi = {
       `/nomination_event/nomination_event_info?${queryString}`,
       data
     ),
+  getPlayoffStatus: (params) =>
+    instance.get(`/match/get_tournament_status`, { params }),
   startGroupStage: (data) =>
     instance.post(`/tournaments/start_group_stage`, data),
   finishGroupStage: (data) =>

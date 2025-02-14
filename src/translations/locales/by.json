@@ -278,7 +278,9 @@
     "WINS": "Выйгрышы",
     "LOSSES": "Пройгрышы",
     "DRAWS": "Нічыя",
-    "ARE_YOU_SURE_FINISH_PLAYOFF": "Вы ўпэўненыя, што хочаце завяршыць плэй-оф"
+    "ARE_YOU_SURE_FINISH_PLAYOFF": "Вы ўпэўненыя, што хочаце завяршыць плэй-оф",
+    "GROUP_STAGE_FINISHED": "Групавы этап паспяхова завершаны",
+    "PLAYOFF_STAGE_FINISHED": "Плэй-оф паспяхова завершаны"
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "Пра партал",

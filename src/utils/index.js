@@ -486,6 +486,34 @@ export const splitByCookies = (str) => {
   return ["", str, ""];
 };
 
+function cleanPlayoffTree(tree) {
+  const nodesToRemove = new Set();
+
+  tree.forEach((level) => {
+    level.forEach((match) => {
+      match.children = match.children.filter((childId) => {
+        const child = tree.flat().find((node) => node.id === childId);
+
+        if (!child) return true;
+
+        const isRedundant =
+          (child.team1?.id === match.team1?.id && child.team2 === null) ||
+          (child.team1?.id === match.team2?.id && child.team2 === null);
+
+        if (isRedundant) {
+          nodesToRemove.add(childId);
+          return false;
+        }
+        return true;
+      });
+    });
+  });
+
+  return tree.map((level) =>
+    level.filter((match) => !nodesToRemove.has(match.id))
+  );
+}
+
 export const getPlayOffLevels = (objects) => {
   const map = new Map();
   const levels = [];
@@ -515,7 +543,8 @@ export const getPlayOffLevels = (objects) => {
 
   rootNodes.forEach((rootId) => traverse(rootId, 0));
 
-  return levels;
+  const cleanLevels = cleanPlayoffTree(levels);
+  return cleanLevels;
 };
 
 export const getTreeData = (leveledMatches, handleEditScore) => {
@@ -570,22 +599,7 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
   return { nodes, edges };
 };
 
-export const validatePlayoffResults = (leveledMatches) => {
-  return !leveledMatches.some((level) =>
-    level.some(
-      (match) =>
-        !match.team1 ||
-        !match.team2 ||
-        match.team1.score == null ||
-        match.team2.score == null
-    )
-  );
-};
-
 export const getPlayoffResults = (leveledMatches) => {
-  if (!validatePlayoffResults(leveledMatches)) {
-    return;
-  }
   const playoffData = leveledMatches.flat();
 
   const scores = new Map();
@@ -606,9 +620,23 @@ export const getPlayoffResults = (leveledMatches) => {
       childrenMap.get(match.id).push(childId);
     });
 
-    [match.team1, match.team2].forEach((team) => {
-      scores.set(team.id, (scores.get(team.id) || 0) + team.score);
-    });
+    if (match.team1) {
+      scores.set(
+        match.team1.id,
+        (scores.get(match.team1.id) || 0) + match.team1.score
+      );
+    }
+
+    if (match.team2) {
+      scores.set(
+        match.team2.id,
+        (scores.get(match.team2.id) || 0) + match.team2.score
+      );
+    }
+
+    // [match.team1, match.team2].forEach((team) => {
+    //   scores.set(team.id, (scores.get(team.id) || 0) + team.score);
+    // });
   });
 
   if (!rootMatch) return [];
@@ -617,6 +645,10 @@ export const getPlayoffResults = (leveledMatches) => {
   let place = 0;
 
   function processMatch(match, place) {
+    if (!(match.team1 && match.team2)) {
+      return place;
+    }
+
     let [winner, loser] =
       match.team1.score > match.team2.score
         ? [match.team1, match.team2]

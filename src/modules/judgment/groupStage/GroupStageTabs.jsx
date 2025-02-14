@@ -8,13 +8,12 @@ import {
   MatchesGroupStage,
   TableGroupStage,
   MatchesPlayoffStage,
-  PlayoffTree,
-  PlayoffResult,
 } from "./components";
 import { FinalParticipantsModal, FinishPlayoffModal } from "./modals";
 import { useTranslation } from "react-i18next";
 import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
-import { validatePlayoffResults } from "@utils";
+import { downloadProtocol } from "@utils";
+import { useParams } from "react-router-dom";
 
 export function GroupStageTabs() {
   const { t } = useTranslation();
@@ -22,6 +21,7 @@ export function GroupStageTabs() {
   const [isFinishPlayoffModalOpen, setIsFinishPlayoffModalOpen] =
     useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const { eventId, nominationId } = useParams();
 
   const {
     matches,
@@ -31,6 +31,7 @@ export function GroupStageTabs() {
     isPlayoffStageFinished,
     isGroupStageFinished,
     leveledPlayoffMatches,
+    finishPlayoffStage,
   } = useMatches();
 
   const handleClickFinishGroupStage = (e) => {
@@ -47,16 +48,21 @@ export function GroupStageTabs() {
     setIsModalOpen(true);
   };
 
+  const onClickDownloadProtocol = async () => {
+    try {
+      await downloadProtocol(eventId, nominationId);
+    } catch {
+      message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
+    }
+  };
+
   const handleClickFinishPlayoffStage = (e) => {
     setIsFinishPlayoffModalOpen(true);
   };
 
   const onOkFinishPlayoffModal = () => {
     setIsFinishPlayoffModalOpen(false);
-    if (!validatePlayoffResults(leveledPlayoffMatches)) {
-      messageApi.error(t("TOURNAMENTS.NOT_ALL_MATCHES_FILLED"));
-      return;
-    }
+    finishPlayoffStage();
   };
 
   const onCancelFinishPlayoffModal = () => {
@@ -88,12 +94,12 @@ export function GroupStageTabs() {
       children: <MatchesPlayoffStage />,
       disabled: !isGroupStageFinished,
     },
-    {
-      key: "4",
-      label: t("COMMON.RESULTS"),
-      children: <PlayoffResult />,
-      disabled: !isPlayoffStageFinished,
-    },
+    // {
+    //   key: "4",
+    //   label: t("COMMON.RESULTS"),
+    //   children: <PlayoffResult />,
+    //   disabled: !isPlayoffStageFinished,
+    // },
   ];
 
   return (
@@ -116,7 +122,9 @@ export function GroupStageTabs() {
                 </Button>
               )}
               {isPlayoffStageFinished && isGroupStageFinished && (
-                <Button type="primary">{t("COMMON.FINAL_PROTOCOL")}</Button>
+                <Button type="primary" onClick={onClickDownloadProtocol}>
+                  {t("COMMON.FINAL_PROTOCOL")}
+                </Button>
               )}
             </Flex>
           ),

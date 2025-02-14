@@ -3,10 +3,13 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import { competenciesApi } from "@api";
 import { message } from "antd";
 import { getPlayOffLevels } from "@utils";
+import { useTranslation } from "react-i18next";
 
 export const MatchesContext = createContext();
 
 export function MatchesProvider({ eventId, nominationId, children }) {
+  const { t } = useTranslation();
+
   const [matches, setMatches] = useState([]);
   const [playoffMatches, setPlayoffMatches] = useState([]);
   const [leveledPlayoffMatches, setLeveledPlayoffMatches] = useState([]);
@@ -17,7 +20,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [isGroupStageFinished, setIsGroupStageFinished] = useState(true);
+  const [isGroupStageFinished, setIsGroupStageFinished] = useState(false);
   const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(false);
 
   const transformMatches = useCallback((data) => {
@@ -166,6 +169,32 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     setIsLoading(false);
   }, []);
 
+  const fetchData = useCallback(async (eventId, nominationId) => {
+    setIsLoading(true);
+
+    try {
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+
+      const statusInfo = (await competenciesApi.getPlayoffStatus(params)).data;
+      setIsGroupStageFinished(statusInfo.group_stage_finished);
+      setIsPlayoffStageFinished(statusInfo.play_off_stage_finished);
+
+      try {
+        await fetchGroupStageData(eventId, nominationId);
+      } catch {}
+
+      if (statusInfo.group_stage_finished) {
+        try {
+          await fetchPlayoffStageData(eventId, nominationId);
+        } catch {}
+      }
+    } catch {}
+
+    setIsLoading(false);
+  }, []);
+
   const handleEditScore = useCallback((match) => {
     setSelectedMatch(match);
     setIsModalOpen(true);
@@ -182,7 +211,6 @@ export function MatchesProvider({ eventId, nominationId, children }) {
             team1.score,
             team2.score
           );
-          fetchPlayoffStageData(eventId, nominationId);
         } else {
           await judgmentApi.setMatches(
             eventId,
@@ -191,8 +219,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
             team1.score,
             team2.score
           );
-          fetchGroupStageData(eventId, nominationId);
         }
+        fetchData(eventId, nominationId);
       } catch (error) {}
     },
     [fetchGroupStageData, fetchPlayoffStageData]
@@ -206,8 +234,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishGroupStage(body);
-      message.info("group stage finished");
-      fetchGroupStageData(eventId, nominationId);
+      message.success(t("TOURNAMENTS.GROUP_STAGE_FINISHED"));
+      fetchData(eventId, nominationId);
     } catch {}
   }, []);
 
@@ -227,9 +255,19 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     } catch {}
   }, []);
 
+  const finishPlayoffStage = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const body = { event_id: eventId, nomination_id: nominationId };
+      await competenciesApi.finishPlayoffStage(body);
+      message.success(t("TOURNAMENTS.PLAYOFF_STAGE_FINISHED"));
+      fetchData(eventId, nominationId);
+    } catch {}
+    setIsLoading(false);
+  }, []);
+
   useEffect(() => {
-    fetchGroupStageData(eventId, nominationId);
-    fetchPlayoffStageData(eventId, nominationId);
+    fetchData(eventId, nominationId);
   }, [fetchGroupStageData, fetchPlayoffStageData, eventId, nominationId]);
 
   const context = {
@@ -245,8 +283,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     isModalOpen,
     isLoading,
     error,
-    fetchGroupStageData,
-    fetchPlayoffStageData,
+    fetchData,
     handleEditScore,
     handleSubmitScore,
     handleCloseModal,
@@ -254,6 +291,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     handleStartPlayoffStage,
     isGroupStageFinished,
     isPlayoffStageFinished,
+    finishPlayoffStage,
   };
 
   return (
