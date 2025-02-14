@@ -5,35 +5,12 @@ import CustomTelegramIconDark from "./CustomTelegramIconDark";
 import CustomTelegramIconLight from "./CustomTelegramIconLight";
 
 function SocialLinkButton() {
-  const { t } = useTranslation();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-  const [isOpen, setOpen] = useState(false);
   const floatButtonGroupRef = useRef(null);
-
-  const onClick = () => {
-    setOpen(!isOpen);
-  };
 
   const openTelegram = () => {
     window.open("https://t.me/championshipsby", "_blank");
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        floatButtonGroupRef.current &&
-        !floatButtonGroupRef.current.contains(event.target)
-      ) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   useEffect(() => {
     const handleThemeChange = () => {
