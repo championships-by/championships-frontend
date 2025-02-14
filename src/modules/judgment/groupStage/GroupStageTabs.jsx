@@ -9,6 +9,7 @@ import {
   TableGroupStage,
   MatchesPlayoffStage,
   PlayoffTree,
+  PlayoffResult,
 } from "./components";
 import { FinalParticipantsModal, FinishPlayoffModal } from "./modals";
 import { useTranslation } from "react-i18next";
@@ -90,7 +91,7 @@ export function GroupStageTabs() {
     {
       key: "4",
       label: t("COMMON.RESULTS"),
-      children: "Content Tab4",
+      children: <PlayoffResult />,
       disabled: !isPlayoffStageFinished,
     },
   ];
@@ -123,7 +124,7 @@ export function GroupStageTabs() {
       />
       {isPlayoffStageFinished && (
         <>
-          <Divider />
+          {/* <Divider /> */}
           <ReturnButton />
         </>
       )}
@@ -137,7 +138,7 @@ export function GroupStageTabs() {
         isOpen={isFinishPlayoffModalOpen}
         onOk={onOkFinishPlayoffModal}
         onCancel={onCancelFinishPlayoffModal}
-      ></FinishPlayoffModal>
+      />
     </Flex>
   );
 }

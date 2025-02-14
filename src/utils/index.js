@@ -577,3 +577,74 @@ export const validatePlayoffResults = (leveledMatches) => {
     )
   );
 };
+
+export const getPlayoffResults = (leveledMatches) => {
+  if (!validatePlayoffResults(leveledMatches)) {
+    return;
+  }
+  const playoffData = leveledMatches.flat();
+
+  const scores = new Map();
+  const matches = new Map();
+  const childrenMap = new Map();
+
+  let rootMatch = null;
+
+  playoffData.forEach((match) => {
+    matches.set(match.id, match);
+    if (match.next_id === null) rootMatch = match;
+
+    if (!childrenMap.has(match.id)) {
+      childrenMap.set(match.id, []);
+    }
+
+    match.children.forEach((childId) => {
+      childrenMap.get(match.id).push(childId);
+    });
+
+    [match.team1, match.team2].forEach((team) => {
+      scores.set(team.id, (scores.get(team.id) || 0) + team.score);
+    });
+  });
+
+  if (!rootMatch) return [];
+
+  let rankings = [];
+  let place = 0;
+
+  function processMatch(match, place) {
+    let [winner, loser] =
+      match.team1.score > match.team2.score
+        ? [match.team1, match.team2]
+        : [match.team2, match.team1];
+
+    if (!rankings.some((entry) => entry.id === winner.id)) {
+      rankings.push({
+        id: winner.id,
+        team: winner.name,
+        score: scores.get(winner.id),
+        place: place,
+      });
+    }
+
+    if (!rankings.some((entry) => entry.id === loser.id)) {
+      rankings.push({
+        id: loser.id,
+        team: loser.name,
+        score: scores.get(loser.id),
+        place: place + 1,
+      });
+    }
+
+    let nextPlace = place + 1;
+    if (childrenMap.has(match.id)) {
+      childrenMap.get(match.id).forEach((childId) => {
+        nextPlace = processMatch(matches.get(childId), nextPlace);
+      });
+    }
+    return nextPlace;
+  }
+
+  processMatch(rootMatch, place);
+  return rankings;
+};

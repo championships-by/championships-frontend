@@ -4,6 +4,7 @@ import { MatchesGroupStage } from "./MatchesGroupStage";
 import { TableGroupStage } from "./TableGroupStage";
 import { MatchesPlayoffStage } from "./MatchesPlayoffStage";
 import PlayoffTree from "./PlayoffTree";
+import { PlayoffResult } from "./PlayoffResult";
 
 export {
   MatchCard,
@@ -12,4 +13,5 @@ export {
   MatchesPlayoffStage,
   PlayoffMatchCard,
   PlayoffTree,
+  PlayoffResult,
 };

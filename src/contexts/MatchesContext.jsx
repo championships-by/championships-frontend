@@ -18,7 +18,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   const [error, setError] = useState(null);
 
   const [isGroupStageFinished, setIsGroupStageFinished] = useState(true);
-  const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(false);
+  const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(true);
 
   const transformMatches = useCallback((data) => {
     return data
