@@ -16,6 +16,10 @@ export const MatchResult = {
 };
 
 export const determinateTheWinner = (score1, score2) => {
+  if (score1 === null || score2 === null) {
+    return MatchResult.DRAW;
+  }
+
   if (score1 > score2) {
     return MatchResult.TEAM1;
   }
@@ -480,6 +484,205 @@ export const splitByCookies = (str) => {
     return [match[1], match[2], match[3]];
   }
   return ["", str, ""];
+};
+
+function cleanPlayoffTree(tree) {
+  const nodesToRemove = new Set();
+
+  tree.forEach((level) => {
+    level.forEach((match) => {
+      match.children = match.children.filter((childId) => {
+        const child = tree.flat().find((node) => node.id === childId);
+
+        if (!child) return true;
+
+        const isRedundant =
+          (child.team1?.id === match.team1?.id && child.team2 === null) ||
+          (child.team1?.id === match.team2?.id && child.team2 === null);
+
+        if (isRedundant) {
+          nodesToRemove.add(childId);
+          return false;
+        }
+        return true;
+      });
+    });
+  });
+
+  return tree.map((level) =>
+    level.filter((match) => !nodesToRemove.has(match.id))
+  );
+}
+
+export const getPlayOffLevels = (objects) => {
+  const map = new Map();
+  const levels = [];
+  const rootNodes = [];
+
+  objects.forEach((obj) => {
+    map.set(obj.id, { ...obj, children: [] });
+    if (obj.next_id === null) {
+      rootNodes.push(obj.id);
+    }
+  });
+
+  objects.forEach((obj) => {
+    if (obj.next_id !== null) {
+      const parent = map.get(obj.next_id);
+      parent.children.push(obj.id);
+    }
+  });
+
+  function traverse(nodeId, level) {
+    if (!levels[level]) levels[level] = [];
+    levels[level].push(map.get(nodeId));
+
+    const node = map.get(nodeId);
+    node.children.forEach((childId) => traverse(childId, level + 1));
+  }
+
+  rootNodes.forEach((rootId) => traverse(rootId, 0));
+
+  const cleanLevels = cleanPlayoffTree(levels);
+  return cleanLevels;
+};
+
+export const getTreeData = (leveledMatches, handleEditScore) => {
+  const nodes = [];
+  const edges = [];
+  const coeffY = 150;
+  const coeffX = 350;
+  const levels = leveledMatches.length;
+  const maxNodes = Math.max(...leveledMatches.map((level) => level.length));
+  const startX = (levels - 1) * coeffX;
+  const startY = levels > 2 ? (maxNodes - 1.5) * coeffY : coeffY;
+
+  const nodesCount = leveledMatches.reduce(
+    (accumulator, level) => accumulator + level.length,
+    0
+  );
+
+  let overallIndex = 0;
+  leveledMatches.forEach((level, levelIndex) => {
+    level.forEach((match, index) => {
+      const deltaY = (levels / 2 ** levelIndex) * coeffY;
+
+      nodes.push({
+        id: match.id.toString(),
+        data: {
+          id: match.id,
+          matchIndex: nodesCount - overallIndex,
+          team1: match.team1,
+          team2: match.team2,
+          onEditScore: () => handleEditScore(match),
+          lastCreatorEmail: match.lastResultCreatorEmail,
+        },
+        type: "customNode",
+        position: {
+          x: startX - levelIndex * coeffX,
+          y: startY - index * deltaY,
+        },
+      });
+
+      match.children.forEach((childId) => {
+        edges.push({
+          id: `e${match.id}-${childId}`,
+          source: match.id.toString(),
+          target: childId.toString(),
+          type: "step",
+        });
+      });
+      overallIndex += 1;
+    });
+  });
+
+  return { nodes, edges };
+};
+
+export const getPlayoffResults = (leveledMatches) => {
+  const playoffData = leveledMatches.flat();
+
+  const scores = new Map();
+  const matches = new Map();
+  const childrenMap = new Map();
+
+  let rootMatch = null;
+
+  playoffData.forEach((match) => {
+    matches.set(match.id, match);
+    if (match.next_id === null) rootMatch = match;
+
+    if (!childrenMap.has(match.id)) {
+      childrenMap.set(match.id, []);
+    }
+
+    match.children.forEach((childId) => {
+      childrenMap.get(match.id).push(childId);
+    });
+
+    if (match.team1) {
+      scores.set(
+        match.team1.id,
+        (scores.get(match.team1.id) || 0) + match.team1.score
+      );
+    }
+
+    if (match.team2) {
+      scores.set(
+        match.team2.id,
+        (scores.get(match.team2.id) || 0) + match.team2.score
+      );
+    }
+
+    // [match.team1, match.team2].forEach((team) => {
+    //   scores.set(team.id, (scores.get(team.id) || 0) + team.score);
+    // });
+  });
+
+  if (!rootMatch) return [];
+
+  let rankings = [];
+  let place = 0;
+
+  function processMatch(match, place) {
+    if (!(match.team1 && match.team2)) {
+      return place;
+    }
+
+    let [winner, loser] =
+      match.team1.score > match.team2.score
+        ? [match.team1, match.team2]
+        : [match.team2, match.team1];
+
+    if (!rankings.some((entry) => entry.id === winner.id)) {
+      rankings.push({
+        id: winner.id,
+        team: winner.name,
+        score: scores.get(winner.id),
+        place: place,
+      });
+    }
+
+    if (!rankings.some((entry) => entry.id === loser.id)) {
+      rankings.push({
+        id: loser.id,
+        team: loser.name,
+        score: scores.get(loser.id),
+        place: place + 1,
+      });
+    }
+
+    let nextPlace = place + 1;
+    if (childrenMap.has(match.id)) {
+      childrenMap.get(match.id).forEach((childId) => {
+        nextPlace = processMatch(matches.get(childId), nextPlace);
+      });
+    }
+    return nextPlace;
+  }
+
+  processMatch(rootMatch, place);
+  return rankings;
 };
 
 export const getMedal = (place) => {

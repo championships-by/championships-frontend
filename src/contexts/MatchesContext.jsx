@@ -1,26 +1,41 @@
 import { judgmentApi } from "@api/judgment";
 import { createContext, useCallback, useEffect, useState } from "react";
+import { competenciesApi } from "@api";
+import { message } from "antd";
+import { getPlayOffLevels } from "@utils";
+import { useTranslation } from "react-i18next";
 
 export const MatchesContext = createContext();
 
-export const MatchesProvider = ({ eventId, nominationId, children }) => {
+export function MatchesProvider({ eventId, nominationId, children }) {
+  const { t } = useTranslation();
+
   const [matches, setMatches] = useState([]);
+  const [playoffMatches, setPlayoffMatches] = useState([]);
+  const [leveledPlayoffMatches, setLeveledPlayoffMatches] = useState([]);
   const [finalParticipants, setFinalParticipants] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState(null);
+  const [selectedPlayoffMatch, setSelectedPlayoffMatch] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const [isGroupStageFinished, setIsGroupStageFinished] = useState(false);
+  const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(false);
 
   const transformMatches = useCallback((data) => {
     return data
       .flatMap((group) =>
         group.matches.map((match) => ({
+          group_id: group.group_id,
           id: match.match_id,
           team1: {
+            id: match.team1.id,
             name: match.team1.name,
             score: match.team1_score,
           },
           team2: {
+            id: match.team2.id,
             name: match.team2.name,
             score: match.team2_score,
           },
@@ -29,6 +44,28 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
         }))
       )
       .sort((a, b) => a.id - b.id);
+  }, []);
+
+  const transformPlayoffMatches = useCallback((data) => {
+    return data.map((match) => ({
+      id: match.match_id,
+      next_id: match.next_match_id,
+      team1: match.team1
+        ? {
+            id: match.team1.id,
+            name: match.team1.name,
+            score: match.team1_score,
+          }
+        : null,
+      team2: match.team2
+        ? {
+            id: match.team2.id,
+            name: match.team2.name,
+            score: match.team2_score,
+          }
+        : null,
+      lastResultCreatorEmail: match.last_result_creator_email,
+    }));
   }, []);
 
   const transformData = (data) => {
@@ -46,6 +83,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
 
         if (!teamStats[team1.name]) {
           teamStats[team1.name] = {
+            id: team1.id,
             name: team1.name,
             wins: 0,
             losses: 0,
@@ -56,6 +94,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
         }
         if (!teamStats[team2.name]) {
           teamStats[team2.name] = {
+            id: team2.id,
             name: team2.name,
             wins: 0,
             losses: 0,
@@ -85,7 +124,6 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
       });
 
       const teams = Object.values(teamStats);
-
       return {
         group_id: group.group_id,
         teams,
@@ -93,7 +131,7 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
     });
   };
 
-  const fetchData = useCallback(
+  const fetchGroupStageData = useCallback(
     async (eventId, nominationId) => {
       setIsLoading(true);
       setError(null);
@@ -112,43 +150,136 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
     [transformMatches]
   );
 
+  const fetchPlayoffStageData = useCallback(async (eventId, nominationId) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const responce = await judgmentApi.getPlayoffMatches(
+        eventId,
+        nominationId
+      );
+
+      const matches = responce.data.matches;
+      const transformedMatches = transformPlayoffMatches(matches);
+      const leveledMatches = getPlayOffLevels(transformedMatches);
+
+      setPlayoffMatches(transformedMatches);
+      setLeveledPlayoffMatches(leveledMatches);
+    } catch (e) {}
+    setIsLoading(false);
+  }, []);
+
+  const fetchData = useCallback(async (eventId, nominationId) => {
+    setIsLoading(true);
+
+    try {
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+
+      const statusInfo = (await competenciesApi.getPlayoffStatus(params)).data;
+      setIsGroupStageFinished(statusInfo.group_stage_finished);
+      setIsPlayoffStageFinished(statusInfo.play_off_stage_finished);
+
+      try {
+        await fetchGroupStageData(eventId, nominationId);
+      } catch {}
+
+      if (statusInfo.group_stage_finished) {
+        try {
+          await fetchPlayoffStageData(eventId, nominationId);
+        } catch {}
+      }
+    } catch {}
+
+    setIsLoading(false);
+  }, []);
+
   const handleEditScore = useCallback((match) => {
     setSelectedMatch(match);
     setIsModalOpen(true);
   }, []);
 
   const handleSubmitScore = useCallback(
-    async ({ id, eventId, nominationId, team1, team2 }) => {
+    async ({ id, eventId, nominationId, team1, team2, isPlayoff }) => {
       try {
-        await judgmentApi.setMatches(
-          eventId,
-          nominationId,
-          id,
-          team1.score,
-          team2.score
-        );
-
+        if (isPlayoff === true) {
+          await judgmentApi.setPlayoffMatch(
+            eventId,
+            nominationId,
+            id,
+            team1.score,
+            team2.score
+          );
+        } else {
+          await judgmentApi.setMatches(
+            eventId,
+            nominationId,
+            id,
+            team1.score,
+            team2.score
+          );
+        }
         fetchData(eventId, nominationId);
       } catch (error) {}
     },
-    [fetchData]
+    [fetchGroupStageData, fetchPlayoffStageData]
   );
 
   const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
   }, []);
 
+  const handleFinishGroupStage = useCallback(async () => {
+    try {
+      const body = { event_id: eventId, nomination_id: nominationId };
+      await competenciesApi.finishGroupStage(body);
+      message.success(t("TOURNAMENTS.GROUP_STAGE_FINISHED"));
+      fetchData(eventId, nominationId);
+    } catch {}
+  }, []);
+
+  const handleStartPlayoffStage = useCallback(async (data) => {
+    const passedTeamsData = data.filter((team) => team.isPassed);
+    const passedTeamsIds = passedTeamsData.map((team) => ({
+      id: team.id.toString(),
+    }));
+
+    try {
+      const body = {
+        nomination_event: { event_id: eventId, nomination_id: nominationId },
+        teams: passedTeamsIds,
+      };
+      await competenciesApi.startPlayoffStage(body);
+      fetchGroupStageData(eventId, nominationId);
+    } catch {}
+  }, []);
+
+  const finishPlayoffStage = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const body = { event_id: eventId, nomination_id: nominationId };
+      await competenciesApi.finishPlayoffStage(body);
+      message.success(t("TOURNAMENTS.PLAYOFF_STAGE_FINISHED"));
+      fetchData(eventId, nominationId);
+    } catch {}
+    setIsLoading(false);
+  }, []);
+
   useEffect(() => {
     fetchData(eventId, nominationId);
-  }, [fetchData, eventId, nominationId]);
+  }, [fetchGroupStageData, fetchPlayoffStageData, eventId, nominationId]);
 
   const context = {
     eventId,
     nominationId,
     matches,
+    playoffMatches,
+    leveledPlayoffMatches,
     finalParticipants,
     setFinalParticipants,
     selectedMatch,
+    selectedPlayoffMatch,
     isModalOpen,
     isLoading,
     error,
@@ -156,6 +287,11 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
     handleEditScore,
     handleSubmitScore,
     handleCloseModal,
+    handleFinishGroupStage,
+    handleStartPlayoffStage,
+    isGroupStageFinished,
+    isPlayoffStageFinished,
+    finishPlayoffStage,
   };
 
   return (
@@ -163,4 +299,4 @@ export const MatchesProvider = ({ eventId, nominationId, children }) => {
       {children}
     </MatchesContext.Provider>
   );
-};
+}
