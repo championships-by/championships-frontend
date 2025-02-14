@@ -8,6 +8,7 @@ import {
   MatchesGroupStage,
   TableGroupStage,
   MatchesPlayoffStage,
+  PlayoffTree,
 } from "./components";
 import { FinalParticipantsModal } from "./modals";
 import { useTranslation } from "react-i18next";
@@ -60,6 +61,7 @@ export function GroupStageTabs() {
     {
       key: "3",
       label: t("NOMINATION_TYPES.PLAYOFF"),
+      // children: <MatchesPlayoffStage />,
       children: <MatchesPlayoffStage />,
       disabled: false,
     },

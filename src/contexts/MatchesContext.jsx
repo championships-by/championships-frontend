@@ -12,6 +12,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   const [leveledPlayoffMatches, setLeveledPlayoffMatches] = useState([]);
   const [finalParticipants, setFinalParticipants] = useState([]);
   const [selectedMatch, setSelectedMatch] = useState(null);
+  const [selectedPlayoffMatch, setSelectedPlayoffMatch] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -37,6 +38,28 @@ export function MatchesProvider({ eventId, nominationId, children }) {
         }))
       )
       .sort((a, b) => a.id - b.id);
+  }, []);
+
+  const transformPlayoffMatches = useCallback((data) => {
+    return data.map((match) => ({
+      id: match.match_id,
+      next_id: match.next_match_id,
+      team1: match.team1
+        ? {
+            id: match.team1.id,
+            name: match.team1.name,
+            score: match.team1_score,
+          }
+        : null,
+      team2: match.team2
+        ? {
+            id: match.team2.id,
+            name: match.team2.name,
+            score: match.team2_score,
+          }
+        : null,
+      lastResultCreatorEmail: match.last_result_creator_email,
+    }));
   }, []);
 
   const transformData = (data) => {
@@ -131,9 +154,13 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       );
 
       const matches = responce.data.matches;
-      const leveledMatches = getPlayOffLevels(responce.data.matches);
+      console.log(matches);
+      const transformedMatches = transformPlayoffMatches(matches);
+      console.log(transformedMatches);
+      const leveledMatches = getPlayOffLevels(transformedMatches);
+      console.log(leveledMatches);
 
-      setPlayoffMatches(matches);
+      setPlayoffMatches(transformedMatches);
       setLeveledPlayoffMatches(leveledMatches);
     } catch (e) {
       console.log(e);
@@ -147,20 +174,30 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   }, []);
 
   const handleSubmitScore = useCallback(
-    async ({ id, eventId, nominationId, team1, team2 }) => {
+    async ({ id, eventId, nominationId, team1, team2, isPlayoff }) => {
       try {
-        await judgmentApi.setMatches(
-          eventId,
-          nominationId,
-          id,
-          team1.score,
-          team2.score
-        );
-
-        fetchGroupStageData(eventId, nominationId);
+        if (isPlayoff === true) {
+          await judgmentApi.setPlayoffMatch(
+            eventId,
+            nominationId,
+            id,
+            team1.score,
+            team2.score
+          );
+          fetchPlayoffStageData(eventId, nominationId);
+        } else {
+          await judgmentApi.setMatches(
+            eventId,
+            nominationId,
+            id,
+            team1.score,
+            team2.score
+          );
+          fetchGroupStageData(eventId, nominationId);
+        }
       } catch (error) {}
     },
-    [fetchGroupStageData]
+    [fetchGroupStageData, fetchPlayoffStageData]
   );
 
   const handleCloseModal = useCallback(() => {
@@ -206,6 +243,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     finalParticipants,
     setFinalParticipants,
     selectedMatch,
+    selectedPlayoffMatch,
     isModalOpen,
     isLoading,
     error,

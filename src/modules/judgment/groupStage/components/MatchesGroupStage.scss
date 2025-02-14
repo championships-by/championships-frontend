@@ -38,10 +38,10 @@
 
 .matches-group-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, max-content));
   grid-gap: 30px;
-  grid-auto-flow: dense;
   max-width: 1200px;
+  justify-content: start;
 }
 
 .matches-group-grid > .match-card {

@@ -74,6 +74,7 @@ export function MatchesGroupStage() {
               ...data,
               eventId,
               nominationId,
+              isPlayoff: false,
             })
           }
           onClose={handleCloseModal}

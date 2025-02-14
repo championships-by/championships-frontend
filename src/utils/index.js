@@ -16,6 +16,10 @@ export const MatchResult = {
 };
 
 export const determinateTheWinner = (score1, score2) => {
+  if (score1 === null || score2 === null) {
+    return MatchResult.DRAW;
+  }
+
   if (score1 > score2) {
     return MatchResult.TEAM1;
   }
@@ -488,16 +492,16 @@ export const getPlayOffLevels = (objects) => {
   const rootNodes = [];
 
   objects.forEach((obj) => {
-    map.set(obj.match_id, { ...obj, children: [] });
-    if (obj.next_match_id === null) {
-      rootNodes.push(obj.match_id);
+    map.set(obj.id, { ...obj, children: [] });
+    if (obj.next_id === null) {
+      rootNodes.push(obj.id);
     }
   });
 
   objects.forEach((obj) => {
-    if (obj.next_match_id !== null) {
-      const parent = map.get(obj.next_match_id);
-      parent.children.push(obj.match_id);
+    if (obj.next_id !== null) {
+      const parent = map.get(obj.next_id);
+      parent.children.push(obj.id);
     }
   });
 
@@ -510,6 +514,7 @@ export const getPlayOffLevels = (objects) => {
   }
 
   rootNodes.forEach((rootId) => traverse(rootId, 0));
+  // levels.reverse();
 
   return levels;
 };

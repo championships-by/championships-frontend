@@ -4,9 +4,10 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
 import { Typography, Spin } from "antd";
 import { EditMatchScoreModal } from "../modals";
-import { MatchCard } from "./MatchCard";
+import { PlayoffMatchCard } from "./PlayoffMatchCard";
 import "./MatchesGroupStage.scss";
 import { useTranslation } from "react-i18next";
+import PlayoffTree from "./PlayoffTree";
 import React from "react";
 
 export function MatchesPlayoffStage() {
@@ -34,24 +35,7 @@ export function MatchesPlayoffStage() {
     </div>
   ) : (
     <div>
-      {Object.keys(leveledPlayoffMatches).map((level, index) => (
-        <div key={index} className="group">
-          <div className="matches-group-grid">
-            {leveledPlayoffMatches[level].map((match, matchIndex) => (
-              // <MatchCard
-              //   key={match.id}
-              //   id={match.id}
-              //   matchIndex={matchIndex + 1}
-              //   team1={match.team1}
-              //   team2={match.team2}
-              //   lastCreatorEmail={match.lastResultCreatorEmail}
-              //   onEditScore={() => handleEditScore(match)}
-              // />
-              <>{match.id}</>
-            ))}
-          </div>
-        </div>
-      ))}
+      <PlayoffTree />
       {selectedMatch && (
         <EditMatchScoreModal
           isOpen={isModalOpen}
@@ -61,6 +45,7 @@ export function MatchesPlayoffStage() {
               ...data,
               eventId,
               nominationId,
+              isPlayoff: true,
             })
           }
           onClose={handleCloseModal}
