@@ -2,7 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import { useMatches } from "@hooks";
 import { isScoreZero } from "@utils";
-import { Button, message, Tabs, Flex } from "antd";
+import { Button, message, Tabs, Flex, Divider } from "antd";
 import { useMemo, useState } from "react";
 import {
   MatchesGroupStage,
@@ -12,6 +12,7 @@ import {
 } from "./components";
 import { FinalParticipantsModal } from "./modals";
 import { useTranslation } from "react-i18next";
+import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
 
 export function GroupStageTabs() {
   const { t } = useTranslation();
@@ -23,9 +24,11 @@ export function GroupStageTabs() {
     setFinalParticipants,
     handleFinishGroupStage,
     handleStartPlayoffStage,
+    isPlayoffStageFinished,
+    isGroupStageFinished,
   } = useMatches();
 
-  const handleClickFinalStage = (e) => {
+  const handleClickFinishGroupStage = (e) => {
     e.preventDefault();
     console.log(matches);
     const completed = matches.every(
@@ -38,6 +41,8 @@ export function GroupStageTabs() {
     }
     setIsModalOpen(true);
   };
+
+  const handleClickFinishPlayoffStage = (e) => {};
 
   const onSubmitFinalParticipants = async (data) => {
     await handleFinishGroupStage(data);
@@ -61,20 +66,19 @@ export function GroupStageTabs() {
     {
       key: "3",
       label: t("NOMINATION_TYPES.PLAYOFF"),
-      // children: <MatchesPlayoffStage />,
       children: <MatchesPlayoffStage />,
-      disabled: false,
+      disabled: !isGroupStageFinished,
     },
     {
       key: "4",
       label: t("COMMON.RESULTS"),
       children: "Content Tab4",
-      disabled: true,
+      disabled: !isPlayoffStageFinished,
     },
   ];
 
   return (
-    <>
+    <Flex vertical gap="middle">
       {contextHolder}
       <Tabs
         defaultActiveKey="1"
@@ -82,18 +86,35 @@ export function GroupStageTabs() {
         tabBarExtraContent={{
           right: (
             <Flex gap="small">
-              <Button onClick={handleClickFinalStage} type="primary">
-                {t("COMMON.COMPLETE_STAGE")}
-              </Button>
+              {!isGroupStageFinished && (
+                <Button onClick={handleClickFinishGroupStage} type="primary">
+                  {t("COMMON.COMPLETE_GROUP_STAGE")}
+                </Button>
+              )}
+              {!isPlayoffStageFinished && isGroupStageFinished && (
+                <Button onClick={handleClickFinishPlayoffStage} type="primary">
+                  {t("COMMON.COMPLETE_PLAY_OFF_STAGE")}
+                </Button>
+              )}
+              {isPlayoffStageFinished && isGroupStageFinished && (
+                <Button type="primary">{t("COMMON.FINAL_PROTOCOL")}</Button>
+              )}
             </Flex>
           ),
         }}
       />
+      {isPlayoffStageFinished && (
+        <>
+          <Divider />
+          <ReturnButton />
+        </>
+      )}
+
       <FinalParticipantsModal
         isOpen={isModalOpen}
         onSubmit={onSubmitFinalParticipants}
         onCancel={() => setIsModalOpen(false)}
       />
-    </>
+    </Flex>
   );
 }

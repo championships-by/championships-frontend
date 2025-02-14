@@ -23,6 +23,7 @@ export function MatchesGroupStage() {
     handleEditScore,
     handleSubmitScore,
     handleCloseModal,
+    isGroupStageFinished,
   } = useMatches();
 
   const groupedMatches = matches.reduce((groups, match) => {
@@ -60,6 +61,7 @@ export function MatchesGroupStage() {
                 team2={match.team2}
                 lastCreatorEmail={match.lastResultCreatorEmail}
                 onEditScore={() => handleEditScore(match)}
+                isGroupStageFinished={isGroupStageFinished}
               />
             ))}
           </div>

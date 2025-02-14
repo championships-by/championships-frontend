@@ -1,5 +1,7 @@
 import { EditOutlined } from "@ant-design/icons";
 import { determinateTheWinner, isScoreZero, MatchResult } from "@utils";
+import { useMatches } from "@hooks";
+
 import clsx from "clsx";
 import "./MatchCard.scss";
 
@@ -11,6 +13,8 @@ export const MatchCard = ({
   onEditScore,
   lastCreatorEmail,
 }) => {
+  const { isGroupStageFinished } = useMatches();
+
   const handleClick = (e) => {
     e.preventDefault();
     onEditScore();
@@ -43,9 +47,13 @@ export const MatchCard = ({
           <p>{lastCreatorEmail ? team2.score : "–"}</p>
         </div>
       </div>
-      <div className="match-card__icon-section" onClick={handleClick}>
-        <EditOutlined className="match-card__icon-section--edit-icon" />
-      </div>
+      {isGroupStageFinished ? (
+        <div className="match-card__icon-section"></div>
+      ) : (
+        <div className="match-card__icon-section" onClick={handleClick}>
+          <EditOutlined className="match-card__icon-section--edit-icon" />
+        </div>
+      )}
     </div>
   );
 };

@@ -17,6 +17,9 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const [isGroupStageFinished, setIsGroupStageFinished] = useState(true);
+  const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(true);
+
   const transformMatches = useCallback((data) => {
     return data
       .flatMap((group) =>
@@ -154,17 +157,12 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       );
 
       const matches = responce.data.matches;
-      console.log(matches);
       const transformedMatches = transformPlayoffMatches(matches);
-      console.log(transformedMatches);
       const leveledMatches = getPlayOffLevels(transformedMatches);
-      console.log(leveledMatches);
 
       setPlayoffMatches(transformedMatches);
       setLeveledPlayoffMatches(leveledMatches);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
     setIsLoading(false);
   }, []);
 
@@ -254,6 +252,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     handleCloseModal,
     handleFinishGroupStage,
     handleStartPlayoffStage,
+    isGroupStageFinished,
+    isPlayoffStageFinished,
   };
 
   return (
