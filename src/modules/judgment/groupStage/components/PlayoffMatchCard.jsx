@@ -46,7 +46,7 @@ export function PlayoffMatchCard({ data }) {
           <p>{lastCreatorEmail ? team2.score : "–"}</p>
         </div>
       </div>
-      {isPlayoffStageFinished ? (
+      {isPlayoffStageFinished || !team1 || !team2 ? (
         <div className="match-card__icon-section" />
       ) : (
         <div className="match-card__icon-section" onClick={handleClick}>
