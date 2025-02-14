@@ -123,6 +123,8 @@
     "TABLE": "Табліца",
     "FINAL_PROTOCOL": "Канчатковы пратакол",
     "COMPLETE_STAGE": "Завяршыць этап",
+    "COMPLETE_GROUP_STAGE": "Завяршыць групавы этап",
+    "COMPLETE_PLAY_OFF_STAGE": "Завяршыць плэй-оф",
     "START_TYPING": "Пачніце ўводзіць",
     "COULD_NOT_FOUND": "Не атрымалася знайсці",
     "LOGO": "Лагатып",
@@ -275,7 +277,10 @@
     "COULDNT_DOWNLOAD_FILE": "Немагчыма загрузіць файл",
     "WINS": "Выйгрышы",
     "LOSSES": "Пройгрышы",
-    "DRAWS": "Нічыя"
+    "DRAWS": "Нічыя",
+    "ARE_YOU_SURE_FINISH_PLAYOFF": "Вы ўпэўненыя, што хочаце завяршыць плэй-оф",
+    "GROUP_STAGE_FINISHED": "Групавы этап паспяхова завершаны",
+    "PLAYOFF_STAGE_FINISHED": "Плэй-оф паспяхова завершаны"
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "Пра партал",

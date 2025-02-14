@@ -53,9 +53,11 @@ export const TableGroupStage = () => {
     <>
       {finalParticipants.map((element, index) => (
         <div key={index}>
-          <Typography.Title level={3}>{`${t("COMMON.GROUP")} ${
-            index + 1
-          }`}</Typography.Title>
+          {finalParticipants.length > 1 && (
+            <Typography.Title level={3}>
+              {`${t("COMMON.GROUP")} ${index + 1}`}
+            </Typography.Title>
+          )}
           <Table
             columns={columns}
             pagination={false}

@@ -1,12 +1,16 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable import/prefer-default-export */
+import React from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
 import { Typography, Spin } from "antd";
 import { EditMatchScoreModal } from "../modals";
 import { MatchCard } from "./MatchCard";
-import "./MatchesGroupStage.scss";
 import { useTranslation } from "react-i18next";
 
-export const MatchesGroupStage = () => {
+import "./MatchesGroupStage.scss";
+
+export function MatchesGroupStage() {
   const { t } = useTranslation();
 
   const {
@@ -20,10 +24,11 @@ export const MatchesGroupStage = () => {
     handleEditScore,
     handleSubmitScore,
     handleCloseModal,
+    isGroupStageFinished,
   } = useMatches();
 
   const groupedMatches = matches.reduce((groups, match) => {
-    const group = match.group;
+    const group = match.group_id;
     if (!groups[group]) {
       groups[group] = [];
     }
@@ -42,9 +47,11 @@ export const MatchesGroupStage = () => {
     <div>
       {Object.keys(groupedMatches).map((group, index) => (
         <div key={index} className="group">
-          <Typography.Title level={3}>{`${t("COMMON.GROUP")} ${
-            index + 1
-          }`}</Typography.Title>
+          {Object.keys(groupedMatches).length > 1 && (
+            <Typography.Title level={3}>
+              {`${t("COMMON.GROUP")} ${index + 1}`}
+            </Typography.Title>
+          )}
           <div className="matches-group-grid">
             {groupedMatches[group].map((match, matchIndex) => (
               <MatchCard
@@ -55,6 +62,7 @@ export const MatchesGroupStage = () => {
                 team2={match.team2}
                 lastCreatorEmail={match.lastResultCreatorEmail}
                 onEditScore={() => handleEditScore(match)}
+                isGroupStageFinished={isGroupStageFinished}
               />
             ))}
           </div>
@@ -69,6 +77,7 @@ export const MatchesGroupStage = () => {
               ...data,
               eventId,
               nominationId,
+              isPlayoff: false,
             })
           }
           onClose={handleCloseModal}
@@ -76,4 +85,4 @@ export const MatchesGroupStage = () => {
       )}
     </div>
   );
-};
+}

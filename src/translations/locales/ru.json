@@ -123,6 +123,8 @@
     "TABLE": "Таблица",
     "FINAL_PROTOCOL": "Итоговый протокол",
     "COMPLETE_STAGE": "Завершить этап",
+    "COMPLETE_GROUP_STAGE": "Завершить групповой этап",
+    "COMPLETE_PLAY_OFF_STAGE": "Завершить плей-офф",
     "START_TYPING": "Начните вводить",
     "COULD_NOT_FOUND": "Не удалось найти",
     "LOGO": "Логотип",
@@ -275,7 +277,10 @@
     "COULDNT_DOWNLOAD_FILE": "Не удалось скачать файл",
     "WINS": "Выигрыши",
     "LOSSES": "Проигрыши",
-    "DRAWS": "Ничьи"
+    "DRAWS": "Ничьи",
+    "ARE_YOU_SURE_FINISH_PLAYOFF": "Вы уверены, что хотите завершить плей-офф?",
+    "GROUP_STAGE_FINISHED": "Групповой этап успешно завершён",
+    "PLAYOFF_STAGE_FINISHED": "Плей-офф успешно завершён."
   },
   "USER_SUPPORT": {
     "ABOUT_SITE": "О портале",
