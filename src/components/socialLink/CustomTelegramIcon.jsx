@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
-import LightTelegramIcon from "../../assets/icons/telegramIconLight.svg";
-import DarkTelegramIcon from "../../assets/icons/telegramIconDark.svg";
+import LightTelegramIcon from "@assets/icons/telegramIconLight.svg";
+import DarkTelegramIcon from "@assets/icons/telegramIconDark.svg";
 
 function CustomTelegramIcon() {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");

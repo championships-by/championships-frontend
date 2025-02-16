@@ -1,13 +1,10 @@
 import React, { useRef } from "react";
 import { FloatButton } from "antd";
 import CustomTelegramIcon from "./CustomTelegramIcon";
+import { OPEN_TELEGRAM } from "@constants";
 
 function SocialLinkButton() {
   const floatButtonGroupRef = useRef(null);
-
-  const openTelegram = () => {
-    window.open("https://t.me/championshipsby", "_blank");
-  };
 
   return (
     <>
@@ -15,7 +12,7 @@ function SocialLinkButton() {
         <FloatButton
           style={{ insetInlineEnd: 170 }}
           icon={<CustomTelegramIcon />}
-          onClick={openTelegram}
+          onClick={OPEN_TELEGRAM}
         />
       </div>
     </>
