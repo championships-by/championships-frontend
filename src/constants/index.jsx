@@ -1,6 +1,17 @@
 import { EventEmitter } from "events";
-
+import { EventEmitter } from "events";
 export const ZUBRONOK = "https://zubronok.by/";
+import NoData from "@components/noData/NoData";
+import BronzeMedal from "@src/assets/img/bronze-medal.png";
+import GoldMedal from "@src/assets/img/gold-medal.png";
+import SilverMedal from "@src/assets/img/silver-medal.png";
+
+export const userGuide =
+  "https://championships.by/static/files/Руководство%20пользователя.pdf";
+export const cookiesPolicy =
+  "https://championships.by/static/files/Cookies_Policy.pdf";
+
+export const medals = [GoldMedal, SilverMedal, BronzeMedal];
 
 export const Roles = {
   ADMIN: "admin",
