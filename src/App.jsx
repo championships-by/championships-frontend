@@ -21,6 +21,7 @@ import AboutProgram from "@components/userSupport/AboutProgram";
 import Feedback from "@components/userSupport/Feedback";
 import UserSupport from "@components/userSupport/UserSupport";
 import SettingsButton from "@components/settingsButton/SettingsButton";
+import SocialLinkButton from "./components/socialLink/SocialLinkButton";
 import PasswordReset from "@components/passwordReset/PasswordReset";
 import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import TitleAndMeta from "@components/titleAndMeta/TitleAndMeta";
@@ -40,6 +41,7 @@ function App() {
           <TitleAndMeta />
           <UserSupport />
           <SettingsButton />
+          <SocialLinkButton />
           <Routes>
             <Route path={ROUTER_ROUTES.NOT_FOUND} element={<NotFound />} />
             <Route
