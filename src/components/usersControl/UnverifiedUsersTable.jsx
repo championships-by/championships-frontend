@@ -47,7 +47,7 @@ function UnverifiedUsersTable({ dispatch }) {
 
       const noticeParams = new URLSearchParams();
       noticeParams.append("user_email", selectedUnverifiedUser.email);
-      sendNotice(params);
+      sendNotice(noticeParams);
     } catch {}
   };
 

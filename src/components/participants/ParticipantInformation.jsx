@@ -1,14 +1,5 @@
 import Loader from "@components/loader/Loader";
-import {
-  Button,
-  Flex,
-  Typography,
-  message,
-  Row,
-  Col,
-  Divider,
-  Breadcrumb,
-} from "antd";
+import { Typography, Row, Col, Divider, Breadcrumb } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -17,7 +8,7 @@ import TeamWinsTable from "./TeamWinsTable";
 import { ROUTES } from "@constants";
 import { participantApi } from "@api";
 import { changeDateFormat } from "@utils";
-import participantImg from "@assets/img/participant.jpg";
+import noPhoto from "@assets/img/participant.jpg";
 import { useTranslation } from "react-i18next";
 
 import "./sass/participants.scss";
@@ -76,7 +67,11 @@ function ParticipantInformation() {
       <Row align="top" className="participants__information__row">
         <Col>
           <img
-            src={participantImg}
+            src={
+              participantData.photo_path
+                ? `${API_HOST}/${participantData.photo_path}`
+                : noPhoto
+            }
             className="participants__information__img"
           />
         </Col>

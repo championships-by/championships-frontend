@@ -1,11 +1,9 @@
-import { Typography, Upload, message, Button, Flex } from "antd";
+import { Typography, Upload, Button, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
-import "./sass/events.scss";
-
-function EventLogo({ name, onChange: onChangeBase, required, form }) {
+function ParticipantPhotoUpload({ name, onChange: onChangeBase, form }) {
   const { t } = useTranslation();
 
   const onChange = ({ file }) => {
@@ -14,19 +12,9 @@ function EventLogo({ name, onChange: onChangeBase, required, form }) {
   };
 
   return (
-    <FormItem
-      name={name}
-      hasFeedback
-      validateFirst
-      rules={[
-        {
-          required: required,
-          message: t("RULES.PLEASE_UPLOAD_LOGO"),
-        },
-      ]}
-    >
+    <FormItem name={name}>
       <Flex vertical>
-        <Typography.Text>{t("COMMON.LOGO")}</Typography.Text>
+        <Typography.Text>{t("COMMON.PHOTO_OPTIONAL")}</Typography.Text>
         <Upload
           accept="image/jpg, image/jpeg, image/png"
           maxCount={1}
@@ -49,4 +37,4 @@ function EventLogo({ name, onChange: onChangeBase, required, form }) {
   );
 }
 
-export default EventLogo;
+export default ParticipantPhotoUpload;

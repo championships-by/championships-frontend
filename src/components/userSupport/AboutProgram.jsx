@@ -4,6 +4,7 @@ import { useDevice } from "@hooks";
 import MobileDevelopers from "./MobileDevelopers";
 import DesktopDevelopers from "./DesktopDevelopers";
 import { useTranslation } from "react-i18next";
+import { userGuide } from "@constants";
 
 import "./sass/user-support.scss";
 
@@ -21,6 +22,10 @@ function AboutProgram() {
         </Typography.Text>
         {" - "}
         {t("USER_SUPPORT.RESURS_IS")}
+        <br /> <br />
+        <Typography.Link href={userGuide} target="_blank">
+          {t("USER_SUPPORT.USER_GUIDE")}
+        </Typography.Link>
       </Typography.Text>
       <Row align="middle">
         <Col xs={24} sm={24} md={24} lg={9}>

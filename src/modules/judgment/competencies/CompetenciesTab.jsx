@@ -5,12 +5,17 @@ import {
   transformCriteriaResultsData,
   transformStageStatus,
   downloadProtocol,
+  downloadCriteriaExcel,
 } from "@utils";
-import { Button, message, Tabs } from "antd";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Button, message, Tabs, Flex } from "antd";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { CompetenciesResults, CompetenciesTable } from "./components";
+import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
 import { useTranslation } from "react-i18next";
+import { CompetenciesResults, CompetenciesTable } from "./components";
+import { DownloadOutlined } from "@ant-design/icons";
+
+import "@modules/judgment/competencies/sass/competencies-criteria.scss";
 
 function CompetenciesTab() {
   const { t } = useTranslation();
@@ -23,6 +28,7 @@ function CompetenciesTab() {
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("1");
+  const [maxPlace, setMaxPlace] = useState();
 
   const handleCompleteStage = useCallback(async () => {
     try {
@@ -69,9 +75,17 @@ function CompetenciesTab() {
     } catch {}
   }, [criteria, dataSource, eventId, nominationId]);
 
-  const handleDownload = async () => {
+  const handleDownloadProtocol = async () => {
     try {
-      downloadProtocol(eventId, nominationId);
+      await downloadProtocol(eventId, nominationId);
+    } catch {
+      message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
+    }
+  };
+
+  const handleDownloadExcel = async () => {
+    try {
+      await downloadCriteriaExcel(eventId, nominationId);
     } catch {
       message.error(t("TOURNAMENTS.COULDNT_DOWNLOAD_FILE"));
     }
@@ -119,6 +133,7 @@ function CompetenciesTab() {
             dataSource={dataSource}
             isLoading={isLoading}
             hasError={isErrorOccurred}
+            maxPlace={maxPlace}
           />
         ),
       },
@@ -167,6 +182,7 @@ function CompetenciesTab() {
               criteriaResponse.data
             );
             setCriteria(transformedCriteria);
+            setMaxPlace(criteriaResultsResponse.data.max_place);
             const transformedCriteriaResults = transformCriteriaResultsData(
               criteriaResultsResponse.data
             );
@@ -187,24 +203,40 @@ function CompetenciesTab() {
     }
   }, [eventId, isDataLoaded, nominationId, stageStatus, isStageFinished]);
 
+  const buttonsForUnfinishedStage = (
+    <Flex gap="middle">
+      <Button onClick={handleDownloadExcel}>
+        <Flex gap="small">
+          <DownloadOutlined />
+          {t("EVENTS.DOWNLOAD_EXCEL")}
+        </Flex>
+      </Button>
+      <Button type="primary" onClick={handleCompleteStage}>
+        {t("COMMON.COMPLETE_STAGE")}
+      </Button>
+    </Flex>
+  );
+
+  const buttonsForFinishedStage = (
+    <Button type="primary" onClick={handleDownloadProtocol}>
+      {t("COMMON.FINAL_PROTOCOL")}
+    </Button>
+  );
+
   return (
-    <Tabs
-      activeKey={activeTabKey}
-      onChange={setActiveTabKey}
-      items={items}
-      tabBarExtraContent={{
-        right: (
-          <Button
-            onClick={isStageFinished ? handleDownload : handleCompleteStage}
-            type="primary"
-          >
-            {isStageFinished
-              ? t("COMMON.FINAL_PROTOCOL")
-              : t("COMMON.COMPLETE_STAGE")}
-          </Button>
-        ),
-      }}
-    />
+    <Flex vertical gap="middle">
+      <Tabs
+        activeKey={activeTabKey}
+        onChange={setActiveTabKey}
+        items={items}
+        tabBarExtraContent={{
+          right: isStageFinished
+            ? buttonsForFinishedStage
+            : buttonsForUnfinishedStage,
+        }}
+      />
+      {isStageFinished && <ReturnButton />}
+    </Flex>
   );
 }
 

@@ -10,7 +10,16 @@ import UserPasswordInput from "@modules/user/UserPasswordInput";
 import UserPatronymicInput from "@modules/user/UserPatronymicInput";
 import UserPasswordConfirmationInput from "@modules/user/UserPasswordConfirmationInput";
 import UserPhoneInput from "@modules/user/UserPhoneInput";
-import { Button, Form, message, Modal, Space, Typography, Flex } from "antd";
+import {
+  Button,
+  Form,
+  message,
+  Modal,
+  Space,
+  Typography,
+  Flex,
+  Checkbox,
+} from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { userApi } from "@api";
 import { useTranslation } from "react-i18next";
@@ -21,6 +30,7 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
   const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const [passwordToConfirm, setPasswordToConfirm] = useState();
+  const [areTermsAccepted, setAreTermsAccepted] = useState(false);
   const dispatch = useDispatch();
 
   const onFinish = async () => {
@@ -53,6 +63,10 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
   const onValuesChange = debounce(() => {
     setPasswordToConfirm(form.getFieldValue("password"));
   }, 300);
+
+  const onCheckedChange = (e) => {
+    setAreTermsAccepted(e.target.checked);
+  };
 
   return (
     <Modal
@@ -87,7 +101,17 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
         <Space>
           <FormItem>
             <Flex vertical gap="middle">
-              <Button type="primary" htmlType="submit" loading={isLoading}>
+              <Checkbox onChange={onCheckedChange}>
+                <Typography.Text align="" type="secondary">
+                  {t("COMMON.I_AGREE_WITH_USER_TERMS")}
+                </Typography.Text>
+              </Checkbox>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isLoading}
+                disabled={!areTermsAccepted}
+              >
                 {t("COMMON.REQUEST_FOR_REGISTRATION")}
               </Button>
               <Typography.Text type="secondary" style={{ textAlign: "center" }}>

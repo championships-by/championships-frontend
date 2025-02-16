@@ -58,8 +58,16 @@ export const competenciesApi = {
       `/nomination_event/nomination_event_info?${queryString}`,
       data
     ),
+  getPlayoffStatus: (params) =>
+    instance.get(`/match/get_tournament_status`, { params }),
   startGroupStage: (data) =>
     instance.post(`/tournaments/start_group_stage`, data),
+  finishGroupStage: (data) =>
+    instance.post(`/tournaments/finish_group_stage`, data),
+  startPlayoffStage: (data) =>
+    instance.post(`/tournaments/start_play_off_stage`, data),
+  finishPlayoffStage: (data) =>
+    instance.post(`/tournaments/finish_play_off_stage`, data),
   startCriteriaStage: async (data) =>
     instance.post(`/tournaments/start_criteria_stage`, data),
   startTimeStage: async (data) =>
@@ -85,6 +93,11 @@ export const competenciesApi = {
         responseType: "blob",
       }
     ),
+  getNominationEventCriteriaExcel: (params) =>
+    instance.get(`/nomination_event/get_nomination_event_excel_protocol`, {
+      params,
+      responseType: "blob",
+    }),
   editNumberRaceRounds: (params) =>
     instance.patch(`/nomination_event/edit_number_of_race_rounds`, null, {
       params,

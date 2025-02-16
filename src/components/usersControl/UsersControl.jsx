@@ -11,20 +11,11 @@ import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import UsersVerificationModal from "@components/usersControl/UnverifiedUsersTable";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
-import {
-  Button,
-  message,
-  Flex,
-  Typography,
-  Row,
-  Col,
-  Divider,
-  Tabs,
-} from "antd";
+import { Button, Flex, Typography, Row, Col, Tabs } from "antd";
 import SearchInput from "@modules/search/SearchInput";
+import { useTranslation } from "react-i18next";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
-import { useTranslation } from "react-i18next";
 
 import "./sass/users-control.scss";
 
@@ -36,7 +27,7 @@ function UsersControl() {
   const users = useSelector(getUsersSelector);
   const unverifiedUsers = useSelector(getUnverifiedUsersSelector);
   const [unverifiedUsersCount, setUnverifiedUsersCount] = useState(0);
-  const isLoading = users.isLoading;
+  const { isLoading } = users;
 
   const [activeTab, setActiveTab] = useState("1");
 
@@ -72,24 +63,7 @@ function UsersControl() {
     {
       key: "1",
       label: t("COMMON.USERS"),
-      children: (
-        <>
-          <Flex justify="flex-end">
-            <SearchInput onChange={findUser} />
-            <AdminPanelControls>
-              <Flex gap="middle">
-                <Button
-                  type="primary"
-                  onClick={() => setIsAddUserModalOpen(true)}
-                >
-                  {t("COMMON.CREATE_USER")}
-                </Button>
-              </Flex>
-            </AdminPanelControls>
-          </Flex>
-          <UsersTable />,
-        </>
-      ),
+      children: <UsersTable />,
     },
     {
       key: "2",
@@ -113,7 +87,23 @@ function UsersControl() {
             {t("COMMON.USER_MANAGEMENT")}
           </Typography.Title>
         </Col>
-        <Col flex="auto" />
+        <Col flex="auto">
+          {activeTab === "1" && (
+            <Flex justify="flex-end">
+              <SearchInput onChange={findUser} />
+              <AdminPanelControls>
+                <Flex gap="middle">
+                  <Button
+                    type="primary"
+                    onClick={() => setIsAddUserModalOpen(true)}
+                  >
+                    {t("COMMON.CREATE_USER")}
+                  </Button>
+                </Flex>
+              </AdminPanelControls>
+            </Flex>
+          )}
+        </Col>
       </Row>
       <Tabs items={tabs} onChange={onChange} />
       <UserModal

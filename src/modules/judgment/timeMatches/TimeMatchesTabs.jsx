@@ -7,12 +7,15 @@ import {
   transformTimeMatchesData,
   downloadProtocol,
 } from "@utils";
-import { Button, message, Tabs } from "antd";
+import { Button, message, Tabs, Flex } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 import { timeMatchesErrorMessages } from "./constants";
 import { useTranslation } from "react-i18next";
+import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
+
+import "@modules/judgment/timeMatches/sass/time-matches.scss";
 
 export const TimeMatchesTabs = () => {
   const { t } = useTranslation();
@@ -182,22 +185,25 @@ export const TimeMatchesTabs = () => {
   }, [eventId, nominationId, isDataLoaded, isStageFinished]);
 
   return (
-    <Tabs
-      activeKey={activeTabKey}
-      onChange={setActiveTabKey}
-      items={items}
-      tabBarExtraContent={{
-        right: (
-          <Button
-            onClick={isStageFinished ? handleDownload : handleCompleteStage}
-            type="primary"
-          >
-            {isStageFinished
-              ? t("COMMON.FINAL_PROTOCOL")
-              : t("COMMON.COMPLETE_STAGE")}
-          </Button>
-        ),
-      }}
-    />
+    <Flex vertical gap="middle">
+      <Tabs
+        activeKey={activeTabKey}
+        onChange={setActiveTabKey}
+        items={items}
+        tabBarExtraContent={{
+          right: (
+            <Button
+              onClick={isStageFinished ? handleDownload : handleCompleteStage}
+              type="primary"
+            >
+              {isStageFinished
+                ? t("COMMON.FINAL_PROTOCOL")
+                : t("COMMON.COMPLETE_STAGE")}
+            </Button>
+          ),
+        }}
+      />
+      {isStageFinished && <ReturnButton />}
+    </Flex>
   );
 };

@@ -1,4 +1,8 @@
 import { EventEmitter } from "events";
+import NoData from "@components/noData/NoData";
+import BronzeMedal from "@src/assets/img/bronze-medal.png";
+import GoldMedal from "@src/assets/img/gold-medal.png";
+import SilverMedal from "@src/assets/img/silver-medal.png";
 
 export const ZUBRONOK = "https://zubronok.by/";
 
@@ -165,7 +169,7 @@ export const tableLocale = {
   cancelSort: "TABLE_LOCALE.CANCELSORT",
   filterReset: "TABLE_LOCALE.FILTERRESET",
   filterConfirm: "TABLE_LOCALE.FILTERCONFIRM",
-  emptyText: "COMMON.NO_DATA",
+  emptyText: <NoData />,
 };
 
 export const paginationLocale = {
@@ -291,6 +295,11 @@ export const bntuSite = "https://bntu.by";
 export const fitrSite = "https://bntu.by/faculties/fitr";
 export const gymnSite = "http://gymn61.minsk.edu.by";
 
+export const userGuide =
+  "https://championships.by/static/files/Руководство%20пользователя.pdf";
+export const cookiesPolicy =
+  "https://championships.by/static/files/Cookies_Policy.pdf";
+
 export const eventFilterOptions = Object.entries(EventFilters).map(
   ([key, value]) => ({
     label: Locale.eventFilters[value],
@@ -312,7 +321,3 @@ export const ANTD_INPUT_FIELD_STATUSES = {
 };
 
 export const MAX_TEXTAREA_LENGTH = 1000;
-
-export const OPEN_TELEGRAM = () => {
-  window.open("https://t.me/championshipsby", "_blank");
-};

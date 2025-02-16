@@ -25,7 +25,7 @@ import SocialLinkButton from "./components/socialLink/SocialLinkButton";
 import PasswordReset from "@components/passwordReset/PasswordReset";
 import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import TitleAndMeta from "@components/titleAndMeta/TitleAndMeta";
-import CookiesNotification from "@components/cookies/CookiesModal";
+import CookiesNotification from "@components/cookies/CookiesNotification";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
 import { Provider } from "react-redux";

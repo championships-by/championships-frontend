@@ -1,15 +1,17 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import BronzeMedal from "@src/assets/img/bronze-medal.png";
-import GoldMedal from "@src/assets/img/gold-medal.png";
-import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Flex, Table, Tooltip, Typography } from "antd";
 import { tableLocale } from "@constants";
-import { getTranslation } from "@utils";
+import { getTranslation, getMedal, getPlace } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./CompetenciesResults.scss";
 
-export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
+export const CompetenciesResults = ({
+  dataSource,
+  isLoading,
+  hasError,
+  maxPlace,
+}) => {
   const { t } = useTranslation();
 
   const columns = [
@@ -18,19 +20,9 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
       key: "medal",
       render: (text, record, index) => (
         <>
-          {index <= 2 && (
+          {getPlace(index, maxPlace) <= 2 && (
             <div className="medal-column">
-              <img
-                src={
-                  index === 0
-                    ? GoldMedal
-                    : index === 1
-                      ? SilverMedal
-                      : index === 2
-                        ? BronzeMedal
-                        : ""
-                }
-              />
+              <img src={getMedal(getPlace(index, maxPlace))} />
             </div>
           )}
         </>
@@ -40,7 +32,7 @@ export const CompetenciesResults = ({ dataSource, isLoading, hasError }) => {
       title: <Tooltip title={t("COMMON.PLACE")}>{t("COMMON.PLACE")}</Tooltip>,
       dataIndex: "place",
       key: "place",
-      render: (text, record, index) => index + 1,
+      render: (text, record, index) => getPlace(index, maxPlace) + 1,
     },
     {
       title: <Tooltip title={t("COMMON.TEAM")}>{t("COMMON.TEAM")}</Tooltip>,
