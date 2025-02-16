@@ -321,3 +321,8 @@ export const ANTD_INPUT_FIELD_STATUSES = {
 };
 
 export const MAX_TEXTAREA_LENGTH = 1000;
+
+export const OPEN_TELEGRAM = () => {
+  window.open("https://t.me/championshipsby", "_blank");
+};
+export const medals = [GoldMedal, SilverMedal, BronzeMedal];
