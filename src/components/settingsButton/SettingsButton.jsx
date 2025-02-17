@@ -50,6 +50,10 @@ function SettingsButton() {
   useEffect(() => {
     document.documentElement.className = theme === "light" ? "" : "dark-theme";
     localStorage.setItem("theme", theme);
+
+    // Event for Social Button
+    const event = new Event("themeChange");
+    window.dispatchEvent(event);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -60,7 +64,7 @@ function SettingsButton() {
     <>
       <div ref={floatButtonGroupRef}>
         <FloatButton.Group
-          style={{ insetInlineEnd: 94 }}
+          style={{ insetInlineEnd: 90 }}
           open={isOpen}
           trigger="click"
           onClick={onClick}
