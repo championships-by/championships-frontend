@@ -3,9 +3,11 @@ import LightTelegramIcon from "@assets/icons/telegramIconLight.svg";
 import DarkTelegramIcon from "@assets/icons/telegramIconDark.svg";
 
 function CustomTelegramIcon() {
-  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [theme, setTheme] = useState();
 
   useLayoutEffect(() => {
+    setTheme(localStorage.getItem("theme") || "light");
+
     const handleThemeChange = () => {
       const storedTheme = localStorage.getItem("theme");
       if (storedTheme) {
@@ -20,11 +22,12 @@ function CustomTelegramIcon() {
     };
   }, []);
 
-  const getTelegramIcon = () => {
-    return theme === "light" ? DarkTelegramIcon : LightTelegramIcon;
-  };
-
-  return <img src={getTelegramIcon()} alt="Telegram Icon" />;
+  return (
+    <img
+      src={theme === "light" ? DarkTelegramIcon : LightTelegramIcon}
+      alt="Telegram Icon"
+    />
+  );
 }
 
 export default CustomTelegramIcon;

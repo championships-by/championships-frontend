@@ -3,17 +3,17 @@ import { FloatButton } from "antd";
 import CustomTelegramIcon from "./CustomTelegramIcon";
 import { TELEGRAM_LINK } from "@constants";
 
-function SocialLinkButton() {
-  const OPEN_TELEGRAM = () => {
-    window.open(TELEGRAM_LINK, "_blank");
-  };
+const OnClick = () => {
+  window.open(TELEGRAM_LINK, "_blank");
+};
 
+function SocialLinkButton() {
   return (
     <div>
       <FloatButton
         style={{ insetInlineEnd: 170 }}
         icon={<CustomTelegramIcon />}
-        onClick={OPEN_TELEGRAM}
+        onClick={OnClick}
       />
     </div>
   );
