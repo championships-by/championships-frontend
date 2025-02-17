@@ -50,6 +50,7 @@ function UserSupport() {
     <>
       <div ref={floatButtonGroupRef}>
         <FloatButton.Group
+          style={{ insetInlineEnd: 10 }}
           open={isOpen}
           trigger="click"
           onClick={onClick}

@@ -85,7 +85,6 @@ export const usersSlice = createSlice({
       .addCase(getUnverifiedUsers.rejected, (state, action) => {
         state.isLoadingUnverifiedUsers = false;
         state.error = action.error.message;
-      })
-      ;
+      });
   },
 });

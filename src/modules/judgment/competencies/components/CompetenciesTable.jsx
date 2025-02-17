@@ -46,7 +46,10 @@ export const CompetenciesTable = ({
       },
       ...generateCriteriaColumns(criteria, (text, record, index, columnId) => {
         const currentCriteria = record[`criteria${columnId}`];
-        const status = currentCriteria.score === null ? ANTD_INPUT_FIELD_STATUSES.ERROR : null;
+        const status =
+          currentCriteria.score === null
+            ? ANTD_INPUT_FIELD_STATUSES.ERROR
+            : null;
 
         return (
           <div className="criteria-table__column">
