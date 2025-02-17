@@ -1,21 +1,21 @@
 import React, { useRef } from "react";
 import { FloatButton } from "antd";
 import CustomTelegramIcon from "./CustomTelegramIcon";
-import { OPEN_TELEGRAM } from "@constants";
+import { TELEGRAM_LINK } from "@constants";
 
 function SocialLinkButton() {
-  const floatButtonGroupRef = useRef(null);
+  const OPEN_TELEGRAM = () => {
+    window.open(TELEGRAM_LINK, "_blank");
+  };
 
   return (
-    <>
-      <div ref={floatButtonGroupRef}>
-        <FloatButton
-          style={{ insetInlineEnd: 170 }}
-          icon={<CustomTelegramIcon />}
-          onClick={OPEN_TELEGRAM}
-        />
-      </div>
-    </>
+    <div>
+      <FloatButton
+        style={{ insetInlineEnd: 170 }}
+        icon={<CustomTelegramIcon />}
+        onClick={OPEN_TELEGRAM}
+      />
+    </div>
   );
 }
 
