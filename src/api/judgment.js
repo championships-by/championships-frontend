@@ -55,4 +55,6 @@ export const judgmentApi = {
 
     return instance.post(`${API_PATH}/match/set_bracket_match_result`, data);
   },
+  getPlayoffResults: (params) =>
+    instance.get(`/match/get_playoff_results`, { params }),
 };

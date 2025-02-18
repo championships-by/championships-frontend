@@ -8,6 +8,7 @@ import {
   MatchesGroupStage,
   TableGroupStage,
   MatchesPlayoffStage,
+  PlayoffResult,
 } from "./components";
 import { FinalParticipantsModal, FinishPlayoffModal } from "./modals";
 import { useTranslation } from "react-i18next";
@@ -94,12 +95,12 @@ export function GroupStageTabs() {
       children: <MatchesPlayoffStage />,
       disabled: !isGroupStageFinished,
     },
-    // {
-    //   key: "4",
-    //   label: t("COMMON.RESULTS"),
-    //   children: <PlayoffResult />,
-    //   disabled: !isPlayoffStageFinished,
-    // },
+    {
+      key: "4",
+      label: t("COMMON.RESULTS"),
+      children: <PlayoffResult />,
+      disabled: !isPlayoffStageFinished,
+    },
   ];
 
   return (

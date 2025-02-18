@@ -19,6 +19,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [results, setResults] = useState([]);
 
   const [isGroupStageFinished, setIsGroupStageFinished] = useState(false);
   const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(false);
@@ -169,6 +170,24 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     setIsLoading(false);
   }, []);
 
+  const fetchResultsData = useCallback(async (eventId, nominationId) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+      const responce = await judgmentApi.getPlayoffResults(params);
+      setResults(responce.data);
+      console.log(responce);
+    } catch (err) {
+      console.log(err);
+    }
+
+    setIsLoading(false);
+  });
+
   const fetchData = useCallback(async (eventId, nominationId) => {
     setIsLoading(true);
 
@@ -188,6 +207,12 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       if (statusInfo.group_stage_finished) {
         try {
           await fetchPlayoffStageData(eventId, nominationId);
+        } catch {}
+      }
+
+      if (statusInfo.play_off_stage_finished) {
+        try {
+          await fetchResultsData(eventId, nominationId);
         } catch {}
       }
     } catch {}
@@ -292,6 +317,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     isGroupStageFinished,
     isPlayoffStageFinished,
     finishPlayoffStage,
+    results,
   };
 
   return (

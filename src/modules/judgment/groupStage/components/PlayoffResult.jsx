@@ -6,35 +6,42 @@ import { Flex, Table, Tooltip, Typography } from "antd";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { useMatches } from "@hooks";
-import { getPlayoffResults, getMedal } from "@utils";
+import { getMedal } from "@utils";
 
-import "./PlayoffResults.scss";
+import "./playoff-results.scss";
 
-export const PlayoffResult = () => {
+export const PlayoffResult = ({ data }) => {
   const { t } = useTranslation();
-  const { leveledPlayoffMatches } = useMatches();
-  const data = getPlayoffResults(leveledPlayoffMatches);
+  const { results } = useMatches();
 
   const columns = [
-    // {
-    //   title: " ",
-    //   key: "play",
-    //   render: (place) => {
-    //     place <= 3 && <img src={getMedal(place)}></img>;
-    //   },
-    // },
+    {
+      title: " ",
+      key: "standing",
+      dataIndex: "standing",
+      render: (standing) => {
+        return (
+          standing <= 3 && (
+            <div className="medal-column">
+              <img src={getMedal(standing - 1)}></img>
+            </div>
+          )
+        );
+      },
+    },
     {
       title: <Tooltip title={t("COMMON.PLACE")}>{t("COMMON.PLACE")}</Tooltip>,
-      dataIndex: "place",
-      key: "place",
-      render: (place) => place + 1,
+      dataIndex: "standing",
+      key: "standing",
+      render: (standing) => standing,
     },
     {
       title: <Tooltip title={t("COMMON.TEAM")}>{t("COMMON.TEAM")}</Tooltip>,
       dataIndex: "team",
       key: "team",
-      render: (team) => team,
+      render: ({ name }) => name,
     },
     {
       title: (
@@ -58,7 +65,7 @@ export const PlayoffResult = () => {
         // }}
         pagination={false}
         columns={columns}
-        dataSource={data}
+        dataSource={results}
       />
     </Flex>
   );
