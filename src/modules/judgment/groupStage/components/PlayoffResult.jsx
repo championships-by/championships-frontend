@@ -1,16 +1,11 @@
-import { LoadingOutlined } from "@ant-design/icons";
-import BronzeMedal from "@src/assets/img/bronze-medal.png";
-import GoldMedal from "@src/assets/img/gold-medal.png";
-import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Flex, Table, Tooltip, Typography } from "antd";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
 import { useMatches } from "@hooks";
 import { getMedal } from "@utils";
 
-import "./sass/playoff-results.scss";
+import "@modules/judgment/groupStage/components/sass/playoff-results.scss";
 
 export const PlayoffResult = ({ data }) => {
   const { t } = useTranslation();
