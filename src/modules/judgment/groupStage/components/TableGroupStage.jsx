@@ -4,7 +4,7 @@ import { paginationLocale, tableLocale } from "@constants";
 import { useTranslation } from "react-i18next";
 import { getTranslation } from "@utils";
 
-import "./TableGroupStage.scss";
+import "./sass/table-group-stage.scss";
 
 export const TableGroupStage = () => {
   const { t } = useTranslation();

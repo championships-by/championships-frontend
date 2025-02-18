@@ -6,7 +6,7 @@ import { EditMatchScoreModal } from "../modals";
 import PlayoffTree from "./PlayoffTree";
 import { useTranslation } from "react-i18next";
 
-import "./MatchesGroupStage.scss";
+import "./sass/matches-group-stage.scss";
 
 export function MatchesPlayoffStage() {
   const { t } = useTranslation();

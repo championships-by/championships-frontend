@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { useMatches } from "@hooks";
 import { getMedal } from "@utils";
 
-import "./playoff-results.scss";
+import "./sass/playoff-results.scss";
 
 export const PlayoffResult = ({ data }) => {
   const { t } = useTranslation();

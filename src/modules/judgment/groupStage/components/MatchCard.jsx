@@ -3,7 +3,7 @@ import { determinateTheWinner, isScoreZero, MatchResult } from "@utils";
 import { useMatches } from "@hooks";
 
 import clsx from "clsx";
-import "./MatchCard.scss";
+import "./sass/match-card.scss";
 
 export const MatchCard = ({
   id,

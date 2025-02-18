@@ -8,7 +8,7 @@ import { EditMatchScoreModal } from "../modals";
 import { MatchCard } from "./MatchCard";
 import { useTranslation } from "react-i18next";
 
-import "./MatchesGroupStage.scss";
+import "./sass/matches-group-stage.scss";
 
 export function MatchesGroupStage() {
   const { t } = useTranslation();
