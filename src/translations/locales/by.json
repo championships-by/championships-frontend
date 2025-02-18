@@ -360,6 +360,7 @@
   "RULES": {
     "ENTER_EMAIL": "Калі ласка, увядзіце Email",
     "INVALID_EMAIL": "Некарэктны Email",
+    "EMAIL_TAKEN": "Такая пошта ўжо ёсць",
     "PLEASE_ENTER_PASSWORD": "Калі ласка, увядзіце пароль",
     "REQUIRED_FIELD": "Абавязковае поле",
     "PLEASE_ENTER_MESSAGE": "Калі ласка, увядзіце паведамленне",

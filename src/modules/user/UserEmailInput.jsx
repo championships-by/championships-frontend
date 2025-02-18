@@ -3,6 +3,7 @@ import { Flex, Input, Typography } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "react-i18next";
+import { participantApi } from "@api";
 
 import "./sass/user.scss";
 
@@ -31,6 +32,17 @@ function UserEmailInput({ name, disabled }) {
           {
             type: "email",
             message: t("RULES.INVALID_EMAIL"),
+          },
+          {
+            asyncValidator: async (rule, value) => {
+              const isEmailTaken = await participantApi.checkEmail(value);
+
+              if (isEmailTaken) {
+                return Promise.reject(new Error(t("RULES.EMAIL_TAKEN")));
+              }
+
+              return Promise.resolve();
+            },
           },
         ]}
         className="user__email-input__formitem"

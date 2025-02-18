@@ -91,4 +91,9 @@ export const participantApi = {
       paramsSerializer: (params) => qs.stringify(params, { indices: false }),
     });
   },
+  checkEmail: async (queryString) => {
+    return instance
+      .post(`/user/check_email?email=${encodeURIComponent(queryString)}`)
+      .then((res) => res.data);
+  },
 };

@@ -362,6 +362,7 @@
   "RULES": {
     "ENTER_EMAIL": "Пожалуйста, введите Email",
     "INVALID_EMAIL": "Некоректный Email",
+    "EMAIL_TAKEN": "Такая почта уже существует",
     "PLEASE_ENTER_PASSWORD": "Пожалуйста, введите пароль",
     "REQUIRED_FIELD": "Обязательное поле",
     "PLEASE_ENTER_MESSAGE": "Пожалуйста, введите сообщение",
