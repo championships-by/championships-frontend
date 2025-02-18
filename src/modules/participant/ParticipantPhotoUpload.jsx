@@ -51,7 +51,7 @@ function ParticipantPhotoUpload({
                 ) : (
                   <img
                     src={`${url}/${existingImage}`}
-                    className="participants__existing-image"
+                    className="participant__existing-image"
                   />
                 )
               ) : (
