@@ -10,7 +10,7 @@ import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventRequirements from "@modules/judgment/events/EventRequirements";
 import { Button, Form, message, Modal, notification } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
@@ -19,6 +19,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
 
   const [values, setValues] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [fileList, setFileList] = useState([]);
 
   const onSubmit = async () => {
     const {
@@ -65,6 +66,10 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       return false;
     }
   };
+
+  useEffect(() => {
+    setFileList([]);
+  }, [isOpen]);
 
   const onValuesChange = (values) => {
     setValues((oldValues) => ({ ...oldValues, ...values }));
@@ -115,6 +120,8 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           onChange={onValuesChange}
           required={true}
           form={form}
+          fileList={fileList}
+          setFileList={setFileList}
         />
         <EventEmail
           name="participant_question_email"

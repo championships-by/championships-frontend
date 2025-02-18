@@ -1,11 +1,8 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { tableLocale } from "@constants";
-import BronzeMedal from "@src/assets/img/bronze-medal.png";
-import GoldMedal from "@src/assets/img/gold-medal.png";
-import SilverMedal from "@src/assets/img/silver-medal.png";
 import { formatTime } from "@utils";
 import { Flex, Table, Tooltip, Typography } from "antd";
-import { getTranslation } from "@utils";
+import { getTranslation, getMedal } from "@utils";
 import { useTranslation } from "react-i18next";
 
 import "./TimeMatchesResult.scss";
@@ -25,17 +22,7 @@ export const TimeMatchesResults = ({
         <>
           {index <= 2 && (
             <div className="medal-column">
-              <img
-                src={
-                  index === 0
-                    ? GoldMedal
-                    : index === 1
-                      ? SilverMedal
-                      : index === 2
-                        ? BronzeMedal
-                        : ""
-                }
-              />
+              <img src={getMedal(index)} />
             </div>
           )}
         </>
@@ -61,10 +48,11 @@ export const TimeMatchesResults = ({
       dataIndex: "bestAttempt",
       key: "bestAttempt",
       render: (text, record) =>
-        record.bestAttempt.result === null ||
-        record.bestAttempt.result === "00:00.000"
-          ? t("TOURNAMENTS.DISQALIFICATED")
-          : record.bestAttempt.result,
+        record.bestAttempt &&
+        record.bestAttempt?.result !== null &&
+        record.bestAttempt?.result !== "00:00.000"
+          ? record.bestAttempt?.result
+          : t("TOURNAMENTS.DISQALIFICATED"),
     },
   ];
 

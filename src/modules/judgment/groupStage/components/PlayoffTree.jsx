@@ -3,9 +3,9 @@ import ReactFlow from "reactflow";
 import "reactflow/dist/style.css";
 import { useMatches } from "@hooks";
 import { getTreeData } from "@utils";
-import { PlayoffMatchCard } from "./PlayoffMatchCard";
+import { PlayoffMatchCard } from "@modules/judgment/groupStage/components";
 
-function PlayoffTree() {
+export function PlayoffTree() {
   const { leveledPlayoffMatches, handleEditScore, isPlayoffStageFinished } =
     useMatches();
 
@@ -26,5 +26,3 @@ function PlayoffTree() {
     </div>
   );
 }
-
-export default PlayoffTree;
