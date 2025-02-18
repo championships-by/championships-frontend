@@ -407,6 +407,7 @@ function EventSettings() {
               holding_start_date: event.holding_start_date,
               holding_finish_date: event.holding_finish_date,
             },
+            existing_logo_path: event.logo_path,
           };
           form.setFieldsValue(values);
 
@@ -499,6 +500,10 @@ function EventSettings() {
   };
 
   const onValuesChange = (values) => {
+    if (values.event_logo?.status === "removed") {
+      values.event_logo = null;
+    }
+
     setValues((oldValues) => ({ ...oldValues, ...values }));
   };
 
@@ -554,6 +559,7 @@ function EventSettings() {
               required={false}
               onChange={onValuesChange}
               form={form}
+              existingImage={values.existing_logo_path}
             />
             <EventEmail
               name="participant_question_email"
