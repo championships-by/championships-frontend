@@ -49,6 +49,7 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
     </Button>
   ) : (
     <TimePicker
+      className="custom-time-picker"
       placeholder="00:00.000"
       disabled={disabled}
       value={time}
