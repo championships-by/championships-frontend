@@ -2,11 +2,24 @@ import { Typography, Upload, Button, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { url } from "@constants";
 
-function ParticipantPhotoUpload({ name, onChange: onChangeBase, form }) {
+import "./sass/participant.scss";
+
+function ParticipantPhotoUpload({
+  name,
+  onChange: onChangeBase,
+  form,
+  existingImage,
+}) {
   const { t } = useTranslation();
+  const [fileList, setFileList] = useState([]);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const onChange = ({ file }) => {
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    const file = newFileList.length > 0 ? newFileList[0].originFileObj : null;
     onChangeBase({ [name]: file });
     form.setFieldsValue({ [name]: file });
   };
@@ -21,13 +34,36 @@ function ParticipantPhotoUpload({ name, onChange: onChangeBase, form }) {
           beforeUpload={() => false}
           onChange={onChange}
           listType="picture-card"
+          fileList={fileList}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <Typography.Text type="secondary">
-            <Flex vertical align="center">
-              <UploadOutlined />
-              {t("COMMON.UPLOAD")}
-            </Flex>
-          </Typography.Text>
+          {fileList.length === 0 && (
+            <div className="upload-placeholder">
+              {existingImage && existingImage !== "/" ? (
+                isHovered ? (
+                  <Typography.Text type="secondary">
+                    <Flex vertical align="center">
+                      <UploadOutlined />
+                      {t("COMMON.REPLACE")}
+                    </Flex>
+                  </Typography.Text>
+                ) : (
+                  <img
+                    src={`${url}/${existingImage}`}
+                    className="participants__existing-image"
+                  />
+                )
+              ) : (
+                <Typography.Text type="secondary">
+                  <Flex vertical align="center">
+                    <UploadOutlined />
+                    {t("COMMON.UPLOAD")}
+                  </Flex>
+                </Typography.Text>
+              )}
+            </div>
+          )}
         </Upload>
       </Flex>
       <Typography.Text type="secondary">

@@ -22,10 +22,21 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   const [form] = Form.useForm();
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
   const [values, setValues] = useState(data || {});
+  const [existingImagePath, setExistingImagePath] = useState(null);
   const user = useSelector(getUserSelector);
 
   useEffect(() => {
     if (data) {
+      const body = { participant_id: data.id };
+      participantApi
+        .getParticipantStats(body)
+        .then((responce) => {
+          setExistingImagePath(responce.participant[0].photo_path);
+        })
+        .catch((error) => {
+          setExistingImagePath(null);
+        });
+
       setValues(data);
       form.setFieldsValue({ ...data, birth_date: dayjs(data.birth_date) });
     } else {
@@ -99,6 +110,9 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   };
 
   const onValuesChange = (values) => {
+    if (values.photo?.status === "removed") {
+      values.photo = null;
+    }
     setValues((oldValues) => ({ ...oldValues, ...values }));
   };
 
@@ -152,6 +166,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
           name="photo"
           onChange={onValuesChange}
           form={form}
+          existingImage={existingImagePath}
         />
         <Flex vertical gap="large">
           <Checkbox
