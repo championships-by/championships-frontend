@@ -60,6 +60,7 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
       needConfirm={false}
       defaultValue={formatTime()}
       defaultOpenValue={formatTime()}
+      inputReadOnly={false}
       format={{ format: defaultFormat, type: "mask" }}
       allowClear={{
         clearIcon: <CloseCircleOutlined onClick={handleClear} />,
