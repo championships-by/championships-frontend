@@ -36,9 +36,11 @@ function UserEmailInput({ name, disabled }) {
           {
             asyncValidator: async (rule, value) => {
               const isEmailTaken = await participantApi.checkEmail(value);
+
               if (isEmailTaken) {
                 return Promise.reject(new Error(t("RULES.EMAIL_TAKEN")));
               }
+
               return Promise.resolve();
             },
           },

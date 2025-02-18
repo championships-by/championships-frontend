@@ -92,9 +92,8 @@ export const participantApi = {
     });
   },
   checkEmail: async (queryString) => {
-    const response = instance.post(
-      `/user/check_email?email=${encodeURIComponent(queryString)}`
-    );
-    return (await response).data;
+    return instance
+      .post(`/user/check_email?email=${encodeURIComponent(queryString)}`)
+      .then((res) => res.data);
   },
 };
