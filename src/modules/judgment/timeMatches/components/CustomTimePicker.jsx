@@ -49,6 +49,7 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
     </Button>
   ) : (
     <TimePicker
+      className="custom-time-picker"
       placeholder="00:00.000"
       disabled={disabled}
       value={time}
@@ -60,6 +61,7 @@ export const CustomTimePicker = ({ id, value, disabled, onTimeChange }) => {
       needConfirm={false}
       defaultValue={formatTime()}
       defaultOpenValue={formatTime()}
+      inputReadOnly={false}
       format={{ format: defaultFormat, type: "mask" }}
       allowClear={{
         clearIcon: <CloseCircleOutlined onClick={handleClear} />,
