@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 function ParticipantsTable({ ParticipantData, getParticipant }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+
   const columns = [
     {
       title: t("COMMON.SURNAME_NAME_THIRD_NAME"),
@@ -55,7 +56,9 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
               <Button
                 type="text"
                 icon={<EditOutlined />}
-                onClick={() => openEditModal(data)}
+                onClick={() => {
+                  openEditModal(data);
+                }}
               />
             </Tooltip>
             <Tooltip title={t("PARTICIPANTS.CARD_OF_PARTICIPANT")}>
