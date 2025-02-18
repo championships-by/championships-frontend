@@ -1,40 +1,42 @@
-import { LoadingOutlined } from "@ant-design/icons";
-import BronzeMedal from "@src/assets/img/bronze-medal.png";
-import GoldMedal from "@src/assets/img/gold-medal.png";
-import SilverMedal from "@src/assets/img/silver-medal.png";
 import { Flex, Table, Tooltip, Typography } from "antd";
 import { tableLocale } from "@constants";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { useMatches } from "@hooks";
-import { getPlayoffResults, getMedal } from "@utils";
+import { getMedal } from "@utils";
 
-import "./PlayoffResults.scss";
+import "@modules/judgment/groupStage/components/sass/playoff-results.scss";
 
-export const PlayoffResult = () => {
+export const PlayoffResult = ({ data }) => {
   const { t } = useTranslation();
-  const { leveledPlayoffMatches } = useMatches();
-  const data = getPlayoffResults(leveledPlayoffMatches);
+  const { results } = useMatches();
 
   const columns = [
-    // {
-    //   title: " ",
-    //   key: "play",
-    //   render: (place) => {
-    //     place <= 3 && <img src={getMedal(place)}></img>;
-    //   },
-    // },
+    {
+      title: " ",
+      key: "standing",
+      dataIndex: "standing",
+      render: (standing) => {
+        return (
+          standing <= 3 && (
+            <div className="medal-column">
+              <img src={getMedal(standing - 1)}></img>
+            </div>
+          )
+        );
+      },
+    },
     {
       title: <Tooltip title={t("COMMON.PLACE")}>{t("COMMON.PLACE")}</Tooltip>,
-      dataIndex: "place",
-      key: "place",
-      render: (place) => place + 1,
+      dataIndex: "standing",
+      key: "standing",
+      render: (standing) => standing,
     },
     {
       title: <Tooltip title={t("COMMON.TEAM")}>{t("COMMON.TEAM")}</Tooltip>,
       dataIndex: "team",
       key: "team",
-      render: (team) => team,
+      render: ({ name }) => name,
     },
     {
       title: (
@@ -58,7 +60,7 @@ export const PlayoffResult = () => {
         // }}
         pagination={false}
         columns={columns}
-        dataSource={data}
+        dataSource={results}
       />
     </Flex>
   );

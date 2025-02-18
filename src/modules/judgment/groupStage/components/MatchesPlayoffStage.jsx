@@ -2,11 +2,11 @@ import React from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
 import { Typography, Spin, Flex } from "antd";
-import { EditMatchScoreModal } from "../modals";
-import PlayoffTree from "./PlayoffTree";
+import { EditMatchScoreModal } from "@modules/judgment/groupStage/modals";
+import { PlayoffTree } from "@modules/judgment/groupStage/components";
 import { useTranslation } from "react-i18next";
 
-import "./MatchesGroupStage.scss";
+import "@modules/judgment/groupStage/components/sass/matches-group-stage.scss";
 
 export function MatchesPlayoffStage() {
   const { t } = useTranslation();

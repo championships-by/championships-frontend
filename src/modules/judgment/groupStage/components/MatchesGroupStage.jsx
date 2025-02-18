@@ -1,14 +1,12 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable import/prefer-default-export */
 import React from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
 import { Typography, Spin } from "antd";
-import { EditMatchScoreModal } from "../modals";
-import { MatchCard } from "./MatchCard";
+import { EditMatchScoreModal } from "@modules/judgment/groupStage/modals";
+import { MatchCard } from "@modules/judgment/groupStage/components";
 import { useTranslation } from "react-i18next";
 
-import "./MatchesGroupStage.scss";
+import "@modules/judgment/groupStage/components/sass/matches-group-stage.scss";
 
 export function MatchesGroupStage() {
   const { t } = useTranslation();
