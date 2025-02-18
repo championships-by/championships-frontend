@@ -23,6 +23,7 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   const [isAgreeChecked, setIsAgreeChecked] = useState(false);
   const [values, setValues] = useState(data || {});
   const [existingImagePath, setExistingImagePath] = useState(null);
+  const [fileList, setFileList] = useState([]);
   const user = useSelector(getUserSelector);
 
   useEffect(() => {
@@ -121,6 +122,10 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
     setValues((oldValues) => ({ ...oldValues, ...values }));
   };
 
+  useEffect(() => {
+    setFileList([]);
+  }, [isOpen]);
+
   return (
     <Modal
       title={
@@ -172,6 +177,8 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
           onChange={onValuesChange}
           form={form}
           existingImage={existingImagePath}
+          fileList={fileList}
+          setFileList={setFileList}
         />
         <Flex vertical gap="large">
           <Checkbox

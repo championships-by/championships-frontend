@@ -13,9 +13,10 @@ function EventLogo({
   required,
   form,
   existingImage,
+  fileList,
+  setFileList,
 }) {
   const { t } = useTranslation();
-  const [fileList, setFileList] = useState([]);
   const [isHovered, setIsHovered] = useState(false);
 
   const onChange = ({ fileList: newFileList }) => {
@@ -24,6 +25,32 @@ function EventLogo({
     onChangeBase({ [name]: file });
     form.setFieldsValue({ [name]: file });
   };
+
+  const onMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const onMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  const replaceLabel = (
+    <Typography.Text type="secondary">
+      <Flex vertical align="center">
+        <UploadOutlined />
+        {t("COMMON.REPLACE")}
+      </Flex>
+    </Typography.Text>
+  );
+
+  const uploadLabel = (
+    <Typography.Text type="secondary">
+      <Flex vertical align="center">
+        <UploadOutlined />
+        {t("COMMON.UPLOAD")}
+      </Flex>
+    </Typography.Text>
+  );
 
   return (
     <FormItem
@@ -46,19 +73,14 @@ function EventLogo({
           onChange={onChange}
           listType="picture-card"
           fileList={fileList}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
         >
           {fileList.length === 0 && (
             <div className="upload-placeholder">
               {existingImage && existingImage !== "/" ? (
                 isHovered ? (
-                  <Typography.Text type="secondary">
-                    <Flex vertical align="center">
-                      <UploadOutlined />
-                      {t("COMMON.REPLACE")}
-                    </Flex>
-                  </Typography.Text>
+                  replaceLabel
                 ) : (
                   <img
                     src={`${url}/${existingImage}`}
@@ -66,12 +88,7 @@ function EventLogo({
                   />
                 )
               ) : (
-                <Typography.Text type="secondary">
-                  <Flex vertical align="center">
-                    <UploadOutlined />
-                    {t("COMMON.UPLOAD")}
-                  </Flex>
-                </Typography.Text>
+                uploadLabel
               )}
             </div>
           )}
