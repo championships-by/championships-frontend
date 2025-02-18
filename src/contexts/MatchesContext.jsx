@@ -180,10 +180,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       params.append("nomination_id", nominationId);
       const responce = await judgmentApi.getPlayoffResults(params);
       setResults(responce.data);
-      console.log(responce);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
 
     setIsLoading(false);
   });

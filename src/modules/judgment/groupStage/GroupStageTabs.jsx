@@ -37,7 +37,6 @@ export function GroupStageTabs() {
 
   const handleClickFinishGroupStage = (e) => {
     e.preventDefault();
-    console.log(matches);
     const completed = matches.every(
       ({ lastResultCreatorEmail }) => lastResultCreatorEmail !== null
     );
