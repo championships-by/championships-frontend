@@ -61,10 +61,11 @@ export const TimeMatchesResults = ({
       dataIndex: "bestAttempt",
       key: "bestAttempt",
       render: (text, record) =>
-        record.bestAttempt.result === null ||
-        record.bestAttempt.result === "00:00.000"
-          ? t("TOURNAMENTS.DISQALIFICATED")
-          : record.bestAttempt.result,
+        record.bestAttempt &&
+        record.bestAttempt?.result !== null &&
+        record.bestAttempt?.result !== "00:00.000"
+          ? record.bestAttempt?.result
+          : t("TOURNAMENTS.DISQALIFICATED"),
     },
   ];
 
