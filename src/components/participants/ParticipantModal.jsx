@@ -26,8 +26,9 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
   const user = useSelector(getUserSelector);
 
   useEffect(() => {
-    if (data) {
+    const getImage = async (data) => {
       const body = { participant_id: data.id };
+
       participantApi
         .getParticipantStats(body)
         .then((responce) => {
@@ -36,6 +37,10 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
         .catch((error) => {
           setExistingImagePath(null);
         });
+    };
+
+    if (data) {
+      getImage(data);
 
       setValues(data);
       form.setFieldsValue({ ...data, birth_date: dayjs(data.birth_date) });
