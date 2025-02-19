@@ -228,7 +228,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     isPlayoff,
   }) => {
     try {
-      if (isPlayoff === true) {
+      if (isPlayoff) {
         await judgmentApi.setPlayoffMatch(
           eventId,
           nominationId,
