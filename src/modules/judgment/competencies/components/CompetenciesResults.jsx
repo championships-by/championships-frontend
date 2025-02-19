@@ -42,6 +42,15 @@ export const CompetenciesResults = ({
     },
     {
       title: (
+        <Tooltip title={t("COMMON.PARTICIPANTS")}>
+          {t("COMMON.PARTICIPANTS")}
+        </Tooltip>
+      ),
+      dataIndex: "participants",
+      key: "participants",
+    },
+    {
+      title: (
         <Tooltip title={t("COMMON.FINAL_SCORE")}>
           {t("COMMON.FINAL_SCORE")}
         </Tooltip>
@@ -62,9 +71,6 @@ export const CompetenciesResults = ({
         <Table
           className="competencies-result-table"
           locale={getTranslation(tableLocale, t)}
-          expandable={{
-            expandedRowRender: (record) => <p>{record.participants}</p>,
-          }}
           pagination={false}
           columns={columns}
           dataSource={dataSource.sort((a, b) => b.totalScore - a.totalScore)}

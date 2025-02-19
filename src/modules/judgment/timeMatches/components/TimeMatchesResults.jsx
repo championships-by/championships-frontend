@@ -41,6 +41,15 @@ export const TimeMatchesResults = ({
     },
     {
       title: (
+        <Tooltip title={t("COMMON.PARTICIPANTS")}>
+          {t("COMMON.PARTICIPANTS")}
+        </Tooltip>
+      ),
+      dataIndex: "participants",
+      key: "participants",
+    },
+    {
+      title: (
         <Tooltip title={t("TOURNAMENTS.BEST_TIME")}>
           {t("TOURNAMENTS.BEST_TIME")}
         </Tooltip>
@@ -67,9 +76,6 @@ export const TimeMatchesResults = ({
           className="time-matches-table"
           pagination={false}
           columns={columns}
-          expandable={{
-            expandedRowRender: (record) => <p>{record.participants}</p>,
-          }}
           locale={getTranslation(tableLocale, t)}
           dataSource={timeMatches.sort((a, b) => {
             const aResult = a.best_attempt?.result;
