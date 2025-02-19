@@ -543,19 +543,46 @@ export const getPlayOffLevels = (objects) => {
 
   rootNodes.forEach((rootId) => traverse(rootId, 0));
 
+  if (levels[0]) {
+    levels[0].sort((b, a) => (a.children.length === 0 ? 1 : -1));
+  }
+
   const cleanLevels = cleanPlayoffTree(levels);
   return cleanLevels;
+};
+
+export const extendWithTreePositions = (leveledMatches) => {
+  const coeffY = 200;
+  const coeffX = 350;
+  const levels = leveledMatches.length;
+
+  const startX = (levels - 1) * coeffX;
+  const startY = coeffY * levels;
+
+  return leveledMatches.map((level, levelIndex) =>
+    level.map((match, index) => {
+      const deltaY = (levels / 2 ** levelIndex) * coeffY;
+
+      let xPos = startX - levelIndex * coeffX;
+      let yPos = startY - index * deltaY - 0.5 * deltaY;
+
+      if (levelIndex === 0) {
+        if (match.children.length !== 0) {
+          yPos = startY - 0.5 * deltaY;
+        } else {
+          yPos = startY - 0.5 * deltaY + 0.5 * coeffY;
+        }
+      }
+
+      return { ...match, xPos, yPos };
+    })
+  );
 };
 
 export const getTreeData = (leveledMatches, handleEditScore) => {
   const nodes = [];
   const edges = [];
-  const coeffY = 150;
-  const coeffX = 350;
-  const levels = leveledMatches.length;
-  const maxNodes = Math.max(...leveledMatches.map((level) => level.length));
-  const startX = (levels - 1) * coeffX;
-  const startY = levels > 2 ? (maxNodes - 1.5) * coeffY : coeffY;
+  leveledMatches = extendWithTreePositions(leveledMatches);
 
   const nodesCount = leveledMatches.reduce(
     (accumulator, level) => accumulator + level.length,
@@ -565,8 +592,6 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
   let overallIndex = 0;
   leveledMatches.forEach((level, levelIndex) => {
     level.forEach((match, index) => {
-      const deltaY = (levels / 2 ** levelIndex) * coeffY;
-
       nodes.push({
         id: match.id.toString(),
         data: {
@@ -579,8 +604,8 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
         },
         type: "customNode",
         position: {
-          x: startX - levelIndex * coeffX,
-          y: startY - index * deltaY,
+          x: match.xPos,
+          y: match.yPos,
         },
       });
 
@@ -633,10 +658,6 @@ export const getPlayoffResults = (leveledMatches) => {
         (scores.get(match.team2.id) || 0) + match.team2.score
       );
     }
-
-    // [match.team1, match.team2].forEach((team) => {
-    //   scores.set(team.id, (scores.get(team.id) || 0) + team.score);
-    // });
   });
 
   if (!rootMatch) return [];

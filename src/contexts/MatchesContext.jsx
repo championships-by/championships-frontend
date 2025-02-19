@@ -24,7 +24,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   const [isGroupStageFinished, setIsGroupStageFinished] = useState(false);
   const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(false);
 
-  const transformMatches = useCallback((data) => {
+  const transformMatches = (data) => {
     return data
       .flatMap((group) =>
         group.matches.map((match) => ({
@@ -45,9 +45,9 @@ export function MatchesProvider({ eventId, nominationId, children }) {
         }))
       )
       .sort((a, b) => a.id - b.id);
-  }, []);
+  };
 
-  const transformPlayoffMatches = useCallback((data) => {
+  const transformPlayoffMatches = (data) => {
     return data.map((match) => ({
       id: match.match_id,
       next_id: match.next_match_id,
@@ -67,7 +67,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
         : null,
       lastResultCreatorEmail: match.last_result_creator_email,
     }));
-  }, []);
+  };
 
   const transformData = (data) => {
     return data.map((group) => {
@@ -132,35 +132,32 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     });
   };
 
-  const fetchGroupStageData = useCallback(
-    async (eventId, nominationId) => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const matches = await judgmentApi.getMatches(eventId, nominationId);
-        const transformedMatches = transformMatches(matches.data);
-        setMatches(transformedMatches);
-        const transformedData = transformData(matches.data);
-        setFinalParticipants(transformedData);
-      } catch (error) {
-        setError("Произошла ошибка получения данных");
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [transformMatches]
-  );
-
-  const fetchPlayoffStageData = useCallback(async (eventId, nominationId) => {
+  const fetchGroupStageData = async (eventId, nominationId) => {
     setIsLoading(true);
     setError(null);
     try {
-      const responce = await judgmentApi.getPlayoffMatches(
+      const matches = await judgmentApi.getMatches(eventId, nominationId);
+      const transformedMatches = transformMatches(matches.data);
+      setMatches(transformedMatches);
+      const transformedData = transformData(matches.data);
+      setFinalParticipants(transformedData);
+    } catch (error) {
+      setError("Произошла ошибка получения данных");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchPlayoffStageData = async (eventId, nominationId) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await judgmentApi.getPlayoffMatches(
         eventId,
         nominationId
       );
 
-      const matches = responce.data.matches;
+      const matches = response.data.matches;
       const transformedMatches = transformPlayoffMatches(matches);
       const leveledMatches = getPlayOffLevels(transformedMatches);
 
@@ -168,9 +165,9 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       setLeveledPlayoffMatches(leveledMatches);
     } catch (e) {}
     setIsLoading(false);
-  }, []);
+  };
 
-  const fetchResultsData = useCallback(async (eventId, nominationId) => {
+  const fetchResultsData = async (eventId, nominationId) => {
     setIsLoading(true);
     setError(null);
 
@@ -178,14 +175,14 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       const params = new URLSearchParams();
       params.append("event_id", eventId);
       params.append("nomination_id", nominationId);
-      const responce = await judgmentApi.getPlayoffResults(params);
-      setResults(responce.data);
+      const response = await judgmentApi.getPlayoffResults(params);
+      setResults(response.data);
     } catch (err) {}
 
     setIsLoading(false);
-  });
+  };
 
-  const fetchData = useCallback(async (eventId, nominationId) => {
+  const fetchData = async (eventId, nominationId) => {
     setIsLoading(true);
 
     try {
@@ -215,53 +212,57 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     } catch {}
 
     setIsLoading(false);
-  }, []);
+  };
 
-  const handleEditScore = useCallback((match) => {
+  const handleEditScore = (match) => {
     setSelectedMatch(match);
     setIsModalOpen(true);
-  }, []);
+  };
 
-  const handleSubmitScore = useCallback(
-    async ({ id, eventId, nominationId, team1, team2, isPlayoff }) => {
-      try {
-        if (isPlayoff === true) {
-          await judgmentApi.setPlayoffMatch(
-            eventId,
-            nominationId,
-            id,
-            team1.score,
-            team2.score
-          );
-        } else {
-          await judgmentApi.setMatches(
-            eventId,
-            nominationId,
-            id,
-            team1.score,
-            team2.score
-          );
-        }
-        fetchData(eventId, nominationId);
-      } catch (error) {}
-    },
-    [fetchGroupStageData, fetchPlayoffStageData]
-  );
+  const handleSubmitScore = async ({
+    id,
+    eventId,
+    nominationId,
+    team1,
+    team2,
+    isPlayoff,
+  }) => {
+    try {
+      if (isPlayoff) {
+        await judgmentApi.setPlayoffMatch(
+          eventId,
+          nominationId,
+          id,
+          team1.score,
+          team2.score
+        );
+      } else {
+        await judgmentApi.setMatches(
+          eventId,
+          nominationId,
+          id,
+          team1.score,
+          team2.score
+        );
+      }
+      fetchData(eventId, nominationId);
+    } catch (error) {}
+  };
 
-  const handleCloseModal = useCallback(() => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
-  }, []);
+  };
 
-  const handleFinishGroupStage = useCallback(async () => {
+  const handleFinishGroupStage = async () => {
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishGroupStage(body);
       message.success(t("TOURNAMENTS.GROUP_STAGE_FINISHED"));
       fetchData(eventId, nominationId);
     } catch {}
-  }, []);
+  };
 
-  const handleStartPlayoffStage = useCallback(async (data) => {
+  const handleStartPlayoffStage = async (data) => {
     const passedTeamsData = data.filter((team) => team.isPassed);
     const passedTeamsIds = passedTeamsData.map((team) => ({
       id: team.id.toString(),
@@ -275,9 +276,9 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       await competenciesApi.startPlayoffStage(body);
       fetchGroupStageData(eventId, nominationId);
     } catch {}
-  }, []);
+  };
 
-  const finishPlayoffStage = useCallback(async () => {
+  const finishPlayoffStage = async () => {
     setIsLoading(true);
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
@@ -286,11 +287,11 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       fetchData(eventId, nominationId);
     } catch {}
     setIsLoading(false);
-  }, []);
+  };
 
   useEffect(() => {
     fetchData(eventId, nominationId);
-  }, [fetchGroupStageData, fetchPlayoffStageData, eventId, nominationId]);
+  }, [eventId, nominationId]);
 
   const context = {
     eventId,
