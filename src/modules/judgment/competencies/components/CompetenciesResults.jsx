@@ -48,6 +48,16 @@ export const CompetenciesResults = ({
       ),
       dataIndex: "participants",
       key: "participants",
+      render: (text, record) => {
+        const { participants } = record;
+        return (
+          <ul className="participants-list">
+            {participants.map((participant, index) => (
+              <li key={index}>{participant}</li>
+            ))}
+          </ul>
+        );
+      },
     },
     {
       title: (

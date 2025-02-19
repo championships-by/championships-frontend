@@ -36,7 +36,7 @@ export const PlayoffResult = ({ data }) => {
       title: <Tooltip title={t("COMMON.TEAM")}>{t("COMMON.TEAM")}</Tooltip>,
       dataIndex: "team",
       key: "team",
-      render: ({ name }) => name,
+      render: ({ team }) => team.name,
     },
     {
       title: (
@@ -44,9 +44,19 @@ export const PlayoffResult = ({ data }) => {
           {t("COMMON.PARTICIPANTS")}
         </Tooltip>
       ),
-      dataIndex: "participants",
-      key: "participants",
-      render: () => "-",
+      dataIndex: "team",
+      key: "team",
+      render: ({ participants }) => {
+        return (
+          <ul className="participants-list">
+            {participants.map((participant, index) => (
+              <li
+                key={index}
+              >{`${participant.second_name} ${participant.first_name} ${participant.third_name}`}</li>
+            ))}
+          </ul>
+        );
+      },
     },
     {
       title: (
