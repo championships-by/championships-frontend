@@ -1,6 +1,7 @@
-import React, { useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import ReactFlow, { MiniMap, Controls, Background } from "reactflow";
 import "reactflow/dist/style.css";
+import clsx from "clsx";
 import { useMatches } from "@hooks";
 import { getTreeData } from "@utils";
 import { PlayoffMatchCard } from "@modules/judgment/groupStage/components";
@@ -12,7 +13,7 @@ export function PlayoffTree() {
     useMatches();
   const { nodes, edges } = getTreeData(leveledPlayoffMatches, handleEditScore);
 
-  const onInit = useCallback((reactFlowInstance) => {
+  const onInit = (reactFlowInstance) => {
     reactFlowInstance.fitView({ maxZoom: 1 });
 
     const viewport = reactFlowInstance.getViewport();
@@ -24,15 +25,11 @@ export function PlayoffTree() {
       ...viewport,
       x: viewport.x - offsetX,
     });
-  }, []);
+  };
 
   return (
     <div
-      className={
-        isPlayoffStageFinished
-          ? "playoff-tree__inactive"
-          : "playoff-tree__active"
-      }
+      className={clsx("playoff-tree", { ["active"]: !isPlayoffStageFinished })}
     >
       <ReactFlow
         nodes={nodes}

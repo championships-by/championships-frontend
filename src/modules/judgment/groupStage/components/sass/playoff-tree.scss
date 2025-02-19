@@ -1,13 +1,9 @@
 .playoff-tree {
   width: 100vw;
-  cursor: default !important;
+  height: 70vh;
 
-  &__active {
-    height: 100vh;
-  }
-
-  &__inactive {
-    height: 70vh;
+  &.active {
+    height: 85vh;
   }
 }
 
