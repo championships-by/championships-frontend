@@ -42,9 +42,7 @@ export function PlayoffTree() {
         zoomOnScroll={true}
         panOnScroll={true}
         zoomOnPinch={true}
-      >
-        <Background gap={8} />
-      </ReactFlow>
+      />
     </div>
   );
 }

@@ -554,7 +554,7 @@ export const getPlayOffLevels = (objects) => {
 export const getTreeData = (leveledMatches, handleEditScore) => {
   const nodes = [];
   const edges = [];
-  const coeffY = 220;
+  const coeffY = 200;
   const coeffX = 350;
   const levels = leveledMatches.length;
 
