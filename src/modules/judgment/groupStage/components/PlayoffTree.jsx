@@ -41,6 +41,7 @@ export function PlayoffTree() {
         nodeTypes={{ customNode: PlayoffMatchCard }}
         zoomOnScroll={true}
         panOnScroll={true}
+        panOnDrag={false}
         zoomOnPinch={true}
       />
     </div>
