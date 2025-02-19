@@ -551,9 +551,7 @@ export const getPlayOffLevels = (objects) => {
   return cleanLevels;
 };
 
-export const getTreeData = (leveledMatches, handleEditScore) => {
-  const nodes = [];
-  const edges = [];
+export const extendWithTreePositions = (leveledMatches) => {
   const coeffY = 200;
   const coeffX = 350;
   const levels = leveledMatches.length;
@@ -561,14 +559,8 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
   const startX = (levels - 1) * coeffX;
   const startY = coeffY * levels;
 
-  const nodesCount = leveledMatches.reduce(
-    (accumulator, level) => accumulator + level.length,
-    0
-  );
-
-  let overallIndex = 0;
-  leveledMatches.forEach((level, levelIndex) => {
-    level.forEach((match, index) => {
+  return leveledMatches.map((level, levelIndex) =>
+    level.map((match, index) => {
       const deltaY = (levels / 2 ** levelIndex) * coeffY;
 
       let xPos = startX - levelIndex * coeffX;
@@ -582,6 +574,24 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
         }
       }
 
+      return { ...match, xPos, yPos };
+    })
+  );
+};
+
+export const getTreeData = (leveledMatches, handleEditScore) => {
+  const nodes = [];
+  const edges = [];
+  leveledMatches = extendWithTreePositions(leveledMatches);
+
+  const nodesCount = leveledMatches.reduce(
+    (accumulator, level) => accumulator + level.length,
+    0
+  );
+
+  let overallIndex = 0;
+  leveledMatches.forEach((level, levelIndex) => {
+    level.forEach((match, index) => {
       nodes.push({
         id: match.id.toString(),
         data: {
@@ -594,8 +604,8 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
         },
         type: "customNode",
         position: {
-          x: xPos,
-          y: yPos,
+          x: match.xPos,
+          y: match.yPos,
         },
       });
 
