@@ -1,0 +1,28 @@
+.playoff-tree {
+  width: 100vw;
+  cursor: default !important;
+
+  &__active {
+    height: 100vh;
+  }
+
+  &__inactive {
+    height: 70vh;
+  }
+}
+
+.react-flow__pane {
+  cursor: default;
+}
+
+.react-flow__node {
+  cursor: default;
+}
+
+.react-flow__edge {
+  cursor: default;
+}
+
+.react-flow__attribution {
+  display: none;
+}
