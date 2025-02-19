@@ -513,7 +513,7 @@
     "SAT": "Сб"
   },
   "ERRORS": {
-    "EMAIL_TAKEN": "Уведзены Email ужо заняты",
+    "EMAIL_TAKEN": "Уведзены Email ужо заняты.Калі ласка увядзіце іншы",
     "LOGGED_OUT": "Для доступу да сістэмы патрабуецца аўтарызацыя",
     "TEAM_CANNOT_CONTAIN_EMAIL_ADDRESS": "Назва каманды не можа ўтрымліваць email адрас",
     "EMAIL_DOES_NOT_EXIST": "Email не існуе",
