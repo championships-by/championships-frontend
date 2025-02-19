@@ -152,12 +152,12 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     setIsLoading(true);
     setError(null);
     try {
-      const responce = await judgmentApi.getPlayoffMatches(
+      const response = await judgmentApi.getPlayoffMatches(
         eventId,
         nominationId
       );
 
-      const matches = responce.data.matches;
+      const matches = response.data.matches;
       const transformedMatches = transformPlayoffMatches(matches);
       const leveledMatches = getPlayOffLevels(transformedMatches);
 
@@ -175,8 +175,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       const params = new URLSearchParams();
       params.append("event_id", eventId);
       params.append("nomination_id", nominationId);
-      const responce = await judgmentApi.getPlayoffResults(params);
-      setResults(responce.data);
+      const response = await judgmentApi.getPlayoffResults(params);
+      setResults(response.data);
     } catch (err) {}
 
     setIsLoading(false);
