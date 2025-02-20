@@ -2,6 +2,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Flex, Table, Tooltip, Typography } from "antd";
 import { tableLocale } from "@constants";
 import { getTranslation, getMedal, getPlace } from "@utils";
+import ParticipantsList from "@modules/judgment/common/ParticipantsList.jsx";
 import { useTranslation } from "react-i18next";
 
 import "./CompetenciesResults.scss";
@@ -50,13 +51,7 @@ export const CompetenciesResults = ({
       key: "participants",
       render: (text, record) => {
         const { participants } = record;
-        return (
-          <ul className="participants-list">
-            {participants.map((participant, index) => (
-              <li key={index}>{participant}</li>
-            ))}
-          </ul>
-        );
+        return <ParticipantsList participants={participants} />;
       },
     },
     {

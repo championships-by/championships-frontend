@@ -47,15 +47,7 @@ export const PlayoffResult = ({ data }) => {
       dataIndex: "team",
       key: "team",
       render: ({ participants }) => {
-        return (
-          <ul className="participants-list">
-            {participants.map((participant, index) => (
-              <li
-                key={index}
-              >{`${participant.second_name} ${participant.first_name} ${participant.third_name}`}</li>
-            ))}
-          </ul>
-        );
+        return <ParticipantsList participants={participants} />;
       },
     },
     {
