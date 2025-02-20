@@ -531,7 +531,7 @@
     "RACE_TOURNAMENT_FINISHED": "Турнір завершаны",
     "CRITERIAS_NAMES_HAS_DUPLICATES": "Назвы крытэрыяў ўтрымліваюць дублікаты",
     "CRITERIA_NOT_FOUND": "Крытэрый не знойдзены",
-    "CRITERIA_NOT_IN_NOMINATION_EVENT": "Крытэрый не адносіцца да падзеі намінацыі",
+    "CRITERIA_NOT_IN_NOMINATION_EVENT": "Крытэрый не адносіцца да падзеі кампетэнцыі",
     "NOT_ALL_CRITERIAS_SET": "Не ўсе крытэрыі ўстаноўлены",
     "CAN_NOT_DECRYPT_PASSWORD": "Немагчыма расшыфраваць пароль",
     "EQUIPMENT_NOT_FOUND": "Абсталяванне не знойдзена",
@@ -589,6 +589,6 @@
     "USER_ACCOUNT_NOT_VERIFIED": "Ваш уліковы запіс пакуль не прайшоў пацверджанне.",
     "USER_ACCOUNT_VERIFICATION_DECLINED": "Вам было адхілена ў пацверджанні ўліковага запісу.",
     "FILL_CAPTCHA": "Запоўніце Captcha",
-    "TEAM_CANNOT_BE_DELETED": "Немагчыма выдаліць каманду, бо яе ўдзельнікі ўжо зарэгістраваны ў намінацыях"
+    "TEAM_CANNOT_BE_DELETED": "Немагчыма выдаліць каманду, бо яе ўдзельнікі ўжо зарэгістраваны ў кампетыцыях"
   }
 }

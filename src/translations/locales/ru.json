@@ -533,7 +533,7 @@
     "RACE_TOURNAMENT_FINISHED": "Турнир завершён",
     "CRITERIAS_NAMES_HAS_DUPLICATES": "Названия критериев содержат дубликаты",
     "CRITERIA_NOT_FOUND": "Критерий не найден",
-    "CRITERIA_NOT_IN_NOMINATION_EVENT": "Критерий не относится к событию номинации",
+    "CRITERIA_NOT_IN_NOMINATION_EVENT": "Критерий не относится к событию компетенции",
     "NOT_ALL_CRITERIAS_SET": "Не все критерии установлены",
     "CAN_NOT_DECRYPT_PASSWORD": "Невозможно расшифровать пароль",
     "EQUIPMENT_NOT_FOUND": "Оборудование не найдено",
@@ -591,6 +591,6 @@
     "USER_ACCOUNT_NOT_VERIFIED": "Ваша учётная запись пока не прошла подтверждение.",
     "USER_ACCOUNT_VERIFICATION_DECLINED": "Вам было отклонено в подтверждении учётной записи.",
     "FILL_CAPTCHA": "Заполните Captcha!",
-    "TEAM_CANNOT_BE_DELETED": "Нельзя удалить команду, поскольку её участники уже зарегистрированы в номинациях"
+    "TEAM_CANNOT_BE_DELETED": "Нельзя удалить команду, поскольку её участники уже зарегистрированы в компетенциях"
   }
 }
