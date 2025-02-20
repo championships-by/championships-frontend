@@ -36,7 +36,7 @@ export const PlayoffResult = ({ data }) => {
       title: <Tooltip title={t("COMMON.TEAM")}>{t("COMMON.TEAM")}</Tooltip>,
       dataIndex: "team",
       key: "team",
-      render: ({ team }) => team.name,
+      render: (team) => team.team.name,
     },
     {
       title: (
