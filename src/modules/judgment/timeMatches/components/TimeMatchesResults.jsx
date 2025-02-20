@@ -4,8 +4,8 @@ import { formatTime } from "@utils";
 import { Flex, Table, Tooltip, Typography } from "antd";
 import { getTranslation, getMedal } from "@utils";
 import { useTranslation } from "react-i18next";
-
-import "./TimeMatchesResult.scss";
+import ResultsTable from "@modules/judgment/common/ResultsTable";
+import ParticipantsList from "@modules/judgment/common/ParticipantsList";
 
 export const TimeMatchesResults = ({
   timeMatches,
@@ -76,11 +76,8 @@ export const TimeMatchesResults = ({
       {isErrorOccurred ? (
         <Typography>{t("COMMON.ERROR_TO_GET_DATA")}</Typography>
       ) : (
-        <Table
-          className="time-matches-table"
-          pagination={false}
+        <ResultsTable
           columns={columns}
-          locale={getTranslation(tableLocale, t)}
           dataSource={timeMatches.sort((a, b) => {
             const aResult = a.best_attempt?.result;
             const bResult = b.best_attempt?.result;

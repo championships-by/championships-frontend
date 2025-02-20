@@ -4,8 +4,8 @@ import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { useMatches } from "@hooks";
 import { getMedal } from "@utils";
-
-import "@modules/judgment/groupStage/components/sass/playoff-results.scss";
+import ParticipantsList from "@modules/judgment/common/ParticipantsList";
+import ResultsTable from "@modules/judgment/common/ResultsTable";
 
 export const PlayoffResult = ({ data }) => {
   const { t } = useTranslation();
@@ -47,7 +47,14 @@ export const PlayoffResult = ({ data }) => {
       dataIndex: "team",
       key: "team",
       render: ({ participants }) => {
-        return <ParticipantsList participants={participants} />;
+        return (
+          <ParticipantsList
+            participants={participants.map(
+              (participant) =>
+                `${participant.second_name} ${participant.first_name} ${participant.third_name}`
+            )}
+          />
+        );
       },
     },
     {
@@ -64,16 +71,7 @@ export const PlayoffResult = ({ data }) => {
 
   return (
     <Flex vertical gap="large">
-      <Table
-        className="competencies-result-table"
-        locale={getTranslation(tableLocale, t)}
-        // expandable={{
-        //   expandedRowRender: (record) => <p>{record.participants}</p>,
-        // }}
-        pagination={false}
-        columns={columns}
-        dataSource={results}
-      />
+      <ResultsTable columns={columns} dataSource={results} />
     </Flex>
   );
 };

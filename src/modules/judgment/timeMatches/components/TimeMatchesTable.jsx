@@ -20,7 +20,6 @@ export const TimeMatchesTable = ({
     () => [
       {
         key: "teamName",
-        dataIndex: "teamName",
         title: t("COMMON.TEAM"),
         render: (record) => {
           if (record.participants.length !== 1) {
