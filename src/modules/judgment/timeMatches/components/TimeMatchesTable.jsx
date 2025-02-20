@@ -20,8 +20,14 @@ export const TimeMatchesTable = ({
     () => [
       {
         key: "teamName",
-        dataIndex: "teamName",
         title: t("COMMON.TEAM"),
+        render: (record) => {
+          if (record.participants.length !== 1) {
+            return record.team.name;
+          } else {
+            return record.participants[0];
+          }
+        },
       },
       ...generateColumns(timeMatches, (text, record, index, columnId) => (
         <CustomTimePicker
@@ -71,9 +77,6 @@ export const TimeMatchesTable = ({
           pagination={false}
           columns={columns}
           dataSource={timeMatches}
-          expandable={{
-            expandedRowRender: (record) => <p>{record.participants}</p>,
-          }}
           locale={getTranslation(tableLocale, t)}
         />
       )}
