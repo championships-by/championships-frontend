@@ -4,8 +4,8 @@ import { formatTime } from "@utils";
 import { Flex, Table, Tooltip, Typography } from "antd";
 import { getTranslation, getMedal } from "@utils";
 import { useTranslation } from "react-i18next";
-import ResultsTable from "@modules/judgment/common/ResultsTable";
-import ParticipantsList from "@modules/judgment/common/ParticipantsList";
+
+import "./TimeMatchesResult.scss";
 
 export const TimeMatchesResults = ({
   timeMatches,
@@ -41,19 +41,6 @@ export const TimeMatchesResults = ({
     },
     {
       title: (
-        <Tooltip title={t("COMMON.PARTICIPANTS")}>
-          {t("COMMON.PARTICIPANTS")}
-        </Tooltip>
-      ),
-      dataIndex: "participants",
-      key: "participants",
-      render: (text, record) => {
-        const { participants } = record;
-        return <ParticipantsList participants={participants} />;
-      },
-    },
-    {
-      title: (
         <Tooltip title={t("TOURNAMENTS.BEST_TIME")}>
           {t("TOURNAMENTS.BEST_TIME")}
         </Tooltip>
@@ -76,8 +63,14 @@ export const TimeMatchesResults = ({
       {isErrorOccurred ? (
         <Typography>{t("COMMON.ERROR_TO_GET_DATA")}</Typography>
       ) : (
-        <ResultsTable
+        <Table
+          className="time-matches-table"
+          pagination={false}
           columns={columns}
+          expandable={{
+            expandedRowRender: (record) => <p>{record.participants}</p>,
+          }}
+          locale={getTranslation(tableLocale, t)}
           dataSource={timeMatches.sort((a, b) => {
             const aResult = a.best_attempt?.result;
             const bResult = b.best_attempt?.result;

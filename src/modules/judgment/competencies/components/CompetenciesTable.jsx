@@ -36,14 +36,12 @@ export const CompetenciesTable = ({
     () => [
       {
         title: t("COMMON.TEAM"),
+        dataIndex: "team",
         key: "team",
         fixed: "left",
-        render: (record) => {
-          if (record.participants.length !== 1) {
-            return record.team.name;
-          } else {
-            return record.participants[0];
-          }
+        render: (text, { team }) => {
+          const { name } = team;
+          return name;
         },
       },
       ...generateCriteriaColumns(criteria, (text, record, index, columnId) => {
@@ -94,6 +92,9 @@ export const CompetenciesTable = ({
       locale={getTranslation(tableLocale, t)}
       columns={columns}
       dataSource={dataSource}
+      expandable={{
+        expandedRowRender: (record) => <p>{record.participants}</p>,
+      }}
       pagination={false}
       scroll={{
         x: true,
