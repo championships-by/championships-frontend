@@ -586,8 +586,8 @@
     "AT_LEAST_THREE_TEAMS": "Колькасць каманд павінна быць не менш за тры",
     "ERROR_EDIT_TEAM_NAME": "Не атрымалася змяніць назву каманды",
     "ERROR_EDIT_TEAM_PARTICIPANTS": "Не атрымалася змяніць удзельнікаў каманды",
-    "USER_ACCOUNT_NOT_VERIFIED": "Ваш уліковы запіс пакуль не прайшоў пацверджанне",
-    "USER_ACCOUNT_VERIFICATION_DECLINED": "Вам было адхілена ў пацверджанні ўліковага запісу",
+    "USER_ACCOUNT_NOT_VERIFIED": "Ваш уліковы запіс пакуль не прайшоў пацверджанне.",
+    "USER_ACCOUNT_VERIFICATION_DECLINED": "Вам было адхілена ў пацверджанні ўліковага запісу.",
     "FILL_CAPTCHA": "Запоўніце Captcha",
     "TEAM_CANNOT_BE_DELETED": "Немагчыма выдаліць каманду, бо яе ўдзельнікі ўжо зарэгістраваны ў кампетыцыях"
   }

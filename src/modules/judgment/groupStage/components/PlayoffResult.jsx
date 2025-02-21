@@ -4,8 +4,8 @@ import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { useMatches } from "@hooks";
 import { getMedal } from "@utils";
-import ParticipantsList from "@modules/judgment/common/ParticipantsList";
-import ResultsTable from "@modules/judgment/common/ResultsTable";
+
+import "@modules/judgment/groupStage/components/sass/playoff-results.scss";
 
 export const PlayoffResult = ({ data }) => {
   const { t } = useTranslation();
@@ -36,26 +36,7 @@ export const PlayoffResult = ({ data }) => {
       title: <Tooltip title={t("COMMON.TEAM")}>{t("COMMON.TEAM")}</Tooltip>,
       dataIndex: "team",
       key: "team",
-      render: (team) => team.team.name,
-    },
-    {
-      title: (
-        <Tooltip title={t("COMMON.PARTICIPANTS")}>
-          {t("COMMON.PARTICIPANTS")}
-        </Tooltip>
-      ),
-      dataIndex: "team",
-      key: "team",
-      render: ({ participants }) => {
-        return (
-          <ParticipantsList
-            participants={participants.map(
-              (participant) =>
-                `${participant.second_name} ${participant.first_name} ${participant.third_name}`
-            )}
-          />
-        );
-      },
+      render: ({ name }) => name,
     },
     {
       title: (
@@ -71,7 +52,16 @@ export const PlayoffResult = ({ data }) => {
 
   return (
     <Flex vertical gap="large">
-      <ResultsTable columns={columns} dataSource={results} />
+      <Table
+        className="competencies-result-table"
+        locale={getTranslation(tableLocale, t)}
+        // expandable={{
+        //   expandedRowRender: (record) => <p>{record.participants}</p>,
+        // }}
+        pagination={false}
+        columns={columns}
+        dataSource={results}
+      />
     </Flex>
   );
 };

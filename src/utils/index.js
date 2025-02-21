@@ -119,10 +119,12 @@ export const transformCriteriaResultsData = (criteriaResults) =>
       id: team.team_data.team_id,
       name: team.team_data.team_name,
     },
-    participants: team.participants.map(
-      (participant) =>
-        `${participant.second_name} ${participant.first_name} ${participant.third_name}`
-    ),
+    participants: team.participants
+      .map(
+        (participant) =>
+          `${participant.second_name} ${participant.first_name} ${participant.third_name}`
+      )
+      .join(", "),
     criteria: team.criterias.map((criterion) => ({
       id: criterion.criteria_id,
       name: criterion.criteria_name,
@@ -137,10 +139,12 @@ export const transformTimeMatchesData = (rounds) => {
   return rounds.map((round, index) => ({
     key: `round-${index + 1}`,
     teamName: round.team_data.team_name,
-    participants: round.participants.map(
-      ({ second_name, first_name, third_name }) =>
-        `${second_name} ${first_name} ${third_name}`
-    ),
+    participants: round.participants
+      .map(
+        ({ second_name, first_name, third_name }) =>
+          `${second_name} ${first_name} ${third_name}`
+      )
+      .join(", "),
     attempts: round.attempts.map(({ id, result }) => ({
       id,
       result,

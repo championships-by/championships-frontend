@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 import { timeMatchesErrorMessages } from "./constants";
 import { useTranslation } from "react-i18next";
-import ReturnButton from "@modules/judgment/common/ReturnButton";
+import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
 
 import "@modules/judgment/timeMatches/sass/time-matches.scss";
 

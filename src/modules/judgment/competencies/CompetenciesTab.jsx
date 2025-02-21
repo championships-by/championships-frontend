@@ -10,7 +10,7 @@ import {
 import { Button, message, Tabs, Flex } from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import ReturnButton from "@modules/judgment/common/ReturnButton";
+import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
 import { useTranslation } from "react-i18next";
 import { CompetenciesResults, CompetenciesTable } from "./components";
 import { DownloadOutlined } from "@ant-design/icons";
