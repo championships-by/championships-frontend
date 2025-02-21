@@ -29,7 +29,8 @@ function EventSettingsCompitations({
   const [groupCount, setGroupCount] = useState(1);
   const [criteria, setCriteria] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
-  const [oldJudges, setOldJudges] = useState([]);
+  const [selectedJudgesIds, setSelectedJudgesIds] = useState([]);
+  const [oldJudgesIds, setOldJudgesIds] = useState([]);
   const [selectedType, setSelectedType] = useState();
   const [selectedCriteria, setSelectedCriteria] = useState([]);
   const [selectedGroupCount, setSelectedGroupCount] = useState();
@@ -47,7 +48,8 @@ function EventSettingsCompitations({
       if (isOpen) {
         competenciesApi.getNominationEventInfo(params).then((data) => {
           const judgeIds = data.judges.map((judge) => judge.id);
-          setSelectedJudges(judgeIds);
+          setSelectedJudgesIds(judgeIds);
+          setSelectedJudges(data.judges);
 
           form.setFieldsValue({
             nomination_name: data.nomination_name,
@@ -71,7 +73,7 @@ function EventSettingsCompitations({
             setSelectedGroupCount(data.race_round_amount);
           }
 
-          setOldJudges(judgeIds);
+          setOldJudgesIds(judgeIds);
         });
       }
     }
@@ -98,7 +100,7 @@ function EventSettingsCompitations({
   };
 
   const handleChangeJudges = (value) => {
-    setSelectedJudges(value);
+    setSelectedJudgesIds(value);
   };
 
   const onFinishFailed = () => {
@@ -122,7 +124,7 @@ function EventSettingsCompitations({
           event_id: eventId,
           nomination_name: inputName,
           reglament: inputReglament,
-          judges_ids: selectedJudges,
+          judges_ids: selectedJudgesIds,
         },
       };
       try {
@@ -148,7 +150,7 @@ function EventSettingsCompitations({
           default:
             break;
         }
-        if (selectedJudges.length !== 0) {
+        if (selectedJudgesIds.length !== 0) {
           try {
             const params = {
               user_full_name: `${user?.data.second_name} ${user?.data.first_name} ${user?.data.third_name}`,
@@ -156,7 +158,7 @@ function EventSettingsCompitations({
               event_name: eventName,
               event_id: eventID,
             };
-            const body = JSON.stringify(selectedJudges);
+            const body = JSON.stringify(selectedJudgesIds);
             await competenciesApi.sendJudgeNotice(params, body);
           } catch {}
         }
@@ -166,7 +168,7 @@ function EventSettingsCompitations({
         onAdd();
         setInputName("");
         setInputReglament("");
-        setSelectedJudges([]);
+        setSelectedJudgesIds([]);
         form.resetFields();
         setRefreshKey((prevKey) => prevKey + 1);
       } catch {}
@@ -175,7 +177,7 @@ function EventSettingsCompitations({
         const data = {
           nomination_name: inputName,
           reglament: inputReglament,
-          judges_ids: selectedJudges,
+          judges_ids: selectedJudgesIds,
         };
         const params = new URLSearchParams();
         params.append("event_id", eventID);
@@ -189,8 +191,8 @@ function EventSettingsCompitations({
             event_name: eventName,
             event_id: eventID,
           };
-          const filteredJudges = selectedJudges.filter(
-            (judge) => !oldJudges.includes(judge)
+          const filteredJudges = selectedJudgesIds.filter(
+            (judge) => !oldJudgesIds.includes(judge)
           );
 
           if (filteredJudges.length !== 0) {
@@ -238,7 +240,7 @@ function EventSettingsCompitations({
         onAdd();
         setInputName("");
         setInputReglament("");
-        setSelectedJudges([]);
+        setSelectedJudgesIds([]);
         form.resetFields();
         setRefreshKey((prevKey) => prevKey + 1);
       } catch {}
