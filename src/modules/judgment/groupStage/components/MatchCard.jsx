@@ -12,7 +12,8 @@ export const MatchCard = ({
   onEditScore,
   lastCreatorEmail,
 }) => {
-  const { isGroupStageFinished } = useMatches();
+  const { isGroupStageFinished, canEditGroupStage } = useMatches();
+  const isEnabled = isGroupStageFinished || canEditGroupStage;
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -46,7 +47,7 @@ export const MatchCard = ({
           <p>{lastCreatorEmail ? team2.score : "–"}</p>
         </div>
       </div>
-      {isGroupStageFinished ? (
+      {!isEnabled ? (
         <div className="match-card__icon-section"></div>
       ) : (
         <div className="match-card__icon-section" onClick={handleClick}>

@@ -24,6 +24,9 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   const [isGroupStageFinished, setIsGroupStageFinished] = useState(false);
   const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(false);
 
+  const [canEditGroupStage, setCanEditGroupStage] = useState(true);
+  const [canEditPlayoffStage, setCanEditPlayoffStage] = useState(true);
+
   const transformMatches = (data) => {
     return data
       .flatMap((group) =>
@@ -316,6 +319,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     isPlayoffStageFinished,
     finishPlayoffStage,
     results,
+    canEditGroupStage,
+    canEditPlayoffStage,
   };
 
   return (
