@@ -119,6 +119,6 @@ export const competenciesApi = {
     // return instance.get(`/nomination_event_judge/check_if_user_is_judge`, {
     //   params,
     // });
-    return { data: true };
+    return { data: false };
   },
 };
