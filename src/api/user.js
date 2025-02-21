@@ -38,4 +38,11 @@ export const userApi = {
   registerUser: async (body) => {
     await instance.post("/user/register", body);
   },
+  searchForJudges: (params) => {
+    return fetchWithPagination(
+      instance,
+      `/user/get_judges_full_names_by_name_part`,
+      params
+    );
+  },
 };

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { userApi } from "@api";
 import { competenciesApi } from "@api";
 import { useTranslation } from "react-i18next";
+import { debounce } from "lodash";
 
 import "./sass/events.scss";
 
@@ -17,39 +18,20 @@ function CompetitionType({ onJudgeChange, judges }) {
   const [options, setOptions] = useState([]);
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedJudges, setSelectedJudges] = useState([]);
-  const [hiddenJudges, setHiddenJudges] = useState([]);
   const [selectHeight, setSelectHeight] = useState(0);
   const [searchInput, setSearchInput] = useState("");
   const selectRef = useRef(null);
-  const { eventID } = useParams();
 
   useEffect(() => {
-    competenciesApi.getCompetenciesEventData(eventID).then((response) => {});
-  }, [eventID]);
-
-  useEffect(() => {
-    userApi.getJudges().then((data) => {
-      const judgeOptions = data.map((item) => ({
+    if (judges) {
+      const judgeOptions = judges.map((item) => ({
         value: item.id,
         label: getFullName(item),
       }));
+
       setOptions(judgeOptions);
-      if (judges && judges.length) {
-        const selectedJudgesData = judgeOptions.filter((option) =>
-          judges.includes(option.value)
-        );
-
-        setHiddenJudges(
-          judges
-            .filter(
-              (judge) => !judgeOptions.some((option) => option.value === judge)
-            )
-            .map((judge) => judge)
-        );
-
-        setSelectedJudges(selectedJudgesData);
-      }
-    });
+      setSelectedJudges(judgeOptions);
+    }
   }, [judges]);
 
   useEffect(() => {
@@ -59,9 +41,28 @@ function CompetitionType({ onJudgeChange, judges }) {
     }
   }, [options, selectedJudges]);
 
-  const handleSearch = (value) => {
+  const handleSearch = debounce((value) => {
     setSearchInput(value);
+
+    const params = { name: value };
+
     if (value) {
+      userApi.searchForJudges(params).then((data) => {
+        const judgeOptions = data.map((item) => ({
+          value: item.id,
+          label: getFullName(item),
+        }));
+        setOptions(judgeOptions);
+
+        if (judges && judges.length) {
+          const selectedJudgesData = judgeOptions.filter((option) =>
+            judges.includes(option.value)
+          );
+
+          setSelectedJudges([...selectedJudges, ...selectedJudgesData]);
+        }
+      });
+
       const filtered = options.filter((option) =>
         option.label.toLowerCase().includes(value.toLowerCase())
       );
@@ -69,7 +70,7 @@ function CompetitionType({ onJudgeChange, judges }) {
     } else {
       setFilteredOptions([]);
     }
-  };
+  }, 300);
 
   const handleDropdownVisibleChange = (open) => {
     if (!open) {
@@ -80,7 +81,7 @@ function CompetitionType({ onJudgeChange, judges }) {
 
   const handleChange = (value) => {
     setSelectedJudges(value);
-    onJudgeChange([...value, ...hiddenJudges]);
+    onJudgeChange(value);
   };
 
   return (
