@@ -12,7 +12,7 @@ import {
 } from "./components";
 import { FinalParticipantsModal, FinishPlayoffModal } from "./modals";
 import { useTranslation } from "react-i18next";
-import ReturnButton from "@modules/judgment/returnButton/ReturnButton";
+import ReturnButton from "@modules/judgment/common/ReturnButton";
 import { downloadProtocol } from "@utils";
 import { useParams } from "react-router-dom";
 

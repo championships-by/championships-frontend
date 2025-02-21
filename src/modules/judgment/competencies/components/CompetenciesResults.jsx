@@ -2,9 +2,9 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Flex, Table, Tooltip, Typography } from "antd";
 import { tableLocale } from "@constants";
 import { getTranslation, getMedal, getPlace } from "@utils";
+import ParticipantsList from "@modules/judgment/common/ParticipantsList.jsx";
+import ResultsTable from "@modules/judgment/common/ResultsTable";
 import { useTranslation } from "react-i18next";
-
-import "./CompetenciesResults.scss";
 
 export const CompetenciesResults = ({
   dataSource,
@@ -42,6 +42,19 @@ export const CompetenciesResults = ({
     },
     {
       title: (
+        <Tooltip title={t("COMMON.PARTICIPANTS")}>
+          {t("COMMON.PARTICIPANTS")}
+        </Tooltip>
+      ),
+      dataIndex: "participants",
+      key: "participants",
+      render: (text, record) => {
+        const { participants } = record;
+        return <ParticipantsList participants={participants} />;
+      },
+    },
+    {
+      title: (
         <Tooltip title={t("COMMON.FINAL_SCORE")}>
           {t("COMMON.FINAL_SCORE")}
         </Tooltip>
@@ -59,13 +72,7 @@ export const CompetenciesResults = ({
       {hasError ? (
         <Typography>{t("COMMON.ERROR_TO_GET_DATA")}</Typography>
       ) : (
-        <Table
-          className="competencies-result-table"
-          locale={getTranslation(tableLocale, t)}
-          expandable={{
-            expandedRowRender: (record) => <p>{record.participants}</p>,
-          }}
-          pagination={false}
+        <ResultsTable
           columns={columns}
           dataSource={dataSource.sort((a, b) => b.totalScore - a.totalScore)}
         />
