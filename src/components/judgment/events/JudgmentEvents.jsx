@@ -16,6 +16,7 @@ function JudgmentEvents() {
   const [IsEventCreateModalOpen, setIsEventCreateModalOpen] = useState(false);
 
   const getEvents = async (value) => {
+    setIsLoading(true);
     const params = new URLSearchParams();
     if (value) {
       params.append("event_name_chars", value);

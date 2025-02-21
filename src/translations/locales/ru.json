@@ -233,7 +233,8 @@
     "ARE_YOU_SURE_REMOVE_PARTICIPANT": "Вы уверены, что хотите удалить этого участника из компетенции?",
     "REGISTRATION_NOT_STARTED": "Регистрация ещё не началась",
     "NUMBER_OF_PARTICIPANTS": "Количество участников",
-    "DOWNLOAD_EXCEL": "Скачать таблицу в формате Excel"
+    "DOWNLOAD_EXCEL": "Скачать таблицу в формате Excel",
+    "EVENT_DELETION_SUCCESS": "Мероприятие успешно удалено"
   },
   "PARTICIPANTS": {
     "CARD_OF_PARTICIPANT": "Карточка участника",

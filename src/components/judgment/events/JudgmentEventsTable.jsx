@@ -7,7 +7,16 @@ import {
 import { paginationLocale, tableLocale, ROUTES } from "@constants";
 import { changeDateFormat } from "@utils";
 import { eventApi } from "@api";
-import { Button, Flex, List, Table, Tooltip, Typography, Modal } from "antd";
+import {
+  Button,
+  Flex,
+  List,
+  Table,
+  Tooltip,
+  Typography,
+  Modal,
+  message,
+} from "antd";
 import { useNavigate } from "react-router-dom";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
@@ -110,7 +119,7 @@ function JudgmentEventsTable({ EventsData, onDelete }) {
     },
   ];
 
-  const deleteEvent = (eventID) => {
+  const deleteEvent = async (eventID) => {
     Modal.confirm({
       title: t("COMMON.ARE_YOU_SURE"),
       content: t("EVENTS.ARE_YOU_SURE_REMOVE_EVENT"),
@@ -127,10 +136,11 @@ function JudgmentEventsTable({ EventsData, onDelete }) {
         };
 
         try {
-          eventApi.deleteEvent(params);
+          await eventApi.deleteEvent(params);
+          message.success(t("EVENTS.EVENT_DELETION_SUCCESS"));
         } catch {}
 
-        onDelete();
+        await onDelete();
       },
       cancelText: t("COMMON.CANCEL"),
     });
