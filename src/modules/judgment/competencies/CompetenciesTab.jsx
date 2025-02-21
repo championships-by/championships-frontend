@@ -13,7 +13,12 @@ import { useParams } from "react-router-dom";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
 import { useTranslation } from "react-i18next";
 import { CompetenciesResults, CompetenciesTable } from "./components";
-import { DownloadOutlined } from "@ant-design/icons";
+import {
+  DownloadOutlined,
+  EditOutlined,
+  CloseOutlined,
+  CheckOutlined,
+} from "@ant-design/icons";
 
 import "@modules/judgment/competencies/sass/competencies-criteria.scss";
 
@@ -29,6 +34,22 @@ function CompetenciesTab() {
   const [isStageFinished, setIsStageFinished] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("1");
   const [maxPlace, setMaxPlace] = useState();
+  const [canPostEdit, setCanPostEdit] = useState(true);
+  const [isEditModeEnabled, setIsEditModeEnabled] = useState(false);
+
+  const onClickEditButton = () => {
+    setIsEditModeEnabled(true);
+  };
+
+  const onClickCancelEditButton = () => {
+    setIsEditModeEnabled(false);
+    setIsDataLoaded(false);
+  };
+
+  const onClickApplyEditButton = async () => {
+    await handleCompleteStage();
+    setIsEditModeEnabled(false);
+  };
 
   const handleCompleteStage = useCallback(async () => {
     try {
@@ -118,8 +139,8 @@ function CompetenciesTab() {
             editable={
               stageStatus.registrationFinished &&
               stageStatus.tournamentStarted &&
-              !stageStatus.tournamentFinished &&
-              !isStageFinished
+              ((!stageStatus.tournamentFinished && !isStageFinished) ||
+                isEditModeEnabled)
             }
           />
         ),
@@ -148,6 +169,7 @@ function CompetenciesTab() {
       stageStatus.tournamentFinished,
       stageStatus.tournamentStarted,
       isStageFinished,
+      isEditModeEnabled,
     ]
   );
 
@@ -204,23 +226,41 @@ function CompetenciesTab() {
   }, [eventId, isDataLoaded, nominationId, stageStatus, isStageFinished]);
 
   const buttonsForUnfinishedStage = (
-    <Flex gap="middle">
-      <Button onClick={handleDownloadExcel}>
-        <Flex gap="small">
-          <DownloadOutlined />
-          {t("EVENTS.DOWNLOAD_EXCEL")}
-        </Flex>
-      </Button>
-      <Button type="primary" onClick={handleCompleteStage}>
-        {t("COMMON.COMPLETE_STAGE")}
-      </Button>
-    </Flex>
+    <Button type="primary" onClick={handleCompleteStage}>
+      {t("COMMON.COMPLETE_STAGE")}
+    </Button>
   );
 
   const buttonsForFinishedStage = (
-    <Button type="primary" onClick={handleDownloadProtocol}>
-      {t("COMMON.FINAL_PROTOCOL")}
-    </Button>
+    <Flex gap="middle">
+      {canPostEdit &&
+        (isEditModeEnabled ? (
+          <Flex gap="small">
+            <Button onClick={onClickCancelEditButton}>
+              <Flex gap="small">
+                <CloseOutlined />
+                {t("COMMON.CANCEL")}
+              </Flex>
+            </Button>
+            <Button onClick={onClickApplyEditButton}>
+              <Flex gap="small">
+                <CheckOutlined />
+                {t("COMMON.APPLY")}
+              </Flex>
+            </Button>
+          </Flex>
+        ) : (
+          <Button onClick={onClickEditButton}>
+            <Flex gap="small">
+              <EditOutlined />
+              {t("COMMON.EDIT")}
+            </Flex>
+          </Button>
+        ))}
+      <Button type="primary" onClick={handleDownloadExcel}>
+        {t("COMMON.FINAL_PROTOCOL")}
+      </Button>
+    </Flex>
   );
 
   return (
