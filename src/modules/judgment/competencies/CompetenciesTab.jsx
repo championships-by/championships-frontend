@@ -35,7 +35,7 @@ function CompetenciesTab() {
   const [isStageFinished, setIsStageFinished] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("1");
   const [maxPlace, setMaxPlace] = useState();
-  const [canPostEdit, setCanPostEdit] = useState(true);
+  const [isEditable, setIsEditable] = useState(false);
   const [isEditModeEnabled, setIsEditModeEnabled] = useState(false);
 
   const onClickEditButton = () => {
@@ -195,6 +195,7 @@ function CompetenciesTab() {
         competenciesApi.getCriteria(eventId, nominationId),
         competenciesApi.getCriteriaResults(eventId, nominationId),
         competenciesApi.getTimeAfterFinishing(params),
+        competenciesApi.isJudge(params),
       ])
         .then(
           ([
@@ -202,6 +203,7 @@ function CompetenciesTab() {
             criteriaResponse,
             criteriaResultsResponse,
             timeAfterFinishingResponse,
+            isJudgeResponse,
           ]) => {
             const transformedStageStatus =
               transformStageStatus(stageStatusResponse);
@@ -224,8 +226,9 @@ function CompetenciesTab() {
             );
             setDataSource(generatedDataSource);
 
-            setCanPostEdit(
-              isStillEditable(timeAfterFinishingResponse.data.stage)
+            setIsEditable(
+              isStillEditable(timeAfterFinishingResponse.data.stage) &&
+                isJudgeResponse.data
             );
           }
         )
@@ -248,7 +251,7 @@ function CompetenciesTab() {
 
   const buttonsForFinishedStage = (
     <Flex gap="middle">
-      {canPostEdit &&
+      {isEditable &&
         (isEditModeEnabled ? (
           <Flex gap="small">
             <Button onClick={onClickCancelEditButton}>

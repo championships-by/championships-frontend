@@ -8,8 +8,8 @@ import "@modules/judgment/groupStage/components/sass/match-card.scss";
 
 export function PlayoffMatchCard({ data }) {
   const { matchIndex, team1, team2, onEditScore, lastCreatorEmail } = data;
-  const { isPlayoffStageFinished, canEditPlayoffStage } = useMatches();
-  const isEnabled = isPlayoffStageFinished && canEditPlayoffStage;
+  const { isPlayoffStageFinished, isPlayoffStageEditable } = useMatches();
+  const isEnabled = isPlayoffStageFinished && isPlayoffStageEditable;
 
   const handleClick = (e) => {
     e.preventDefault();

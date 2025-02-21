@@ -24,8 +24,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   const [isGroupStageFinished, setIsGroupStageFinished] = useState(false);
   const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(false);
 
-  const [canEditGroupStage, setCanEditGroupStage] = useState(true);
-  const [canEditPlayoffStage, setCanEditPlayoffStage] = useState(true);
+  const [isGroupStageEditable, setIsGroupStageEditable] = useState(false);
+  const [isPlayoffStageEditable, setIsPlayoffStageEditable] = useState(false);
 
   const transformMatches = (data) => {
     return data
@@ -191,13 +191,16 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       const params = new URLSearchParams();
       params.append("event_id", eventId);
       params.append("nomination_id", nominationId);
-      const response = await competenciesApi.getTimeAfterFinishing(params);
+      const timeResponse = await competenciesApi.getTimeAfterFinishing(params);
+      const isJudgeResponse = await competenciesApi.isJudge(params);
 
-      setCanEditGroupStage(isStillEditable(response.data.group_stage));
-      setCanEditPlayoffStage(isStillEditable(response.data.play_off_stage));
-
-      console.log(isStillEditable(response.data.group_stage));
-      console.log(isStillEditable(response.data.play_off_stage));
+      setIsGroupStageEditable(
+        isStillEditable(timeResponse.data.group_stage) && isJudgeResponse.data
+      );
+      setIsPlayoffStageEditable(
+        isStillEditable(timeResponse.data.play_off_stage) &&
+          isJudgeResponse.data
+      );
     } catch (err) {}
 
     setIsLoading(false);
@@ -341,8 +344,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     isPlayoffStageFinished,
     finishPlayoffStage,
     results,
-    canEditGroupStage,
-    canEditPlayoffStage,
+    isGroupStageEditable,
+    isPlayoffStageEditable,
   };
 
   return (

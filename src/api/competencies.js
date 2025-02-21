@@ -115,4 +115,10 @@ export const competenciesApi = {
   getTimeAfterFinishing: (params) => {
     return instance.get(`/tournaments/get_finish_time`, { params });
   },
+  isJudge: (params) => {
+    // return instance.get(`/nomination_event_judge/check_if_user_is_judge`, {
+    //   params,
+    // });
+    return { data: true };
+  },
 };

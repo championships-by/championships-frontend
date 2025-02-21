@@ -12,8 +12,8 @@ export const MatchCard = ({
   onEditScore,
   lastCreatorEmail,
 }) => {
-  const { isGroupStageFinished, canEditGroupStage } = useMatches();
-  const isEnabled = !isGroupStageFinished || canEditGroupStage;
+  const { isGroupStageFinished, isGroupStageEditable } = useMatches();
+  const isEnabled = !isGroupStageFinished || isGroupStageEditable;
 
   const handleClick = (e) => {
     e.preventDefault();

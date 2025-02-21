@@ -30,8 +30,7 @@ export const TimeMatchesTabs = () => {
   const [isStageFinished, setIsStageFinished] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("1");
   const [isEditModeEnabled, setIsEditModeEnabled] = useState(false);
-  const [timeAfterFinishing, setTimeAfterFinishing] = useState(null);
-  const [canPostEdit, setCanPostEdit] = useState(true);
+  const [isEditable, setIsEditable] = useState(false);
 
   const onClickEditButton = () => {
     setIsEditModeEnabled(true);
@@ -185,12 +184,14 @@ export const TimeMatchesTabs = () => {
         competenciesApi.getNominationEventInfo(params),
         timeMatchesApi.getTimeMatches(eventId, nominationId),
         competenciesApi.getTimeAfterFinishing(params),
+        competenciesApi.isJudge(params),
       ])
         .then(
           ([
             stageStatusResponse,
             timeMatchesResponse,
             timeAfterFinishingResponse,
+            isJudgeResponse,
           ]) => {
             const transformedStageStatus =
               transformStageStatus(stageStatusResponse);
@@ -205,8 +206,9 @@ export const TimeMatchesTabs = () => {
 
             setTimeMatches(transformedTimeMatches);
 
-            setCanPostEdit(
-              isStillEditable(timeAfterFinishingResponse.data.stage)
+            setIsEditable(
+              isStillEditable(timeAfterFinishingResponse.data.stage) &&
+                isJudgeResponse.data
             );
           }
         )
@@ -231,7 +233,7 @@ export const TimeMatchesTabs = () => {
 
   const buttonsForFinishedStage = (
     <Flex gap="middle">
-      {canPostEdit &&
+      {isEditable &&
         (isEditModeEnabled ? (
           <Flex gap="small">
             <Button onClick={onClickCancelEditButton}>
