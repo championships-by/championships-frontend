@@ -282,7 +282,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishGroupStage(body);
-      message.success(t("TOURNAMENTS.GROUP_STAGE_FINISHED"));
+      message.info("MESSAGES.EDIT_INFO");
       fetchData(eventId, nominationId);
     } catch {}
   };
@@ -308,7 +308,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishPlayoffStage(body);
-      message.success(t("TOURNAMENTS.PLAYOFF_STAGE_FINISHED"));
+      message.info("MESSAGES.EDIT_INFO");
       fetchData(eventId, nominationId);
     } catch {}
     setIsLoading(false);

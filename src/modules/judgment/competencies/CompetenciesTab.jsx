@@ -48,54 +48,61 @@ function CompetenciesTab() {
   };
 
   const onClickApplyEditButton = async () => {
-    await handleCompleteStage();
-    setIsEditModeEnabled(false);
+    try {
+      await handleCompleteStage();
+      setIsEditModeEnabled(false);
+    } catch {}
+  };
+
+  const onClickCompleteStage = async () => {
+    try {
+      await handleCompleteStage();
+      message.info(t("MESSAGES.EDITING_INFO"));
+    } catch {}
   };
 
   const handleCompleteStage = useCallback(async () => {
-    try {
-      const criteriaResults = [];
-      let fullFilled = true;
+    const criteriaResults = [];
+    let fullFilled = true;
 
-      dataSource.forEach((result) => {
-        Object.keys(result).forEach((key) => {
-          if (key.startsWith("criteria")) {
-            const criterion = result[key];
+    dataSource.forEach((result) => {
+      Object.keys(result).forEach((key) => {
+        if (key.startsWith("criteria")) {
+          const criterion = result[key];
 
-            if (criterion.score === null) {
-              fullFilled = false;
-            }
-
-            criteriaResults.push({
-              nomination_event: {
-                event_id: eventId,
-                nomination_id: nominationId,
-              },
-
-              criteria_id: criterion.id,
-              team_id: result.team.id,
-              score: criterion.score,
-            });
+          if (criterion.score === null) {
+            fullFilled = false;
           }
-        });
+
+          criteriaResults.push({
+            nomination_event: {
+              event_id: eventId,
+              nomination_id: nominationId,
+            },
+
+            criteria_id: criterion.id,
+            team_id: result.team.id,
+            score: criterion.score,
+          });
+        }
       });
+    });
 
-      if (!fullFilled) {
-        message.error(t("MESSAGES.FILL_ALL_FIELDS"));
-        return;
-      }
+    if (!fullFilled) {
+      message.error(t("MESSAGES.FILL_ALL_FIELDS"));
+      return;
+    }
 
-      await competenciesApi.setCriteriaResults(criteriaResults);
+    await competenciesApi.setCriteriaResults(criteriaResults);
 
-      await competenciesApi.finishCriteriaStage({
-        event_id: eventId,
-        nomination_id: nominationId,
-      });
+    await competenciesApi.finishCriteriaStage({
+      event_id: eventId,
+      nomination_id: nominationId,
+    });
 
-      setIsStageFinished(true);
-      setActiveTabKey("2");
-      setIsDataLoaded(false);
-    } catch {}
+    setIsStageFinished(true);
+    setActiveTabKey("2");
+    setIsDataLoaded(false);
   }, [criteria, dataSource, eventId, nominationId]);
 
   const handleDownloadProtocol = async () => {
@@ -234,7 +241,7 @@ function CompetenciesTab() {
   }, [eventId, isDataLoaded, nominationId, stageStatus, isStageFinished]);
 
   const buttonsForUnfinishedStage = (
-    <Button type="primary" onClick={handleCompleteStage}>
+    <Button type="primary" onClick={onClickCompleteStage}>
       {t("COMMON.COMPLETE_STAGE")}
     </Button>
   );

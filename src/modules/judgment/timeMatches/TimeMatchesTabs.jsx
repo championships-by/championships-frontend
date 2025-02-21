@@ -43,8 +43,17 @@ export const TimeMatchesTabs = () => {
   };
 
   const onClickApplyEditButton = async () => {
-    await handleCompleteStage();
-    setIsEditModeEnabled(false);
+    try {
+      await handleCompleteStage();
+      setIsEditModeEnabled(false);
+    } catch {}
+  };
+
+  const onClickCompleteStage = async () => {
+    try {
+      await handleCompleteStage();
+      message.info(t("MESSAGES.EDITING_INFO"));
+    } catch {}
   };
 
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
@@ -77,34 +86,32 @@ export const TimeMatchesTabs = () => {
   }, []);
 
   const handleCompleteStage = useCallback(async () => {
-    try {
-      if (!isTimeMatchesFilled(timeMatches)) {
-        message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
-        return;
-      }
+    if (!isTimeMatchesFilled(timeMatches)) {
+      message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
+      return;
+    }
 
-      const timeMatchData = timeMatches.flatMap((timeMatch) =>
-        timeMatch.attempts.map(({ id, result, isDisqualified }) => ({
-          nomination_event: {
-            event_id: eventId,
-            nomination_id: nominationId,
-          },
-          race_round_id: id,
-          result: !result && isDisqualified ? "00:00.000" : result,
-        }))
-      );
+    const timeMatchData = timeMatches.flatMap((timeMatch) =>
+      timeMatch.attempts.map(({ id, result, isDisqualified }) => ({
+        nomination_event: {
+          event_id: eventId,
+          nomination_id: nominationId,
+        },
+        race_round_id: id,
+        result: !result && isDisqualified ? "00:00.000" : result,
+      }))
+    );
 
-      await timeMatchesApi.setTimeMatch(timeMatchData);
+    await timeMatchesApi.setTimeMatch(timeMatchData);
 
-      await competenciesApi.finishTimeStage({
-        event_id: eventId,
-        nomination_id: nominationId,
-      });
+    await competenciesApi.finishTimeStage({
+      event_id: eventId,
+      nomination_id: nominationId,
+    });
 
-      setIsStageFinished(true);
-      setActiveTabKey("2");
-      setIsDataLoaded(false);
-    } catch (error) {}
+    setIsStageFinished(true);
+    setActiveTabKey("2");
+    setIsDataLoaded(false);
   }, [eventId, nominationId, timeMatches]);
 
   const handleDownload = async () => {
@@ -217,7 +224,7 @@ export const TimeMatchesTabs = () => {
   }, [eventId, nominationId, isDataLoaded, isStageFinished]);
 
   const buttonsForUnfinishedStage = (
-    <Button type="primary" onClick={handleCompleteStage}>
+    <Button type="primary" onClick={onClickCompleteStage}>
       {t("COMMON.COMPLETE_STAGE")}
     </Button>
   );
