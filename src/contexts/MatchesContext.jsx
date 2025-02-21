@@ -2,7 +2,7 @@ import { judgmentApi } from "@api/judgment";
 import { createContext, useCallback, useEffect, useState } from "react";
 import { competenciesApi } from "@api";
 import { message } from "antd";
-import { getPlayOffLevels } from "@utils";
+import { getPlayOffLevels, isStillEditable } from "@utils";
 import { useTranslation } from "react-i18next";
 
 export const MatchesContext = createContext();
@@ -185,6 +185,24 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     setIsLoading(false);
   };
 
+  const fetchTimeFinishedData = async (eventId, nominationId) => {
+    setIsLoading(true);
+    try {
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+      const response = await competenciesApi.getTimeAfterFinishing(params);
+
+      setCanEditGroupStage(isStillEditable(response.data.group_stage));
+      setCanEditPlayoffStage(isStillEditable(response.data.play_off_stage));
+
+      console.log(isStillEditable(response.data.group_stage));
+      console.log(isStillEditable(response.data.play_off_stage));
+    } catch (err) {}
+
+    setIsLoading(false);
+  };
+
   const fetchData = async (eventId, nominationId) => {
     setIsLoading(true);
 
@@ -199,6 +217,10 @@ export function MatchesProvider({ eventId, nominationId, children }) {
 
       try {
         await fetchGroupStageData(eventId, nominationId);
+      } catch {}
+
+      try {
+        await fetchTimeFinishedData(eventId, nominationId);
       } catch {}
 
       if (statusInfo.group_stage_finished) {

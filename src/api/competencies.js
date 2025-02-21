@@ -112,4 +112,7 @@ export const competenciesApi = {
   updateSoftware: (body) => {
     return instance.patch(`/software/update`, body);
   },
+  getTimeAfterFinishing: (params) => {
+    return instance.get(`/tournaments/get_finish_time`, { params });
+  },
 };

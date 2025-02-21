@@ -6,6 +6,7 @@ import {
   transformStageStatus,
   transformTimeMatchesData,
   downloadProtocol,
+  isStillEditable,
 } from "@utils";
 import { EditOutlined, CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import { Button, message, Tabs, Flex } from "antd";
@@ -28,9 +29,9 @@ export const TimeMatchesTabs = () => {
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("1");
-  const [canPostEdit, setCanPostEdit] = useState(true);
   const [isEditModeEnabled, setIsEditModeEnabled] = useState(false);
   const [timeAfterFinishing, setTimeAfterFinishing] = useState(null);
+  const [canPostEdit, setCanPostEdit] = useState(true);
 
   const onClickEditButton = () => {
     setIsEditModeEnabled(true);
@@ -102,6 +103,7 @@ export const TimeMatchesTabs = () => {
 
       setIsStageFinished(true);
       setActiveTabKey("2");
+      setIsDataLoaded(false);
     } catch (error) {}
   }, [eventId, nominationId, timeMatches]);
 
@@ -175,21 +177,32 @@ export const TimeMatchesTabs = () => {
       Promise.all([
         competenciesApi.getNominationEventInfo(params),
         timeMatchesApi.getTimeMatches(eventId, nominationId),
+        competenciesApi.getTimeAfterFinishing(params),
       ])
-        .then(([stageStatusResponse, timeMatchesResponse]) => {
-          const transformedStageStatus =
-            transformStageStatus(stageStatusResponse);
-          setStageStatus(transformedStageStatus);
+        .then(
+          ([
+            stageStatusResponse,
+            timeMatchesResponse,
+            timeAfterFinishingResponse,
+          ]) => {
+            const transformedStageStatus =
+              transformStageStatus(stageStatusResponse);
+            setStageStatus(transformedStageStatus);
 
-          if (transformedStageStatus.tournamentFinished) {
-            setIsStageFinished(true);
+            if (transformedStageStatus.tournamentFinished) {
+              setIsStageFinished(true);
+            }
+            const transformedTimeMatches = transformTimeMatchesData(
+              timeMatchesResponse.data
+            );
+
+            setTimeMatches(transformedTimeMatches);
+
+            setCanPostEdit(
+              isStillEditable(timeAfterFinishingResponse.data.stage)
+            );
           }
-          const transformedTimeMatches = transformTimeMatchesData(
-            timeMatchesResponse.data
-          );
-
-          setTimeMatches(transformedTimeMatches);
-        })
+        )
         .catch((error) => {
           if (error.response && error.response.status === 404) {
             message.error(t("MESSAGES.ERROR"));

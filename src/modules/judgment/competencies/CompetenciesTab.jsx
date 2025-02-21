@@ -6,6 +6,7 @@ import {
   transformStageStatus,
   downloadProtocol,
   downloadCriteriaExcel,
+  isStillEditable,
 } from "@utils";
 import { Button, message, Tabs, Flex } from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -93,6 +94,7 @@ function CompetenciesTab() {
 
       setIsStageFinished(true);
       setActiveTabKey("2");
+      setIsDataLoaded(false);
     } catch {}
   }, [criteria, dataSource, eventId, nominationId]);
 
@@ -185,12 +187,14 @@ function CompetenciesTab() {
         competenciesApi.getNominationEventInfo(params),
         competenciesApi.getCriteria(eventId, nominationId),
         competenciesApi.getCriteriaResults(eventId, nominationId),
+        competenciesApi.getTimeAfterFinishing(params),
       ])
         .then(
           ([
             stageStatusResponse,
             criteriaResponse,
             criteriaResultsResponse,
+            timeAfterFinishingResponse,
           ]) => {
             const transformedStageStatus =
               transformStageStatus(stageStatusResponse);
@@ -212,6 +216,10 @@ function CompetenciesTab() {
               transformedCriteriaResults
             );
             setDataSource(generatedDataSource);
+
+            setCanPostEdit(
+              isStillEditable(timeAfterFinishingResponse.data.stage)
+            );
           }
         )
         .catch((reason) => {

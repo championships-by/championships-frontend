@@ -13,7 +13,7 @@ export const MatchCard = ({
   lastCreatorEmail,
 }) => {
   const { isGroupStageFinished, canEditGroupStage } = useMatches();
-  const isEnabled = isGroupStageFinished || canEditGroupStage;
+  const isEnabled = !isGroupStageFinished || canEditGroupStage;
 
   const handleClick = (e) => {
     e.preventDefault();
