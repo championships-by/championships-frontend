@@ -3,7 +3,7 @@ import { Button, InputNumber, Modal, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import "@modules/judgment/groups/sass/edit-score-modal.scss";
+import "@modules/judgment/roundRobin/sass/edit-score-modal.scss";
 
 export const EditMatchScoreModal = ({ isOpen, match, onSubmit, onClose }) => {
   const { t } = useTranslation();

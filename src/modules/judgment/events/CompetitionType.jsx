@@ -34,8 +34,8 @@ function CompetitionType({
       label: t("NOMINATION_TYPES.PLAYOFF"),
     },
     {
-      value: NOMINATIONS.GROUP,
-      label: t("NOMINATION_TYPES.GROUP"),
+      value: NOMINATIONS.ROUND_ROBIN,
+      label: t("NOMINATION_TYPES.ROUND_ROBIN"),
     },
   ];
 
@@ -101,7 +101,7 @@ function CompetitionType({
                 {t("NOMINATION_TYPES_DESCRIPTIONS.PLAYOFF")}
                 <br />
                 <br />
-                {t("NOMINATION_TYPES_DESCRIPTIONS.GROUP")}
+                {t("NOMINATION_TYPES_DESCRIPTIONS.ROUND_ROBIN")}
               </Flex>
             }
             overlayStyle={{ maxWidth: "750px" }}

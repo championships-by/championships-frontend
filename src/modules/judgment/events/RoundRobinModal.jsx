@@ -13,7 +13,7 @@ import { ROUTES } from "@constants";
 import { competenciesApi } from "@api";
 import { useTranslation } from "react-i18next";
 
-function GroupsModal({ isOpen, onCancel, onOk, name, nominationID }) {
+function RoundRobinModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const { t } = useTranslation();
   const [groupCount, setGroupCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +36,7 @@ function GroupsModal({ isOpen, onCancel, onOk, name, nominationID }) {
     try {
       await competenciesApi.startGroupStage(data);
       message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
-      navigate(ROUTES.JUDGMENT_GROUPS.PATH(eventID, nominationID));
+      navigate(ROUTES.JUDGMENT_ROUND_ROBIN.PATH(eventID, nominationID));
     } catch {
     } finally {
       setIsLoading(false);
@@ -92,4 +92,4 @@ function GroupsModal({ isOpen, onCancel, onOk, name, nominationID }) {
   );
 }
 
-export default GroupsModal;
+export default RoundRobinModal;

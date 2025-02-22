@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
 import { Typography, Spin } from "antd";
-import { EditMatchScoreModal } from "@modules/judgment/groups/EditScoreModal";
-import { MatchCard } from "@modules/judgment/groups/MatchCard";
+import { EditMatchScoreModal } from "@modules/judgment/roundRobin/EditScoreModal";
+import { MatchCard } from "@modules/judgment/roundRobin/MatchCard";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { judgmentApi } from "@api";
 
-import "@modules/judgment/groups/sass/matches.scss";
+import "@modules/judgment/roundRobin/sass/matches.scss";
 
 export function MatchesGroupStage({
   matches,

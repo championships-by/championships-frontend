@@ -4,13 +4,13 @@ import { Button, message, Tabs, Flex, Divider } from "antd";
 import { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
-import { MatchesGroupStage } from "@modules/judgment/groups/Matches";
+import { MatchesGroupStage } from "@modules/judgment/roundRobin/Matches";
 import { downloadProtocol } from "@utils";
 import { useParams } from "react-router-dom";
 import { competenciesApi, judgmentApi } from "@api";
 import { TableGroupStage } from "./Table";
 
-export function GroupsTabs() {
+export function RoundRobinTabs() {
   const { t } = useTranslation();
   const [messageApi, contextHolder] = message.useMessage();
   const { eventId, nominationId } = useParams();

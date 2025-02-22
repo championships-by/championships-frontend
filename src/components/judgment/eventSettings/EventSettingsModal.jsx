@@ -140,7 +140,7 @@ function EventSettingsCompitations({
               .addOlympicCompetenciesForEvent(data)
               .then(() => {});
             break;
-          case NOMINATIONS.GROUP:
+          case NOMINATIONS.ROUND_ROBIN:
             await competenciesApi
               .addOlympicCompetenciesForEvent(data)
               .then(() => {});

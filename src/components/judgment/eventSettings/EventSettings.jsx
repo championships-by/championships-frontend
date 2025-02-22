@@ -35,7 +35,7 @@ import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
 import OlympicModal from "@modules/judgment/events/OlympicModal";
-import GroupsModal from "@modules/judgment/events/GroupsModal";
+import RoundRobinModal from "@modules/judgment/events/RoundRobinModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi } from "@api";
 import {
@@ -103,8 +103,8 @@ function EventSettings() {
             return t(NOMINATION_TYPES.CRITERIA);
           case NOMINATIONS.OLYMPIC:
             return t(NOMINATION_TYPES.OLYMPIC);
-          case NOMINATIONS.GROUP:
-            return t(NOMINATION_TYPES.GROUP);
+          case NOMINATIONS.ROUND_ROBIN:
+            return t(NOMINATION_TYPES.ROUND_ROBIN);
           default:
             return record;
         }
@@ -291,8 +291,8 @@ function EventSettings() {
           case NOMINATIONS.OLYMPIC:
             navigate(ROUTES.JUDGMENT_OLYMPIC.PATH(eventID, nominationID));
             break;
-          case NOMINATIONS.GROUP:
-            navigate(ROUTES.JUDGMENT_GROUPS.PATH(eventID, nominationID));
+          case NOMINATIONS.ROUND_ROBIN:
+            navigate(ROUTES.JUDGMENT_ROUND_ROBIN.PATH(eventID, nominationID));
           case NOMINATIONS.TIME:
             navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
             break;
@@ -307,7 +307,7 @@ function EventSettings() {
     }
 
     switch (competitionType) {
-      case NOMINATIONS.GROUP:
+      case NOMINATIONS.ROUND_ROBIN:
         setGroupsModalOpened(true);
         break;
       case NOMINATIONS.OLYMPIC:
@@ -676,13 +676,13 @@ function EventSettings() {
         name={t("EVENTS.PLAYOFF_SETTINGS")}
         nominationID={dataNominationID}
       ></OlympicModal>
-      <GroupsModal
+      <RoundRobinModal
         isOpen={isGroupsModalOpened}
         onOk={() => setGroupsModalOpened(false)}
         onCancel={() => setGroupsModalOpened(false)}
-        name={t("EVENTS.GROUPS_SETTINGS")}
+        name={t("EVENTS.ROUND_ROBIN_SETTINGS")}
         nominationID={dataNominationID}
-      ></GroupsModal>
+      ></RoundRobinModal>
       <ParticipantModal
         isOpen={participantModal}
         onOk={() => setParticipantModal(false)}
