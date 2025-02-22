@@ -1,10 +1,18 @@
 import { EventFilters, defaultFormat, defaultTime, url } from "@constants";
 import { competenciesApi, eventApi } from "@api";
-import { ROUTES, MAX_TEXTAREA_LENGTH, medals } from "@constants";
+import {
+  ROUTES,
+  MAX_TEXTAREA_LENGTH,
+  medals,
+  RESULTS_EDITABILITY_MINUTES,
+} from "@constants";
 import i18n from "@src/translations/translations";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import JSEncrypt from "jsencrypt";
 import * as qs from "qs";
+
+dayjs.extend(utc);
 
 export const FILTER_OPTION = (input, option) =>
   (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
@@ -708,4 +716,16 @@ export const getMedal = (place) => {
 
 export const getPlace = (index, maxPlace) => {
   return index + (maxPlace ? maxPlace - 1 : 0);
+};
+
+export const getMinutesAfterFinishing = (endTime) => {
+  return dayjs.utc().diff(endTime, "minutes");
+};
+
+export const isStillEditable = (endTime) => {
+  try {
+    const dayjsTime = dayjs.utc(endTime);
+    return getMinutesAfterFinishing(dayjsTime) < RESULTS_EDITABILITY_MINUTES;
+  } catch (err) {}
+  return false;
 };

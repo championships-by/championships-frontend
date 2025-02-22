@@ -325,3 +325,5 @@ export const MAX_TEXTAREA_LENGTH = 1000;
 export const TELEGRAM_LINK = "https://t.me/championshipsby";
 
 export const medals = [GoldMedal, SilverMedal, BronzeMedal];
+
+export const RESULTS_EDITABILITY_MINUTES = 15;

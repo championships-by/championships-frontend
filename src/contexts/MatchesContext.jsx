@@ -2,7 +2,7 @@ import { judgmentApi } from "@api/judgment";
 import { createContext, useCallback, useEffect, useState } from "react";
 import { competenciesApi } from "@api";
 import { message } from "antd";
-import { getPlayOffLevels } from "@utils";
+import { getPlayOffLevels, isStillEditable } from "@utils";
 import { useTranslation } from "react-i18next";
 
 export const MatchesContext = createContext();
@@ -23,6 +23,9 @@ export function MatchesProvider({ eventId, nominationId, children }) {
 
   const [isGroupStageFinished, setIsGroupStageFinished] = useState(false);
   const [isPlayoffStageFinished, setIsPlayoffStageFinished] = useState(false);
+
+  const [isGroupStageEditable, setIsGroupStageEditable] = useState(false);
+  const [isPlayoffStageEditable, setIsPlayoffStageEditable] = useState(false);
 
   const transformMatches = (data) => {
     return data
@@ -182,6 +185,27 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     setIsLoading(false);
   };
 
+  const fetchTimeFinishedData = async (eventId, nominationId) => {
+    setIsLoading(true);
+    try {
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+      const timeResponse = await competenciesApi.getTimeAfterFinishing(params);
+      const isJudgeResponse = await competenciesApi.isJudge(params);
+
+      setIsGroupStageEditable(
+        isStillEditable(timeResponse.data.group_stage) && isJudgeResponse.data
+      );
+      setIsPlayoffStageEditable(
+        isStillEditable(timeResponse.data.play_off_stage) &&
+          isJudgeResponse.data
+      );
+    } catch (err) {}
+
+    setIsLoading(false);
+  };
+
   const fetchData = async (eventId, nominationId) => {
     setIsLoading(true);
 
@@ -196,6 +220,10 @@ export function MatchesProvider({ eventId, nominationId, children }) {
 
       try {
         await fetchGroupStageData(eventId, nominationId);
+      } catch {}
+
+      try {
+        await fetchTimeFinishedData(eventId, nominationId);
       } catch {}
 
       if (statusInfo.group_stage_finished) {
@@ -257,7 +285,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishGroupStage(body);
-      message.success(t("TOURNAMENTS.GROUP_STAGE_FINISHED"));
+      message.info("MESSAGES.EDIT_INFO");
       fetchData(eventId, nominationId);
     } catch {}
   };
@@ -283,7 +311,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishPlayoffStage(body);
-      message.success(t("TOURNAMENTS.PLAYOFF_STAGE_FINISHED"));
+      message.info("MESSAGES.EDIT_INFO");
       fetchData(eventId, nominationId);
     } catch {}
     setIsLoading(false);
@@ -316,6 +344,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     isPlayoffStageFinished,
     finishPlayoffStage,
     results,
+    isGroupStageEditable,
+    isPlayoffStageEditable,
   };
 
   return (
