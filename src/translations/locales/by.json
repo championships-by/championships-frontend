@@ -171,7 +171,8 @@
     "PHOTO_OPTIONAL": "Фота (неабавязкова)",
     "RETURN": "Назад",
     "AGREE": "Згозден",
-    "REPLACE": "Замяніць"
+    "REPLACE": "Замяніць",
+    "SYSTEM_WIDE_SEARCH": "Пошук па ўсёй сістэме"
   },
   "EVENTS": {
     "EVENT": "Мерапрыемства",

@@ -171,7 +171,8 @@
     "PHOTO_OPTIONAL": "Фото (необязательно)",
     "RETURN": "Назад",
     "AGREE": "Согласен",
-    "REPLACE": "Заменить"
+    "REPLACE": "Заменить",
+    "SYSTEM_WIDE_SEARCH": "Поиск по всей системе"
   },
   "EVENTS": {
     "EVENT": "Мероприятие",
