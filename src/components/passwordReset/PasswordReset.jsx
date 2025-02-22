@@ -43,7 +43,7 @@ function PasswordReset() {
 
       await authApi.resetPassword(params);
 
-      message.success("MESSAGES.SUCCESS_CHANGE_PASSWORD");
+      message.success(t("MESSAGES.SUCCESS_CHANGE_PASSWORD"));
 
       navigate(ROUTES.AUTHORIZATION.PATH);
     } catch (error) {

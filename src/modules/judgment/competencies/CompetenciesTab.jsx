@@ -6,6 +6,7 @@ import {
   transformStageStatus,
   downloadProtocol,
   downloadCriteriaExcel,
+  isStillEditable,
 } from "@utils";
 import { Button, message, Tabs, Flex } from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -13,7 +14,12 @@ import { useParams } from "react-router-dom";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
 import { useTranslation } from "react-i18next";
 import { CompetenciesResults, CompetenciesTable } from "./components";
-import { DownloadOutlined } from "@ant-design/icons";
+import {
+  DownloadOutlined,
+  EditOutlined,
+  CloseOutlined,
+  CheckOutlined,
+} from "@ant-design/icons";
 
 import "@modules/judgment/competencies/sass/competencies-criteria.scss";
 
@@ -29,50 +35,74 @@ function CompetenciesTab() {
   const [isStageFinished, setIsStageFinished] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("1");
   const [maxPlace, setMaxPlace] = useState();
+  const [isEditable, setIsEditable] = useState(false);
+  const [isEditModeEnabled, setIsEditModeEnabled] = useState(false);
+
+  const onClickEditButton = () => {
+    setIsEditModeEnabled(true);
+  };
+
+  const onClickCancelEditButton = () => {
+    setIsEditModeEnabled(false);
+    setIsDataLoaded(false);
+  };
+
+  const onClickApplyEditButton = async () => {
+    try {
+      await handleCompleteStage();
+      setIsEditModeEnabled(false);
+    } catch {}
+  };
+
+  const onClickCompleteStage = async () => {
+    try {
+      await handleCompleteStage();
+      message.info(t("MESSAGES.EDITING_INFO"));
+    } catch {}
+  };
 
   const handleCompleteStage = useCallback(async () => {
-    try {
-      const criteriaResults = [];
-      let fullFilled = true;
+    const criteriaResults = [];
+    let fullFilled = true;
 
-      dataSource.forEach((result) => {
-        Object.keys(result).forEach((key) => {
-          if (key.startsWith("criteria")) {
-            const criterion = result[key];
+    dataSource.forEach((result) => {
+      Object.keys(result).forEach((key) => {
+        if (key.startsWith("criteria")) {
+          const criterion = result[key];
 
-            if (criterion.score === null) {
-              fullFilled = false;
-            }
-
-            criteriaResults.push({
-              nomination_event: {
-                event_id: eventId,
-                nomination_id: nominationId,
-              },
-
-              criteria_id: criterion.id,
-              team_id: result.team.id,
-              score: criterion.score,
-            });
+          if (criterion.score === null) {
+            fullFilled = false;
           }
-        });
+
+          criteriaResults.push({
+            nomination_event: {
+              event_id: eventId,
+              nomination_id: nominationId,
+            },
+
+            criteria_id: criterion.id,
+            team_id: result.team.id,
+            score: criterion.score,
+          });
+        }
       });
+    });
 
-      if (!fullFilled) {
-        message.error(t("MESSAGES.FILL_ALL_FIELDS"));
-        return;
-      }
+    if (!fullFilled) {
+      message.error(t("MESSAGES.FILL_ALL_FIELDS"));
+      return;
+    }
 
-      await competenciesApi.setCriteriaResults(criteriaResults);
+    await competenciesApi.setCriteriaResults(criteriaResults);
 
-      await competenciesApi.finishCriteriaStage({
-        event_id: eventId,
-        nomination_id: nominationId,
-      });
+    await competenciesApi.finishCriteriaStage({
+      event_id: eventId,
+      nomination_id: nominationId,
+    });
 
-      setIsStageFinished(true);
-      setActiveTabKey("2");
-    } catch {}
+    setIsStageFinished(true);
+    setActiveTabKey("2");
+    setIsDataLoaded(false);
   }, [criteria, dataSource, eventId, nominationId]);
 
   const handleDownloadProtocol = async () => {
@@ -118,8 +148,8 @@ function CompetenciesTab() {
             editable={
               stageStatus.registrationFinished &&
               stageStatus.tournamentStarted &&
-              !stageStatus.tournamentFinished &&
-              !isStageFinished
+              ((!stageStatus.tournamentFinished && !isStageFinished) ||
+                isEditModeEnabled)
             }
           />
         ),
@@ -148,6 +178,7 @@ function CompetenciesTab() {
       stageStatus.tournamentFinished,
       stageStatus.tournamentStarted,
       isStageFinished,
+      isEditModeEnabled,
     ]
   );
 
@@ -163,12 +194,16 @@ function CompetenciesTab() {
         competenciesApi.getNominationEventInfo(params),
         competenciesApi.getCriteria(eventId, nominationId),
         competenciesApi.getCriteriaResults(eventId, nominationId),
+        competenciesApi.getTimeAfterFinishing(params),
+        competenciesApi.isJudge(params),
       ])
         .then(
           ([
             stageStatusResponse,
             criteriaResponse,
             criteriaResultsResponse,
+            timeAfterFinishingResponse,
+            isJudgeResponse,
           ]) => {
             const transformedStageStatus =
               transformStageStatus(stageStatusResponse);
@@ -190,6 +225,11 @@ function CompetenciesTab() {
               transformedCriteriaResults
             );
             setDataSource(generatedDataSource);
+
+            setIsEditable(
+              isStillEditable(timeAfterFinishingResponse.data.stage) &&
+                isJudgeResponse.data
+            );
           }
         )
         .catch((reason) => {
@@ -204,23 +244,41 @@ function CompetenciesTab() {
   }, [eventId, isDataLoaded, nominationId, stageStatus, isStageFinished]);
 
   const buttonsForUnfinishedStage = (
-    <Flex gap="middle">
-      <Button onClick={handleDownloadExcel}>
-        <Flex gap="small">
-          <DownloadOutlined />
-          {t("EVENTS.DOWNLOAD_EXCEL")}
-        </Flex>
-      </Button>
-      <Button type="primary" onClick={handleCompleteStage}>
-        {t("COMMON.COMPLETE_STAGE")}
-      </Button>
-    </Flex>
+    <Button type="primary" onClick={onClickCompleteStage}>
+      {t("COMMON.COMPLETE_STAGE")}
+    </Button>
   );
 
   const buttonsForFinishedStage = (
-    <Button type="primary" onClick={handleDownloadProtocol}>
-      {t("COMMON.FINAL_PROTOCOL")}
-    </Button>
+    <Flex gap="middle">
+      {isEditable &&
+        (isEditModeEnabled ? (
+          <Flex gap="small">
+            <Button onClick={onClickCancelEditButton}>
+              <Flex gap="small">
+                <CloseOutlined />
+                {t("COMMON.CANCEL")}
+              </Flex>
+            </Button>
+            <Button onClick={onClickApplyEditButton}>
+              <Flex gap="small">
+                <CheckOutlined />
+                {t("COMMON.APPLY")}
+              </Flex>
+            </Button>
+          </Flex>
+        ) : (
+          <Button onClick={onClickEditButton}>
+            <Flex gap="small">
+              <EditOutlined />
+              {t("COMMON.EDIT")}
+            </Flex>
+          </Button>
+        ))}
+      <Button type="primary" onClick={handleDownloadExcel}>
+        {t("COMMON.FINAL_PROTOCOL")}
+      </Button>
+    </Flex>
   );
 
   return (

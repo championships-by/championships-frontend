@@ -10,6 +10,7 @@ import UserPasswordInput from "@modules/user/UserPasswordInput";
 import UserPatronymicInput from "@modules/user/UserPatronymicInput";
 import UserPasswordConfirmationInput from "@modules/user/UserPasswordConfirmationInput";
 import UserPhoneInput from "@modules/user/UserPhoneInput";
+import ParticipantReCaptcha from "@modules/participant/ParticipantReCaptcha";
 import {
   Button,
   Form,
@@ -31,6 +32,7 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
   const [form] = Form.useForm();
   const [passwordToConfirm, setPasswordToConfirm] = useState();
   const [areTermsAccepted, setAreTermsAccepted] = useState(false);
+  const [areCaptchaAccepted, setAreCaptchaAccepted] = useState(false);
   const dispatch = useDispatch();
 
   const onFinish = async () => {
@@ -67,6 +69,10 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
   const onCheckedChange = (e) => {
     setAreTermsAccepted(e.target.checked);
   };
+
+  const handleValidation = (status) => {
+    setAreCaptchaAccepted(status);
+  }
 
   return (
     <Modal
@@ -106,11 +112,12 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
                   {t("COMMON.I_AGREE_WITH_USER_TERMS")}
                 </Typography.Text>
               </Checkbox>
+              <ParticipantReCaptcha onValidate={handleValidation} />
               <Button
                 type="primary"
                 htmlType="submit"
                 loading={isLoading}
-                disabled={!areTermsAccepted}
+                disabled={!areTermsAccepted || !areCaptchaAccepted}
               >
                 {t("COMMON.REQUEST_FOR_REGISTRATION")}
               </Button>

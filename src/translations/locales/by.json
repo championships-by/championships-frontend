@@ -233,7 +233,8 @@
     "ARE_YOU_SURE_REMOVE_PARTICIPANT": "Вы ўпэўнены, што жадаеце выдаліць гэтага ўдзельніка з кампетэнцыі?",
     "REGISTRATION_NOT_STARTED": "Рэгістрацыя яшчэ не пачалася",
     "NUMBER_OF_PARTICIPANTS": "Колькасць удзельнікаў",
-    "DOWNLOAD_EXCEL": "Спампаваць табліцу ў фармаце Excel"
+    "DOWNLOAD_EXCEL": "Спампаваць табліцу ў фармаце Excel",
+    "EVENT_DELETION_SUCCESS": "Мерапрыемства паспяхова выдалена"
   },
   "PARTICIPANTS": {
     "CARD_OF_PARTICIPANT": "Картка ўдзельніка",
@@ -355,7 +356,8 @@
     "SUCCESS_EDIT_USER": "Карыстальнік паспяхова зменены",
     "YOU_NOT_JUDGE": "Вы не можаце завяршыць стадыю, паколькі не з'яўляецеся суддзёй",
     "NOTICE_SUCCESS_SEND": "Ліст паспяхова адпраўлены",
-    "SUCCESS_EDIT_TEAM_PARTICIPANTS": "Удзельнікі каманды паспяхова зменены"
+    "SUCCESS_EDIT_TEAM_PARTICIPANTS": "Удзельнікі каманды паспяхова зменены",
+    "EDITING_INFO": "Вы можаце ўносіць праўкі на працягу 15 хвілін пасля завяршэння этапу"
   },
   "RULES": {
     "ENTER_EMAIL": "Калі ласка, увядзіце Email",
