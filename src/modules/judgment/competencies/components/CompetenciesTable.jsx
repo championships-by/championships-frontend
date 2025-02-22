@@ -1,5 +1,6 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { generateCriteriaColumns, getContentSectionWidth } from "@utils";
+import PariticipantsList from "@modules/judgment/common/ParticipantsList.jsx";
 import { InputNumber, Spin, Table } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { tableLocale } from "@constants";
@@ -37,14 +38,18 @@ export const CompetenciesTable = ({
       {
         title: t("COMMON.TEAM"),
         key: "team",
+        dataIndex: "team",
         fixed: "left",
-        render: (record) => {
-          if (record.participants.length !== 1) {
-            return record.team.name;
-          } else {
-            return record.participants[0];
-          }
-        },
+        render: (team) => team.name,
+      },
+      {
+        title: t("COMMON.PARTICIPANTS"),
+        key: "participants",
+        dataIndex: "participants",
+        fixed: "left",
+        render: (participants) => (
+          <PariticipantsList participants={participants} />
+        ),
       },
       ...generateCriteriaColumns(criteria, (text, record, index, columnId) => {
         const currentCriteria = record[`criteria${columnId}`];

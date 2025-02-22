@@ -358,7 +358,8 @@
     "NOTICE_SUCCESS_SEND": "Письмо успешно отправлено",
     "TEAM_PARTICIPANT_DELETE_ERROR": "Ошибка при удалении участника из команды",
     "DELETE_SUCCESS": "Удаление прошло успешно",
-    "SUCCESS_EDIT_TEAM_PARTICIPANTS": "Участники команды успешно изменены"
+    "SUCCESS_EDIT_TEAM_PARTICIPANTS": "Участники команды успешно изменены",
+    "EDITING_INFO": "Вы можете вносить правки в течение 15 минут после завершения этапа"
   },
   "RULES": {
     "ENTER_EMAIL": "Пожалуйста, введите Email",

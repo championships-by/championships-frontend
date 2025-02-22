@@ -1,6 +1,7 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { defaultFormat, tableLocale } from "@constants";
 import { CustomTimePicker } from "@modules/judgment/timeMatches/components";
+import PariticipantsList from "@modules/judgment/common/ParticipantsList.jsx";
 import { formatTimeToString, generateColumns } from "@utils";
 import { Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
@@ -19,15 +20,20 @@ export const TimeMatchesTable = ({
   const columns = useMemo(
     () => [
       {
-        key: "teamName",
         title: t("COMMON.TEAM"),
-        render: (record) => {
-          if (record.participants.length !== 1) {
-            return record.team.name;
-          } else {
-            return record.participants[0];
-          }
-        },
+        key: "team",
+        dataIndex: "teamName",
+        fixed: "left",
+        render: (teamName) => teamName,
+      },
+      {
+        title: t("COMMON.PARTICIPANTS"),
+        key: "participants",
+        dataIndex: "participants",
+        fixed: "left",
+        render: (participants) => (
+          <PariticipantsList participants={participants} />
+        ),
       },
       ...generateColumns(timeMatches, (text, record, index, columnId) => (
         <CustomTimePicker
