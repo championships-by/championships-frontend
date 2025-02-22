@@ -70,7 +70,7 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
     setAreTermsAccepted(e.target.checked);
   };
 
-  function handleValidation(status) {
+  const handleValidation = (status) => {
     setAreCaptchaAccepted(status);
   }
 

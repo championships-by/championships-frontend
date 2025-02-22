@@ -53,6 +53,7 @@ module.exports = (env) => {
         API_HOST: JSON.stringify(process.env.API_HOST),
         PUBLIC_KEY: process.env.PUBLIC_KEY,
         CAPTCHA_TOKEN: process.env.CAPTCHA_TOKEN,
+        WEB_SITE_KEY: process.env.WEB_SITE_KEY,
       }),
     ],
     module: {
