@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
-const webSiteKey = WEB_SITE_KEY;
-
 function ParticipantReCaptcha({ onValidate }) {
   const [isValid, setIsValid] = useState(false);
 
@@ -17,7 +15,7 @@ function ParticipantReCaptcha({ onValidate }) {
   return (
       <ReCAPTCHA
         className="re-captcha-container"
-        sitekey={webSiteKey}
+        sitekey={WEB_SITE_KEY}
         onChange={onChange}
       />
   );
