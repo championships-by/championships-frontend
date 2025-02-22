@@ -428,7 +428,8 @@
   "NOMINATION_TYPES": {
     "TIME": "Па часе",
     "CRITERIA": "Па крытэрыях",
-    "PLAYOFF": "Плей-оф"
+    "PLAYOFF": "Плей-оф",
+    "GROUP": "Кругавы"
   },
   "EVENT_LEVELS": {
     "REPUBLIC": "Рэспубліканскі",

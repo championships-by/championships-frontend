@@ -36,7 +36,7 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
     try {
       await competenciesApi.startGroupStage(data);
       message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
-      navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+      navigate(ROUTES.JUDGMENT_OLYMPIC.PATH(eventID, nominationID));
     } catch {
     } finally {
       setIsLoading(false);

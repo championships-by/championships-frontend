@@ -41,12 +41,14 @@ export const NOMINATIONS = {
   PLAYOFF: "playoffs",
   CRITERIA: "criteria",
   OLYMPIC: "olympic",
+  GROUP: "group",
 };
 
 export const NOMINATION_TYPES = {
   CRITERIA: "NOMINATION_TYPES.CRITERIA",
   TIME: "NOMINATION_TYPES.TIME",
   OLYMPIC: "NOMINATION_TYPES.PLAYOFF",
+  GROUP: "NOMINATION_TYPES.GROUP",
 };
 
 export const RESPONSE_STATUS = {
@@ -111,10 +113,15 @@ export const ROUTES = {
     TITLE: "COMMON.EDIT",
     PATH: (eventID) => `/judgment/events/${eventID}/settings`,
   },
-  JUDGMENT_GROUP_STAGE: {
+  JUDGMENT_OLYMPIC: {
     TITLE: "NOMINATION_TYPES.PLAYOFF",
     PATH: (event_id, nomination_id) =>
-      `/judgment/events/${event_id}/${nomination_id}/group-stage`,
+      `/judgment/events/${event_id}/${nomination_id}/olympic`,
+  },
+  JUDGMENT_GROUPS: {
+    TITLE: "NOMINATION_TYPES.GROUP",
+    PATH: (event_id, nomination_id) =>
+      `/judgment/events/${event_id}/${nomination_id}/groups`,
   },
   JUDGMENT_TIME_MATCHES: {
     TITLE: "NOMINATION_TYPES.TIME",
@@ -150,9 +157,10 @@ export const ROUTER_ROUTES = {
   JUDGMENT_CREATE: "create",
   JUDGMENT_CREATE_TEST: "create/test",
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
-  JUDGMENT_GROUP_STAGE: ":eventId/:nominationId/group-stage",
+  JUDGMENT_OLYMPIC: ":eventId/:nominationId/olympic",
   JUDGMENT_TIME_MATCHES: ":eventId/:nominationId/time-matches",
   JUDGMENT_CRITERIA: ":eventId/:nominationId/criteria",
+  JUDGMENT_GROUPS: ":eventid/:nominationId/groups",
 };
 
 export const EventFilters = {

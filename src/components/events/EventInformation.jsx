@@ -116,7 +116,7 @@ function EventInformation() {
             navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
             break;
           case NOMINATIONS.OLYMPIC:
-            navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
+            navigate(ROUTES.JUDGMENT_OLYMPIC.PATH(eventID, nomination.id));
             break;
           default:
             message.error(t("MESSAGES.ERROR"));

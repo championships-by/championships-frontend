@@ -285,7 +285,7 @@ function EventSettings() {
       } else if (data.tournament_started) {
         switch (competitionType) {
           case NOMINATIONS.OLYMPIC:
-            navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+            navigate(ROUTES.JUDGMENT_OLYMPIC.PATH(eventID, nominationID));
             break;
           case NOMINATIONS.TIME:
             navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Typography, Space, Select } from "antd";
+import { Typography, Space, Select, Flex, Button, Tooltip } from "antd";
+import { InfoOutlined } from "@ant-design/icons";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 import { NOMINATION_TYPES, NOMINATIONS } from "@constants";
@@ -31,6 +32,17 @@ function CompetitionType({
     {
       value: NOMINATIONS.OLYMPIC,
       label: t("NOMINATION_TYPES.PLAYOFF"),
+    },
+    {
+      value: NOMINATIONS.GROUP,
+      label: t("NOMINATION_TYPES.GROUP"),
+    },
+  ];
+
+  const descriptions = [
+    {
+      value: NOMINATIONS.TIME,
+      label: t("NOMINATION_TYPES"),
     },
   ];
 
@@ -69,13 +81,37 @@ function CompetitionType({
         {t("EVENTS.TYPE_OF_TOURNAMENTS")}
       </Typography.Text>
       <Space direction="vertical" className="events__competition-type__space">
-        <Select
-          placeholder={t("MESSAGES.CHOOSE_TYPE_OF_TOURNAMENT")}
-          options={options}
-          className="events__competition-type__name"
-          onChange={handleChange}
-          value={selectedValue}
-        />
+        <Flex gap="small">
+          <Select
+            placeholder={t("MESSAGES.CHOOSE_TYPE_OF_TOURNAMENT")}
+            options={options}
+            className="events__competition-type__name"
+            onChange={handleChange}
+            value={selectedValue}
+          />
+          <Tooltip
+            title={
+              <Flex vertical gap="small">
+                {t("NOMINATION_TYPES_DESCRIPTIONS.TIME")}
+                <br />
+                <br />
+                {t("NOMINATION_TYPES_DESCRIPTIONS.CRITERIA")}
+                <br />
+                <br />
+                {t("NOMINATION_TYPES_DESCRIPTIONS.PLAYOFF")}
+                <br />
+                <br />
+                {t("NOMINATION_TYPES_DESCRIPTIONS.GROUP")}
+              </Flex>
+            }
+            overlayStyle={{ maxWidth: "750px" }}
+          >
+            <Button className="events__competition-type__info">
+              <InfoOutlined />
+            </Button>
+          </Tooltip>
+        </Flex>
+
         {selectedValue && settingsComponents[selectedValue]}
       </Space>
     </div>

@@ -155,7 +155,7 @@ function App() {
                     }
                   />
                   <Route
-                    path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
+                    path={ROUTER_ROUTES.JUDGMENT_OLYMPIC}
                     element={<JudgmentGroupStage />}
                   />
                   <Route
