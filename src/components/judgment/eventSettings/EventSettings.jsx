@@ -673,7 +673,7 @@ function EventSettings() {
         isOpen={isOlympicModalOpened}
         onOk={() => setOlympicModalOpened(false)}
         onCancel={() => setOlympicModalOpened(false)}
-        name={t("EVENTS.PLAYOFF_SETTINGS")}
+        name={t("EVENTS.OLYMPIC_SETTINGS")}
         nominationID={dataNominationID}
       ></OlympicModal>
       <RoundRobinModal

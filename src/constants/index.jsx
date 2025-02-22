@@ -38,7 +38,7 @@ export const ROLE_FILTERS = [
 
 export const NOMINATIONS = {
   TIME: "time",
-  PLAYOFF: "playoffs",
+  OLYMPIC: "playoffs",
   CRITERIA: "criteria",
   OLYMPIC: "olympic",
   ROUND_ROBIN: "round-robin",
@@ -47,7 +47,7 @@ export const NOMINATIONS = {
 export const NOMINATION_TYPES = {
   CRITERIA: "NOMINATION_TYPES.CRITERIA",
   TIME: "NOMINATION_TYPES.TIME",
-  OLYMPIC: "NOMINATION_TYPES.PLAYOFF",
+  OLYMPIC: "NOMINATION_TYPES.OLYMPIC",
   ROUND_ROBIN: "NOMINATION_TYPES.ROUND_ROBIN",
 };
 
@@ -114,7 +114,7 @@ export const ROUTES = {
     PATH: (eventID) => `/judgment/events/${eventID}/settings`,
   },
   JUDGMENT_OLYMPIC: {
-    TITLE: "NOMINATION_TYPES.PLAYOFF",
+    TITLE: "NOMINATION_TYPES.OLYMPIC",
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/olympic`,
   },

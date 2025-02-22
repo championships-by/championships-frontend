@@ -2,7 +2,13 @@ import { judgmentApi } from "@api/judgment";
 import { createContext, useCallback, useEffect, useState } from "react";
 import { competenciesApi } from "@api";
 import { message } from "antd";
-import { getPlayOffLevels, isStillEditable } from "@utils";
+import {
+  getPlayOffLevels,
+  isStillEditable,
+  transformMatches,
+  transformData,
+  transformPlayoffMatches,
+} from "@utils";
 import { useTranslation } from "react-i18next";
 
 export const MatchesContext = createContext();
@@ -26,114 +32,6 @@ export function MatchesProvider({ eventId, nominationId, children }) {
 
   const [isGroupStageEditable, setIsGroupStageEditable] = useState(false);
   const [isPlayoffStageEditable, setIsPlayoffStageEditable] = useState(false);
-
-  const transformMatches = (data) => {
-    return data
-      .flatMap((group) =>
-        group.matches.map((match) => ({
-          group_id: group.group_id,
-          id: match.match_id,
-          team1: {
-            id: match.team1.id,
-            name: match.team1.name,
-            score: match.team1_score,
-          },
-          team2: {
-            id: match.team2.id,
-            name: match.team2.name,
-            score: match.team2_score,
-          },
-          lastResultCreatorEmail: match.last_result_creator_email,
-          matchQueueNumber: match.match_queue_number,
-        }))
-      )
-      .sort((a, b) => a.id - b.id);
-  };
-
-  const transformPlayoffMatches = (data) => {
-    return data.map((match) => ({
-      id: match.match_id,
-      next_id: match.next_match_id,
-      team1: match.team1
-        ? {
-            id: match.team1.id,
-            name: match.team1.name,
-            score: match.team1_score,
-          }
-        : null,
-      team2: match.team2
-        ? {
-            id: match.team2.id,
-            name: match.team2.name,
-            score: match.team2_score,
-          }
-        : null,
-      lastResultCreatorEmail: match.last_result_creator_email,
-    }));
-  };
-
-  const transformData = (data) => {
-    return data.map((group) => {
-      const teamStats = {};
-
-      group.matches.forEach((match) => {
-        const {
-          team1,
-          team2,
-          team1_score,
-          team2_score,
-          last_result_creator_email,
-        } = match;
-
-        if (!teamStats[team1.name]) {
-          teamStats[team1.name] = {
-            id: team1.id,
-            name: team1.name,
-            wins: 0,
-            losses: 0,
-            draws: 0,
-            points: 0,
-            scores: 0,
-          };
-        }
-        if (!teamStats[team2.name]) {
-          teamStats[team2.name] = {
-            id: team2.id,
-            name: team2.name,
-            wins: 0,
-            losses: 0,
-            draws: 0,
-            points: 0,
-            scores: 0,
-          };
-        }
-
-        if (team1_score > team2_score) {
-          teamStats[team1.name].wins += 1;
-          teamStats[team1.name].points += 3;
-          teamStats[team2.name].losses += 1;
-        } else if (team1_score < team2_score) {
-          teamStats[team2.name].wins += 1;
-          teamStats[team2.name].points += 3;
-          teamStats[team1.name].losses += 1;
-        } else if (last_result_creator_email !== null) {
-          teamStats[team1.name].draws += 1;
-          teamStats[team1.name].points += 1;
-          teamStats[team2.name].draws += 1;
-          teamStats[team2.name].points += 1;
-        }
-
-        teamStats[team1.name].scores += team1_score;
-        teamStats[team2.name].scores += team2_score;
-      });
-
-      const teams = Object.values(teamStats);
-      return {
-        group_id: group.group_id,
-        teams,
-      };
-    });
-  };
 
   const fetchGroupStageData = async (eventId, nominationId) => {
     setIsLoading(true);

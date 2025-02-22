@@ -1,11 +1,14 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable import/prefer-default-export */
 import { Button, message, Tabs, Flex, Divider } from "antd";
 import { useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
 import { MatchesGroupStage } from "@modules/judgment/roundRobin/Matches";
-import { downloadProtocol } from "@utils";
+import {
+  downloadProtocol,
+  isStillEditable,
+  transformMatches,
+  transformData,
+} from "@utils";
 import { useParams } from "react-router-dom";
 import { competenciesApi, judgmentApi } from "@api";
 import { TableGroupStage } from "./Table";
@@ -15,101 +18,18 @@ export function RoundRobinTabs() {
   const [messageApi, contextHolder] = message.useMessage();
   const { eventId, nominationId } = useParams();
   const [isFinished, setIsFinished] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
   const [matches, setMatches] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [finalParticipants, setFinalParticipants] = useState([]);
   const [error, setError] = useState(null);
   const [results, setResults] = useState([]);
 
+  const isEnabled = !isFinished || isEditable;
+
   useEffect(() => {
     fetchData();
   }, [eventId, nominationId]);
-
-  const transformMatches = (data) => {
-    return data
-      .flatMap((group) =>
-        group.matches.map((match) => ({
-          group_id: group.group_id,
-          id: match.match_id,
-          team1: {
-            id: match.team1.id,
-            name: match.team1.name,
-            score: match.team1_score,
-          },
-          team2: {
-            id: match.team2.id,
-            name: match.team2.name,
-            score: match.team2_score,
-          },
-          lastResultCreatorEmail: match.last_result_creator_email,
-          matchQueueNumber: match.match_queue_number,
-        }))
-      )
-      .sort((a, b) => a.id - b.id);
-  };
-
-  const transformData = (data) => {
-    return data.map((group) => {
-      const teamStats = {};
-
-      group.matches.forEach((match) => {
-        const {
-          team1,
-          team2,
-          team1_score,
-          team2_score,
-          last_result_creator_email,
-        } = match;
-
-        if (!teamStats[team1.name]) {
-          teamStats[team1.name] = {
-            id: team1.id,
-            name: team1.name,
-            wins: 0,
-            losses: 0,
-            draws: 0,
-            points: 0,
-            scores: 0,
-          };
-        }
-        if (!teamStats[team2.name]) {
-          teamStats[team2.name] = {
-            id: team2.id,
-            name: team2.name,
-            wins: 0,
-            losses: 0,
-            draws: 0,
-            points: 0,
-            scores: 0,
-          };
-        }
-
-        if (team1_score > team2_score) {
-          teamStats[team1.name].wins += 1;
-          teamStats[team1.name].points += 3;
-          teamStats[team2.name].losses += 1;
-        } else if (team1_score < team2_score) {
-          teamStats[team2.name].wins += 1;
-          teamStats[team2.name].points += 3;
-          teamStats[team1.name].losses += 1;
-        } else if (last_result_creator_email !== null) {
-          teamStats[team1.name].draws += 1;
-          teamStats[team1.name].points += 1;
-          teamStats[team2.name].draws += 1;
-          teamStats[team2.name].points += 1;
-        }
-
-        teamStats[team1.name].scores += team1_score;
-        teamStats[team2.name].scores += team2_score;
-      });
-
-      const teams = Object.values(teamStats);
-      return {
-        group_id: group.group_id,
-        teams,
-      };
-    });
-  };
 
   const fetchGroupStageData = async () => {
     setIsLoading(true);
@@ -143,6 +63,23 @@ export function RoundRobinTabs() {
     setIsLoading(false);
   };
 
+  const fetchTimeFinishedData = async () => {
+    setIsLoading(true);
+    try {
+      const params = new URLSearchParams();
+      params.append("event_id", eventId);
+      params.append("nomination_id", nominationId);
+      const timeResponse = await competenciesApi.getTimeAfterFinishing(params);
+      const isJudgeResponse = await competenciesApi.isJudge(params);
+
+      setIsEditable(
+        isStillEditable(timeResponse.data.stage) && isJudgeResponse.data
+      );
+    } catch (err) {}
+
+    setIsLoading(false);
+  };
+
   const fetchData = async () => {
     setIsLoading(true);
 
@@ -156,14 +93,15 @@ export function RoundRobinTabs() {
       setIsFinished(statusInfo.group_stage_finished);
 
       try {
-        await fetchGroupStageData(eventId, nominationId);
+        await fetchGroupStageData();
       } catch (err) {
         console.log(error);
       }
 
       if (statusInfo.group_stage_finished) {
         try {
-          await fetchResultsData(eventId, nominationId);
+          await fetchResultsData();
+          await fetchTimeFinishedData();
         } catch {}
       }
     } catch (err) {
@@ -212,7 +150,7 @@ export function RoundRobinTabs() {
       children: (
         <MatchesGroupStage
           matches={matches}
-          isFinished={isFinished}
+          isFinished={isEnabled}
           isLoading={isLoading}
           error={error}
           fetchData={fetchData}

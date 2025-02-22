@@ -14,7 +14,7 @@ function FinishPlayoffModal({ isOpen, onOk, onCancel }) {
       okText={t("COMMON.YES")}
       cancelText={t("COMMON.NO")}
     >
-      {t("TOURNAMENTS.ARE_YOU_SURE_FINISH_PLAYOFF")}
+      {t("TOURNAMENTS.ARE_YOU_SURE_FINISH_OLYMPIC")}
     </Modal>
   );
 }

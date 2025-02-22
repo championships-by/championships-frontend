@@ -4,9 +4,9 @@ import "reactflow/dist/style.css";
 import clsx from "clsx";
 import { useMatches } from "@hooks";
 import { getTreeData } from "@utils";
-import { PlayoffMatchCard } from "@modules/judgment/groupStage/components";
+import { PlayoffMatchCard } from "@modules/judgment/olympic/components";
 
-import "@modules/judgment/groupStage/components/sass/playoff-tree.scss";
+import "@modules/judgment/olympic/components/sass/playoff-tree.scss";
 
 export function PlayoffTree() {
   const { leveledPlayoffMatches, handleEditScore, isPlayoffStageFinished } =

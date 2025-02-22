@@ -4,12 +4,12 @@ import { determinateTheWinner, isScoreZero, MatchResult } from "@utils";
 import { Handle, Position } from "reactflow";
 import { useMatches } from "@hooks";
 import clsx from "clsx";
-import "@modules/judgment/groupStage/components/sass/match-card.scss";
+import "@modules/judgment/olympic/components/sass/match-card.scss";
 
 export function PlayoffMatchCard({ data }) {
   const { matchIndex, team1, team2, onEditScore, lastCreatorEmail } = data;
   const { isPlayoffStageFinished, isPlayoffStageEditable } = useMatches();
-  const isEnabled = isPlayoffStageFinished && isPlayoffStageEditable;
+  const isEnabled = !isPlayoffStageFinished || isPlayoffStageEditable;
 
   const handleClick = (e) => {
     e.preventDefault();

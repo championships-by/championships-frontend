@@ -8,7 +8,7 @@ import Forbidden from "@components/forbidden/Forbidden";
 import Competencies from "@components/judgment/competencies/Competencies";
 import Judgment from "@components/judgment/events/JudgmentEvents";
 import EventSettings from "@components/judgment/eventSettings/EventSettings";
-import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
+import Olympic from "@components/judgment/olympic/Olympic";
 import RoundRobin from "@components/judgment/roundRobin/RoundRobin";
 import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
 import Logout from "@components/logout/Logout";
@@ -157,7 +157,7 @@ function App() {
                   />
                   <Route
                     path={ROUTER_ROUTES.JUDGMENT_OLYMPIC}
-                    element={<JudgmentGroupStage />}
+                    element={<Olympic />}
                   />
                   <Route
                     path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}

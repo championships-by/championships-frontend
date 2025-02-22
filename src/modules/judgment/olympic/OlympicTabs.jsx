@@ -90,7 +90,7 @@ export function GroupStageTabs() {
     },
     {
       key: "3",
-      label: t("NOMINATION_TYPES.PLAYOFF"),
+      label: t("COMMON.PLAYOFF"),
       children: <MatchesPlayoffStage />,
       disabled: !isGroupStageFinished,
     },

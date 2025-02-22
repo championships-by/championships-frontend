@@ -1,8 +1,8 @@
 import { MatchesProvider } from "@contexts/MatchesContext";
-import { GroupStageTabs } from "@modules/judgment/groupStage/GroupStageTabs";
+import { GroupStageTabs } from "@modules/judgment/olympic/OlympicTabs";
 import { useParams } from "react-router-dom";
 
-function JudgmentGroupStage() {
+function Olympic() {
   const { eventId, nominationId } = useParams();
   return (
     <MatchesProvider eventId={eventId} nominationId={nominationId}>
@@ -11,4 +11,4 @@ function JudgmentGroupStage() {
   );
 }
 
-export default JudgmentGroupStage;
+export default Olympic;

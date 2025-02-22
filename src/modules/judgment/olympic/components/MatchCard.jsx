@@ -2,7 +2,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { determinateTheWinner, isScoreZero, MatchResult } from "@utils";
 import { useMatches } from "@hooks";
 import clsx from "clsx";
-import "@modules/judgment/groupStage/components/sass/match-card.scss";
+import "@modules/judgment/olympic/components/sass/match-card.scss";
 
 export const MatchCard = ({
   id,

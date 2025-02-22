@@ -31,7 +31,7 @@ function CompetitionType({
     },
     {
       value: NOMINATIONS.OLYMPIC,
-      label: t("NOMINATION_TYPES.PLAYOFF"),
+      label: t("NOMINATION_TYPES.OLYMPIC"),
     },
     {
       value: NOMINATIONS.ROUND_ROBIN,
@@ -98,7 +98,7 @@ function CompetitionType({
                 {t("NOMINATION_TYPES_DESCRIPTIONS.CRITERIA")}
                 <br />
                 <br />
-                {t("NOMINATION_TYPES_DESCRIPTIONS.PLAYOFF")}
+                {t("NOMINATION_TYPES_DESCRIPTIONS.OLYMPIC")}
                 <br />
                 <br />
                 {t("NOMINATION_TYPES_DESCRIPTIONS.ROUND_ROBIN")}
