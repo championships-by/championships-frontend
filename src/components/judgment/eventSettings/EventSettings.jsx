@@ -389,7 +389,6 @@ function EventSettings() {
       try {
         eventApi.getEventByJudge(eventID).then((data) => {
           setEvent(data);
-
           const { event } = data;
 
           const values = {
@@ -409,6 +408,7 @@ function EventSettings() {
               holding_finish_date: event.holding_finish_date,
             },
             existing_logo_path: event.logo_path,
+            existing_rules_path: event.event_rules,
           };
           form.setFieldsValue(values);
 
@@ -575,6 +575,7 @@ function EventSettings() {
               required={false}
               onChange={onValuesChange}
               form={form}
+              existing={values.existing_rules_path}
             />
             <EventRegisterDate
               name="registration"
