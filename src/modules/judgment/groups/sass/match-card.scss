@@ -1,0 +1,63 @@
+@import "@src/sass/darkTheme/variables.scss";
+@import "@src/sass/lightTheme/variables.scss";
+
+.match-card {
+  width: 275px;
+  background-color: #f6f5f5;
+  display: flex;
+
+  p {
+    margin: 0;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  &__match-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px 0px 10px;
+  }
+
+  &__team-section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  &__team {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 10px 8px 10px;
+
+    &.active {
+      background-color: #1677ff;
+    }
+
+    &.active p {
+      color: white;
+    }
+  }
+
+  &__icon-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+    cursor: pointer;
+
+    &--edit-icon {
+      font-size: 24px;
+    }
+  }
+}
+
+.dark-theme .match-card {
+  background-color: $dark-gray;
+  color: $white;
+}
+
+.opaque-handle {
+  opacity: 0;
+}

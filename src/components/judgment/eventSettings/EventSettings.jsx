@@ -34,7 +34,8 @@ import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationS
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import CompitationModal from "./EventSettingsModal";
-import CompetitionModal from "@modules/judgment/events/CompetitionModal";
+import OlympicModal from "@modules/judgment/events/OlympicModal";
+import GroupsModal from "@modules/judgment/events/GroupsModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi } from "@api";
 import {
@@ -58,7 +59,8 @@ function EventSettings() {
   const [dataEvent, setEvent] = useState({});
   const [values, setValues] = useState({});
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [openTrophyModal, setTrophyModal] = useState(false);
+  const [isOlympicModalOpened, setOlympicModalOpened] = useState(false);
+  const [isGroupsModalOpened, setGroupsModalOpened] = useState(false);
   const [participantModal, setParticipantModal] = useState(false);
   const [competenciesModal, setCompetenciesModal] = useState(false);
   const [switchDisabled, setSwitchDisabled] = useState(true);
@@ -101,6 +103,8 @@ function EventSettings() {
             return t(NOMINATION_TYPES.CRITERIA);
           case NOMINATIONS.OLYMPIC:
             return t(NOMINATION_TYPES.OLYMPIC);
+          case NOMINATIONS.GROUP:
+            return t(NOMINATION_TYPES.GROUP);
           default:
             return record;
         }
@@ -287,6 +291,8 @@ function EventSettings() {
           case NOMINATIONS.OLYMPIC:
             navigate(ROUTES.JUDGMENT_OLYMPIC.PATH(eventID, nominationID));
             break;
+          case NOMINATIONS.GROUP:
+            navigate(ROUTES.JUDGMENT_GROUPS.PATH(eventID, nominationID));
           case NOMINATIONS.TIME:
             navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
             break;
@@ -301,8 +307,11 @@ function EventSettings() {
     }
 
     switch (competitionType) {
+      case NOMINATIONS.GROUP:
+        setGroupsModalOpened(true);
+        break;
       case NOMINATIONS.OLYMPIC:
-        setTrophyModal(true);
+        setOlympicModalOpened(true);
         break;
       default:
         Modal.confirm({
@@ -660,13 +669,20 @@ function EventSettings() {
         nominationId={selectedNomination}
         eventName={dataEvent?.event?.name}
       />
-      <CompetitionModal
-        isOpen={openTrophyModal}
-        onOk={() => setTrophyModal(false)}
-        onCancel={() => setTrophyModal(false)}
+      <OlympicModal
+        isOpen={isOlympicModalOpened}
+        onOk={() => setOlympicModalOpened(false)}
+        onCancel={() => setOlympicModalOpened(false)}
         name={t("EVENTS.PLAYOFF_SETTINGS")}
         nominationID={dataNominationID}
-      ></CompetitionModal>
+      ></OlympicModal>
+      <GroupsModal
+        isOpen={isGroupsModalOpened}
+        onOk={() => setGroupsModalOpened(false)}
+        onCancel={() => setGroupsModalOpened(false)}
+        name={t("EVENTS.GROUPS_SETTINGS")}
+        nominationID={dataNominationID}
+      ></GroupsModal>
       <ParticipantModal
         isOpen={participantModal}
         onOk={() => setParticipantModal(false)}

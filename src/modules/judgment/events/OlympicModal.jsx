@@ -13,7 +13,7 @@ import { ROUTES } from "@constants";
 import { competenciesApi } from "@api";
 import { useTranslation } from "react-i18next";
 
-function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
+function OlympicModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const { t } = useTranslation();
   const [groupCount, setGroupCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,4 +92,4 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
   );
 }
 
-export default CompetitionModal;
+export default OlympicModal;

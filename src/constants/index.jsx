@@ -160,7 +160,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_OLYMPIC: ":eventId/:nominationId/olympic",
   JUDGMENT_TIME_MATCHES: ":eventId/:nominationId/time-matches",
   JUDGMENT_CRITERIA: ":eventId/:nominationId/criteria",
-  JUDGMENT_GROUPS: ":eventid/:nominationId/groups",
+  JUDGMENT_GROUPS: ":eventId/:nominationId/groups",
 };
 
 export const EventFilters = {
