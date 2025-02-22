@@ -234,7 +234,8 @@
     "REGISTRATION_NOT_STARTED": "Рэгістрацыя яшчэ не пачалася",
     "NUMBER_OF_PARTICIPANTS": "Колькасць удзельнікаў",
     "DOWNLOAD_EXCEL": "Спампаваць табліцу ў фармаце Excel",
-    "EVENT_DELETION_SUCCESS": "Мерапрыемства паспяхова выдалена"
+    "EVENT_DELETION_SUCCESS": "Мерапрыемства паспяхова выдалена",
+    "TIME_UNTIL_PREPOSITION": "па"
   },
   "PARTICIPANTS": {
     "CARD_OF_PARTICIPANT": "Картка ўдзельніка",
