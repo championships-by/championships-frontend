@@ -272,6 +272,7 @@ export const yaShareLink = "https://yastatic.net/share2/share.js";
 export const defaultTime = "00:00.000";
 
 export const defaultFormat = "mm:ss.SSS";
+export const extendedDateFormat = "DD MMMM YYYY";
 
 export const TimeMatchEvents = {
   UPDATE_TABLE_DATA: "updateTableData",
