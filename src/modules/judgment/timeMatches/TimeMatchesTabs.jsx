@@ -6,7 +6,9 @@ import {
   transformStageStatus,
   transformTimeMatchesData,
   downloadProtocol,
+  isStillEditable,
 } from "@utils";
+import { EditOutlined, CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import { Button, message, Tabs, Flex } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -27,6 +29,31 @@ export const TimeMatchesTabs = () => {
   const [isErrorOccurred, setIsErrorOccurred] = useState(false);
   const [isStageFinished, setIsStageFinished] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("1");
+  const [isEditModeEnabled, setIsEditModeEnabled] = useState(false);
+  const [isEditable, setIsEditable] = useState(false);
+
+  const onClickEditButton = () => {
+    setIsEditModeEnabled(true);
+  };
+
+  const onClickCancelEditButton = () => {
+    setIsEditModeEnabled(false);
+    setIsDataLoaded(false);
+  };
+
+  const onClickApplyEditButton = async () => {
+    try {
+      await handleCompleteStage();
+      setIsEditModeEnabled(false);
+    } catch {}
+  };
+
+  const onClickCompleteStage = async () => {
+    try {
+      await handleCompleteStage();
+      message.info(t("MESSAGES.EDITING_INFO"));
+    } catch {}
+  };
 
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
     setTimeMatches((prev) =>
@@ -58,33 +85,32 @@ export const TimeMatchesTabs = () => {
   }, []);
 
   const handleCompleteStage = useCallback(async () => {
-    try {
-      if (!isTimeMatchesFilled(timeMatches)) {
-        message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
-        return;
-      }
+    if (!isTimeMatchesFilled(timeMatches)) {
+      message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
+      return;
+    }
 
-      const timeMatchData = timeMatches.flatMap((timeMatch) =>
-        timeMatch.attempts.map(({ id, result, isDisqualified }) => ({
-          nomination_event: {
-            event_id: eventId,
-            nomination_id: nominationId,
-          },
-          race_round_id: id,
-          result: !result && isDisqualified ? "00:00.000" : result,
-        }))
-      );
+    const timeMatchData = timeMatches.flatMap((timeMatch) =>
+      timeMatch.attempts.map(({ id, result, isDisqualified }) => ({
+        nomination_event: {
+          event_id: eventId,
+          nomination_id: nominationId,
+        },
+        race_round_id: id,
+        result: !result && isDisqualified ? "00:00.000" : result,
+      }))
+    );
 
-      await timeMatchesApi.setTimeMatch(timeMatchData);
+    await timeMatchesApi.setTimeMatch(timeMatchData);
 
-      await competenciesApi.finishTimeStage({
-        event_id: eventId,
-        nomination_id: nominationId,
-      });
+    await competenciesApi.finishTimeStage({
+      event_id: eventId,
+      nomination_id: nominationId,
+    });
 
-      setIsStageFinished(true);
-      setActiveTabKey("2");
-    } catch (error) {}
+    setIsStageFinished(true);
+    setActiveTabKey("2");
+    setIsDataLoaded(false);
   }, [eventId, nominationId, timeMatches]);
 
   const handleDownload = async () => {
@@ -105,8 +131,8 @@ export const TimeMatchesTabs = () => {
             editable={
               stageStatus.registrationFinished &&
               stageStatus.tournamentStarted &&
-              !stageStatus.tournamentFinished &&
-              !isStageFinished
+              ((!stageStatus.tournamentFinished && !isStageFinished) ||
+                isEditModeEnabled)
             }
             timeMatches={timeMatches}
             isLoading={isLoading}
@@ -142,6 +168,7 @@ export const TimeMatchesTabs = () => {
       stageStatus.tournamentStarted,
       timeMatches,
       isStageFinished,
+      isEditModeEnabled,
     ]
   );
 
@@ -156,21 +183,35 @@ export const TimeMatchesTabs = () => {
       Promise.all([
         competenciesApi.getNominationEventInfo(params),
         timeMatchesApi.getTimeMatches(eventId, nominationId),
+        competenciesApi.getTimeAfterFinishing(params),
+        competenciesApi.isJudge(params),
       ])
-        .then(([stageStatusResponse, timeMatchesResponse]) => {
-          const transformedStageStatus =
-            transformStageStatus(stageStatusResponse);
-          setStageStatus(transformedStageStatus);
+        .then(
+          ([
+            stageStatusResponse,
+            timeMatchesResponse,
+            timeAfterFinishingResponse,
+            isJudgeResponse,
+          ]) => {
+            const transformedStageStatus =
+              transformStageStatus(stageStatusResponse);
+            setStageStatus(transformedStageStatus);
 
-          if (transformedStageStatus.tournamentFinished) {
-            setIsStageFinished(true);
+            if (transformedStageStatus.tournamentFinished) {
+              setIsStageFinished(true);
+            }
+            const transformedTimeMatches = transformTimeMatchesData(
+              timeMatchesResponse.data
+            );
+
+            setTimeMatches(transformedTimeMatches);
+
+            setIsEditable(
+              isStillEditable(timeAfterFinishingResponse.data.stage) &&
+                isJudgeResponse.data
+            );
           }
-          const transformedTimeMatches = transformTimeMatchesData(
-            timeMatchesResponse.data
-          );
-
-          setTimeMatches(transformedTimeMatches);
-        })
+        )
         .catch((error) => {
           if (error.response && error.response.status === 404) {
             message.error(t("MESSAGES.ERROR"));
@@ -184,6 +225,44 @@ export const TimeMatchesTabs = () => {
     }
   }, [eventId, nominationId, isDataLoaded, isStageFinished]);
 
+  const buttonsForUnfinishedStage = (
+    <Button type="primary" onClick={onClickCompleteStage}>
+      {t("COMMON.COMPLETE_STAGE")}
+    </Button>
+  );
+
+  const buttonsForFinishedStage = (
+    <Flex gap="middle">
+      {isEditable &&
+        (isEditModeEnabled ? (
+          <Flex gap="small">
+            <Button onClick={onClickCancelEditButton}>
+              <Flex gap="small">
+                <CloseOutlined />
+                {t("COMMON.CANCEL")}
+              </Flex>
+            </Button>
+            <Button onClick={onClickApplyEditButton}>
+              <Flex gap="small">
+                <CheckOutlined />
+                {t("COMMON.APPLY")}
+              </Flex>
+            </Button>
+          </Flex>
+        ) : (
+          <Button onClick={onClickEditButton}>
+            <Flex gap="small">
+              <EditOutlined />
+              {t("COMMON.EDIT")}
+            </Flex>
+          </Button>
+        ))}
+      <Button type="primary" onClick={handleDownload}>
+        {t("COMMON.FINAL_PROTOCOL")}
+      </Button>
+    </Flex>
+  );
+
   return (
     <Flex vertical gap="middle">
       <Tabs
@@ -191,16 +270,9 @@ export const TimeMatchesTabs = () => {
         onChange={setActiveTabKey}
         items={items}
         tabBarExtraContent={{
-          right: (
-            <Button
-              onClick={isStageFinished ? handleDownload : handleCompleteStage}
-              type="primary"
-            >
-              {isStageFinished
-                ? t("COMMON.FINAL_PROTOCOL")
-                : t("COMMON.COMPLETE_STAGE")}
-            </Button>
-          ),
+          right: isStageFinished
+            ? buttonsForFinishedStage
+            : buttonsForUnfinishedStage,
         }}
       />
       {isStageFinished && <ReturnButton />}

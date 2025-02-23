@@ -272,6 +272,7 @@ export const yaShareLink = "https://yastatic.net/share2/share.js";
 export const defaultTime = "00:00.000";
 
 export const defaultFormat = "mm:ss.SSS";
+export const extendedDateFormat = "DD MMMM YYYY";
 
 export const TimeMatchEvents = {
   UPDATE_TABLE_DATA: "updateTableData",
@@ -325,3 +326,5 @@ export const MAX_TEXTAREA_LENGTH = 1000;
 export const TELEGRAM_LINK = "https://t.me/championshipsby";
 
 export const medals = [GoldMedal, SilverMedal, BronzeMedal];
+
+export const RESULTS_EDITABILITY_MINUTES = 15;
