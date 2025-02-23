@@ -42,6 +42,14 @@ function Participants() {
     }
   };
 
+  const onClickGlobalSearchModal = () => {
+    setIsGlobalSearchModalOpen(true);
+  };
+
+  const onCloseGlobalSearchModal = () => {
+    setIsGlobalSearchModalOpen(false);
+  };
+
   const onOk = () => {
     setIsAddParticipantModalOpen(false);
 
@@ -75,10 +83,7 @@ function Participants() {
                 >
                   {t("PARTICIPANTS.CREATE_PARTICIPANT")}
                 </Button>
-                <Button
-                  type="primary"
-                  onClick={() => setIsGlobalSearchModalOpen(true)}
-                >
+                <Button type="primary" onClick={onClickGlobalSearchModal}>
                   {t("COMMON.SYSTEM_WIDE_SEARCH")}
                 </Button>
               </Flex>
@@ -100,7 +105,7 @@ function Participants() {
       />
       <ParticipantsGlobalSearchModal
         isOpen={isGlobalSearchModalOpen}
-        onClose={() => setIsGlobalSearchModalOpen(false)}
+        onClose={onCloseGlobalSearchModal}
       />
     </>
   );

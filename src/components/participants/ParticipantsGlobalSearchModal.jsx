@@ -12,7 +12,7 @@ function ParticipantsGlobalSearchModal({ isOpen, onClose }) {
   const { t } = useTranslation();
   const [options, setOptions] = useState([]);
 
-  const search = async (value) => {
+  const onSearch = debounce(async (value) => {
     try {
       const response = await participantApi.getParticipantsInSystem({
         name: value,
@@ -29,10 +29,6 @@ function ParticipantsGlobalSearchModal({ isOpen, onClose }) {
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const onSearch = debounce((value) => {
-    search(value);
   }, 300);
 
   const onSelect = (value, option) => {
