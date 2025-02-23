@@ -5,9 +5,11 @@ import { useTranslation } from "react-i18next";
 import "react-quill/dist/quill.snow.css";
 import "./sass/textEditor.scss";
 
-function TextEditor({ value, onChange }) {
+function TextEditor({ value, onChange, placeholder}) {
   const { t } = useTranslation();
-
+  if(placeholder == null){
+    placeholder=t("EVENTS.ENTER_EVENT_DESCRIPTION");
+  }
   useLayoutEffect(() => {
     const styleSheet = document.styleSheets[0];
 
@@ -39,7 +41,7 @@ function TextEditor({ value, onChange }) {
     <ReactQuill
       value={value}
       onChange={onChange}
-      placeholder={t("EVENTS.ENTER_EVENT_DESCRIPTION")}
+      placeholder={placeholder}
       className="quill"
       modules={{
         toolbar: [
