@@ -2,7 +2,11 @@ import { useEffect, useState, useCallback } from "react";
 import { Flex, Select, Space, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { participantApi } from "@api";
-import { FILTER_OPTION, changeDateFormat } from "@utils";
+import {
+  FILTER_OPTION,
+  changeDateFormat,
+  transformParticipantsInSystemData,
+} from "@utils";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
 
@@ -23,17 +27,6 @@ function TeamParticipantsInput({ name, mode, disabled }) {
     },
   ];
 
-  const transformData = (data) => {
-    return data?.map((item) => {
-      const fullName = `${item.second_name} ${item.first_name} ${item.third_name}`;
-      const birthDate = item.birth_date;
-      return {
-        value: item.id,
-        label: `${fullName}, ${changeDateFormat(birthDate)}`,
-      };
-    });
-  };
-
   const fetchParticipants = useCallback(
     debounce((searchValue) => {
       if (!searchValue.trim()) {
@@ -43,7 +36,7 @@ function TeamParticipantsInput({ name, mode, disabled }) {
       try {
         participantApi
           .getParticipantsInSystem({ name: searchValue })
-          .then((data) => setOptions(transformData(data)));
+          .then((data) => setOptions(transformParticipantsInSystemData(data)));
       } catch {}
     }, 300),
     []
