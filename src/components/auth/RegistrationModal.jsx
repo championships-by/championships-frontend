@@ -72,7 +72,8 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
 
   const handleValidation = (status) => {
     setAreCaptchaAccepted(status);
-  }
+  };
+
 
   return (
     <Modal
