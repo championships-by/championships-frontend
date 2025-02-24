@@ -37,7 +37,11 @@ function EventRequirements({ name, value, form, onChange: onChangeBase }) {
         <Typography.Text>
           {t("COMMON.WHAT_NEED_TO_PARTICIPATE")}
         </Typography.Text>
-        <TextEditor value={value} onChange={onChange} placeholder={t("COMMON.ENTER_REQUIREMENTS")}/>
+        <TextEditor
+          value={value}
+          onChange={onChange}
+          placeholder={t("COMMON.ENTER_REQUIREMENTS")}
+        />
       </Flex>
     </FormItem>
   );
