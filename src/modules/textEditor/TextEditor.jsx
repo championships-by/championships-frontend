@@ -8,8 +8,6 @@ import "./sass/textEditor.scss";
 function TextEditor({ value, onChange, placeholder }) {
   const { t } = useTranslation();
 
-  placeholder = placeholder || t("EVENTS.ENTER_EVENT_DESCRIPTION");
-
   useLayoutEffect(() => {
     const styleSheet = document.styleSheets[0];
 
@@ -41,7 +39,7 @@ function TextEditor({ value, onChange, placeholder }) {
     <ReactQuill
       value={value}
       onChange={onChange}
-      placeholder={placeholder}
+      placeholder={placeholder || t("EVENTS.ENTER_EVENT_DESCRIPTION")}
       className="quill"
       modules={{
         toolbar: [
