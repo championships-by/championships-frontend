@@ -28,6 +28,7 @@ import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
 import EventDescription from "@modules/judgment/events/EventDescription";
 import EventRequirements from "@modules/judgment/events/EventRequirements";
 import EventEmail from "@modules/judgment/events/EventEmail";
+import EventOrganizerName from "@modules/judgment/events/EventOrganizerName";
 import EventLevel from "@modules/judgment/events/EventLevel";
 import EventPlace from "@modules/judgment/events/EventPlace";
 import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationSwitch";
@@ -567,6 +568,10 @@ function EventSettings() {
             <EventEmail
               name="participant_question_email"
               value={values.participant_question_email}
+            />
+            <EventOrganizerName
+              name="organizer_name"
+              value={values.organizer_name}
             />
             <EventPlace name="event_place" value={values.event_place} />
             <EventRegulation
