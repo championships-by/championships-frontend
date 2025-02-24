@@ -14,11 +14,13 @@ import ParticipantModal from "./ParticipantModal";
 import ParticipantsTable from "./ParticipantsTable";
 import SearchInput from "@modules/search/SearchInput";
 import { useTranslation } from "react-i18next";
+import ParticipantsGlobalSearchModal from "./ParticipantsGlobalSearchModal";
 
 import "./sass/participants.scss";
 
 function Participants() {
   const { t } = useTranslation();
+  const [isGlobalSearchModalOpen, setIsGlobalSearchModalOpen] = useState(false);
   const [isAddParticipantModalOpen, setIsAddParticipantModalOpen] =
     useState(false);
   const dispatch = useDispatch();
@@ -38,6 +40,14 @@ function Participants() {
     } else {
       dispatch(getParticipant());
     }
+  };
+
+  const onClickGlobalSearchModal = () => {
+    setIsGlobalSearchModalOpen(true);
+  };
+
+  const onCloseGlobalSearchModal = () => {
+    setIsGlobalSearchModalOpen(false);
   };
 
   const onOk = () => {
@@ -73,6 +83,9 @@ function Participants() {
                 >
                   {t("PARTICIPANTS.CREATE_PARTICIPANT")}
                 </Button>
+                <Button type="primary" onClick={onClickGlobalSearchModal}>
+                  {t("COMMON.SYSTEM_WIDE_SEARCH")}
+                </Button>
               </Flex>
             </AdminPanelControls>
           </Flex>
@@ -89,6 +102,10 @@ function Participants() {
         isOpen={isAddParticipantModalOpen}
         onOk={onOk}
         onCancel={onCancel}
+      />
+      <ParticipantsGlobalSearchModal
+        isOpen={isGlobalSearchModalOpen}
+        onClose={onCloseGlobalSearchModal}
       />
     </>
   );

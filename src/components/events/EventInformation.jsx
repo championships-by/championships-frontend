@@ -2,7 +2,13 @@ import { InfoCircleOutlined, LinkOutlined } from "@ant-design/icons";
 import { competenciesApi, eventApi } from "@api";
 import noLogo from "@assets/img/auth-background.png";
 import Loader from "@components/loader/Loader";
-import { NOMINATIONS, ROUTES, url, yaShareLink } from "@constants";
+import {
+  extendedDateFormat,
+  NOMINATIONS,
+  ROUTES,
+  url,
+  yaShareLink,
+} from "@constants";
 import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import {
   Breadcrumb,
@@ -14,10 +20,12 @@ import {
   Space,
   Table,
   Typography,
+  Flex,
 } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
 
 import "./sass/event-information.scss";
 
@@ -126,9 +134,9 @@ function EventInformation() {
     });
   };
 
-  const finishDate = new Date(dataEvent.registration_finish_date);
-  const startDate = new Date(dataEvent.registration_start_date);
-  const now = new Date();
+  const finishDate = dayjs(dataEvent.registration_finish_date);
+  const startDate = dayjs(dataEvent.registration_start_date);
+  const now = dayjs();
 
   return (
     <div className="events__event-information__container">
@@ -250,14 +258,18 @@ function EventInformation() {
           >
             <Col xs={24} sm={24} md={12}>
               {finishDate > now && startDate < now ? (
-                <Button
-                  onClick={() =>
-                    navigate(ROUTES.EVENTS_REGISTRATION.PATH(dataEvent.id))
-                  }
-                  type="primary"
-                >
-                  {t("EVENTS.PARTICIPANT_REGISTRATION")}
-                </Button>
+                <Flex gap="small" align="center">
+                  <Button
+                    onClick={() =>
+                      navigate(ROUTES.EVENTS_REGISTRATION.PATH(dataEvent.id))
+                    }
+                    type="primary"
+                  >
+                    {t("EVENTS.PARTICIPANT_REGISTRATION")}
+                  </Button>
+                  {t("EVENTS.TIME_UNTIL_PREPOSITION")}{" "}
+                  {finishDate.format(extendedDateFormat)}
+                </Flex>
               ) : finishDate > now ? (
                 <Typography.Text>
                   {t("EVENTS.REGISTRATION_NOT_STARTED")}
