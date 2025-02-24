@@ -718,6 +718,21 @@ export const getPlace = (index, maxPlace) => {
   return index + (maxPlace ? maxPlace - 1 : 0);
 };
 
+export const transformParticipantsInSystemData = (data) => {
+  return data?.map((item) => {
+    const fullName = `${item.second_name} ${item.first_name} ${item.third_name}`;
+    const birthDate = item.birth_date;
+    return {
+      value: item.id,
+      label: `${fullName}, ${changeDateFormat(birthDate)}`,
+    };
+  });
+};
+
+export const getParticipantLink = (id) => {
+  return url + ROUTES.PARTICIPANT_INFORMATION.PATH(id);
+};
+
 export const getMinutesAfterFinishing = (endTime) => {
   return dayjs.utc().diff(endTime, "minutes");
 };

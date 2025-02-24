@@ -61,7 +61,7 @@
     "@reduxjs/toolkit": "2.2.7",
     "@yandex/smart-captcha": "2.6.3",
     "antd": "5.14.2",
-    "axios": "1.7.3",
+    "axios": "1.7.4",
     "babel-eslint": "10.1.0",
     "clsx": "2.1.1",
     "dayjs": "1.11.12",
