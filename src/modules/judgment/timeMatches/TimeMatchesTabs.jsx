@@ -55,6 +55,13 @@ export const TimeMatchesTabs = () => {
     } catch {}
   };
 
+  const onClickSendResults = async () => {
+    try {
+      await handleSendResults();
+      message.success(t("MESSAGES.SUCCESS_SEND_RESULTS"));
+    } catch {}
+  };
+
   const handleTimeChange = useCallback((id, time, isDisqualified) => {
     setTimeMatches((prev) =>
       prev.map((timeMatch) => {
@@ -84,7 +91,7 @@ export const TimeMatchesTabs = () => {
     );
   }, []);
 
-  const handleCompleteStage = useCallback(async () => {
+  const handleSendResults = useCallback(async () => {
     if (!isTimeMatchesFilled(timeMatches)) {
       message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
       return;
@@ -102,7 +109,9 @@ export const TimeMatchesTabs = () => {
     );
 
     await timeMatchesApi.setTimeMatch(timeMatchData);
+  });
 
+  const handleCompleteStage = useCallback(async () => {
     await competenciesApi.finishTimeStage({
       event_id: eventId,
       nomination_id: nominationId,
@@ -180,6 +189,8 @@ export const TimeMatchesTabs = () => {
       params.append("event_id", eventId);
       params.append("nomination_id", nominationId);
 
+      let transformedTimeMatches;
+
       Promise.all([
         competenciesApi.getNominationEventInfo(params),
         timeMatchesApi.getTimeMatches(eventId, nominationId),
@@ -199,10 +210,17 @@ export const TimeMatchesTabs = () => {
 
             if (transformedStageStatus.tournamentFinished) {
               setIsStageFinished(true);
+
+              transformedTimeMatches = transformTimeMatchesData(
+                timeMatchesResponse.data,
+                false
+              );
+            } else {
+              transformedTimeMatches = transformTimeMatchesData(
+                timeMatchesResponse.data,
+                true
+              );
             }
-            const transformedTimeMatches = transformTimeMatchesData(
-              timeMatchesResponse.data
-            );
 
             setTimeMatches(transformedTimeMatches);
 
@@ -226,9 +244,14 @@ export const TimeMatchesTabs = () => {
   }, [eventId, nominationId, isDataLoaded, isStageFinished]);
 
   const buttonsForUnfinishedStage = (
-    <Button type="primary" onClick={onClickCompleteStage}>
-      {t("COMMON.COMPLETE_STAGE")}
-    </Button>
+    <Flex gap="small">
+      <Button type="primary" onClick={onClickSendResults}>
+        {t("COMMON.SEND_RESULTS")}
+      </Button>
+      <Button type="primary" onClick={onClickCompleteStage}>
+        {t("COMMON.COMPLETE_STAGE")}
+      </Button>
+    </Flex>
   );
 
   const buttonsForFinishedStage = (
