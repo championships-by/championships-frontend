@@ -141,7 +141,7 @@ export const transformCriteriaResultsData = (criteriaResults) =>
     totalScore: team.criterias.reduce((acc, obj) => (acc += obj.score), 0),
   }));
 
-export const transformTimeMatchesData = (rounds) => {
+export const transformTimeMatchesData = (rounds, empty) => {
   return rounds.map((round, index) => ({
     key: `round-${index + 1}`,
     teamName: round.team_data.team_name,
@@ -151,15 +151,16 @@ export const transformTimeMatchesData = (rounds) => {
     ),
     attempts: round.attempts.map(({ id, result }) => ({
       id,
-      result,
+      result: !empty ? result : null,
       isDisqualified: false,
     })),
-    bestAttempt: round.best_attempt
-      ? {
-          id: round.best_attempt.id,
-          result: round.best_attempt.result,
-        }
-      : null,
+    bestAttempt:
+      round.best_attempt && !empty
+        ? {
+            id: round.best_attempt.id,
+            result: round.best_attempt.result,
+          }
+        : null,
   }));
 };
 
