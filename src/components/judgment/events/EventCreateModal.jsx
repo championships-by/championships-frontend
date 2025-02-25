@@ -2,6 +2,7 @@ import { eventApi } from "@api";
 import EventDate from "@modules/judgment/events/EventDate";
 import EventDescription from "@modules/judgment/events/EventDescription";
 import EventEmail from "@modules/judgment/events/EventEmail";
+import EventOrganizerName from "@modules/judgment/events/EventOrganizerName";
 import EventLevel from "@modules/judgment/events/EventLevel";
 import EventLogo from "@modules/judgment/events/EventLogo";
 import EventName from "@modules/judgment/events/EventName";
@@ -126,6 +127,10 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
         <EventEmail
           name="participant_question_email"
           value={values.participant_question_email}
+        />
+        <EventOrganizerName
+          name="organizer_name"
+          value={values.organizer_name}
         />
         <EventPlace name="event_place" value={values.event_place} />
         <EventRegulation

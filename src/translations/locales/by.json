@@ -77,6 +77,8 @@
     "REGLAMENT": "Рэгламент",
     "RESULTS": "Вынікі",
     "ORGANIZER": "Арганізатар",
+    "ORGANIZER_NAME": "Арганізатары",
+    "ENTER_ORGANIZER_NAME": "Увядзіце арганізатараў мерапрыемства",
     "LEVEL_OF_EVENT": "Узровень мерапрыемства",
     "CHOOSE_LEVEL_OF_EVENT": "Абярыце ўзровень мерапрыемства",
     "WHAT_NEED_TO_PARTICIPATE": "Што трэба для ўдзелу",
@@ -122,6 +124,7 @@
     "TOTAL": "Усяго",
     "TABLE": "Табліца",
     "FINAL_PROTOCOL": "Канчатковы пратакол",
+    "SEND_RESULTS": "Адправіць вынікі",
     "COMPLETE_STAGE": "Завяршыць этап",
     "COMPLETE_GROUP_STAGE": "Завяршыць групавы этап",
     "COMPLETE_PLAY_OFF_STAGE": "Завяршыць плэй-оф",
@@ -360,7 +363,8 @@
     "YOU_NOT_JUDGE": "Вы не можаце завяршыць стадыю, паколькі не з'яўляецеся суддзёй",
     "NOTICE_SUCCESS_SEND": "Ліст паспяхова адпраўлены",
     "SUCCESS_EDIT_TEAM_PARTICIPANTS": "Удзельнікі каманды паспяхова зменены",
-    "EDITING_INFO": "Вы можаце ўносіць праўкі на працягу 15 хвілін пасля завяршэння этапу"
+    "EDITING_INFO": "Вы можаце ўносіць праўкі на працягу 15 хвілін пасля завяршэння этапу",
+    "SUCCESS_SEND_RESULTS": "Вынікі паспяхова адпраўлены"
   },
   "RULES": {
     "ENTER_EMAIL": "Калі ласка, увядзіце Email",
@@ -393,6 +397,7 @@
     "PLEASE_ENTER_EMAIL_FOR_QUESTIONS": "Калі ласка, увядзіце email для пытанняў удзельнікаў",
     "PLEASE_CHOOSE_LEVEL_OF_EVENT": "Калі ласка, выберыце ўзровень мерапрыемства",
     "PLEASE_UPLOAD_LOGO": "Калі ласка, загрузіце лагатып",
+    "PLEASE_ENTER_ORGANIZER_NAME": "Калі ласка, увядзіце арганізатараў",
     "ENTER_CORRECT_EVENT_NAME": "Увядзіце карэктную назву мерапрыемства",
     "PLEASE_ENTER_EVENT_NAME": "Калі ласка, увядзіце назву мерапрыемства",
     "ENTER_CORRECT_EVENT_PLACE": "Увядзіце карэктнае месца правядзення мерапрыемства",
