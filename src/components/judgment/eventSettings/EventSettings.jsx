@@ -34,6 +34,7 @@ import EventPlace from "@modules/judgment/events/EventPlace";
 import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationSwitch";
 import EventRegulation from "@modules/judgment/events/EventRegulation";
 import EventLogo from "@modules/judgment/events/EventLogo";
+import EventPhotoGallery from "@modules/judgment/events/EventPhotoGallery";
 import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
@@ -645,6 +646,7 @@ function EventSettings() {
             locale={getTranslation(tableLocale, t)}
             pagination={false}
           />
+          <EventPhotoGallery eventId={eventID} />
         </Col>
       </Row>
       <CompitationModal
