@@ -49,7 +49,7 @@
     "sass-loader": "14.1.1",
     "webpack": "5.90.3",
     "webpack-cli": "5.1.4",
-    "webpack-dev-server": "5.0.2"
+    "webpack-dev-server": "^5.0.2"
   },
   "lint-staged": {
     "*": [
@@ -74,9 +74,10 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-google-recaptcha": "3.1.0",
+
     "react-helmet": "6.1.0",
     "react-i18next": "15.1.0",
-    "react-image-lightbox": "^5.1.4",
+    "react-phone-number-input": "3.4.3",
     "react-phone-number-input": "3.4.3",
     "react-photo-gallery": "^8.0.0",
     "react-quill": "2.0.0",
