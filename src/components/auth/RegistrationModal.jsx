@@ -95,7 +95,7 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
         <UserLastnameInput name="second_name" />
         <UserFirstnameInput name="first_name" />
         <UserPatronymicInput name="third_name" />
-        <UserEmailInput name="email" />
+        <UserEmailInput name="email" disabled={false} isRegistration={true} />
         <UserPasswordInput required name="password" />
         <UserPasswordConfirmationInput
           required
