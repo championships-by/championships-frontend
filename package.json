@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CultDog/TournamentFrontend.git"
+    "url": "git+https://github.com/championships-by/championships-frontend.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CultDog/TournamentFrontend/issues"
+    "url": "https://github.com/championships-by/championships-frontend/issues"
   },
-  "homepage": "https://github.com/CultDog/TournamentFrontend#readme",
+  "homepage": "https://github.com/championships-by/championships-frontend#readme",
   "devDependencies": {
     "@babel/cli": "7.23.9",
     "@babel/core": "7.23.9",
