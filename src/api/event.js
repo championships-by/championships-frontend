@@ -79,4 +79,19 @@ export const eventApi = {
         "Content-Type": "multipart/form-data",
       },
     }),
+  getEventPhotos: (event_id) =>
+    instance.get(`/event/get_event_photos`, { params: { event_id } }),
+
+  uploadEventPhotos: (event_id, formData) =>
+    instance.post(`/event/upload_event_photos?event_id=${event_id}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    }),
+  deleteEventPhotos: (event_id, photos) => {
+    instance.delete(
+      `/event/delete_event_photos?photos=${photos}&event_id=${event_id}`
+    );
+  },
 };
