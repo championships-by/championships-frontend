@@ -7,13 +7,25 @@ import { participantApi } from "@api";
 
 import "./sass/user.scss";
 
-function UserEmailInput({ name, disabled }) {
+function UserEmailInput({ name, disabled, checkEmailAvailability = false }) {
   const { t } = useTranslation();
 
   const handleKeyPress = (event) => {
     if (event.key === " ") {
       event.preventDefault();
     }
+  };
+
+  const asyncEmailValidator = async (rule, value) => {
+    if (checkEmailAvailability) {
+      const isEmailTaken = await participantApi.checkEmail(value);
+
+      if (isEmailTaken) {
+        return Promise.reject(new Error(t("RULES.EMAIL_TAKEN")));
+      }
+    }
+
+    return Promise.resolve();
   };
 
   return (
@@ -34,15 +46,7 @@ function UserEmailInput({ name, disabled }) {
             message: t("RULES.INVALID_EMAIL"),
           },
           {
-            asyncValidator: async (rule, value) => {
-              const isEmailTaken = await participantApi.checkEmail(value);
-
-              if (isEmailTaken) {
-                return Promise.reject(new Error(t("RULES.EMAIL_TAKEN")));
-              }
-
-              return Promise.resolve();
-            },
+            asyncValidator: asyncEmailValidator,
           },
         ]}
         className="user__email-input__formitem"
