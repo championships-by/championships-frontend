@@ -235,12 +235,12 @@
   justify-content: center;
   height: 100%;
   text-align: center;
-  border: 1px dashed #d9d9d9;
+  border: 1px dashed $disabled-color;
   background-color: rgba(0, 0, 0, 0.02);
   border-radius: 8px;
 }
 .upload_photo_to_gallery:hover {
-  border-color: #276af5;
+  border-color: $dark-blue;
 }
 .photo-item {
   position: relative;
@@ -278,16 +278,16 @@
   width: 35px;
   height: 35px;
   cursor: pointer;
-  color: #fff;
+  color: $white;
   background: rgba(0, 0, 0, 0.5);
   padding: 5px;
   border-radius: 5px;
 }
 
 .icon.delete {
-  color: #fff;
+  color: $white;
 }
 
 .icon:hover {
-  color: #ffffff83;
+  color: $dark-gray;
 }

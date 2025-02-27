@@ -5,6 +5,57 @@ import { UploadOutlined, EyeOutlined, DeleteOutlined } from "@ant-design/icons";
 import { eventApi } from "@api";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
+import { PHOTO_FILE_PATH } from "@constants";
+
+async function fetchPhotos(eventId, setPhotos) {
+  const response = await eventApi.getEventPhotos(eventId);
+  const photoNames = response.data;
+
+  const photoObjects = photoNames.map((filename) => ({
+    src: `${PHOTO_FILE_PATH}${eventId}/${filename}`,
+    filename,
+  }));
+
+  setPhotos(photoObjects);
+}
+
+function openLightbox(index, setCurrentImage, setIsLightboxOpen) {
+  setCurrentImage(index);
+  setIsLightboxOpen(true);
+}
+
+function closeLightbox(setIsLightboxOpen) {
+  setIsLightboxOpen(false);
+}
+
+async function deletePhoto(eventId, filename, setPhotos, t) {
+  await eventApi.deleteEventPhotos(eventId, filename);
+  message.success(t("COMMON.PHOTO_DELETE-SUCCESS"));
+  setPhotos((prevPhotos) =>
+    prevPhotos.filter((photo) => photo.filename !== filename)
+  );
+}
+
+function handleUploadClick(eventId, t, fetchPhotos, setPhotos) {
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "image/*";
+  fileInput.multiple = true;
+  fileInput.onchange = async (event) => {
+    const files = event.target.files;
+    if (!files.length) return;
+
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append("photos", file);
+    }
+
+    await eventApi.uploadEventPhotos(eventId, formData);
+    message.success(t("COMMON.PHOTO_UPLOAD_SUCCESS"));
+    fetchPhotos(eventId, setPhotos);
+  };
+  fileInput.click();
+}
 
 function EventPhotoGallery({ eventId }) {
   const { t } = useTranslation();
@@ -13,58 +64,8 @@ function EventPhotoGallery({ eventId }) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   useEffect(() => {
-    fetchPhotos();
+    fetchPhotos(eventId, setPhotos);
   }, [eventId]);
-
-  const fetchPhotos = async () => {
-    const response = await eventApi.getEventPhotos(eventId);
-    const photoNames = response.data;
-
-    const photoObjects = photoNames.map((filename) => ({
-      src: `/backend/static/images/events/${eventId}/${filename}`,
-      filename,
-    }));
-
-    setPhotos(photoObjects);
-  };
-
-  const openLightbox = (index) => {
-    setCurrentImage(index);
-    setIsLightboxOpen(true);
-  };
-
-  const closeLightbox = () => {
-    setIsLightboxOpen(false);
-  };
-
-  const deletePhoto = async (filename) => {
-    await eventApi.deleteEventPhotos(eventId, filename);
-    message.success(t("COMMON.PHOTO_DELETE-SUCCESS"));
-    setPhotos((prevPhotos) =>
-      prevPhotos.filter((photo) => photo.filename !== filename)
-    );
-  };
-
-  const handleUploadClick = () => {
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.accept = "image/*";
-    fileInput.multiple = true;
-    fileInput.onchange = async (event) => {
-      const files = event.target.files;
-      if (!files.length) return;
-
-      const formData = new FormData();
-      for (let file of files) {
-        formData.append("photos", file);
-      }
-
-      await eventApi.uploadEventPhotos(eventId, formData);
-      message.success(t("COMMON.PHOTO_UPLOAD_SUCCESS"));
-      fetchPhotos();
-    };
-    fileInput.click();
-  };
 
   return (
     <div className="event-photo-gallery">
@@ -77,11 +78,15 @@ function EventPhotoGallery({ eventId }) {
               <div className="photo-actions">
                 <EyeOutlined
                   className="icon"
-                  onClick={() => openLightbox(index)}
+                  onClick={() =>
+                    openLightbox(index, setCurrentImage, setIsLightboxOpen)
+                  }
                 />
                 <DeleteOutlined
                   className="icon delete"
-                  onClick={() => deletePhoto(photo.filename)}
+                  onClick={() =>
+                    deletePhoto(eventId, photo.filename, setPhotos, t)
+                  }
                 />
               </div>
             </div>
@@ -90,7 +95,7 @@ function EventPhotoGallery({ eventId }) {
         <Typography.Text
           className="upload_photo_to_gallery"
           type="secondary"
-          onClick={handleUploadClick}
+          onClick={() => handleUploadClick(eventId, t, fetchPhotos, setPhotos)}
         >
           <div className="upload-button">
             <UploadOutlined />
@@ -106,7 +111,7 @@ function EventPhotoGallery({ eventId }) {
           prevSrc={
             photos[(currentImage + photos.length - 1) % photos.length].src
           }
-          onCloseRequest={closeLightbox}
+          onCloseRequest={() => closeLightbox(setIsLightboxOpen)}
           onMovePrevRequest={() =>
             setCurrentImage((currentImage + photos.length - 1) % photos.length)
           }
