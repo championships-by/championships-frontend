@@ -328,3 +328,5 @@ export const TELEGRAM_LINK = "https://t.me/championshipsby";
 export const medals = [GoldMedal, SilverMedal, BronzeMedal];
 
 export const RESULTS_EDITABILITY_MINUTES = 15;
+
+export const PHOTO_FILE_PATH = `/backend/static/images/events/`;
