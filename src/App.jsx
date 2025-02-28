@@ -26,6 +26,7 @@ import PasswordReset from "@components/passwordReset/PasswordReset";
 import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import TitleAndMeta from "@components/titleAndMeta/TitleAndMeta";
 import CookiesNotification from "@components/cookies/CookiesNotification";
+import EmailVerification from "@components/verification/EmailVerification";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
 import { Provider } from "react-redux";
@@ -56,6 +57,10 @@ function App() {
             <Route
               path={ROUTER_ROUTES.FIRST_AUTHORIZATION}
               element={<FirstAuth />}
+            />
+            <Route
+              path={ROUTER_ROUTES.EMAIL_VERIFICATION}
+              element={<EmailVerification />}
             />
             <Route path={ROUTER_ROUTES.ROOT}>
               <Route index element={<Auth />} />

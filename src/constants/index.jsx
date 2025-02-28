@@ -133,6 +133,7 @@ export const ROUTER_ROUTES = {
   UNAUTHORIZED: "/401",
   FORBIDDEN: "/403",
   FIRST_AUTHORIZATION: "/auth/first_login",
+  EMAIL_VERIFICATION: "/email_verification",
   RESET_PASSWORD: "/reset_password",
   ROOT: "/",
   LOGOUT: "logout",

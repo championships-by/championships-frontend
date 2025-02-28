@@ -96,4 +96,6 @@ export const participantApi = {
       .post(`/user/check_email?email=${encodeURIComponent(queryString)}`)
       .then((res) => res.data);
   },
+  emailVerification: (params) =>
+    instance.post("/participant/email_verification", null, { params }),
 };
