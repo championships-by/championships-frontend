@@ -26,6 +26,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
+import EventPhotoGallery from "@modules/judgment/events/EventPhotoGallery";
 
 import "./sass/event-information.scss";
 
@@ -326,6 +327,7 @@ function EventInformation() {
         rowKey="id"
         pagination={false}
       />
+      <EventPhotoGallery eventId={eventID} />
     </div>
   );
 }

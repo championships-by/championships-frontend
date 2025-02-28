@@ -646,7 +646,7 @@ function EventSettings() {
             locale={getTranslation(tableLocale, t)}
             pagination={false}
           />
-          <EventPhotoGallery eventId={eventID} />
+          <EventPhotoGallery eventId={eventID} forEdit={true} />
         </Col>
       </Row>
       <CompitationModal

@@ -57,7 +57,7 @@ function handleUploadClick(eventId, t, fetchPhotos, setPhotos) {
   fileInput.click();
 }
 
-function EventPhotoGallery({ eventId }) {
+function EventPhotoGallery({ eventId, forEdit = false }) {
   const { t } = useTranslation();
   const [photos, setPhotos] = useState([]);
   const [currentImage, setCurrentImage] = useState(0);
@@ -67,9 +67,15 @@ function EventPhotoGallery({ eventId }) {
     fetchPhotos(eventId, setPhotos);
   }, [eventId]);
 
+  if (!photos.length && !forEdit) {
+    return null;
+  }
+
   return (
     <div className="event-photo-gallery">
-      <h2>{t("COMMON.PHOTO_GALLERY_TITLE")}</h2>
+      <Typography.Title level={3}>
+        {t("COMMON.PHOTO_GALLERY_TITLE")}
+      </Typography.Title>
       <div className="photo-grid">
         {photos.map((photo, index) => (
           <div key={index} className="photo-item">
@@ -82,26 +88,33 @@ function EventPhotoGallery({ eventId }) {
                     openLightbox(index, setCurrentImage, setIsLightboxOpen)
                   }
                 />
-                <DeleteOutlined
-                  className="icon delete"
-                  onClick={() =>
-                    deletePhoto(eventId, photo.filename, setPhotos, t)
-                  }
-                />
+                {forEdit && (
+                  <DeleteOutlined
+                    className="icon delete"
+                    onClick={() =>
+                      deletePhoto(eventId, photo.filename, setPhotos, t)
+                    }
+                  />
+                )}
               </div>
             </div>
           </div>
         ))}
-        <Typography.Text
-          className="upload_photo_to_gallery"
-          type="secondary"
-          onClick={() => handleUploadClick(eventId, t, fetchPhotos, setPhotos)}
-        >
-          <div className="upload-button">
-            <UploadOutlined />
-            {t("COMMON.UPLOAD")}
-          </div>
-        </Typography.Text>
+
+        {forEdit && (
+          <Typography.Text
+            className="upload_photo_to_gallery"
+            type="secondary"
+            onClick={() =>
+              handleUploadClick(eventId, t, fetchPhotos, setPhotos)
+            }
+          >
+            <div className="upload-button">
+              <UploadOutlined />
+              {t("COMMON.UPLOAD")}
+            </div>
+          </Typography.Text>
+        )}
       </div>
 
       {isLightboxOpen && (
