@@ -378,7 +378,7 @@
     "PLEASE_ENTER_PASSWORD": "Пожалуйста, введите пароль",
     "REQUIRED_FIELD": "Обязательное поле",
     "PLEASE_ENTER_MESSAGE": "Пожалуйста, введите сообщение",
-    "MAX_1000_SYMBOLS": "Максимум 1000 символов",
+    "MAX_3000_SYMBOLS": "Максимум 3000 символов",
     "MIN_5_SYMBOLS": "Минимум 5 символов",
     "PLEASE_ENTER_NAME": "Пожалуйста, введите имя",
     "NAME_CAN_CONTAIN_ONLY_LETTERS": "Имя может содержать только буквы",

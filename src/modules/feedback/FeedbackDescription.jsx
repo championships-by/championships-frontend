@@ -12,8 +12,8 @@ function FeedbackDescription({ name }) {
       message: t("RULES.PLEASE_ENTER_MESSAGE"),
     },
     {
-      max: 1000,
-      message: t("RULES.MAX_1000_SYMBOLS"),
+      max: 3000,
+      message: t("RULES.MAX_3000_SYMBOLS"),
     },
     {
       min: 5,
@@ -30,7 +30,7 @@ function FeedbackDescription({ name }) {
           allowClear
           placeholder={t("COMMON.ENTER_MESSAGE")}
           id="event_description_input"
-          maxLength={1000}
+          maxLength={3000}
         />
       </Flex>
     </FormItem>

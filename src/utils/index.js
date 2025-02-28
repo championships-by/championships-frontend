@@ -478,7 +478,7 @@ export const validateDescription = (value, t) => {
     return Promise.reject(new Error(t("RULES.MIN_5_SYMBOLS")));
   }
   if (cleanedValue.length > MAX_TEXTAREA_LENGTH) {
-    return Promise.reject(new Error(t("RULES.MAX_1000_SYMBOLS")));
+    return Promise.reject(new Error(t("RULES.MAX_3000_SYMBOLS")));
   }
   return Promise.resolve();
 };

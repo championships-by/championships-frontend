@@ -321,7 +321,7 @@ export const ANTD_INPUT_FIELD_STATUSES = {
   WARNING: "warning",
 };
 
-export const MAX_TEXTAREA_LENGTH = 1000;
+export const MAX_TEXTAREA_LENGTH = 3000;
 
 export const TELEGRAM_LINK = "https://t.me/championshipsby";
 
