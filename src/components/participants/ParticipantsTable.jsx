@@ -1,4 +1,8 @@
-import { EditOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  InfoCircleOutlined,
+  CheckCircleTwoTone,
+} from "@ant-design/icons";
 import {
   Locale,
   paginationLocale,
@@ -23,8 +27,11 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
     {
       title: t("COMMON.SURNAME_NAME_THIRD_NAME"),
       key: "participant_fullname",
-      render: (_, { first_name, second_name, third_name }) => (
-        <Typography.Text>{`${second_name} ${first_name} ${third_name}`}</Typography.Text>
+      render: (_, { first_name, second_name, third_name, is_verified }) => (
+        <>
+          <Typography.Text>{`${second_name} ${first_name} ${third_name} `}</Typography.Text>
+          {is_verified ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : ""}
+        </>
       ),
       sorter: (a, b) => {
         const firstFullName = `${a.second_name} ${a.first_name} ${a.third_name}`;
