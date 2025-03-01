@@ -1,7 +1,7 @@
 import Loader from "@components/loader/Loader";
 import { Typography, Row, Col, Divider, Breadcrumb } from "antd";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserSelector } from "@store/users";
 import TeamWinsTable from "./TeamWinsTable";
@@ -20,7 +20,6 @@ function ParticipantInformation() {
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector(getUserSelector);
   const profileIsLoading = user.isLoading;
-  const navigate = useNavigate();
   const { participantID } = useParams();
 
   const participantsBreadcrumb = {
@@ -45,9 +44,6 @@ function ParticipantInformation() {
         .getParticipantStats(body)
         .then((data) => {
           data.participant.map((participant) => {
-            if (!profileIsLoading && participant.creator_id != user?.data.id) {
-              navigate(ROUTES.FORBIDDEN.PATH);
-            }
             setParticipantData(participant);
           });
           setTeamWinsData(data.participation);
