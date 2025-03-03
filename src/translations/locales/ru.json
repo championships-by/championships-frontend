@@ -325,6 +325,7 @@
     "NOT_AUTHORIZED": "Вы не авторизовались",
     "USER_UPDATE_ERROR": "Невозможно обновить данные пользователя. Обратитесь к администратору.",
     "CHECK_FIELDS": "Проверьте поля для ввода!",
+    "EVALUAAT_LEAST_ONE_EVALUATION_CRITERIATION_CRITERIA": "Должен быть минимум один критерий.",
     "SUCCESS_MESSAGE": "Данные успешно сохранены",
     "INVALID_EMAIL_OR_PASSWORD": "Неверный email или пароль",
     "SUCCESS_PARTICIPANT_ADD": "Участник успешно добавлен для участия в компетенции",
