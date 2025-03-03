@@ -23,6 +23,12 @@
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
   }
+
+  & .ql-editor.ql-blank::before {
+    color: $disabled-color;
+    font-family: inherit;
+    font-style: normal;
+  }
 }
 
 .dark-theme .quill {
@@ -38,9 +44,5 @@
 
   & .ql-editor p {
     color: $white;
-  }
-
-  & .ql-editor.ql-blank::before {
-    color: $disabled-color;
   }
 }
