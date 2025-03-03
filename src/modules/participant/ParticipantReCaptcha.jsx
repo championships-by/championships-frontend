@@ -13,13 +13,11 @@ function ParticipantReCaptcha({ onValidate }) {
   }
 
   return (
-
     <ReCAPTCHA
       className="re-captcha-container"
       sitekey={WEB_SITE_KEY}
       onChange={onChange}
     />
-
   );
 }
 

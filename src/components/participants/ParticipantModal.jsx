@@ -166,7 +166,11 @@ function ParticipantModal({ isOpen, onOk, onCancel, data, isEdit }) {
           value={values.birth_date}
           onChange={onValuesChange}
         />
-        <ParticipantEmailInput name="email" value={values.email} />
+        <ParticipantEmailInput
+          name="email"
+          value={values.email}
+          checkEmailAvailability
+        />
         <ParticipantRegionSelect
           name="region"
           value={values.region}
