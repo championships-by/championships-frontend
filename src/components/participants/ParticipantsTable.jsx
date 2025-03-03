@@ -30,7 +30,16 @@ function ParticipantsTable({ ParticipantData, getParticipant }) {
       render: (_, { first_name, second_name, third_name, is_verified }) => (
         <>
           <Typography.Text>{`${second_name} ${first_name} ${third_name} `}</Typography.Text>
-          {is_verified ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : ""}
+          {is_verified ? (
+            <Tooltip
+              title={t("PARTICIPANTS.VERIFICATION_DONE")}
+              placement="right"
+            >
+              <CheckCircleTwoTone twoToneColor="#52c41a" />
+            </Tooltip>
+          ) : (
+            ""
+          )}
         </>
       ),
       sorter: (a, b) => {
