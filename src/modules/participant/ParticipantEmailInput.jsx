@@ -3,14 +3,38 @@ import { Flex, Input, Typography } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "react-i18next";
+import { participantApi } from "@api";
 
 import "./sass/participant.scss";
 
-function ParticipnatEmailInput({ name, value }) {
+function ParticipnatEmailInput({
+  name,
+  value,
+  disabled,
+  checkEmailAvailability = false,
+}) {
   const { t } = useTranslation();
 
+  const handleKeyPress = (event) => {
+    if (event.key === " ") {
+      event.preventDefault();
+    }
+  };
+
+  const asyncEmailValidator = async (rule, value) => {
+    if (checkEmailAvailability) {
+      const isEmailTaken = await participantApi.checkEmail(value);
+
+      if (isEmailTaken) {
+        return Promise.reject(new Error(t("RULES.EMAIL_TAKEN")));
+      }
+    }
+
+    return Promise.resolve();
+  };
+
   return (
-    <Flex vertical className="participant__email-input__flex">
+    <Flex vertical className="user__email-input__flex">
       <Typography.Text>{t("COMMON.EMAIL")}</Typography.Text>
       <FormItem
         name={name}
@@ -26,14 +50,19 @@ function ParticipnatEmailInput({ name, value }) {
             type: "email",
             message: t("RULES.INVALID_EMAIL"),
           },
+          {
+            asyncValidator: asyncEmailValidator,
+          },
         ]}
-        className="participant__email-input__formitem"
+        className="user__email-input__formitem"
       >
         <Input
           value={value}
           prefix={<MailOutlined />}
           type="email"
           placeholder={t("COMMON.ENTER_EMAIL")}
+          disabled={disabled}
+          onKeyPress={handleKeyPress}
         />
       </FormItem>
       <Typography.Text type="secondary">
