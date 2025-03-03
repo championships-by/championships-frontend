@@ -74,7 +74,6 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
     setAreCaptchaAccepted(status);
   };
 
-
   return (
     <Modal
       title={t("COMMON.REGISTRATION")}
