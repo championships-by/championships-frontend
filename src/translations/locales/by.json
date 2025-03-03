@@ -336,6 +336,7 @@
     "SUCCESS_DELETE_NOMINATION": "Кампетэнцыя паспяхова выдалена",
     "SUCCESS_DELETE_TEAM": "Каманда паспяхова выдалена",
     "DELETE_ERROR": "Пры выдаленні адбылася памылка",
+    "EVALUAAT_LEAST_ONE_EVALUATION_CRITERIATION_CRITERIA": "Павінен быць мінімум адзін крытэрый.",
     "DISABLE_PUBLISH_FOR_REMOVE_NOMINATION": "Перш чым выдаліць апошнюю кампетэнцыю, зніміце мерапрыемства з публікацыі",
     "TOURNAMENT_FINISHED": "Турнір ужо завершаны",
     "ARE_YOU_SURE_TO_START_TOURNAMENT": "Вы ўпэўненыя, што хочаце пачаць спаборніцтва? Адмяніць гэта дзеянне будзе немагчыма!",
