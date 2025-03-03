@@ -130,7 +130,7 @@ function UserModal({ isOpen, onOk, onCancel, type, userId }) {
         <UserFirstnameInput name="first_name" />
         <UserPatronymicInput name="third_name" />
 
-        <UserRoleInput name="role" />
+        <UserRoleInput disabled name="role" />
 
         <UserEmailInput name="email" />
         <UserPasswordInput name="password" disabled={type == ModalType.EDIT} />
