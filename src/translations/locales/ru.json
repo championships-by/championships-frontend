@@ -247,7 +247,7 @@
     "TIME_UNTIL_PREPOSITION": "по"
   },
   "PARTICIPANTS": {
-    "VERIFICATION_DONE": "Пользователь верифицирован",
+    "VERIFICATION_DONE": "Верифицирован",
     "CARD_OF_PARTICIPANT": "Карточка участника",
     "EDIT_PARTICIPANT": "Редактировать участника",
     "CREATE_PARTICIPANT": "Добавить участника",
