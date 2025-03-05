@@ -1,16 +1,15 @@
 import React from "react";
-import { Flex, Input, Typography } from "antd";
-import { EyeInvisibleOutlined } from "@ant-design/icons";
+import { Input } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import "./sass/auth.scss";
-import { mailZubronok } from "@constants";
 import { useTranslation } from "react-i18next";
+
+import "./sass/auth.scss";
 
 function AuthPasswordInput({ value, onChange }) {
   const { t } = useTranslation();
   return (
     <FormItem
-      name="Password"
+      name="password"
       className="auth-password-input"
       hasFeedback
       validateFirst
@@ -19,24 +18,18 @@ function AuthPasswordInput({ value, onChange }) {
           required: true,
           message: t("RULES.PLEASE_ENTER_PASSWORD"),
         },
+        // {
+        //   min: 6,
+        //   message: t("RULES.PASSWORD_LENGTH"),
+        // },
       ]}
     >
-      <Flex vertical>
-        <Input.Password
-          placeholder={`${t("COMMON.PASSWORD")}...`}
-          iconRender={() => <EyeInvisibleOutlined />}
-          id="user_password_input"
-          value={value}
-          onChange={(event) => onChange(event.target.value)}
-        />
-        <Typography.Text
-          type="secondary"
-          className="auth-password-input__secondary-text"
-        >
-          {t("COMMON.CONTANT_WITH_ADMINISTRATOR")}
-        </Typography.Text>
-        <a href={`mailto:${mailZubronok}`}>{mailZubronok}</a>
-      </Flex>
+      <Input.Password
+        id="user_password_input"
+        placeholder={t("COMMON.PASSWORD")}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+      />
     </FormItem>
   );
 }
