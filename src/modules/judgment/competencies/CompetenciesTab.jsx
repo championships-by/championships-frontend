@@ -61,7 +61,14 @@ function CompetenciesTab() {
     } catch {}
   };
 
-  const handleCompleteStage = useCallback(async () => {
+  const onClickSendResults = async () => {
+    try {
+      await handleSendResults();
+      message.success(t("MESSAGES.SUCCESS_SEND_RESULTS"));
+    } catch {}
+  };
+
+  const handleSendResults = async () => {
     const criteriaResults = [];
     let fullFilled = true;
 
@@ -94,7 +101,9 @@ function CompetenciesTab() {
     }
 
     await competenciesApi.setCriteriaResults(criteriaResults);
+  };
 
+  const handleCompleteStage = useCallback(async () => {
     await competenciesApi.finishCriteriaStage({
       event_id: eventId,
       nomination_id: nominationId,
@@ -219,7 +228,8 @@ function CompetenciesTab() {
             setCriteria(transformedCriteria);
             setMaxPlace(criteriaResultsResponse.data.max_place);
             const transformedCriteriaResults = transformCriteriaResultsData(
-              criteriaResultsResponse.data
+              criteriaResultsResponse.data,
+              transformedStageStatus.tournamentFinished
             );
             const generatedDataSource = generateCompetenciesDataSource(
               transformedCriteriaResults
@@ -244,9 +254,14 @@ function CompetenciesTab() {
   }, [eventId, isDataLoaded, nominationId, stageStatus, isStageFinished]);
 
   const buttonsForUnfinishedStage = (
-    <Button type="primary" onClick={onClickCompleteStage}>
-      {t("COMMON.COMPLETE_STAGE")}
-    </Button>
+    <Flex gap="small">
+      <Button type="primary" onClick={onClickSendResults}>
+        {t("COMMON.SEND_RESULTS")}
+      </Button>
+      <Button type="primary" onClick={onClickCompleteStage}>
+        {t("COMMON.COMPLETE_STAGE")}
+      </Button>
+    </Flex>
   );
 
   const buttonsForFinishedStage = (
