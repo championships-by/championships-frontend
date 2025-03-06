@@ -35,7 +35,10 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       holding,
       event_logo,
       event_regulation,
+      organizer_name,
     } = values;
+
+    const organizers = organizer_name.split(",").map((name) => name.trim());
 
     const formData = new FormData();
     formData.append("logo", event_logo);
@@ -47,6 +50,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       event_place,
       description,
       event_level,
+      organizers,
       participation_needs,
       published,
       registration_start_date: registration?.registration_start_date,
