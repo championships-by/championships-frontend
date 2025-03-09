@@ -35,6 +35,7 @@ function EventInformation() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataEvent, setEvent] = useState({});
   const [dataNominations, setNomination] = useState([]);
+  const [organizers, setOrganizers] = useState([]);
   const { eventID } = useParams();
   const navigate = useNavigate();
 
@@ -98,13 +99,23 @@ function EventInformation() {
           document.body.appendChild(script);
           setTimeout(() => setIsLoading(false), 300);
         });
+
+        eventApi
+          .getOrganizersRelatedToEvent(eventID)
+          .then((organizerData) => {
+            setOrganizers(organizerData);
+          })
+          .catch((error) => {
+            console.error("Error fetching organizers:", error);
+            message.error(t("MESSAGES.GET_ORGANIZERS_ERROR"));
+          });
       } catch (error) {
         message.error(t("MESSAGES.GET_DATA_ERROR"));
       }
     } else {
       setTimeout(() => setIsLoading(false), 300);
     }
-  }, [eventID]);
+  }, [eventID, t]);
 
   const onResultsClick = (nomination) => {
     const params = new URLSearchParams();
@@ -218,7 +229,9 @@ function EventInformation() {
               <Typography.Text strong>{t("COMMON.ORGANIZER")}</Typography.Text>
               <br />
               <Typography.Text>
-                {dataEvent.educational_institution}
+                {organizers.length > 0
+                  ? organizers.map((org) => org.name).join(", ")
+                  : t("COMMON.NO_ORGANIZERS")}
               </Typography.Text>
             </Col>
             <Col
@@ -231,7 +244,6 @@ function EventInformation() {
               <Typography.Text strong>
                 {t("COMMON.LEVEL_OF_EVENT")}
               </Typography.Text>
-
               <br />
               <Typography.Text>
                 {t(getEventLevel(dataEvent.event_level))}

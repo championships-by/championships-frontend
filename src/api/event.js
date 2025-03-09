@@ -94,4 +94,25 @@ export const eventApi = {
       `/event/delete_event_photos?photos=${photos}&event_id=${event_id}`
     );
   },
+  getOrganizers: () =>
+    instance
+      .get(`/organizer/organizer?offset=0&limit=10`)
+      .then((org) => org.data),
+  getOrganizersRelatedToEvent: (event_id) =>
+    instance
+      .get(`/organizer/get_organizers_related_to_event?event_id=${event_id}`)
+      .then((org) => org.data),
+  createOrganizer: (name) =>
+    instance
+      .post(
+        "/organizer/organizer",
+        { name },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      )
+      .then((res) => res.data),
 };

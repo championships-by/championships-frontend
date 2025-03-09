@@ -18,7 +18,6 @@ import {
   TeamOutlined,
   LinkOutlined,
 } from "@ant-design/icons";
-import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
@@ -62,7 +61,6 @@ function EventSettings() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [openTrophyModal, setTrophyModal] = useState(false);
   const [participantModal, setParticipantModal] = useState(false);
-  const [competenciesModal, setCompetenciesModal] = useState(false);
   const [switchDisabled, setSwitchDisabled] = useState(true);
   const [eventInfo, setEventInfo] = useState();
   const [published, setPublished] = useState(true);
@@ -109,14 +107,8 @@ function EventSettings() {
       },
       filters: [
         { text: t(NOMINATION_TYPES.TIME), value: NOMINATIONS.TIME },
-        {
-          text: t(NOMINATION_TYPES.CRITERIA),
-          value: NOMINATIONS.CRITERIA,
-        },
-        {
-          text: t(NOMINATION_TYPES.OLYMPIC),
-          value: NOMINATIONS.OLYMPIC,
-        },
+        { text: t(NOMINATION_TYPES.CRITERIA), value: NOMINATIONS.CRITERIA },
+        { text: t(NOMINATION_TYPES.OLYMPIC), value: NOMINATIONS.OLYMPIC },
       ],
       onFilter: (value, record) => record.kind.includes(value),
     },
@@ -193,10 +185,7 @@ function EventSettings() {
   };
 
   const startCriteriaStage = async (eventID, nominationID) => {
-    const data = {
-      event_id: eventID,
-      nomination_id: nominationID,
-    };
+    const data = { event_id: eventID, nomination_id: nominationID };
     try {
       await competenciesApi.startCriteriaStage(data);
     } catch (error) {
@@ -206,10 +195,7 @@ function EventSettings() {
   };
 
   const startTimeStage = async (eventID, nominationID) => {
-    const data = {
-      event_id: eventID,
-      nomination_id: nominationID,
-    };
+    const data = { event_id: eventID, nomination_id: nominationID };
     try {
       await competenciesApi.startTimeStage(data);
     } catch (error) {
@@ -217,6 +203,7 @@ function EventSettings() {
     }
     return "success";
   };
+
   const openLink = (record) => {
     window.open(record.reglament);
   };
@@ -267,6 +254,7 @@ function EventSettings() {
       message.error(t("MESSAGES.DISABLE_PUBLISH_FOR_REMOVE_NOMINATION"));
     }
   };
+
   const openCompetenciesModal = async (record) => {
     const competitionType = record.kind;
     const competitionName = record.name;
@@ -274,11 +262,7 @@ function EventSettings() {
     setNominationID(nominationID);
 
     try {
-      const params = {
-        event_id: eventID,
-        nomination_id: nominationID,
-      };
-
+      const params = { event_id: eventID, nomination_id: nominationID };
       const data = await competenciesApi.getNominationEventInfo(params);
 
       if (data.tournament_finished) {
@@ -322,27 +306,23 @@ function EventSettings() {
               switch (competitionType) {
                 case NOMINATIONS.TIME:
                   let timeResult = await startTimeStage(eventId, nominationID);
-                  switch (timeResult) {
-                    case "success":
-                      message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
-                      navigate(
-                        ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
-                      );
-                      break;
+                  if (timeResult === "success") {
+                    message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
+                    navigate(
+                      ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
+                    );
                   }
                   break;
                 case NOMINATIONS.CRITERIA:
-                  let creteriaResult = await startCriteriaStage(
+                  let criteriaResult = await startCriteriaStage(
                     eventId,
                     nominationID
                   );
-                  switch (creteriaResult) {
-                    case "success":
-                      message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
-                      navigate(
-                        ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
-                      );
-                      break;
+                  if (criteriaResult === "success") {
+                    message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
+                    navigate(
+                      ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
+                    );
                   }
                   break;
               }
@@ -368,7 +348,6 @@ function EventSettings() {
           nomination_id: nominationID,
           competition_type: competitionType,
         }));
-
         setParticipantsInfo(updatedData);
       });
 
@@ -393,7 +372,7 @@ function EventSettings() {
           setEvent(data);
           const { event } = data;
 
-          const values = {
+          const initialValues = {
             name: event.name,
             participant_question_email: event.participant_question_email,
             event_place: event.event_place,
@@ -412,11 +391,9 @@ function EventSettings() {
             existing_logo_path: event.logo_path,
             existing_rules_path: event.event_rules,
           };
-          form.setFieldsValue(values);
-
-          setPublished(values.published);
-          setValues(values);
-
+          form.setFieldsValue(initialValues);
+          setPublished(initialValues.published);
+          setValues(initialValues);
           setTimeout(() => setIsLoading(false), 300);
         });
       } catch (error) {
@@ -431,6 +408,7 @@ function EventSettings() {
   const onSubmit = async () => {
     enterLoading(0);
 
+    const formValues = form.getFieldsValue();
     const {
       name,
       participant_question_email,
@@ -443,23 +421,35 @@ function EventSettings() {
       holding,
       event_logo,
       event_regulation,
-    } = values;
+      organizers,
+    } = { ...values, ...formValues };
+
+    const allOrganizers = await eventApi.getOrganizers();
+    const organizersWithIds = organizers.map((orgName) => {
+      const organizer = allOrganizers.find((o) => o.name === orgName);
+      return organizer
+        ? { id: organizer.id, name: organizer.name }
+        : { name: orgName };
+    });
+
+    const eventData = {
+      id: eventID,
+      name: dataEvent.event?.name === name ? undefined : name,
+      participant_question_email,
+      event_place,
+      description,
+      event_level,
+      participation_needs,
+      published,
+      registration_start_date: registration?.registration_start_date,
+      registration_finish_date: registration?.registration_finish_date,
+      holding_start_date: holding?.holding_start_date,
+      holding_finish_date: holding?.holding_finish_date,
+      organizers: organizersWithIds || [],
+    };
 
     const body = new URLSearchParams({
-      event_data: JSON.stringify({
-        id: eventID,
-        name: dataEvent.event.name === name ? undefined : name,
-        participant_question_email,
-        event_place,
-        description,
-        event_level,
-        participation_needs,
-        published,
-        registration_start_date: registration.registration_start_date,
-        registration_finish_date: registration.registration_finish_date,
-        holding_start_date: holding.holding_start_date,
-        holding_finish_date: holding.holding_finish_date,
-      }),
+      event_data: JSON.stringify(eventData),
     });
 
     let eventSuccess = true;
@@ -473,7 +463,7 @@ function EventSettings() {
 
     let logoSuccess = true;
 
-    if (event_logo) {
+    if (event_logo && event_logo instanceof File) {
       try {
         const formDataLogo = new FormData();
         formDataLogo.append("logo", event_logo);
@@ -487,7 +477,7 @@ function EventSettings() {
 
     let regulationSuccess = true;
 
-    if (event_regulation) {
+    if (event_regulation && event_regulation instanceof File) {
       try {
         const formDataRegulation = new FormData();
         formDataRegulation.append("rules", event_regulation);
@@ -502,12 +492,14 @@ function EventSettings() {
     return eventSuccess && logoSuccess && regulationSuccess;
   };
 
-  const onValuesChange = (values) => {
-    if (values.event_logo?.status === "removed") {
-      values.event_logo = null;
+  const onValuesChange = (changedValues) => {
+    if (changedValues.event_logo?.status === "removed") {
+      changedValues.event_logo = null;
     }
-
-    setValues((oldValues) => ({ ...oldValues, ...values }));
+    setValues((oldValues) => ({
+      ...oldValues,
+      ...changedValues,
+    }));
   };
 
   const onFinish = async () => {
@@ -536,6 +528,7 @@ function EventSettings() {
       });
     }, 6000);
   };
+
   return (
     <div>
       <Loader show={isLoading} />
@@ -571,8 +564,11 @@ function EventSettings() {
               value={values.participant_question_email}
             />
             <EventOrganizerName
-              name="organizer_name"
-              value={values.organizer_name}
+              name="organizers"
+              eventId={eventID}
+              form={form}
+              required={true}
+              onChange={onValuesChange}
             />
             <EventPlace name="event_place" value={values.event_place} />
             <EventRegulation
@@ -674,14 +670,14 @@ function EventSettings() {
         onCancel={() => setTrophyModal(false)}
         name={t("EVENTS.PLAYOFF_SETTINGS")}
         nominationID={dataNominationID}
-      ></CompetitionModal>
+      />
       <ParticipantModal
         isOpen={participantModal}
         onOk={() => setParticipantModal(false)}
         onCancel={() => setParticipantModal(false)}
         name={t("EVENTS.TOURNAMENT_PARTICIPANTS")}
         data={participantsInfo}
-      ></ParticipantModal>
+      />
     </div>
   );
 }
