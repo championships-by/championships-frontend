@@ -120,7 +120,7 @@ export const transformCriteriaData = (criteria) =>
     maxScore: criterion.max_score,
   }));
 
-export const transformCriteriaResultsData = (criteriaResults) =>
+export const transformCriteriaResultsData = (criteriaResults, isFinished) =>
   criteriaResults.team_data.map((team, index) => ({
     id: index + 1,
     team: {
@@ -135,7 +135,7 @@ export const transformCriteriaResultsData = (criteriaResults) =>
       id: criterion.criteria_id,
       name: criterion.criteria_name,
       maxScore: criterion.max_score,
-      score: criterion.score,
+      score: isFinished ? criterion.score : null,
       initialScore: criterion.score,
     })),
     totalScore: team.criterias.reduce((acc, obj) => (acc += obj.score), 0),
