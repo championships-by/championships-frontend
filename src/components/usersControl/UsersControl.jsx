@@ -16,12 +16,14 @@ import SearchInput from "@modules/search/SearchInput";
 import { useTranslation } from "react-i18next";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
-
+import NotificationModal from "./NotificationModal";
 import "./sass/users-control.scss";
 
 function UsersControl() {
   const { t } = useTranslation();
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+  const [isSendNotificationModalOpen, setSendNotificationModalOpen] =
+    useState(false);
   const [isUserApprovalModalOpen, setIsUserApprovalModalOpen] = useState(false);
   const dispatch = useDispatch();
   const users = useSelector(getUsersSelector);
@@ -90,7 +92,7 @@ function UsersControl() {
         <Col flex="auto">
           {activeTab === "1" && (
             <Flex justify="flex-end">
-              <SearchInput onChange={findUser} />
+              <SearchInput width="200" onChange={findUser} />
               <AdminPanelControls>
                 <Flex gap="middle">
                   <Button
@@ -98,6 +100,12 @@ function UsersControl() {
                     onClick={() => setIsAddUserModalOpen(true)}
                   >
                     {t("COMMON.CREATE_USER")}
+                  </Button>
+                  <Button
+                    type="primary"
+                    onClick={() => setSendNotificationModalOpen(true)}
+                  >
+                    {t("COMMON.SEND_NOTIFICATION")}
                   </Button>
                 </Flex>
               </AdminPanelControls>
@@ -111,6 +119,14 @@ function UsersControl() {
         isOpen={isAddUserModalOpen}
         onOk={() => setIsAddUserModalOpen(false)}
         onCancel={() => setIsAddUserModalOpen(false)}
+      />
+      <NotificationModal
+        isOpen={isSendNotificationModalOpen}
+        onOk={(message) => {
+          console.log("Отправка уведомления:", message);
+          setSendNotificationModalOpen(false);
+        }}
+        onCancel={() => setSendNotificationModalOpen(false)}
       />
     </div>
   );
