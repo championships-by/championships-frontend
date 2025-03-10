@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { userApi } from "@api";
+import { userApi, authApi } from "@api";
 
 export const getUsers = createAsyncThunk("users/getUsers", async () => {
   const data = await userApi.getUsers();
@@ -47,3 +47,15 @@ export const getJudges = createAsyncThunk("users/getJudges", async () => {
   const data = await userApi.getJudges();
   return data;
 });
+
+export const logout = createAsyncThunk(
+  "users/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      await authApi.setLogout();
+      return null;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
