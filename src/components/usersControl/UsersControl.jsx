@@ -16,12 +16,15 @@ import SearchInput from "@modules/search/SearchInput";
 import { useTranslation } from "react-i18next";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
+import NotificationModal from "./NotificationModal";
 
 import "./sass/users-control.scss";
 
 function UsersControl() {
   const { t } = useTranslation();
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+  const [isSendNotificationModalOpen, setSendNotificationModalOpen] =
+    useState(false);
   const [isUserApprovalModalOpen, setIsUserApprovalModalOpen] = useState(false);
   const dispatch = useDispatch();
   const users = useSelector(getUsersSelector);
@@ -99,6 +102,12 @@ function UsersControl() {
                   >
                     {t("COMMON.CREATE_USER")}
                   </Button>
+                  <Button
+                    type="primary"
+                    onClick={() => setSendNotificationModalOpen(true)}
+                  >
+                    {t("COMMON.SEND_NOTIFICATION")}
+                  </Button>
                 </Flex>
               </AdminPanelControls>
             </Flex>
@@ -111,6 +120,11 @@ function UsersControl() {
         isOpen={isAddUserModalOpen}
         onOk={() => setIsAddUserModalOpen(false)}
         onCancel={() => setIsAddUserModalOpen(false)}
+      />
+      <NotificationModal
+        isOpen={isSendNotificationModalOpen}
+        onOk={() => setSendNotificationModalOpen(false)}
+        onCancel={() => setSendNotificationModalOpen(false)}
       />
     </div>
   );
