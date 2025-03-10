@@ -9,6 +9,7 @@ function NotificationModal({ isOpen, onCancel }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const messageRules = [{ required: true, message: t("COMMON.ENTER_MESSAGE") }];
 
   const sendNotification = async () => {
     if (!message.trim()) {
@@ -38,17 +39,14 @@ function NotificationModal({ isOpen, onCancel }) {
       footer={null}
     >
       <Form form={form} onFinish={sendNotification}>
-        <Form.Item
-          name="message"
-          rules={[{ required: true, message: t("COMMON.ENTER_MESSAGE") }]}
-        >
+        <Form.Item name="message" rules={messageRules}>
           <TextEditor
             value={message}
             onChange={setMessage}
             placeholder={t("COMMON.SEND_NOTIFICATION_INPUT")}
           />
         </Form.Item>
-        <Form.Item style={{ textAlign: "right" }}>
+        <Form.Item className="notification-form-item">
           <Button onClick={onCancel} disabled={loading}>
             {t("COMMON.CANCEL")}
           </Button>
@@ -56,7 +54,7 @@ function NotificationModal({ isOpen, onCancel }) {
             type="primary"
             htmlType="submit"
             loading={loading}
-            style={{ marginLeft: "8px" }}
+            className={"notificaton-send-button"}
           >
             {t("COMMON.SEND")}
           </Button>

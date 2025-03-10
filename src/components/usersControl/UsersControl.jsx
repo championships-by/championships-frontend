@@ -93,7 +93,7 @@ function UsersControl() {
         <Col flex="auto">
           {activeTab === "1" && (
             <Flex justify="flex-end">
-              <SearchInput width="200" onChange={findUser} />
+              <SearchInput onChange={findUser} />
               <AdminPanelControls>
                 <Flex gap="middle">
                   <Button
