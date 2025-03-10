@@ -31,12 +31,6 @@ function AuthPasswordInput({ value, onChange }) {
         />
       </FormItem>
 
-      {/* <Typography.Text
-        type="danger"
-        className="auth-password-input__error-message"
-      >
-      </Typography.Text> */}
-
       <Flex vertical className="auth-password-input__info">
         <Typography.Text
           type="secondary"
