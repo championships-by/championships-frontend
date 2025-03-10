@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
 import NotificationModal from "./NotificationModal";
+
 import "./sass/users-control.scss";
 
 function UsersControl() {
@@ -122,10 +123,7 @@ function UsersControl() {
       />
       <NotificationModal
         isOpen={isSendNotificationModalOpen}
-        onOk={(message) => {
-          console.log("Отправка уведомления:", message);
-          setSendNotificationModalOpen(false);
-        }}
+        onOk={() => setSendNotificationModalOpen(false)}
         onCancel={() => setSendNotificationModalOpen(false)}
       />
     </div>

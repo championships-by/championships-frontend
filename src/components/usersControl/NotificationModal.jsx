@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Modal, Button, message as antdMessage } from "antd";
+import { Modal, Button, Form, message as antdMessage } from "antd";
 import { useTranslation } from "react-i18next";
 import TextEditor from "@modules/textEditor/TextEditor";
-import axios from "axios";
+import { notificationApi } from "@api";
 
 function NotificationModal({ isOpen, onCancel }) {
   const { t } = useTranslation();
-  const [message, setMessage] = useState("");
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const sendNotification = async () => {
     if (!message.trim()) {
@@ -17,12 +18,12 @@ function NotificationModal({ isOpen, onCancel }) {
 
     setLoading(true);
     try {
-      await axios.post("/api/notifications/send", { message });
+      await notificationApi.sendNotification(message);
       antdMessage.success(t("COMMON.NOTIFICATION_SENT"));
+      form.resetFields();
       setMessage("");
       onCancel();
     } catch (error) {
-      console.error("Ошибка отправки уведомления:", error);
       antdMessage.error(t("COMMON.NOTIFICATION_ERROR"));
     } finally {
       setLoading(false);
@@ -34,25 +35,33 @@ function NotificationModal({ isOpen, onCancel }) {
       title={t("COMMON.SEND_NOTIFICATION")}
       open={isOpen}
       onCancel={onCancel}
-      footer={[
-        <Button key="cancel" onClick={onCancel} disabled={loading}>
-          {t("COMMON.CANCEL")}
-        </Button>,
-        <Button
-          key="send"
-          type="primary"
-          onClick={sendNotification}
-          loading={loading}
-        >
-          {t("COMMON.SEND")}
-        </Button>,
-      ]}
+      footer={null}
     >
-      <TextEditor
-        placeholder={t("COMMON.SEND_NOTIFICATION_INPUT")}
-        value={message}
-        onChange={setMessage}
-      />
+      <Form form={form} onFinish={sendNotification}>
+        <Form.Item
+          name="message"
+          rules={[{ required: true, message: t("COMMON.ENTER_MESSAGE") }]}
+        >
+          <TextEditor
+            value={message}
+            onChange={setMessage}
+            placeholder={t("COMMON.SEND_NOTIFICATION_INPUT")}
+          />
+        </Form.Item>
+        <Form.Item style={{ textAlign: "right" }}>
+          <Button onClick={onCancel} disabled={loading}>
+            {t("COMMON.CANCEL")}
+          </Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            style={{ marginLeft: "8px" }}
+          >
+            {t("COMMON.SEND")}
+          </Button>
+        </Form.Item>
+      </Form>
     </Modal>
   );
 }
