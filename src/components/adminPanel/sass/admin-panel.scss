@@ -138,7 +138,7 @@ $transition: $timing ease all;
     background-position: center;
     background-repeat: no-repeat;
     transition: $transition;
-
+    position: relative;
     &.active {
       background-color: $dark-blue;
       filter: invert(0);
