@@ -13,6 +13,7 @@ import EventRequirements from "@modules/judgment/events/EventRequirements";
 import { Button, Form, message, Modal, notification } from "antd";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { RESPONSE_STATUS } from "@constants";
 
 function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   const [form] = Form.useForm();
@@ -55,8 +56,6 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       organizers: organizer_name || [],
     };
 
-    console.log("Event data before sending:", event_data);
-
     const formData = new FormData();
     formData.append("logo", event_logo || "");
     formData.append("rules", event_regulation || "");
@@ -65,21 +64,15 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
     try {
       setIsSubmitting(true);
       const response = await eventApi.setEvent(formData);
-      console.log("Server response:", response.data);
-      if (response.status >= 200 && response.status < 300) {
+      if (
+        response.status >= RESPONSE_STATUS.STATUS_OK &&
+        response.status < 300
+      ) {
         return true;
       } else {
         throw new Error(`Unexpected status: ${response.status}`);
       }
-    } catch (error) {
-      console.error("Error creating event:", {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-      });
-      message.error(t("MESSAGES.EVENT_CREATE_ERROR"));
-      return false;
-    } finally {
+    } catch {
       setIsSubmitting(false);
     }
   };
@@ -87,11 +80,6 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   useEffect(() => {
     setFileList([]);
   }, [isOpen]);
-
-  const onValuesChange = (changedValues) => {
-    console.log("Changed values:", changedValues);
-    setValues((oldValues) => ({ ...oldValues, ...changedValues }));
-  };
 
   const onFinish = async () => {
     if (isSubmitting) return;
@@ -132,13 +120,11 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
         requiredMark="optional"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        onValuesChange={onValuesChange}
       >
         <EventName name="name" value={values.name} />
         <EventLogo
           name="event_logo"
           value={values.event_logo}
-          onChange={onValuesChange}
           required={true}
           form={form}
           fileList={fileList}
@@ -153,13 +139,11 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           value={values.organizer_name}
           form={form}
           required={true}
-          onChange={onValuesChange}
         />
         <EventPlace name="event_place" value={values.event_place} />
         <EventRegulation
           name="event_regulation"
           value={values.event_regulation}
-          onChange={onValuesChange}
           required={true}
           form={form}
         />
@@ -167,31 +151,18 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           name="registration"
           value={values.registration}
           form={form}
-          onChange={onValuesChange}
         />
-        <EventDate
-          name="holding"
-          value={values.holding}
-          form={form}
-          onChange={onValuesChange}
-        />
+        <EventDate name="holding" value={values.holding} form={form} />
         <EventDescription
           name="description"
           value={values.description}
           form={form}
-          onChange={onValuesChange}
         />
-        <EventLevel
-          name="event_level"
-          value={values.event_level}
-          form={form}
-          onChange={onValuesChange}
-        />
+        <EventLevel name="event_level" value={values.event_level} form={form} />
         <EventRequirements
           name="participation_needs"
           value={values.participation_needs}
           form={form}
-          onChange={onValuesChange}
         />
         <Button
           type="primary"

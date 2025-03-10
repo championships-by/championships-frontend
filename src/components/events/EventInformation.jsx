@@ -100,15 +100,9 @@ function EventInformation() {
           setTimeout(() => setIsLoading(false), 300);
         });
 
-        eventApi
-          .getOrganizersRelatedToEvent(eventID)
-          .then((organizerData) => {
-            setOrganizers(organizerData);
-          })
-          .catch((error) => {
-            console.error("Error fetching organizers:", error);
-            message.error(t("MESSAGES.GET_ORGANIZERS_ERROR"));
-          });
+        eventApi.getOrganizersRelatedToEvent(eventID).then((organizerData) => {
+          setOrganizers(organizerData);
+        });
       } catch (error) {
         message.error(t("MESSAGES.GET_DATA_ERROR"));
       }

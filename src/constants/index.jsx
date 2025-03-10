@@ -322,6 +322,12 @@ export const ANTD_INPUT_FIELD_STATUSES = {
   WARNING: "warning",
 };
 
+export const STATUS_OF_EVENT = {
+  SUCCESS: "success",
+  FAILED: "failed",
+  REMOVED: "removed",
+};
+
 export const MAX_TEXTAREA_LENGTH = 3000;
 
 export const TELEGRAM_LINK = "https://t.me/championshipsby";

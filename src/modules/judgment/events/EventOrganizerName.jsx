@@ -5,14 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { eventApi } from "@api";
 
-function EventOrganizerName({
-  name,
-  value,
-  eventId,
-  form,
-  required,
-  onChange,
-}) {
+function EventOrganizerName({ name, value, eventId, form, onChange }) {
   const { t } = useTranslation();
   const [organizers, setOrganizers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,15 +13,16 @@ function EventOrganizerName({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newOrganizerName, setNewOrganizerName] = useState("");
 
+  const rules = {
+    required: true,
+    message: t("COMMON.ORGANIZER_NAME_REQUIRED"),
+  };
+
   const fetchAllOrganizers = async () => {
     setLoading(true);
     try {
       const response = await eventApi.getOrganizers();
-      const organizerNames = response.map((org) => org.name);
-      setOrganizers(organizerNames || []);
-    } catch (error) {
-      console.error("Error fetching organizers:", error);
-      message.error(t("MESSAGES.GET_ORGANIZERS_ERROR"));
+      setOrganizers(response.map((org) => org.name) || []);
     } finally {
       setLoading(false);
     }
@@ -36,8 +30,10 @@ function EventOrganizerName({
 
   const fetchEventOrganizers = async () => {
     if (!eventId) return;
+
     const response = await eventApi.getOrganizersRelatedToEvent(eventId);
     const organizerNames = response.map((org) => org.name);
+
     setSelectedOrganizers(organizerNames);
     form.setFieldsValue({ [name]: organizerNames });
     if (onChange) onChange({ [name]: organizerNames });
@@ -49,21 +45,22 @@ function EventOrganizerName({
       return;
     }
 
-    await eventApi.createOrganizer(newOrganizerName.trim());
+    try {
+      await eventApi.createOrganizer(newOrganizerName.trim());
+      await fetchAllOrganizers();
 
-    await fetchAllOrganizers();
+      const newOrganizer = newOrganizerName.trim();
+      const updatedSelected = [...selectedOrganizers, newOrganizer];
+      setSelectedOrganizers(updatedSelected);
+      form.setFieldsValue({ [name]: updatedSelected });
+      if (onChange) onChange({ [name]: updatedSelected });
 
-    const newOrganizer = newOrganizerName.trim();
-    const updatedSelected = [...selectedOrganizers, newOrganizer];
-    setSelectedOrganizers(updatedSelected);
-
-    form.setFieldsValue({ [name]: updatedSelected });
-    if (onChange) onChange({ [name]: updatedSelected });
-
-    message.success(t("MESSAGES.ORGANIZER_CREATED_SUCCESS"));
-
-    setNewOrganizerName("");
-    setIsModalOpen(false);
+      message.success(t("MESSAGES.ORGANIZER_CREATED_SUCCESS"));
+      setNewOrganizerName("");
+      setIsModalOpen(false);
+    } catch (error) {
+      message.error(t("COMMON.ORGANIZER_CREATION_FAILED"));
+    }
   };
 
   useEffect(() => {
@@ -100,13 +97,8 @@ function EventOrganizerName({
   const dropdownRender = (menu) => (
     <div>
       {menu}
-      <div style={{ padding: 8, borderTop: "1px solid #f0f0f0" }}>
-        <Button
-          type="link"
-          icon={<PlusOutlined />}
-          onClick={handleCreateClick}
-          style={{ width: "100%", textAlign: "left" }}
-        >
+      <div>
+        <Button type="link" icon={<PlusOutlined />} onClick={handleCreateClick}>
           {t("COMMON.CREATE_NEW_ORGANIZER")}
         </Button>
       </div>
@@ -115,17 +107,7 @@ function EventOrganizerName({
 
   return (
     <>
-      <FormItem
-        name={name}
-        hasFeedback
-        validateFirst
-        rules={[
-          {
-            required: true,
-            message: t("COMMON.ORGANIZER_NAME_REQUIRED"),
-          },
-        ]}
-      >
+      <FormItem name={name} hasFeedback validateFirst rules={[rules]}>
         <Flex vertical>
           <Typography.Text>{t("COMMON.ORGANIZER_NAME")}</Typography.Text>
           <Select
@@ -140,7 +122,6 @@ function EventOrganizerName({
             filterOption={(input, option) =>
               (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
             }
-            style={{ width: "100%" }}
             prefix={<SolutionOutlined />}
             className="events__organizer_name__input"
             dropdownRender={dropdownRender}

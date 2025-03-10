@@ -42,6 +42,7 @@ import {
   tableLocale,
   ROUTES,
   NOMINATION_TYPES,
+  STATUS_OF_EVENT,
   ModalType,
   NOMINATIONS,
 } from "@constants";
@@ -189,9 +190,9 @@ function EventSettings() {
     try {
       await competenciesApi.startCriteriaStage(data);
     } catch (error) {
-      return "failed";
+      return STATUS_OF_EVENT.FAILED;
     }
-    return "success";
+    return STATUS_OF_EVENT.SUCCESS;
   };
 
   const startTimeStage = async (eventID, nominationID) => {
@@ -199,9 +200,9 @@ function EventSettings() {
     try {
       await competenciesApi.startTimeStage(data);
     } catch (error) {
-      return "failed";
+      return STATUS_OF_EVENT.FAILED;
     }
-    return "success";
+    return STATUS_OF_EVENT.SUCCESS;
   };
 
   const openLink = (record) => {
@@ -306,7 +307,7 @@ function EventSettings() {
               switch (competitionType) {
                 case NOMINATIONS.TIME:
                   let timeResult = await startTimeStage(eventId, nominationID);
-                  if (timeResult === "success") {
+                  if (timeResult === STATUS_OF_EVENT.SUCCESS) {
                     message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
                     navigate(
                       ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
@@ -318,7 +319,7 @@ function EventSettings() {
                     eventId,
                     nominationID
                   );
-                  if (criteriaResult === "success") {
+                  if (criteriaResult === STATUS_OF_EVENT.SUCCESS) {
                     message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
                     navigate(
                       ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
@@ -493,7 +494,7 @@ function EventSettings() {
   };
 
   const onValuesChange = (changedValues) => {
-    if (changedValues.event_logo?.status === "removed") {
+    if (changedValues.event_logo?.status === STATUS_OF_EVENT.REMOVED) {
       changedValues.event_logo = null;
     }
     setValues((oldValues) => ({
