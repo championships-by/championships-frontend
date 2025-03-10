@@ -9,9 +9,9 @@ import { useDevice } from "@hooks";
 import { ROUTES } from "@constants";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { CustomCalendar } from "./CustomCalendar";
 import { FilterSearchPanel } from "./FilterSearchPanel";
-import { useTranslation } from "react-i18next";
 
 import "./sass/events.scss";
 
@@ -35,7 +35,7 @@ function Events() {
         published: true,
         levels: filters,
         event_name_chars: search,
-        date: date,
+        date,
       })
     );
   }, [dispatch, filters, search, date]);
@@ -69,7 +69,7 @@ function Events() {
         <Col xs={24} sm={24} md={14}>
           <Typography.Title level={2}>{t("EVENTS.EVENTS")}</Typography.Title>
         </Col>
-        {user.data.length === 0 && (
+        {!user.data && (
           <Col flex="auto">
             <Flex justify="flex-end">
               <Button
