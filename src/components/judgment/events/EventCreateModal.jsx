@@ -39,14 +39,13 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       event_regulation,
       organizer_name,
     } = values;
-    
+
     const event_data = {
       name,
       participant_question_email,
       event_place,
       description,
       event_level,
-      organizers,
       participation_needs,
       published: false,
       registration_start_date: registration?.registration_start_date,
