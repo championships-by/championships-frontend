@@ -121,11 +121,10 @@ function EventOrganizerName({
         validateFirst
         rules={[
           {
-            required: required,
+            required: true,
             message: t("COMMON.ORGANIZER_NAME_REQUIRED"),
           },
         ]}
-        initialValue={selectedOrganizers}
       >
         <Flex vertical>
           <Typography.Text>{t("COMMON.ORGANIZER_NAME")}</Typography.Text>

@@ -30,6 +30,8 @@
     "ROLE": "Роль пользователя",
     "CHOOSE_USER_ROLE": "Выберите роль пользователя",
     "ORGANIZER_NAME": "Организаторы",
+    "ORGANIZER_NAME_REQUIRED": "Пожалуйста, укажите организаторов",
+    "CREATE_NEW_ORGANIZER": "Создать нового организатора",
     "ENTER_ORGANIZER_NAME": "Введите организаторов мероприятия",
     "CHOOSE_ROLE": "Выберите роль",
     "MORE_ABOUT_ROLES": "Подробнее о ролях",

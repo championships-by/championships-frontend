@@ -77,6 +77,8 @@
     "REGLAMENT": "Рэгламент",
     "RESULTS": "Вынікі",
     "ORGANIZER": "Арганізатар",
+    "ORGANIZER_NAME_REQUIRED": "Калі ласка, пазначце арганізатараў",
+    "CREATE_NEW_ORGANIZER": "Стварыць новага арганізатара",
     "ORGANIZER_NAME": "Арганізатары",
     "ENTER_ORGANIZER_NAME": "Увядзіце арганізатараў мерапрыемства",
     "LEVEL_OF_EVENT": "Узровень мерапрыемства",
