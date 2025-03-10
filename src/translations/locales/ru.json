@@ -339,6 +339,7 @@
     "TOURNAMENT_NOT_START": "Соревнование ещё не началось",
     "TOURNAMENT_NOT_FINISHED": "Соревнование ещё не закончилось",
     "EVENT_CREATE_ERROR": "При создании мероприятия произошла ошибка",
+    "ORGANIZER_CREATED_SUCCESS": "Организатор успешно создан",
     "EVENT_CREATE_SUCCESS": "Мероприятие успешно создано",
     "SUCCESS_DELETE_NOMINATION": "Компетенция успешно удалена",
     "SUCCESS_DELETE_TEAM": "Команда успешно удалена",
