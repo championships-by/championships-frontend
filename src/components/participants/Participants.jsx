@@ -2,7 +2,7 @@ import { participantApi } from "@api";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
-import { Button, Flex, Typography, message, Row, Col, Divider } from "antd";
+import { Button, Flex, Typography, Row, Col, Divider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getParticipant,
@@ -52,7 +52,6 @@ function Participants() {
 
   const onOk = () => {
     setIsAddParticipantModalOpen(false);
-
     findParticipant();
   };
 
@@ -63,31 +62,24 @@ function Participants() {
   return (
     <>
       <Loader show={isLoading} />
-      <Row align="bottom">
-        <Col xs={24} sm={24} md={14}>
+      <Row align="middle" justify="space-between">
+        <Col>
           <Typography.Title level={2}>
             {t("COMMON.PARTICIPANT_MANAGEMENT")}
           </Typography.Title>
         </Col>
-        <Col flex="auto">
-          <Flex justify="flex-end">
+        <Col>
+          <Flex gap="middle" align="center">
             <SearchInput onChange={findParticipant} />
-            <AdminPanelControls>
-              <Flex gap="small">
-                {/*<Tooltip title="Сохранить список участников">
-            <Button type="primary" icon={<DownloadOutlined />} />
-          </Tooltip>*/}
-                <Button
-                  type="primary"
-                  onClick={() => setIsAddParticipantModalOpen(true)}
-                >
-                  {t("PARTICIPANTS.CREATE_PARTICIPANT")}
-                </Button>
-                <Button type="primary" onClick={onClickGlobalSearchModal}>
-                  {t("COMMON.SYSTEM_WIDE_SEARCH")}
-                </Button>
-              </Flex>
-            </AdminPanelControls>
+            <Button
+              type="primary"
+              onClick={() => setIsAddParticipantModalOpen(true)}
+            >
+              {t("PARTICIPANTS.CREATE_PARTICIPANT")}
+            </Button>
+            <Button type="primary" onClick={onClickGlobalSearchModal}>
+              {t("COMMON.SYSTEM_WIDE_SEARCH")}
+            </Button>
           </Flex>
         </Col>
       </Row>
@@ -110,4 +102,5 @@ function Participants() {
     </>
   );
 }
+
 export default Participants;
