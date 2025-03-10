@@ -5,7 +5,7 @@ import { message, notification } from "antd";
 import { ROUTES } from "@constants";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { logout } from "../../store/users/thunk";
+import { logout } from "@store/users/thunk";
 
 function Logout() {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ function Logout() {
         navigate(ROUTES.USER_SETTINGS.PATH);
         message.error(t("MESSAGES.LOGOUT_ERROR"));
       });
-  }, []);
+  }, [dispatch]);
 
   return <Loader show />;
 }
