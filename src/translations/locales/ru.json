@@ -249,7 +249,7 @@
     "TIME_UNTIL_PREPOSITION": "по"
   },
   "PARTICIPANTS": {
-    "VERIFICATION_DONE": "Пользователь верифицирован",
+    "VERIFICATION_DONE": "Подтвенр",
     "CARD_OF_PARTICIPANT": "Карточка участника",
     "EDIT_PARTICIPANT": "Редактировать участника",
     "CREATE_PARTICIPANT": "Добавить участника",
@@ -419,7 +419,7 @@
     "LINK_SHOULD_START_WITH_HTTP": "Ссылка должна начинаться с 'http://' или 'https://'",
     "PLEASE_ENTER_BIRTHDAY": "Пожалуйста, выберите дату рождения",
     "ENTER_TEACHER_NAME": "Пожалуйста, введите имя педагога",
-    "ENTER_TEACHER_LAST_NAME": "Пожалуйста, введите фамилию учителя",
+    "ENTER_TEACHER_LAST_NAME": "Пожалуйста, введите фамилию педагога",
     "PLEASE_ENTER_REGION": "Пожалуйста, выберите регион",
     "PLESE_ENTER_EDUCATIONAL_INSTITUTION": "Пожалуйста, введите учреждение образования",
     "PLESE_ENTER_CORRECT_EDUCATIONAL_INSTITUTION": "Пожалуйста, введите корректное учреждение образования",
