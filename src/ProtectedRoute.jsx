@@ -1,9 +1,14 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { getUserSelector } from "@store/users";
+import Loader from "@components/loader/Loader";
 
 const ProtectedRoute = ({ allowedRoles, children }) => {
   const user = useSelector(getUserSelector);
+
+  if (!user || !user.data) {
+    return <Loader show={true} />;
+  }
 
   if (user.data.length !== 0) {
     if (!user?.data?.role) {
