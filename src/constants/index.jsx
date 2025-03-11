@@ -47,6 +47,7 @@ export const NOMINATION_TYPES = {
   CRITERIA: "NOMINATION_TYPES.CRITERIA",
   TIME: "NOMINATION_TYPES.TIME",
   OLYMPIC: "NOMINATION_TYPES.PLAYOFF",
+  GROUP: "NOMINATION_TYPES.GROUP",
 };
 
 export const RESPONSE_STATUS = {
@@ -112,9 +113,14 @@ export const ROUTES = {
     PATH: (eventID) => `/judgment/events/${eventID}/settings`,
   },
   JUDGMENT_GROUP_STAGE: {
-    TITLE: "NOMINATION_TYPES.PLAYOFF",
+    TITLE: "NOMINATION_TYPES.GROUP",
     PATH: (event_id, nomination_id) =>
       `/judgment/events/${event_id}/${nomination_id}/group-stage`,
+  },
+  JUDGMENT_PLAYOFF_STAGE: {
+    TITLE: "NOMINATION_TYPES.PLAYOFF",
+    PATH: (event_id, nomination_id) =>
+      `/judgment/events/${event_id}/${nomination_id}/play-off`,
   },
   JUDGMENT_TIME_MATCHES: {
     TITLE: "NOMINATION_TYPES.TIME",
@@ -152,6 +158,7 @@ export const ROUTER_ROUTES = {
   JUDGMENT_CREATE_TEST: "create/test",
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
   JUDGMENT_GROUP_STAGE: ":eventId/:nominationId/group-stage",
+  JUDGMENT_PLAYOFF_STAGE: ":eventId/:nominationId/play-off",
   JUDGMENT_TIME_MATCHES: ":eventId/:nominationId/time-matches",
   JUDGMENT_CRITERIA: ":eventId/:nominationId/criteria",
 };

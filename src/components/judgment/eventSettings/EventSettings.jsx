@@ -99,6 +99,8 @@ function EventSettings() {
         switch (record) {
           case NOMINATIONS.TIME:
             return t(NOMINATION_TYPES.TIME);
+          case NOMINATIONS.TIME:
+            return t(NOMINATION_TYPES.GROUP);
           case NOMINATIONS.CRITERIA:
             return t(NOMINATION_TYPES.CRITERIA);
           case NOMINATIONS.OLYMPIC:
@@ -116,6 +118,10 @@ function EventSettings() {
         {
           text: t(NOMINATION_TYPES.OLYMPIC),
           value: NOMINATIONS.OLYMPIC,
+        },
+        {
+          text: t(NOMINATION_TYPES.GROUP),
+          value: NOMINATIONS.GROUP,
         },
       ],
       onFilter: (value, record) => record.kind.includes(value),

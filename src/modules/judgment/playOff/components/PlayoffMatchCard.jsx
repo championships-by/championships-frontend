@@ -4,7 +4,7 @@ import { determinateTheWinner, isScoreZero, MatchResult } from "@utils";
 import { Handle, Position } from "reactflow";
 import { useMatches } from "@hooks";
 import clsx from "clsx";
-import "@modules/judgment/groupStage/components/sass/match-card.scss";
+import "@modules/judgment/playOff/components/sass/match-card.scss";
 
 export function PlayoffMatchCard({ data }) {
   const { matchIndex, team1, team2, onEditScore, lastCreatorEmail } = data;

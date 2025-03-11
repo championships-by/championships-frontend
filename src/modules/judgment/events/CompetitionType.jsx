@@ -32,6 +32,10 @@ function CompetitionType({
       value: NOMINATIONS.OLYMPIC,
       label: t("NOMINATION_TYPES.PLAYOFF"),
     },
+    {
+      value: NOMINATIONS.GROUP,
+      label: t("NOMINATION_TYPES.GROUP"),
+    },
   ];
 
   const handleChange = (value) => {
