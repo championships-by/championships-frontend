@@ -375,7 +375,8 @@
     "NOTICE_SUCCESS_SEND": "Ліст паспяхова адпраўлены",
     "SUCCESS_EDIT_TEAM_PARTICIPANTS": "Удзельнікі каманды паспяхова зменены",
     "EDITING_INFO": "Вы можаце ўносіць праўкі на працягу 15 хвілін пасля завяршэння этапу",
-    "SUCCESS_SEND_RESULTS": "Вынікі паспяхова адпраўлены"
+    "SUCCESS_SEND_RESULTS": "Вынікі паспяхова адпраўлены",
+    "EDIT_INFO": "Плей-оф запушчаны"
   },
   "RULES": {
     "ENTER_EMAIL": "Калі ласка, увядзіце Email",
