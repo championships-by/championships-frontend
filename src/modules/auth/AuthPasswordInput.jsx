@@ -9,19 +9,19 @@ import { useTranslation } from "react-i18next";
 function AuthPasswordInput({ value, onChange }) {
   const { t } = useTranslation();
   return (
-    <FormItem
-      name="Password"
-      className="auth-password-input"
-      hasFeedback
-      validateFirst
-      rules={[
-        {
-          required: true,
-          message: t("RULES.PLEASE_ENTER_PASSWORD"),
-        },
-      ]}
-    >
-      <Flex vertical>
+    <Flex vertical className="auth-password-input-wrapper">
+      <FormItem
+        name="Password"
+        className="auth-password-input"
+        hasFeedback
+        validateFirst
+        rules={[
+          {
+            required: true,
+            message: t("RULES.PLEASE_ENTER_PASSWORD"),
+          },
+        ]}
+      >
         <Input.Password
           placeholder={`${t("COMMON.PASSWORD")}...`}
           iconRender={() => <EyeInvisibleOutlined />}
@@ -29,6 +29,9 @@ function AuthPasswordInput({ value, onChange }) {
           value={value}
           onChange={(event) => onChange(event.target.value)}
         />
+      </FormItem>
+
+      <Flex vertical className="auth-password-input__info">
         <Typography.Text
           type="secondary"
           className="auth-password-input__secondary-text"
@@ -37,7 +40,7 @@ function AuthPasswordInput({ value, onChange }) {
         </Typography.Text>
         <a href={`mailto:${mailZubronok}`}>{mailZubronok}</a>
       </Flex>
-    </FormItem>
+    </Flex>
   );
 }
 

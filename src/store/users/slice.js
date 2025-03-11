@@ -7,6 +7,7 @@ import {
   getJudges,
   getUsersByName,
   getUnverifiedUsers,
+  logout,
 } from "./thunk";
 
 export const usersSlice = createSlice({
@@ -14,14 +15,18 @@ export const usersSlice = createSlice({
   initialState: {
     allUsers: [],
     unverifiedUsers: [],
-    userProfile: [],
+    userProfile: null,
     judges: [],
     isLoading: false,
     isUserProfileLoading: true,
     isLoadingUnverifiedUsers: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    clearUserProfile: (state) => {
+      state.userProfile = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUsers.pending, (state) => {
@@ -39,9 +44,7 @@ export const usersSlice = createSlice({
       .addCase(setUser.rejected, (state, action) => {
         state.error = action.error.message;
       })
-      .addCase(changeUserProfile.fulfilled, (state, action) => {
-        //там где будет меняться поставить запрос getUserProfile и после удалить этот кейс
-      })
+      .addCase(changeUserProfile.fulfilled, (state, action) => {})
       .addCase(changeUserProfile.rejected, (state, action) => {
         state.error = action.error.message;
       })
@@ -51,7 +54,7 @@ export const usersSlice = createSlice({
       })
       .addCase(getUserProfile.fulfilled, (state, action) => {
         state.isUserProfileLoading = false;
-        state.userProfile = action.payload;
+        state.userProfile = action.payload || null;
       })
       .addCase(getUserProfile.rejected, (state, action) => {
         state.isUserProfileLoading = false;
@@ -85,6 +88,21 @@ export const usersSlice = createSlice({
       .addCase(getUnverifiedUsers.rejected, (state, action) => {
         state.isLoadingUnverifiedUsers = false;
         state.error = action.error.message;
+      })
+      .addCase(logout.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.isLoading = false;
+        state.userProfile = null;
+        state.error = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });
+
+export const { clearUserProfile } = usersSlice.actions;

@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import "./sass/events.scss";
 
 function CompetitionType({
+  Disabled = false,
   onChange,
   onInputChange,
   onCriteriaChange,
@@ -70,6 +71,7 @@ function CompetitionType({
       </Typography.Text>
       <Space direction="vertical" className="events__competition-type__space">
         <Select
+          disabled={Disabled}
           placeholder={t("MESSAGES.CHOOSE_TYPE_OF_TOURNAMENT")}
           options={options}
           className="events__competition-type__name"
