@@ -13,6 +13,7 @@ export * from "./team";
 export * from "./timeMatches";
 export * from "./user";
 export * from "./feedback";
+export * from "./organizers";
 
 const excludedUrls = ["/user/profile"];
 

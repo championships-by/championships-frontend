@@ -66,7 +66,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       const response = await eventApi.setEvent(formData);
       if (
         response.status >= RESPONSE_STATUS.STATUS_OK &&
-        response.status < 300
+        response.status < RESPONSE_STATUS.STATUS_300
       ) {
         return true;
       } else {

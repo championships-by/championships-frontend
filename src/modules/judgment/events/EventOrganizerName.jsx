@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import { SolutionOutlined, PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-import { eventApi } from "@api";
+import { organizerApi } from "@api";
 
 function EventOrganizerName({ name, value, eventId, form, onChange }) {
   const { t } = useTranslation();
@@ -20,8 +20,9 @@ function EventOrganizerName({ name, value, eventId, form, onChange }) {
 
   const fetchAllOrganizers = async () => {
     setLoading(true);
+
     try {
-      const response = await eventApi.getOrganizers();
+      const response = await organizerApi.getOrganizers();
       setOrganizers(response.map((org) => org.name) || []);
     } finally {
       setLoading(false);
@@ -31,11 +32,12 @@ function EventOrganizerName({ name, value, eventId, form, onChange }) {
   const fetchEventOrganizers = async () => {
     if (!eventId) return;
 
-    const response = await eventApi.getOrganizersRelatedToEvent(eventId);
+    const response = await organizerApi.getOrganizersRelatedToEvent(eventId);
     const organizerNames = response.map((org) => org.name);
 
     setSelectedOrganizers(organizerNames);
     form.setFieldsValue({ [name]: organizerNames });
+
     if (onChange) onChange({ [name]: organizerNames });
   };
 
@@ -46,7 +48,7 @@ function EventOrganizerName({ name, value, eventId, form, onChange }) {
     }
 
     try {
-      await eventApi.createOrganizer(newOrganizerName.trim());
+      await organizerApi.createOrganizer(newOrganizerName.trim());
       await fetchAllOrganizers();
 
       const newOrganizer = newOrganizerName.trim();
@@ -88,6 +90,11 @@ function EventOrganizerName({ name, value, eventId, form, onChange }) {
     setSelectedOrganizers(selectedValues);
     form.setFieldsValue({ [name]: selectedValues });
     if (onChange) onChange({ [name]: selectedValues });
+  };
+
+  const onCancel = () => {
+    setIsModalOpen(false);
+    setNewOrganizerName("");
   };
 
   const handleCreateClick = () => {
@@ -143,10 +150,7 @@ function EventOrganizerName({ name, value, eventId, form, onChange }) {
         title={t("COMMON.CREATE_NEW_ORGANIZER")}
         open={isModalOpen}
         onOk={createNewOrganizer}
-        onCancel={() => {
-          setIsModalOpen(false);
-          setNewOrganizerName("");
-        }}
+        onCancel={onCancel}
         okText={t("COMMON.SAVE")}
         cancelText={t("COMMON.CANCEL")}
       >

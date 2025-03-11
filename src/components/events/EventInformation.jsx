@@ -223,9 +223,7 @@ function EventInformation() {
               <Typography.Text strong>{t("COMMON.ORGANIZER")}</Typography.Text>
               <br />
               <Typography.Text>
-                {organizers.length > 0
-                  ? organizers.map((org) => org.name).join(", ")
-                  : t("COMMON.NO_ORGANIZERS")}
+                {organizers.map((org) => org.name).join(", ")}
               </Typography.Text>
             </Col>
             <Col

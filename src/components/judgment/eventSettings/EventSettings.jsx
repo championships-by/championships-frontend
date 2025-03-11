@@ -37,7 +37,7 @@ import EventPhotoGallery from "@modules/judgment/events/EventPhotoGallery";
 import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
-import { eventApi, competenciesApi, participantApi } from "@api";
+import { eventApi, competenciesApi, participantApi, organizerApi } from "@api";
 import {
   tableLocale,
   ROUTES,
@@ -425,7 +425,7 @@ function EventSettings() {
       organizers,
     } = { ...values, ...formValues };
 
-    const allOrganizers = await eventApi.getOrganizers();
+    const allOrganizers = await organizerApi.getOrganizers();
     const organizersWithIds = organizers.map((orgName) => {
       const organizer = allOrganizers.find((o) => o.name === orgName);
       return organizer
