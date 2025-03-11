@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeUserProfile, getUserSelector } from "@store/users";
 import FormItem from "antd/es/form/FormItem";
 import React, { useEffect, useState } from "react";
-import UserPasswordModal from "./UserPasswordChange";
 import { useTranslation } from "react-i18next";
+import UserPasswordModal from "./UserPasswordChange";
 
 import "./sass/user-settings.scss";
 

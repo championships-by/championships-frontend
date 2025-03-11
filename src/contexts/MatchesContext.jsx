@@ -160,7 +160,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
         nominationId
       );
 
-      const matches = response.data.matches;
+      const { matches } = response.data;
       const transformedMatches = transformPlayoffMatches(matches);
       const leveledMatches = getPlayOffLevels(transformedMatches);
 
