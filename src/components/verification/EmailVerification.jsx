@@ -1,4 +1,4 @@
-import { Button, Typography } from "antd";
+import { Button, Result, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
@@ -43,19 +43,24 @@ function EmailVerification() {
     <>
       <Loader show={isLoading} />
       <div className="container">
-        <Typography.Title level={2} className="first-auth__text">
-          {isSuccess
-            ? t("PARTICIPANTS.ACCOUNT_VERIFICATED")
-            : t("ERRORS.VERIFICATION_ERROR")}
-        </Typography.Title>
-        <Button
-          type="primary"
-          onClick={() => {
-            navigate(ROUTES.EVENTS.PATH);
-          }}
-        >
-          {t("COMMON.TO_MAIN")}
-        </Button>
+        <Result
+          status={isSuccess ? "success" : "error"}
+          title={
+            isSuccess
+              ? t("PARTICIPANTS.ACCOUNT_VERIFICATED")
+              : t("ERRORS.VERIFICATION_ERROR")
+          }
+          extra={[
+            <Button
+              type="primary"
+              onClick={() => {
+                navigate(ROUTES.EVENTS.PATH);
+              }}
+            >
+              {t("COMMON.TO_MAIN")}
+            </Button>,
+          ]}
+        />
       </div>
     </>
   );
