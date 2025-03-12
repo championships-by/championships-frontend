@@ -182,7 +182,9 @@
     "REPLACE": "Заменить",
     "SYSTEM_WIDE_SEARCH": "Поиск по всей системе",
     "SEE": "Смотреть",
-    "TO_MAIN": "На главную"
+    "TO_MAIN": "На главную",
+    "SEND_NOTIFICATION": "Отправить уведомление",
+    "SEND_NOTIFICATION_INPUT": "Введите текст уведомления..."
   },
   "EVENTS": {
     "EVENT": "Мероприятие",

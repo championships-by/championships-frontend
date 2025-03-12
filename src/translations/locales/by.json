@@ -182,7 +182,9 @@
     "REPLACE": "Замяніць",
     "SYSTEM_WIDE_SEARCH": "Пошук па ўсёй сістэме",
     "SEE": "Глядзець",
-    "TO_MAIN": "На галоўную"
+    "TO_MAIN": "На галоўную",
+    "SEND_NOTIFICATION": "Адправіць апавяшчэнне",
+    "SEND_NOTIFICATION_INPUT": "Увядзіце тэкст паведамлення..."
   },
   "EVENTS": {
     "EVENT": "Мерапрыемства",
