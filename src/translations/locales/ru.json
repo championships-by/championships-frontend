@@ -607,7 +607,7 @@
     "PASSWORDS_DONT_MATCH": "Пароли не совпадают",
     "CURRENT_PASSWORD_IS_MISSED": "Текущий пароль отсутствует",
     "ONE_OR_MORE_JUDGES_NOT_FOUND": "Один или несколько указанных судей не найдены",
-    "AT_LEAST_THREE_TEAMS": "Количество команд должно быть не меньше трёх",
+    "AT_LEAST_TWO_TEAMS": "Количество команд должно быть не меньше двух",
     "ERROR_EDIT_TEAM_NAME": "Не удалось изменить название команды",
     "ERROR_EDIT_TEAM_PARTICIPANTS": "Не удалось изменить участников команды",
     "USER_ACCOUNT_NOT_VERIFIED": "Ваша учётная запись пока не прошла подтверждение",
