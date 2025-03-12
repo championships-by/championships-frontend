@@ -100,6 +100,7 @@ export const ERRORS = {
   "exceeded image folder size (200 MB)": "ERRORS.EXCEEDED_IMAGE_FOLDER_SIZE",
   "teams not found": "ERRORS.TEAMS_NOT_FOUND",
 
+  
   getError: function (errorKey) {
     return i18n.t(this[errorKey]) || i18n.t("MESSAGES.ERROR");
   },
