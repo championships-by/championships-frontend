@@ -182,6 +182,8 @@
     "REPLACE": "Заменить",
     "SYSTEM_WIDE_SEARCH": "Поиск по всей системе",
     "SEE": "Смотреть",
+    "SEND_NOTIFICATION": "Отправить уведомление",
+    "SEND_NOTIFICATION_INPUT": "Введите сообщение которое хотите отправить",
     "TO_MAIN": "На главную"
   },
   "EVENTS": {
