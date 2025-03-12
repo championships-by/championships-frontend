@@ -81,9 +81,40 @@ export const ERRORS = {
   "current password is missed": "ERRORS.CURRENT_PASSWORD_IS_MISSED",
   "one or more judges presented in judges_ids not found":
     "ERRORS.JUDGES_NOT_FOUND",
-  "amount of teams should be at least 3": "ERRORS.AT_LEAST_THREE_TEAMS",
+  "amount of teams should be at least 2": "ERRORS.AT_LEAST_TWO_TEAMS",
   "team cannot be deleted": "ERRORS.TEAM_CANNOT_BE_DELETED",
   "your account is not confirmed": "ERRORS.USER_ACCOUNT_NOT_VERIFIED",
+  "user not in judge command": "ERRORS.USER_NOT_IN_JUDGE_COMMAND",
+  "user doesn't have acces for this operation":
+    "ERRORS.USER_DOESNT_HAVE_ACCESS_FOR_THIS_OPERATION",
+  "user is not a part of event organizers":
+    "ERRORS.USER_IS_NOT_A_PART_OF_EVENT_ORGANIZERS",
+  "photos uploaded successfully": "ERRORS.PHOTOS_UPLOADED_SUCCESSFULLY",
+  "successfully deleted photos from event":
+    "ERRORS.SUCCESSFULLY_DELETED_PHOTOS_FROM_EVENT",
+  "wrong match data": "ERRORS.WRONG_MATCH_DATA",
+  "play off match cannot be draw": "ERRORS.PLAY_OFF_MATCH_CANNOT_BE_DRAW",
+  "tournament already started": "ERRORS.TOURNAMENT_ALREADY_STARTED",
+  "you are not judge or owner": "ERRORS.YOU_ARE_NOT_JUDGE_OR_OWNER",
+  "this nomination event is not yours":
+    "ERRORS.THIS_NOMINATION_EVENT_IS_NOT_YOURS",
+  "judge not found in judges team error":
+    "ERRORS.JUDGE_NOT_FOUND_IN_JUDGES_TEAM_ERROR",
+  "organizer not found": "ERRORS.ORGANIZER_NOT_FOUND",
+  "organizer name taken": "ERRORS.ORGANIZER_NAME_TAKEN",
+  "wrong secret": "ERRORS.WRONG_SECRET",
+  "secret missing": "ERRORS.SECRET_MISSING",
+  "invalid role": "ERRORS.INVALID_ROLE",
+  "educational institution cannot be none for non judge user":
+    "ERRORS.EDUCATIONAL_INSTITUTION_CANNOT_BE_NONE_FOR_NON_JUDGE_USER",
+  "user account is already confirmed": "ERRORS.USER_ACCOUNT_ALREADY_CONFIRMED",
+  "token is expired": "ERRORS.TOKEN_IS_EXPIRED",
+  "token has invalid signature": "ERRORS.TOKEN_HAS_INVALID_SIGNATURE",
+  "hash verification failed": "ERRORS.HASH_VERIFICATION_FAILED",
+  "token wasn't found": "ERRORS.TOKEN_WASN'T_FOUND",
+  "processing image error": "ERRORS.PROCESSING_IMAGE_ERROR",
+  "exceeded image folder size (200 MB)": "ERRORS.EXCEEDED_IMAGE_FOLDER_SIZE",
+  "teams not found": "ERRORS.TEAMS_NOT_FOUND",
 
   getError: function (errorKey) {
     return i18n.t(this[errorKey]) || i18n.t("MESSAGES.ERROR");
