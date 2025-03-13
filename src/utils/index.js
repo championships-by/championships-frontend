@@ -597,6 +597,10 @@ export const getTreeData = (leveledMatches, handleEditScore) => {
   let overallIndex = 0;
   leveledMatches.forEach((level, levelIndex) => {
     level.forEach((match, index) => {
+      if (!match.team1 && !match.team2) {
+        console.warn(`Пропускаем матч ${match.id}, так как у него нет команд.`);
+        return;
+      }
       nodes.push({
         id: match.id.toString(),
         data: {
