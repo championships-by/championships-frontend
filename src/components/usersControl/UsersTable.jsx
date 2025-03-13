@@ -69,6 +69,7 @@ function UsersTable() {
     {
       title: t("COMMON.EDUCATIONAL_INSTITUTION"),
       key: "educational_institution",
+      dataIndex: "educational_institution",
       render: (_, { educational_institution }) => (
         <Typography.Text>{educational_institution}</Typography.Text>
       ),
