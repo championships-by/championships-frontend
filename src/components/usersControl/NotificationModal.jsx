@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import TextEditor from "@modules/textEditor/TextEditor";
 import { notificationApi } from "@api";
 
+import "./sass/notification-modal.scss";
+
 function NotificationModal({ isOpen, onCancel }) {
   const { t } = useTranslation();
   const [form] = Form.useForm();
