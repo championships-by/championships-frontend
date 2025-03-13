@@ -1,10 +1,11 @@
 import { fetchWithPagination } from "@utils";
 import { instance } from ".";
+import { ROUTER_ROUTES } from "@constants";
 
 export const eventApi = {
   getEvent: (eventID) =>
     instance
-      .get(`/event/event/get_by_id`, {
+      .get(`/${ROUTER_ROUTES.EVENT}/event/get_by_id`, {
         params: {
           event_id: eventID,
         },
@@ -12,7 +13,7 @@ export const eventApi = {
       .then((response) => response.data),
   getEventByJudge: (eventID) =>
     instance
-      .get(`/event/get_all_events_judged_nominations`, {
+      .get(`/${ROUTER_ROUTES.EVENT}/get_all_events_judged_nominations`, {
         params: {
           event_id: eventID,
         },
@@ -21,77 +22,85 @@ export const eventApi = {
   getEventWithNominations: async (data) => {
     return fetchWithPagination(
       instance,
-      "/event/events_with_nominations",
+      `/${ROUTER_ROUTES.EVENT}/events_with_nominations`,
       data
     );
   },
   getEventsRelatedToDate: async (data) => {
     return fetchWithPagination(
       instance,
-      "/event/get_events_related_to_date",
+      `/${ROUTER_ROUTES.EVENT}/get_events_related_to_date`,
       data
     );
   },
   changeEvent: (body) =>
-    instance.patch(`/event/event`, body, {
+    instance.patch(`/${ROUTER_ROUTES.EVENT}/event`, body, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     }),
   getEventsWithNominationsByOwner: (queryString) =>
-    instance.get(`/event/events_with_nominations_by_owner?${queryString}`),
+    instance.get(
+      `/${ROUTER_ROUTES.EVENT}/events_with_nominations_by_owner?${queryString}`
+    ),
   getEventsWithNominationsByJudgeInCommand: (queryString) =>
     instance.get(
-      `/event/events_with_nominations_by_judge_in_command?${queryString}`
+      `/${ROUTER_ROUTES.EVENT}/events_with_nominations_by_judge_in_command?${queryString}`
     ),
   getEventWithNominationsAndTeamParticipants: (queryString) =>
     instance
       .get(
-        `/event/get_event_with_nominations_and_team_participants?${queryString}`
+        `/${ROUTER_ROUTES.EVENT}/get_event_with_nominations_and_team_participants?${queryString}`
       )
       .then((res) => res.data),
   getEventTeamsNotRelated: (params) => {
     return fetchWithPagination(
       instance,
-      `/event/get_event_teams_not_related`,
+      `/${ROUTER_ROUTES.EVENT}/get_event_teams_not_related`,
       params
     );
   },
   changeLogo: (formData) =>
-    instance.post(`/event/event_update_logo`, formData, {
+    instance.post(`/${ROUTER_ROUTES.EVENT}/event_update_logo`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     }),
   changeRegulation: (formData) =>
-    instance.post(`/event/event_update_doc`, formData, {
+    instance.post(`/${ROUTER_ROUTES.EVENT}/event_update_doc`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     }),
   deleteEvent: (params) =>
-    instance.delete(`/event/delete_event`, {
+    instance.delete(`/${ROUTER_ROUTES.EVENT}/delete_event`, {
       params,
     }),
   setEvent: (body) =>
-    instance.post(`/event/event`, body, {
+    instance.post(`/${ROUTER_ROUTES.EVENT}/event`, body, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     }),
   getEventPhotos: (event_id) =>
-    instance.get(`/event/get_event_photos`, { params: { event_id } }),
+    instance.get(`/${ROUTER_ROUTES.EVENT}/get_event_photos`, {
+      params: { event_id },
+    }),
 
   uploadEventPhotos: (event_id, formData) =>
-    instance.post(`/event/upload_event_photos?event_id=${event_id}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      withCredentials: true,
-    }),
+    instance.post(
+      `/${ROUTER_ROUTES.EVENT}/upload_event_photos?event_id=${event_id}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      }
+    ),
   deleteEventPhotos: (event_id, photos) => {
     instance.delete(
-      `/event/delete_event_photos?photos=${photos}&event_id=${event_id}`
+      `/${ROUTER_ROUTES.EVENT}/delete_event_photos?photos=${photos}&event_id=${event_id}`
     );
   },
 };

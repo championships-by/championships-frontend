@@ -52,6 +52,7 @@ export const NOMINATION_TYPES = {
 
 export const RESPONSE_STATUS = {
   STATUS_OK: 200,
+  STATUS_300: 300,
   STATUS_UNAUTHORIZED: 401,
   STATUS_FORBIDDEN: 403,
   STATUS_NOTFOUND: 404,
@@ -151,6 +152,7 @@ export const ROUTER_ROUTES = {
   ABOUT_PROGRAM: "about",
   FEEDBACK: "feedback",
   EVENTS: "events",
+  EVENT: "event",
   EVENTS_DESCRIPTION: ":eventID",
   EVENTS_REGISTRATION: ":eventID/registration",
   JUDGMENT: "judgment/events",
@@ -327,6 +329,12 @@ export const ANTD_INPUT_FIELD_STATUSES = {
   DEFAULT: null,
   ERROR: "error",
   WARNING: "warning",
+};
+
+export const STATUS_OF_EVENT = {
+  SUCCESS: "success",
+  FAILED: "failed",
+  REMOVED: "removed",
 };
 
 export const MAX_TEXTAREA_LENGTH = 3000;

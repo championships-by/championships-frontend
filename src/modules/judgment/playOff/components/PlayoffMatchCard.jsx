@@ -11,6 +11,10 @@ export function PlayoffMatchCard({ data }) {
   const { isPlayoffStageFinished, isPlayoffStageEditable } = useMatches();
   const isEnabled = !isPlayoffStageFinished || isPlayoffStageEditable;
 
+  if (!team1 && !team2) {
+    return null;
+  }
+
   const handleClick = (e) => {
     e.preventDefault();
     onEditScore();
@@ -31,8 +35,8 @@ export function PlayoffMatchCard({ data }) {
               ) === MatchResult.TEAM1,
           })}
         >
-          <p>{team1 ? team1.name : ""}</p>
-          <p>{lastCreatorEmail ? team1.score : "–"}</p>
+          <p>{team1 ? team1.name : "Ожидается команда"}</p>
+          <p>{lastCreatorEmail ? team1?.score ?? "–" : "–"}</p>
         </div>
         <div
           className={clsx("match-card__team", {
@@ -43,8 +47,8 @@ export function PlayoffMatchCard({ data }) {
               ) === MatchResult.TEAM2,
           })}
         >
-          <p>{team2 ? team2.name : ""}</p>
-          <p>{lastCreatorEmail ? team2.score : "–"}</p>
+          <p>{team2 ? team2.name : "Ожидается команда"}</p>
+          <p>{lastCreatorEmail ? team2?.score ?? "–" : "–"}</p>
         </div>
       </div>
       {!isEnabled || !team1 || !team2 ? (

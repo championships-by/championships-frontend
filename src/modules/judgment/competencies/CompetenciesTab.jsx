@@ -255,6 +255,12 @@ function CompetenciesTab() {
 
   const buttonsForUnfinishedStage = (
     <Flex gap="small">
+      <Button onClick={handleDownloadExcel}>
+        <Flex gap="small">
+          <DownloadOutlined />
+          {t("EVENTS.DOWNLOAD_EXCEL")}
+        </Flex>
+      </Button>
       <Button type="primary" onClick={onClickSendResults}>
         {t("COMMON.SEND_RESULTS")}
       </Button>
@@ -290,7 +296,7 @@ function CompetenciesTab() {
             </Flex>
           </Button>
         ))}
-      <Button type="primary" onClick={handleDownloadExcel}>
+      <Button type="primary" onClick={handleDownloadProtocol}>
         {t("COMMON.FINAL_PROTOCOL")}
       </Button>
     </Flex>
