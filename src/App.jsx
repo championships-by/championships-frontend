@@ -33,10 +33,23 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
 import ProtectedRoute from "./ProtectedRoute";
+import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
+
+const { t } = useTranslation();
 
 function App() {
   return (
     <Provider store={store}>
+      <Helmet>
+        <meta property="og:title" content="РЕСУРС" />
+        <meta
+          property="og:description"
+          content={t("COMMON.META_DESCRIPTION")}
+        />
+        <meta property="og:image" content="./assets/icons/meta_icon.png" />
+        <meta property="og:url" content={API_HOST} />
+      </Helmet>
       <Layout>
         <BrowserRouter>
           <TitleAndMeta />
