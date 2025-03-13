@@ -86,7 +86,6 @@ function CompetenciesTab() {
               event_id: eventId,
               nomination_id: nominationId,
             },
-
             criteria_id: criterion.id,
             team_id: result.team.id,
             score: criterion.score,
@@ -112,7 +111,7 @@ function CompetenciesTab() {
     setIsStageFinished(true);
     setActiveTabKey("2");
     setIsDataLoaded(false);
-  }, [criteria, dataSource, eventId, nominationId]);
+  }, [eventId, nominationId]);
 
   const handleDownloadProtocol = async () => {
     try {
@@ -204,7 +203,6 @@ function CompetenciesTab() {
         competenciesApi.getCriteria(eventId, nominationId),
         competenciesApi.getCriteriaResults(eventId, nominationId),
         competenciesApi.getTimeAfterFinishing(params),
-        competenciesApi.isJudge(params),
       ])
         .then(
           ([
@@ -212,7 +210,6 @@ function CompetenciesTab() {
             criteriaResponse,
             criteriaResultsResponse,
             timeAfterFinishingResponse,
-            isJudgeResponse,
           ]) => {
             const transformedStageStatus =
               transformStageStatus(stageStatusResponse);
@@ -237,8 +234,7 @@ function CompetenciesTab() {
             setDataSource(generatedDataSource);
 
             setIsEditable(
-              isStillEditable(timeAfterFinishingResponse.data.stage) &&
-                isJudgeResponse.data
+              isStillEditable(timeAfterFinishingResponse.data.stage)
             );
           }
         )
