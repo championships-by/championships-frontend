@@ -36,9 +36,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
-const { t } = useTranslation();
-
 function App() {
+  const { t } = useTranslation();
+
   return (
     <Provider store={store}>
       <Helmet>
