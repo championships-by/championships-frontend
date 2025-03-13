@@ -11,7 +11,10 @@ import "@modules/judgment/groupStage/components/sass/playoff-tree.scss";
 export function PlayoffTree() {
   const { leveledPlayoffMatches, handleEditScore, isPlayoffStageFinished } =
     useMatches();
-  const { nodes, edges } = getTreeData(leveledPlayoffMatches, handleEditScore);
+  const filteredMatches = leveledPlayoffMatches.map((level) =>
+    level.filter((match) => match.team1 || match.team2)
+  );
+  const { nodes, edges } = getTreeData(filteredMatches, handleEditScore);
 
   const onInit = (reactFlowInstance) => {
     reactFlowInstance.fitView({ maxZoom: 1 });
