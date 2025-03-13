@@ -282,10 +282,8 @@ function EventSettingsCompitations({
         />
         <CompetitionType
           name="nomination_type"
+          Disabled={mode === "edit"}
           onChange={(value) => {
-            if (mode == "edit") {
-              return;
-            }
             handleChange(value);
           }}
           onInputChange={handleGroupCount}
