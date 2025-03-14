@@ -38,7 +38,7 @@ export const ROLE_FILTERS = [
 
 export const NOMINATIONS = {
   TIME: "time",
-  PLAYOFF: "playoffs",
+  GROUP: "group",
   CRITERIA: "criteria",
   OLYMPIC: "olympic",
 };

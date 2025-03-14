@@ -67,6 +67,7 @@ function CompetitionType({
       />
     ),
     playoffs: null,
+    group: null,
   };
   return (
     <div className="events__competition-type__div">

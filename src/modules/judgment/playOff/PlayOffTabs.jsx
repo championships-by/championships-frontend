@@ -16,7 +16,7 @@ import ReturnButton from "@modules/judgment/common/ReturnButton";
 import { downloadProtocol } from "@utils";
 import { useParams } from "react-router-dom";
 
-export function GroupStageTabs() {
+export function PlayOffTabs() {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFinishPlayoffModalOpen, setIsFinishPlayoffModalOpen] =

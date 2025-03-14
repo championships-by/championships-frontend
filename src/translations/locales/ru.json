@@ -227,6 +227,7 @@
     "ADD_NOMINATION": "Добавить компетенцию",
     "EDIT_NOMINATION": "Редактировать компетенцию",
     "PLAYOFF_SETTINGS": "Настройки плей-офф",
+    "GROUP_SETTINGS": "Настройки круговой",
     "TOURNAMENT_PARTICIPANTS": "Участники соревнования",
     "JUDGES_STRUCTURE": "Судейский состав",
     "NAME_NOMINATION_EXAMPLE": "Пример: Робофутбол",
@@ -451,7 +452,7 @@
     "TIME": "По времени",
     "CRITERIA": "По критериям",
     "PLAYOFF": "Плей-офф",
-    "GROUP": "Круговое"
+    "GROUP": "Круговой"
   },
   "EVENT_LEVELS": {
     "REPUBLIC": "Республиканский",

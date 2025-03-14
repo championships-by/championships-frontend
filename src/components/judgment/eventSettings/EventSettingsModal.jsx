@@ -135,7 +135,11 @@ function EventSettingsCompitations({
               .addTimeCompetenciesForEvent(data)
               .then(() => {});
             break;
-
+          case NOMINATIONS.GROUP:
+            await competenciesApi
+              .addGroupCompetenciesForEvent(data)
+              .then(() => {});
+            break;
           case NOMINATIONS.OLYMPIC:
             await competenciesApi
               .addOlympicCompetenciesForEvent(data)

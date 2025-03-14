@@ -6,6 +6,7 @@ export const judgmentApi = {
       params: {
         event_id: eventId,
         nomination_id: nominationId,
+        type,
       },
     });
   },
@@ -47,6 +48,7 @@ export const judgmentApi = {
       nomination_event: {
         event_id: eventId,
         nomination_id: nominationId,
+        type,
       },
       match_id: matchId,
       team1_score: team1Score,

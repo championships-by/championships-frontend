@@ -139,7 +139,11 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     setIsLoading(true);
     setError(null);
     try {
-      const matches = await judgmentApi.getMatches(eventId, nominationId);
+      const matches = await judgmentApi.getMatches(
+        eventId,
+        nominationId,
+        "group"
+      );
       const transformedMatches = transformMatches(matches.data);
       setMatches(transformedMatches);
       const transformedData = transformData(matches.data);

@@ -32,6 +32,8 @@ export const competenciesApi = {
       `/nomination_event/append_nomination_for_event_olympic`,
       data
     ),
+  addGroupCompetenciesForEvent: async (data) =>
+    instance.post(`/nomination_event/append_nomination_for_event_group`, data),
   addCriteriaCompetenciesForEvent: async (data) =>
     instance.post(
       `/nomination_event/append_nomination_for_event_criteria`,
@@ -63,7 +65,7 @@ export const competenciesApi = {
   startGroupStage: (data) =>
     instance.post(`/tournaments/start_group_stage`, data),
   finishGroupStage: (data) =>
-    instance.post(`/tournaments/finish_group_stage`, data),
+    instance.post(`/tournaments/finish_group_stageВ`, data),
   startPlayoffStage: (data) =>
     instance.post(`/tournaments/start_play_off_stage`, data),
   finishPlayoffStage: (data) =>

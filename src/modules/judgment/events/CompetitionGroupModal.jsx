@@ -13,7 +13,7 @@ import { ROUTES } from "@constants";
 import { competenciesApi } from "@api";
 import { useTranslation } from "react-i18next";
 
-function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
+function CompetitionGroupModal({ isOpen, onCancel, onOk, name, nominationID }) {
   const { t } = useTranslation();
   const [groupCount, setGroupCount] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,14 +30,18 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
       nomination_event: {
         event_id: eventId,
         nomination_id: nominationID,
+        type: "group",
       },
       group_count: groupCount,
     };
+
     try {
       await competenciesApi.startGroupStage(data);
       message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
-      navigate(ROUTES.JUDGMENT_PLAYOFF_STAGE.PATH(eventID, nominationID));
-    } catch {
+      navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+    } catch (error) {
+      console.error("Ошибка при старте соревнования:", error);
+      message.error(t("MESSAGES.ERROR_TOURNAMENT_START"));
     } finally {
       setIsLoading(false);
     }
@@ -92,4 +96,4 @@ function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {
   );
 }
 
-export default CompetitionModal;
+export default CompetitionGroupModal;

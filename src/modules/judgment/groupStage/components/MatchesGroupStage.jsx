@@ -75,6 +75,7 @@ export function MatchesGroupStage() {
               ...data,
               eventId,
               nominationId,
+              type: "group",
             })
           }
           onClose={handleCloseModal}
