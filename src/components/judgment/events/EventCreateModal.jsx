@@ -106,6 +106,10 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
     message.error(t("MESSAGES.CHECK_FIELDS"));
   };
 
+  const onValuesChange = (changedValues) => {
+    setValues((oldValues) => ({ ...oldValues, ...changedValues }));
+  };
+
   return (
     <Modal
       title={t("EVENTS.CREATE_EVENT")}
@@ -120,6 +124,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
         requiredMark="optional"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        onValuesChange={onValuesChange}
       >
         <EventName name="name" value={values.name} />
         <EventLogo
@@ -129,6 +134,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           form={form}
           fileList={fileList}
           setFileList={setFileList}
+          onChange={onValuesChange}
         />
         <EventEmail
           name="participant_question_email"
@@ -139,6 +145,7 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           value={values.organizer_name}
           form={form}
           required={true}
+          onChange={onValuesChange}
         />
         <EventPlace name="event_place" value={values.event_place} />
         <EventRegulation
@@ -146,23 +153,37 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           value={values.event_regulation}
           required={true}
           form={form}
+          onChange={onValuesChange}
         />
         <EventRegisterDate
           name="registration"
           value={values.registration}
           form={form}
+          onChange={onValuesChange}
         />
-        <EventDate name="holding" value={values.holding} form={form} />
+        <EventDate
+          name="holding"
+          value={values.holding}
+          form={form}
+          onChange={onValuesChange}
+        />
         <EventDescription
           name="description"
           value={values.description}
           form={form}
+          onChange={onValuesChange}
         />
-        <EventLevel name="event_level" value={values.event_level} form={form} />
+        <EventLevel
+          name="event_level"
+          value={values.event_level}
+          form={form}
+          onChange={onValuesChange}
+        />
         <EventRequirements
           name="participation_needs"
           value={values.participation_needs}
           form={form}
+          onChange={onValuesChange}
         />
         <Button
           type="primary"
