@@ -85,15 +85,6 @@ export const participantApi = {
       { data: body }
     );
   },
-  deleteTeamParticipant: (params) => {
-    return instance.delete("/team_participant/delete_team_participant", {
-      params,
-      paramsSerializer: (params) => qs.stringify(params, { indices: false }),
-    });
-  },
-  addTeamParticipant: (params) => {
-    return instance.post("/team_participant/team_participant", params);
-  },
   checkEmail: async (queryString) => {
     return instance
       .post(`/user/check_email?email=${encodeURIComponent(queryString)}`)

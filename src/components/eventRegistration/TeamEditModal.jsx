@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Flex, Form, Modal, message } from "antd";
 import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import { participantApi, teamApi } from "@api";
+import { participantApi, teamApi, team_participantApi } from "@api";
 import { useTranslation } from "react-i18next";
 
 function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
@@ -21,7 +21,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
 
   const updateParticipants = async (params) => {
     if (params.participants_ids.length > 0) {
-      await participantApi.addTeamParticipant(params);
+      await team_participantApi.addTeamParticipant(params);
     }
 
     const selectedIds = form.getFieldValue("teamParticipants");
@@ -29,7 +29,7 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
     const idsToDelete = initialIds.filter((id) => !selectedIds.includes(id));
 
     if (idsToDelete.length > 0) {
-      await participantApi.deleteTeamParticipant({
+      await team_participantApi.deleteTeamParticipant({
         team_id: teamID,
         participants_ids: idsToDelete,
       });
