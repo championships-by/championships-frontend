@@ -1,5 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable import/prefer-default-export */
 import { useMatches } from "@hooks";
 import { isScoreZero } from "@utils";
 import { Button, message, Tabs, Flex } from "antd";

@@ -65,7 +65,7 @@ export const competenciesApi = {
   startGroupStage: (data) =>
     instance.post(`/tournaments/start_group_stage`, data),
   finishGroupStage: (data) =>
-    instance.post(`/tournaments/finish_group_stageВ`, data),
+    instance.post(`/tournaments/finish_group_stage`, data),
   startPlayoffStage: (data) =>
     instance.post(`/tournaments/start_play_off_stage`, data),
   finishPlayoffStage: (data) =>

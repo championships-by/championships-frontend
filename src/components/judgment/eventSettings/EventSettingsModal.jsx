@@ -136,9 +136,7 @@ function EventSettingsCompitations({
               .then(() => {});
             break;
           case NOMINATIONS.GROUP:
-            await competenciesApi
-              .addGroupCompetenciesForEvent(data)
-              .then(() => {});
+            await competenciesApi.addGroupCompetenciesForEvent(data);
             break;
           case NOMINATIONS.OLYMPIC:
             await competenciesApi

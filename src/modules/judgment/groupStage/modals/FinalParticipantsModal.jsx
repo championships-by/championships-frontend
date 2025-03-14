@@ -8,6 +8,61 @@ import { useTranslation } from "react-i18next";
 const regex = /^[^@]+/;
 const replaceRegex = /[^a-zA-Z0-9]+/g;
 
+const getParticipantKey = (participant) => {
+  return participant.match(regex)[0].replace(replaceRegex, "-").toLowerCase();
+};
+
+const calculatePoints = (score1, score2) => {
+  if (score1 > score2) return [3, 0];
+  if (score1 < score2) return [0, 3];
+  return [1, 1];
+};
+
+const getNextStageCount = (count) => {
+  let n = 1;
+  while (2 ** n <= count) {
+    n++;
+  }
+  return 2 ** (n - 1);
+};
+
+const getParticipants = (matches) => {
+  const participants = matches.reduce((acc, match) => {
+    const { team1, team2 } = match;
+    const [points1, points2] = calculatePoints(team1.score, team2.score);
+
+    const updateParticipant = (id, name, score, points) => {
+      const existingParticipant = acc.find((p) => p.participant === name);
+      if (existingParticipant) {
+        existingParticipant.score += score;
+        existingParticipant.points += points;
+      } else {
+        acc.push({
+          id,
+          key: getParticipantKey(name),
+          participant: name,
+          score,
+          points,
+          isPassed: false,
+        });
+      }
+    };
+
+    updateParticipant(team1.id, team1.name, team1.score, points1);
+    updateParticipant(team2.id, team2.name, team2.score, points2);
+
+    return acc;
+  }, []);
+
+  participants.sort((a, b) => b.points - a.points || b.score - a.score);
+  const advancingCount = getNextStageCount(participants.length);
+  participants.slice(0, advancingCount).forEach((participant) => {
+    participant.isPassed = true;
+  });
+
+  return participants;
+};
+
 export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
   const { t } = useTranslation();
   const [tableData, setTableData] = useState([]);
@@ -57,65 +112,6 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
     },
   ];
 
-  const getParticipantKey = useCallback((participant) => {
-    return participant.match(regex)[0].replace(replaceRegex, "-").toLowerCase();
-  }, []);
-
-  const calculatePoints = useCallback((score1, score2) => {
-    if (score1 > score2) return [3, 0];
-    if (score1 < score2) return [0, 3];
-    return [1, 1];
-  }, []);
-
-  const getNextStageCount = (count) => {
-    let n = 1;
-    while (2 ** n <= count) {
-      n++;
-    }
-    return 2 ** (n - 1);
-  };
-
-  const getParticipants = useCallback(
-    (matches) => {
-      const participants = matches.reduce((acc, match) => {
-        const { team1, team2 } = match;
-        const [points1, points2] = calculatePoints(team1.score, team2.score);
-
-        const updateParticipant = (id, name, score, points) => {
-          const existingParticipant = acc.find((p) => p.participant === name);
-          if (existingParticipant) {
-            existingParticipant.score += score;
-            existingParticipant.points += points;
-          } else {
-            acc.push({
-              id,
-              key: getParticipantKey(name),
-              participant: name,
-              score,
-              points,
-              isPassed: false,
-            });
-          }
-        };
-
-        updateParticipant(team1.id, team1.name, team1.score, points1);
-        updateParticipant(team2.id, team2.name, team2.score, points2);
-
-        return acc;
-      }, []);
-
-      participants.sort((a, b) => b.points - a.points || b.score - a.score);
-      const advancingCount = getNextStageCount(participants.length);
-      participants.sort((a, b) => b.points - a.points || b.score - a.score);
-      participants.slice(0, advancingCount).forEach((participant) => {
-        participant.isPassed = true;
-      });
-
-      return participants;
-    },
-    [calculatePoints, getParticipantKey]
-  );
-
   const handleOnSubmit = (e) => {
     e.preventDefault();
     onSubmit(tableData);
@@ -126,7 +122,7 @@ export const FinalParticipantsModal = ({ isOpen, onSubmit, onCancel }) => {
       const data = getParticipants(matches);
       setTableData(data);
     }
-  }, [getParticipants, isOpen, matches]);
+  }, [isOpen, matches]);
 
   return (
     <Modal

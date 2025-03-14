@@ -48,7 +48,7 @@ export const MatchCard = ({
         </div>
       </div>
       {!isEnabled ? (
-        <div className="match-card__icon-section"></div>
+        <div className="match-card__icon-section" />
       ) : (
         <div className="match-card__icon-section" onClick={handleClick}>
           <EditOutlined className="match-card__icon-section--edit-icon" />
