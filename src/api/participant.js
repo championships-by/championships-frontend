@@ -92,10 +92,7 @@ export const participantApi = {
     });
   },
   addTeamParticipant: (params) => {
-    return instance.post("/team_participant/team_participant", {
-      team_id: params.team_id,
-      participants_ids: params.participants_ids,
-    });
+    return instance.post("/team_participant/team_participant", params);
   },
   checkEmail: async (queryString) => {
     return instance

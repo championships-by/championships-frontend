@@ -19,19 +19,14 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
     }
   };
 
-  const updateParticipants = async () => {
+  const updateParticipants = async (params) => {
+    if (params.participants_ids.length > 0) {
+      await participantApi.addTeamParticipant(params);
+    }
+
     const selectedIds = form.getFieldValue("teamParticipants");
     const initialIds = initialParticipants.map((p) => p.value);
-
-    const idsToAdd = selectedIds.filter((id) => !initialIds.includes(id));
     const idsToDelete = initialIds.filter((id) => !selectedIds.includes(id));
-
-    if (idsToAdd.length > 0) {
-      await participantApi.addTeamParticipant({
-        team_id: teamID,
-        participants_ids: idsToAdd,
-      });
-    }
 
     if (idsToDelete.length > 0) {
       await participantApi.deleteTeamParticipant({
@@ -41,9 +36,20 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
     }
   };
 
+  const getParams = () => {
+    const selectedIds = form.getFieldValue("teamParticipants");
+    const initialIds = initialParticipants.map((p) => p.value);
+    const idsToAdd = selectedIds.filter((id) => !initialIds.includes(id));
+    return {
+      team_id: teamID,
+      participants_ids: idsToAdd,
+    };
+  };
+
   const onFinish = async () => {
     setIsLoading(true);
-    await updateParticipants();
+    const params = getParams();
+    await updateParticipants(params);
     await updateName();
     message.success(t("EVENTS.SUCCESS_EDIT_TEAM"));
     onOk();
