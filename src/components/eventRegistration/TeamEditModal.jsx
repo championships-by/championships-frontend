@@ -27,12 +27,10 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
     const idsToDelete = initialIds.filter((id) => !selectedIds.includes(id));
 
     if (idsToAdd.length > 0) {
-      for (const participant_id of idsToAdd) {
-        await participantApi.addTeamParticipant({
-          participant_id,
-          team_id: teamID,
-        });
-      }
+      await participantApi.addTeamParticipant({
+        team_id: teamID,
+        participants_ids: idsToAdd,
+      });
     }
 
     if (idsToDelete.length > 0) {
@@ -44,15 +42,12 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
   };
 
   const onFinish = async () => {
-    try {
-      setIsLoading(true);
-      await updateParticipants();
-      await updateName();
-      message.success(t("EVENTS.SUCCESS_EDIT_TEAM"));
-      onOk();
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    await updateParticipants();
+    await updateName();
+    message.success(t("EVENTS.SUCCESS_EDIT_TEAM"));
+    onOk();
+    setIsLoading(false);
   };
 
   const onFinishFailed = () => {
@@ -65,28 +60,28 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
       setIsLoading(true);
       const params = new URLSearchParams({ team_id: teamID });
 
-      teamApi.getTeamById(params.toString()).then((data) => {
-        data.forEach((team) => {
+      Promise.all([
+        teamApi.getTeamById(params.toString()),
+        participantApi.getParticipant(),
+      ])
+        .then(([teamData, participants]) => {
+          const team = teamData[0];
           const initialParticipants = team.participants.map((participant) => ({
             value: participant.id,
             label: `${participant.second_name} ${participant.first_name} ${participant.third_name}`,
           }));
           setInitialParticipants(initialParticipants);
-          form.setFieldsValue({
-            teamName: team.name,
-            teamParticipants: initialParticipants.map((p) => p.value),
-          });
-        });
-      });
 
-      participantApi
-        .getParticipant()
-        .then((participants) => {
           const options = participants.map((p) => ({
             value: p.id,
             label: `${p.second_name} ${p.first_name} ${p.third_name}`,
           }));
           setTeamParticipants(options);
+
+          form.setFieldsValue({
+            teamName: team.name,
+            teamParticipants: initialParticipants.map((p) => p.value),
+          });
         })
         .finally(() => setTimeout(() => setIsLoading(false), 300));
     }

@@ -93,8 +93,8 @@ export const participantApi = {
   },
   addTeamParticipant: (params) => {
     return instance.post("/team_participant/team_participant", {
-      participant_id: params.participant_id,
       team_id: params.team_id,
+      participants_ids: params.participants_ids,
     });
   },
   checkEmail: async (queryString) => {
