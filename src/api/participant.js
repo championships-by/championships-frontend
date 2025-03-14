@@ -91,6 +91,12 @@ export const participantApi = {
       paramsSerializer: (params) => qs.stringify(params, { indices: false }),
     });
   },
+  addTeamParticipant: (params) => {
+    return instance.post("/team_participant/team_participant", {
+      participant_id: params.participant_id,
+      team_id: params.team_id,
+    });
+  },
   checkEmail: async (queryString) => {
     return instance
       .post(`/user/check_email?email=${encodeURIComponent(queryString)}`)

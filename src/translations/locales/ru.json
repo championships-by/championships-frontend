@@ -207,6 +207,7 @@
     "REGISTRATION_OPEN": "Регистрация открыта",
     "ADD_TEAM": "Добавить команду",
     "EDIT_TEAM": "Редактирование команды",
+    "SUCCESS_EDIT_TEAM": "Команда успешно отредактирована",
     "ADD_PARTICIPANT_IN_NOMINATION": "Добавление участников в компетенцию",
     "EDIT_PARTICIPANT_IN_NOMINATION": "Редактирование участника компетенции",
     "ARE_YOU_SURE_REMOVE_TEAM": "Вы уверены, что хотите удалить эту команду?",
