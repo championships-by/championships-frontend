@@ -4,7 +4,7 @@ import { paginationLocale, tableLocale } from "@constants";
 import { useTranslation } from "react-i18next";
 import { getTranslation } from "@utils";
 
-import "@modules/judgment/groupStage/components/sass/table-group-stage.scss";
+import "@modules/judgment/playOff/components/sass/table-group-stage.scss";
 
 export const TableGroupStage = () => {
   const { t } = useTranslation();

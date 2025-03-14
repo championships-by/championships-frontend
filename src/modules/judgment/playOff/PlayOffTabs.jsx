@@ -1,22 +1,37 @@
 import { useMatches } from "@hooks";
 import { isScoreZero } from "@utils";
-import { Button, message, Tabs, Flex } from "antd";
-import { useState } from "react";
-import { MatchesGroupStage, TableGroupStage } from "./components";
-import { FinalParticipantsModal } from "./modals";
+import { Button, message, Tabs, Flex, Divider } from "antd";
+import { useMemo, useState } from "react";
+import {
+  MatchesGroupStage,
+  TableGroupStage,
+  MatchesPlayoffStage,
+  PlayoffResult,
+} from "./components";
+import { FinalParticipantsModal, FinishPlayoffModal } from "./modals";
 import { useTranslation } from "react-i18next";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
 import { downloadProtocol } from "@utils";
 import { useParams } from "react-router-dom";
 
-export function GroupStageTabs() {
+export function PlayOffTabs() {
   const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFinishPlayoffModalOpen, setIsFinishPlayoffModalOpen] =
+    useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const { eventId, nominationId } = useParams();
 
-  const { matches, handleFinishGroupStage, isGroupStageFinished } =
-    useMatches();
+  const {
+    matches,
+    setFinalParticipants,
+    handleFinishGroupStage,
+    handleStartPlayoffStage,
+    isPlayoffStageFinished,
+    isGroupStageFinished,
+    leveledPlayoffMatches,
+    finishPlayoffStage,
+  } = useMatches();
 
   const handleClickFinishGroupStage = (e) => {
     e.preventDefault();
@@ -39,8 +54,22 @@ export function GroupStageTabs() {
     }
   };
 
+  const handleClickFinishPlayoffStage = (e) => {
+    setIsFinishPlayoffModalOpen(true);
+  };
+
+  const onOkFinishPlayoffModal = () => {
+    setIsFinishPlayoffModalOpen(false);
+    finishPlayoffStage();
+  };
+
+  const onCancelFinishPlayoffModal = () => {
+    setIsFinishPlayoffModalOpen(false);
+  };
+
   const onSubmitFinalParticipants = async (data) => {
     await handleFinishGroupStage(data);
+    await handleStartPlayoffStage(data);
     setIsModalOpen(false);
   };
 
@@ -59,9 +88,15 @@ export function GroupStageTabs() {
     },
     {
       key: "3",
-      label: t("COMMON.RESULTS"),
-      children: <div>{t("TOURNAMENTS.FINAL_RESULTS")}</div>,
+      label: t("NOMINATION_TYPES.PLAYOFF"),
+      children: <MatchesPlayoffStage />,
       disabled: !isGroupStageFinished,
+    },
+    {
+      key: "4",
+      label: t("COMMON.RESULTS"),
+      children: <PlayoffResult />,
+      disabled: !isPlayoffStageFinished,
     },
   ];
 
@@ -76,10 +111,15 @@ export function GroupStageTabs() {
             <Flex gap="small">
               {!isGroupStageFinished && (
                 <Button onClick={handleClickFinishGroupStage} type="primary">
-                  {t("COMMON.COMPLETE_STAGE")}
+                  {t("COMMON.COMPLETE_GROUP_STAGE")}
                 </Button>
               )}
-              {isGroupStageFinished && (
+              {!isPlayoffStageFinished && isGroupStageFinished && (
+                <Button onClick={handleClickFinishPlayoffStage} type="primary">
+                  {t("COMMON.COMPLETE_PLAY_OFF_STAGE")}
+                </Button>
+              )}
+              {isPlayoffStageFinished && isGroupStageFinished && (
                 <Button type="primary" onClick={onClickDownloadProtocol}>
                   {t("COMMON.FINAL_PROTOCOL")}
                 </Button>
@@ -88,12 +128,21 @@ export function GroupStageTabs() {
           ),
         }}
       />
-      {isGroupStageFinished && <ReturnButton />}
+      {isPlayoffStageFinished && (
+        <>
+          <ReturnButton />
+        </>
+      )}
 
       <FinalParticipantsModal
         isOpen={isModalOpen}
         onSubmit={onSubmitFinalParticipants}
         onCancel={() => setIsModalOpen(false)}
+      />
+      <FinishPlayoffModal
+        isOpen={isFinishPlayoffModalOpen}
+        onOk={onOkFinishPlayoffModal}
+        onCancel={onCancelFinishPlayoffModal}
       />
     </Flex>
   );
