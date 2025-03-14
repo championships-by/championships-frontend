@@ -39,9 +39,7 @@ function CompetitionGroupModal({ isOpen, onCancel, onOk, name, nominationID }) {
       await competenciesApi.startGroupStage(data);
       message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
       navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
-    } catch (error) {
-      console.error("Ошибка при старте соревнования:", error);
-      message.error(t("MESSAGES.ERROR_TOURNAMENT_START"));
+    } catch {
     } finally {
       setIsLoading(false);
     }

@@ -1,5 +1,5 @@
-import { EditMatchScoreModal } from "@modules/judgment/groupStage/modals/EditMatchScoreModal";
-import { FinalParticipantsModal } from "@modules/judgment/groupStage/modals/FinalParticipantsModal";
-import FinishPlayoffModal from "@modules/judgment/groupStage/modals/FinishPlayoffModal";
+import { EditMatchScoreModal } from "@modules/judgment/playoff/modals/EditMatchScoreModal";
+import { FinalParticipantsModal } from "@modules/judgment/playoff/modals/FinalParticipantsModal";
+import FinishPlayoffModal from "@modules/judgment/playoff/modals/FinishPlayoffModal";
 
 export { EditMatchScoreModal, FinalParticipantsModal, FinishPlayoffModal };

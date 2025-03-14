@@ -23,6 +23,7 @@ export const EditMatchScoreModal = ({ isOpen, match, onSubmit, onClose }) => {
       ...match,
       team1: { ...team1, score: team1Score },
       team2: { ...team2, score: team2Score },
+      type: "group",
     });
     onClose();
   };
