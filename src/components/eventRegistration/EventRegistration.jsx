@@ -1,6 +1,7 @@
 import { Button, Typography, Breadcrumb, Divider, Tabs, Row, Col } from "antd";
 import { useState, useEffect } from "react";
-import { json, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import dayjs from "dayjs";
 import TeamCreateModal from "@components/eventRegistration/TeamCreateModal";
 import TeamsTable from "@components/eventRegistration/TeamsTable";
 import AllTeamsTable from "@components/eventRegistration/AllTeamsTable";
@@ -22,6 +23,7 @@ function EventsRegistration() {
   const [activeTab, setActiveTab] = useState("1");
   const { eventID } = useParams();
   const isRelated = true;
+  const navigate = useNavigate();
 
   const items = [
     {
@@ -89,7 +91,13 @@ function EventsRegistration() {
 
   useEffect(() => {
     if (isLoading) {
-      eventApi.getEvent(eventID).then((data) => setEvent(data));
+      eventApi.getEvent(eventID).then((data) => {
+        setEvent(data);
+
+        if (dayjs(data.event.registration_finish_date) < dayjs()) {
+          navigate(ROUTES.EVENTS.PATH);
+        }
+      });
       getTeams();
     }
   }, [isLoading, eventID]);
