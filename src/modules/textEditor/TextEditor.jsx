@@ -1,10 +1,10 @@
 import { useLayoutEffect } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import { useTranslation } from "react-i18next";
+import MagicUrl from "quill-magic-url";
+
 import "react-quill/dist/quill.snow.css";
 import "./sass/textEditor.scss";
-
-import MagicUrl from "quill-magic-url";
 
 Quill.register("modules/magicUrl", MagicUrl);
 
