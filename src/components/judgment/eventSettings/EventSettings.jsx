@@ -338,7 +338,7 @@ function EventSettings() {
   const openParticipantModal = (record) => {
     const competitionType = record.kind;
     const competitionName = record.name;
-    const nominationID = findNominationId(competitionName, eventInfo);
+    const nominationID = record.id;
 
     participantApi
       .getParticipantsWithInfo(eventId, nominationID, competitionType)
