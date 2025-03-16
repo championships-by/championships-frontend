@@ -74,6 +74,10 @@ export const ROUTES = {
     TITLE: "COMMON.PARTICIPANT_MANAGEMENT",
     PATH: "/participants",
   },
+  CHECK_DIPLOMA: {
+    TITLE: "CHECK_DIPLOMA",
+    PATH: "/events/check-diploma",
+  },
   PARTICIPANT_INFORMATION: {
     TITLE: "PARTICIPANTS.CARD_OF_PARTICIPANT",
     PATH: (participantID) => `/participants/${participantID}`,
@@ -157,6 +161,7 @@ export const ROUTER_ROUTES = {
   EVENTS_REGISTRATION: ":eventID/registration",
   JUDGMENT: "judgment/events",
   JUDGMENT_CREATE: "create",
+  EVENTS_CHECK_DIPLOMA: "check-diploma",
   JUDGMENT_CREATE_TEST: "create/test",
   JUDGMENT_EVENT_SETTINGS: ":eventID/settings",
   JUDGMENT_GROUP_STAGE: ":eventId/:nominationId/group-stage",

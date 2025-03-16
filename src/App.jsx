@@ -13,6 +13,7 @@ import JudgmentPlayOff from "@components/judgment/playOff/JudgmentPlayOFF";
 import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
 import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
+import CheckDiploma from "./components/checkDiploma/CheckDiploma";
 import Participants from "@components/participants/Participants";
 import ParticipantInformation from "@components/participants/ParticipantInformation";
 import Unauthorized from "@components/unauthorized/Unauthorized";
@@ -146,6 +147,10 @@ function App() {
                         <EventsRegistration />
                       </ProtectedRoute>
                     }
+                  />
+                  <Route
+                    path={ROUTER_ROUTES.EVENTS_CHECK_DIPLOMA}
+                    element={<CheckDiploma />}
                   />
                 </Route>
                 <Route path={ROUTER_ROUTES.JUDGMENT}>
