@@ -81,6 +81,16 @@ function Events() {
             </Flex>
           </Col>
         )}
+        <Col flex="auto">
+          <Flex justify="flex-end">
+            <Button
+              type="primary"
+              onClick={() => navigate(ROUTES.CHECK_DIPLOMA.PATH)}
+            >
+              Проверить сертификат
+            </Button>
+          </Flex>
+        </Col>
       </Row>
       <Flex vertical gap={500}>
         <Flex vertical={isMobile || isTablet} gap="large">

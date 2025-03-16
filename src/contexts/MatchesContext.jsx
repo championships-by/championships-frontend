@@ -4,6 +4,7 @@ import { competenciesApi } from "@api";
 import { message } from "antd";
 import { getPlayOffLevels, isStillEditable } from "@utils";
 import { useTranslation } from "react-i18next";
+import { certificateApi } from "../api/certificates";
 
 export const MatchesContext = createContext();
 
@@ -306,12 +307,26 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     } catch {}
   };
 
+  const createCertificates = async (eventId, nominationId) => {
+    try {
+      const certificateData = {
+        event_id: eventId,
+        nomination_id: nominationId,
+      };
+      await certificateApi.createCertificate(certificateData);
+      message.success("Сертификаты успешно созданы");
+    } catch (error) {
+      message.error("Ошибка при создании сертификатов");
+    }
+  };
+
   const finishPlayoffStage = async () => {
     setIsLoading(true);
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishPlayoffStage(body);
       message.info("MESSAGES.EDIT_INFO");
+      await createCertificates(eventId, nominationId);
       fetchData(eventId, nominationId);
     } catch {}
     setIsLoading(false);
