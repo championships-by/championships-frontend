@@ -1,9 +1,11 @@
 import { useLayoutEffect } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import { useTranslation } from "react-i18next";
-
 import "react-quill/dist/quill.snow.css";
 import "./sass/textEditor.scss";
+import MagicUrl from "quill-magic-url";
+
+Quill.register("modules/magicUrl", MagicUrl);
 
 function TextEditor({ value, onChange, placeholder }) {
   const { t } = useTranslation();
@@ -47,7 +49,12 @@ function TextEditor({ value, onChange, placeholder }) {
           [{ list: "ordered" }, { list: "bullet" }],
           ["link"],
         ],
+        clipboard: {
+          matchVisual: false,
+        },
+        magicUrl: true,
       }}
+      formats={["bold", "italic", "underline", "list", "bullet", "link"]}
     />
   );
 }
