@@ -3,6 +3,7 @@ import ReactQuill, { Quill } from "react-quill";
 import { useTranslation } from "react-i18next";
 import "react-quill/dist/quill.snow.css";
 import "./sass/textEditor.scss";
+
 import MagicUrl from "quill-magic-url";
 
 Quill.register("modules/magicUrl", MagicUrl);
