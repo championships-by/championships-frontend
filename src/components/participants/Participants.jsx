@@ -1,5 +1,6 @@
 import { participantApi } from "@api";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
+import ParticipantExcelModal from "@modules/participant/ParticipantExcelModal";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
 import { Button, Flex, Typography, Row, Col, Divider } from "antd";
@@ -58,6 +59,7 @@ function Participants() {
   const onCancel = () => {
     setIsAddParticipantModalOpen(false);
   };
+  const [isExcelModalOpen, setIsExcelModalOpen] = useState(false);
 
   return (
     <>
@@ -71,12 +73,16 @@ function Participants() {
         <Col>
           <Flex gap="middle" align="center">
             <SearchInput onChange={findParticipant} />
+            <Button type="primary" onClick={() => setIsExcelModalOpen(true)}>
+              {t("COMMON.PARTICIPANT_EXCEL")}
+            </Button>
             <Button
               type="primary"
               onClick={() => setIsAddParticipantModalOpen(true)}
             >
               {t("PARTICIPANTS.CREATE_PARTICIPANT")}
             </Button>
+
             <Button type="primary" onClick={onClickGlobalSearchModal}>
               {t("COMMON.SYSTEM_WIDE_SEARCH")}
             </Button>
@@ -98,6 +104,10 @@ function Participants() {
       <ParticipantsGlobalSearchModal
         isOpen={isGlobalSearchModalOpen}
         onClose={onCloseGlobalSearchModal}
+      />
+      <ParticipantExcelModal
+        isOpen={isExcelModalOpen}
+        onClose={() => setIsExcelModalOpen(false)}
       />
     </>
   );

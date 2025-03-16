@@ -62,6 +62,9 @@
     "TEAM": "Команда",
     "TEAMS": "Команды",
     "PARTICIPANT": "Участник",
+    "PARTICIPANT_EXCEL": "Добавить документ",
+    "PARTICIPANTS_UPLOAD_EXCEL": "Загрузить участников документом",
+    "FILESELECT": "Выбрать файл",
     "CHOOSE_PARTICIPANT": "Выберите участника",
     "CHOOSE_PARTICIPANTS": "Выберите участников",
     "ACTIONS": "Действия",
@@ -382,7 +385,8 @@
     "DELETE_SUCCESS": "Удаление прошло успешно",
     "SUCCESS_EDIT_TEAM_PARTICIPANTS": "Участники команды успешно изменены",
     "EDITING_INFO": "Вы можете вносить правки в течение 15 минут после завершения этапа",
-    "SUCCESS_SEND_RESULTS": "Результаты успешно отправлены"
+    "SUCCESS_SEND_RESULTS": "Результаты успешно отправлены",
+    "SELECT_EXCEL_FILE": "Выберите файл"
   },
   "RULES": {
     "ENTER_EMAIL": "Пожалуйста, введите Email",
