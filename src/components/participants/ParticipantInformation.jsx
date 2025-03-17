@@ -43,9 +43,7 @@ function ParticipantInformation() {
       participantApi
         .getParticipantStats(body)
         .then((data) => {
-          data.participant.map((participant) => {
-            setParticipantData(participant);
-          });
+          setParticipantData(data.participant);
           setTeamWinsData(data.participation);
         })
         .finally(() => setTimeout(() => setIsLoading(false), 300));
