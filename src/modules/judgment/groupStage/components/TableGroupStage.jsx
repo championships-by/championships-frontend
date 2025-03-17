@@ -1,14 +1,16 @@
 import { useMatches } from "@hooks";
-import { Checkbox, Table, Typography } from "antd";
+import { Checkbox, Table, Typography, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { paginationLocale, tableLocale } from "@constants";
 import { useTranslation } from "react-i18next";
 import { getTranslation } from "@utils";
+import { useState, useEffect } from "react";
 
 import "@modules/judgment/groupStage/components/sass/table-group-stage.scss";
 
 export const TableGroupStage = () => {
   const { t } = useTranslation();
-  const { finalParticipants } = useMatches();
+  const { finalParticipants, isLoading } = useMatches();
 
   const columns = [
     {
@@ -49,7 +51,9 @@ export const TableGroupStage = () => {
     },
   ];
 
-  return finalParticipants && finalParticipants.length > 0 ? (
+  return isLoading ? (
+    <Spin indicator={<LoadingOutlined spin />} />
+  ) : finalParticipants && finalParticipants.length > 0 ? (
     <>
       {finalParticipants.map((element, index) => (
         <div key={index}>
@@ -69,3 +73,5 @@ export const TableGroupStage = () => {
     </>
   ) : null;
 };
+
+export default TableGroupStage;
