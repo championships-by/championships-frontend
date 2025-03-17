@@ -202,6 +202,9 @@
     margin-top: 20px;
   }
   &__existing-image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
     padding-left: 8px;
     padding-right: 8px;
     padding-top: 11px;
