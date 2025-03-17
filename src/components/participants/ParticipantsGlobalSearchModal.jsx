@@ -28,9 +28,7 @@ function ParticipantsGlobalSearchModal({ isOpen, onClose }) {
           label: <ParticipantLink>{item.label}</ParticipantLink>,
         }))
       );
-    } catch (err) {
-      console.error(err);
-    }
+    } catch {}
   }, 300);
 
   const onSearch = (value) => {
