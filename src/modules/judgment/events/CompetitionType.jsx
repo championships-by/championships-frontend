@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Typography, Space } from "antd";
-import Select from "@modules/customSelect/CustomSelect";
+import Select from "@components/Select";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 import { NOMINATION_TYPES, NOMINATIONS } from "@constants";

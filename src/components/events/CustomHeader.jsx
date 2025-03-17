@@ -1,6 +1,6 @@
 import { calendarLocale } from "@constants";
 import { Radio } from "antd";
-import Select from "@modules/customSelect/CustomSelect";
+import Select from "@components/Select";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useTranslation } from "react-i18next";

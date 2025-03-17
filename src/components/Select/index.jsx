@@ -4,12 +4,11 @@ import { useTranslation } from "react-i18next";
 
 const CustomSelect = (props) => {
   const { t } = useTranslation();
-  const defaultText = t("COMMON.NO_DATA");
 
   return (
     <AntdSelect
       {...props}
-      notFoundContent={props.notFoundContent || defaultText}
+      notFoundContent={props.notFoundContent || t("COMMON.NO_DATA")}
     />
   );
 };

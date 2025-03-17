@@ -1,7 +1,7 @@
 import React from "react";
 import FormItem from "antd/es/form/FormItem";
 import { Flex, Input, Space, Typography } from "antd";
-import Select from "@modules/customSelect/CustomSelect";
+import Select from "@components/Select";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 

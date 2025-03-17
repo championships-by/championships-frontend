@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Flex, Space, Typography } from "antd";
-import Select from "@modules/customSelect/CustomSelect";
+import Select from "@components/Select";
 import FormItem from "antd/es/form/FormItem";
 import { participantApi } from "@api";
 import { FILTER_OPTION, changeDateFormat } from "@utils";
