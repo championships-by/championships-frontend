@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { getEventsSelector } from "@store/events/selectors";
 import Loader from "@components/loader/Loader";
 import SearchInput from "@modules/search/SearchInput";
-import CheckCertificatInfo from "@CheckCertificatInfo";
+import CheckCertificateInfo from "@CheckCertificateInfo";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import s from "./sass/check-certificat.module.scss";
+import s from "./sass/check-certificate.module.scss";
 
-function CheckCertificat() {
+function CheckCertificate() {
   const [certificateId, setCertificateId] = useState("");
   const [searchId, setSearchId] = useState(null);
   const { isLoading } = useSelector(getEventsSelector);
@@ -25,7 +25,7 @@ function CheckCertificat() {
       <Row>
         <Col span={24}>
           <Typography.Title level={2}>
-            {t("CHECK_CERTIFICAT.TITLE")}
+            {t("CHECK_CERTIFICATE.TITLE")}
           </Typography.Title>
         </Col>
         <Col span={24}>
@@ -34,14 +34,14 @@ function CheckCertificat() {
               <SearchInput value={certificateId} onChange={setCertificateId} />
             </div>
             <Button type="primary" onClick={handleSearch}>
-              {t("CHECK_CERTIFICAT.BUTTON")}
+              {t("CHECK_CERTIFICATE.BUTTON")}
             </Button>
           </Flex>
         </Col>
-        <CheckCertificatInfo certificateId={searchId} />
+        <CheckCertificateInfo certificateId={searchId} />
       </Row>
     </>
   );
 }
 
-export default CheckCertificat;
+export default CheckCertificate;

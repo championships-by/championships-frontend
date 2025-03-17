@@ -28,7 +28,7 @@ import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import TitleAndMeta from "@components/titleAndMeta/TitleAndMeta";
 import CookiesNotification from "@components/cookies/CookiesNotification";
 import EmailVerification from "@components/verification/EmailVerification";
-import CheckCertificat from "@components/checkCertificat/CheckCertificat";
+import CheckCertificate from "@components/CheckCertificate/CheckCertificatee";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
 import { Provider } from "react-redux";
@@ -150,7 +150,7 @@ function App() {
                   />
                   <Route
                     path={ROUTER_ROUTES.EVENTS_CHECK_CERTIFICAT}
-                    element={<CheckCertificat />}
+                    element={<CheckCertificate />}
                   />
                 </Route>
                 <Route path={ROUTER_ROUTES.JUDGMENT}>

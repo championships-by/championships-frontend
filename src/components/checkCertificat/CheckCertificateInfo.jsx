@@ -2,9 +2,9 @@ import { Typography } from "antd";
 import { useEffect, useState } from "react";
 import { certificateApi } from "@api/certificates";
 
-import s from "./sass/check-certificat-info.module.scss";
+import s from "./sass/check-certificate-info.module.scss";
 
-function CheckCertificatInfo({ certificateId }) {
+function CheckCertificateInfo({ certificateId }) {
   const [certificateData, setCertificateData] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -28,12 +28,14 @@ function CheckCertificatInfo({ certificateId }) {
   if (loading)
     return (
       <Typography.Paragraph>
-        {t("CHECK_CERTIFICAT.LOADING")}
+        {t("CHECK_CERTIFICATE.LOADING")}
       </Typography.Paragraph>
     );
   if (!certificateData)
     return (
-      <Typography.Paragraph>{t("CHECK_CERTIFICAT.INPUT")}</Typography.Paragraph>
+      <Typography.Paragraph>
+        {t("CHECK_CERTIFICATE.INPUT")}
+      </Typography.Paragraph>
     );
 
   const { event_name, event_start_date, event_end_date, participant_name, id } =
@@ -43,13 +45,13 @@ function CheckCertificatInfo({ certificateId }) {
     <div className={s.content}>
       <div>
         <Typography.Title level={5}>
-          {t("CHECK_CERTIFICAT.EVENT")}
+          {t("CHECK_CERTIFICATE.EVENT")}
         </Typography.Title>
         <Typography.Paragraph>{event_name}</Typography.Paragraph>
       </div>
       <div>
         <Typography.Title level={5}>
-          {t("CHECK_CERTIFICAT.DATE")}
+          {t("CHECK_CERTIFICATE.DATE")}
         </Typography.Title>
         <Typography.Paragraph>
           {event_start_date}
@@ -58,13 +60,13 @@ function CheckCertificatInfo({ certificateId }) {
       </div>
       <div>
         <Typography.Title level={5}>
-          {t("CHECK_CERTIFICAT.FULL_NAME")}
+          {t("CHECK_CERTIFICATE.FULL_NAME")}
         </Typography.Title>
         <Typography.Paragraph>{participant_name}</Typography.Paragraph>
       </div>
       <div>
         <Typography.Title level={5}>
-          {t("CHECK_CERTIFICAT.NUMBER_CERTIFICAT")}
+          {t("CHECK_CERTIFICATE.NUMBER")}
         </Typography.Title>
         <Typography.Paragraph>{id}</Typography.Paragraph>
       </div>
@@ -72,4 +74,4 @@ function CheckCertificatInfo({ certificateId }) {
   );
 }
 
-export default CheckCertificatInfo;
+export default CheckCertificateInfo;

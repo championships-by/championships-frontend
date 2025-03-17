@@ -4,7 +4,7 @@ import { competenciesApi } from "@api";
 import { message } from "antd";
 import { getPlayOffLevels, isStillEditable } from "@utils";
 import { useTranslation } from "react-i18next";
-import { certificateApi } from "../api/certificates";
+import { certificateApi } from "@api/certificates";
 
 export const MatchesContext = createContext();
 
@@ -324,9 +324,9 @@ export function MatchesProvider({ eventId, nominationId, children, type }) {
         nomination_id: nominationId,
       };
       await certificateApi.createCertificate(certificateData);
-      message.success(t("CHECK_CERTIFICAT.SUCCESS"));
+      message.success(t("CHECK_CERTIFICATE.SUCCESS"));
     } catch (error) {
-      message.error(t("CHECK_CERTIFICAT.ERROR"));
+      message.error(t("CHECK_CERTIFICAET.ERROR"));
     }
   };
 
