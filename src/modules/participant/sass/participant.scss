@@ -122,3 +122,23 @@
 .re-captcha-container {
   margin: auto;
 }
+
+.custom-upload {
+  display: inline-block;
+  cursor: pointer;
+
+  button {
+    width: 100%;
+    text-align: left;
+  }
+}
+.excel-upload {
+  margin-top: 20px;
+
+  .ant-upload {
+    width: 100%;
+  }
+}
+.excel-template-link {
+  margin-top: 8px;
+}

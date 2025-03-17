@@ -34,6 +34,10 @@ function CompetitionType({
       value: NOMINATIONS.OLYMPIC,
       label: t("NOMINATION_TYPES.PLAYOFF"),
     },
+    {
+      value: NOMINATIONS.GROUP,
+      label: t("NOMINATION_TYPES.GROUP"),
+    },
   ];
 
   const handleChange = (value) => {
@@ -64,6 +68,7 @@ function CompetitionType({
       />
     ),
     playoffs: null,
+    group: null,
   };
   return (
     <div className="events__competition-type__div">

@@ -32,6 +32,8 @@ export const competenciesApi = {
       `/nomination_event/append_nomination_for_event_olympic`,
       data
     ),
+  addGroupCompetenciesForEvent: async (data) =>
+    instance.post(`/nomination_event/append_nomination_for_event_group`, data),
   addCriteriaCompetenciesForEvent: async (data) =>
     instance.post(
       `/nomination_event/append_nomination_for_event_criteria`,

@@ -9,6 +9,7 @@ import Competencies from "@components/judgment/competencies/Competencies";
 import Judgment from "@components/judgment/events/JudgmentEvents";
 import EventSettings from "@components/judgment/eventSettings/EventSettings";
 import JudgmentGroupStage from "@components/judgment/groupStage/JudgmentGroupStage";
+import JudgmentPlayOff from "@components/judgment/playOff/JudgmentPlayOff";
 import TimeMatches from "@components/judgment/timeMatches/TimeMatches";
 import Logout from "@components/logout/Logout";
 import NotFound from "@components/notFound/Notfound";
@@ -27,6 +28,7 @@ import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import TitleAndMeta from "@components/titleAndMeta/TitleAndMeta";
 import CookiesNotification from "@components/cookies/CookiesNotification";
 import EmailVerification from "@components/verification/EmailVerification";
+import CheckCertificate from "@components/CheckCertificate/CheckCertificate";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
 import { Provider } from "react-redux";
@@ -146,6 +148,10 @@ function App() {
                       </ProtectedRoute>
                     }
                   />
+                  <Route
+                    path={ROUTER_ROUTES.EVENTS_CHECK_CERTIFICAT}
+                    element={<CheckCertificate />}
+                  />
                 </Route>
                 <Route path={ROUTER_ROUTES.JUDGMENT}>
                   <Route
@@ -175,6 +181,10 @@ function App() {
                   <Route
                     path={ROUTER_ROUTES.JUDGMENT_GROUP_STAGE}
                     element={<JudgmentGroupStage />}
+                  />
+                  <Route
+                    path={ROUTER_ROUTES.JUDGMENT_PLAYOFF_STAGE}
+                    element={<JudgmentPlayOff />}
                   />
                   <Route
                     path={ROUTER_ROUTES.JUDGMENT_TIME_MATCHES}

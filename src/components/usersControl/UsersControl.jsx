@@ -7,7 +7,6 @@ import {
   getUsersSelector,
   getUnverifiedUsersSelector,
 } from "@store/users";
-import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import UsersVerificationModal from "@components/usersControl/UnverifiedUsersTable";
 import Loader from "@components/loader/Loader";
 import { ModalType } from "@constants";
@@ -82,34 +81,32 @@ function UsersControl() {
   ];
 
   return (
-    <div className="users-control">
+    <>
       <Loader show={isLoading} />
-      <Row align="bottom">
-        <Col xs={24} sm={24} md={14}>
+      <Row align="middle" justify="space-between">
+        <Col>
           <Typography.Title level={2}>
             {t("COMMON.USER_MANAGEMENT")}
           </Typography.Title>
         </Col>
-        <Col flex="auto">
+        <Col>
           {activeTab === "1" && (
-            <Flex justify="flex-end">
+            <Flex gap="middle" align="center">
               <SearchInput onChange={findUser} />
-              <AdminPanelControls>
-                <Flex gap="middle">
-                  <Button
-                    type="primary"
-                    onClick={() => setIsAddUserModalOpen(true)}
-                  >
-                    {t("COMMON.CREATE_USER")}
-                  </Button>
-                  <Button
-                    type="primary"
-                    onClick={() => setSendNotificationModalOpen(true)}
-                  >
-                    {t("COMMON.SEND_NOTIFICATION")}
-                  </Button>
-                </Flex>
-              </AdminPanelControls>
+              <Flex gap="middle">
+                <Button
+                  type="primary"
+                  onClick={() => setIsAddUserModalOpen(true)}
+                >
+                  {t("COMMON.CREATE_USER")}
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={() => setSendNotificationModalOpen(true)}
+                >
+                  {t("COMMON.SEND_NOTIFICATION")}
+                </Button>
+              </Flex>
             </Flex>
           )}
         </Col>
@@ -126,7 +123,7 @@ function UsersControl() {
         onOk={() => setSendNotificationModalOpen(false)}
         onCancel={() => setSendNotificationModalOpen(false)}
       />
-    </div>
+    </>
   );
 }
 
