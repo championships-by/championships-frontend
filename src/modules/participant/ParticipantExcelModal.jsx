@@ -44,7 +44,7 @@ const ParticipantExcelModal = ({ isOpen, onClose }) => {
     const file = fileList.length > 0 ? fileList[0].originFileObj : null;
     setExcelFile(file);
     if (file) {
-      message.info(t("COMMON.CHOSEN_FILE", { fileName: file.name }));
+      message.info(`${t("COMMON.CHOSEN_FILE")}: ${file.name}`);
     }
   };
 
