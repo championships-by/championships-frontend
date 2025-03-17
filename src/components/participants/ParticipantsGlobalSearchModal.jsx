@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { debounce } from "lodash";
 import { Modal, Input, AutoComplete } from "antd";
 import { transformParticipantsInSystemData, getParticipantLink } from "@utils";
@@ -13,26 +13,25 @@ function ParticipantsGlobalSearchModal({ isOpen, onClose }) {
   const [options, setOptions] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const fetchParticipants = useCallback(
-    debounce(async (name) => {
-      if (!name) {
-        setOptions([]);
-        return;
-      }
+  const fetchParticipants = debounce(async (name) => {
+    if (!name) {
+      setOptions([]);
+      return;
+    }
 
-      try {
-        const response = await participantApi.getParticipantsInSystem({ name });
-        const transformedData = transformParticipantsInSystemData(response);
-        setOptions(
-          transformedData.map((item) => ({
-            value: item.value,
-            label: <ParticipantLink>{item.label}</ParticipantLink>,
-          }))
-        );
-      } catch {}
-    }, 300),
-    []
-  );
+    try {
+      const response = await participantApi.getParticipantsInSystem({ name });
+      const transformedData = transformParticipantsInSystemData(response);
+      setOptions(
+        transformedData.map((item) => ({
+          value: item.value,
+          label: <ParticipantLink>{item.label}</ParticipantLink>,
+        }))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }, 300);
 
   const onSearch = (value) => {
     setSearchValue(value);
