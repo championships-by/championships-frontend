@@ -8,13 +8,13 @@ import {
   getParticipantByName,
   getParticipantsSelector,
 } from "@store/participants";
-import ParticipantsTable from "./ParticipantsTable";
+import ParticipantsTable from "@components/participants/ParticipantsTable";
 import SearchInput from "@modules/search/SearchInput";
 import Loader from "@components/loader/Loader";
-import ParticipantModal from "./ParticipantModal";
+import ParticipantModal from "@components/participants/ParticipantModal";
 import ParticipantExcelModal from "@modules/participant/ParticipantExcelModal";
-import ParticipantsGlobalSearchModal from "./ParticipantsGlobalSearchModal";
-import ParticipantAddOptionsModal from "./ParticipantAddOptionsModal";
+import ParticipantsGlobalSearchModal from "@components/participants/ParticipantsGlobalSearchModal";
+import ParticipantAddOptionsModal from "@components/participants/ParticipantAddOptionsModal";
 
 import "./sass/participants.scss";
 

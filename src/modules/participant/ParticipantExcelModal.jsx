@@ -28,7 +28,7 @@ const ParticipantExcelModal = ({ isOpen, onClose }) => {
       const formData = new FormData();
       formData.append("file", excelFile);
 
-      await participantApi.uploadExcel(formData); // <-- Исправленный вызов API
+      await participantApi.uploadExcel(formData);
       message.success(t("MESSAGES.SUCCESS_UPLOAD_EXCEL"));
       onClose();
       form.resetFields();
