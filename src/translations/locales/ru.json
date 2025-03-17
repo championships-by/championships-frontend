@@ -190,7 +190,7 @@
     "SEND_NOTIFICATION_INPUT": "Введите сообщение которое хотите отправить",
     "NOTIFICATION_SENT": "Уведомление отправлено",
     "TO_MAIN": "На главную",
-    "CHOSED_FILE": "Выбран файл"
+    "CHOSEN_FILE": "Выбран файл"
   },
   "EVENTS": {
     "EVENT": "Мероприятие",
