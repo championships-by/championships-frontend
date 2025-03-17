@@ -1,4 +1,5 @@
-import { Typography, Select } from "antd";
+import { Typography } from "antd";
+import Select from "@modules/customSelect/CustomSelect";
 import FormItem from "antd/es/form/FormItem";
 import { EventFilters } from "@constants";
 import { useTranslation } from "react-i18next";
