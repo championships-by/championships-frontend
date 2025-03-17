@@ -1,18 +1,16 @@
 import { instance } from ".";
 
-const routes = "/certificate";
+const CERTIFICATE = "/certificate";
 
 export const certificateApi = {
   getCertificateById: (certificateId) =>
-    instance.get(`${routes}/get_certificate_by_id`, {
-      params: {
-        certificate_id: certificateId,
-      },
+    instance.get(`${CERTIFICATE}/get_certificate_by_id`, {
+      params: { certificate_id: certificateId },
     }),
 
   createCertificate: (certificateData) =>
     instance.post(
-      `${routes}/create_certificate_for_each_participant`,
+      `${CERTIFICATE}/create_certificate_for_each_participant`,
       certificateData
     ),
 };

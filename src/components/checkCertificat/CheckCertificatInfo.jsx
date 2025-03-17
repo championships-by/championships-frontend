@@ -1,6 +1,6 @@
 import { Typography } from "antd";
 import { useEffect, useState } from "react";
-import { certificateApi } from "../../api/certificates";
+import { certificateApi } from "@api/certificates";
 
 import s from "./sass/check-certificat-info.module.scss";
 
@@ -17,7 +17,6 @@ function CheckCertificatInfo({ certificateId }) {
         const response = await certificateApi.getCertificateById(certificateId);
         setCertificateData(response.data);
       } catch (error) {
-        console.error("Ошибка при запросе данных:", error.message);
         setCertificateData(null);
       }
       setLoading(false);

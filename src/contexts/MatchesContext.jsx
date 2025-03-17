@@ -324,9 +324,9 @@ export function MatchesProvider({ eventId, nominationId, children, type }) {
         nomination_id: nominationId,
       };
       await certificateApi.createCertificate(certificateData);
-      message.success("Сертификаты успешно созданы");
+      message.success(t("CHECK_CERTIFICAT.SUCCESS"));
     } catch (error) {
-      message.error("Ошибка при создании сертификатов");
+      message.error(t("CHECK_CERTIFICAT.ERROR"));
     }
   };
 
