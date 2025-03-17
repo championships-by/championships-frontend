@@ -26,9 +26,16 @@ function CheckCertificatInfo({ certificateId }) {
     fetchCertificate();
   }, []);
 
-  if (loading) return <Typography.Paragraph>Загрузка...</Typography.Paragraph>;
+  if (loading)
+    return (
+      <Typography.Paragraph>
+        {t("CHECK_CERTIFICAT.LOADING")}
+      </Typography.Paragraph>
+    );
   if (!certificateData)
-    return <Typography.Paragraph>Введите номер диплома</Typography.Paragraph>;
+    return (
+      <Typography.Paragraph>{t("CHECK_CERTIFICAT.INPUT")}</Typography.Paragraph>
+    );
 
   const { event_name, event_start_date, event_end_date, participant_name, id } =
     certificateData;
@@ -36,22 +43,30 @@ function CheckCertificatInfo({ certificateId }) {
   return (
     <div className={s.content}>
       <div>
-        <Typography.Title level={5}>Мероприятие</Typography.Title>
+        <Typography.Title level={5}>
+          {t("CHECK_CERTIFICAT.EVENT")}
+        </Typography.Title>
         <Typography.Paragraph>{event_name}</Typography.Paragraph>
       </div>
       <div>
-        <Typography.Title level={5}>Даты проведения</Typography.Title>
+        <Typography.Title level={5}>
+          {t("CHECK_CERTIFICAT.DATE")}
+        </Typography.Title>
         <Typography.Paragraph>
           {event_start_date}
           {event_end_date ? ` -${event_end_date}` : ""}
         </Typography.Paragraph>
       </div>
       <div>
-        <Typography.Title level={5}>ФИО</Typography.Title>
+        <Typography.Title level={5}>
+          {t("CHECK_CERTIFICAT.FULL_NAME")}
+        </Typography.Title>
         <Typography.Paragraph>{participant_name}</Typography.Paragraph>
       </div>
       <div>
-        <Typography.Title level={5}>Номер диплома</Typography.Title>
+        <Typography.Title level={5}>
+          {t("CHECK_CERTIFICAT.NUMBER_CERTIFICAT")}
+        </Typography.Title>
         <Typography.Paragraph>{id}</Typography.Paragraph>
       </div>
     </div>

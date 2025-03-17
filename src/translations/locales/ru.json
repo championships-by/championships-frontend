@@ -651,5 +651,15 @@
     "PROCESSING_IMAGE_ERROR": "Ошибка при обработке изображения",
     "EXCEEDED_IMAGE_FOLDER_SIZE": "Превышен размер папки с изображением (200 МБ)",
     "TEAMS_NOT_FOUND": "Команды не найдены"
+  },
+  "CHECK_CERTIFICAT": {
+    "TITLE": "Проверка сертификата",
+    "BUTTON": "Проверить",
+    "LOADING": "Загрузка...",
+    "INPUT": "Введите номер диплома",
+    "EVENT": "Мероприятие",
+    "DATE": "Даты проведения",
+    "FULL_NAME": "ФИО",
+    "NUMBER_CERTIFICAT": "Номер сертификата"
   }
 }

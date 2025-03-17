@@ -1,8 +1,10 @@
 import { instance } from ".";
 
+const routes = "/certificate";
+
 export const certificateApi = {
   getCertificateById: (certificateId) =>
-    instance.get("/certificate/get_certificate_by_id", {
+    instance.get(`${routes}/get_certificate_by_id`, {
       params: {
         certificate_id: certificateId,
       },
@@ -10,12 +12,7 @@ export const certificateApi = {
 
   createCertificate: (certificateData) =>
     instance.post(
-      "/certificate/create_certificate_for_each_participant",
-      certificateData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      `${routes}/create_certificate_for_each_participant`,
+      certificateData
     ),
 };

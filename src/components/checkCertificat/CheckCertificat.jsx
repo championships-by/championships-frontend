@@ -5,11 +5,15 @@ import Loader from "@components/loader/Loader";
 import SearchInput from "@modules/search/SearchInput";
 import CheckCertificatInfo from "./CheckCertificatInfo";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
+import s from "./sass/check-certificat.module.scss";
 
 function CheckCertificat() {
   const [certificateId, setCertificateId] = useState("");
   const [searchId, setSearchId] = useState(null);
   const { isLoading } = useSelector(getEventsSelector);
+  const { t } = useTranslation();
 
   const handleSearch = () => {
     setSearchId(certificateId);
@@ -20,15 +24,17 @@ function CheckCertificat() {
       <Loader show={isLoading} />
       <Row>
         <Col span={24}>
-          <Typography.Title level={2}>Проверка сертификата</Typography.Title>
+          <Typography.Title level={2}>
+            {t("CHECK_CERTIFICAT.TITLE")}
+          </Typography.Title>
         </Col>
         <Col span={24}>
           <Flex gap="middle" align="center">
-            <div style={{ width: "300px" }}>
+            <div className={s.input}>
               <SearchInput value={certificateId} onChange={setCertificateId} />
             </div>
             <Button type="primary" onClick={handleSearch}>
-              Проверить
+              {t("CHECK_CERTIFICAT.BUTTON")}
             </Button>
           </Flex>
         </Col>
