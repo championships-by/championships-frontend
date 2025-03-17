@@ -46,9 +46,8 @@ function TextEditor({ value, onChange, placeholder }) {
       className="quill"
       modules={{
         toolbar: [
-          [{ header: [1, 2, false] }],
           ["bold", "italic", "underline", "strike"],
-          ["code", "code-block"],
+          ["code"],
           [{ list: "ordered" }, { list: "bullet" }],
           ["link"],
           ["blockquote"],
