@@ -63,6 +63,7 @@
     "TEAMS": "Команды",
     "PARTICIPANT": "Участник",
     "PARTICIPANT_EXCEL": "Добавить группой",
+    "PARTICIPANTS_UPLOAD_EXCEL": "Добавить участников группой",
     "FILESELECT": "Выбрать файл",
     "CHOOSE_PARTICIPANT": "Выберите участника",
     "CHOOSE_PARTICIPANTS": "Выберите участников",
@@ -190,7 +191,8 @@
     "SEND_NOTIFICATION_INPUT": "Введите сообщение которое хотите отправить",
     "NOTIFICATION_SENT": "Уведомление отправлено",
     "TO_MAIN": "На главную",
-    "CHOSEN_FILE": "Выбран файл"
+    "CHOSEN_FILE": "Выбран файл",
+    "DOWNLOAD_EXCEL_TEMPLATE": "Пример Excel файла"
   },
   "EVENTS": {
     "EVENT": "Мероприятие",

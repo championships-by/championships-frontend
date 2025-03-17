@@ -8,7 +8,7 @@ import {
   MatchesPlayoffStage,
   PlayoffResult,
 } from "./components";
-import { FinalParticipantsModal, FinishPlayoffModal } from "./modals";
+import { FinalParticipantsModal, FinishPlayOffModal } from "./modals";
 import { useTranslation } from "react-i18next";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
 import { downloadProtocol } from "@utils";
@@ -139,7 +139,7 @@ export function PlayOffTabs() {
         onSubmit={onSubmitFinalParticipants}
         onCancel={() => setIsModalOpen(false)}
       />
-      <FinishPlayoffModal
+      <FinishPlayOffModal
         isOpen={isFinishPlayoffModalOpen}
         onOk={onOkFinishPlayoffModal}
         onCancel={onCancelFinishPlayoffModal}

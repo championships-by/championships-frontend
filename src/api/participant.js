@@ -93,7 +93,7 @@ export const participantApi = {
   emailVerification: (params) =>
     instance.post("/participant/email_verification", null, { params }),
   uploadExcel: (formData) => {
-    return instance.post(`/participant/upload_excel`, formData, {
+    return instance.post(`/participant/create_excel_participants`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

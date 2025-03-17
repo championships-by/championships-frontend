@@ -168,8 +168,6 @@
     "DECLINE": "Адхіліць",
     "ACCEPTED": "Ухвалена",
     "DECLINED": "Адхілена",
-    "SEND_NOTIFICATION": "Даслаць апавяшчэнне",
-    "SEND_NOTIFICATION_INPUT": "Увядзіце паведамленне, якое жадаеце адправіць",
     "NOTIFICATION_SENT": "Апавяшчэнне адпраўлена",
     "ACCEPT_MESSAGE": "Вы ўпэўненыя, што жадаеце ўхваліць гэтую заяўку?",
     "DECLINE_MESSAGE": "Вы ўпэўненыя, што жадаеце адхіліць гэтую заяўку?",
@@ -188,8 +186,9 @@
     "SYSTEM_WIDE_SEARCH": "Пошук па ўсёй сістэме",
     "SEE": "Глядзець",
     "TO_MAIN": "На галоўную",
-    "SEND_NOTIFICATION": "Адправіць апавяшчэнне",
-    "SEND_NOTIFICATION_INPUT": "Увядзіце тэкст паведамлення..."
+    "SEND_NOTIFICATION": "Даслаць апавяшчэнне",
+    "SEND_NOTIFICATION_INPUT": "Увядзіце паведамленне, якое жадаеце адправіць",
+    "DOWNLOAD_EXCEL_TEMPLATE": "Прыклад Excel файла"
   },
   "EVENTS": {
     "EVENT": "Мерапрыемства",
