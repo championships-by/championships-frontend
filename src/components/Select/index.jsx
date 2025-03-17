@@ -2,7 +2,7 @@ import React from "react";
 import { Select as AntdSelect } from "antd";
 import { useTranslation } from "react-i18next";
 
-const CustomSelect = (props) => {
+const Select = (props) => {
   const { t } = useTranslation();
 
   return (
@@ -16,4 +16,4 @@ const CustomSelect = (props) => {
 CustomSelect.Option = AntdSelect.Option;
 CustomSelect.OptGroup = AntdSelect.OptGroup;
 
-export default CustomSelect;
+export default Select;
