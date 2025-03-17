@@ -325,7 +325,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishPlayoffStage(body);
-      message.info("MESSAGES.EDIT_INFO");
+      message.info(t("MESSAGES.EDIT_INFO"));
       await createCertificates(eventId, nominationId);
       fetchData(eventId, nominationId);
     } catch {}
