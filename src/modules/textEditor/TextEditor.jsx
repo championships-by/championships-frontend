@@ -46,16 +46,30 @@ function TextEditor({ value, onChange, placeholder }) {
       className="quill"
       modules={{
         toolbar: [
-          ["bold", "italic", "underline"],
+          [{ header: [1, 2, false] }],
+          ["bold", "italic", "underline", "strike"],
+          ["code", "code-block"],
           [{ list: "ordered" }, { list: "bullet" }],
           ["link"],
+          ["blockquote"],
         ],
         clipboard: {
           matchVisual: false,
         },
         magicUrl: true,
       }}
-      formats={["bold", "italic", "underline", "list", "bullet", "link"]}
+      formats={[
+        "header",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "code",
+        "code-block",
+        "list",
+        "link",
+        "blockquote",
+      ]}
     />
   );
 }
