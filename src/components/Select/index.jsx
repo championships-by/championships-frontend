@@ -13,7 +13,7 @@ const Select = (props) => {
   );
 };
 
-CustomSelect.Option = AntdSelect.Option;
-CustomSelect.OptGroup = AntdSelect.OptGroup;
+Select.Option = AntdSelect.Option;
+Select.OptGroup = AntdSelect.OptGroup;
 
 export default Select;
