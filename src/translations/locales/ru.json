@@ -189,6 +189,7 @@
     "SEE": "Смотреть",
     "SEND_NOTIFICATION": "Отправить уведомление",
     "SEND_NOTIFICATION_INPUT": "Введите сообщение которое хотите отправить",
+    "NOTIFICATION_SENT": "Уведомление отправлено",
     "TO_MAIN": "На главную"
   },
   "EVENTS": {
