@@ -14,7 +14,7 @@ import Loader from "@components/loader/Loader";
 import ParticipantModal from "./ParticipantModal";
 import ParticipantExcelModal from "@modules/participant/ParticipantExcelModal";
 import ParticipantsGlobalSearchModal from "./ParticipantsGlobalSearchModal";
-import ParticipantAddOptionsModal from "./ParticipantAddOptionsModal"; // Модальное окно выбора способа добавления
+import ParticipantAddOptionsModal from "./ParticipantAddOptionsModal";
 
 import "./sass/participants.scss";
 
