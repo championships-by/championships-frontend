@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Upload, Button, message, Checkbox, Flex, Form } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { participantExcelUpload } from "@api/participantExcelUpload";
+import { participantExcelUpload } from "@api";
 import { useTranslation } from "react-i18next";
 
 import "./sass/participant.scss";
@@ -28,7 +28,7 @@ const ParticipantExcelModal = ({ isOpen, onClose }) => {
       const formData = new FormData();
       formData.append("file", excelFile);
 
-      await participantExcelUpload.uploadExcel(formData);
+      await participantApi.uploadExcel(formData); // <-- Исправленный вызов API
       message.success(t("MESSAGES.SUCCESS_UPLOAD_EXCEL"));
       onClose();
       form.resetFields();
@@ -80,7 +80,7 @@ const ParticipantExcelModal = ({ isOpen, onClose }) => {
           </Upload>
         </Form.Item>
 
-        <Flex vertical gap="large" style={{ marginTop: "16px" }}>
+        <Flex vertical gap="large" sx={{ mt: 2 }}>
           <Checkbox
             checked={isAgreeChecked}
             onChange={() => setIsAgreeChecked(!isAgreeChecked)}
