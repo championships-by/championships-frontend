@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { debounce } from "lodash";
 import { Modal, Input, AutoComplete } from "antd";
 import { transformParticipantsInSystemData, getParticipantLink } from "@utils";
@@ -11,28 +11,38 @@ import "@components/participants/sass/participants-global-search-modal.scss";
 function ParticipantsGlobalSearchModal({ isOpen, onClose }) {
   const { t } = useTranslation();
   const [options, setOptions] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
-  const onSearch = debounce(async (value) => {
-    try {
-      const response = await participantApi.getParticipantsInSystem({
-        name: value,
-      });
-      const transformedData = transformParticipantsInSystemData(response);
-      setOptions(
-        transformedData.map((item) => {
-          return {
+  const fetchParticipants = useCallback(
+    debounce(async (name) => {
+      if (!name) {
+        setOptions([]);
+        return;
+      }
+
+      try {
+        const response = await participantApi.getParticipantsInSystem({ name });
+        const transformedData = transformParticipantsInSystemData(response);
+        setOptions(
+          transformedData.map((item) => ({
             value: item.value,
             label: <ParticipantLink>{item.label}</ParticipantLink>,
-          };
-        })
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  }, 300);
+          }))
+        );
+      } catch {}
+    }, 300),
+    []
+  );
 
-  const onSelect = (value, option) => {
-    window.open(getParticipantLink(option.value), "_blank");
+  const onSearch = (value) => {
+    setSearchValue(value);
+    fetchParticipants(value);
+  };
+
+  const onSelect = (value) => {
+    window.open(getParticipantLink(value), "_blank");
+    setSearchValue("");
+    setOptions([]);
   };
 
   return (
@@ -46,6 +56,7 @@ function ParticipantsGlobalSearchModal({ isOpen, onClose }) {
         options={options}
         onSearch={onSearch}
         onSelect={onSelect}
+        value={searchValue}
         className="participants-global-search"
       >
         <Input.Search />
