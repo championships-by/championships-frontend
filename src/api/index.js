@@ -6,6 +6,7 @@ import { message } from "antd";
 export * from "./auth";
 export * from "./competencies";
 export * from "./event";
+export * from "./team_participant";
 export * from "./judgment";
 export * from "./match";
 export * from "./participant";
@@ -13,6 +14,7 @@ export * from "./team";
 export * from "./timeMatches";
 export * from "./user";
 export * from "./feedback";
+export * from "./organizers";
 export * from "./notification";
 
 const excludedUrls = ["/user/profile"];

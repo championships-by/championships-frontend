@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 export const MatchesContext = createContext();
 
-export function MatchesProvider({ eventId, nominationId, children }) {
+export function MatchesProvider({ eventId, nominationId, children, type }) {
   const { t } = useTranslation();
 
   const [matches, setMatches] = useState([]);
@@ -135,17 +135,16 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     });
   };
 
-  const fetchGroupStageData = async (eventId, nominationId) => {
+  const fetchGroupStageData = async (eventId, nominationId, type) => {
     setIsLoading(true);
     setError(null);
     try {
-      const matches = await judgmentApi.getMatches(eventId, nominationId);
+      const matches = await judgmentApi.getMatches(eventId, nominationId, type);
       const transformedMatches = transformMatches(matches.data);
       setMatches(transformedMatches);
       const transformedData = transformData(matches.data);
       setFinalParticipants(transformedData);
-    } catch (error) {
-      setError("Произошла ошибка получения данных");
+    } catch {
     } finally {
       setIsLoading(false);
     }
@@ -170,7 +169,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     setIsLoading(false);
   };
 
-  const fetchResultsData = async (eventId, nominationId) => {
+  const fetchResultsData = async (eventId, nominationId, type) => {
     setIsLoading(true);
     setError(null);
 
@@ -178,6 +177,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
       const params = new URLSearchParams();
       params.append("event_id", eventId);
       params.append("nomination_id", nominationId);
+      params.append("type", type);
+
       const response = await judgmentApi.getPlayoffResults(params);
       setResults(response.data);
     } catch (err) {}
@@ -185,12 +186,14 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     setIsLoading(false);
   };
 
-  const fetchTimeFinishedData = async (eventId, nominationId) => {
+  const fetchTimeFinishedData = async (eventId, nominationId, type) => {
     setIsLoading(true);
     try {
       const params = new URLSearchParams();
       params.append("event_id", eventId);
       params.append("nomination_id", nominationId);
+      params.append("type", type);
+
       const timeResponse = await competenciesApi.getTimeAfterFinishing(params);
       const isJudgeResponse = await competenciesApi.isJudge(params);
 
@@ -206,24 +209,25 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     setIsLoading(false);
   };
 
-  const fetchData = async (eventId, nominationId) => {
+  const fetchData = async (eventId, nominationId, type) => {
     setIsLoading(true);
 
     try {
       const params = new URLSearchParams();
       params.append("event_id", eventId);
       params.append("nomination_id", nominationId);
+      params.append("type", type);
 
       const statusInfo = (await competenciesApi.getPlayoffStatus(params)).data;
       setIsGroupStageFinished(statusInfo.group_stage_finished);
       setIsPlayoffStageFinished(statusInfo.play_off_stage_finished);
 
       try {
-        await fetchGroupStageData(eventId, nominationId);
+        await fetchGroupStageData(eventId, nominationId, type);
       } catch {}
 
       try {
-        await fetchTimeFinishedData(eventId, nominationId);
+        await fetchTimeFinishedData(eventId, nominationId, type);
       } catch {}
 
       if (statusInfo.group_stage_finished) {
@@ -234,7 +238,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
 
       if (statusInfo.play_off_stage_finished) {
         try {
-          await fetchResultsData(eventId, nominationId);
+          await fetchResultsData(eventId, nominationId, type);
         } catch {}
       }
     } catch {}
@@ -254,6 +258,7 @@ export function MatchesProvider({ eventId, nominationId, children }) {
     team1,
     team2,
     isPlayoff,
+    type,
   }) => {
     try {
       if (isPlayoff) {
@@ -270,10 +275,11 @@ export function MatchesProvider({ eventId, nominationId, children }) {
           nominationId,
           id,
           team1.score,
-          team2.score
+          team2.score,
+          type
         );
       }
-      fetchData(eventId, nominationId);
+      fetchData(eventId, nominationId, type);
     } catch (error) {}
   };
 
@@ -283,10 +289,14 @@ export function MatchesProvider({ eventId, nominationId, children }) {
 
   const handleFinishGroupStage = async () => {
     try {
-      const body = { event_id: eventId, nomination_id: nominationId };
+      const body = {
+        event_id: eventId,
+        nomination_id: nominationId,
+        type: type,
+      };
       await competenciesApi.finishGroupStage(body);
       message.info(t("MESSAGES.EDIT_INFO"));
-      fetchData(eventId, nominationId);
+      fetchData(eventId, nominationId, type);
     } catch {}
   };
 
@@ -318,8 +328,8 @@ export function MatchesProvider({ eventId, nominationId, children }) {
   };
 
   useEffect(() => {
-    fetchData(eventId, nominationId);
-  }, [eventId, nominationId]);
+    fetchData(eventId, nominationId, type);
+  }, [eventId, nominationId, type]);
 
   const context = {
     eventId,

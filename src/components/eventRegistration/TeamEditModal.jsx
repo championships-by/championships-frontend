@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
 import TeamNameInput from "@modules/team/TeamNameInput";
 import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import { participantApi, teamApi } from "@api";
+import { participantApi, teamApi, team_participantApi } from "@api";
 import { useTranslation } from "react-i18next";
 
 function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
@@ -11,93 +10,88 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
   const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [dataTeamParticipants, setTeamParticipants] = useState([]);
-  const { eventID } = useParams();
   const [initialParticipants, setInitialParticipants] = useState([]);
 
   const updateName = async () => {
     const newTeamName = form.getFieldValue("teamName");
-
     if (newTeamName !== teamName) {
-      const body = {
-        id: teamID,
-        new_name: newTeamName,
-      };
-      await teamApi
-        .updateTeam(body)
-        .then(() => {
-          message.success(t("EVENTS.SUCCESS_EDIT_TEAM_NAME"));
-        })
-        .catch(() => {
-          message.error(t("ERRORS.ERROR_EDIT_TEAM_NAME"));
-        });
+      await teamApi.updateTeam({ id: teamID, new_name: newTeamName });
     }
   };
 
-  const updateParticipants = async () => {
-    const participantsNames = form.getFieldValue("teamParticipants");
+  const updateParticipants = async (params) => {
+    if (params.participants_ids.length > 0) {
+      await team_participantApi.addTeamParticipant(params);
+    }
 
-    const idsToDelete = initialParticipants
-      .filter((participant) => !participantsNames.includes(participant.label))
-      .map((participant) => participant.value);
+    const selectedIds = form.getFieldValue("teamParticipants");
+    const initialIds = initialParticipants.map((p) => p.value);
+    const idsToDelete = initialIds.filter((id) => !selectedIds.includes(id));
 
     if (idsToDelete.length > 0) {
-      const body = {
+      await team_participantApi.deleteTeamParticipant({
         team_id: teamID,
         participants_ids: idsToDelete,
-      };
-      await participantApi
-        .deleteTeamParticipant(body)
-        .then(() => {
-          message.success(t("MESSAGES.SUCCESS_EDIT_TEAM_PARTICIPANTS"));
-        })
-        .catch(() => {
-          message.error(t("ERRORS.ERROR_EDIT_TEAM_PARTICIPANTS"));
-        });
+      });
     }
+  };
+
+  const getParams = () => {
+    const selectedIds = form.getFieldValue("teamParticipants");
+    const initialIds = initialParticipants.map((p) => p.value);
+    const idsToAdd = selectedIds.filter((id) => !initialIds.includes(id));
+    return {
+      team_id: teamID,
+      participants_ids: idsToAdd,
+    };
   };
 
   const onFinish = async () => {
     setIsLoading(true);
-    await updateParticipants();
+    const params = getParams();
+    await updateParticipants(params);
     await updateName();
-    setIsLoading(false);
+    message.success(t("EVENTS.SUCCESS_EDIT_TEAM"));
     onOk();
+    setIsLoading(false);
   };
 
   const onFinishFailed = () => {
-    message.error(t("MESSAGES.CHECK_FIELDS"));
+    message.error(t("ERROR.EDIT_TEAM_PARTICIPANTS"));
     setIsLoading(false);
   };
 
   useEffect(() => {
     if (isOpen) {
-      const params = new URLSearchParams();
-      params.append("team_id", teamID);
-      teamApi
-        .getTeamById(params.toString())
-        .then((data) => {
-          data.map((team) => {
-            const initialParticipants = team.participants.map(
-              (participant) => ({
-                value: participant.id,
-                label: `${participant.second_name} ${participant.first_name} ${participant.third_name}`,
-              })
-            );
-            setInitialParticipants(initialParticipants);
+      setIsLoading(true);
+      const params = new URLSearchParams({ team_id: teamID });
 
-            const participants = team.participants.map(
-              (participant) =>
-                `${participant.second_name} ${participant.first_name} ${participant.third_name}`
-            );
-            form.setFieldsValue({
-              ["teamName"]: team.name,
-              ["teamParticipants"]: participants,
-            });
+      Promise.all([
+        teamApi.getTeamById(params.toString()),
+        participantApi.getParticipant(),
+      ])
+        .then(([teamData, participants]) => {
+          const team = teamData[0];
+          const initialParticipants = team.participants.map((participant) => ({
+            value: participant.id,
+            label: `${participant.second_name} ${participant.first_name} ${participant.third_name}`,
+          }));
+          setInitialParticipants(initialParticipants);
+
+          const options = participants.map((p) => ({
+            value: p.id,
+            label: `${p.second_name} ${p.first_name} ${p.third_name}`,
+          }));
+          setTeamParticipants(options);
+
+          form.setFieldsValue({
+            teamName: team.name,
+            teamParticipants: initialParticipants.map((p) => p.value),
           });
         })
         .finally(() => setTimeout(() => setIsLoading(false), 300));
     }
-  }, [isOpen, eventID]);
+  }, [isOpen, teamID, form]);
 
   return (
     <Modal
@@ -119,8 +113,8 @@ function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {
         <TeamNameInput name="teamName" />
         <TeamParticipantsInput
           name="teamParticipants"
-          options={dataTeamParticipants}
           mode="multiple"
+          options={dataTeamParticipants}
         />
         <Flex gap="middle">
           <Button type="primary" htmlType="submit" loading={isLoading}>

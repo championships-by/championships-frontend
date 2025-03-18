@@ -1,93 +1,68 @@
-import { participantApi } from "@api";
-import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
-import Loader from "@components/loader/Loader";
-import { ModalType } from "@constants";
-import { Button, Flex, Typography, message, Row, Col, Divider } from "antd";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Flex, Typography, Row, Col, Divider } from "antd";
+import { useTranslation } from "react-i18next";
+
 import {
   getParticipant,
   getParticipantByName,
   getParticipantsSelector,
 } from "@store/participants";
-import { useEffect, useState } from "react";
-import ParticipantModal from "./ParticipantModal";
-import ParticipantsTable from "./ParticipantsTable";
+import ParticipantsTable from "@components/participants/ParticipantsTable";
 import SearchInput from "@modules/search/SearchInput";
-import { useTranslation } from "react-i18next";
-import ParticipantsGlobalSearchModal from "./ParticipantsGlobalSearchModal";
+import Loader from "@components/loader/Loader";
+import ParticipantModal from "@components/participants/ParticipantModal";
+import ParticipantExcelModal from "@modules/participant/ParticipantExcelModal";
+import ParticipantsGlobalSearchModal from "@components/participants/ParticipantsGlobalSearchModal";
+import ParticipantAddOptionsModal from "@components/participants/ParticipantAddOptionsModal";
 
 import "./sass/participants.scss";
 
 function Participants() {
   const { t } = useTranslation();
-  const [isGlobalSearchModalOpen, setIsGlobalSearchModalOpen] = useState(false);
-  const [isAddParticipantModalOpen, setIsAddParticipantModalOpen] =
-    useState(false);
   const dispatch = useDispatch();
   const participants = useSelector(getParticipantsSelector);
   const { isLoading } = participants;
+
+  const [isGlobalSearchModalOpen, setIsGlobalSearchModalOpen] = useState(false);
+  const [isParticipantOptionsOpen, setIsParticipantOptionsOpen] =
+    useState(false);
+  const [isAddParticipantModalOpen, setIsAddParticipantModalOpen] =
+    useState(false);
+  const [isExcelModalOpen, setIsExcelModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getParticipant());
   }, [dispatch]);
 
   const findParticipant = (value) => {
-    if (value) {
-      const params = {
-        name: value,
-      };
-      dispatch(getParticipantByName(params));
-    } else {
-      dispatch(getParticipant());
-    }
-  };
-
-  const onClickGlobalSearchModal = () => {
-    setIsGlobalSearchModalOpen(true);
-  };
-
-  const onCloseGlobalSearchModal = () => {
-    setIsGlobalSearchModalOpen(false);
-  };
-
-  const onOk = () => {
-    setIsAddParticipantModalOpen(false);
-
-    findParticipant();
-  };
-
-  const onCancel = () => {
-    setIsAddParticipantModalOpen(false);
+    dispatch(value ? getParticipantByName({ name: value }) : getParticipant());
   };
 
   return (
     <>
       <Loader show={isLoading} />
-      <Row align="bottom">
-        <Col xs={24} sm={24} md={14}>
+      <Row align="middle" justify="space-between">
+        <Col>
           <Typography.Title level={2}>
             {t("COMMON.PARTICIPANT_MANAGEMENT")}
           </Typography.Title>
         </Col>
-        <Col flex="auto">
-          <Flex justify="flex-end">
+        <Col>
+          <Flex gap="middle" align="center">
             <SearchInput onChange={findParticipant} />
-            <AdminPanelControls>
-              <Flex gap="small">
-                {/*<Tooltip title="Сохранить список участников">
-            <Button type="primary" icon={<DownloadOutlined />} />
-          </Tooltip>*/}
-                <Button
-                  type="primary"
-                  onClick={() => setIsAddParticipantModalOpen(true)}
-                >
-                  {t("PARTICIPANTS.CREATE_PARTICIPANT")}
-                </Button>
-                <Button type="primary" onClick={onClickGlobalSearchModal}>
-                  {t("COMMON.SYSTEM_WIDE_SEARCH")}
-                </Button>
-              </Flex>
-            </AdminPanelControls>
+            <Button
+              type="primary"
+              onClick={() => setIsParticipantOptionsOpen(true)}
+            >
+              {t("PARTICIPANTS.CREATE_PARTICIPANT")}
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => setIsGlobalSearchModalOpen(true)}
+            >
+              {t("COMMON.SYSTEM_WIDE_SEARCH")}
+            </Button>
           </Flex>
         </Col>
       </Row>
@@ -97,17 +72,36 @@ function Participants() {
         getParticipant={findParticipant}
       />
 
-      <ParticipantModal
-        type={ModalType.ADD}
-        isOpen={isAddParticipantModalOpen}
-        onOk={onOk}
-        onCancel={onCancel}
+      <ParticipantAddOptionsModal
+        isOpen={isParticipantOptionsOpen}
+        onClose={() => setIsParticipantOptionsOpen(false)}
+        onOpenSingle={() => {
+          setIsAddParticipantModalOpen(true);
+          setIsParticipantOptionsOpen(false);
+        }}
+        onOpenExcel={() => {
+          setIsExcelModalOpen(true);
+          setIsParticipantOptionsOpen(false);
+        }}
       />
+
+      <ParticipantModal
+        isOpen={isAddParticipantModalOpen}
+        onOk={() => setIsAddParticipantModalOpen(false)}
+        onCancel={() => setIsAddParticipantModalOpen(false)}
+      />
+
+      <ParticipantExcelModal
+        isOpen={isExcelModalOpen}
+        onClose={() => setIsExcelModalOpen(false)}
+      />
+
       <ParticipantsGlobalSearchModal
         isOpen={isGlobalSearchModalOpen}
-        onClose={onCloseGlobalSearchModal}
+        onClose={() => setIsGlobalSearchModalOpen(false)}
       />
     </>
   );
 }
+
 export default Participants;

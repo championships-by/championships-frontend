@@ -1,4 +1,5 @@
-import { Flex, Select, Space, Typography } from "antd";
+import { Flex, Space, Typography } from "antd";
+import Select from "@components/Select";
 import FormItem from "antd/es/form/FormItem";
 import { FILTER_OPTION } from "@utils";
 import { useTranslation } from "react-i18next";

@@ -1,5 +1,5 @@
 import { InfoCircleOutlined, LinkOutlined } from "@ant-design/icons";
-import { competenciesApi, eventApi } from "@api";
+import { competenciesApi, eventApi, organizerApi } from "@api";
 import noLogo from "@assets/img/auth-background.png";
 import Loader from "@components/loader/Loader";
 import {
@@ -35,6 +35,7 @@ function EventInformation() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataEvent, setEvent] = useState({});
   const [dataNominations, setNomination] = useState([]);
+  const [organizers, setOrganizers] = useState([]);
   const { eventID } = useParams();
   const navigate = useNavigate();
 
@@ -98,13 +99,19 @@ function EventInformation() {
           document.body.appendChild(script);
           setTimeout(() => setIsLoading(false), 300);
         });
+
+        organizerApi
+          .getOrganizersRelatedToEvent(eventID)
+          .then((organizerData) => {
+            setOrganizers(organizerData);
+          });
       } catch (error) {
         message.error(t("MESSAGES.GET_DATA_ERROR"));
       }
     } else {
       setTimeout(() => setIsLoading(false), 300);
     }
-  }, [eventID]);
+  }, [eventID, t]);
 
   const onResultsClick = (nomination) => {
     const params = new URLSearchParams();
@@ -124,8 +131,13 @@ function EventInformation() {
           case NOMINATIONS.CRITERIA:
             navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nomination.id));
             break;
-          case NOMINATIONS.OLYMPIC:
+          case NOMINATIONS.GROUP:
             navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nomination.id));
+            break;
+          case NOMINATIONS.OLYMPIC:
+            navigate(
+              ROUTES.JUDGMENT_PLAYOFF_STAGE.PATH(eventID, nomination.id)
+            );
             break;
           default:
             message.error(t("MESSAGES.ERROR"));
@@ -218,7 +230,7 @@ function EventInformation() {
               <Typography.Text strong>{t("COMMON.ORGANIZER")}</Typography.Text>
               <br />
               <Typography.Text>
-                {dataEvent.educational_institution}
+                {organizers.map((org) => org.name).join(", ")}
               </Typography.Text>
             </Col>
             <Col
@@ -231,7 +243,6 @@ function EventInformation() {
               <Typography.Text strong>
                 {t("COMMON.LEVEL_OF_EVENT")}
               </Typography.Text>
-
               <br />
               <Typography.Text>
                 {t(getEventLevel(dataEvent.event_level))}

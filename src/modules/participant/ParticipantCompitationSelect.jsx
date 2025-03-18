@@ -1,6 +1,7 @@
 import React from "react";
 import FormItem from "antd/es/form/FormItem";
-import { Select, Flex, Input, Space, Typography } from "antd";
+import { Flex, Input, Space, Typography } from "antd";
+import Select from "@components/Select";
 import { FlagOutlined } from "@ant-design/icons";
 import "./sass/participant.scss";
 

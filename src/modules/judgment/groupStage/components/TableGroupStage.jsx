@@ -55,7 +55,7 @@ export const TableGroupStage = () => {
         <div key={index}>
           {finalParticipants.length > 1 && (
             <Typography.Title level={3}>
-              {`${t("COMMON.GROUP")} ${index + 1}`}
+              {t("COMMON.GROUP")} {index + 1}{" "}
             </Typography.Title>
           )}
           <Table

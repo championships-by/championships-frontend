@@ -4,14 +4,17 @@ import "reactflow/dist/style.css";
 import clsx from "clsx";
 import { useMatches } from "@hooks";
 import { getTreeData } from "@utils";
-import { PlayoffMatchCard } from "@modules/judgment/groupStage/components";
+import { PlayoffMatchCard } from "@modules/judgment/playOff/components";
 
-import "@modules/judgment/groupStage/components/sass/playoff-tree.scss";
+import "@modules/judgment/playOff/components/sass/playoff-tree.scss";
 
 export function PlayoffTree() {
   const { leveledPlayoffMatches, handleEditScore, isPlayoffStageFinished } =
     useMatches();
-  const { nodes, edges } = getTreeData(leveledPlayoffMatches, handleEditScore);
+  const filteredMatches = leveledPlayoffMatches.map((level) =>
+    level.filter((match) => match.team1 || match.team2)
+  );
+  const { nodes, edges } = getTreeData(filteredMatches, handleEditScore);
 
   const onInit = (reactFlowInstance) => {
     reactFlowInstance.fitView({ maxZoom: 1 });

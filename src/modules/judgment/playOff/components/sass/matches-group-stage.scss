@@ -1,0 +1,49 @@
+@import "@src/sass/lightTheme/variables.scss";
+
+.matches-group-stage {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.icon {
+  font-size: 48px;
+}
+
+.error {
+  text-align: center;
+  padding: 20px;
+}
+
+.group {
+  margin-bottom: 40px;
+}
+.group:last-child {
+  margin-bottom: 0;
+}
+
+.matches-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(325px, max-content));
+  grid-gap: 30px;
+  justify-content: start;
+}
+
+.matches-group-grid > .match-card {
+  width: 100%;
+  margin: 0 auto;
+}

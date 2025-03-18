@@ -13,16 +13,19 @@ import EventRequirements from "@modules/judgment/events/EventRequirements";
 import { Button, Form, message, Modal, notification } from "antd";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { RESPONSE_STATUS } from "@constants";
 
 function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   const [form] = Form.useForm();
   const { t } = useTranslation();
-
   const [values, setValues] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [fileList, setFileList] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = async () => {
+    if (isSubmitting) return false;
+
     const {
       name,
       participant_question_email,
@@ -38,37 +41,39 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
       organizer_name,
     } = values;
 
-    const organizers = organizer_name.split(",").map((name) => name.trim());
-
-    const formData = new FormData();
-    formData.append("logo", event_logo);
-    formData.append("rules", event_regulation);
-
     const event_data = {
       name,
       participant_question_email,
       event_place,
       description,
       event_level,
-      organizers,
       participation_needs,
-      published,
+      published: false,
       registration_start_date: registration?.registration_start_date,
       registration_finish_date: registration?.registration_finish_date,
       holding_start_date: holding?.holding_start_date,
       holding_finish_date: holding?.holding_finish_date,
+      organizers: organizer_name || [],
     };
 
-    event_data.published = false;
-
+    const formData = new FormData();
+    formData.append("logo", event_logo || "");
+    formData.append("rules", event_regulation || "");
     formData.append("event_data", JSON.stringify(event_data));
 
     try {
-      await eventApi.setEvent(formData);
-      return true;
-    } catch (error) {
-      message.error(t("MESSAGES.EVENT_CREATE_ERROR"));
-      return false;
+      setIsSubmitting(true);
+      const response = await eventApi.setEvent(formData);
+      if (
+        response.status >= RESPONSE_STATUS.STATUS_OK &&
+        response.status < RESPONSE_STATUS.STATUS_300
+      ) {
+        return true;
+      } else {
+        throw new Error(`Unexpected status: ${response.status}`);
+      }
+    } catch {
+      setIsSubmitting(false);
     }
   };
 
@@ -76,17 +81,16 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
     setFileList([]);
   }, [isOpen]);
 
-  const onValuesChange = (values) => {
-    setValues((oldValues) => ({ ...oldValues, ...values }));
-  };
-
   const onFinish = async () => {
+    if (isSubmitting) return;
     setIsLoading(true);
     const success = await onSubmit();
     if (success) {
       message.success(t("MESSAGES.EVENT_CREATE_SUCCESS"));
       onAdd();
       form.resetFields();
+      setValues({});
+      setFileList([]);
       onOk();
       notification.info({
         message: t("COMMON.ATTENTION"),
@@ -100,6 +104,10 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
 
   const onFinishFailed = () => {
     message.error(t("MESSAGES.CHECK_FIELDS"));
+  };
+
+  const onValuesChange = (changedValues) => {
+    setValues((oldValues) => ({ ...oldValues, ...changedValues }));
   };
 
   return (
@@ -122,11 +130,11 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
         <EventLogo
           name="event_logo"
           value={values.event_logo}
-          onChange={onValuesChange}
           required={true}
           form={form}
           fileList={fileList}
           setFileList={setFileList}
+          onChange={onValuesChange}
         />
         <EventEmail
           name="participant_question_email"
@@ -135,14 +143,17 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
         <EventOrganizerName
           name="organizer_name"
           value={values.organizer_name}
+          form={form}
+          required={true}
+          onChange={onValuesChange}
         />
         <EventPlace name="event_place" value={values.event_place} />
         <EventRegulation
           name="event_regulation"
           value={values.event_regulation}
-          onChange={onValuesChange}
           required={true}
           form={form}
+          onChange={onValuesChange}
         />
         <EventRegisterDate
           name="registration"
@@ -174,7 +185,12 @@ function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
           form={form}
           onChange={onValuesChange}
         />
-        <Button type="primary" htmlType="submit" loading={isLoading}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={isLoading}
+          disabled={isSubmitting}
+        >
           {t("COMMON.SAVE")}
         </Button>
       </Form>

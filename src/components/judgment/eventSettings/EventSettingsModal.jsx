@@ -135,7 +135,9 @@ function EventSettingsCompitations({
               .addTimeCompetenciesForEvent(data)
               .then(() => {});
             break;
-
+          case NOMINATIONS.GROUP:
+            await competenciesApi.addGroupCompetenciesForEvent(data);
+            break;
           case NOMINATIONS.OLYMPIC:
             await competenciesApi
               .addOlympicCompetenciesForEvent(data)
@@ -282,10 +284,8 @@ function EventSettingsCompitations({
         />
         <CompetitionType
           name="nomination_type"
+          Disabled={mode === "edit"}
           onChange={(value) => {
-            if (mode == "edit") {
-              return;
-            }
             handleChange(value);
           }}
           onInputChange={handleGroupCount}

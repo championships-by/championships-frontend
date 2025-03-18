@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Typography, Space, Select } from "antd";
+import { Typography, Space } from "antd";
+import Select from "@components/Select";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 import { NOMINATION_TYPES, NOMINATIONS } from "@constants";
@@ -8,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import "./sass/events.scss";
 
 function CompetitionType({
+  Disabled = false,
   onChange,
   onInputChange,
   onCriteriaChange,
@@ -31,6 +33,10 @@ function CompetitionType({
     {
       value: NOMINATIONS.OLYMPIC,
       label: t("NOMINATION_TYPES.PLAYOFF"),
+    },
+    {
+      value: NOMINATIONS.GROUP,
+      label: t("NOMINATION_TYPES.GROUP"),
     },
   ];
 
@@ -62,6 +68,7 @@ function CompetitionType({
       />
     ),
     playoffs: null,
+    group: null,
   };
   return (
     <div className="events__competition-type__div">
@@ -70,6 +77,7 @@ function CompetitionType({
       </Typography.Text>
       <Space direction="vertical" className="events__competition-type__space">
         <Select
+          disabled={Disabled}
           placeholder={t("MESSAGES.CHOOSE_TYPE_OF_TOURNAMENT")}
           options={options}
           className="events__competition-type__name"
