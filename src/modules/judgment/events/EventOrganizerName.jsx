@@ -1,4 +1,5 @@
-import { Typography, Select, Flex, Button, Modal, Input, message } from "antd";
+import { Typography, Flex, Button, Modal, Input, message } from "antd";
+import Select from "@components/Select";
 import FormItem from "antd/es/form/FormItem";
 import { SolutionOutlined, PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";

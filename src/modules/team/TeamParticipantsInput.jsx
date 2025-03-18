@@ -1,21 +1,18 @@
-import { useEffect, useState, useCallback } from "react";
-import { Flex, Select, Space, Typography } from "antd";
+import { useState, useCallback } from "react";
+import { Flex, Space, Typography } from "antd";
+import Select from "@components/Select";
 import FormItem from "antd/es/form/FormItem";
 import { participantApi } from "@api";
-import {
-  FILTER_OPTION,
-  changeDateFormat,
-  transformParticipantsInSystemData,
-} from "@utils";
+import { FILTER_OPTION } from "@utils";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
 
 import "./sass/team.scss";
 
-function TeamParticipantsInput({ name, mode, disabled }) {
+function TeamParticipantsInput({ name, mode, disabled, options }) {
   const { t } = useTranslation();
   const [participantName, setParticipantName] = useState("");
-  const [options, setOptions] = useState([]);
+  const [searchOptions, setSearchOptions] = useState([]);
 
   const rules = [
     {
@@ -30,14 +27,20 @@ function TeamParticipantsInput({ name, mode, disabled }) {
   const fetchParticipants = useCallback(
     debounce((searchValue) => {
       if (!searchValue.trim()) {
-        setOptions([]);
+        setSearchOptions([]);
         return;
       }
-      try {
-        participantApi
-          .getParticipantsInSystem({ name: searchValue })
-          .then((data) => setOptions(transformParticipantsInSystemData(data)));
-      } catch {}
+      participantApi
+        .getParticipantsInSystem({ name: searchValue })
+        .then((data) =>
+          setSearchOptions(
+            data.map((p) => ({
+              value: p.id,
+              label: `${p.second_name} ${p.first_name} ${p.third_name}`,
+            }))
+          )
+        )
+        .catch(() => setSearchOptions([]));
     }, 300),
     []
   );
@@ -50,7 +53,7 @@ function TeamParticipantsInput({ name, mode, disabled }) {
   return (
     <Flex vertical className="team__team-participants-input__flex">
       <Typography.Text>
-        {mode == "single" ? t("COMMON.PARTICIPANT") : t("COMMON.PARTICIPANTS")}
+        {mode === "single" ? t("COMMON.PARTICIPANT") : t("COMMON.PARTICIPANTS")}
       </Typography.Text>
       <Flex>
         <Space.Compact className="team__team-participants-input__space">
@@ -65,16 +68,16 @@ function TeamParticipantsInput({ name, mode, disabled }) {
               showSearch
               disabled={disabled}
               placeholder={
-                mode == "single"
+                mode === "single"
                   ? t("COMMON.CHOOSE_PARTICIPANT")
                   : t("COMMON.CHOOSE_PARTICIPANTS")
               }
-              name="team_participants_select"
-              value={participantName}
               onSearch={onSearch}
               filterOption={FILTER_OPTION}
-              options={options}
+              options={searchOptions.length > 0 ? searchOptions : options}
               notFoundContent={t("COMMON.NO_DATA")}
+              optionFilterProp="label"
+              fieldNames={{ label: "label", value: "value" }}
             />
           </FormItem>
         </Space.Compact>

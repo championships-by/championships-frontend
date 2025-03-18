@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "antd";
 import { useTranslation } from "react-i18next";
 
-function FinishPlayoffModal({ isOpen, onOk, onCancel }) {
+function FinishPlayOffModal({ isOpen, onOk, onCancel }) {
   const { t } = useTranslation();
 
   return (
@@ -19,4 +19,4 @@ function FinishPlayoffModal({ isOpen, onOk, onCancel }) {
   );
 }
 
-export default FinishPlayoffModal;
+export default FinishPlayOffModal;

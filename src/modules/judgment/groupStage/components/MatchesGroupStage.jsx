@@ -35,7 +35,7 @@ export function MatchesGroupStage() {
   }, {});
 
   return isLoading ? (
-    <Spin indicator={<LoadingOutlined className="icon" spin />} />
+    <Spin indicator={<LoadingOutlined spin />} />
   ) : error ? (
     <div className="error">
       <h2>{t("MESSAGES.DATA_UPLOAD_ERROR")}</h2>
@@ -47,7 +47,7 @@ export function MatchesGroupStage() {
         <div key={index} className="group">
           {Object.keys(groupedMatches).length > 1 && (
             <Typography.Title level={3}>
-              {`${t("COMMON.GROUP")} ${index + 1}`}
+              {t("COMMON.GROUP")} {index + 1}{" "}
             </Typography.Title>
           )}
           <div className="matches-group-grid">
@@ -75,7 +75,7 @@ export function MatchesGroupStage() {
               ...data,
               eventId,
               nominationId,
-              isPlayoff: false,
+              type: "group",
             })
           }
           onClose={handleCloseModal}

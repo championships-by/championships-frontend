@@ -2,6 +2,7 @@ import { EditOutlined } from "@ant-design/icons";
 import { determinateTheWinner, isScoreZero, MatchResult } from "@utils";
 import { useMatches } from "@hooks";
 import clsx from "clsx";
+
 import "@modules/judgment/groupStage/components/sass/match-card.scss";
 
 export const MatchCard = ({
@@ -48,7 +49,7 @@ export const MatchCard = ({
         </div>
       </div>
       {!isEnabled ? (
-        <div className="match-card__icon-section"></div>
+        <div className="match-card__icon-section" />
       ) : (
         <div className="match-card__icon-section" onClick={handleClick}>
           <EditOutlined className="match-card__icon-section--edit-icon" />

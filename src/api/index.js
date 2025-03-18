@@ -6,6 +6,7 @@ import { message } from "antd";
 export * from "./auth";
 export * from "./competencies";
 export * from "./event";
+export * from "./team_participant";
 export * from "./judgment";
 export * from "./match";
 export * from "./participant";

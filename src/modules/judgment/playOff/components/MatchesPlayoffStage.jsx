@@ -2,11 +2,11 @@ import React from "react";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useMatches } from "@hooks";
 import { Typography, Spin, Flex } from "antd";
-import { EditMatchScoreModal } from "@modules/judgment/groupStage/modals";
-import { PlayoffTree } from "@modules/judgment/groupStage/components";
+import { EditMatchScoreModal } from "@modules/judgment/playOff/modals";
+import { PlayoffTree } from "@modules/judgment/playOff/components";
 import { useTranslation } from "react-i18next";
 
-import "@modules/judgment/groupStage/components/sass/matches-group-stage.scss";
+import "@modules/judgment/playOff/components/sass/matches-group-stage.scss";
 
 export function MatchesPlayoffStage() {
   const { t } = useTranslation();
@@ -23,7 +23,7 @@ export function MatchesPlayoffStage() {
   } = useMatches();
 
   return isLoading ? (
-    <Spin indicator={<LoadingOutlined className="icon" spin />} />
+    <Spin indicator={<LoadingOutlined spin />} />
   ) : error ? (
     <div className="error">
       <h2>{t("MESSAGES.DATA_UPLOAD_ERROR")}</h2>

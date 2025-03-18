@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Typography, Space, Select } from "antd";
+import { Typography, Space } from "antd";
+import Select from "@components/Select";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 import { NOMINATION_TYPES, NOMINATIONS } from "@constants";
@@ -33,6 +34,10 @@ function CompetitionType({
       value: NOMINATIONS.OLYMPIC,
       label: t("NOMINATION_TYPES.PLAYOFF"),
     },
+    {
+      value: NOMINATIONS.GROUP,
+      label: t("NOMINATION_TYPES.GROUP"),
+    },
   ];
 
   const handleChange = (value) => {
@@ -63,6 +68,7 @@ function CompetitionType({
       />
     ),
     playoffs: null,
+    group: null,
   };
   return (
     <div className="events__competition-type__div">

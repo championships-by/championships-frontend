@@ -85,12 +85,6 @@ export const participantApi = {
       { data: body }
     );
   },
-  deleteTeamParticipant: (params) => {
-    return instance.delete("/team_participant/delete_team_participant", {
-      params,
-      paramsSerializer: (params) => qs.stringify(params, { indices: false }),
-    });
-  },
   checkEmail: async (queryString) => {
     return instance
       .post(`/user/check_email?email=${encodeURIComponent(queryString)}`)
@@ -98,4 +92,11 @@ export const participantApi = {
   },
   emailVerification: (params) =>
     instance.post("/participant/email_verification", null, { params }),
+  uploadExcel: (formData) => {
+    return instance.post(`/participant/create_excel_participants`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  },
 };

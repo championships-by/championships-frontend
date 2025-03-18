@@ -67,6 +67,14 @@ function UsersTable() {
       onFilter: (value, record) => record.role.indexOf(value) === 0,
     },
     {
+      title: t("COMMON.EDUCATIONAL_INSTITUTION"),
+      key: "educational_institution",
+      dataIndex: "educational_institution",
+      render: (_, { educational_institution }) => (
+        <Typography.Text>{educational_institution}</Typography.Text>
+      ),
+    },
+    {
       title: t("COMMON.ACTIONS"),
       key: "action",
       render: (_, record) => (

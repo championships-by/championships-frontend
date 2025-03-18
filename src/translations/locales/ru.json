@@ -62,6 +62,9 @@
     "TEAM": "Команда",
     "TEAMS": "Команды",
     "PARTICIPANT": "Участник",
+    "PARTICIPANT_EXCEL": "Добавить группой",
+    "PARTICIPANTS_UPLOAD_EXCEL": "Добавить участников группой",
+    "FILESELECT": "Выбрать файл",
     "CHOOSE_PARTICIPANT": "Выберите участника",
     "CHOOSE_PARTICIPANTS": "Выберите участников",
     "ACTIONS": "Действия",
@@ -186,7 +189,10 @@
     "SEE": "Смотреть",
     "SEND_NOTIFICATION": "Отправить уведомление",
     "SEND_NOTIFICATION_INPUT": "Введите сообщение которое хотите отправить",
-    "TO_MAIN": "На главную"
+    "NOTIFICATION_SENT": "Уведомление отправлено",
+    "TO_MAIN": "На главную",
+    "CHOSEN_FILE": "Выбран файл",
+    "DOWNLOAD_EXCEL_TEMPLATE": "Пример Excel файла"
   },
   "EVENTS": {
     "EVENT": "Мероприятие",
@@ -207,6 +213,7 @@
     "REGISTRATION_OPEN": "Регистрация открыта",
     "ADD_TEAM": "Добавить команду",
     "EDIT_TEAM": "Редактирование команды",
+    "SUCCESS_EDIT_TEAM": "Команда успешно отредактирована",
     "ADD_PARTICIPANT_IN_NOMINATION": "Добавление участников в компетенцию",
     "EDIT_PARTICIPANT_IN_NOMINATION": "Редактирование участника компетенции",
     "ARE_YOU_SURE_REMOVE_TEAM": "Вы уверены, что хотите удалить эту команду?",
@@ -229,6 +236,7 @@
     "ADD_NOMINATION": "Добавить компетенцию",
     "EDIT_NOMINATION": "Редактировать компетенцию",
     "PLAYOFF_SETTINGS": "Настройки плей-офф",
+    "GROUP_SETTINGS": "Настройки круговой",
     "TOURNAMENT_PARTICIPANTS": "Участники соревнования",
     "JUDGES_STRUCTURE": "Судейский состав",
     "NAME_NOMINATION_EXAMPLE": "Пример: Робофутбол",
@@ -253,10 +261,11 @@
     "TIME_UNTIL_PREPOSITION": "по"
   },
   "PARTICIPANTS": {
-    "VERIFICATION_DONE": "Подтвенр",
+    "VERIFICATION_DONE": "Пользователь верифицирован",
     "CARD_OF_PARTICIPANT": "Карточка участника",
     "EDIT_PARTICIPANT": "Редактировать участника",
     "CREATE_PARTICIPANT": "Добавить участника",
+    "CREATE_PARTICIPANT_SEPARATELY": "Добавить по отдельности",
     "PERSONAL_DATA_AGREE": "Даю согласие на обработку и хранение персональных данных, проведение\nфото и видеосъемок с моим участием, на размещение фото и видео\nматериалов на сайтах и информационных площадках; использовать\nфотографии и видео на выставках, в презентациях, в докладах и иных\nматериалах, не противоречащих действущему законодательству\nРеспублики Беларусь.",
     "ACCOUNT_VERIFICATED": "Email успешно подтверждён!"
   },
@@ -380,7 +389,8 @@
     "DELETE_SUCCESS": "Удаление прошло успешно",
     "SUCCESS_EDIT_TEAM_PARTICIPANTS": "Участники команды успешно изменены",
     "EDITING_INFO": "Вы можете вносить правки в течение 15 минут после завершения этапа",
-    "SUCCESS_SEND_RESULTS": "Результаты успешно отправлены"
+    "SUCCESS_SEND_RESULTS": "Результаты успешно отправлены",
+    "SELECT_EXCEL_FILE": "Выберите файл"
   },
   "RULES": {
     "ENTER_EMAIL": "Пожалуйста, введите Email",
@@ -452,7 +462,8 @@
   "NOMINATION_TYPES": {
     "TIME": "По времени",
     "CRITERIA": "По критериям",
-    "PLAYOFF": "Плей-офф"
+    "PLAYOFF": "Плей-офф",
+    "GROUP": "Круговой"
   },
   "EVENT_LEVELS": {
     "REPUBLIC": "Республиканский",
@@ -642,5 +653,17 @@
     "PROCESSING_IMAGE_ERROR": "Ошибка при обработке изображения",
     "EXCEEDED_IMAGE_FOLDER_SIZE": "Превышен размер папки с изображением (200 МБ)",
     "TEAMS_NOT_FOUND": "Команды не найдены"
+  },
+  "CHECK_CERTIFICATE": {
+    "TITLE": "Проверка сертификата",
+    "BUTTON": "Проверить",
+    "LOADING": "Загрузка...",
+    "INPUT": "Введите номер диплома",
+    "EVENT": "Мероприятие",
+    "DATE": "Даты проведения",
+    "FULL_NAME": "ФИО",
+    "NUMBER": "Номер сертификата",
+    "SUCCESS": "Сертификаты успешно созданы",
+    "ERROR": "Ошибка при создании сертификатов"
   }
 }

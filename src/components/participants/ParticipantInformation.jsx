@@ -15,7 +15,7 @@ import "./sass/participants.scss";
 
 function ParticipantInformation() {
   const { t } = useTranslation();
-  const [participantData, setParticipantData] = useState([]);
+  const [participantData, setParticipantData] = useState(null);
   const [teamWinsData, setTeamWinsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector(getUserSelector);
@@ -39,18 +39,20 @@ function ParticipantInformation() {
       participant_id: participantID,
     };
 
-    try {
-      participantApi
-        .getParticipantStats(body)
-        .then((data) => {
-          data.participant.map((participant) => {
-            setParticipantData(participant);
-          });
-          setTeamWinsData(data.participation);
-        })
-        .finally(() => setTimeout(() => setIsLoading(false), 300));
-    } catch {}
-  }, [participantID, isLoading, profileIsLoading]);
+    setIsLoading(true);
+    participantApi
+      .getParticipantStats(body)
+      .then((data) => {
+        setParticipantData(data.participant);
+        setTeamWinsData(data.participation);
+      })
+      .catch((error) => {})
+      .finally(() => setTimeout(() => setIsLoading(false), 300));
+  }, [participantID]);
+
+  if (!participantData) {
+    return <Loader show={isLoading || profileIsLoading} />;
+  }
 
   return (
     <>
