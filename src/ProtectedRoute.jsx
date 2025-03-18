@@ -6,11 +6,11 @@ import Loader from "@components/loader/Loader";
 const ProtectedRoute = ({ allowedRoles, children }) => {
   const user = useSelector(getUserSelector);
 
-  if (!user || !user.data) {
+  if ((!user || !user.data) && user.isLoading) {
     return <Loader show={true} />;
   }
 
-  if (user.data.length !== 0) {
+  if (user.data) {
     if (!user?.data?.role) {
       return <Navigate to="/401" />;
     }
