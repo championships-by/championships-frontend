@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { getEventsSelector } from "@store/events/selectors";
 import Loader from "@components/loader/Loader";
 import SearchInput from "@modules/search/SearchInput";
-import CheckCertificateInfo from "@CheckCertificateInfo";
+import CheckCertificateInfo from "@components/checkCertificate/CheckCertificateInfo";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

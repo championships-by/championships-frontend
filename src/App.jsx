@@ -28,7 +28,7 @@ import YandexMetrika from "@components/yandexMetrika/YandexMetrika";
 import TitleAndMeta from "@components/titleAndMeta/TitleAndMeta";
 import CookiesNotification from "@components/cookies/CookiesNotification";
 import EmailVerification from "@components/verification/EmailVerification";
-import CheckCertificate from "@components/CheckCertificate/CheckCertificate";
+import CheckCertificate from "@components/checkCertificate/CheckCertificate";
 import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
 import { Provider } from "react-redux";
