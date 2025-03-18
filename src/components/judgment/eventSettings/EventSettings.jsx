@@ -514,6 +514,7 @@ function EventSettings() {
   };
 
   const onValuesChange = (changedValues) => {
+    setPublished(!published);
     if (changedValues.event_logo?.status === STATUS_OF_EVENT.REMOVED) {
       changedValues.event_logo = null;
     }
