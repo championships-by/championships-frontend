@@ -3,21 +3,17 @@ import { useSelector } from "react-redux";
 import { getEventsSelector } from "@store/events/selectors";
 import Loader from "@components/loader/Loader";
 import SearchInput from "@modules/search/SearchInput";
-import CheckCertificateInfo from "@CheckCertificateInfo";
+import CheckCertificateInfo from "./CheckCertificateInfo";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import s from "./sass/check-certificate.module.scss";
+import styles from "./sass/check-certificate.module.scss";
 
 function CheckCertificate() {
   const [certificateId, setCertificateId] = useState("");
   const [searchId, setSearchId] = useState(null);
   const { isLoading } = useSelector(getEventsSelector);
   const { t } = useTranslation();
-
-  const handleSearch = () => {
-    setSearchId(certificateId);
-  };
 
   return (
     <>
@@ -30,10 +26,10 @@ function CheckCertificate() {
         </Col>
         <Col span={24}>
           <Flex gap="middle" align="center">
-            <div className={s.input}>
+            <div className={styles.input}>
               <SearchInput value={certificateId} onChange={setCertificateId} />
             </div>
-            <Button type="primary" onClick={handleSearch}>
+            <Button type="primary" onClick={() => setSearchId(certificateId)}>
               {t("CHECK_CERTIFICATE.BUTTON")}
             </Button>
           </Flex>
