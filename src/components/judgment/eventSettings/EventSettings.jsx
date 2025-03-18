@@ -36,6 +36,7 @@ import EventLogo from "@modules/judgment/events/EventLogo";
 import EventPhotoGallery from "@modules/judgment/events/EventPhotoGallery";
 import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
+import CompetitionGroupModal from "@modules/judgment/events/CompetitionGroupModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi, organizerApi } from "@api";
 import {
@@ -61,6 +62,7 @@ function EventSettings() {
   const [values, setValues] = useState({});
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [openTrophyModal, setTrophyModal] = useState(false);
+  const [openTrophyGroupModal, setTrophyGroupModal] = useState(false);
   const [participantModal, setParticipantModal] = useState(false);
   const [switchDisabled, setSwitchDisabled] = useState(true);
   const [eventInfo, setEventInfo] = useState();
@@ -98,6 +100,8 @@ function EventSettings() {
         switch (record) {
           case NOMINATIONS.TIME:
             return t(NOMINATION_TYPES.TIME);
+          case NOMINATIONS.GROUP:
+            return t(NOMINATION_TYPES.GROUP);
           case NOMINATIONS.CRITERIA:
             return t(NOMINATION_TYPES.CRITERIA);
           case NOMINATIONS.OLYMPIC:
@@ -108,8 +112,18 @@ function EventSettings() {
       },
       filters: [
         { text: t(NOMINATION_TYPES.TIME), value: NOMINATIONS.TIME },
-        { text: t(NOMINATION_TYPES.CRITERIA), value: NOMINATIONS.CRITERIA },
-        { text: t(NOMINATION_TYPES.OLYMPIC), value: NOMINATIONS.OLYMPIC },
+        {
+          text: t(NOMINATION_TYPES.CRITERIA),
+          value: NOMINATIONS.CRITERIA,
+        },
+        {
+          text: t(NOMINATION_TYPES.OLYMPIC),
+          value: NOMINATIONS.OLYMPIC,
+        },
+        {
+          text: t(NOMINATION_TYPES.GROUP),
+          value: NOMINATIONS.GROUP,
+        },
       ],
       onFilter: (value, record) => record.kind.includes(value),
     },
@@ -271,8 +285,11 @@ function EventSettings() {
         return;
       } else if (data.tournament_started) {
         switch (competitionType) {
-          case NOMINATIONS.OLYMPIC:
+          case NOMINATIONS.GROUP:
             navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
+            break;
+          case NOMINATIONS.OLYMPIC:
+            navigate(ROUTES.JUDGMENT_PLAYOFF_STAGE.PATH(eventID, nominationID));
             break;
           case NOMINATIONS.TIME:
             navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
@@ -290,6 +307,9 @@ function EventSettings() {
     switch (competitionType) {
       case NOMINATIONS.OLYMPIC:
         setTrophyModal(true);
+        break;
+      case NOMINATIONS.GROUP:
+        setTrophyGroupModal(true);
         break;
       default:
         Modal.confirm({
@@ -338,7 +358,7 @@ function EventSettings() {
   const openParticipantModal = (record) => {
     const competitionType = record.kind;
     const competitionName = record.name;
-    const nominationID = findNominationId(competitionName, eventInfo);
+    const nominationID = record.id;
 
     participantApi
       .getParticipantsWithInfo(eventId, nominationID, competitionType)
@@ -409,7 +429,6 @@ function EventSettings() {
   const onSubmit = async () => {
     enterLoading(0);
 
-    const formValues = form.getFieldsValue();
     const {
       name,
       participant_question_email,
@@ -422,8 +441,9 @@ function EventSettings() {
       holding,
       event_logo,
       event_regulation,
-      organizers,
-    } = { ...values, ...formValues };
+    } = { ...values };
+
+    const organizers = form.getFieldValue("organizers");
 
     const allOrganizers = await organizerApi.getOrganizers();
     const organizersWithIds = organizers.map((orgName) => {
@@ -497,6 +517,7 @@ function EventSettings() {
     if (changedValues.event_logo?.status === STATUS_OF_EVENT.REMOVED) {
       changedValues.event_logo = null;
     }
+
     setValues((oldValues) => ({
       ...oldValues,
       ...changedValues,
@@ -670,6 +691,13 @@ function EventSettings() {
         onOk={() => setTrophyModal(false)}
         onCancel={() => setTrophyModal(false)}
         name={t("EVENTS.PLAYOFF_SETTINGS")}
+        nominationID={dataNominationID}
+      />
+      <CompetitionGroupModal
+        isOpen={openTrophyGroupModal}
+        onOk={() => setTrophyGroupTModal(false)}
+        onCancel={() => setTrophyGroupModal(false)}
+        name={t("EVENTS.GROUP_SETTINGS")}
         nominationID={dataNominationID}
       />
       <ParticipantModal
