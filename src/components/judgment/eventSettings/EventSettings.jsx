@@ -36,7 +36,6 @@ import EventLogo from "@modules/judgment/events/EventLogo";
 import EventPhotoGallery from "@modules/judgment/events/EventPhotoGallery";
 import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
-import CompetitionGroupModal from "@modules/judgment/events/CompetitionGroupModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
 import { eventApi, competenciesApi, participantApi, organizerApi } from "@api";
 import {
@@ -514,6 +513,7 @@ function EventSettings() {
   };
 
   const onValuesChange = (changedValues) => {
+    setPublished(!published);
     if (changedValues.event_logo?.status === STATUS_OF_EVENT.REMOVED) {
       changedValues.event_logo = null;
     }
@@ -693,13 +693,7 @@ function EventSettings() {
         name={t("EVENTS.PLAYOFF_SETTINGS")}
         nominationID={dataNominationID}
       />
-      <CompetitionGroupModal
-        isOpen={openTrophyGroupModal}
-        onOk={() => setTrophyGroupTModal(false)}
-        onCancel={() => setTrophyGroupModal(false)}
-        name={t("EVENTS.GROUP_SETTINGS")}
-        nominationID={dataNominationID}
-      />
+
       <ParticipantModal
         isOpen={participantModal}
         onOk={() => setParticipantModal(false)}
