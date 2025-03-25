@@ -1,36 +1,44 @@
 import { Typography } from "antd";
 import { useEffect, useState } from "react";
-import { certificateApi } from "@api/certificates";
+import { certificateApi } from "@api";
+import { useTranslation } from "react-i18next";
+
+import styles from "./sass/check-certificate-info.module.scss";
 
 import s from "./sass/check-certificate-info.module.scss";
+import { t } from "i18next";
 
 function CheckCertificateInfo({ certificateId }) {
   const [certificateData, setCertificateData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!certificateId) return;
 
     const fetchCertificate = async () => {
-      setLoading(true);
+      setIsLoading(true);
+
       try {
-        const response = await certificateApi.getCertificateById(certificateId);
-        setCertificateData(response.data);
+        const params = { certificate_id: certificateId };
+        const result = await certificateApi.getCertificateById(params);
+        setCertificateData(result);
       } catch (error) {
         setCertificateData(null);
       }
-      setLoading(false);
+      setIsLoading(false);
     };
 
     fetchCertificate();
-  }, []);
+  }, [certificateId]);
 
-  if (loading)
+  if (isLoading)
     return (
       <Typography.Paragraph>
         {t("CHECK_CERTIFICATE.LOADING")}
       </Typography.Paragraph>
     );
+
   if (!certificateData)
     return (
       <Typography.Paragraph>
@@ -42,7 +50,7 @@ function CheckCertificateInfo({ certificateId }) {
     certificateData;
 
   return (
-    <div className={s.content}>
+    <div className={styles.content}>
       <div>
         <Typography.Title level={5}>
           {t("CHECK_CERTIFICATE.EVENT")}

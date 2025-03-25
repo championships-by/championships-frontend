@@ -149,7 +149,7 @@ function App() {
                     }
                   />
                   <Route
-                    path={ROUTER_ROUTES.EVENTS_CHECK_CERTIFICAT}
+                    path={ROUTER_ROUTES.EVENTS_CHECK_CERTIFICATE}
                     element={<CheckCertificate />}
                   />
                 </Route>
