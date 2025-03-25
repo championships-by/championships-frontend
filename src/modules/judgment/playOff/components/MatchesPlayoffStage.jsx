@@ -23,7 +23,7 @@ export function MatchesPlayoffStage() {
   } = useMatches();
 
   return isLoading ? (
-    <Spin indicator={<LoadingOutlined className="icon" spin />} />
+    <Spin indicator={<LoadingOutlined spin />} />
   ) : error ? (
     <div className="error">
       <h2>{t("MESSAGES.DATA_UPLOAD_ERROR")}</h2>

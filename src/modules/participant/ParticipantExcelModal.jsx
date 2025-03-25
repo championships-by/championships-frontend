@@ -78,6 +78,15 @@ const ParticipantExcelModal = ({ isOpen, onClose }) => {
           >
             <Button icon={<UploadOutlined />}>{t("COMMON.FILESELECT")}</Button>
           </Upload>
+          <div className="excel-template-link">
+            <a
+              href="https://championships.by/static/files/participants_template.xlsx"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📄 {t("COMMON.DOWNLOAD_EXCEL_TEMPLATE")}
+            </a>
+          </div>
         </Form.Item>
 
         <Flex vertical gap="large" sx={{ mt: 2 }}>

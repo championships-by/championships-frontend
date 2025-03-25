@@ -63,6 +63,7 @@
     "TEAMS": "Команды",
     "PARTICIPANT": "Участник",
     "PARTICIPANT_EXCEL": "Добавить группой",
+    "PARTICIPANTS_UPLOAD_EXCEL": "Добавить участников группой",
     "FILESELECT": "Выбрать файл",
     "CHOOSE_PARTICIPANT": "Выберите участника",
     "CHOOSE_PARTICIPANTS": "Выберите участников",
@@ -141,7 +142,7 @@
     "EXTENSIONS": "Расширения",
     "REGISTRATION": "Регистрация",
     "FULL_NAME_OF_TEACHER": "ФИО педагога",
-    "LINK_EXAMPLE": "Пример: http://google.com или https://google.com",
+    "LINK_EXAMPLE": "Пример: http://yandex.by или https://yandex.by",
     "CHECK_FILE_ACCESS": "ВНИМАНИЕ! Проверьте права доступа к файлу",
     "CONFIRM": "Подтвердить",
     "RESET": "Сбросить",
@@ -190,7 +191,8 @@
     "SEND_NOTIFICATION_INPUT": "Введите сообщение которое хотите отправить",
     "NOTIFICATION_SENT": "Уведомление отправлено",
     "TO_MAIN": "На главную",
-    "CHOSEN_FILE": "Выбран файл"
+    "CHOSEN_FILE": "Выбран файл",
+    "DOWNLOAD_EXCEL_TEMPLATE": "Пример Excel файла"
   },
   "EVENTS": {
     "EVENT": "Мероприятие",
@@ -662,6 +664,7 @@
     "FULL_NAME": "ФИО",
     "NUMBER": "Номер сертификата",
     "SUCCESS": "Сертификаты успешно созданы",
-    "ERROR": "Ошибка при создании сертификатов"
+    "ERROR": "Ошибка при создании сертификатов",
+    "SEARCH": "Индификатор сертификата"
   }
 }

@@ -137,7 +137,7 @@
     "EXTENSIONS": "Пашырэнні",
     "REGISTRATION": "Рэгістрацыя",
     "FULL_NAME_OF_TEACHER": "Поўнае імя педагога",
-    "LINK_EXAMPLE": "Прыклад: http://google.com ці https://google.com",
+    "LINK_EXAMPLE": "Прыклад: http://yandex.by ці https://yandex.by",
     "CHECK_FILE_ACCESS": "УВАГА! Праверце правы доступу да файла",
     "CONFIRM": "Пацвердзіць",
     "RESET": "Скід",
@@ -168,8 +168,6 @@
     "DECLINE": "Адхіліць",
     "ACCEPTED": "Ухвалена",
     "DECLINED": "Адхілена",
-    "SEND_NOTIFICATION": "Даслаць апавяшчэнне",
-    "SEND_NOTIFICATION_INPUT": "Увядзіце паведамленне, якое жадаеце адправіць",
     "NOTIFICATION_SENT": "Апавяшчэнне адпраўлена",
     "ACCEPT_MESSAGE": "Вы ўпэўненыя, што жадаеце ўхваліць гэтую заяўку?",
     "DECLINE_MESSAGE": "Вы ўпэўненыя, што жадаеце адхіліць гэтую заяўку?",
@@ -188,8 +186,9 @@
     "SYSTEM_WIDE_SEARCH": "Пошук па ўсёй сістэме",
     "SEE": "Глядзець",
     "TO_MAIN": "На галоўную",
-    "SEND_NOTIFICATION": "Адправіць апавяшчэнне",
-    "SEND_NOTIFICATION_INPUT": "Увядзіце тэкст паведамлення..."
+    "SEND_NOTIFICATION": "Даслаць апавяшчэнне",
+    "SEND_NOTIFICATION_INPUT": "Увядзіце паведамленне, якое жадаеце адправіць",
+    "DOWNLOAD_EXCEL_TEMPLATE": "Прыклад Excel файла"
   },
   "EVENTS": {
     "EVENT": "Мерапрыемства",
@@ -656,6 +655,7 @@
     "FULL_NAME": "Прозвішча, імя, імя па бацьку",
     "NUMBER": "Нумар сертыфіката",
     "SUCCESS": "Сертыфікаты паспяхова створаны",
-    "ERROR": "Памылка пры стварэнні сертыфікатаў"
+    "ERROR": "Памылка пры стварэнні сертыфікатаў",
+    "SEARCH": "Індыфікатар сертыфіката"
   }
 }

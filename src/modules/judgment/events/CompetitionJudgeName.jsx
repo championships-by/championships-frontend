@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Typography, Select, Space, Flex, Input } from "antd";
+import { Typography, Space, Flex, Input } from "antd";
+import Select from "@components/Select";
 import { UsergroupAddOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import { userApi } from "@api";

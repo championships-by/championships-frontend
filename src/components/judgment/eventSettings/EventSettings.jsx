@@ -429,7 +429,6 @@ function EventSettings() {
   const onSubmit = async () => {
     enterLoading(0);
 
-    const formValues = form.getFieldsValue();
     const {
       name,
       participant_question_email,
@@ -442,8 +441,9 @@ function EventSettings() {
       holding,
       event_logo,
       event_regulation,
-      organizers,
-    } = { ...values, ...formValues };
+    } = { ...values };
+
+    const organizers = form.getFieldValue("organizers");
 
     const allOrganizers = await organizerApi.getOrganizers();
     const organizersWithIds = organizers.map((orgName) => {
@@ -514,9 +514,11 @@ function EventSettings() {
   };
 
   const onValuesChange = (changedValues) => {
+    setPublished(!published);
     if (changedValues.event_logo?.status === STATUS_OF_EVENT.REMOVED) {
       changedValues.event_logo = null;
     }
+
     setValues((oldValues) => ({
       ...oldValues,
       ...changedValues,

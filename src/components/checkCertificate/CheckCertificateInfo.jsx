@@ -5,6 +5,9 @@ import { useTranslation } from "react-i18next";
 
 import styles from "./sass/check-certificate-info.module.scss";
 
+import s from "./sass/check-certificate-info.module.scss";
+import { t } from "i18next";
+
 function CheckCertificateInfo({ certificateId }) {
   const [certificateData, setCertificateData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
