@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { certificateApi } from "@api/certificates";
 
 import s from "./sass/check-certificate-info.module.scss";
+import { t } from "i18next";
 
 function CheckCertificateInfo({ certificateId }) {
   const [certificateData, setCertificateData] = useState(null);
