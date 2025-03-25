@@ -3,14 +3,14 @@ import { instance } from ".";
 const CERTIFICATE = "/certificate";
 
 export const certificateApi = {
-  getCertificateById: (certificateId) =>
-    instance.get(`${CERTIFICATE}/get_certificate_by_id`, {
-      params: { certificate_id: certificateId },
-    }),
+  getCertificateById: (params) =>
+    instance
+      .get(`${CERTIFICATE}/get_certificate_by_id`, { params })
+      .then((res) => res.data),
 
-  createCertificate: (certificateData) =>
+  createCertificate: (data) =>
     instance.post(
       `${CERTIFICATE}/create_certificate_for_each_participant`,
-      certificateData
+      data
     ),
 };
