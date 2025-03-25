@@ -96,8 +96,8 @@ function CompetitionType({ onJudgeChange, judges }) {
             <Input
               prefix={<UsergroupAddOutlined />}
               className="events__competition-judge__input"
-              style={{ height: selectHeight }}
-              disabled
+              style={{ minHeight: selectHeight }}
+              // disabled
             />
             <Select
               ref={selectRef}
