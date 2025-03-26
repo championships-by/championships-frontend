@@ -48,7 +48,7 @@ function Participants() {
             {t("COMMON.PARTICIPANT_MANAGEMENT")}
           </Typography.Title>
         </Col>
-        <Col style={{ minHeight: "52px" }}>
+        <Col className="custom-col">
           <Flex gap="middle" align="center">
             <SearchInput onChange={findParticipant} />
             <Button
