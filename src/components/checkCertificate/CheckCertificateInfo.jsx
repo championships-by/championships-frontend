@@ -11,7 +11,7 @@ function CheckCertificateInfo({ certificateId }) {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!certificateId) return;
+    if (!certificateId) return null;
 
     const fetchCertificate = async () => {
       setIsLoading(true);
@@ -22,7 +22,6 @@ function CheckCertificateInfo({ certificateId }) {
         setCertificateData(result);
       } catch (error) {
         setCertificateData(null);
-        console.log(error);
       }
       setIsLoading(false);
     };
