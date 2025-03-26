@@ -42,13 +42,13 @@ function Participants() {
   return (
     <>
       <Loader show={isLoading} />
-      <Row align="middle" justify="space-between">
+      <Row align="bottom" justify="space-between">
         <Col>
           <Typography.Title level={2}>
             {t("COMMON.PARTICIPANT_MANAGEMENT")}
           </Typography.Title>
         </Col>
-        <Col>
+        <Col style={{ minHeight: "52px" }}>
           <Flex gap="middle" align="center">
             <SearchInput onChange={findParticipant} />
             <Button
