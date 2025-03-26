@@ -5,9 +5,6 @@ import { useTranslation } from "react-i18next";
 
 import styles from "./sass/check-certificate-info.module.scss";
 
-import s from "./sass/check-certificate-info.module.scss";
-import { t } from "i18next";
-
 function CheckCertificateInfo({ certificateId }) {
   const [certificateData, setCertificateData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,12 +36,7 @@ function CheckCertificateInfo({ certificateId }) {
       </Typography.Paragraph>
     );
 
-  if (!certificateData)
-    return (
-      <Typography.Paragraph>
-        {t("CHECK_CERTIFICATE.INPUT")}
-      </Typography.Paragraph>
-    );
+  if (!certificateData) return null;
 
   const { event_name, event_start_date, event_end_date, participant_name, id } =
     certificateData;

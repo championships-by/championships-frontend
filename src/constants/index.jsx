@@ -159,7 +159,7 @@ export const ROUTER_ROUTES = {
   EVENT: "event",
   EVENTS_DESCRIPTION: ":eventID",
   EVENTS_REGISTRATION: ":eventID/registration",
-  EVENTS_CHECK_CERTIFICATE: "check-certificat",
+  EVENTS_CHECK_CERTIFICATE: "check-certificate",
   JUDGMENT: "judgment/events",
   JUDGMENT_CREATE: "create",
   JUDGMENT_CREATE_TEST: "create/test",
