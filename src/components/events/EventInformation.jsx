@@ -154,9 +154,17 @@ function EventInformation() {
   return (
     <div className="events__event-information__container">
       <Loader show={isLoading} />
-      <Typography.Title level={2}>
-        {t("EVENTS.INFO_ABOUT_EVENT")}
-      </Typography.Title>
+      <Flex justify="space-between" align="center">
+        <Typography.Title level={2}>
+          {t("EVENTS.INFO_ABOUT_EVENT")}
+        </Typography.Title>
+        <Button
+          type="primary"
+          onClick={() => navigate(ROUTES.AUTHORIZATION.PATH)}
+        >
+          {t("COMMON.LOGIN")}
+        </Button>
+      </Flex>
       <Divider />
       <Breadcrumb items={items} />
       <Row className="events__event-information__flex-container">
