@@ -11,7 +11,7 @@ function CheckCertificateInfo({ certificateId }) {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!certificateId) return null;
+    if (!certificateId) return;
 
     const fetchCertificate = async () => {
       setIsLoading(true);
@@ -36,7 +36,7 @@ function CheckCertificateInfo({ certificateId }) {
       </Typography.Paragraph>
     );
 
-  if (!certificateData) return;
+  if (!certificateData) return null;
 
   const { event_name, event_start_date, event_end_date, participant_name, id } =
     certificateData;
