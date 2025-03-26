@@ -71,12 +71,18 @@ function Events() {
         </Col>
         {!user.data && (
           <Col flex="auto">
-            <Flex justify="flex-end">
+            <Flex justify="flex-end" gap="15px">
               <Button
                 type="primary"
                 onClick={() => navigate(ROUTES.AUTHORIZATION.PATH)}
               >
                 {t("COMMON.LOGIN")}
+              </Button>
+              <Button
+                type="primary"
+                onClick={() => navigate(ROUTES.CHECK_CERTIFICATE.PATH)}
+              >
+                {t("CHECK_CERTIFICATE.TITLE")}
               </Button>
             </Flex>
           </Col>

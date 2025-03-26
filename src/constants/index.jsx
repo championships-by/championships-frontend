@@ -85,7 +85,7 @@ export const ROUTES = {
   },
   CHECK_CERTIFICATE: {
     TITLE: "Проверка сертификата",
-    PATH: "/events/check-certificate",
+    PATH: "/events/check-certificat",
   },
   ABOUT_PROGRAM: {
     TITLE: "USER_SUPPORT.ABOUT_SITE",

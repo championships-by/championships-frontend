@@ -16,6 +16,7 @@ export * from "./user";
 export * from "./feedback";
 export * from "./organizers";
 export * from "./notification";
+export * from "./certificates";
 
 const excludedUrls = ["/user/profile"];
 
