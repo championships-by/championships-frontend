@@ -56,7 +56,7 @@ function ParticipantsGlobalSearchModal({ isOpen, onClose }) {
         value={searchValue}
         className="participants-global-search"
       >
-        <Input.Search placeholder={`${t("PARTICIPANTS.SEARCH")}..`} />
+        <Input.Search placeholder={`${t("PARTICIPANTS.SEARCH")}...`} />
       </AutoComplete>
     </Modal>
   );
