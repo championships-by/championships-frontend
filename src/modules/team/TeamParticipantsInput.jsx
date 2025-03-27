@@ -6,6 +6,7 @@ import { participantApi } from "@api";
 import { FILTER_OPTION } from "@utils";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
+import dayjs from "dayjs";
 
 import "./sass/team.scss";
 
@@ -24,13 +25,6 @@ function TeamParticipantsInput({ name, mode, disabled, options }) {
     },
   ];
 
-  const convertDate = (date) => {
-    const convertedDate = date.split("T")[0];
-    return `${convertedDate.split("-")[2]}.${convertedDate.split("-")[1]}.${
-      convertedDate.split("-")[0]
-    }`;
-  };
-
   const fetchParticipants = useCallback(
     debounce((searchValue) => {
       if (!searchValue.trim()) {
@@ -44,9 +38,9 @@ function TeamParticipantsInput({ name, mode, disabled, options }) {
           setSearchOptions(
             data.map((p) => ({
               value: p.id,
-              label: `${p.second_name} ${p.first_name} ${
-                p.third_name
-              }, ${convertDate(p.birth_date)}`,
+              label: `${p.second_name} ${p.first_name} ${p.third_name}, ${dayjs(
+                p.birth_date
+              ).format("DD.MM.YYYY")}`,
             }))
           );
         })
