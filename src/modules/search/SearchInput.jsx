@@ -19,7 +19,7 @@ function SearchInput({ onChange: onChangeBase }) {
   return (
     <Search
       className="search"
-      placeholder="Введите номер сертификата"
+      placeholder={`${t("CHECK_CERTIFICATE.SEARCH")}..`}
       onChange={(e) => onChange(e.target.value)}
     />
   );
