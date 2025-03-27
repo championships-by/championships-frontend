@@ -140,7 +140,7 @@ function EventInformation() {
             );
             break;
           default:
-            message.error(t("MESSAGES.ERROR"));
+            message.error(t("MESSAGES.ERROR_REPEAT_NAME"));
             break;
         }
       }

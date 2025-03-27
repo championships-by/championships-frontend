@@ -43,6 +43,7 @@ export const participantApi = {
       body
     );
   },
+
   updateParticipantInNomination: (body) => {
     return instance.patch(
       "/team_participant_nomination_event/team_participant",
