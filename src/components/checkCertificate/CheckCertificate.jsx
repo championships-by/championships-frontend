@@ -7,6 +7,7 @@ import CheckCertificateInfo from "@components/checkCertificate/CheckCertificateI
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ROUTES } from "@constants";
+
 import s from "./sass/check-certificate.module.scss";
 
 function CheckCertificate() {
