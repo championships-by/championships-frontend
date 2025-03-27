@@ -83,9 +83,9 @@ export const ROUTES = {
     TITLE: "USER_SETTINGS.USER_SETTINGS",
     PATH: "/settings",
   },
-  CHECK_CERTIFICAT: {
+  CHECK_CERTIFICATE: {
     TITLE: "Проверка сертификата",
-    PATH: "/events/check-certificat",
+    PATH: "/events/check-certificate",
   },
   ABOUT_PROGRAM: {
     TITLE: "USER_SUPPORT.ABOUT_SITE",
@@ -159,7 +159,7 @@ export const ROUTER_ROUTES = {
   EVENT: "event",
   EVENTS_DESCRIPTION: ":eventID",
   EVENTS_REGISTRATION: ":eventID/registration",
-  EVENTS_CHECK_CERTIFICAT: "check-certificat",
+  EVENTS_CHECK_CERTIFICATE: "check-certificate",
   JUDGMENT: "judgment/events",
   JUDGMENT_CREATE: "create",
   JUDGMENT_CREATE_TEST: "create/test",

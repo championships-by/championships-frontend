@@ -106,6 +106,7 @@ function Auth() {
             >
               <AuthEmailInput value={email} onChange={setEmail} />
               <AuthPasswordInput value={password} onChange={setPassword} />
+
               <FormItem className="auth__body__form-item">
                 <Button
                   type="primary"
