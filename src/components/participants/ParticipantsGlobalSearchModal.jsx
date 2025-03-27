@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { debounce } from "lodash";
-import { Modal, Input, AutoComplete } from "antd";
+import { Modal, Input, AutoComplete, Tooltip } from "antd";
 import { transformParticipantsInSystemData, getParticipantLink } from "@utils";
 import ParticipantLink from "@components/participants/ParticipantLink.jsx";
 import { useTranslation } from "react-i18next";
@@ -56,7 +56,7 @@ function ParticipantsGlobalSearchModal({ isOpen, onClose }) {
         value={searchValue}
         className="participants-global-search"
       >
-        <Input.Search />
+        <Input.Search placeholder={`${t("PARTICIPANTS.SEARCH")}...`} />
       </AutoComplete>
     </Modal>
   );
