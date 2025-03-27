@@ -34,7 +34,6 @@ function TeamParticipantsInput({ name, mode, disabled, options }) {
       participantApi
         .getParticipantsInSystem({ name: searchValue })
         .then((data) => {
-          console.log(data);
           setSearchOptions(
             data.map((p) => ({
               value: p.id,
