@@ -50,7 +50,10 @@ function Participants() {
         </Col>
         <Col className="custom-col">
           <Flex gap="middle" align="center">
-            <SearchInput onChange={findParticipant} />
+            <SearchInput
+              onChange={findParticipant}
+              placeholder={t("COMMON.SEARCH") + "..."}
+            />
             <Button
               type="primary"
               onClick={() => setIsParticipantOptionsOpen(true)}

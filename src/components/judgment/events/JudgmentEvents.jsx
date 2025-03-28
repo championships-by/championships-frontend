@@ -71,7 +71,10 @@ function JudgmentEvents() {
         </Col>
         <Col gap="middle" align="center">
           <Flex justify="flex-end">
-            <SearchInput onChange={getEvents} />
+            <SearchInput
+              onChange={getEvents}
+              placeholder={t("COMMON.SEARCH") + "..."}
+            />
             <AdminPanelControls>
               <Button
                 type="primary"

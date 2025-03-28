@@ -92,7 +92,10 @@ function UsersControl() {
         <Col>
           {activeTab === "1" && (
             <Flex gap="middle" align="center">
-              <SearchInput onChange={findUser} />
+              <SearchInput
+                onChange={findUser}
+                placeholder={t("COMMON.SEARCH") + "..."}
+              />
               <Flex gap="middle">
                 <Button
                   type="primary"

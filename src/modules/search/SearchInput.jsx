@@ -6,7 +6,7 @@ const { Search } = Input;
 
 import "./sass/search.scss";
 
-function SearchInput({ onChange: onChangeBase }) {
+function SearchInput({ onChange: onChangeBase, placeholder }) {
   const { t } = useTranslation();
 
   const onChange = useCallback(
