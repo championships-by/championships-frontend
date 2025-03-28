@@ -8,7 +8,7 @@ export const notificationApi = {
   },
   sendRegistrationNomination: (params) => {
     return instance.post(
-      `${API_PATH}/system_notice/send_nomination_event_registation`, // Исправлена опечатка в URL (registation -> registration)
+      `${API_PATH}/system_notice/send_nomination_event_registation`,
       null,
       {
         params,
