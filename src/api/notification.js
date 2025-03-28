@@ -6,4 +6,13 @@ export const notificationApi = {
       params: { message_text: message },
     });
   },
+  sendRegistrationNomination: (params) => {
+    return instance.post(
+      `${API_PATH}/system_notice/send_nomination_event_registation`, // Исправлена опечатка в URL (registation -> registration)
+      null,
+      {
+        params,
+      }
+    );
+  },
 };

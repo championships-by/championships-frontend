@@ -10,7 +10,12 @@ import ParticipantTeacherFirstnameInput from "@modules/participant/ParticipantTe
 import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTeacherLastnameInput.jsx";
 import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
 import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
-import { eventApi, competenciesApi, participantApi } from "@api";
+import {
+  eventApi,
+  competenciesApi,
+  participantApi,
+  notificationApi,
+} from "@api";
 import { useTranslation } from "react-i18next";
 
 import "./sass/event-registration.scss";
@@ -130,6 +135,12 @@ function TeamAddParticipantModal({ isOpen, onOk, onCancel, teamID }) {
         ],
       };
       await participantApi.addParticipantToNomination(body);
+      const bodyNomination = {
+        participant_id: form.getFieldValue("participant_id"),
+        event_id: eventID,
+        nomination_id: nominationId,
+      };
+      await notificationApi.sendRegistrationNomination(bodyNomination);
       message.success(t("MESSAGES.SUCCESS_PARTICIPANT_ADD"));
       form.resetFields();
       onOk();
