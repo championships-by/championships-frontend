@@ -14,6 +14,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 import { timeMatchesErrorMessages } from "./constants";
+import { certificateApi } from "@api/certificates";
 import { useTranslation } from "react-i18next";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
 
@@ -91,6 +92,19 @@ export const TimeMatchesTabs = () => {
     );
   }, []);
 
+  const createCertificates = async () => {
+    try {
+      const certificateData = {
+        event_id: eventId,
+        nomination_id: nominationId,
+      };
+      await certificateApi.createCertificate(certificateData);
+      message.success(t("CHECK_CERTIFICATE.SUCCESS"));
+    } catch (error) {
+      message.error(t("CHECK_CERTIFICAET.ERROR"));
+    }
+  };
+
   const handleSendResults = useCallback(async () => {
     if (!isTimeMatchesFilled(timeMatches)) {
       message.warning(t("MESSAGES.FILL_ALL_FIELDS"));
@@ -116,6 +130,7 @@ export const TimeMatchesTabs = () => {
       event_id: eventId,
       nomination_id: nominationId,
     });
+    await createCertificates();
 
     setIsStageFinished(true);
     setActiveTabKey("2");
