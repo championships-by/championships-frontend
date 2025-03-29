@@ -1,5 +1,4 @@
 import { competenciesApi, timeMatchesApi } from "@api";
-import { defaultTime } from "@constants";
 import {
   formatTimeToString,
   isTimeMatchesFilled,
@@ -17,6 +16,7 @@ import { timeMatchesErrorMessages } from "./constants";
 import { certificateApi } from "@api/certificates";
 import { useTranslation } from "react-i18next";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
+import { NOMINATIONS } from "@constants";
 
 import "@modules/judgment/timeMatches/sass/time-matches.scss";
 
@@ -97,6 +97,7 @@ export const TimeMatchesTabs = () => {
       const certificateData = {
         event_id: eventId,
         nomination_id: nominationId,
+        type: NOMINATIONS.TIME,
       };
       await certificateApi.createCertificate(certificateData);
       message.success(t("CHECK_CERTIFICATE.SUCCESS"));

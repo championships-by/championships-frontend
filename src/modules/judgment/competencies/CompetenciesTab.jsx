@@ -21,6 +21,7 @@ import {
   CloseOutlined,
   CheckOutlined,
 } from "@ant-design/icons";
+import { NOMINATIONS } from "@constants";
 
 import "@modules/judgment/competencies/sass/competencies-criteria.scss";
 
@@ -60,6 +61,7 @@ function CompetenciesTab() {
       const certificateData = {
         event_id: eventId,
         nomination_id: nominationId,
+        type: NOMINATIONS.CRITERIA,
       };
       await certificateApi.createCertificate(certificateData);
       message.success(t("CHECK_CERTIFICATE.SUCCESS"));
