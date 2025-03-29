@@ -302,6 +302,7 @@ function EventSettings() {
 
   useEffect(() => {
     if (competenciesParticipantsData.length > 0) {
+      return competenciesParticipantsData;
     }
   }, [competenciesParticipantsData]);
 
