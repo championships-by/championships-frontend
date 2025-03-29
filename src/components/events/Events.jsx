@@ -65,7 +65,7 @@ function Events() {
   return (
     <>
       <Loader show={isLoading} />
-      <Row align="middle">
+      <Row align="middle" justify={"space-between"}>
         <Col xs={24} sm={24} md={14}>
           <Typography.Title level={2}>{t("EVENTS.EVENTS")}</Typography.Title>
         </Col>
@@ -87,6 +87,12 @@ function Events() {
             </Flex>
           </Col>
         )}
+        <Button
+          type="primary"
+          onClick={() => navigate(ROUTES.CHECK_CERTIFICATE.PATH)}
+        >
+          {t("CHECK_CERTIFICATE.TITLE")}
+        </Button>
       </Row>
       <Flex vertical gap={500}>
         <Flex vertical={isMobile || isTablet} gap="large">
