@@ -28,7 +28,6 @@ const ParticipantsCheckingModal = ({ data, isOpen, onCancel, onOk }) => {
           : participant
       )
     );
-    console.log(e.target.checked, id);
   };
 
   return (
@@ -52,10 +51,7 @@ const ParticipantsCheckingModal = ({ data, isOpen, onCancel, onOk }) => {
             const id = member.participant_data.id;
             return (
               <div key={id}>
-                <Checkbox
-                  //checked={participant}
-                  onChange={(e) => handleCheckboxChange(e, id)}
-                >
+                <Checkbox onChange={(e) => handleCheckboxChange(e, id)}>
                   {`${member?.participant_data?.first_name || ""} 
                     ${member?.participant_data?.second_name || ""} 
                     ${member?.participant_data?.third_name || ""}`}

@@ -93,14 +93,11 @@ function EventSettings() {
           related: "true",
         });
 
-        console.log("params: ", params.toString());
-
         const result =
           await eventApi.getEventWithNominationsAndTeamParticipants(
             params.toString()
           );
         setEventCompetenciesData(result);
-        console.log("lool: ", eventCompetenciesData);
       } catch (error) {
         console.error(error);
       }
@@ -305,18 +302,10 @@ function EventSettings() {
 
   useEffect(() => {
     if (competenciesParticipantsData.length > 0) {
-      console.log(
-        "Список присутствующих участников компетенции 2: ",
-        competenciesParticipantsData
-      );
     }
   }, [competenciesParticipantsData]);
 
   const nextModal = (modal, values, participantsPresenseData) => {
-    console.log(
-      "Список присутствующих участников компетенции 1: ",
-      participantsPresenseData
-    );
     setCompetenciesParticipantsData(participantsPresenseData);
 
     setIsParticipantsCheckingModalOpen(false);
@@ -376,55 +365,37 @@ function EventSettings() {
   };
 
   const openCompetenciesModal = async (record) => {
-    console.log("data: ", dataEvent, " id: ", eventID);
-
     const competitionType = record.kind;
     const competitionName = record.name;
     const nominationID = findNominationId(competitionName, eventInfo);
     setNominationID(nominationID);
 
     try {
-      console.log(eventCompetenciesData);
       eventCompetenciesData.find((item) => {
         if (item.nomination_id === nominationID) {
-          console.log("i found him))): ", item);
           setParticipantsData(item);
           return item;
         }
       });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
     try {
       const params = { event_id: eventID, nomination_id: nominationID };
       const data = await competenciesApi.getNominationEventInfo(params);
-      //console.log(data)
       if (data.tournament_finished) {
         message.error(t("MESSAGES.TOURNAMENT_FINISHED"));
         return;
       } else if (data.tournament_started) {
-        console.log("lesgo");
         switch (competitionType) {
           case NOMINATIONS.GROUP:
-            console.log("case 1", competitionType, eventID, nominationID);
             navigate(ROUTES.JUDGMENT_GROUP_STAGE.PATH(eventID, nominationID));
             break;
           case NOMINATIONS.OLYMPIC:
-            console.log(
-              "case 2",
-              competitionType,
-              eventID,
-              nominationID,
-              ROUTES.JUDGMENT_PLAYOFF_STAGE.PATH(eventID, nominationID)
-            );
             navigate(ROUTES.JUDGMENT_PLAYOFF_STAGE.PATH(eventID, nominationID));
             break;
           case NOMINATIONS.TIME:
-            console.log("case 3", competitionType, eventID, nominationID);
             navigate(ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID));
             break;
           case NOMINATIONS.CRITERIA:
-            console.log("case 4", competitionType, eventID, nominationID);
             navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID));
             break;
         }
@@ -436,24 +407,14 @@ function EventSettings() {
 
     switch (competitionType) {
       case NOMINATIONS.OLYMPIC:
-        console.log("second switch, 1", competitionType);
-
         setNextModalType(1);
-
         setIsParticipantsCheckingModalOpen(true);
-
         break;
       case NOMINATIONS.GROUP:
-        console.log("second switch, 2", competitionType);
-
         setNextModalType(2);
-
         setIsParticipantsCheckingModalOpen(true);
-
         break;
       default:
-        console.log("second switch, def", competitionType);
-
         setNextModalType(3);
 
         setCompetitionVal([competitionType, eventID, nominationID]);
