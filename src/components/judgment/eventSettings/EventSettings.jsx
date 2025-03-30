@@ -300,7 +300,6 @@ function EventSettings() {
 
   const nextModal = (modal, values, participantsPresenseData) => {
     setCompetenciesParticipantsData(participantsPresenseData);
-    console.log("finish data: ", participantsPresenseData);
 
     setIsParticipantsCheckingModalOpen(false);
     switch (modal) {
