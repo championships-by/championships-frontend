@@ -98,9 +98,7 @@ function EventSettings() {
             params.toString()
           );
         setEventCompetenciesData(result);
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     };
 
     getEventCompetenciesData();
@@ -300,24 +298,19 @@ function EventSettings() {
     }
   };
 
-  useEffect(() => {
-    if (competenciesParticipantsData.length > 0) {
-      return competenciesParticipantsData;
-    }
-  }, [competenciesParticipantsData]);
-
   const nextModal = (modal, values, participantsPresenseData) => {
     setCompetenciesParticipantsData(participantsPresenseData);
+    console.log("finish data: ", participantsPresenseData);
 
     setIsParticipantsCheckingModalOpen(false);
     switch (modal) {
-      case 1:
+      case NOMINATIONS.OLYMPIC:
         setTrophyModal(true);
         break;
-      case 2:
+      case NOMINATIONS.GROUP:
         setTrophyGroupModal(true);
         break;
-      case 3:
+      case NOMINATIONS.TIME || NOMINATIONS.CRITERIA:
         startConfirmation(values[0], values[1], values[2]);
       default:
         break;
@@ -406,20 +399,19 @@ function EventSettings() {
       return;
     }
 
+    setNextModalType(competitionType);
+
     switch (competitionType) {
       case NOMINATIONS.OLYMPIC:
-        setNextModalType(1);
         setIsParticipantsCheckingModalOpen(true);
+
         break;
       case NOMINATIONS.GROUP:
-        setNextModalType(2);
         setIsParticipantsCheckingModalOpen(true);
+
         break;
       default:
-        setNextModalType(3);
-
         setCompetitionVal([competitionType, eventID, nominationID]);
-
         setIsParticipantsCheckingModalOpen(true);
 
         break;

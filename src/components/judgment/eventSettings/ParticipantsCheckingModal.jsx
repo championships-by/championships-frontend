@@ -1,66 +1,88 @@
 import { Modal, Button, Checkbox } from "antd";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const ParticipantsCheckingModal = ({ data, isOpen, onCancel, onOk }) => {
-  const [teams, setTeams] = useState([]);
-  const [presenseList, setPresenseList] = useState([]);
+  const [updatedData, setUpdatedData] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (data) {
-      setTeams(data.team_participants);
-
-      const updatedPresenseList = data.team_participants.flatMap((item) =>
-        item.team.participants.map((participant) => ({
-          ...participant,
-          presense: false,
-        }))
-      );
-
-      setPresenseList(updatedPresenseList);
+      setUpdatedData({
+        ...data,
+        team_participants: data.team_participants.map((team) => ({
+          ...team,
+          team: {
+            ...team.team,
+            participants: team.team.participants.map((participant) => ({
+              ...participant,
+              presense: participant.presense ?? false,
+            })),
+          },
+        })),
+      });
     }
   }, [data]);
 
-  const handleCheckboxChange = (e, id) => {
-    setPresenseList((prevList) =>
-      prevList.map((participant) =>
-        participant.participant_data.id === id
-          ? { ...participant, presense: e.target.checked }
-          : participant
-      )
-    );
+  const handleCheckboxChange = (e, teamId, participantId) => {
+    setUpdatedData((prevData) => ({
+      ...prevData,
+      team_participants: prevData.team_participants.map((team) =>
+        team.team.id === teamId
+          ? {
+              ...team,
+              team: {
+                ...team.team,
+                participants: team.team.participants.map((participant) =>
+                  participant.participant_data.id === participantId
+                    ? { ...participant, presense: e.target.checked }
+                    : participant
+                ),
+              },
+            }
+          : team
+      ),
+    }));
   };
 
   return (
     <Modal
-      title="Список участников"
+      title={t("EVENTS.PARTICIPANTS_LIST")}
       open={isOpen}
       onCancel={onCancel}
       footer={[
         <Button key="cancel" onClick={onCancel}>
-          Отмена
+          {t("COMMON.CANCEL")}
         </Button>,
-        <Button key="ok" type="primary" onClick={() => onOk(presenseList)}>
-          ОК
+        <Button key="ok" type="primary" onClick={() => onOk(updatedData)}>
+          {t("COMMON.OK")}
         </Button>,
       ]}
     >
-      {teams.map((team) => (
-        <div key={team.team.id}>
-          <h3>{team.team.name}</h3>
-          {team.team.participants.map((member) => {
-            const id = member.participant_data.id;
-            return (
-              <div key={id}>
-                <Checkbox onChange={(e) => handleCheckboxChange(e, id)}>
-                  {`${member?.participant_data?.first_name || ""} 
-                    ${member?.participant_data?.second_name || ""} 
-                    ${member?.participant_data?.third_name || ""}`}
+      {updatedData &&
+        updatedData.team_participants.map((team) => (
+          <div key={team.team.id}>
+            <h3>{team.team.name}</h3>
+            {team.team.participants.map((member) => (
+              <div key={member.participant_data.id}>
+                <Checkbox
+                  checked={member.presense}
+                  onChange={(e) =>
+                    handleCheckboxChange(
+                      e,
+                      team.team.id,
+                      member.participant_data.id
+                    )
+                  }
+                >
+                  {member.participant_data.first_name}{" "}
+                  {member.participant_data.second_name}{" "}
+                  {member.participant_data.third_name}
                 </Checkbox>
               </div>
-            );
-          })}
-        </div>
-      ))}
+            ))}
+          </div>
+        ))}
     </Modal>
   );
 };
