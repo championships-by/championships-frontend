@@ -5,9 +5,9 @@ import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 import { NOMINATION_TYPES, NOMINATIONS } from "@constants";
 import { useTranslation } from "react-i18next";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 import "./sass/events.scss";
-import { InfoCircleOutlined } from "@ant-design/icons";
 
 function CompetitionType({
   Disabled = false,

@@ -5,6 +5,7 @@ import { message } from "antd";
 import { getPlayOffLevels, isStillEditable } from "@utils";
 import { useTranslation } from "react-i18next";
 import { certificateApi } from "@api/certificates";
+import { NOMINATIONS } from "@constants";
 
 export const MatchesContext = createContext();
 
@@ -322,6 +323,7 @@ export function MatchesProvider({ eventId, nominationId, children, type }) {
       const certificateData = {
         event_id: eventId,
         nomination_id: nominationId,
+        type: NOMINATIONS.OLYMPIC,
       };
       await certificateApi.createCertificate(certificateData);
       message.success(t("CHECK_CERTIFICATE.SUCCESS"));

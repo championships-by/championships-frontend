@@ -2,6 +2,8 @@ import { Typography } from "antd";
 import { useEffect, useState } from "react";
 import { certificateApi } from "@api";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
+import { Locale } from "@constants";
 
 import styles from "./sass/check-certificate-info.module.scss";
 
@@ -54,8 +56,10 @@ function CheckCertificateInfo({ certificateId }) {
           {t("CHECK_CERTIFICATE.DATE")}
         </Typography.Title>
         <Typography.Paragraph>
-          {event_start_date}
-          {event_end_date ? ` -${event_end_date}` : ""}
+          {dayjs(event_start_date).format(Locale.dateFormat)}
+          {event_end_date
+            ? ` - ${dayjs(event_end_date).format(Locale.dateFormat)}`
+            : ""}
         </Typography.Paragraph>
       </div>
       <div>
