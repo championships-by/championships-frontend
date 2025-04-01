@@ -6,41 +6,49 @@ const ParticipantsCheckingModal = ({ data, isOpen, onCancel, onOk }) => {
   const [updatedData, setUpdatedData] = useState(null);
   const { t } = useTranslation();
 
+  const initializeData = (rawData) => {
+    return {
+      ...rawData,
+      team_participants: rawData.team_participants.map((team) => ({
+        ...team,
+        team: {
+          ...team.team,
+          participants: team.team.participants.map((p) => ({
+            ...p,
+            presense: p.presense ?? false,
+          })),
+        },
+      })),
+    };
+  };
+
   useEffect(() => {
     if (data) {
-      setUpdatedData({
-        ...data,
-        team_participants: data.team_participants.map((team) => ({
-          ...team,
-          team: {
-            ...team.team,
-            participants: team.team.participants.map((participant) => ({
-              ...participant,
-              presense: participant.presense ?? false,
-            })),
-          },
-        })),
-      });
+      setUpdatedData(initializeData(data));
     }
   }, [data]);
 
-  const handleCheckboxChange = (e, teamId, participantId) => {
+  const handleCheckboxChange = (
+    { target: { checked } },
+    teamId,
+    participantId
+  ) => {
     setUpdatedData((prevData) => ({
       ...prevData,
-      team_participants: prevData.team_participants.map((team) =>
-        team.team.id === teamId
+      team_participants: prevData.team_participants.map(({ team, ...rest }) =>
+        team.id === teamId
           ? {
-              ...team,
+              ...rest,
               team: {
-                ...team.team,
-                participants: team.team.participants.map((participant) =>
-                  participant.participant_data.id === participantId
-                    ? { ...participant, presense: e.target.checked }
-                    : participant
+                ...team,
+                participants: team.participants.map((p) =>
+                  p.participant_data.id === participantId
+                    ? { ...p, presense: checked }
+                    : p
                 ),
               },
             }
-          : team
+          : { team, ...rest }
       ),
     }));
   };
@@ -75,9 +83,11 @@ const ParticipantsCheckingModal = ({ data, isOpen, onCancel, onOk }) => {
                     )
                   }
                 >
-                  {member.participant_data.first_name}{" "}
-                  {member.participant_data.second_name}{" "}
-                  {member.participant_data.third_name}
+                  {[
+                    member.participant_data.first_name,
+                    member.participant_data.second_name,
+                    member.participant_data.third_name,
+                  ].join(" ")}
                 </Checkbox>
               </div>
             ))}

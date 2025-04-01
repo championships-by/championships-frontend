@@ -309,7 +309,9 @@ function EventSettings() {
       case NOMINATIONS.GROUP:
         setTrophyGroupModal(true);
         break;
-      case NOMINATIONS.TIME || NOMINATIONS.CRITERIA:
+      case NOMINATIONS.TIME:
+        startConfirmation(values[0], values[1], values[2]);
+      case NOMINATIONS.CRITERIA:
         startConfirmation(values[0], values[1], values[2]);
       default:
         break;
