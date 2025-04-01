@@ -63,15 +63,18 @@ function JudgmentEvents() {
   return (
     <>
       <Loader show={isLoading} />
-      <Row align="bottom">
+      <Row align="bottom" justify="space-between">
         <Col xs={24} sm={24} md={14}>
           <Typography.Title level={2}>
             {t("EVENTS.EVENTS_CONTOL")}
           </Typography.Title>
         </Col>
-        <Col flex="auto">
+        <Col gap="middle" align="center">
           <Flex justify="flex-end">
-            <SearchInput onChange={getEvents} />
+            <SearchInput
+              onChange={getEvents}
+              placeholder={t("COMMON.SEARCH") + "..."}
+            />
             <AdminPanelControls>
               <Button
                 type="primary"

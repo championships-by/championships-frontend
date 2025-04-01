@@ -6,6 +6,7 @@ import { participantApi } from "@api";
 import { FILTER_OPTION } from "@utils";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
+import dayjs from "dayjs";
 
 import "./sass/team.scss";
 
@@ -32,14 +33,16 @@ function TeamParticipantsInput({ name, mode, disabled, options }) {
       }
       participantApi
         .getParticipantsInSystem({ name: searchValue })
-        .then((data) =>
+        .then((data) => {
           setSearchOptions(
             data.map((p) => ({
               value: p.id,
-              label: `${p.second_name} ${p.first_name} ${p.third_name}`,
+              label: `${p.second_name} ${p.first_name} ${p.third_name}, ${dayjs(
+                p.birth_date
+              ).format("DD.MM.YYYY")}`,
             }))
-          )
-        )
+          );
+        })
         .catch(() => setSearchOptions([]));
     }, 300),
     []

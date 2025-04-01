@@ -2,11 +2,10 @@ import { Typography } from "antd";
 import { useEffect, useState } from "react";
 import { certificateApi } from "@api";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
+import { Locale } from "@constants";
 
 import styles from "./sass/check-certificate-info.module.scss";
-
-import s from "./sass/check-certificate-info.module.scss";
-import { t } from "i18next";
 
 function CheckCertificateInfo({ certificateId }) {
   const [certificateData, setCertificateData] = useState(null);
@@ -39,12 +38,7 @@ function CheckCertificateInfo({ certificateId }) {
       </Typography.Paragraph>
     );
 
-  if (!certificateData)
-    return (
-      <Typography.Paragraph>
-        {t("CHECK_CERTIFICATE.INPUT")}
-      </Typography.Paragraph>
-    );
+  if (!certificateData) return null;
 
   const { event_name, event_start_date, event_end_date, participant_name, id } =
     certificateData;
@@ -62,8 +56,10 @@ function CheckCertificateInfo({ certificateId }) {
           {t("CHECK_CERTIFICATE.DATE")}
         </Typography.Title>
         <Typography.Paragraph>
-          {event_start_date}
-          {event_end_date ? ` -${event_end_date}` : ""}
+          {dayjs(event_start_date).format(Locale.dateFormat)}
+          {event_end_date
+            ? ` - ${dayjs(event_end_date).format(Locale.dateFormat)}`
+            : ""}
         </Typography.Paragraph>
       </div>
       <div>

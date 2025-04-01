@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Typography, Space } from "antd";
+import { Typography, Space, Tooltip, Flex } from "antd";
 import Select from "@components/Select";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
 import { NOMINATION_TYPES, NOMINATIONS } from "@constants";
 import { useTranslation } from "react-i18next";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 import "./sass/events.scss";
 
@@ -72,9 +73,42 @@ function CompetitionType({
   };
   return (
     <div className="events__competition-type__div">
-      <Typography.Text className="events__competition-type__text">
-        {t("EVENTS.TYPE_OF_TOURNAMENTS")}
-      </Typography.Text>
+      <Space align="center" size={8}>
+        <Typography.Text className="events__competition-type__text">
+          {t("EVENTS.TYPE_OF_TOURNAMENTS")}
+        </Typography.Text>
+        <Tooltip
+          placement="right"
+          title={
+            <Typography.Text className="user__role-input__tooltip">
+              <Typography.Text strong className="user__role-input__tooltip">
+                {t("COMMON.BY_CRITERIA")}
+              </Typography.Text>{" "}
+              {t("COMMON.BY_CRITERIA_DESCRIPTION")}
+              <br />
+              <br />
+              <Typography.Text strong className="user__role-input__tooltip">
+                {t("COMMON.BY_TIME")}
+              </Typography.Text>{" "}
+              {t("COMMON.BY_TIME_DESCRIPTION")}
+              <br />
+              <br />
+              <Typography.Text strong className="user__role-input__tooltip">
+                {t("COMMON.BY_PLAYOFF")}
+              </Typography.Text>{" "}
+              {t("COMMON.BY_PLAYOFF_DESCRIPTION")}
+              <br />
+              <br />
+              <Typography.Text strong className="user__role-input__tooltip">
+                {t("COMMON.BY_CIRCULAR")}
+              </Typography.Text>{" "}
+              {t("COMMON.BY_CIRCULAR_DESCRIPTION")}
+            </Typography.Text>
+          }
+        >
+          <InfoCircleOutlined />
+        </Tooltip>
+      </Space>
       <Space direction="vertical" className="events__competition-type__space">
         <Select
           disabled={Disabled}

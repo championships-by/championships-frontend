@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useTranslation } from "react-i18next";
 import { getTranslation } from "@utils";
-
 import "./sass/custom-calendar.scss";
 
 dayjs.locale("ru");

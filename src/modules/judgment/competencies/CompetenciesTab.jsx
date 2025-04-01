@@ -13,6 +13,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
 import { useTranslation } from "react-i18next";
+import { certificateApi } from "@api/certificates";
 import { CompetenciesResults, CompetenciesTable } from "./components";
 import {
   DownloadOutlined,
@@ -20,6 +21,7 @@ import {
   CloseOutlined,
   CheckOutlined,
 } from "@ant-design/icons";
+import { NOMINATIONS } from "@constants";
 
 import "@modules/judgment/competencies/sass/competencies-criteria.scss";
 
@@ -54,9 +56,24 @@ function CompetenciesTab() {
     } catch {}
   };
 
+  const createCertificates = async () => {
+    try {
+      const certificateData = {
+        event_id: eventId,
+        nomination_id: nominationId,
+        type: NOMINATIONS.CRITERIA,
+      };
+      await certificateApi.createCertificate(certificateData);
+      message.success(t("CHECK_CERTIFICATE.SUCCESS"));
+    } catch (error) {
+      message.error(t("CHECK_CERTIFICAET.ERROR"));
+    }
+  };
+
   const onClickCompleteStage = async () => {
     try {
       await handleCompleteStage();
+      await createCertificates();
       message.info(t("MESSAGES.EDITING_INFO"));
     } catch {}
   };
