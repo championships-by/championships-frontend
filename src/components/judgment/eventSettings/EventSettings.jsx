@@ -18,7 +18,7 @@ import {
   TeamOutlined,
   LinkOutlined,
 } from "@ant-design/icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
 import EventName from "@modules/judgment/events/EventName";
@@ -38,6 +38,7 @@ import CompitationModal from "./EventSettingsModal";
 import CompetitionModal from "@modules/judgment/events/CompetitionModal";
 import CompetitionGroupModal from "@modules/judgment/events/CompetitionGroupModal";
 import ParticipantModal from "@modules/judgment/events/ParticipantModal";
+import ParticipantsCheckingModal from "./ParticipantsCheckingModal";
 import { eventApi, competenciesApi, participantApi, organizerApi } from "@api";
 import {
   tableLocale,
@@ -75,6 +76,33 @@ function EventSettings() {
   const [dataNominationID, setNominationID] = useState();
   const [participantsInfo, setParticipantsInfo] = useState([]);
   const [fileList, setFileList] = useState([]);
+  const [competitionVal, setCompetitionVal] = useState([]);
+  const [nextModalType, setNextModalType] = useState(null);
+  const [isParticipantsCheckingModalOpen, setIsParticipantsCheckingModalOpen] =
+    useState(false);
+  const [participantsData, setParticipantsData] = useState();
+  const [eventCompetenciesData, setEventCompetenciesData] = useState(null);
+  const [competenciesParticipantsData, setCompetenciesParticipantsData] =
+    useState([]);
+
+  useEffect(() => {
+    const getEventCompetenciesData = async () => {
+      try {
+        const params = new URLSearchParams({
+          event_id: eventID,
+          related: "true",
+        });
+
+        const result =
+          await eventApi.getEventWithNominationsAndTeamParticipants(
+            params.toString()
+          );
+        setEventCompetenciesData(result);
+      } catch (error) {}
+    };
+
+    getEventCompetenciesData();
+  }, []);
 
   const eventsBreadcromb = {
     title: t(ROUTES.JUDGMENT.TITLE),
@@ -270,6 +298,67 @@ function EventSettings() {
     }
   };
 
+  const nextModal = (modal, values, participantsPresenseData) => {
+    setCompetenciesParticipantsData(participantsPresenseData);
+
+    setIsParticipantsCheckingModalOpen(false);
+    switch (modal) {
+      case NOMINATIONS.OLYMPIC:
+        setTrophyModal(true);
+        break;
+      case NOMINATIONS.GROUP:
+        setTrophyGroupModal(true);
+        break;
+      case NOMINATIONS.TIME:
+        startConfirmation(values[0], values[1], values[2]);
+      case NOMINATIONS.CRITERIA:
+        startConfirmation(values[0], values[1], values[2]);
+      default:
+        break;
+    }
+  };
+
+  const startConfirmation = (competitionType, eventID, nominationID) => {
+    setIsParticipantsCheckingModalOpen(false);
+    Modal.confirm({
+      title: t("COMMON.ARE_YOU_SURE"),
+      content: t("MESSAGES.ARE_YOU_SURE_TO_START_TOURNAMENT"),
+      footer: (_, { OkBtn, CancelBtn }) => (
+        <>
+          <OkBtn />
+          <CancelBtn />
+        </>
+      ),
+      okText: t("COMMON.YES"),
+      onOk: async () => {
+        try {
+          switch (competitionType) {
+            case NOMINATIONS.TIME:
+              let timeResult = await startTimeStage(eventId, nominationID);
+              if (timeResult === STATUS_OF_EVENT.SUCCESS) {
+                message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
+                navigate(
+                  ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
+                );
+              }
+              break;
+            case NOMINATIONS.CRITERIA:
+              let criteriaResult = await startCriteriaStage(
+                eventId,
+                nominationID
+              );
+              if (criteriaResult === STATUS_OF_EVENT.SUCCESS) {
+                message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
+                navigate(ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID));
+              }
+              break;
+          }
+        } catch (error) {}
+      },
+      cancelText: t("COMMON.CANCEL"),
+    });
+  };
+
   const openCompetenciesModal = async (record) => {
     const competitionType = record.kind;
     const competitionName = record.name;
@@ -277,9 +366,16 @@ function EventSettings() {
     setNominationID(nominationID);
 
     try {
+      eventCompetenciesData.find((item) => {
+        if (item.nomination_id === nominationID) {
+          setParticipantsData(item);
+          return item;
+        }
+      });
+    } catch (error) {}
+    try {
       const params = { event_id: eventID, nomination_id: nominationID };
       const data = await competenciesApi.getNominationEventInfo(params);
-
       if (data.tournament_finished) {
         message.error(t("MESSAGES.TOURNAMENT_FINISHED"));
         return;
@@ -304,53 +400,21 @@ function EventSettings() {
       return;
     }
 
+    setNextModalType(competitionType);
+
     switch (competitionType) {
       case NOMINATIONS.OLYMPIC:
-        setTrophyModal(true);
+        setIsParticipantsCheckingModalOpen(true);
+
         break;
       case NOMINATIONS.GROUP:
-        setTrophyGroupModal(true);
+        setIsParticipantsCheckingModalOpen(true);
+
         break;
       default:
-        Modal.confirm({
-          title: t("COMMON.ARE_YOU_SURE"),
-          content: t("MESSAGES.ARE_YOU_SURE_TO_START_TOURNAMENT"),
-          footer: (_, { OkBtn, CancelBtn }) => (
-            <>
-              <OkBtn />
-              <CancelBtn />
-            </>
-          ),
-          okText: t("COMMON.YES"),
-          onOk: async () => {
-            try {
-              switch (competitionType) {
-                case NOMINATIONS.TIME:
-                  let timeResult = await startTimeStage(eventId, nominationID);
-                  if (timeResult === STATUS_OF_EVENT.SUCCESS) {
-                    message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
-                    navigate(
-                      ROUTES.JUDGMENT_TIME_MATCHES.PATH(eventID, nominationID)
-                    );
-                  }
-                  break;
-                case NOMINATIONS.CRITERIA:
-                  let criteriaResult = await startCriteriaStage(
-                    eventId,
-                    nominationID
-                  );
-                  if (criteriaResult === STATUS_OF_EVENT.SUCCESS) {
-                    message.success(t("MESSAGES.SUCCESS_TOURNAMENT_START"));
-                    navigate(
-                      ROUTES.JUDGMENT_CRITERIA.PATH(eventID, nominationID)
-                    );
-                  }
-                  break;
-              }
-            } catch (error) {}
-          },
-          cancelText: t("COMMON.CANCEL"),
-        });
+        setCompetitionVal([competitionType, eventID, nominationID]);
+        setIsParticipantsCheckingModalOpen(true);
+
         break;
     }
   };
@@ -686,6 +750,14 @@ function EventSettings() {
         mode={ModalType.EDIT}
         nominationId={selectedNomination}
         eventName={dataEvent?.event?.name}
+      />
+      <ParticipantsCheckingModal
+        data={participantsData}
+        onOk={(participantsPresenseData) =>
+          nextModal(nextModalType, competitionVal, participantsPresenseData)
+        }
+        isOpen={isParticipantsCheckingModalOpen}
+        onCancel={() => setIsParticipantsCheckingModalOpen(false)}
       />
       <CompetitionModal
         isOpen={openTrophyModal}
