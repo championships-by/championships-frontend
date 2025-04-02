@@ -28,7 +28,6 @@ function Events() {
     date,
   } = useSelector(getEventsSelector);
   const user = useSelector(getUserSelector);
-
   useEffect(() => {
     dispatch(
       getEventsRelatedToDate({
@@ -69,7 +68,7 @@ function Events() {
         <Col xs={24} sm={24} md={14}>
           <Typography.Title level={2}>{t("EVENTS.EVENTS")}</Typography.Title>
         </Col>
-        {!user.data && (
+        {!user.data ? (
           <Col flex="auto">
             <Flex justify="flex-end" gap="15px">
               <Button
@@ -86,13 +85,14 @@ function Events() {
               </Button>
             </Flex>
           </Col>
+        ) : (
+          <Button
+            type="primary"
+            onClick={() => navigate(ROUTES.CHECK_CERTIFICATE.PATH)}
+          >
+            {t("CHECK_CERTIFICATE.TITLE")}
+          </Button>
         )}
-        <Button
-          type="primary"
-          onClick={() => navigate(ROUTES.CHECK_CERTIFICATE.PATH)}
-        >
-          {t("CHECK_CERTIFICATE.TITLE")}
-        </Button>
       </Row>
       <Flex vertical gap={500}>
         <Flex vertical={isMobile || isTablet} gap="large">
