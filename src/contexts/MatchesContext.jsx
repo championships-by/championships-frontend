@@ -297,7 +297,7 @@ export function MatchesProvider({ eventId, nominationId, children, type }) {
         type: type,
       };
       await competenciesApi.finishGroupStage(body);
-      message.info(t("MESSAGES.EDIT_INFO"));
+      message.info(t("MESSAGES.EDITING_INFO"));
       fetchData(eventId, nominationId, type);
     } catch {}
   };
@@ -337,7 +337,7 @@ export function MatchesProvider({ eventId, nominationId, children, type }) {
     try {
       const body = { event_id: eventId, nomination_id: nominationId };
       await competenciesApi.finishPlayoffStage(body);
-      message.info(t("MESSAGES.EDIT_INFO"));
+      message.info(t("MESSAGES.EDITING_INFO"));
       await createCertificates(eventId, nominationId);
       fetchData(eventId, nominationId);
     } catch {}
