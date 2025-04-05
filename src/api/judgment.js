@@ -1,7 +1,8 @@
 import { instance } from ".";
+import { NOMINATIONS } from "@constants";
 
 export const judgmentApi = {
-  getMatches: async (eventId, nominationId) => {
+  getMatches: async (eventId, nominationId, type) => {
     return instance.get(`${API_PATH}/match/get_group_matches`, {
       params: {
         event_id: eventId,
@@ -48,7 +49,7 @@ export const judgmentApi = {
       nomination_event: {
         event_id: eventId,
         nomination_id: nominationId,
-        type,
+        type: NOMINATIONS.OLYMPIC,
       },
       match_id: matchId,
       team1_score: team1Score,
