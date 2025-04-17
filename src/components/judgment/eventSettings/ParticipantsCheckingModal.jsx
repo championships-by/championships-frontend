@@ -84,8 +84,8 @@ const ParticipantsCheckingModal = ({ data, isOpen, onCancel, onOk }) => {
                   }
                 >
                   {[
+                    member.participant_data.third_name,
                     member.participant_data.first_name,
-                    member.participant_data.second_name,
                     member.participant_data.third_name,
                   ].join(" ")}
                 </Checkbox>
