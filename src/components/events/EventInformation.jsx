@@ -2,6 +2,7 @@ import { InfoCircleOutlined, LinkOutlined } from "@ant-design/icons";
 import { competenciesApi, eventApi, organizerApi } from "@api";
 import noLogo from "@assets/img/auth-background.png";
 import Loader from "@components/loader/Loader";
+import { getUserSelector } from "@store/users";
 import {
   extendedDateFormat,
   NOMINATIONS,
@@ -27,6 +28,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 import EventPhotoGallery from "@modules/judgment/events/EventPhotoGallery";
+import { useSelector } from "react-redux";
 
 import "./sass/event-information.scss";
 
@@ -38,6 +40,7 @@ function EventInformation() {
   const [organizers, setOrganizers] = useState([]);
   const { eventID } = useParams();
   const navigate = useNavigate();
+  const user = useSelector(getUserSelector);
 
   const columns = [
     {
@@ -158,12 +161,14 @@ function EventInformation() {
         <Typography.Title level={2}>
           {t("EVENTS.INFO_ABOUT_EVENT")}
         </Typography.Title>
-        <Button
-          type="primary"
-          onClick={() => navigate(ROUTES.AUTHORIZATION.PATH)}
-        >
-          {t("COMMON.LOGIN")}
-        </Button>
+        {!user.data && (
+          <Button
+            type="primary"
+            onClick={() => navigate(ROUTES.AUTHORIZATION.PATH)}
+          >
+            {t("COMMON.LOGIN")}
+          </Button>
+        )}
       </Flex>
       <Divider />
       <Breadcrumb items={items} />
