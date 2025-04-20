@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserSelector } from "@store/users";
-import TeamWinsTable from "./TeamWinsTable";
 import { ROUTES } from "@constants";
 import { participantApi } from "@api";
 import { changeDateFormat } from "@utils";
 import noPhoto from "@assets/img/participant.jpg";
 import { useTranslation } from "react-i18next";
+import TeamWinsTable from "./TeamWinsTable";
 
 import "./sass/participants.scss";
 
@@ -67,7 +67,7 @@ function ParticipantInformation() {
           <img
             src={
               participantData.photo_path
-                ? `${API_HOST}/${participantData.photo_path}`
+                ? `${API_URL}/${participantData.photo_path}`
                 : noPhoto
             }
             className="participants__information__img"

@@ -304,7 +304,7 @@ export const tabsButtonEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";
 
-export const url = API_HOST;
+export const url = API_URL;
 
 export const zubronokSite = "https://zubronok.by";
 export const bntuSite = "https://bntu.by";

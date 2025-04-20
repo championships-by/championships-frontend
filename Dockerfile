@@ -1,7 +1,6 @@
 FROM node:20-alpine
 
-ENV API_HOST=
-ENV API_PATH=
+ENV API_URL=
 
 WORKDIR /usr/src/app
 

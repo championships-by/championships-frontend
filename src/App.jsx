@@ -33,10 +33,10 @@ import { ROUTER_ROUTES, Roles } from "@constants";
 import { store } from "@store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "./Layout";
-import ProtectedRoute from "./ProtectedRoute";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
+import Layout from "./Layout";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const { t } = useTranslation();
@@ -50,7 +50,7 @@ function App() {
           content={t("COMMON.META_DESCRIPTION")}
         />
         <meta property="og:image" content="./assets/icons/meta_icon.png" />
-        <meta property="og:url" content={API_HOST} />
+        <meta property="og:url" content={API_URL} />
       </Helmet>
       <Layout>
         <BrowserRouter>
