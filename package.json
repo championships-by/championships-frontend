@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "prepare": "husky install",
     "lint:fix": "eslint . --ext .js,.jsx --fix",
-    "prettier": "prettier . --write",
-    "start": "webpack serve",
-    "build:dev": "webpack --env mode=development",
-    "build:prod": "webpack --env mode=production"
+    "prettier": "prettier . --write"
   },
   "repository": {
     "type": "git",
@@ -83,6 +82,7 @@
     "react-redux": "8.1.3",
     "react-responsive": "10.0.0",
     "react-router-dom": "6.22.1",
+    "react-scripts": "^5.0.1",
     "react-text-mask": "5.5.0",
     "reactflow": "11.11.4",
     "styled-components": "6.1.11"
