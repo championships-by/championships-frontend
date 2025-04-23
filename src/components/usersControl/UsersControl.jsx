@@ -94,7 +94,7 @@ function UsersControl() {
             <Flex gap="middle" align="center">
               <SearchInput
                 onChange={findUser}
-                placeholder={t("COMMON.SEARCH") + "..."}
+                placeholder={t("PARTICIPANTS.FIND") + "..."}
               />
               <Flex gap="middle">
                 <Button

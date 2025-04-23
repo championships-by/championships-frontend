@@ -52,7 +52,7 @@ function Participants() {
           <Flex gap="middle" align="center">
             <SearchInput
               onChange={findParticipant}
-              placeholder={t("COMMON.SEARCH") + "..."}
+              placeholder={t("PARTICIPANTS.FIND") + "..."}
             />
             <Button
               type="primary"
