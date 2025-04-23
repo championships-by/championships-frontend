@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserSelector } from "@store/users";
-import { ROUTES } from "@constants";
+import { ROUTES, REACT_APP_API_URL } from "@constants";
 import { participantApi } from "@api";
 import { changeDateFormat } from "@utils";
 import noPhoto from "@assets/img/participant.jpg";
@@ -67,7 +67,7 @@ function ParticipantInformation() {
           <img
             src={
               participantData.photo_path
-                ? `${API_URL}/${participantData.photo_path}`
+                ? `${REACT_APP_API_URL}/${participantData.photo_path}`
                 : noPhoto
             }
             className="participants__information__img"

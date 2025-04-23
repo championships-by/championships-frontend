@@ -1,8 +1,8 @@
-import { Typography, Upload, message, Button, Flex } from "antd";
+import { Typography, Upload, Button, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { url } from "@constants";
+import { REACT_APP_API_URL } from "@constants";
 
 import "./sass/events.scss";
 
@@ -29,7 +29,7 @@ function EventRegulation({
       validateFirst
       rules={[
         {
-          required: required,
+          required,
           message: t("RULES.PLEASE_UPLOAD_REGULATION"),
         },
       ]}
@@ -38,7 +38,10 @@ function EventRegulation({
         <Flex justify="space-between">
           <Typography.Text>{t("EVENTS.EVENT_REGULATION")}</Typography.Text>
           {existing && (
-            <Typography.Link href={`${url}/${existing}`} target="_blank">
+            <Typography.Link
+              href={`${REACT_APP_API_URL}/${existing}`}
+              target="_blank"
+            >
               ({t("COMMON.SEE")})
             </Typography.Link>
           )}
@@ -54,7 +57,7 @@ function EventRegulation({
               <Flex gap="small">
                 <UploadOutlined />
                 <Typography.Text>{buttonLabel}</Typography.Text>
-                <Typography.Text type="secondary"> {"(.pdf)"}</Typography.Text>
+                <Typography.Text type="secondary"> (.pdf)</Typography.Text>
               </Flex>
             </Button>
           </Upload>

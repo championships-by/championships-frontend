@@ -7,7 +7,7 @@ import AuthEmailInput from "@modules/auth/AuthEmailInput";
 import AuthPasswordInput from "@modules/auth/AuthPasswordInput";
 import { useNavigate } from "react-router-dom";
 import Loader from "@components/loader/Loader";
-import { ROUTES } from "@constants";
+import { ROUTES, REACT_APP_PUBLIC_KEY } from "@constants";
 import { userApi, authApi } from "@api";
 import { getEncryptedPassword } from "@utils";
 import { useTranslation } from "react-i18next";
@@ -46,7 +46,10 @@ function Auth() {
     event.preventDefault();
     setIsFormLoading(true);
 
-    const encrypedPassword = getEncryptedPassword(password, PUBLIC_KEY);
+    const encrypedPassword = getEncryptedPassword(
+      password,
+      REACT_APP_PUBLIC_KEY
+    );
 
     try {
       await authApi.setLogin({

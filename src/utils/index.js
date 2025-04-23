@@ -1,11 +1,14 @@
-import { EventFilters, defaultFormat, defaultTime, url } from "@constants";
-import { competenciesApi, eventApi } from "@api";
 import {
+  EventFilters,
+  defaultFormat,
+  defaultTime,
   ROUTES,
   MAX_TEXTAREA_LENGTH,
   medals,
   RESULTS_EDITABILITY_MINUTES,
+  REACT_APP_API_URL,
 } from "@constants";
+import { competenciesApi, eventApi } from "@api";
 import i18n from "@src/translations/translations";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -220,7 +223,7 @@ export const generateCompetenciesDataSource = (criteriaResults) =>
   }));
 
 export const openPdf = (eventRulesPath) => {
-  const pdfUrl = `${url}/${eventRulesPath}`;
+  const pdfUrl = `${REACT_APP_API_URL}/${eventRulesPath}`;
   const link = document.createElement("a");
   link.href = pdfUrl;
   link.target = "_blank";
@@ -284,9 +287,11 @@ export const getTranslation = (locale, t) => {
   const translateValue = (value) => {
     if (typeof value === "string") {
       return t(value);
-    } else if (Array.isArray(value)) {
+    }
+    if (Array.isArray(value)) {
       return value.map((item) => translateValue(item));
-    } else if (typeof value === "object" && value !== null) {
+    }
+    if (typeof value === "object" && value !== null) {
       return Object.entries(value).reduce((translated, [key, val]) => {
         translated[key] = translateValue(val);
         return translated;
@@ -571,7 +576,7 @@ export const extendWithTreePositions = (leveledMatches) => {
     level.map((match, index) => {
       const deltaY = (levels / 2 ** levelIndex) * coeffY;
 
-      let xPos = startX - levelIndex * coeffX;
+      const xPos = startX - levelIndex * coeffX;
       let yPos = startY - index * deltaY - 0.5 * deltaY;
 
       if (levelIndex === 0) {
@@ -673,15 +678,15 @@ export const getPlayoffResults = (leveledMatches) => {
 
   if (!rootMatch) return [];
 
-  let rankings = [];
-  let place = 0;
+  const rankings = [];
+  const place = 0;
 
   function processMatch(match, place) {
     if (!(match.team1 && match.team2)) {
       return place;
     }
 
-    let [winner, loser] =
+    const [winner, loser] =
       match.team1.score > match.team2.score
         ? [match.team1, match.team2]
         : [match.team2, match.team1];
@@ -691,7 +696,7 @@ export const getPlayoffResults = (leveledMatches) => {
         id: winner.id,
         team: winner.name,
         score: scores.get(winner.id),
-        place: place,
+        place,
       });
     }
 
@@ -737,7 +742,7 @@ export const transformParticipantsInSystemData = (data) => {
 };
 
 export const getParticipantLink = (id) => {
-  return url + ROUTES.PARTICIPANT_INFORMATION.PATH(id);
+  return REACT_APP_API_URL + ROUTES.PARTICIPANT_INFORMATION.PATH(id);
 };
 
 export const getMinutesAfterFinishing = (endTime) => {

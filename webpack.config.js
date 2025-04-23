@@ -41,10 +41,9 @@ module.exports = (env) => {
         React: "react",
       }),
       new webpack.DefinePlugin({
-        API_URL: JSON.stringify(process.env.API_URL),
-        PUBLIC_KEY: process.env.PUBLIC_KEY,
-        CAPTCHA_TOKEN: process.env.CAPTCHA_TOKEN,
-        WEB_SITE_KEY: process.env.WEB_SITE_KEY,
+        API_URL: JSON.stringify(process.env.REACT_APP_API_URL),
+        PUBLIC_KEY: process.env.REACT_APP_PUBLIC_KEY,
+        CAPTCHA_TOKEN: process.env.REACT_APP_CAPTCHA_TOKEN,
       }),
     ],
     module: {
