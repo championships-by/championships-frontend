@@ -86,5 +86,17 @@
     "react-text-mask": "5.5.0",
     "reactflow": "11.11.4",
     "styled-components": "6.1.11"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
