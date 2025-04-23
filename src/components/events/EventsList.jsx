@@ -4,14 +4,13 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import noLogo from "@assets/img/auth-background.png";
-import { ROUTES, url, paginationLocale } from "@constants";
-import { changeDateFormat, getEventLevel } from "@utils";
+import { ROUTES, paginationLocale, REACT_APP_API_URL } from "@constants";
+import { changeDateFormat, getEventLevel, getTranslation } from "@utils";
 import { Card, List, Tooltip, Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDevice } from "@hooks";
 import { useTranslation } from "react-i18next";
-import { getTranslation } from "@utils";
 
 function EventsList({ events }) {
   const { t } = useTranslation();
@@ -41,7 +40,7 @@ function EventsList({ events }) {
                 }
                 src={
                   event.logo_path !== "/" && event.logo_path
-                    ? `${url}/${event.logo_path}`
+                    ? `${REACT_APP_API_URL}/${event.logo_path}`
                     : noLogo
                 }
               />
@@ -82,7 +81,7 @@ function EventsList({ events }) {
             </Typography.Text>
             <br />
             <Tooltip title={event.event_place} placement="bottomLeft">
-              <Typography.Text ellipsis={true} type="secondary">
+              <Typography.Text ellipsis type="secondary">
                 <HomeOutlined /> {event.event_place}
               </Typography.Text>
             </Tooltip>

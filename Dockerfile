@@ -1,7 +1,5 @@
 FROM node:20-alpine
 
-ENV API_URL=
-
 WORKDIR /usr/src/app
 
 COPY package.json .

@@ -304,8 +304,6 @@ export const tabsButtonEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";
 
-export const url = API_URL;
-
 export const zubronokSite = "https://zubronok.by";
 export const bntuSite = "https://bntu.by";
 export const fitrSite = "https://bntu.by/faculties/fitr";
@@ -351,3 +349,8 @@ export const medals = [GoldMedal, SilverMedal, BronzeMedal];
 export const RESULTS_EDITABILITY_MINUTES = 15;
 
 export const PHOTO_FILE_PATH = `/backend/static/images/events/`;
+
+// env
+export const REACT_APP_API_URL = API_URL;
+export const REACT_APP_PUBLIC_KEY = PUBLIC_KEY;
+export const REACT_APP_CAPTCHA_TOKEN = CAPTCHA_TOKEN;

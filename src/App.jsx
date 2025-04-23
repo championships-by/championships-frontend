@@ -29,7 +29,7 @@ import TitleAndMeta from "@components/titleAndMeta/TitleAndMeta";
 import CookiesNotification from "@components/cookies/CookiesNotification";
 import EmailVerification from "@components/verification/EmailVerification";
 import CheckCertificate from "@components/checkCertificate/CheckCertificate";
-import { ROUTER_ROUTES, Roles } from "@constants";
+import { ROUTER_ROUTES, Roles, REACT_APP_API_URL } from "@constants";
 import { store } from "@store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -50,7 +50,7 @@ function App() {
           content={t("COMMON.META_DESCRIPTION")}
         />
         <meta property="og:image" content="./assets/icons/meta_icon.png" />
-        <meta property="og:url" content={API_URL} />
+        <meta property="og:url" content={REACT_APP_API_URL} />
       </Helmet>
       <Layout>
         <BrowserRouter>
