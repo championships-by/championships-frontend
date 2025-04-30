@@ -1,4 +1,4 @@
-import i18n from "@src/translations/translations";
+import i18n from "@translations/translations";
 
 export const ERRORS = {
   "email taken": "ERRORS.EMAIL_TAKEN",
@@ -116,7 +116,7 @@ export const ERRORS = {
   "exceeded image folder size (200 MB)": "ERRORS.EXCEEDED_IMAGE_FOLDER_SIZE",
   "teams not found": "ERRORS.TEAMS_NOT_FOUND",
 
-  getError: function (errorKey) {
+  getError(errorKey) {
     return i18n.t(this[errorKey]) || i18n.t("MESSAGES.ERROR");
   },
 };
