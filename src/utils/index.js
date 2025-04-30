@@ -9,7 +9,7 @@ import {
   REACT_APP_API_URL,
 } from "@constants";
 import { competenciesApi, eventApi } from "@api";
-import i18n from "@src/translations/translations";
+import i18n from "@translations/translations";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import JSEncrypt from "jsencrypt";

@@ -1,8 +1,8 @@
 import { EventEmitter } from "events";
 import NoData from "@components/noData/NoData";
-import BronzeMedal from "@src/assets/img/bronze-medal.png";
-import GoldMedal from "@src/assets/img/gold-medal.png";
-import SilverMedal from "@src/assets/img/silver-medal.png";
+import BronzeMedal from "@assets/img/bronze-medal.png";
+import GoldMedal from "@assets/img/gold-medal.png";
+import SilverMedal from "@assets/img/silver-medal.png";
 
 export const ZUBRONOK = "https://zubronok.by/";
 
