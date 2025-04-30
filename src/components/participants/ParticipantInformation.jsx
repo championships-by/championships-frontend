@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getUserSelector } from "@store/users";
-import { ROUTES, REACT_APP_API_URL } from "@constants";
+import { ROUTES, REACT_APP_API_URL } from "@const";
 import { participantApi } from "@api";
 import { changeDateFormat } from "@utils";
 import noPhoto from "@assets/img/participant.jpg";

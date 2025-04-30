@@ -6,7 +6,7 @@ import { getUserSelector } from "@store/users";
 import { getEventsRelatedToDate } from "@store/events/thunk";
 import { Card, Flex, Typography, Tabs, Row, Col, Button } from "antd";
 import { useDevice } from "@hooks";
-import { ROUTES } from "@constants";
+import { ROUTES } from "@const";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";

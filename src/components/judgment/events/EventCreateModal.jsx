@@ -13,7 +13,7 @@ import EventRequirements from "@modules/judgment/events/EventRequirements";
 import { Button, Form, message, Modal, notification } from "antd";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { RESPONSE_STATUS } from "@constants";
+import { RESPONSE_STATUS } from "@const";
 
 function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   const [form] = Form.useForm();

@@ -1,6 +1,6 @@
 import { LoadingOutlined } from "@ant-design/icons";
 import { Flex, Table, Tooltip, Typography } from "antd";
-import { tableLocale } from "@constants";
+import { tableLocale } from "@const";
 import { getTranslation, getMedal, getPlace } from "@utils";
 import ParticipantsList from "@modules/judgment/common/ParticipantsList.jsx";
 import ResultsTable from "@modules/judgment/common/ResultsTable";

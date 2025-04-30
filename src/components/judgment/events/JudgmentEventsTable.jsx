@@ -4,7 +4,7 @@ import {
   UsergroupAddOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { paginationLocale, tableLocale, ROUTES } from "@constants";
+import { paginationLocale, tableLocale, ROUTES } from "@const";
 import { changeDateFormat } from "@utils";
 import { eventApi } from "@api";
 import {

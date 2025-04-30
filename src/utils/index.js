@@ -7,7 +7,7 @@ import {
   medals,
   RESULTS_EDITABILITY_MINUTES,
   REACT_APP_API_URL,
-} from "@constants";
+} from "@const";
 import { competenciesApi, eventApi } from "@api";
 import i18n from "@translations/translations";
 import dayjs from "dayjs";

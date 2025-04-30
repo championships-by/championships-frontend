@@ -9,7 +9,7 @@ import {
 } from "@store/users";
 import UsersVerificationModal from "@components/usersControl/UnverifiedUsersTable";
 import Loader from "@components/loader/Loader";
-import { ModalType } from "@constants";
+import { ModalType } from "@const";
 import { Button, Flex, Typography, Row, Col, Tabs } from "antd";
 import SearchInput from "@modules/search/SearchInput";
 import { useTranslation } from "react-i18next";

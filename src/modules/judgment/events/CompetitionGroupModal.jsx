@@ -9,7 +9,7 @@ import {
   message,
 } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { ROUTES } from "@constants";
+import { ROUTES } from "@const";
 import { competenciesApi } from "@api";
 import { useTranslation } from "react-i18next";
 

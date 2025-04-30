@@ -3,7 +3,7 @@ import { Modal, Table, Typography, Flex, Tooltip, Button, message } from "antd";
 import { useSelector } from "react-redux";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import { getUnverifiedUsersSelector, getUnverifiedUsers } from "@store/users";
-import { paginationLocale, tableLocale } from "@constants";
+import { paginationLocale, tableLocale } from "@const";
 import { useTranslation } from "react-i18next";
 import { getTranslation } from "@utils";
 import { userApi } from "@api";

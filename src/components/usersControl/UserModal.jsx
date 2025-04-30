@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsersSelector, setUser, getUsers } from "@store/users";
-import { ModalType } from "@constants";
+import { ModalType } from "@const";
 import UserEmailInput from "@modules/user/UserEmailInput";
 import UserFirstnameInput from "@modules/user/UserFirstnameInput";
 import UserLastnameInput from "@modules/user/UserLastnameInput";

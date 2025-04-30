@@ -8,7 +8,7 @@ import {
 import TeamDeleteModal from "@components/eventRegistration/TeamDeleteModal";
 import TeamEditModal from "@components/eventRegistration/TeamEditModal";
 import TeamAddParticipantModal from "@components/eventRegistration/TeamAddParticipantModal";
-import { tableLocale } from "@constants";
+import { tableLocale } from "@const";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { teamApi } from "@api";

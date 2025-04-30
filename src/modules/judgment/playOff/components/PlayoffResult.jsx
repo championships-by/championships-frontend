@@ -1,5 +1,5 @@
 import { Flex, Table, Tooltip, Typography } from "antd";
-import { tableLocale } from "@constants";
+import { tableLocale } from "@const";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { useMatches } from "@hooks";

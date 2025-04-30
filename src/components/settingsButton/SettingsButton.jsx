@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FloatButton } from "antd";
 import { SettingOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
-import { LANGUAGES } from "@constants";
+import { LANGUAGES } from "@const";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@store/languages";
 import { changeLanguageAsync } from "@store/languages";

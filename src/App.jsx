@@ -29,7 +29,7 @@ import TitleAndMeta from "@components/titleAndMeta/TitleAndMeta";
 import CookiesNotification from "@components/cookies/CookiesNotification";
 import EmailVerification from "@components/verification/EmailVerification";
 import CheckCertificate from "@components/checkCertificate/CheckCertificate";
-import { ROUTER_ROUTES, Roles, REACT_APP_API_URL } from "@constants";
+import { ROUTER_ROUTES, Roles, REACT_APP_API_URL } from "@const";
 import { store } from "@store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

@@ -9,7 +9,7 @@ import {
   tableLocale,
   ModalType,
   ROUTES,
-} from "@constants";
+} from "@const";
 import { getUniqueFilters } from "@utils";
 import { Button, Flex, Table, Tooltip, Typography } from "antd";
 import dayjs from "dayjs";

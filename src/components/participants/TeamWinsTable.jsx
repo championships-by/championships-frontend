@@ -1,4 +1,4 @@
-import { tableLocale } from "@constants";
+import { tableLocale } from "@const";
 import { Table } from "antd";
 import React from "react";
 import { getTranslation } from "@utils";

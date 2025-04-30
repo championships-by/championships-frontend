@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 import { certificateApi } from "@api/certificates";
 import { useTranslation } from "react-i18next";
 import ReturnButton from "@modules/judgment/common/ReturnButton";
-import { NOMINATIONS } from "@constants";
+import { NOMINATIONS } from "@const";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 
 import "@modules/judgment/timeMatches/sass/time-matches.scss";

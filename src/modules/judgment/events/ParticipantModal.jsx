@@ -10,7 +10,7 @@ import {
   Download,
 } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-import { tableLocale } from "@constants";
+import { tableLocale } from "@const";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { DeleteOutlined } from "@ant-design/icons";
