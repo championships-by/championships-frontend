@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Typography, Row, Col, Form, message, Button } from "antd";
 import laptop from "@assets/img/laptop-simple.png";
-import { mailZubronok } from "@constants";
+import { mailZubronok } from "@const";
 import FeedbackFirstnameInput from "@modules/feedback/FeedbackFirstnameInput";
 import FeedbackLastnameInput from "@modules/feedback/FeedbackLastnameInput";
 import FeedbackEmailInput from "@modules/feedback/FeedbackEmailInput";

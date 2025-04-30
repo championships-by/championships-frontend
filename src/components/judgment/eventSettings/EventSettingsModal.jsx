@@ -4,7 +4,7 @@ import CompetitionName from "@modules/judgment/events/CompetitionName";
 import CompetitionType from "@modules/judgment/events/CompetitionType";
 import ReglamentName from "@modules/judgment/events/ReglamentName";
 import { Button, Flex, Form, Modal, message } from "antd";
-import { ModalType, NOMINATIONS } from "@constants";
+import { ModalType, NOMINATIONS } from "@const";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";

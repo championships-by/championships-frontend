@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { ROUTES } from "@constants";
-import { Roles } from "@constants";
+import { ROUTES } from "@const";
+import { Roles } from "@const";
 
 function MobileAdminPanelNav({ role }) {
   return (

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Tooltip } from "antd";
-import { ROUTES, Roles } from "@constants";
+import { ROUTES, Roles } from "@const";
 import { useTranslation } from "react-i18next";
 
 function AdminPanelNav({ role }) {

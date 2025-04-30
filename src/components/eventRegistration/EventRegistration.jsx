@@ -8,7 +8,7 @@ import AllTeamsTable from "@components/eventRegistration/AllTeamsTable";
 import Loader from "@components/loader/Loader";
 import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import { eventApi } from "@api";
-import { ROUTES } from "@constants";
+import { ROUTES } from "@const";
 import { useTranslation } from "react-i18next";
 
 import "./sass/event-registration.scss";

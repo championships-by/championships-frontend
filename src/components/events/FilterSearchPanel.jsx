@@ -1,4 +1,4 @@
-import { defaultEventFilterOptions, eventFilterOptions } from "@constants";
+import { defaultEventFilterOptions, eventFilterOptions } from "@const";
 import { setEventFilters, setEventSearchValue } from "@store/events/slice";
 import { Button, Card, Checkbox, Flex, Input, Typography } from "antd";
 import { useState } from "react";

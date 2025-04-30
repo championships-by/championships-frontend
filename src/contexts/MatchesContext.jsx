@@ -5,7 +5,7 @@ import { message } from "antd";
 import { getPlayOffLevels, isStillEditable } from "@utils";
 import { useTranslation } from "react-i18next";
 import { certificateApi } from "@api/certificates";
-import { NOMINATIONS } from "@constants";
+import { NOMINATIONS } from "@const";
 
 export const MatchesContext = createContext();
 

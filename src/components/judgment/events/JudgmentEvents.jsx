@@ -3,7 +3,7 @@ import AdminPanelControls from "@components/adminPanel/AdminPanelControls";
 import EventTable from "@components/judgment/events/JudgmentEventsTable";
 import Loader from "@components/loader/Loader";
 import SearchInput from "@modules/search/SearchInput";
-import { ROUTES } from "@constants";
+import { ROUTES } from "@const";
 import { Button, Col, Divider, Row, Typography, Flex } from "antd";
 import { useEffect, useState } from "react";
 import EventCreateModal from "./EventCreateModal";

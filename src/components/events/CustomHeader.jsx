@@ -1,4 +1,4 @@
-import { calendarLocale } from "@constants";
+import { calendarLocale } from "@const";
 import { Radio } from "antd";
 import Select from "@components/Select";
 import dayjs from "dayjs";

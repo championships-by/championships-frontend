@@ -4,7 +4,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import TeamAddParticipantModal from "@components/eventRegistration/TeamAddParticipantModal";
 import TeamEditParticipantModal from "@components/eventRegistration/TeamEditParticipantModal";
 import TeamDeleteParticipantModal from "@components/eventRegistration/TeamDeleteParticipantModal";
-import { tableLocale } from "@constants";
+import { tableLocale } from "@const";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { competenciesApi, participantApi } from "@api";

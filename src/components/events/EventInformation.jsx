@@ -9,7 +9,7 @@ import {
   ROUTES,
   yaShareLink,
   REACT_APP_API_URL,
-} from "@constants";
+} from "@const";
 import { changeDateFormat, getEventLevel, openPdf } from "@utils";
 import {
   Breadcrumb,

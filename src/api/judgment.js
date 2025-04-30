@@ -1,4 +1,4 @@
-import { NOMINATIONS } from "@constants";
+import { NOMINATIONS } from "@const";
 import { instance } from ".";
 
 export const judgmentApi = {

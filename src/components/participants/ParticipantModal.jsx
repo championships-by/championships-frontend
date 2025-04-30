@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { ModalType } from "@constants";
+import { ModalType } from "@const";
 import { useSelector } from "react-redux";
 import { getUserSelector } from "@store/users";
 import { Button, Flex, Form, Modal, message, Checkbox } from "antd";

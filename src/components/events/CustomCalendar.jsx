@@ -1,4 +1,4 @@
-import { calendarLocale } from "@constants";
+import { calendarLocale } from "@const";
 import { Calendar } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";

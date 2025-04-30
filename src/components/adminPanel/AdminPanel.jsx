@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { message } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
-import { RESPONSE_STATUS } from "@constants";
+import { RESPONSE_STATUS } from "@const";
 import { userApi } from "@api/index.js";
 import AdminPanelNav from "./AdminPanelNav.jsx";
 import MobileAdminPanelNav from "./MobileAdminPanelNav.jsx";

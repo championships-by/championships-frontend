@@ -6,7 +6,7 @@ import SearchInput from "@modules/search/SearchInput";
 import CheckCertificateInfo from "@components/checkCertificate/CheckCertificateInfo";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ROUTES } from "@constants";
+import { ROUTES } from "@const";
 
 import s from "./sass/check-certificate.module.scss";
 

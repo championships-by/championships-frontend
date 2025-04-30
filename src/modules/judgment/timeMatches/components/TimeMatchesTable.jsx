@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { defaultFormat, tableLocale } from "@constants";
+import { defaultFormat, tableLocale } from "@const";
 import { CustomTimePicker } from "@modules/judgment/timeMatches/components";
 import PariticipantsList from "@modules/judgment/common/ParticipantsList.jsx";
 import { formatTimeToString, generateColumns } from "@utils";

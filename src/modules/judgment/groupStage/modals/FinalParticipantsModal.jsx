@@ -1,7 +1,7 @@
 import { useMatches } from "@hooks";
 import { Button, Checkbox, Modal, Table } from "antd";
 import { useEffect, useState } from "react";
-import { tableLocale } from "@constants";
+import { tableLocale } from "@const";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 import { getParticipants } from "@utils";

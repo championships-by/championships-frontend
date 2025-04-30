@@ -47,7 +47,7 @@ import {
   STATUS_OF_EVENT,
   ModalType,
   NOMINATIONS,
-} from "@constants";
+} from "@const";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";
 

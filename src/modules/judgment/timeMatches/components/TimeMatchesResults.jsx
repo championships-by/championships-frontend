@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { tableLocale } from "@constants";
+import { tableLocale } from "@const";
 import { formatTime } from "@utils";
 import { Flex, Table, Tooltip, Typography } from "antd";
 import { getTranslation, getMedal } from "@utils";

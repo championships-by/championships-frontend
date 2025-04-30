@@ -2,7 +2,7 @@ import React from "react";
 import { DatePicker, Flex, Input, Space, Typography } from "antd";
 import dayjs from "dayjs";
 import FormItem from "antd/es/form/FormItem";
-import { Locale, calendarLocale } from "@constants";
+import { Locale, calendarLocale } from "@const";
 import { useTranslation } from "react-i18next";
 import { getTranslation } from "../../utils";
 

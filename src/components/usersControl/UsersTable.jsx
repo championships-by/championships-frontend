@@ -7,7 +7,7 @@ import {
   tableLocale,
   ModalType,
   ROLE_FILTERS,
-} from "@constants";
+} from "@const";
 import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
 import { useState } from "react";
 import { getTranslation } from "@utils";

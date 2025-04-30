@@ -6,7 +6,7 @@ import SecondNewPassword from "@modules/user/passwordChange/SecondNewPassword";
 import { userApi } from "@api";
 import { getEncryptedPassword } from "@utils";
 import { useTranslation } from "react-i18next";
-import { REACT_APP_PUBLIC_KEY } from "@constants";
+import { REACT_APP_PUBLIC_KEY } from "@const";
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
   const { t } = useTranslation();

@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { REACT_APP_API_URL } from "@constants";
+import { REACT_APP_API_URL } from "@const";
 
 import "./sass/participant.scss";
 

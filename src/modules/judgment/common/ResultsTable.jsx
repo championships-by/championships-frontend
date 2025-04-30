@@ -1,5 +1,5 @@
 import React from "react";
-import { tableLocale } from "@constants";
+import { tableLocale } from "@const";
 import { Table } from "antd";
 import { getTranslation } from "@utils";
 import { useTranslation } from "react-i18next";

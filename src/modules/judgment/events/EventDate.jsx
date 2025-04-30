@@ -1,6 +1,6 @@
 import { DatePicker, Typography } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { Locale, calendarLocale } from "@constants";
+import { Locale, calendarLocale } from "@const";
 import { useEffect } from "react";
 import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";

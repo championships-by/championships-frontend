@@ -1,6 +1,6 @@
 import { useMatches } from "@hooks";
 import { Checkbox, Table, Typography } from "antd";
-import { paginationLocale, tableLocale } from "@constants";
+import { paginationLocale, tableLocale } from "@const";
 import { useTranslation } from "react-i18next";
 import { getTranslation } from "@utils";
 

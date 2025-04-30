@@ -2,7 +2,7 @@ import { Button, Result, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Loader from "@components/loader/Loader";
-import { ROUTES } from "@constants";
+import { ROUTES } from "@const";
 import { participantApi } from "@api";
 import { useTranslation } from "react-i18next";
 

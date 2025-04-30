@@ -21,7 +21,7 @@ import {
   CloseOutlined,
   CheckOutlined,
 } from "@ant-design/icons";
-import { NOMINATIONS } from "@constants";
+import { NOMINATIONS } from "@const";
 
 import "@modules/judgment/competencies/sass/competencies-criteria.scss";
 

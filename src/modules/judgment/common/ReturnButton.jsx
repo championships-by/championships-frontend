@@ -3,7 +3,7 @@ import { Typography, Flex } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ROUTES } from "@constants";
+import { ROUTES } from "@const";
 
 function ReturnButton() {
   const { t } = useTranslation();
