@@ -112,12 +112,11 @@ function RegistrationModal({ isOpen, onOk, onCancel }) {
                   {t("COMMON.I_AGREE_WITH_USER_TERMS")}
                 </Typography.Text>
               </Checkbox>
-              <ParticipantReCaptcha onValidate={handleValidation} />
               <Button
                 type="primary"
                 htmlType="submit"
                 loading={isLoading}
-                disabled={!areTermsAccepted || !areCaptchaAccepted}
+                disabled={!areTermsAccepted}
               >
                 {t("COMMON.REQUEST_FOR_REGISTRATION")}
               </Button>
