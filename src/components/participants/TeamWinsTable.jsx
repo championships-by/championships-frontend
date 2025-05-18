@@ -1,7 +1,7 @@
-import { tableLocale } from "@const";
+import { tableLocale } from "@/const";
 import { Table } from "antd";
 import React from "react";
-import { getTranslation } from "@utils";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
 
 function TeamWinsTable({ teamWinsData }) {

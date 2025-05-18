@@ -1,16 +1,16 @@
 import { EditOutlined } from "@ant-design/icons";
-import { getUsersSelector } from "@store/users";
+import { getUsersSelector } from "@/store/users";
 import { useSelector } from "react-redux";
-import UserModal from "@components/usersControl/UserModal";
+import UserModal from "@/components/usersControl/UserModal";
 import {
   paginationLocale,
   tableLocale,
   ModalType,
   ROLE_FILTERS,
-} from "@const";
+} from "@/const";
 import { Button, Flex, Table, Tooltip, Form, Typography } from "antd";
 import { useState } from "react";
-import { getTranslation } from "@utils";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
 
 function UsersTable() {

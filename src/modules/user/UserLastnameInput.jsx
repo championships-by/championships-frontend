@@ -3,7 +3,7 @@ import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/user.scss";
 import { useTranslation } from "react-i18next";
-import { handlePaste } from "@utils";
+import { handlePaste } from "@/utils";
 
 function UserLastnameInput({ name }) {
   const { t } = useTranslation();

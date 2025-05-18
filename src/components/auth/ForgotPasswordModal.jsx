@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Flex, Form, Modal, Typography, message } from "antd";
-import AuthEmailInput from "@modules/auth/AuthEmailInput";
-import { userApi } from "@api";
+import AuthEmailInput from "@/modules/auth/AuthEmailInput";
+import { userApi } from "@/api";
 import { useTranslation } from "react-i18next";
 
 import "./sass/forgot-password.scss";

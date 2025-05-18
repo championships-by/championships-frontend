@@ -1,4 +1,4 @@
-import { fetchWithPagination } from "@utils";
+import { fetchWithPagination } from "@/utils";
 import { instance } from ".";
 
 export const organizerApi = {

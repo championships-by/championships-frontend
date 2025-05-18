@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { Flex, Space, Typography } from "antd";
-import Select from "@components/Select";
+import Select from "@/components/Select";
 import FormItem from "antd/es/form/FormItem";
-import { participantApi } from "@api";
-import { FILTER_OPTION, changeDateFormat } from "@utils";
+import { participantApi } from "@/api";
+import { FILTER_OPTION, changeDateFormat } from "@/utils";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
 

@@ -1,11 +1,11 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { tableLocale } from "@const";
-import { formatTime } from "@utils";
+import { tableLocale } from "@/const";
+import { formatTime } from "@/utils";
 import { Flex, Table, Tooltip, Typography } from "antd";
-import { getTranslation, getMedal } from "@utils";
+import { getTranslation, getMedal } from "@/utils";
 import { useTranslation } from "react-i18next";
-import ResultsTable from "@modules/judgment/common/ResultsTable";
-import ParticipantsList from "@modules/judgment/common/ParticipantsList";
+import ResultsTable from "@/modules/judgment/common/ResultsTable";
+import ParticipantsList from "@/modules/judgment/common/ParticipantsList";
 
 export const TimeMatchesResults = ({
   timeMatches,

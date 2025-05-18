@@ -3,13 +3,13 @@ import {
   HomeOutlined,
   StarOutlined,
 } from "@ant-design/icons";
-import noLogo from "@assets/img/auth-background.png";
-import { ROUTES, paginationLocale, REACT_APP_API_URL } from "@const";
-import { changeDateFormat, getEventLevel, getTranslation } from "@utils";
+import noLogo from "@/assets/img/auth-background.png";
+import { ROUTES, paginationLocale, REACT_APP_API_URL } from "@/const";
+import { changeDateFormat, getEventLevel, getTranslation } from "@/utils";
 import { Card, List, Tooltip, Typography } from "antd";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDevice } from "@hooks";
+import { useDevice } from "@/hooks";
 import { useTranslation } from "react-i18next";
 
 function EventsList({ events }) {

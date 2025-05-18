@@ -1,9 +1,9 @@
-import { isScoreEqual } from "@utils";
+import { isScoreEqual } from "@/utils";
 import { Button, InputNumber, Modal, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import "@modules/judgment/groupStage/modals/sass/edit-match-score-modal.scss";
+import "@/modules/judgment/groupStage/modals/sass/edit-match-score-modal.scss";
 
 export const EditMatchScoreModal = ({ isOpen, match, onSubmit, onClose }) => {
   const { t } = useTranslation();

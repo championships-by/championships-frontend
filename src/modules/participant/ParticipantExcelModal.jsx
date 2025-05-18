@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Upload, Button, message, Checkbox, Flex, Form } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { participantExcelUpload } from "@api";
+import { participantExcelUpload } from "@/api";
 import { useTranslation } from "react-i18next";
 
 import "./sass/participant.scss";

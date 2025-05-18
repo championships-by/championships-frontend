@@ -1,12 +1,12 @@
-import { calendarLocale } from "@const";
+import { calendarLocale } from "@/const";
 import { Calendar } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import dayLocaleData from "dayjs/plugin/localeData";
 import { CustomHeader } from "./CustomHeader";
-import { setEventDate } from "@store/events/slice";
+import { setEventDate } from "@/store/events/slice";
 import { useDispatch } from "react-redux";
-import { getTranslation } from "@utils";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
 
 dayjs.extend(dayLocaleData);

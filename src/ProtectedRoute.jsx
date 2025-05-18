@@ -1,13 +1,13 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { getUserSelector } from "@store/users";
-import Loader from "@components/loader/Loader";
+import { getUserSelector } from "@/store/users";
+import Loader from "@/components/loader/Loader";
 
-const ProtectedRoute = ({ allowedRoles, children }) => {
+function ProtectedRoute({ allowedRoles, children }) {
   const user = useSelector(getUserSelector);
 
   if ((!user || !user.data) && user.isLoading) {
-    return <Loader show={true} />;
+    return <Loader show />;
   }
 
   if (user.data) {
@@ -20,9 +20,10 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
     }
 
     return children;
-  } else if (!user.isLoading) {
+  }
+  if (!user.isLoading) {
     return <Navigate to="/401" />;
   }
-};
+}
 
 export default ProtectedRoute;

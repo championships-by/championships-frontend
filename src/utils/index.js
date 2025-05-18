@@ -1,3 +1,8 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import JSEncrypt from "jsencrypt";
+import * as qs from "qs";
+import i18n from "@/translations/translations";
 import {
   EventFilters,
   defaultFormat,
@@ -7,13 +12,8 @@ import {
   medals,
   RESULTS_EDITABILITY_MINUTES,
   REACT_APP_API_URL,
-} from "@const";
-import { competenciesApi, eventApi } from "@api";
-import i18n from "@translations/translations";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import JSEncrypt from "jsencrypt";
-import * as qs from "qs";
+} from "@/const";
+import { competenciesApi, eventApi } from "@/api";
 
 const regex = /^[^@]+/;
 const replaceRegex = /[^a-zA-Z0-9]+/g;

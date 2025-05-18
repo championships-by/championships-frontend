@@ -1,13 +1,13 @@
 import { Table, Flex, Button, Tooltip, message } from "antd";
 import { useMemo, useState } from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import TeamAddParticipantModal from "@components/eventRegistration/TeamAddParticipantModal";
-import TeamEditParticipantModal from "@components/eventRegistration/TeamEditParticipantModal";
-import TeamDeleteParticipantModal from "@components/eventRegistration/TeamDeleteParticipantModal";
-import { tableLocale } from "@const";
-import { getTranslation } from "@utils";
+import TeamAddParticipantModal from "@/components/eventRegistration/TeamAddParticipantModal";
+import TeamEditParticipantModal from "@/components/eventRegistration/TeamEditParticipantModal";
+import TeamDeleteParticipantModal from "@/components/eventRegistration/TeamDeleteParticipantModal";
+import { tableLocale } from "@/const";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
-import { competenciesApi, participantApi } from "@api";
+import { competenciesApi, participantApi } from "@/api";
 import { useParams } from "react-router-dom";
 
 const transformTeamsData = (teamsData) => {

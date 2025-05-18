@@ -2,17 +2,17 @@ import "./sass/auth.scss";
 import { Form, message, Button, Typography, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useEffect, useState } from "react";
-import logo from "@assets/img/logo.png";
-import AuthEmailInput from "@modules/auth/AuthEmailInput";
-import AuthPasswordInput from "@modules/auth/AuthPasswordInput";
+import logo from "@/assets/img/logo.png";
+import AuthEmailInput from "@/modules/auth/AuthEmailInput";
+import AuthPasswordInput from "@/modules/auth/AuthPasswordInput";
 import { useNavigate } from "react-router-dom";
-import Loader from "@components/loader/Loader";
-import { ROUTES, REACT_APP_PUBLIC_KEY } from "@const";
-import { userApi, authApi } from "@api";
-import { getEncryptedPassword } from "@utils";
+import Loader from "@/components/loader/Loader";
+import { ROUTES, REACT_APP_PUBLIC_KEY } from "@/const";
+import { userApi, authApi } from "@/api";
+import { getEncryptedPassword } from "@/utils";
 import { useTranslation } from "react-i18next";
-import ForgotPasswordModal from "@components/auth/ForgotPasswordModal";
-import RegistrationModal from "@components/auth/RegistrationModal";
+import ForgotPasswordModal from "@/components/auth/ForgotPasswordModal";
+import RegistrationModal from "@/components/auth/RegistrationModal";
 
 function Auth() {
   const { t } = useTranslation();

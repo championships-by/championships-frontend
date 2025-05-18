@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { defaultEventFilterOptions } from "@const";
+import { defaultEventFilterOptions } from "@/const";
 import {
   changeEvent,
   changeLogo,

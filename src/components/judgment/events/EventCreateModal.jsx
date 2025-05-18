@@ -1,19 +1,19 @@
-import { eventApi } from "@api";
-import EventDate from "@modules/judgment/events/EventDate";
-import EventDescription from "@modules/judgment/events/EventDescription";
-import EventEmail from "@modules/judgment/events/EventEmail";
-import EventOrganizerName from "@modules/judgment/events/EventOrganizerName";
-import EventLevel from "@modules/judgment/events/EventLevel";
-import EventLogo from "@modules/judgment/events/EventLogo";
-import EventName from "@modules/judgment/events/EventName";
-import EventPlace from "@modules/judgment/events/EventPlace";
-import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
-import EventRegulation from "@modules/judgment/events/EventRegulation";
-import EventRequirements from "@modules/judgment/events/EventRequirements";
+import { eventApi } from "@/api";
+import EventDate from "@/modules/judgment/events/EventDate";
+import EventDescription from "@/modules/judgment/events/EventDescription";
+import EventEmail from "@/modules/judgment/events/EventEmail";
+import EventOrganizerName from "@/modules/judgment/events/EventOrganizerName";
+import EventLevel from "@/modules/judgment/events/EventLevel";
+import EventLogo from "@/modules/judgment/events/EventLogo";
+import EventName from "@/modules/judgment/events/EventName";
+import EventPlace from "@/modules/judgment/events/EventPlace";
+import EventRegisterDate from "@/modules/judgment/events/EventRegisterDate";
+import EventRegulation from "@/modules/judgment/events/EventRegulation";
+import EventRequirements from "@/modules/judgment/events/EventRequirements";
 import { Button, Form, message, Modal, notification } from "antd";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { RESPONSE_STATUS } from "@const";
+import { RESPONSE_STATUS } from "@/const";
 
 function EventCreateModal({ isOpen, onOk, onCancel, name, onAdd }) {
   const [form] = Form.useForm();

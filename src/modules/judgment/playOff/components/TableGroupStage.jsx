@@ -1,10 +1,10 @@
-import { useMatches } from "@hooks";
+import { useMatches } from "@/hooks";
 import { Checkbox, Table, Typography } from "antd";
-import { paginationLocale, tableLocale } from "@const";
+import { paginationLocale, tableLocale } from "@/const";
 import { useTranslation } from "react-i18next";
-import { getTranslation } from "@utils";
+import { getTranslation } from "@/utils";
 
-import "@modules/judgment/playOff/components/sass/table-group-stage.scss";
+import "@/modules/judgment/playOff/components/sass/table-group-stage.scss";
 
 export const TableGroupStage = () => {
   const { t } = useTranslation();

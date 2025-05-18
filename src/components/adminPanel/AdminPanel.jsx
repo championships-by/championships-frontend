@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { message } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
-import { RESPONSE_STATUS } from "@const";
-import { userApi } from "@api/index.js";
+import { RESPONSE_STATUS } from "@/const";
+import { userApi } from "@/api/index.js";
 import AdminPanelNav from "./AdminPanelNav.jsx";
 import MobileAdminPanelNav from "./MobileAdminPanelNav.jsx";
 import AdminPanelLogo from "./AdminPanelLogo.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserProfile, getUserSelector } from "@store/users";
+import { getUserProfile, getUserSelector } from "@/store/users";
 
 import "./sass/admin-panel.scss";
 import "./sass/mobile-admin-panel.scss";

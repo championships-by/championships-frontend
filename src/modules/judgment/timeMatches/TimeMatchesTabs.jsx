@@ -1,4 +1,4 @@
-import { competenciesApi, timeMatchesApi } from "@api";
+import { competenciesApi, timeMatchesApi } from "@/api";
 import {
   formatTimeToString,
   isTimeMatchesFilled,
@@ -6,18 +6,18 @@ import {
   transformTimeMatchesData,
   downloadProtocol,
   isStillEditable,
-} from "@utils";
+} from "@/utils";
 import { EditOutlined, CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import { Button, message, Tabs, Flex } from "antd";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import { certificateApi } from "@api/certificates";
+import { certificateApi } from "@/api/certificates";
 import { useTranslation } from "react-i18next";
-import ReturnButton from "@modules/judgment/common/ReturnButton";
-import { NOMINATIONS } from "@const";
+import ReturnButton from "@/modules/judgment/common/ReturnButton";
+import { NOMINATIONS } from "@/const";
 import { TimeMatchesResults, TimeMatchesTable } from "./components";
 
-import "@modules/judgment/timeMatches/sass/time-matches.scss";
+import "@/modules/judgment/timeMatches/sass/time-matches.scss";
 
 export function TimeMatchesTabs() {
   const { t } = useTranslation();

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FloatButton } from "antd";
 import { SettingOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
-import { LANGUAGES } from "@const";
+import { LANGUAGES } from "@/const";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentLanguage } from "@store/languages";
-import { changeLanguageAsync } from "@store/languages";
+import { selectCurrentLanguage } from "@/store/languages";
+import { changeLanguageAsync } from "@/store/languages";
 
 import { useTranslation } from "react-i18next";
 

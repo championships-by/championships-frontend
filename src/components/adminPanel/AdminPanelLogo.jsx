@@ -1,5 +1,5 @@
-import logo from "@assets/img/logo.png";
-import { ZUBRONOK } from "@const";
+import logo from "@/assets/img/logo.png";
+import { ZUBRONOK } from "@/const";
 
 function AdminPanelLogo() {
   return (

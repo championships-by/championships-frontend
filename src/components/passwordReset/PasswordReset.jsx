@@ -1,11 +1,11 @@
 import { Button, Form, Typography, message } from "antd";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { authApi } from "@api";
-import NewPassword from "@modules/user/passwordChange/NewPassword";
-import SecondNewPassword from "@modules/user/passwordChange/SecondNewPassword";
-import resursLogo from "@assets/img/resursLogo.svg";
-import { ROUTES, REACT_APP_PUBLIC_KEY } from "@const";
-import { getEncryptedPassword } from "@utils";
+import { authApi } from "@/api";
+import NewPassword from "@/modules/user/passwordChange/NewPassword";
+import SecondNewPassword from "@/modules/user/passwordChange/SecondNewPassword";
+import resursLogo from "@/assets/img/resursLogo.svg";
+import { ROUTES, REACT_APP_PUBLIC_KEY } from "@/const";
+import { getEncryptedPassword } from "@/utils";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 

@@ -1,5 +1,5 @@
-import { MatchesProvider } from "@contexts/MatchesContext";
-import { PlayOffTabs } from "@modules/judgment/playOff/PlayOffTabs";
+import { MatchesProvider } from "@/contexts/MatchesContext";
+import { PlayOffTabs } from "@/modules/judgment/playOff/PlayOffTabs";
 import { useParams } from "react-router-dom";
 
 function JudgmentPlayOff() {

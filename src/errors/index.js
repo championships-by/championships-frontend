@@ -1,4 +1,4 @@
-import i18n from "@translations/translations";
+import i18n from "@/translations/translations";
 
 export const ERRORS = {
   "email taken": "ERRORS.EMAIL_TAKEN",

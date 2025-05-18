@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsersSelector, setUser, getUsers } from "@store/users";
-import { ModalType } from "@const";
-import UserEmailInput from "@modules/user/UserEmailInput";
-import UserFirstnameInput from "@modules/user/UserFirstnameInput";
-import UserLastnameInput from "@modules/user/UserLastnameInput";
-import UserOrganizationInput from "@modules/user/UserOrganizationInput";
-import UserPasswordInput from "@modules/user/UserPasswordInput";
-import UserPatronymicInput from "@modules/user/UserPatronymicInput";
-import UserPhoneInput from "@modules/user/UserPhoneInput";
-import UserRoleInput from "@modules/user/UserRoleInput";
+import { getUsersSelector, setUser, getUsers } from "@/store/users";
+import { ModalType } from "@/const";
+import UserEmailInput from "@/modules/user/UserEmailInput";
+import UserFirstnameInput from "@/modules/user/UserFirstnameInput";
+import UserLastnameInput from "@/modules/user/UserLastnameInput";
+import UserOrganizationInput from "@/modules/user/UserOrganizationInput";
+import UserPasswordInput from "@/modules/user/UserPasswordInput";
+import UserPatronymicInput from "@/modules/user/UserPatronymicInput";
+import UserPhoneInput from "@/modules/user/UserPhoneInput";
+import UserRoleInput from "@/modules/user/UserRoleInput";
 import { Button, Form, message, Modal, Space } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { userApi } from "@api";
+import { userApi } from "@/api";
 import { useTranslation } from "react-i18next";
 
 function UserModal({ isOpen, onOk, onCancel, type, userId }) {

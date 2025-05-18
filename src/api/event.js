@@ -1,6 +1,6 @@
-import { fetchWithPagination } from "@utils";
+import { fetchWithPagination } from "@/utils";
 import { instance } from ".";
-import { ROUTER_ROUTES } from "@const";
+import { ROUTER_ROUTES } from "@/const";
 
 export const eventApi = {
   getEvent: (eventID) =>

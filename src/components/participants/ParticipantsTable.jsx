@@ -9,14 +9,14 @@ import {
   tableLocale,
   ModalType,
   ROUTES,
-} from "@const";
-import { getUniqueFilters } from "@utils";
+} from "@/const";
+import { getUniqueFilters } from "@/utils";
 import { Button, Flex, Table, Tooltip, Typography } from "antd";
 import dayjs from "dayjs";
 import React, { useState } from "react";
 import ParticipantModal from "./ParticipantModal";
 import { useNavigate } from "react-router-dom";
-import { getTranslation } from "@utils";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
 
 function ParticipantsTable({ ParticipantData, getParticipant }) {

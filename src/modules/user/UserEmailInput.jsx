@@ -3,7 +3,7 @@ import { Flex, Input, Typography } from "antd";
 import { MailOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "react-i18next";
-import { participantApi } from "@api";
+import { participantApi } from "@/api";
 
 import "./sass/user.scss";
 

@@ -1,12 +1,12 @@
-import { useMatches } from "@hooks";
+import { useMatches } from "@/hooks";
 import { Checkbox, Table, Typography, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { paginationLocale, tableLocale } from "@const";
+import { paginationLocale, tableLocale } from "@/const";
 import { useTranslation } from "react-i18next";
-import { getTranslation } from "@utils";
+import { getTranslation } from "@/utils";
 import { useState, useEffect } from "react";
 
-import "@modules/judgment/groupStage/components/sass/table-group-stage.scss";
+import "@/modules/judgment/groupStage/components/sass/table-group-stage.scss";
 
 export const TableGroupStage = () => {
   const { t } = useTranslation();

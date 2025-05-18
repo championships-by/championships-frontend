@@ -1,5 +1,5 @@
-import { MatchesProvider } from "@contexts/MatchesContext";
-import { GroupStageTabs } from "@modules/judgment/groupStage/GroupStageTabs";
+import { MatchesProvider } from "@/contexts/MatchesContext";
+import { GroupStageTabs } from "@/modules/judgment/groupStage/GroupStageTabs";
 import { useParams } from "react-router-dom";
 
 function JudgmentGroupStage() {

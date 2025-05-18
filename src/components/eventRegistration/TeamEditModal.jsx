@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Flex, Form, Modal, message } from "antd";
-import TeamNameInput from "@modules/team/TeamNameInput";
-import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import { participantApi, teamApi, team_participantApi } from "@api";
+import TeamNameInput from "@/modules/team/TeamNameInput";
+import TeamParticipantsInput from "@/modules/team/TeamParticipantsInput";
+import { participantApi, teamApi, team_participantApi } from "@/api";
 import { useTranslation } from "react-i18next";
 
 function TeamEditModal({ isOpen, onOk, onCancel, teamID, teamName }) {

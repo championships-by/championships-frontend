@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { Flex, Input, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
-import { handlePaste } from "@utils";
+import { handlePaste } from "@/utils";
 import { useTranslation } from "react-i18next";
 
 import "./sass/user.scss";
