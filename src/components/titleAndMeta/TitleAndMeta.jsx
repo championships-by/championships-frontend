@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { findRouteTitle } from "@utils";
+import { findRouteTitle } from "@/utils";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet";
 

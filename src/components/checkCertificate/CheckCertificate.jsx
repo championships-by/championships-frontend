@@ -1,12 +1,12 @@
 import { Row, Col, Typography, Button, Flex, Breadcrumb } from "antd";
 import { useSelector } from "react-redux";
-import { getEventsSelector } from "@store/events/selectors";
-import Loader from "@components/loader/Loader";
-import SearchInput from "@modules/search/SearchInput";
-import CheckCertificateInfo from "@components/checkCertificate/CheckCertificateInfo";
+import { getEventsSelector } from "@/store/events/selectors";
+import Loader from "@/components/loader/Loader";
+import SearchInput from "@/modules/search/SearchInput";
+import CheckCertificateInfo from "@/components/checkCertificate/CheckCertificateInfo";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ROUTES } from "@constants";
+import { ROUTES } from "@/const";
 
 import s from "./sass/check-certificate.module.scss";
 

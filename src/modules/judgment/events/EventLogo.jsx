@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Typography, Upload, message, Button, Flex } from "antd";
+import { Typography, Upload, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { url } from "@constants";
+import { API_URL } from "@/const";
 
 import "./sass/events.scss";
 
@@ -59,7 +59,7 @@ function EventLogo({
       validateFirst
       rules={[
         {
-          required: required,
+          required,
           message: t("RULES.PLEASE_UPLOAD_LOGO"),
         },
       ]}
@@ -83,7 +83,7 @@ function EventLogo({
                   replaceLabel
                 ) : (
                   <img
-                    src={`${url}/${existingImage}`}
+                    src={`${API_URL}/${existingImage}`}
                     className="events__existing-image"
                   />
                 )

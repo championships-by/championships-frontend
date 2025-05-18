@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { FloatButton } from "antd";
 import CustomTelegramIcon from "./CustomTelegramIcon";
-import { TELEGRAM_LINK } from "@constants";
+import { TELEGRAM_LINK } from "@/const";
 
 const onClick = () => {
   window.open(TELEGRAM_LINK, "_blank");

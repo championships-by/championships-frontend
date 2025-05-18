@@ -1,5 +1,5 @@
 import React from "react";
-import "@modules/judgment/common/sass/participants-list.scss";
+import "@/modules/judgment/common/sass/participants-list.scss";
 
 function ParticipantsList({ participants }) {
   return (

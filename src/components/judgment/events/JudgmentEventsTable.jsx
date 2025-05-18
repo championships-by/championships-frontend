@@ -4,9 +4,9 @@ import {
   UsergroupAddOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { paginationLocale, tableLocale, ROUTES } from "@constants";
-import { changeDateFormat } from "@utils";
-import { eventApi } from "@api";
+import { paginationLocale, tableLocale, ROUTES } from "@/const";
+import { changeDateFormat } from "@/utils";
+import { eventApi } from "@/api";
 import {
   Button,
   Flex,
@@ -18,7 +18,7 @@ import {
   message,
 } from "antd";
 import { useNavigate } from "react-router-dom";
-import { getTranslation } from "@utils";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
 

@@ -1,9 +1,9 @@
 import { Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import Loader from "@components/loader/Loader";
-import { ROUTES } from "@constants";
-import { authApi } from "@api";
+import Loader from "@/components/loader/Loader";
+import { ROUTES } from "@/const";
+import { authApi } from "@/api";
 import { useTranslation } from "react-i18next";
 
 import "./sass/first-auth.scss";

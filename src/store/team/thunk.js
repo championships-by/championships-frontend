@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { teamApi } from "@api";
+import { teamApi } from "@/api";
 
 export const getTeams = createAsyncThunk("teams/getTeams", async () => {
   const data = await teamApi.getTeams();

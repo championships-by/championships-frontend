@@ -1,9 +1,9 @@
 import { Flex, Space, Typography, Tooltip } from "antd";
-import Select from "@components/Select";
+import Select from "@/components/Select";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "react-i18next";
-import { Roles } from "@constants";
+import { Roles } from "@/const";
 
 import "./sass/user.scss";
 

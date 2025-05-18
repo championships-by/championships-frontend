@@ -1,12 +1,12 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { defaultFormat, tableLocale } from "@constants";
-import { CustomTimePicker } from "@modules/judgment/timeMatches/components";
-import PariticipantsList from "@modules/judgment/common/ParticipantsList.jsx";
-import { formatTimeToString, generateColumns } from "@utils";
+import { defaultFormat, tableLocale } from "@/const";
+import { CustomTimePicker } from "@/modules/judgment/timeMatches/components";
+import PariticipantsList from "@/modules/judgment/common/ParticipantsList.jsx";
+import { formatTimeToString, generateColumns } from "@/utils";
 import { Flex, Table, Typography } from "antd";
 import dayjs from "dayjs";
 import { useMemo } from "react";
-import { getTranslation } from "@utils";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
 
 export const TimeMatchesTable = ({

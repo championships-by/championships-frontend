@@ -1,10 +1,10 @@
 import { Typography, Row, Col } from "antd";
-import laptop from "@assets/img/laptop.png";
-import { useDevice } from "@hooks";
+import laptop from "@/assets/img/laptop.png";
+import { useDevice } from "@/hooks";
 import MobileDevelopers from "./MobileDevelopers";
 import DesktopDevelopers from "./DesktopDevelopers";
 import { useTranslation } from "react-i18next";
-import { userGuide } from "@constants";
+import { userGuide } from "@/const";
 
 import "./sass/user-support.scss";
 

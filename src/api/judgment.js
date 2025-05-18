@@ -1,9 +1,9 @@
+import { NOMINATIONS } from "@/const";
 import { instance } from ".";
-import { NOMINATIONS } from "@constants";
 
 export const judgmentApi = {
   getMatches: async (eventId, nominationId, type) => {
-    return instance.get(`${API_PATH}/match/get_group_matches`, {
+    return instance.get("/match/get_group_matches", {
       params: {
         event_id: eventId,
         nomination_id: nominationId,
@@ -28,10 +28,10 @@ export const judgmentApi = {
       team2_score: team2Score,
     };
 
-    return instance.post(`${API_PATH}/match/set_group_match_result`, data);
+    return instance.post("/match/set_group_match_result", data);
   },
   getPlayoffMatches: async (eventId, nominationId) => {
-    return instance.get(`${API_PATH}/match/get_bracket_matches`, {
+    return instance.get("/match/get_bracket_matches", {
       params: {
         event_id: eventId,
         nomination_id: nominationId,
@@ -56,7 +56,7 @@ export const judgmentApi = {
       team2_score: team2Score,
     };
 
-    return instance.post(`${API_PATH}/match/set_bracket_match_result`, data);
+    return instance.post("/match/set_bracket_match_result", data);
   },
   getPlayoffResults: (params) =>
     instance.get(`/match/get_playoff_results`, { params }),

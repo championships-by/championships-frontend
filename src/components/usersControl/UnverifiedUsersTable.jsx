@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Modal, Table, Typography, Flex, Tooltip, Button, message } from "antd";
 import { useSelector } from "react-redux";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-import { getUnverifiedUsersSelector, getUnverifiedUsers } from "@store/users";
-import { paginationLocale, tableLocale } from "@constants";
+import { getUnverifiedUsersSelector, getUnverifiedUsers } from "@/store/users";
+import { paginationLocale, tableLocale } from "@/const";
 import { useTranslation } from "react-i18next";
-import { getTranslation } from "@utils";
-import { userApi } from "@api";
+import { getTranslation } from "@/utils";
+import { userApi } from "@/api";
 import UserAcceptOrDeclineModal from "./UserAcceptOrDeclineModal";
 
-import "@components/usersControl/sass/users-approval-modal.scss";
+import "@/components/usersControl/sass/users-approval-modal.scss";
 
 function UnverifiedUsersTable({ dispatch }) {
   const { t } = useTranslation();

@@ -1,6 +1,6 @@
 import { CloseCircleOutlined } from "@ant-design/icons";
-import { defaultFormat } from "@constants";
-import { formatTime, isAttemptDisqualified } from "@utils";
+import { defaultFormat } from "@/const";
+import { formatTime, isAttemptDisqualified } from "@/utils";
 import { Button, TimePicker } from "antd";
 import { useState } from "react";
 import "./CustomTimePicker.scss";

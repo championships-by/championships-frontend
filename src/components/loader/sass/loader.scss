@@ -1,5 +1,5 @@
-@import "@src/sass/darkTheme/variables.scss";
-@import "@src/sass/lightTheme/variables.scss";
+@import "@/sass/darkTheme/variables.scss";
+@import "@/sass/lightTheme/variables.scss";
 
 .loader {
   position: fixed;
@@ -29,14 +29,14 @@
 .loader-gif {
   width: 80px;
   height: 80px;
-  background: url("@assets/img/loader.gif");
+  background: url("@/assets/img/loader.gif");
   background-size: contain;
 }
 
 .dark-theme .loader-gif {
   width: 80px;
   height: 80px;
-  background: url("@assets/img/loaderDark.gif");
+  background: url("@/assets/img/loaderDark.gif");
   background-size: contain;
 }
 

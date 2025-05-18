@@ -1,5 +1,5 @@
 import { instance } from ".";
-import { fetchWithPagination } from "@utils";
+import { fetchWithPagination } from "@/utils";
 
 export const teamApi = {
   getTeam: () => {

@@ -1,11 +1,11 @@
-import { judgmentApi } from "@api/judgment";
+import { judgmentApi } from "@/api/judgment";
 import { createContext, useCallback, useEffect, useState } from "react";
-import { competenciesApi } from "@api";
+import { competenciesApi } from "@/api";
 import { message } from "antd";
-import { getPlayOffLevels, isStillEditable } from "@utils";
+import { getPlayOffLevels, isStillEditable } from "@/utils";
 import { useTranslation } from "react-i18next";
-import { certificateApi } from "@api/certificates";
-import { NOMINATIONS } from "@constants";
+import { certificateApi } from "@/api/certificates";
+import { NOMINATIONS } from "@/const";
 
 export const MatchesContext = createContext();
 

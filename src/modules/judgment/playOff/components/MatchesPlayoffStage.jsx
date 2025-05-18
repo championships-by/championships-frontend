@@ -1,12 +1,12 @@
 import React from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useMatches } from "@hooks";
+import { useMatches } from "@/hooks";
 import { Typography, Spin, Flex } from "antd";
-import { EditMatchScoreModal } from "@modules/judgment/playOff/modals";
-import { PlayoffTree } from "@modules/judgment/playOff/components";
+import { EditMatchScoreModal } from "@/modules/judgment/playOff/modals";
+import { PlayoffTree } from "@/modules/judgment/playOff/components";
 import { useTranslation } from "react-i18next";
 
-import "@modules/judgment/playOff/components/sass/matches-group-stage.scss";
+import "@/modules/judgment/playOff/components/sass/matches-group-stage.scss";
 
 export function MatchesPlayoffStage() {
   const { t } = useTranslation();

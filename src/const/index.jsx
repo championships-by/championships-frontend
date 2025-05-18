@@ -1,8 +1,8 @@
 import { EventEmitter } from "events";
-import NoData from "@components/noData/NoData";
-import BronzeMedal from "@src/assets/img/bronze-medal.png";
-import GoldMedal from "@src/assets/img/gold-medal.png";
-import SilverMedal from "@src/assets/img/silver-medal.png";
+import BronzeMedal from "@/assets/img/bronze-medal.png";
+import GoldMedal from "@/assets/img/gold-medal.png";
+import SilverMedal from "@/assets/img/silver-medal.png";
+import NoData from "@/components/noData/NoData";
 
 export const ZUBRONOK = "https://zubronok.by/";
 
@@ -304,8 +304,6 @@ export const tabsButtonEventEmitter = new EventEmitter();
 
 export const mailZubronok = "support@championships.by";
 
-export const url = API_HOST;
-
 export const zubronokSite = "https://zubronok.by";
 export const bntuSite = "https://bntu.by";
 export const fitrSite = "https://bntu.by/faculties/fitr";
@@ -351,3 +349,8 @@ export const medals = [GoldMedal, SilverMedal, BronzeMedal];
 export const RESULTS_EDITABILITY_MINUTES = 15;
 
 export const PHOTO_FILE_PATH = `/backend/static/images/events/`;
+
+// env
+export const API_URL = process.env.REACT_APP_API_URL;
+export const PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY;
+export const CAPTCHA_TOKEN = process.env.REACT_APP_CAPTCHA_TOKEN;

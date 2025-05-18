@@ -1,11 +1,11 @@
 import { Flex, Table, Tooltip, Typography } from "antd";
-import { tableLocale } from "@constants";
-import { getTranslation } from "@utils";
+import { tableLocale } from "@/const";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
-import { useMatches } from "@hooks";
-import { getMedal } from "@utils";
-import ParticipantsList from "@modules/judgment/common/ParticipantsList";
-import ResultsTable from "@modules/judgment/common/ResultsTable";
+import { useMatches } from "@/hooks";
+import { getMedal } from "@/utils";
+import ParticipantsList from "@/modules/judgment/common/ParticipantsList";
+import ResultsTable from "@/modules/judgment/common/ResultsTable";
 
 export const PlayoffResult = ({ data }) => {
   const { t } = useTranslation();

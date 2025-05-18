@@ -1,4 +1,4 @@
-import { eventApi } from "@api";
+import { eventApi } from "@/api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getEvent = createAsyncThunk("events/getEvent", async (eventID) => {

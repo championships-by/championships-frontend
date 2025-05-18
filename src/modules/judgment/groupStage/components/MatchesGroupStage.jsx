@@ -1,12 +1,12 @@
 import React from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useMatches } from "@hooks";
+import { useMatches } from "@/hooks";
 import { Typography, Spin } from "antd";
-import { EditMatchScoreModal } from "@modules/judgment/groupStage/modals";
-import { MatchCard } from "@modules/judgment/groupStage/components";
+import { EditMatchScoreModal } from "@/modules/judgment/groupStage/modals";
+import { MatchCard } from "@/modules/judgment/groupStage/components";
 import { useTranslation } from "react-i18next";
 
-import "@modules/judgment/groupStage/components/sass/matches-group-stage.scss";
+import "@/modules/judgment/groupStage/components/sass/matches-group-stage.scss";
 
 export function MatchesGroupStage() {
   const { t } = useTranslation();

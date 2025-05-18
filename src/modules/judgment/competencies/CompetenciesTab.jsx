@@ -1,4 +1,4 @@
-import { competenciesApi } from "@api";
+import { competenciesApi } from "@/api";
 import {
   generateCompetenciesDataSource,
   transformCriteriaData,
@@ -7,13 +7,13 @@ import {
   downloadProtocol,
   downloadCriteriaExcel,
   isStillEditable,
-} from "@utils";
+} from "@/utils";
 import { Button, message, Tabs, Flex } from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import ReturnButton from "@modules/judgment/common/ReturnButton";
+import ReturnButton from "@/modules/judgment/common/ReturnButton";
 import { useTranslation } from "react-i18next";
-import { certificateApi } from "@api/certificates";
+import { certificateApi } from "@/api/certificates";
 import { CompetenciesResults, CompetenciesTable } from "./components";
 import {
   DownloadOutlined,
@@ -21,9 +21,9 @@ import {
   CloseOutlined,
   CheckOutlined,
 } from "@ant-design/icons";
-import { NOMINATIONS } from "@constants";
+import { NOMINATIONS } from "@/const";
 
-import "@modules/judgment/competencies/sass/competencies-criteria.scss";
+import "@/modules/judgment/competencies/sass/competencies-criteria.scss";
 
 function CompetenciesTab() {
   const { t } = useTranslation();

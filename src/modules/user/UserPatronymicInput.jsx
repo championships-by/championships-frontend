@@ -3,7 +3,7 @@ import { Flex, Input, Typography, Form } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import FormItem from "antd/es/form/FormItem";
 import "./sass/user.scss";
-import { handlePaste } from "@utils";
+import { handlePaste } from "@/utils";
 import { useTranslation } from "react-i18next";
 
 function UserPatronymicInput({ name, initialValue }) {

@@ -1,11 +1,12 @@
 import { Button, Modal, Flex, message, Form } from "antd";
 import { useState } from "react";
-import OldPassword from "@modules/user/passwordChange/OldPassword";
-import NewPassword from "@modules/user/passwordChange/NewPassword";
-import SecondNewPassword from "@modules/user/passwordChange/SecondNewPassword";
-import { userApi } from "@api";
-import { getEncryptedPassword } from "@utils";
+import OldPassword from "@/modules/user/passwordChange/OldPassword";
+import NewPassword from "@/modules/user/passwordChange/NewPassword";
+import SecondNewPassword from "@/modules/user/passwordChange/SecondNewPassword";
+import { userApi } from "@/api";
+import { getEncryptedPassword } from "@/utils";
 import { useTranslation } from "react-i18next";
+import { PUBLIC_KEY } from "@/const";
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
   const { t } = useTranslation();
@@ -20,7 +21,10 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
       OldPassword,
       PUBLIC_KEY
     );
-    const encrypedNewPassword = getEncryptedPassword(NewPassword, PUBLIC_KEY);
+    const encrypedNewPassword = getEncryptedPassword(
+      NewPassword,
+      PUBLIC_KEY
+    );
     const encrypedNewRetypedPassword = getEncryptedPassword(
       SecondNewPassword,
       PUBLIC_KEY

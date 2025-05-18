@@ -1,5 +1,5 @@
-@import "@src/sass/darkTheme/variables.scss";
-@import "@src/sass/lightTheme/variables.scss";
+@import "@/sass/darkTheme/variables.scss";
+@import "@/sass/lightTheme/variables.scss";
 
 $borderRadius: 10px;
 $spacer: 1rem;
@@ -164,23 +164,23 @@ $transition: $timing ease all;
     filter: invert(0);
 
     &--event::before {
-      background-image: url("@assets/img/event.png");
+      background-image: url("@/assets/img/event.png");
     }
 
     &--users::before {
-      background-image: url("@assets/img/user.png");
+      background-image: url("@/assets/img/user.png");
     }
 
     &--judgment::before {
-      background-image: url("@assets/img/judge.png");
+      background-image: url("@/assets/img/judge.png");
     }
 
     &--add-participants::before {
-      background-image: url("@assets/img/add-participants.png");
+      background-image: url("@/assets/img/add-participants.png");
     }
 
     &--settings::before {
-      background-image: url("@assets/img/settings.png");
+      background-image: url("@/assets/img/settings.png");
     }
 
     &--logout {
@@ -189,7 +189,7 @@ $transition: $timing ease all;
         filter: invert(0);
       }
       &:before {
-        background-image: url("@assets/img/logout.png");
+        background-image: url("@/assets/img/logout.png");
       }
     }
 

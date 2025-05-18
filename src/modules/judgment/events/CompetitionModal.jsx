@@ -9,8 +9,8 @@ import {
   message,
 } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { ROUTES } from "@constants";
-import { competenciesApi } from "@api";
+import { ROUTES } from "@/const";
+import { competenciesApi } from "@/api";
 import { useTranslation } from "react-i18next";
 
 function CompetitionModal({ isOpen, onCancel, onOk, name, nominationID }) {

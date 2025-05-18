@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { Typography, message } from "antd";
 import { useTranslation } from "react-i18next";
 import { UploadOutlined, EyeOutlined, DeleteOutlined } from "@ant-design/icons";
-import { eventApi } from "@api";
+import { eventApi } from "@/api";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
-import { PHOTO_FILE_PATH } from "@constants";
+import { PHOTO_FILE_PATH } from "@/const";
 
 async function fetchPhotos(eventId, setPhotos) {
   const response = await eventApi.getEventPhotos(eventId);

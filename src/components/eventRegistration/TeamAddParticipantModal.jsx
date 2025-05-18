@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Form, Modal, message, Flex } from "antd";
-import TeamNominationSelect from "@modules/team/TeamNominationSelect";
-import ExistingTeamParticipantsInput from "@modules/team/ExistingTeamParticipantsInput";
-import ParticipantEquipmentInput from "@modules/participant/ParticipantEquipmentInput";
-import ParticipantSoftwareInput from "@modules/participant/ParticipantSoftwareInput";
-import ParticipantAdditionalOrganizationInput from "@modules/participant/ParticipantAdditionalOrganizationInput.jsx";
-import ParticipantTeacherFirstnameInput from "@modules/participant/ParticipantTeacherFirstnameInput.jsx";
-import ParticipantTeacherLastnameInput from "@modules/participant/ParticipantTeacherLastnameInput.jsx";
-import ParticipantOrganizationInput from "@modules/participant/ParticopantOrganizationInput.jsx";
-import ParticipantTeacherPatronymicInput from "@modules/participant/ParticipantTeacherPatronymicInput.jsx";
+import TeamNominationSelect from "@/modules/team/TeamNominationSelect";
+import ExistingTeamParticipantsInput from "@/modules/team/ExistingTeamParticipantsInput";
+import ParticipantEquipmentInput from "@/modules/participant/ParticipantEquipmentInput";
+import ParticipantSoftwareInput from "@/modules/participant/ParticipantSoftwareInput";
+import ParticipantAdditionalOrganizationInput from "@/modules/participant/ParticipantAdditionalOrganizationInput.jsx";
+import ParticipantTeacherFirstnameInput from "@/modules/participant/ParticipantTeacherFirstnameInput.jsx";
+import ParticipantTeacherLastnameInput from "@/modules/participant/ParticipantTeacherLastnameInput.jsx";
+import ParticipantOrganizationInput from "@/modules/participant/ParticopantOrganizationInput.jsx";
+import ParticipantTeacherPatronymicInput from "@/modules/participant/ParticipantTeacherPatronymicInput.jsx";
 import {
   eventApi,
   competenciesApi,
   participantApi,
   notificationApi,
-} from "@api";
+} from "@/api";
 import { useTranslation } from "react-i18next";
 
 import "./sass/event-registration.scss";

@@ -1,9 +1,9 @@
 import { Typography } from "antd";
 import { useEffect, useState } from "react";
-import { certificateApi } from "@api";
+import { certificateApi } from "@/api";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
-import { Locale } from "@constants";
+import { Locale } from "@/const";
 
 import styles from "./sass/check-certificate-info.module.scss";
 

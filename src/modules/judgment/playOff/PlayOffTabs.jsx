@@ -1,5 +1,5 @@
-import { useMatches } from "@hooks";
-import { isScoreZero } from "@utils";
+import { useMatches } from "@/hooks";
+import { isScoreZero } from "@/utils";
 import { Button, message, Tabs, Flex, Divider } from "antd";
 import { useMemo, useState } from "react";
 import {
@@ -10,8 +10,8 @@ import {
 } from "./components";
 import { FinalParticipantsModal, FinishPlayOffModal } from "./modals";
 import { useTranslation } from "react-i18next";
-import ReturnButton from "@modules/judgment/common/ReturnButton";
-import { downloadProtocol } from "@utils";
+import ReturnButton from "@/modules/judgment/common/ReturnButton";
+import { downloadProtocol } from "@/utils";
 import { useParams } from "react-router-dom";
 
 export function PlayOffTabs() {

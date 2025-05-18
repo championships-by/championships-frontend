@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { debounce } from "lodash";
 import { Modal, Input, AutoComplete, Tooltip } from "antd";
-import { transformParticipantsInSystemData, getParticipantLink } from "@utils";
-import ParticipantLink from "@components/participants/ParticipantLink.jsx";
+import { transformParticipantsInSystemData, getParticipantLink } from "@/utils";
+import ParticipantLink from "@/components/participants/ParticipantLink.jsx";
 import { useTranslation } from "react-i18next";
-import { participantApi } from "@api";
+import { participantApi } from "@/api";
 
-import "@components/participants/sass/participants-global-search-modal.scss";
+import "@/components/participants/sass/participants-global-search-modal.scss";
 
 function ParticipantsGlobalSearchModal({ isOpen, onClose }) {
   const { t } = useTranslation();

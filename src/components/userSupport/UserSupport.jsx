@@ -6,7 +6,7 @@ import {
   FileTextOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@constants";
+import { ROUTES } from "@/const";
 import { useTranslation } from "react-i18next";
 
 function UserSupport() {

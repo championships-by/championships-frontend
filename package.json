@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "prepare": "husky install",
     "lint:fix": "eslint . --ext .js,.jsx --fix",
-    "prettier": "prettier . --write",
-    "start": "webpack serve",
-    "build:dev": "webpack --env mode=development",
-    "build:prod": "webpack --env mode=production"
+    "prettier": "prettier . --write"
   },
   "repository": {
     "type": "git",
@@ -20,7 +19,40 @@
   "bugs": {
     "url": "https://github.com/championships-by/championships-frontend/issues"
   },
-  "homepage": "https://github.com/championships-by/championships-frontend#readme",
+  "dependencies": {
+    "@ant-design/icons": "5.3.1",
+    "@reduxjs/toolkit": "2.2.7",
+    "@yandex/smart-captcha": "2.6.3",
+    "antd": "5.14.2",
+    "axios": "1.8.2",
+    "babel-eslint": "10.1.0",
+    "clsx": "2.1.1",
+    "customize-cra": "1.0.0",
+    "dayjs": "1.11.12",
+    "husky": "8.0.3",
+    "i18next": "23.16.4",
+    "jsencrypt": "3.3.2",
+    "lodash": "4.17.21",
+    "qs": "6.13.0",
+    "quill": "2.0.3",
+    "quill-magic-url": "4.2.0",
+    "react": "18.2.0",
+    "react-app-rewired": "2.2.1",
+    "react-dom": "18.2.0",
+    "react-google-recaptcha": "3.1.0",
+    "react-helmet": "6.1.0",
+    "react-i18next": "15.1.0",
+    "react-image-lightbox": "5.1.4",
+    "react-phone-number-input": "3.4.3",
+    "react-quill": "2.0.0",
+    "react-redux": "8.1.3",
+    "react-responsive": "10.0.0",
+    "react-router-dom": "6.22.1",
+    "react-scripts": "5.0.1",
+    "react-text-mask": "5.5.0",
+    "reactflow": "11.11.4",
+    "styled-components": "6.1.11"
+  },
   "devDependencies": {
     "@babel/cli": "7.23.9",
     "@babel/core": "7.23.9",
@@ -56,35 +88,16 @@
       "npm run prettier"
     ]
   },
-  "dependencies": {
-    "@ant-design/icons": "5.3.1",
-    "@reduxjs/toolkit": "2.2.7",
-    "@yandex/smart-captcha": "2.6.3",
-    "antd": "5.14.2",
-    "axios": "1.8.2",
-    "babel-eslint": "10.1.0",
-    "clsx": "2.1.1",
-    "dayjs": "1.11.12",
-    "husky": "8.0.3",
-    "i18next": "23.16.4",
-    "jsencrypt": "3.3.2",
-    "lodash": "4.17.21",
-    "qs": "6.13.0",
-    "quill": "2.0.3",
-    "quill-magic-url": "4.2.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-google-recaptcha": "3.1.0",
-    "react-helmet": "6.1.0",
-    "react-i18next": "15.1.0",
-    "react-image-lightbox": "5.1.4",
-    "react-phone-number-input": "3.4.3",
-    "react-quill": "2.0.0",
-    "react-redux": "8.1.3",
-    "react-responsive": "10.0.0",
-    "react-router-dom": "6.22.1",
-    "react-text-mask": "5.5.0",
-    "reactflow": "11.11.4",
-    "styled-components": "6.1.11"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

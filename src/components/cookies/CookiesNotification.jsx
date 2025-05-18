@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { notification, Space, Button, Typography, Flex } from "antd";
 import { useTranslation } from "react-i18next";
-import { splitByCookies } from "@utils";
-import { cookiesPolicy } from "@constants";
+import { splitByCookies } from "@/utils";
+import { cookiesPolicy } from "@/const";
 
 function CookiesNotification() {
   const [api, contextHolder] = notification.useNotification();

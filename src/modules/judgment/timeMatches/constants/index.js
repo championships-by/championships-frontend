@@ -1,5 +1,5 @@
-import { RESPONSE_STATUS } from "@constants";
-import i18n from "@src/translations/translations";
+import { RESPONSE_STATUS } from "@/const";
+import i18n from "@/translations/translations";
 
 export const TimeMatchesTabsEnum = {
   TABLE: "table",

@@ -1,16 +1,16 @@
 import { InfoCircleOutlined, LinkOutlined } from "@ant-design/icons";
-import { competenciesApi, eventApi, organizerApi } from "@api";
-import noLogo from "@assets/img/auth-background.png";
-import Loader from "@components/loader/Loader";
-import { getUserSelector } from "@store/users";
+import { competenciesApi, eventApi, organizerApi } from "@/api";
+import noLogo from "@/assets/img/auth-background.png";
+import Loader from "@/components/loader/Loader";
+import { getUserSelector } from "@/store/users";
 import {
   extendedDateFormat,
   NOMINATIONS,
   ROUTES,
-  url,
   yaShareLink,
-} from "@constants";
-import { changeDateFormat, getEventLevel, openPdf } from "@utils";
+  API_URL,
+} from "@/const";
+import { changeDateFormat, getEventLevel, openPdf } from "@/utils";
 import {
   Breadcrumb,
   Button,
@@ -27,7 +27,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import dayjs from "dayjs";
-import EventPhotoGallery from "@modules/judgment/events/EventPhotoGallery";
+import EventPhotoGallery from "@/modules/judgment/events/EventPhotoGallery";
 import { useSelector } from "react-redux";
 
 import "./sass/event-information.scss";
@@ -178,7 +178,7 @@ function EventInformation() {
             alt="Logo"
             src={
               dataEvent.logo_path !== "/" && dataEvent.logo_path
-                ? `${url}/${dataEvent.logo_path}`
+                ? `${API_URL}/${dataEvent.logo_path}`
                 : noLogo
             }
             className={

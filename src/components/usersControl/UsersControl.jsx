@@ -6,12 +6,12 @@ import {
   getUsersByName,
   getUsersSelector,
   getUnverifiedUsersSelector,
-} from "@store/users";
-import UsersVerificationModal from "@components/usersControl/UnverifiedUsersTable";
-import Loader from "@components/loader/Loader";
-import { ModalType } from "@constants";
+} from "@/store/users";
+import UsersVerificationModal from "@/components/usersControl/UnverifiedUsersTable";
+import Loader from "@/components/loader/Loader";
+import { ModalType } from "@/const";
 import { Button, Flex, Typography, Row, Col, Tabs } from "antd";
-import SearchInput from "@modules/search/SearchInput";
+import SearchInput from "@/modules/search/SearchInput";
 import { useTranslation } from "react-i18next";
 import UserModal from "./UserModal";
 import UsersTable from "./UsersTable";
