@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, message as antdMessage } from "antd";
 import { useTranslation } from "react-i18next";
-import TextEditor from "@modules/textEditor/TextEditor";
-import { notificationApi } from "@api";
+import TextEditor from "@/modules/textEditor/TextEditor";
+import { notificationApi } from "@/api";
 
 import "./sass/notification-modal.scss";
 

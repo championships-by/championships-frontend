@@ -1,10 +1,10 @@
 import { Typography, Flex, Button, Modal, Input, message } from "antd";
-import Select from "@components/Select";
+import Select from "@/components/Select";
 import FormItem from "antd/es/form/FormItem";
 import { SolutionOutlined, PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-import { organizerApi } from "@api";
+import { organizerApi } from "@/api";
 
 function EventOrganizerName({ name, value, eventId, form, onChange }) {
   const { t } = useTranslation();

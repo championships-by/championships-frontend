@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { debounce } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsersSelector, setUser, getUsers } from "@store/users";
-import UserEmailInput from "@modules/user/UserEmailInput";
-import UserFirstnameInput from "@modules/user/UserFirstnameInput";
-import UserLastnameInput from "@modules/user/UserLastnameInput";
-import UserOrganizationInput from "@modules/user/UserOrganizationInput";
-import UserPasswordInput from "@modules/user/UserPasswordInput";
-import UserPatronymicInput from "@modules/user/UserPatronymicInput";
-import UserPasswordConfirmationInput from "@modules/user/UserPasswordConfirmationInput";
-import UserPhoneInput from "@modules/user/UserPhoneInput";
-import ParticipantReCaptcha from "@modules/participant/ParticipantReCaptcha";
+import { getUsersSelector, setUser, getUsers } from "@/store/users";
+import UserEmailInput from "@/modules/user/UserEmailInput";
+import UserFirstnameInput from "@/modules/user/UserFirstnameInput";
+import UserLastnameInput from "@/modules/user/UserLastnameInput";
+import UserOrganizationInput from "@/modules/user/UserOrganizationInput";
+import UserPasswordInput from "@/modules/user/UserPasswordInput";
+import UserPatronymicInput from "@/modules/user/UserPatronymicInput";
+import UserPasswordConfirmationInput from "@/modules/user/UserPasswordConfirmationInput";
+import UserPhoneInput from "@/modules/user/UserPhoneInput";
+import ParticipantReCaptcha from "@/modules/participant/ParticipantReCaptcha";
 import {
   Button,
   Form,
@@ -22,9 +22,9 @@ import {
   Checkbox,
 } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { userApi } from "@api";
+import { userApi } from "@/api";
 import { useTranslation } from "react-i18next";
-import Captcha from "@components/auth/Captcha";
+import Captcha from "@/components/auth/Captcha";
 
 function RegistrationModal({ isOpen, onOk, onCancel }) {
   const { t } = useTranslation();

@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Typography, Row, Col, Form, message, Button } from "antd";
-import laptop from "@assets/img/laptop-simple.png";
-import { mailZubronok } from "@const";
-import FeedbackFirstnameInput from "@modules/feedback/FeedbackFirstnameInput";
-import FeedbackLastnameInput from "@modules/feedback/FeedbackLastnameInput";
-import FeedbackEmailInput from "@modules/feedback/FeedbackEmailInput";
-import FeedbackFile from "@modules/feedback/FeedbackFile";
-import FeedbackCheckbox from "@modules/feedback/FeedbackCheckbox";
-import FeedbackDescription from "@modules/feedback/FeedbackDescription";
-import { feedbackApi } from "@api";
+import laptop from "@/assets/img/laptop-simple.png";
+import { mailZubronok } from "@/const";
+import FeedbackFirstnameInput from "@/modules/feedback/FeedbackFirstnameInput";
+import FeedbackLastnameInput from "@/modules/feedback/FeedbackLastnameInput";
+import FeedbackEmailInput from "@/modules/feedback/FeedbackEmailInput";
+import FeedbackFile from "@/modules/feedback/FeedbackFile";
+import FeedbackCheckbox from "@/modules/feedback/FeedbackCheckbox";
+import FeedbackDescription from "@/modules/feedback/FeedbackDescription";
+import { feedbackApi } from "@/api";
 import { useTranslation } from "react-i18next";
 
 import "./sass/user-support.scss";

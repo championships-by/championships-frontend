@@ -1,8 +1,8 @@
 import { Typography, Flex } from "antd";
-import { validateDescription } from "@utils";
+import { validateDescription } from "@/utils";
 import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "react-i18next";
-import TextEditor from "@modules/textEditor/TextEditor";
+import TextEditor from "@/modules/textEditor/TextEditor";
 
 import "./sass/events.scss";
 

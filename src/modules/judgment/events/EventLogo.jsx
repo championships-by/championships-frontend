@@ -3,7 +3,7 @@ import { Typography, Upload, Flex } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import { REACT_APP_API_URL } from "@const";
+import { REACT_APP_API_URL } from "@/const";
 
 import "./sass/events.scss";
 

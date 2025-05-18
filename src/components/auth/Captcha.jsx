@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SmartCaptcha } from "@yandex/smart-captcha";
-import { REACT_APP_CAPTCHA_TOKEN } from "@const";
+import { REACT_APP_CAPTCHA_TOKEN } from "@/const";
 
 function Captcha({ onSuccess: onSuccessBase }) {
   const [token, setToken] = useState("");

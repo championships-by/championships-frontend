@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Typography, Space, Tooltip, Flex } from "antd";
-import Select from "@components/Select";
+import Select from "@/components/Select";
 import CriteriaParametrs from "./CompetitionCriteriaParametrs";
 import TimeParametrs from "./CompetitionTimeParametrs";
-import { NOMINATION_TYPES, NOMINATIONS } from "@const";
+import { NOMINATION_TYPES, NOMINATIONS } from "@/const";
 import { useTranslation } from "react-i18next";
 import { InfoCircleOutlined } from "@ant-design/icons";
 

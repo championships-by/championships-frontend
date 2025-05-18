@@ -1,12 +1,12 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { generateCriteriaColumns, getContentSectionWidth } from "@utils";
-import PariticipantsList from "@modules/judgment/common/ParticipantsList.jsx";
+import { generateCriteriaColumns, getContentSectionWidth } from "@/utils";
+import PariticipantsList from "@/modules/judgment/common/ParticipantsList.jsx";
 import { InputNumber, Spin, Table } from "antd";
 import { useEffect, useMemo, useState } from "react";
-import { tableLocale } from "@const";
-import { getTranslation } from "@utils";
+import { tableLocale } from "@/const";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
-import { ANTD_INPUT_FIELD_STATUSES } from "@const";
+import { ANTD_INPUT_FIELD_STATUSES } from "@/const";
 
 import "./CompetenciesTable.scss";
 

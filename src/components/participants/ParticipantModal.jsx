@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { ModalType } from "@const";
+import { ModalType } from "@/const";
 import { useSelector } from "react-redux";
-import { getUserSelector } from "@store/users";
+import { getUserSelector } from "@/store/users";
 import { Button, Flex, Form, Modal, message, Checkbox } from "antd";
-import ParticipantBirthdayInput from "@modules/participant/ParticipantBirthdayInput.jsx";
-import ParticipantEmailInput from "@modules/participant/ParticipantEmailInput.jsx";
-import ParticipantFirstnameInput from "@modules/participant/ParticipantFirstnameInput.jsx";
-import ParticipantLastnameInput from "@modules/participant/ParticipantLastnameInput.jsx";
-import ParticipantPatronymicInput from "@modules/participant/ParticipantPatronymicInput.jsx";
-import ParticipantRegionSelect from "@modules/participant/ParticipantRegionSelect.jsx";
-import ParticipantPhotoUpload from "@modules/participant/ParticipantPhotoUpload";
-import { participantApi } from "@api";
+import ParticipantBirthdayInput from "@/modules/participant/ParticipantBirthdayInput.jsx";
+import ParticipantEmailInput from "@/modules/participant/ParticipantEmailInput.jsx";
+import ParticipantFirstnameInput from "@/modules/participant/ParticipantFirstnameInput.jsx";
+import ParticipantLastnameInput from "@/modules/participant/ParticipantLastnameInput.jsx";
+import ParticipantPatronymicInput from "@/modules/participant/ParticipantPatronymicInput.jsx";
+import ParticipantRegionSelect from "@/modules/participant/ParticipantRegionSelect.jsx";
+import ParticipantPhotoUpload from "@/modules/participant/ParticipantPhotoUpload";
+import { participantApi } from "@/api";
 import { useTranslation } from "react-i18next";
 
 import "./sass/participants.scss";

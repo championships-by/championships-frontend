@@ -10,13 +10,13 @@ import {
   Download,
 } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-import { tableLocale } from "@const";
-import { getTranslation } from "@utils";
+import { tableLocale } from "@/const";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
 import { DeleteOutlined } from "@ant-design/icons";
-import TeamDeleteParticipantModal from "@components/eventRegistration/TeamDeleteParticipantModal";
-import { participantApi } from "@api";
-import { downloadCompetenceParticipantsExcel } from "@utils";
+import TeamDeleteParticipantModal from "@/components/eventRegistration/TeamDeleteParticipantModal";
+import { participantApi } from "@/api";
+import { downloadCompetenceParticipantsExcel } from "@/utils";
 
 import "./sass/events.scss";
 

@@ -1,12 +1,12 @@
-import { useMatches } from "@hooks";
-import { isScoreZero } from "@utils";
+import { useMatches } from "@/hooks";
+import { isScoreZero } from "@/utils";
 import { Button, message, Tabs, Flex } from "antd";
 import { useState } from "react";
 import { MatchesGroupStage, TableGroupStage } from "./components";
 import { FinalParticipantsModal } from "./modals";
 import { useTranslation } from "react-i18next";
-import ReturnButton from "@modules/judgment/common/ReturnButton";
-import { downloadProtocol } from "@utils";
+import ReturnButton from "@/modules/judgment/common/ReturnButton";
+import { downloadProtocol } from "@/utils";
 import { useParams } from "react-router-dom";
 
 export function GroupStageTabs() {

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { ERRORS } from "@errors";
+import { ERRORS } from "@/errors";
 import { message } from "antd";
-import { REACT_APP_API_URL } from "@const";
+import { REACT_APP_API_URL } from "@/const";
 
 export * from "./auth";
 export * from "./competencies";

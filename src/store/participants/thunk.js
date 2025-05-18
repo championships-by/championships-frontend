@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { participantApi } from "@api";
+import { participantApi } from "@/api";
 
 export const getParticipant = createAsyncThunk(
   "participants/getParticipant",

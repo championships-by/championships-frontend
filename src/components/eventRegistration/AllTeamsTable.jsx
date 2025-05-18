@@ -5,13 +5,13 @@ import {
   UsergroupAddOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import TeamDeleteModal from "@components/eventRegistration/TeamDeleteModal";
-import TeamEditModal from "@components/eventRegistration/TeamEditModal";
-import TeamAddParticipantModal from "@components/eventRegistration/TeamAddParticipantModal";
-import { tableLocale } from "@const";
-import { getTranslation } from "@utils";
+import TeamDeleteModal from "@/components/eventRegistration/TeamDeleteModal";
+import TeamEditModal from "@/components/eventRegistration/TeamEditModal";
+import TeamAddParticipantModal from "@/components/eventRegistration/TeamAddParticipantModal";
+import { tableLocale } from "@/const";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
-import { teamApi } from "@api";
+import { teamApi } from "@/api";
 
 const getRowSpan = (data, index, key) => {
   let count = 1;

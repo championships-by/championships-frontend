@@ -1,14 +1,14 @@
-import { competenciesApi } from "@api";
-import CompetitionJudge from "@modules/judgment/events/CompetitionJudgeName";
-import CompetitionName from "@modules/judgment/events/CompetitionName";
-import CompetitionType from "@modules/judgment/events/CompetitionType";
-import ReglamentName from "@modules/judgment/events/ReglamentName";
+import { competenciesApi } from "@/api";
+import CompetitionJudge from "@/modules/judgment/events/CompetitionJudgeName";
+import CompetitionName from "@/modules/judgment/events/CompetitionName";
+import CompetitionType from "@/modules/judgment/events/CompetitionType";
+import ReglamentName from "@/modules/judgment/events/ReglamentName";
 import { Button, Flex, Form, Modal, message } from "antd";
-import { ModalType, NOMINATIONS } from "@const";
+import { ModalType, NOMINATIONS } from "@/const";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getUserSelector } from "@store/users";
+import { getUserSelector } from "@/store/users";
 import { useTranslation } from "react-i18next";
 
 function EventSettingsCompitations({

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import ReactFlow, { MiniMap, Controls, Background } from "reactflow";
 import "reactflow/dist/style.css";
 import clsx from "clsx";
-import { useMatches } from "@hooks";
-import { getTreeData } from "@utils";
-import { PlayoffMatchCard } from "@modules/judgment/playOff/components";
+import { useMatches } from "@/hooks";
+import { getTreeData } from "@/utils";
+import { PlayoffMatchCard } from "@/modules/judgment/playOff/components";
 
-import "@modules/judgment/playOff/components/sass/playoff-tree.scss";
+import "@/modules/judgment/playOff/components/sass/playoff-tree.scss";
 
 export function PlayoffTree() {
   const { leveledPlayoffMatches, handleEditScore, isPlayoffStageFinished } =

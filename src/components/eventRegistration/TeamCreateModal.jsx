@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
-import TeamNameInput from "@modules/team/TeamNameInput";
-import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import { changeDateFormat } from "@utils";
-import { participantApi, teamApi } from "@api";
+import TeamNameInput from "@/modules/team/TeamNameInput";
+import TeamParticipantsInput from "@/modules/team/TeamParticipantsInput";
+import { changeDateFormat } from "@/utils";
+import { participantApi, teamApi } from "@/api";
 import { useTranslation } from "react-i18next";
 
 function TeamCreateModal({ isOpen, onOk, onCancel, onAdd }) {

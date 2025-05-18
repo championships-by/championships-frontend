@@ -1,10 +1,10 @@
-import { calendarLocale } from "@const";
+import { calendarLocale } from "@/const";
 import { Radio } from "antd";
-import Select from "@components/Select";
+import Select from "@/components/Select";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import { useTranslation } from "react-i18next";
-import { getTranslation } from "@utils";
+import { getTranslation } from "@/utils";
 import "./sass/custom-calendar.scss";
 
 dayjs.locale("ru");

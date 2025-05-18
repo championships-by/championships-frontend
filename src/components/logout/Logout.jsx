@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Loader from "@components/loader/Loader";
+import Loader from "@/components/loader/Loader";
 import { message, notification } from "antd";
-import { ROUTES } from "@const";
+import { ROUTES } from "@/const";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { logout } from "@store/users/thunk";
+import { logout } from "@/store/users/thunk";
 
 function Logout() {
   const { t } = useTranslation();

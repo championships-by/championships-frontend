@@ -1,9 +1,9 @@
 import { Row, Col, Typography } from "antd";
-import logo from "@assets/img/logo.png";
-import bntuLogo from "@assets/img/bntu-logo.png";
-import fitrLogo from "@assets/img/fitr-logo.png";
-import schoolLogo from "@assets/img/school-logo.png";
-import { bntuSite, zubronokSite, fitrSite, gymnSite } from "@const";
+import logo from "@/assets/img/logo.png";
+import bntuLogo from "@/assets/img/bntu-logo.png";
+import fitrLogo from "@/assets/img/fitr-logo.png";
+import schoolLogo from "@/assets/img/school-logo.png";
+import { bntuSite, zubronokSite, fitrSite, gymnSite } from "@/const";
 import { useTranslation } from "react-i18next";
 
 import "./sass/user-support.scss";

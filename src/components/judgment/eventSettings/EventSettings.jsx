@@ -20,26 +20,26 @@ import {
 } from "@ant-design/icons";
 import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Loader from "@components/loader/Loader";
-import EventName from "@modules/judgment/events/EventName";
-import EventDate from "@modules/judgment/events/EventDate";
-import EventRegisterDate from "@modules/judgment/events/EventRegisterDate";
-import EventDescription from "@modules/judgment/events/EventDescription";
-import EventRequirements from "@modules/judgment/events/EventRequirements";
-import EventEmail from "@modules/judgment/events/EventEmail";
-import EventOrganizerName from "@modules/judgment/events/EventOrganizerName";
-import EventLevel from "@modules/judgment/events/EventLevel";
-import EventPlace from "@modules/judgment/events/EventPlace";
-import EventRegistrationSwitch from "@modules/judgment/events/EventRegistrationSwitch";
-import EventRegulation from "@modules/judgment/events/EventRegulation";
-import EventLogo from "@modules/judgment/events/EventLogo";
-import EventPhotoGallery from "@modules/judgment/events/EventPhotoGallery";
+import Loader from "@/components/loader/Loader";
+import EventName from "@/modules/judgment/events/EventName";
+import EventDate from "@/modules/judgment/events/EventDate";
+import EventRegisterDate from "@/modules/judgment/events/EventRegisterDate";
+import EventDescription from "@/modules/judgment/events/EventDescription";
+import EventRequirements from "@/modules/judgment/events/EventRequirements";
+import EventEmail from "@/modules/judgment/events/EventEmail";
+import EventOrganizerName from "@/modules/judgment/events/EventOrganizerName";
+import EventLevel from "@/modules/judgment/events/EventLevel";
+import EventPlace from "@/modules/judgment/events/EventPlace";
+import EventRegistrationSwitch from "@/modules/judgment/events/EventRegistrationSwitch";
+import EventRegulation from "@/modules/judgment/events/EventRegulation";
+import EventLogo from "@/modules/judgment/events/EventLogo";
+import EventPhotoGallery from "@/modules/judgment/events/EventPhotoGallery";
 import CompitationModal from "./EventSettingsModal";
-import CompetitionModal from "@modules/judgment/events/CompetitionModal";
-import CompetitionGroupModal from "@modules/judgment/events/CompetitionGroupModal";
-import ParticipantModal from "@modules/judgment/events/ParticipantModal";
+import CompetitionModal from "@/modules/judgment/events/CompetitionModal";
+import CompetitionGroupModal from "@/modules/judgment/events/CompetitionGroupModal";
+import ParticipantModal from "@/modules/judgment/events/ParticipantModal";
 import ParticipantsCheckingModal from "./ParticipantsCheckingModal";
-import { eventApi, competenciesApi, participantApi, organizerApi } from "@api";
+import { eventApi, competenciesApi, participantApi, organizerApi } from "@/api";
 import {
   tableLocale,
   ROUTES,
@@ -47,8 +47,8 @@ import {
   STATUS_OF_EVENT,
   ModalType,
   NOMINATIONS,
-} from "@const";
-import { getTranslation } from "@utils";
+} from "@/const";
+import { getTranslation } from "@/utils";
 import { useTranslation } from "react-i18next";
 
 import "./sass/event-settings.scss";

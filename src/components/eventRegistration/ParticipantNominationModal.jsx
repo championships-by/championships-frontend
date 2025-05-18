@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Flex, Form, Modal, message } from "antd";
-import TeamParticipantsInput from "@modules/team/TeamParticipantsInput";
-import TeamNominationInput from "@modules/team/TeamNominationSelect";
-import { eventApi, participantApi, userApi } from "@api";
+import TeamParticipantsInput from "@/modules/team/TeamParticipantsInput";
+import TeamNominationInput from "@/modules/team/TeamNominationSelect";
+import { eventApi, participantApi, userApi } from "@/api";
 import { useTranslation } from "react-i18next";
 
 function ParticipantNominationModal({ isOpen, onOk, onCancel }) {
