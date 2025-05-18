@@ -19,7 +19,6 @@
   "bugs": {
     "url": "https://github.com/championships-by/championships-frontend/issues"
   },
-  "homepage": "https://github.com/championships-by/championships-frontend#readme",
   "dependencies": {
     "@ant-design/icons": "5.3.1",
     "@reduxjs/toolkit": "2.2.7",

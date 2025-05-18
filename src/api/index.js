@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ERRORS } from "@/errors";
 import { message } from "antd";
-import { REACT_APP_API_URL } from "@/const";
+import { API_URL } from "@/const";
 
 export * from "./auth";
 export * from "./competencies";
@@ -21,7 +21,7 @@ export * from "./certificates";
 const excludedUrls = ["/user/profile"];
 
 export const instance = axios.create({
-  baseURL: `${REACT_APP_API_URL}/backend/api`,
+  baseURL: `${API_URL}/backend/api`,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

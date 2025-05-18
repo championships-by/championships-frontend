@@ -11,7 +11,7 @@ import {
   MAX_TEXTAREA_LENGTH,
   medals,
   RESULTS_EDITABILITY_MINUTES,
-  REACT_APP_API_URL,
+  API_URL,
 } from "@/const";
 import { competenciesApi, eventApi } from "@/api";
 
@@ -223,7 +223,7 @@ export const generateCompetenciesDataSource = (criteriaResults) =>
   }));
 
 export const openPdf = (eventRulesPath) => {
-  const pdfUrl = `${REACT_APP_API_URL}/${eventRulesPath}`;
+  const pdfUrl = `${API_URL}/${eventRulesPath}`;
   const link = document.createElement("a");
   link.href = pdfUrl;
   link.target = "_blank";
@@ -742,7 +742,7 @@ export const transformParticipantsInSystemData = (data) => {
 };
 
 export const getParticipantLink = (id) => {
-  return REACT_APP_API_URL + ROUTES.PARTICIPANT_INFORMATION.PATH(id);
+  return API_URL + ROUTES.PARTICIPANT_INFORMATION.PATH(id);
 };
 
 export const getMinutesAfterFinishing = (endTime) => {

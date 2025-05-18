@@ -3,7 +3,7 @@ import FormItem from "antd/es/form/FormItem";
 import { UploadOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { REACT_APP_API_URL } from "@/const";
+import { API_URL } from "@/const";
 
 import "./sass/participant.scss";
 
@@ -72,7 +72,7 @@ function ParticipantPhotoUpload({
                   replaceLabel
                 ) : (
                   <img
-                    src={`${REACT_APP_API_URL}/${existingImage}`}
+                    src={`${API_URL}/${existingImage}`}
                     className="participant__existing-image"
                   />
                 )

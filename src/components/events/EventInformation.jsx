@@ -8,7 +8,7 @@ import {
   NOMINATIONS,
   ROUTES,
   yaShareLink,
-  REACT_APP_API_URL,
+  API_URL,
 } from "@/const";
 import { changeDateFormat, getEventLevel, openPdf } from "@/utils";
 import {
@@ -178,7 +178,7 @@ function EventInformation() {
             alt="Logo"
             src={
               dataEvent.logo_path !== "/" && dataEvent.logo_path
-                ? `${REACT_APP_API_URL}/${dataEvent.logo_path}`
+                ? `${API_URL}/${dataEvent.logo_path}`
                 : noLogo
             }
             className={

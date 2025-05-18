@@ -4,7 +4,7 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import noLogo from "@/assets/img/auth-background.png";
-import { ROUTES, paginationLocale, REACT_APP_API_URL } from "@/const";
+import { ROUTES, paginationLocale, API_URL } from "@/const";
 import { changeDateFormat, getEventLevel, getTranslation } from "@/utils";
 import { Card, List, Tooltip, Typography } from "antd";
 import React from "react";
@@ -40,7 +40,7 @@ function EventsList({ events }) {
                 }
                 src={
                   event.logo_path !== "/" && event.logo_path
-                    ? `${REACT_APP_API_URL}/${event.logo_path}`
+                    ? `${API_URL}/${event.logo_path}`
                     : noLogo
                 }
               />
