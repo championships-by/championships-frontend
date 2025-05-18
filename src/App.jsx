@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import { store } from "@/store";
-import { ROUTER_ROUTES, Roles, REACT_APP_API_URL } from "@/const";
+import { ROUTER_ROUTES, Roles, API_URL } from "@/const";
 import Auth from "@/components/auth/Auth";
 import FirstAuth from "@/components/auth/FirstAuth";
 import EventsRegistration from "@/components/eventRegistration/EventRegistration";
@@ -50,7 +50,7 @@ function App() {
           content={t("COMMON.META_DESCRIPTION")}
         />
         <meta property="og:image" content="./assets/icons/meta_icon.png" />
-        <meta property="og:url" content={REACT_APP_API_URL} />
+        <meta property="og:url" content={API_URL} />
       </Helmet>
       <Layout>
         <BrowserRouter>

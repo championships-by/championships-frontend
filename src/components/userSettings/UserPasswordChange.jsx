@@ -6,7 +6,7 @@ import SecondNewPassword from "@/modules/user/passwordChange/SecondNewPassword";
 import { userApi } from "@/api";
 import { getEncryptedPassword } from "@/utils";
 import { useTranslation } from "react-i18next";
-import { REACT_APP_PUBLIC_KEY } from "@/const";
+import { PUBLIC_KEY } from "@/const";
 
 function UserPasswordModal({ isOpen, onOk, onCancel }) {
   const { t } = useTranslation();
@@ -19,15 +19,15 @@ function UserPasswordModal({ isOpen, onOk, onCancel }) {
 
     const encrypedCurrentPassword = getEncryptedPassword(
       OldPassword,
-      REACT_APP_PUBLIC_KEY
+      PUBLIC_KEY
     );
     const encrypedNewPassword = getEncryptedPassword(
       NewPassword,
-      REACT_APP_PUBLIC_KEY
+      PUBLIC_KEY
     );
     const encrypedNewRetypedPassword = getEncryptedPassword(
       SecondNewPassword,
-      REACT_APP_PUBLIC_KEY
+      PUBLIC_KEY
     );
 
     const data = {

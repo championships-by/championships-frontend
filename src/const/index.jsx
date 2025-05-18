@@ -351,6 +351,6 @@ export const RESULTS_EDITABILITY_MINUTES = 15;
 export const PHOTO_FILE_PATH = `/backend/static/images/events/`;
 
 // env
-export const REACT_APP_API_URL = API_URL;
-export const REACT_APP_PUBLIC_KEY = PUBLIC_KEY;
-export const REACT_APP_CAPTCHA_TOKEN = CAPTCHA_TOKEN;
+export const API_URL = process.env.REACT_APP_API_URL;
+export const PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY;
+export const CAPTCHA_TOKEN = process.env.REACT_APP_CAPTCHA_TOKEN;
