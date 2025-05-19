@@ -21,7 +21,7 @@ export * from "./certificates";
 const excludedUrls = ["/user/profile"];
 
 export const instance = axios.create({
-  baseURL: `${API_URL}/backend/api`,
+  baseURL: `${API_URL}/api`,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
